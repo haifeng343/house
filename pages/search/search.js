@@ -59,7 +59,8 @@ Page({
       maxPrice: 99999, //最高价s
       sort: 2, //搜索方式 1推荐 2低价有限
       equipment: []
-    }
+    },
+    needOnShow: false
   },
 
   service: new searchService(),
@@ -295,13 +296,11 @@ Page({
     }
   },
   getHouseTypeAndEqu() {
-    this.service.getIndexHose().then(resp => {
-      this.setData({
-        houseType: resp.houseType,
-        equipments: resp.equipments,
-        numberList: resp.numberList,
-        leaseType: resp.leaseType
-      });
+    this.setData({
+      houseType: wx.getStorageSync('houseType'),
+      equipments: wx.getStorageSync('equipments'),
+      numberList: wx.getStorageSync('numberList'),
+      leaseType: wx.getStorageSync('leaseType')
     });
   },
   showAuthDialog() {

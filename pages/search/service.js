@@ -2,9 +2,6 @@ import Http from '../../utils/http';
 import { authSubject } from '../../utils/auth';
 
 export default class index {
-  indexHose() {
-    return Http.get('/indexHose.json');
-  }
   indexPosition(cityName) {
     return Http.get('/indexPosition.json', { cityName });
   }
@@ -16,29 +13,6 @@ export default class index {
   }
   getBanner() {
     return Http.get('/banner/index.json');
-  }
-
-  getIndexHose() {
-    return Http.get('/indexHose.json').then(resp => {
-      const houseType = resp.data.shortLayout;
-      const equipments = resp.data.shortFacilities;
-      const numberList = resp.data.shortPeople;
-      const leaseType = resp.data.shortRentType;
-      const hourMoney = resp.data.hourMoney;
-
-      wx.setStorageSync('houseType', houseType);
-      wx.setStorageSync('equipments', equipments);
-      wx.setStorageSync('numberList', numberList);
-      wx.setStorageSync('leaseType', leaseType);
-      wx.setStorageSync('hourMoney', hourMoney);
-
-      return Promise.resolve({
-        houseType,
-        equipments,
-        numberList,
-        leaseType
-      });
-    });
   }
 
   getUserInfo() {
