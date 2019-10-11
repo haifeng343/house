@@ -15,7 +15,20 @@
     </view>
   </view>
   <view class="block"></view>
-  <view class="card-list {{countFlag === 0 ? 'section_empty' : ''}}"  style="height: {{containerHeight}}px">
+  <view class="card-list {{countFlag === 0 ? 'section_empty' : ''}}" style="height: {{containerHeight}}px">
+    <view class="search_empty" wx:if="{{countFlag===0&&bottomType === 1}}">
+      <view class="search_view">
+        <image class="monitor_empty_image" src="../../assets/image/monitor_empty.png"></image>
+      </view>
+      <view class="search_view search_title">暂时未监控符合条件的房源</view>
+    </view>
+    <view class="search_empty" wx:if="{{countFlag === 0&&bottomType ===2}}">
+      <view class="search_view">
+        <image class="empty_image" src="../../assets/image/search_empty.png"></image>
+      </view>
+      <view class="search_view search_title">未找到符合条件的房源</view>
+      <view class="search_view search_tip">立即添加监控，第一时间推送房源信息，再也不怕心仪的房源擦肩而过</view>
+    </view>
     <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
       <view class="house_card" data-productId="{{item.productId}}" data-platform="{{item.platformId}}" data-index="{{idx}}" catchtap="goToPlatformDetail">
         <swiper class="swiper" data-Index="{{idx}}" bindchange="swiperChange">
@@ -44,25 +57,16 @@
             </view>
             <view class="house_type">
               <text>{{item.preloadDetail}}</text>
-              <!-- <image class="distance" src="../../assets/image/distance.png"></image>
-              <text>距离2.3公里</text> -->
             </view>
           </view>
           <view class="house_photo">
             <image class="photo" src="{{item.logoUrl}}"></image>
           </view>
         </view>
-        <view class="remove" data-index="{{idx}}" catchtap="delItem" style="right:{{removeRight}}rpx">
-          <image  src="../../assets/image/no_attention.png"></image>
-          <view>不</view>
-          <view>再</view>
-          <view>关</view>
-          <view>注</view>
-        </view>
       </view>
     </block>
   </view>
-  <view class="monit_start {{bottomType === 1?'monit_stop':''}}" wx:if="{{bottomType === 1}}">
+  <view class="monit_start {{bottomType === 1?'monit_stop':''}}" wx:if="{{bottomType === 1&&countFlag === 1}}">
     <view>
       <text>监控时长:</text>
       <text class="price">{{taskTime}}</text>
@@ -71,7 +75,7 @@
       <text class="monit_btn" bindtap="stopMonitor">结束监控</text>
     </view>
   </view>
-  <view class="monit_start {{bottomType === 2?'monit_save':''}}" wx:if="{{bottomType === 2}}">
+  <view class="monit_start {{bottomType === 2?'monit_save':''}}" wx:if="{{bottomType === 2&&countFlag === 1}}">
     <view>
       <text class="monit_btn monit_back" bindtap="goBack">返回监控</text>
       <text class="monit_btn" bindtap="goSave">保存修改</text>
@@ -94,12 +98,7 @@
   </view>
 
 
-  <view class="search_empty" wx:if="{{countFlag===0}}">
-    <view class="search_view">
-      <image class="empty_image" src="../../assets/image/monitor_empty.png"></image>
-    </view>
-    <view class="search_view search_title">暂时未监控符合条件的房源</view>
-  </view>
+  
   <noNetwork wx:if="{{countFlag===2}}"></noNetwork>
   <view class="house_monitor" wx:if="{{countFlag===2}}">
     <button class="monitor_btn" bindtap='goBack'>返回重试</button>
@@ -111,7 +110,9 @@
   <enoughBottomDialog tjCount="{{tjCount}}" xzCount="{{xzCount}}" mnCount="{{mnCount}}" zgCount="{{zgCount}}" bind:enoughBottomEvent="getBottomEnoughEvent" style="display:{{enoughBottomDisplay}}"></enoughBottomDialog>
   <collectDialog bind:collectEvent="getcollectEventEvent" style="display:{{collectDisplay}}"></collectDialog>
   <stopDialog bind:stopEvent="getstopEventEvent" bind:stopConfrimEvent="getstopConfirmEventEvent" startTimeName="{{startTimeName}}" taskTime="{{taskTime}}" fee="{{fee}}" totalFee="{{totalFee}}" style="display:{{stopDisplay}}"></stopDialog>
-  <updateMonitorDialog bind:updateCancelEvent="getUpdateCancelEvent" bind:updateConfrimEvent="getUpdateConfrimEvent" beginDate="{{beginDate}}" endDate="{{endDate}}" cityName="{{cityName}}" locationName="{{locationName}}" updateMinPrice="{{updateMinPrice}}" updateMaxPrice="{{updateMaxPrice}}" defaultBeginDate="{{defaultBeginDate}}" defaultEndDate="{{defaultEndDate}}" defaultCityName="{{defaultCityName}}" defaultLocationName="{{defaultLocationName}}" defaultMInPrice="{{defaultMInPrice}}" defaultMaxPrice="{{defaultMaxPrice}}" style="display:{{updateMonitorDisplay}}"></updateMonitorDialog>
+  <updateMonitorDialog bind:updateCancelEvent="getUpdateCancelEvent" bind:updateConfrimEvent="getUpdateConfrimEvent" beginDate="{{beginDate}}" endDate="{{endDate}}" cityName="{{cityName}}" locationName="{{locationName}}" updateMinPrice="{{updateMinPrice}}"
+    updateMaxPrice="{{updateMaxPrice}}" defaultBeginDate="{{defaultBeginDate}}" defaultEndDate="{{defaultEndDate}}" defaultCityName="{{defaultCityName}}" defaultLocationName="{{defaultLocationName}}" defaultMInPrice="{{defaultMInPrice}}" defaultMaxPrice="{{defaultMaxPrice}}"
+    style="display:{{updateMonitorDisplay}}"></updateMonitorDialog>
   <block wx:if='{{isLoaded}}'>
     <advanceFilter class='{{showAdvance?"":"vhidden"}}' type='monitor' shownType='{{showAdvanceType}}' cityName='{{cityName}}' bind:submit='submitAdvance' />
   </block>

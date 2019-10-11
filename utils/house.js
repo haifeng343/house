@@ -288,9 +288,33 @@ const getZgData = (type, zgfilter)=> {
     });
   });
 }
+
+const houseCollection = (pId, proId)=>{
+  let num = wx.getStorageSync('collectionNum');
+  let obj = wx.getStorageSync('collectionObj') || {};
+  if (!obj[pId]) {
+    obj[pId] = [];
+    obj[pId].push(proId);
+  } else {
+    if (obj[pId].indexOf(proId) == -1) {
+      obj[pId].push(proId);
+    } else {
+      obj[pId] && obj[pId].splice(obj[pId].indexOf(proId), 1);
+    }
+  }
+  wx.setStorageSync('collectionObj', obj);
+  if (num) {
+    num++;
+    wx.setStorageSync('collectionNum', num);
+  } else {
+    wx.setStorageSync('collectionNum', 1);
+  }
+}
+
 module.exports = {
   getTjData,
   getXzData,
   getMnData,
-  getZgData
+  getZgData,
+  houseCollection
 }

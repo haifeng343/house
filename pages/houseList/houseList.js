@@ -883,36 +883,21 @@ Page({
   },
 
   /**
-   * 收藏
+   * 房源收藏
    */
   goToCollection(e) {
     //开启收藏
     let num = wx.getStorageSync('collectionNum');
-    let obj = wx.getStorageSync('collectionObj') || {};
-    let pId = this.data.allData[e.currentTarget.dataset.index].platformId;
-    let proId = this.data.allData[e.currentTarget.dataset.index].productId;
+    let index = e.currentTarget.dataset.index;
+    let pId = this.data.allData[index].platformId;
+    let proId = this.data.allData[index].productId;
 
-    if (!obj[pId]) {
-      obj[pId] = [];
-      obj[pId].push(proId);
-    } else {
-      if (obj[pId].indexOf(proId) == -1) {
-        obj[pId].push(proId);
-      } else {
-        obj[pId] && obj[pId].splice(obj[pId].indexOf(proId), 1);
-      }
-    }
-
-    wx.setStorageSync('collectionObj', obj);
-    let item = 'allData[' + e.currentTarget.dataset.index + '].collection';
+    house.houseCollection(pId, proId)
+    let item = 'allData[' + index + '].collection';
     this.setData({
       [item]: !e.currentTarget.dataset.collection
     });
-    if (num) {
-      num++;
-      wx.setStorageSync('collectionNum', num);
-    } else {
-      wx.setStorageSync('collectionNum', 1);
+    if(!num){
       this.setData({
         collectDisplay: 'block',
       });
