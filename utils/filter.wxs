@@ -1,0 +1,10 @@
+//小猪图片处理
+var xzCoverImage = function (url) {
+  if(url){
+    return url.replace('imgsec', 'image').replace('imgshowsource/', '').replace('webp', 'jpg')
+  }
+}
+
+module.exports = {
+  xzCoverImage: xzCoverImage
+}

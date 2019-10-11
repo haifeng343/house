@@ -1,0 +1,13 @@
+{
+  "usingComponents": {
+    "houseCard":"../../components/houseCard/houseCard",
+    "houseData": "../../components/houseData/houseData",
+    "houseStat": "../../components/houseStat/houseStat",
+    "stopDialog": "../../components/stopDialog/stopDialog",
+    "enoughDialog": "../../components/enoughDialog/enoughDialog",
+    "monitorDialog": "../../components/monitorDialog/monitorDialog",
+    "publicDialog": "../../components/publicDialog/publicDialog",
+    "updateMonitorDialog": "../../components/updateMonitorDialog/updateMonitorDialog"
+  },
+  "navigationBarTitleText": "统计信息"
+}

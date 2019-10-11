@@ -1,0 +1,218 @@
+@import '../../assets/styles/flex.wxss';
+@import '../../assets/styles/font.wxss';
+
+:host {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.page {
+  flex: 1;
+  background-color: #f9f9f9;
+}
+
+.page .nav {
+  display: flex;
+  height: 100rpx;
+  background-color: #fff;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.page .content {
+  background-color: #fff;
+  flex: 1 1 auto;
+}
+
+.page .nav .nav-item {
+  flex: 1;
+  text-align: center;
+}
+
+.page .nav .nav-item .text {
+  font-size: 32rpx;
+  color: #1d1d1d;
+}
+
+.page .nav .nav-item .border {
+  font-size: 32rpx;
+  width: 50rpx;
+  height: 4rpx;
+  border-radius: 4rpx;
+  background-color: transparent;
+  margin: 8rpx auto 0;
+}
+
+.page .nav .nav-item.active .text {
+  color: #e75d28;
+}
+
+.page .nav .nav-item.active .border {
+  background-color: #e75d28;
+}
+
+.page .title {
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #1d1d1d;
+  line-height: 44rpx;
+  margin: 32rpx 0;
+}
+
+.page .top {
+  padding: 0 28rpx;
+  background-color: #fff;
+}
+
+.page .top .cell-list {
+  flex-wrap: wrap;
+}
+
+.page .top .cell-list .cell-item {
+  width: 25%;
+  font-weight: 500;
+  font-size: 28rpx;
+  height: 80rpx;
+  color: #171717;
+  border: solid 2rpx #f1612a;
+  border-radius: 8rpx;
+  margin-bottom: 40rpx;
+}
+
+.page .top .cell-list .cell-item.active {
+  color: #fff;
+  background-color: #f1612a;
+}
+
+.page .bottom {
+  padding: 28rpx 28rpx 0 28rpx;
+  margin-top: 16rpx;
+  flex: 1 1 auto;
+  background-color: #fff;
+}
+
+.page .bottom .payment-list .payment-item {
+  height: 140rpx;
+  box-sizing: border-box;
+  border-top: solid 2rpx #e8e8e8;
+  border-bottom: solid 2rpx #e8e8e8;
+  padding-left: 28rpx;
+  padding-right: 48rpx;
+}
+
+.page .bottom .payment-list .payment-item .checkbox {
+  color: #f1612a;
+  font-size: 40rpx;
+}
+
+.page .bottom .payment-list .payment-item .uniE91E {
+  color: #61cf14;
+  font-size: 68rpx;
+}
+
+.page .bottom .payment-list .payment-item .info {
+  font-weight: 400;
+  margin-left: 32rpx;
+}
+
+.money-wrapper {
+  font-size: 48rpx;
+  color: #1d1d1d;
+  font-weight: 500;
+  margin-left: auto;
+  margin-right: 20rpx;
+}
+
+.money-wrapper .yen {
+  font-size: 28rpx;
+  margin-right: 4rpx;
+}
+
+.page .bottom .payment-list .payment-item .info .name {
+  font-size: 24rpx;
+  line-height: 36rpx;
+  color: #171717;
+}
+
+.page .bottom .payment-list .payment-item .info .desc {
+  font-size: 20rpx;
+  color: #bec3cd;
+  line-height: 28rpx;
+}
+
+.page .button-wrapper {
+  margin-top: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.pay-btn {
+  width: 480rpx;
+  height: 92rpx;
+  line-height: 92rpx;
+  background: linear-gradient(
+    180deg,
+    rgba(231, 93, 40, 1) 0%,
+    rgba(233, 68, 68, 1) 100%
+  );
+  box-shadow: 2px 2px 4px 0px rgba(198, 55, 35, 0.48);
+  border-radius: 92px;
+  font-size: 28rpx;
+  color: #fff;
+  text-align: center;
+  margin: 40rpx auto;
+}
+
+.page .exchange-form {
+  padding: 20rpx 28rpx;
+  background-color: #fff;
+  flex: 1 1 auto;
+}
+
+.page .form-tips {
+  font-size: 32rpx;
+  color: #1d1d1d;
+  margin-bottom: 60rpx;
+}
+
+.page .form-title {
+  font-size: 32rpx;
+  color: #1d1d1d;
+  margin-bottom: 26rpx;
+}
+
+.page .form-box {
+  border-bottom: 2rpx solid rgba(232, 232, 232, 0.8);
+  padding-bottom: 10rpx;
+  position: relative;
+}
+
+.page .form-box .yen {
+  position: absolute;
+  font-size: 72rpx;
+  color: #1d1d1d;
+  height: 100rpx;
+  line-height: 100rpx;
+  top: 0;
+  left: 0;
+}
+
+.page .form-input {
+  font-size: 72rpx;
+  color: #1d1d1d;
+  height: 100rpx;
+  line-height: 100rpx;
+  box-sizing: border-box;
+  padding-left: 68rpx;
+}
+.page .form-remain {
+  color: #bebebe;
+  font-size: 32rpx;
+  margin-top: 26rpx;
+}
+.page .form-all {
+  color: #f1612a;
+}

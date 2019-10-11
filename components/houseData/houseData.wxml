@@ -1,0 +1,27 @@
+<view class="house_query">
+      <image class="query" src="../../assets/image/house_query.png"></image>
+      <text>查询统计</text>
+    </view>
+
+    <view class="house_data">
+      <view class="data_first">
+        <view class="data_layout data_real">
+          <view>实际数量/套</view>
+          <view class="real_num">{{allCount}}</view>
+        </view>
+        <view class="data_layout data_average">
+          <view>平均价格/晚</view>
+          <view class="average_price">¥{{averagePrice}}</view>
+        </view>
+      </view>
+      <view class="data_sencond">
+        <view class="data_layout data_total">
+          <view>当前展示/套</view>
+          <view class="total_num">{{showCount}}</view>
+        </view>
+        <view class="data_layout data_low">
+          <view>最低价格/晚</view>
+          <view class="low_price">¥{{lowPrice}}</view>
+        </view>
+      </view>
+    </view>

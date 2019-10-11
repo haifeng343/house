@@ -1,0 +1,16 @@
+<view class="page">
+  <view wx:if="{{isLoaded === true && monitorList.length === 0}}" class="no-data">
+    <nodata message="暂无历史监控" />
+  </view>
+  <view class="monitor-list" wx:if="{{isLoaded === true && monitorList.length > 0}}">
+    <view class="monitor-item" wx:for="{{monitorList}}" wx:key="id">
+      <MonitorCard data="{{item}}" bind:onRemove="handleRemove" />
+    </view>
+  </view>
+  <view class="tip-wrapper " wx:if="{{isLoaded === true && monitorList.length > 0}}">
+    <text class="icon-font uniE915" />
+    <text>左滑删除监控</text>
+  </view>
+
+  <monitorEndDialog text="确认要删除该监控吗" bind:monitorEndEvent="getmonitorEndEvent" bind:monitorEndConfirmEvent="getmonitorEndConfirmEvent" style="display:{{monitorEndDisplay}}"></monitorEndDialog>
+</view>

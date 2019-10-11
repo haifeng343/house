@@ -1,0 +1,14 @@
+{
+  "usingComponents": {
+    "houseSelect": "../../components/houseSelect/houseSelect",
+    "enoughDialog": "../../components/enoughDialog/enoughDialog",
+    "enoughBottomDialog": "../../components/enoughBottomDialog/enoughBottomDialog",
+    "stopDialog": "../../components/stopDialog/stopDialog",
+    "updateMonitorDialog": "../../components/updateMonitorDialog/updateMonitorDialog",
+    "advanceFilter": "../../components/advanceFilter/advanceFilter",
+    "imageExtend": "../../components/imageExtend/imageExtend",
+    "noNetwork": "../../components/noNetwork/noNetwork",
+    "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog"
+  },
+  "navigationBarTitleText": "房源监控详情"
+}

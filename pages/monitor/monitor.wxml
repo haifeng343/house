@@ -1,0 +1,19 @@
+<view class="section {{show === 0?'section_empty':''}}">
+  <view wx:if="{{show===1}}" class="card_list">
+    <block wx:for="{{data}}" wx:key="{{index}}">
+      <monitorColorCard wx:if="{{item.status == 1}}" item="{{item}}" ddCoin="{{ddCoin}}" bind:checkEvent="checkDetail" bind:clickDelete="delItem" bind:clickOpen="openTask"></monitorColorCard>
+      <monitorGrayCard wx:else item="{{item}}" ddCoin="{{ddCoin}}" bind:clickEvent="goToClick" bind:clickDelete="delItem" bind:clickOpen="openTask"></monitorGrayCard>
+    </block>
+  </view>
+
+  <empty wx:if="{{show===0}}" title="暂未开启监控任务" imgsrc="../../assets/image/monitor_empty.png" class="search_empty">
+    <view class="bg_border"></view>
+  </empty>
+
+  <monitorStopDialog deleteItem="{{deleteItem}}" bind:monitorStopEvent="getmonitorStopEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorStopDisplay}}"></monitorStopDialog>
+
+  <monitorEndDialog text="确认要结束当前任务" bind:monitorEndEvent="getmonitorEndEvent" bind:monitorEndConfirmEvent="getmonitorEndConfirmEvent" style="display:{{monitorEndDisplay}}"></monitorEndDialog>
+
+  <monitorStartDialog bind:monitorStartEvent="getmonitorStartEvent" bind:monitorStartConfirmEvent="getmonitorStartConfirmEvent" style="display:{{monitorStartDisplay}}"></monitorStartDialog>
+
+</view>

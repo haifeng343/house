@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "priceblock": "/components/PriceBlock/index",
+    "authDialog": "/components/AuthDialog/AuthDialog"
+  },
+  "navigationBarTitleText": "房盯盯"
+}

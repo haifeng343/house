@@ -1,0 +1,9 @@
+<view class="container flex-box-center">
+    <view class="icon flex-box-center-center">
+        <image src='{{icon}}' class='icon-image' />
+    </view>
+    <view class="label flex-box-center-between">
+        <text class="label-text">{{label}}</text>
+        <text class="icon-font uniE90C" />
+    </view>
+</view>

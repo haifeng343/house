@@ -1,0 +1,7 @@
+{
+    "component": true,
+    "usingComponents": {
+        "priceblock": "/components/PriceBlock/index",
+        "MovableSelect": "/components/MovableSelect/index"
+    }
+}

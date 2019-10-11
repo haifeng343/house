@@ -1,0 +1,64 @@
+<view class="page flex-column">
+    <view class='nav'>
+        <view class='nav-item {{showType?"active":""}}' bindtap='changeTab'>
+            <view class='text'>充盯盯币</view>
+            <view class='border'></view>
+        </view>
+        <view class='nav-item {{showType?"":"active"}}' bindtap='changeTab'>
+            <view class='text'>兑盯盯币</view>
+            <view class='border'></view>
+        </view>
+    </view>
+    <view class="content" wx:if='{{showType}}'>
+        <view class="top flex-column">
+            <view class="title">选择充值金额</view>
+            <view class="cell-list flex-box-center-around">
+                <block wx:for="{{pay}}" wx:for-item="item" wx:key="label">
+                    <block wx:if="{{item.disabled !== true}}">
+                        <view class="cell-item flex-box-center-center {{money === item.value ? 'active' : ''}}" bindtap="handleSelect" data-money='{{item.value}}' data-coin='{{item.coin}}'>
+                            {{item.value}}币
+                        </view>
+                    </block>
+                </block>
+            </view>
+        </view>
+        <view class="bottom">
+            <view class="title">支付方式</view>
+            <view class="payment-list">
+                <view class="payment-item flex-box-center">
+                    <view class="icon icon-wechat">
+                        <span class="icon-font uniE91E" />
+                    </view>
+                    <view class="info">
+                        <view class="name">微信支付</view>
+                        <view class="desc">微信零钱</view>
+                    </view>
+                    <view class="money-wrapper">
+                        <text class="yen">¥</text>
+                        <text class="moeny-value">{{moneyText}}</text>
+                    </view>
+                    <view class="checkbox flex-box-center-center">
+                        <span class="icon-font uniE922" />
+                    </view>
+                </view>
+            </view>
+            <view class="button-wrapper">
+                <view class='pay-btn' bindtap="handlePay">确认充值</view>
+            </view>
+        </view>
+    </view>
+    <view wx:else class='exchange-form'>
+        <view class='form-tips'>兑换比例:1元=100币</view>
+        <view class='form-title'>兑换金额</view>
+        <view class='form-box'>
+            <text class="yen">￥</text>
+            <input class='form-input' value='{{exchangeAmount}}' bindinput="handleExchangeAmountChange" maxlength="6" />
+        </view>
+        <view class='form-remain'>
+            账户余额{{userMoney}}元,
+            <text class='form-all' bindtap='exchangeAll'>全部兑换</text>
+        </view>
+        <view class='pay-btn' bindtap="handleShowConfirmdialog">确认兑换</view>
+    </view>
+    <monitorEndDialog text="确定要兑换吗" bind:monitorEndEvent="getmonitorEndEvent" bind:monitorEndConfirmEvent="getmonitorEndConfirmEvent" wx:if="{{showConfirmDialog}}"></monitorEndDialog>
+</view>

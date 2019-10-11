@@ -1,0 +1,29 @@
+.search_empty{
+  flex: 1;
+  background: #FFFFFF;
+}
+.search_empty .search_view{
+  display: flex;
+  justify-content: center;
+}
+
+.search_empty .search_view:nth-child(2){
+  margin-top: 240rpx;
+}
+.search_empty .search_view:nth-child(3){
+  margin-top: 40rpx;
+  text-align: center;
+  margin: 30rpx 108rpx 0 ;
+}
+.search_empty .search_title{
+  font-size: 32rpx;
+  color: #1D1D1D
+}
+.search_empty .search_tip{
+  font-size: 28rpx;
+  color: #A6A6A6
+}
+.search_empty .empty_image{
+  width: 320rpx;
+  height: 222rpx;
+}

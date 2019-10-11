@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "房源查询",
+    "usingComponents": {
+        "positionSelectItem": "../../components/positionSelectItem/positionSelectItem"
+    }
+}

@@ -1,0 +1,15 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: -webkit-linear-gradient(top, #e75d28, #e94444);
+  box-shadow: 4rpx 4rpx 8rpx 0px rgba(198, 55, 35, 0.48);
+  padding-bottom: 120rpx;
+  padding-top: 60rpx;
+  flex-direction: column;
+}
+
+.page image {
+  width: 90%;
+}

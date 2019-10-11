@@ -1,0 +1,8 @@
+<view class="search_empty">
+  <slot></slot>
+  <view class="search_view">
+    <image class="empty_image" src="{{imgsrc}}">
+    </image>
+  </view>
+  <view class="search_view search_title">{{title}}</view>
+</view>

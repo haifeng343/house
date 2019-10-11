@@ -1,0 +1,84 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.container .week-list {
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+  box-sizing: border-box;
+  border-top: solid 2rpx #efefef;
+  padding: 0 20rpx;
+  flex: 0 0 80rpx;
+  width: 100%;
+}
+
+.container .week-list text {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 calc(100% / 7);
+  color: #1d1d1d;
+  font-weight: 400;
+  font-size: 24rpx;
+}
+
+.container .week-list text.rest {
+  color: #f25555;
+}
+
+.container .picker-view {
+  height: calc(100% - 80rpx);
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.container .picker-view .picker-list {
+  height: 2736rpx;
+  width: 100%;
+  position: relative;
+}
+
+.container .picker-view .picker-list .picker-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.total {
+  width: 480rpx;
+  height: 92rpx;
+  line-height: 92rpx;
+  background: linear-gradient(180deg, rgba(231, 93, 40, 1) 0%, rgba(233, 68, 68, 1) 100%);
+  box-shadow: 2px 2px 4px 0px rgba(198, 55, 35, 0.48);
+  border-radius: 92px;
+  font-size: 28rpx;
+  color: #fff;
+  text-align: center;
+  margin: 40rpx auto;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  bottom: 30rpx;
+}
+
+.total.disable {
+  background: rgba(210, 210, 210, 1);
+  box-shadow: 2px 2px 4px 0px rgba(172, 172, 172, 0.48);
+  border-radius: 23px;
+}

@@ -1,0 +1,44 @@
+<view class="mask" bindtap="bindCancel">
+    <view class="mask_content" catchtap="stopEvent">
+      <view class="house_image">
+        <view class="house_title">房源监控确认</view>
+      </view>
+      <view class="content">
+        <view class="text">
+          <image class="warn_image" src="../../assets/image/warn.png"></image>
+          <text>开启监控后，除已收藏的房源外，当 前所查询的房源都将不再监控内展示。</text>
+        </view>
+        <view class="mask_task">
+          <view class="task">
+            <text>收费标准:</text>
+            <text class="task_right">{{fee}}币/时</text>
+          </view>
+          <view class="task">
+            <text>剩盯盯币:</text>
+            <text class="task_right">{{ddCoin}}币</text>
+          </view>
+          <view class="task task_notice">
+            <text>通知方式:</text>
+            <view class="task_right">
+              <view class="task_select" catchtap="bindPublic">
+                <image wx:if="{{publicSelect}}" class="select_image" src="{{selected}}"></image>
+                <image wx:else class="select_image" src="{{unselect}}"></image>
+                <text class="official">公众号</text>
+              </view>
+              <view class="task_select">
+                <image wx:if="{{noteSelect}}" class="select_image" src="{{selected}}"></image>
+                <image wx:else class="select_image" src="{{unselect}}"></image>
+                <text>短信</text>
+              </view>
+            </view>
+            
+          </view>
+          <view class="ding"><text>时长不足时，任务将自动暂停</text></view>
+        </view>
+        <view class="mask-btn">
+          <text class="cancel" catchtap="bindCancel">取消</text>
+          <text class="confirm" catchtap="bindConfirm">开始</text>
+        </view>
+      </view>
+    </view>
+  </view>

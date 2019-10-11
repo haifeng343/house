@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "houseCard":"../../components/houseCard/houseCard",
+    "houseData": "../../components/houseData/houseData",
+    "houseStat": "../../components/houseStat/houseStat"
+  },
+  "navigationBarTitleText": "统计信息"
+}

@@ -1,0 +1,16 @@
+<view class="page">
+    <view class="input phone">
+        <input type="number" placeholder="请输入手机号码" placeholder-class="input-placeholder" bindinput="handleMobileChange" />
+    </view>
+    <view class="input code">
+        <input type="text" placeholder="请输入验证码" placeholder-class="input-placeholder" maxlength="6" bindinput="handleCodeChange" />
+        <view class="getcode {{countDown > 0 ? 'disabled' : ''}}" bindtap="handleGetCode">
+            获取验证码
+            <block wx:if="{{countDown > 0}}">{{"(" + countDown + ")"}}</block>
+            <block wx:elif="true">{{''}}</block>
+        </view>
+    </view>
+    <view class="button-wrapper">
+        <view class='submitBtn' bindtap='handleBindMoblie'>确认</view>
+    </view>
+</view>

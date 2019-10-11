@@ -1,0 +1,252 @@
+const monitor = require("../../utils/monitor.js");
+const monitorApi = require('../../api/monitorApi.js');
+const userApi = require('../../api/userApi.js')
+const app = getApp();
+Page({
+  data: {
+    data:[],
+    monitorStopDisplay:'none',
+    monitorEndDisplay:'none',
+    monitorStartDisplay:'none',
+    ddCoin:0
+  },
+  onLoad: function (options) {
+  },
+  onShow:function(){
+    let token = wx.getStorageSync('token');
+    if (token) {
+      this.getMonitorData();
+      this.getUserInfo()
+    } else {
+      this.setData({
+        show: 0
+      })
+    }
+  },
+  getMonitorData(){
+    let data={}
+    monitorApi.getMonitorList(data).then(res => {
+      if (res.data.data.length) {
+        for (let i = 0; i < res.data.data.length; i++) {
+          res.data.data[i].beginDay = monitor.setDate(res.data.data[i].beginDate)
+          res.data.data[i].endDay = monitor.setDate(res.data.data[i].endDate)
+          res.data.data[i].dayNum = monitor.setDay(res.data.data[i].monitorTime)
+          res.data.data[i].hourNum = monitor.setHour(res.data.data[i].monitorTime)
+          res.data.data[i].index = i
+        }
+        this.setData({
+          data: res.data.data,
+          show: 1
+        })
+      } else {
+        this.setData({
+          show: 0
+        })
+      }
+    })
+  },
+  /**
+   * 获取用户信息，盯盯币，是否绑定微信公众号 和 手机绑定
+   */
+  getUserInfo() {
+    let data = {}
+    userApi.userInfo(data).then(res => {
+      this.setData({
+        ddCoin: res.data.data.coinAccount.useCoin,
+      })
+    })
+  },
+  /**
+   * 监控删除弹窗
+   */
+  delItem(e){
+    var item = this.data.data[e.detail.index]
+    let deleteItem={
+      startTimeName: item.startTime?monitor.startTimeName(item.startTime):'',
+      createTime: monitor.startTimeName(item.createTime),
+      taskTime: monitor.taskTime(item.monitorTime, item.minutes),
+      fee:item.fee,
+      totalFee: item.totalFee||0,
+      id:item.id
+    }
+    //未开启-无监控开始时间，消费记录；已过期-无监控开始时间，消费记录
+    if (!item.startTime && (item.status == 12 || item.status == 0)){
+      this.setData({
+        monitorEndDisplay: 'block',
+        deleteItem
+      })
+    }else{
+      this.setData({
+        monitorStopDisplay: 'block',
+        deleteItem
+      })
+    }
+    
+  },
+  getmonitorStopEvent(e){
+    this.setData({
+      monitorStopDisplay: e.detail,
+    })
+  },
+  /**
+   * 监控删除确认--已开启有监控记录
+   */
+  getmonitorConfirmEvent(e){
+    let data={
+      monitorId: this.data.deleteItem.id
+    }
+    monitorApi.endMonitor(data).then(res => {
+        if(res.data.success){
+          wx.showToast({
+            title: res.data.resultMsg,
+            icon: 'success',
+            duration: 2000
+          })
+          this.setData({
+            monitorStopDisplay: e.detail,
+          })
+          this.getMonitorData();
+        }
+    })
+  },
+  getmonitorEndEvent(e){
+    this.setData({
+      monitorEndDisplay: e.detail,
+    })
+  },
+  /**
+   * 监控删除确认--未开启无监控任务
+   */
+  getmonitorEndConfirmEvent(e){
+    let data = {
+      monitorId: this.data.deleteItem.id
+    }
+    monitorApi.endMonitor(data).then(res => {
+      if (res.data.success) {
+        wx.showToast({
+          title: res.data.resultMsg,
+          icon: 'success',
+          duration: 2000
+        })
+        this.setData({
+          monitorEndDisplay: e.detail,
+        })
+        this.getMonitorData();
+      }
+    })
+  },
+  /**
+   * 立即充值，跳转到充值页面
+   */
+  recharge(e){
+    var type = e.currentTarget.dataset.type
+    wx.navigateTo({
+      url: `/pages/deposit/deposit?type=${type}`
+    });
+  },
+
+  getmonitorStartEvent(e){
+    this.setData({
+      monitorStartDisplay: e.detail,
+    })
+  },
+  /**
+   * 立即开启
+   */
+  getmonitorStartConfirmEvent(e){
+    let data = {
+      monitorId: this.data.startItem.id
+    }
+    monitorApi.startMonitor(data).then(res => {
+      if (res.data.success) {
+        wx.showToast({
+          title: res.data.resultMsg,
+          icon: 'success',
+          duration: 2000
+        })
+        this.setData({
+          monitorStartDisplay: e.detail,
+        })
+        this.getMonitorData();
+      }
+    })
+  },
+  /**
+   * 立即开启弹窗
+   */
+  openTask(e){
+    var item = this.data.data[e.detail.index]
+    this.setData({
+      monitorStartDisplay: 'block',
+      startItem: item
+    })
+  },
+  /**
+   * 点击整个灰色卡片事件
+   */
+  goToClick(e){
+    var type = e.detail.type
+    var item = this.data.data[e.detail.index]
+    if (item.status == 12){
+      this.delItem(e)
+    }
+    if ((item.status == 11 || item.status == 0) && this.data.ddCoin<item.fee) {
+      wx.navigateTo({
+        url: `/pages/deposit/deposit?type=${type}`
+      });
+    }
+    if ((item.status == 11 || item.status == 0) && this.data.ddCoin >= item.fee) {
+      this.openTask(e)
+    }
+  },
+  /**
+   * 查看详情
+   */
+  checkDetail(e){
+    var item = this.data.data[e.detail.index]
+    app.globalData.monitorSearchData = {
+      cityType: '',
+      area: '',
+      areaId: {},
+      ltude: {},
+      areaType: '',
+      city: '',//城市名
+      cityId: {},//城市ID
+      beginDate: '',//开始日期
+      endDate: '',//离开日期
+      dayCount: 0,
+      gueseNumber: 1,//入住人数
+      leaseType: 1,//房间类型  0单间 1整租
+      houseType: [],//户型 0 一居室 1 二居室 2 三居室 3 4居以上
+      minPrice: 0,//最低价
+      maxPrice: 99999,//最高价
+      sort: 0,//搜索方式 0推荐 1低价有限
+      equipment: []
+    }
+    app.globalData.monitorDefaultData = {
+      cityType: '',
+      area: '',
+      areaId: {},
+      ltude: {},
+      areaType: '',
+      city: '',//城市名
+      cityId: {},//城市ID
+      beginDate: '',//开始日期
+      endDate: '',//离开日期
+      dayCount: 0,
+      gueseNumber: 1,//入住人数
+      leaseType: 1,//房间类型  0单间 1整租
+      houseType: [],//户型 0 一居室 1 二居室 2 三居室 3 4居以上
+      minPrice: 0,//最低价
+      maxPrice: 99999,//最高价
+      sort: 0,//搜索方式 0推荐 1低价有限
+      equipment: []
+    }
+    app.globalData.monitorData = {
+      item: item
+    }
+    wx.navigateTo({
+      url: '../monitorList/monitorList',
+    })
+  }
+})

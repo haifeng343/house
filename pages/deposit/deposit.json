@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "盯盯币充值兑换",
+    "usingComponents": {
+        "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog"
+    }
+}

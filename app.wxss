@@ -1,0 +1,63 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+page {
+  font-size: 28rpx;
+  color: #1D1D1D;
+  height: 100%;
+}
+
+.flex-box {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-box-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-box-center-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-box-top-between {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.flex-box-top-center {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.flex-box-center-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-box-center-around {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.vhidden {
+  display: none
+}

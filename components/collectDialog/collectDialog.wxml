@@ -1,0 +1,11 @@
+<view class="mask" bindtap='bindConfirm'>
+    <view class="mask_content" catchtap='stopEvent'>
+      <view class="house_image">
+        <view class="house_title">收藏成功</view>
+      </view>
+      <view class="content">
+        <view class="text">已收藏的房源外会自动加入待监控列表并在开启监控的后持续监控价格！</view>
+        <view class="btn" catchtap="bindConfirm">知道了</view>
+      </view>
+    </view>
+  </view>

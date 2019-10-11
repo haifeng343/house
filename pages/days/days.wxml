@@ -1,0 +1,4 @@
+<!-- index.wxml -->
+<view class="container">
+    <datepicker type='{{type}}' bind:onChange='selectDate' startDate='{{startDate}}' endDate='{{endDate}}'></datepicker>
+</view>

@@ -1,0 +1,12 @@
+<view class="flex-box-center-center container" bindtap="handleExpand">
+    <view class="label flex-box-center">
+        <text>{{label}}</text>
+        <text class="icon-font uniE90D" />
+    </view>
+    <view class="overlay" wx:if="{{expand === true}}" />
+    <view class="option-list" wx:if="{{expand === true}}">
+        <view wx:for="{{optionList}}" wx:for-item="item" wx:key="label" class="option-item {{item.value === value ? 'active' : ''}}" bindtap="handleChange" data-item='{{item}}'>
+            {{item.label}}
+        </view>
+    </view>
+</view>

@@ -1,0 +1,23 @@
+<view class='section'>
+    <view class="header">
+        <view class="search-bar-wrapper flex-box-center" bindtap="gotoSearch">
+            <text class="icon-font uniE908" />
+            <text class="placeholder">输入景点、地标等</text>
+        </view>
+    </view>
+    <view class='position-box' wx:if='{{history.length>0}}'>
+        <view class='position-box-title history'>搜索历史</view>
+        <view class='positon-box-clear' bindtap='clearHistory' wx:if='{{history.length>0}}'>
+            清除历史
+            <text class="icon-font uniE939"></text>
+        </view>
+        <view class='position-list  history'>
+            <view class='item history' wx:for='{{history}}' wx:key='{{index}}' bindtap='handleSelectCityHistory' data-item='{{item}}'>
+                {{item.name}}
+            </view>
+        </view>
+    </view>
+    <block wx:for='{{list}}' wx:for-index='key' wx:key='{{item.type}}'>
+        <positionSelectItem  data='{{item}}' key='{{key}}' type='{{item.type}}' wx:if='{{item.data.length>0 && item.name!= "商圈"}}'></positionSelectItem>
+    </block>
+</view>

@@ -1,0 +1,31 @@
+<view class="container">
+  <movable-area class="area">
+    <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
+      <view class="bg"></view>
+      <view class="tag"></view>
+      <text class="icon-font uniE929" />
+      <view class="content">
+        <view class="top">
+          <view class="top-item1">
+            <view class="top-item1-text1">{{data.title}}</view>
+            <view class="top-item1-text2">
+              <text class="top-item1-text2-label">花费/币:</text>
+              <text class="top-item1-text2-value">{{data.totalFee}}</text>
+            </view>
+          </view>
+          <view class="top-item2">
+            <text class="top-item2-text1">{{data.dateText}}</text>
+          </view>
+        </view>
+        <view class="bottom">
+          <view class="bottom-item1">
+            <text>{{data.monitorDateText}}</text>
+          </view>
+        </view>
+      </view>
+    </movable-view>
+  </movable-area>
+  <view class="delete-button" catchtap="handleRemoveClick">
+    <text class="icon-font uniE901" style="color:#F25555" />
+  </view>
+</view>

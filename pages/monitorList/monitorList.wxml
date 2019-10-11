@@ -1,0 +1,120 @@
+<wxs src="../../utils/filter.wxs" module="filter" />
+<scroll-view scroll-top="{{y}}" scroll-y="{{canScroll}}" lower-threshold="{{0}}" scroll-with-animation="{{true}}" throttle="{{false}}" bindscroll="handleScroll" bindscrolltolower="handleReachBottom" class="{{(enoughDisplay =='block'||enoughBottomDisplay =='block'||collectDisplay =='block'||stopDisplay =='block'||updateMonitorDisplay=='block'||showAdvance)?'section_hidden':''}}">
+  <view class="header {{showUI ? '' : 'hidden'}}">
+    <view class="top-nav'">
+      <houseSelect id="houseSelect" type='monitor' checkInDate="{{checkInDate}}" checkOutDate="{{checkOutDate}}" cityName="{{cityName}}" locationName="{{locationName}}" bind:clickSelectItem='clickSelectItem'></houseSelect>
+      <view class="bg_border"></view>
+    </view>
+    <view wx:if="{{countFlag === 1}}" class="house_detail">
+      <view>总计:{{allCount}}套</view>
+      <view>最低价:¥{{lowPrice}}</view>
+      <view class="check_detail" bindtap="goToDetail">
+        <text>查看明细</text>
+        <image class="check_more" src="../../assets/image/more.png"></image>
+      </view>
+    </view>
+  </view>
+  <view class="block"></view>
+  <view class="card-list {{countFlag === 0 ? 'section_empty' : ''}}"  style="height: {{containerHeight}}px">
+    <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
+      <view class="house_card" data-productId="{{item.productId}}" data-platform="{{item.platformId}}" data-index="{{idx}}" catchtap="goToPlatformDetail">
+        <swiper class="swiper" data-Index="{{idx}}" bindchange="swiperChange">
+          <block wx:for="{{item.pictureList}}" wx:key="{{index}}" wx:for-item="items">
+            <swiper-item wx:if="{{item.platformId == 'xz'}}">
+              <imageExtend src="{{filter.xzCoverImage(items)}}" data-index="{{index}}" data-idx="{{idx}}"></imageExtend>
+            </swiper-item>
+            <swiper-item wx:else>
+              <imageExtend src="{{items}}" data-index="{{index}}" data-idx="{{idx}}"></imageExtend>
+            </swiper-item>
+          </block>
+        </swiper>
+        <image class="star" wx:if="{{item.collection&&isMonitorHouse ===0}}" data-collection="{{item.collection}}" data-Index="{{idx}}" data-productId="{{item.productId}}" catchtap="goToCollection" src="../../assets/image/star_select.png"></image>
+        <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0}}" data-Index="{{idx}}" data-collection="{{item.collection}}" data-productId="{{item.productId}}" catchtap="goToCollection" src="../../assets/image/star.png"></image>
+        <view class="house_classify" wx:if="{{item.platformId == 'tj'}}">途家</view>
+        <view class="house_classify" wx:elif="{{item.platformId == 'xz'}}">小猪</view>
+        <view class="house_classify" wx:elif="{{item.platformId == 'mn'}}">木鸟</view>
+        <view class="house_classify" wx:else="{{item.platformId == 'zg'}}">榛果</view>
+        <view class="house_swiper">{{item.curIndex}}/{{item.pictureList.length}}</view>
+        <view class="house_price">¥{{item.finalPrice}}/晚</view>
+        <view class="house_bottom">
+          <view class="house_message">
+            <view class="house_name">
+              <image class="hotel" src="../../assets/image/hotel.png"></image>
+              <text>{{item.unitName}}</text>
+            </view>
+            <view class="house_type">
+              <text>{{item.preloadDetail}}</text>
+              <!-- <image class="distance" src="../../assets/image/distance.png"></image>
+              <text>距离2.3公里</text> -->
+            </view>
+          </view>
+          <view class="house_photo">
+            <image class="photo" src="{{item.logoUrl}}"></image>
+          </view>
+        </view>
+        <view class="remove" data-index="{{idx}}" catchtap="delItem" style="right:{{removeRight}}rpx">
+          <image  src="../../assets/image/no_attention.png"></image>
+          <view>不</view>
+          <view>再</view>
+          <view>关</view>
+          <view>注</view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="monit_start {{bottomType === 1?'monit_stop':''}}" wx:if="{{bottomType === 1}}">
+    <view>
+      <text>监控时长:</text>
+      <text class="price">{{taskTime}}</text>
+      <text>消费:</text>
+      <text class="price">{{totalFee}}币</text>
+      <text class="monit_btn" bindtap="stopMonitor">结束监控</text>
+    </view>
+  </view>
+  <view class="monit_start {{bottomType === 2?'monit_save':''}}" wx:if="{{bottomType === 2}}">
+    <view>
+      <text class="monit_btn monit_back" bindtap="goBack">返回监控</text>
+      <text class="monit_btn" bindtap="goSave">保存修改</text>
+    </view>
+  </view>
+  <!-- <view wx:if="{{countFlag===1&&!scrollIng}}" class="house_shortcuts">
+    <image bindtap="goTop" class="top {{scrollTop>200?'scroll_top':'scroll_none'}}" src="../../assets/image/top.png"></image>
+  </view>
+  <view wx:if="{{countFlag===1&&isMonitorHouse ===0&&!scrollIng}}" class="house_shortcuts">
+    <image bindtap="goSort" class="sort" src="../../assets/image/sort.png"></image>
+  </view> -->
+
+  <view wx:if="{{countFlag===1}}" class="house_shortcuts {{showUI ? '' : 'hidden'}}">
+    <view>
+      <image bindtap="goTop" wx:if="{{showScrollTop}}" class="top" src="../../assets/image/top.png"></image>
+    </view>
+    <view>
+      <image bindtap="goSort" wx:if="{{showScrollTop&&isMonitorHouse ===0}}" class="sort" src="../../assets/image/sort.png"></image>
+    </view>
+  </view>
+
+
+  <view class="search_empty" wx:if="{{countFlag===0}}">
+    <view class="search_view">
+      <image class="empty_image" src="../../assets/image/monitor_empty.png"></image>
+    </view>
+    <view class="search_view search_title">暂时未监控符合条件的房源</view>
+  </view>
+  <noNetwork wx:if="{{countFlag===2}}"></noNetwork>
+  <view class="house_monitor" wx:if="{{countFlag===2}}">
+    <button class="monitor_btn" bindtap='goBack'>返回重试</button>
+  </view>
+  <view class="house_loading" style="display:{{loadingDisplay}}">
+    <image src="../../assets/image/loading.gif"></image>
+  </view>
+  <enoughDialog tjCount="{{tjCount}}" xzCount="{{xzCount}}" mnCount="{{mnCount}}" zgCount="{{zgCount}}" bind:enoughEvent="getEnoughEvent" style="display:{{enoughDisplay}}"></enoughDialog>
+  <enoughBottomDialog tjCount="{{tjCount}}" xzCount="{{xzCount}}" mnCount="{{mnCount}}" zgCount="{{zgCount}}" bind:enoughBottomEvent="getBottomEnoughEvent" style="display:{{enoughBottomDisplay}}"></enoughBottomDialog>
+  <collectDialog bind:collectEvent="getcollectEventEvent" style="display:{{collectDisplay}}"></collectDialog>
+  <stopDialog bind:stopEvent="getstopEventEvent" bind:stopConfrimEvent="getstopConfirmEventEvent" startTimeName="{{startTimeName}}" taskTime="{{taskTime}}" fee="{{fee}}" totalFee="{{totalFee}}" style="display:{{stopDisplay}}"></stopDialog>
+  <updateMonitorDialog bind:updateCancelEvent="getUpdateCancelEvent" bind:updateConfrimEvent="getUpdateConfrimEvent" beginDate="{{beginDate}}" endDate="{{endDate}}" cityName="{{cityName}}" locationName="{{locationName}}" updateMinPrice="{{updateMinPrice}}" updateMaxPrice="{{updateMaxPrice}}" defaultBeginDate="{{defaultBeginDate}}" defaultEndDate="{{defaultEndDate}}" defaultCityName="{{defaultCityName}}" defaultLocationName="{{defaultLocationName}}" defaultMInPrice="{{defaultMInPrice}}" defaultMaxPrice="{{defaultMaxPrice}}" style="display:{{updateMonitorDisplay}}"></updateMonitorDialog>
+  <block wx:if='{{isLoaded}}'>
+    <advanceFilter class='{{showAdvance?"":"vhidden"}}' type='monitor' shownType='{{showAdvanceType}}' cityName='{{cityName}}' bind:submit='submitAdvance' />
+  </block>
+
+  <monitorEndDialog text="确认不再关注" bind:monitorEndEvent="getmonitorEndEvent" bind:monitorEndConfirmEvent="getmonitorEndConfirmEvent" style="display:{{monitorEndDisplay}}"></monitorEndDialog>
+</scroll-view>

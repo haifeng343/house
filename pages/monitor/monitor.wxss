@@ -1,0 +1,23 @@
+page{
+  background-color: #F9F9F9;
+  width: 100%;
+  height: 100%;
+}
+.section{
+  padding: 24rpx 8rpx 0;
+}
+
+.section_empty{
+  display: flex;
+  height: 100%;
+  padding: 0;
+}
+.search_empty{
+  flex: 1;
+  background: #FFFFFF;
+  
+}
+.bg_border{
+  background: #F9F9F9;
+  height: 12rpx;
+}

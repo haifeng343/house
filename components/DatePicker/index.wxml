@@ -1,0 +1,22 @@
+<view class="container">
+  <view class="week-list">
+    <text class="rest">日</text>
+    <text>一</text>
+    <text>二</text>
+    <text>三</text>
+    <text>四</text>
+    <text>五</text>
+    <text class="rest">六</text>
+  </view>
+  <scroll-view scroll-y throttle="{{false}}" class="picker-view" bindscroll="handleScroll">
+    <view class="picker-list">
+      <view class="picker-item" wx:for="{{pickerList}}" wx:for-item="item" wx:key="index" style="transform: translateY({{item.top}}px)">
+        <daypicker month="{{item.month}}" />
+      </view>
+    </view>
+  </scroll-view>
+  <view class="total {{dayCount<=0 ?'disable':''}}" bindtap="handleSelectDate">
+    确定
+    <block wx:if="{{dayCount > 0}}">{{"(共" + dayCount + "晚)"}}</block>
+  </view>
+</view>

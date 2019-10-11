@@ -1,0 +1,3 @@
+<view class="container {{value === select.value ? 'active' : ''}}" bindtap="handleChange">
+  {{label}}
+</view>

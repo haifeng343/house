@@ -1,0 +1,14 @@
+<view class="container">
+  <view class="picker-item">
+    <view class="title">{{title}}</view>
+    <view class="day-list">
+      <view class="{{'day-item ' + item.className + ' ' + (item.mark ? 'red-color' : '')}}" bindtap="handleSelectDay" data-index='{{index}}' wx:for="{{dayList}}" wx:for-item="item" wx:key="index">
+        <view class="overlay" />
+        <block wx:if="{{item.title}}">
+          <text class="day-title">{{item.title}}</text>
+        </block>
+        <text class="day-label">{{item.date ? item.label : ''}}</text>
+      </view>
+    </view>
+  </view>
+</view>

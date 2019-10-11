@@ -1,0 +1,49 @@
+@import '../../assets/styles/font.wxss';
+
+@import '../../assets/styles/flex.wxss';
+
+:host {
+    display: flex;
+    width: 100%;
+    background-color: #fff;
+    height: 108rpx;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.container .icon {
+    height: 62rpx;
+    width: 62rpx;
+    border-radius: 31rpx;
+    margin: 0 28rpx;
+}
+
+.container .icon-image {
+    height: 62rpx;
+    width: 62rpx;
+    border-radius: 31rpx;
+    background-color: #FFF5F2;
+}
+
+.container .label {
+    border-bottom: solid 2rpx #f4f4f4;
+    margin-right: 28rpx;
+    flex: 1 1 auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.container .label .label-text {
+    color: #1d1d1d;
+    font-weight: 400;
+    font-size: 32rpx;
+}
+
+.container .label .uniE90C {
+    color: #bec3cd;
+    font-size: 28rpx;
+}

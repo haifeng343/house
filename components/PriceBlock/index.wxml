@@ -1,0 +1,19 @@
+<view class="container">
+  <view class="background-line">
+    <view class='scale scale{{key}}  scale{{key === long-1 ? "last" : ""}}' wx:for='{{priceType}}' wx:key="{{item}}" wx:for-index='key' style='left:{{itemWidth * key}}px;' catchtap="handleGotoPrice" data-index="{{key}}">
+      <view class='text'>{{key === '0' ? '￥' : ''}}{{item === 99999 ? '不限' : item}}</view>
+      <view class="icon {{leftX > itemWidth * key || rightX < itemWidth * key ? '' : 'active'}}"></view>
+    </view>
+    <view class='distance' style='left:{{leftX}}px;width:{{rightX-leftX}}px;'></view>
+  </view>
+  <view class="move-view move-view-left" bindtouchstart="handleLeftTouchStart" bindtouchmove="handleLeftTouchMove" bindtouchend="handleLeftTouchEnd" style="transform: translateX({{leftX}}px);">
+    <view class="block">
+      <text class="icon-font {{leftX === 0 ? 'uniE953' : 'uniE955'}}" />
+    </view>
+  </view>
+  <view class="move-view move-view-right" bindtouchstart="handleRightTouchStart" bindtouchmove="handleRightTouchMove" bindtouchend="handleRightTouchEnd" style="transform: translateX({{rightX}}px);">
+    <view class="block">
+      <text class="icon-font {{rightX >= containerWidth ? 'uniE954' : 'uniE955'}}" />
+    </view>
+  </view>
+</view>

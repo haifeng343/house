@@ -1,0 +1,71 @@
+.page {
+  background-color: #f9f9f9;
+  height: 100%;
+}
+
+.page .select-list {
+  height: 108rpx;
+  margin-left: 30rpx;
+}
+
+.page .select-list .type-select {
+  margin-left: auto;
+  margin-right: 30rpx;
+}
+
+.page .fund-list {
+  height: calc(100% - 108rpx - 100rpx);
+  background-color: #fff;
+  position: relative;
+  width: 100%;
+}
+
+.page .fund-list .fund-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.page .no-data {
+  padding-top: 200rpx;
+}
+
+.page .no-data image {
+  width: 314rpx;
+  height: 210rpx;
+}
+
+.page .nav {
+  display: flex;
+  height: 100rpx;
+  background-color: #fff;
+  align-items: center;
+}
+
+.page .nav .nav-item {
+  flex: 1;
+  text-align: center;
+}
+
+.page .nav .nav-item .text {
+  font-size: 32rpx;
+  color: #1d1d1d;
+}
+
+.page .nav .nav-item .border {
+  font-size: 32rpx;
+  width: 50rpx;
+  height: 4rpx;
+  border-radius: 4rpx;
+  background-color: transparent;
+  margin: 8rpx auto 0;
+}
+
+.page .nav .nav-item.active .text {
+  color: #e75d28;
+}
+
+.page .nav .nav-item.active .border {
+  background-color: #e75d28;
+}

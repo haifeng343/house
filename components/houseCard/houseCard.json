@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "collectDialog": "../../components/collectDialog/collectDialog",
+    "imageExtend": "../../components/imageExtend/imageExtend"
+  }
+}

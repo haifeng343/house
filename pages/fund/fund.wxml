@@ -1,0 +1,36 @@
+<view class="page flex-column">
+  <view class='nav'>
+    <view class='nav-item {{fundListType === 1 ? "active" : ""}}' data-value="1" bindtap='handleFundTypeChange'>
+      <view class='text'>余额账单</view>
+      <view class='border'></view>
+    </view>
+    <view class='nav-item {{fundListType === 2 ? "active" : ""}}' data-value="2" bindtap='handleFundTypeChange'>
+      <view class='text'>盯盯币账单</view>
+      <view class='border'></view>
+    </view>
+  </view>
+  <view class="select-list flex-box-center">
+    <view class="flex-box time-select" wx:if="{{fundListType === 1}}">
+      <select optionList='{{fundTimeList}}' value='{{timeRange}}' bind:change='handletimeRangeChange' bind:expands='handleSelectExpand' />
+    </view>
+    <view class="flex-box time-select" wx:if="{{fundListType === 2}}">
+      <select optionList='{{coinFundTimeList}}' value='{{timeRange}}' bind:change='handletimeRangeChange' bind:expands='handleSelectExpand' />
+    </view>
+    <view class="flex-box type-select" wx:if="{{fundListType === 1}}">
+      <select value='{{billType}}' optionList='{{fundTypeList}}' bind:change='handlebillTypeChange' bind:expands='handleSelectExpand' />
+    </view>
+    <view class="flex-box type-select" wx:if="{{fundListType === 2}}">
+      <select value='{{billType}}' optionList='{{coinTypeList}}' bind:change='handlebillTypeChange' bind:expands='handleSelectExpand' />
+    </view>
+  </view>
+  <block wx:if="{{isLoaded}}">
+    <scroll-view scroll-y class="fund-list">
+      <view class="no-data" wx:if="{{fundList.length === 0}}">
+        <nodata message="暂无数据" />
+      </view>
+      <view wx:for="{{fundList}}" wx:key="number">
+        <fundcard items='{{item}}' bind:onGotoDetail="handleGotoFundDetail" />
+      </view>
+    </scroll-view>
+  </block>
+</view>

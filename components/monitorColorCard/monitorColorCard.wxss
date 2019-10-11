@@ -1,0 +1,170 @@
+.monitor_card{
+  position: relative;
+  height: 312rpx;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+}
+.area {
+  width: calc(100% - 134rpx);
+  height: 312rpx;
+}
+.wrapper {
+  width: calc(100vw - 16rpx);
+  height: 312rpx;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+.red_bg{
+  width: 100%;
+  height: 312rpx;
+  background-repeat:no-repeat; 
+  background-size:100% 100%;
+  background-image:url('https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/monitor_red_card.png');
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.green_bg{
+  width: 100%;
+  height: 312rpx;
+  background-repeat:no-repeat; 
+  background-size:100% 100%;
+  background-image:url('https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/monitor_green_card.png');
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.monitor_card .card_content{
+  position: relative;
+}
+
+.monitor_card .card_message{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 18rpx 0 44rpx;
+}
+.monitor_card .card_date{
+  width: 140rpx;
+  font-size: 28rpx;
+}
+.monitor_card .card_address{
+  width: 300rpx;
+  font-size: 56rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.monitor_card .card_address .text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.monitor_card .card_budget{
+  width: 230rpx;
+  font-size: 28rpx;
+  text-align: right;
+  margin-right: 20rpx;
+}
+.monitor_card .past_card,.monitor_card .card_search{margin-top: 10rpx;}
+.card_budget .card_money .money{font-size: 60rpx;}
+.card_search .card_money .money{font-size: 40rpx;}
+.past_card .card_money .money{font-size: 40rpx;}
+
+.card_budget .card_down_money{
+  margin-top: -12rpx;
+}
+.past_card .card_down_money,.card_search .card_down_money{
+  margin-top: 0;
+}
+
+.monitor_card .card_total{
+  font-size: 32rpx;
+  padding-left: 44rpx;
+}
+.monitor_card .card_line{
+  padding: 0 44rpx;
+}
+.monitor_card .card_line .line{
+  width: 100%;
+  height: 1rpx;
+  background: #FFFFFF;
+  margin-top: 20rpx;
+}
+.card_total .romm_num{
+  background: #FFFFFF;
+  color: #5CD6B6;
+  width:76rpx;
+  height: 44rpx;
+  text-align: center;
+  display: inline-block;
+  margin-left: 8rpx;
+}
+.monitor_red_card .card_total .romm_num{
+  color: #DA4E3A
+}
+.monitor_card .card_time{
+  font-size: 28rpx;
+  padding-left: 44rpx;
+  margin-top: 30rpx;
+  position: relative;
+}
+.card_time .detail_btn{
+  width: 192rpx;
+  height: 64rpx;
+  color: #10BCAE;
+  text-align: center;
+  background: #FFFFFF;
+  display: inline-block;
+  line-height: 64rpx;
+  border-radius: 32rpx;
+  position: absolute;
+  top: 50%;
+  margin-top: -32rpx;
+  right: 30rpx;
+}
+
+.monitor_red_card .card_time .detail_btn{
+  color: #DA4E3A
+}
+.card_time .time_monitor{
+  width: 44rpx;
+  height: 44rpx;
+  position: absolute;
+  top: 50%;
+  margin-top: -22rpx;
+}
+.card_time .time_text{
+  padding-left: 64rpx;
+}
+.card_time .time_text text{
+  margin-right: 8rpx;
+}
+.card_time .time_text .pay_money{
+  background: #D6D6D6;
+  height: 44rpx;
+  display: inline-block;
+  text-align: center;
+  line-height: 44rpx;
+  border-radius: 4rpx;
+  padding: 0 14rpx;
+}
+.card_time .time_line{
+  text-decoration: underline
+}
+
+.remove{  
+  width: 134rpx;  
+  height: 100%;  
+  position: absolute;  
+  top: 0;  
+  right: 0;  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;
+}  
+.remove image{width: 42rpx;height:44rpx}
+

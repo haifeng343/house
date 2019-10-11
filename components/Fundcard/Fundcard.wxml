@@ -1,0 +1,32 @@
+<view class='container'>
+    <view class='icon icon{{items.type}}'></view>
+    <view class='info'>
+        <view class="box-wrapper">
+            <view class='box box-left'>
+                <view class='name'>{{items.remark}}</view>
+                <view class='platform'>
+                    {{items.platform}}
+                    <text class='number'>({{items.number}})</text>
+                </view>
+            </view>
+            <view class='box box-right'>
+                <view class="money {{items.direction > 0 ? 'zheng' : 'fu'}}">
+                    {{items.money}}{{type === 2 ? '币' : ''}}
+                </view>
+                <view class='date'>{{items.date}}</view>
+            </view>
+        </view>
+        <view wx:if="{{items.payList.length > 0 && showDetail !== true}}" class='check'>
+            <text bindtap='handleShowDetail'>查看明细 >></text>
+        </view>
+        <view wx:if="{{showDetail === true}}" wx:for="{{items.payList}}" wx:key="date" class='pay-list' wx:for-item="item">
+            <view class='item'>
+                <view class='date'>
+                    <text class='type'>任务结算</text>
+                    {{item.date}}
+                </view>
+                <view class='money'>{{item.money}}币</view>
+            </view>
+        </view>
+    </view>
+</view>

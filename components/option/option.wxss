@@ -1,0 +1,25 @@
+@import '../../assets/styles/flex.wxss';
+
+@import '../../assets/styles/font.wxss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.container {
+  height: 80rpx;
+  font-size: 24rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  color: #1d1d1d;
+  width: calc(100% + 48rpx);
+  transform: translateX(-24rpx);
+}
+.container.active {
+  color: #10bcae;
+}

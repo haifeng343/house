@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "datepicker": "/components/DatePicker/index"
+  },
+  "navigationBarTitleText": "日期选择"
+}

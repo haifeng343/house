@@ -1,0 +1,15 @@
+<view class="mask" bindtap="bindClose">
+    <view class="mask_content" catchtap="stopEvent">
+      <view class="house_image">
+        <image class="image" src="../../assets/image/wechat.png"></image>
+      </view>
+      <view class="content">
+        <view class="title">关注公众号提醒</view>
+        <view class="text">为了能够及时的给您推送监控通知，需您微信手动关注我们的公众号<text class="ding">“帮盯盯”</text></view>
+        <view class="btn" catchtap="bindConfirm">现在关注</view>
+      </view>
+      <view class="mask_colse">
+        <image catchtap="bindClose" class="close_image" src="../../assets/image/close_down.png"></image>
+      </view>
+    </view>
+  </view>

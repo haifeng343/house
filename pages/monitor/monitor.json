@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "monitorStopDialog": "../../components/monitorStopDialog/monitorStopDialog",
+    "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog",
+    "monitorStartDialog": "../../components/monitorStartDialog/monitorStartDialog",
+    "empty": "../../components/empty/empty",
+    "monitorGrayCard": "../../components/monitorGrayCard/monitorGrayCard",
+    "monitorColorCard": "../../components/monitorColorCard/monitorColorCard"
+  },
+  "navigationBarTitleText": "监控列表"
+}

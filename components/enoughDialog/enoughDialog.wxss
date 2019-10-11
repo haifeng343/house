@@ -1,0 +1,128 @@
+.mask{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  z-index: 101
+}
+.mask .mask-out{
+  width: 580rpx;
+  height: 860rpx;
+  margin-top: 140rpx;
+  background-repeat:no-repeat; 
+  background-size:100% 100%;
+  background: -webkit-linear-gradient(top,#E94444,#E75D28);
+  border-radius: 16rpx;
+  position: relative;
+}
+
+.mask .mask-title{
+  color: #FFFFFF;
+}
+.mask .line{
+  width: 124rpx;
+  height: 3rpx;
+  background: #FFFFFF;
+  display: inline-block;
+  margin-bottom: 14rpx;
+}
+.mask .title{
+  margin: 0 22rpx;
+}
+.mask .mask-title:first-child{
+  font-size: 48rpx;
+  margin-top: 56rpx;
+  text-align: center;
+}
+.mask .mask-title:nth-child(2){
+  text-indent: 56rpx;
+  margin: 14rpx 46rpx 0;
+}
+.mask .mask_bell{
+  width: 254rpx;
+  height: 280rpx;
+  position: absolute;
+  left: 50%;
+  margin-left: -127rpx;
+  top: 8rpx;
+}
+.mask .mask_house_l{
+  width: 164rpx;
+  height: 222rpx;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+.mask .mask_house_b{
+  width: 254rpx;
+  height: 182rpx;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.mask-mold{
+  margin: 46rpx 36rpx 0;
+}
+.mask-mold .mold-first,.mask-mold .mold-second{
+  display: flex;
+  position: relative
+}
+.mask-mold .mold-first{
+  margin-bottom: 18rpx;
+}
+.mask-mold .mold-first .mold:nth-child(1),.mask-mold .mold-second .mold:nth-child(1){
+  margin-right: 18rpx;
+}
+.mask-mold .mold-first .mold,.mask-mold .mold-second .mold{
+  width: 238rpx;
+  height: 172rpx;
+  border: 4rpx solid #FFDA00;
+  background: #FFFFFF;
+  border-radius: 6rpx;
+  text-align: center;
+}
+.mask-mold .mold .name{
+  font-size: 36rpx;
+  color: #1D1D1D;
+  margin-top: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mask-mold .mold .num{
+  font-size: 36rpx;
+  color: #EB3F27;
+}
+.mask-mold .image{
+  width: 180rpx;
+  height: 8rpx;
+  margin: 12rpx auto;
+  background-repeat:no-repeat; 
+  background-size:100% 100%;
+  background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAAICAYAAABQxdU8AAAAAXNSR0IArs4c6QAAAVxJREFUWAntlr9KA0EQxmfWPykMIVjYXSc+RDwkhSgRkQuSQsFnsPA1FMSH0ELkUohpReJLaMDiGrFKYixywo07p3u3OSJi5YKzzcx8twsf3/32OABrvbTq5V5QO+VqydJKAk4m8HywsfC4Uzvmagwq0zDE/fF7J0ngkKtAbZKR6mICDPFwOLohgCOuBmpkswZmAPJz89itluYaS5e3o1yTThL4+wQMzECwlrlBuKtUyluzLPTjuK2LBTOr5H/p6zz9Znmepy/OzyuKovRCFXfK+f+dX5GH4vw6eAu1lsPMGzTcrKe/HArxBAHH9kGeWbc16SUBFxKgGTwDhHjCi55Zz76QvWC1QQmEBFRimFFBc7l935k4JIMk4EgCD01/G5LkSn+Z51O4ldpdCbvXGdDsM4Wa6AIR9wRmR96c2Pg2gU+o6RwU7jPMUzc+BfXq1AciSgIOJhC1NhdtWx+s6ZbwzHYJ6gAAAABJRU5ErkJggg==');
+}
+.mask-mold .mold .name text{
+  margin-right: 8rpx;
+}
+.mask-mold .mold .name .arrow{
+  width: 28rpx;
+  height: 30rpx;
+}
+
+.mask-out .mask-know{
+  width: 482rpx;
+  height: 92rpx;
+  background: #FFFFFF;
+  color: #F1612A;
+  margin: 56rpx auto 0;
+  border-radius: 46rpx;
+  text-align: center;
+  line-height: 92rpx;
+  box-shadow: 4rpx 4rpx 8rpx 0px rgba(198, 55, 35, 0.48);
+  position: relative;
+}

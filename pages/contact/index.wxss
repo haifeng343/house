@@ -1,0 +1,105 @@
+@import '../../assets/styles/font.wxss';
+page {
+  height: 100%;
+}
+page .page {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(
+    -180deg,
+    rgba(231, 93, 40, 1) 0%,
+    rgba(233, 68, 68, 1) 100%
+  );
+  color: #fff;
+  position: relative;
+}
+page .page .feedback {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  right: 36rpx;
+  top: 40rpx;
+  font-size: 32rpx;
+  color: #fff;
+  z-index: 999;
+}
+page .page .feedback .uniE949 {
+  margin-left: 8rpx;
+  font-size: 28rpx;
+}
+page .page .bg {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+page .page .content {
+  position: relative;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 160rpx;
+}
+page .page .h1 {
+  font-size: 44rpx;
+  font-weight: 500;
+}
+page .page .h1 .highlight {
+  color: #ffd300;
+}
+page .page .h2 {
+  font-size: 40rpx;
+  font-weight: 300;
+}
+page .page .h3 {
+  font-size: 34rpx;
+  font-weight: 500;
+}
+page .page .button {
+  width: 144rpx;
+  height: 48rpx;
+  background-color: #fff;
+  color: #f1612a;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+page .page .big-button {
+  height: 92rpx;
+  width: 480rpx;
+  background-color: #fff;
+  box-shadow: 4rpx 6rpx 8rpx 0px rgba(8, 129, 119, 0.38);
+  border-radius: 46rpx;
+  color: #f1612a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: 120rpx;
+}
+page .page .big-button:active {
+  top: 2rpx;
+}
+page .page .qr {
+  width: 356rpx;
+  height: 356rpx;
+  margin-top: 60rpx;
+  margin-bottom: 36rpx;
+}
+page .page .qr .qrimage {
+  width: 356rpx;
+  height: 356rpx;
+}

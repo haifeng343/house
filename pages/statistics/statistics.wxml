@@ -1,0 +1,85 @@
+<view class="{{(stopDisplay =='block'||enoughDisplay =='block'||monitorDisplay =='block'||publicDisplay =='block'||updateMonitorDisplay =='block')?'section_hidden':''}}">
+  <view class="section">
+    <view>
+      <view class="statistics_query">
+        <houseData allCount="{{allCount}}" showCount="{{showCount}}" averagePrice="{{averagePrice}}" lowPrice="{{lowPrice}}"></houseData>
+      </view>
+
+      <view class="house_low_price">
+        <houseCard lowPriceData="{{lowPriceData}}" isMonitorHouse="{{isMonitorHouse}}"></houseCard>
+      </view>
+
+      <view class="line"></view>
+      <view class="statistics_detail">
+        <houseStat 
+          sort="{{sort}}"
+          tjCount="{{tjCount}}" tjFilterCount="{{tjFilterCount.length}}" tjLowPriceData="{{tjLowPriceData}}"
+          xzCount="{{xzCount}}" xzFilterCount="{{xzFilterCount.length}}" xzLowPriceData="{{xzLowPriceData}}"
+          mnCount="{{mnCount}}" mnFilterCount="{{mnFilterCount.length}}" mnLowPriceData="{{mnLowPriceData}}"
+          zgCount="{{zgCount}}" zgFilterCount="{{zgFilterCount.length}}" zgLowPriceData="{{zgLowPriceData}}"
+        ></houseStat>
+      </view>
+    </view>
+  </view>
+  <view class="monit_start" wx:if="{{bottomType === 0}}">
+    <view>
+      <text>收费标准:</text>
+      <text class="price">¥{{fee}}币/时</text>
+      <text>余额:</text>
+      <text class="price">¥{{ddCoin}}币</text>
+      <!-- <button class="monit_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfoFun">立即开始</button> -->
+      <button class="monit_btn" bindtap='startMonitor'>立即开始</button>
+    </view>
+  </view>
+  <view class="monit_start {{bottomType === 1?'monit_stop':''}}" wx:if="{{bottomType === 1}}">
+    <view>
+      <text>监控时长:</text>
+      <text class="price">{{taskTime}}</text>
+      <text>消费:</text>
+      <text class="price">{{totalFee}}币</text>
+      <text class="monit_btn" bindtap="stopMonitor">结束监控</text>
+    </view>
+  </view>
+  <view class="monit_start {{bottomType === 2?'monit_save':''}}" wx:if="{{bottomType === 2}}">
+    <view>
+      <text class="monit_btn monit_back" bindtap="goBack">返回监控</text>
+      <text class="monit_btn" bindtap="goSave">保存修改</text>
+    </view>
+  </view>
+</view>
+
+<stopDialog 
+    bind:stopEvent="getstopEventEvent" 
+    bind:stopConfrimEvent="getstopConfirmEventEvent" 
+    startTimeName="{{startTimeName}}"
+    taskTime="{{taskTime}}"
+    fee="{{fee}}"
+    totalFee="{{totalFee}}"
+    style="display:{{stopDisplay}}">
+</stopDialog>
+
+<enoughDialog tjCount="{{tjCount}}" xzCount="{{xzCount}}" mnCount="{{mnCount}}" zgCount="{{zgCount}}" bind:enoughEvent="getEnoughEvent"  style="display:{{enoughDisplay}}">
+</enoughDialog>
+
+<monitorDialog ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent"  style="display:{{monitorDisplay}}"></monitorDialog>
+
+<publicDialog style="display:{{publicDisplay}}" bind:publicEvent="getPublicEvent" bind:publicConfrimEvent="getPublicConfrimEvent"></publicDialog>
+
+<updateMonitorDialog
+    bind:updateCancelEvent="getUpdateCancelEvent" 
+    bind:updateConfrimEvent="getUpdateConfrimEvent" 
+    beginDate="{{beginDate}}"
+    endDate="{{endDate}}"
+    cityName="{{cityName}}"
+    locationName="{{locationName}}"
+    updateMinPrice="{{updateMinPrice}}"
+    updateMaxPrice="{{updateMaxPrice}}"
+    defaultBeginDate="{{defaultBeginDate}}"
+    defaultEndDate="{{defaultEndDate}}"
+    defaultCityName="{{defaultCityName}}"
+    defaultLocationName="{{defaultLocationName}}"
+    defaultMInPrice="{{defaultMInPrice}}"
+    defaultMaxPrice="{{defaultMaxPrice}}"
+    style="display:{{updateMonitorDisplay}}"
+  >
+</updateMonitorDialog>

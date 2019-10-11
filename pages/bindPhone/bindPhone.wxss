@@ -1,0 +1,70 @@
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.page .input {
+  display: flex;
+  align-items: center;
+  height: 120rpx;
+  border-bottom: solid 2rpx #e8e8e8;
+  margin-left: 32rpx;
+  padding: 0 16rpx;
+}
+
+.page .input input {
+  font-size: 40rpx;
+  font-weight: 400;
+  color: #171717;
+  flex: 1 1 auto;
+}
+
+.page .input .input-placeholder {
+  font-size: 24rpx;
+  color: #bec3cd;
+}
+
+.page .input .getcode {
+  font-size: 28rpx;
+  line-height: 56rpx;
+  color: #F1612A;
+  width: 220rpx;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: solid 2rpx #f3f3f3;
+}
+
+.page .input .getcode.disabled {
+  color: #bec3cd;
+}
+
+.page .button-wrapper {
+  margin-top: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.page .submitBtn {
+  width: 480rpx;
+  height: 92rpx;
+  line-height: 92rpx;
+  background: linear-gradient(180deg, rgba(231, 93, 40, 1) 0%, rgba(233, 68, 68, 1) 100%);
+  box-shadow: 2px 2px 4px 0px rgba(198, 55, 35, 0.48);
+  border-radius: 92px;
+  font-size: 28rpx;
+  color: #fff;
+  text-align: center;
+  margin: 30rpx auto;
+}

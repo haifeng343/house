@@ -1,0 +1,5 @@
+<view class="page">
+  <image src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/%E5%BC%95%E5%AF%BC%E5%85%AC%E4%BC%97%E5%8F%B7%403x.png" mode="widthFix" />
+  <view style="height: 120rpx;"></view>
+  <official-account style="position:fixed; bottom: 0; width: 100%"></official-account>
+</view>

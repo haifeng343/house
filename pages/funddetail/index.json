@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "fundcard": "/components/Fundcard/Fundcard"
+  },
+  "navigationBarTitleText": "账单详情"
+}

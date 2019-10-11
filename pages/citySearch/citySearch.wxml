@@ -1,0 +1,31 @@
+<view class="page">
+    <view class="header">
+        <view class="search-bar-wrapper flex-box-center">
+            <text class="icon-font uniE908" />
+            <input type="text" placeholder="城市 | 区域 | 位置" bindconfirm="handleSearch" bindinput="inputSearch" auto-focus="true" />
+            <view class='search-btn' bindtap='handleSearch'>确定</view>
+        </view>
+    </view>
+    <scroll-view scroll-y class="city-list flex-column">
+        <block wx:for="{{result}}" wx:for-item="item" wx:key='{{index}}'>
+            <view>
+                <view class="city-item" data-item='{{item}}' bindtap="handleSelectCity">
+                    <text class="label">{{item.typeName}}</text>
+                    <text class="name">{{item.name}}</text>
+                    <text class="icon-font uniE928" />
+                </view>
+                <block wx:if="{{item.children}}">
+                    <block wx:for="{{item.children}}" wx:for-item="item2" wx:key='{{index}}'>
+                        <view class="child-city-item" data-city='{{item}}' data-item='{{item.name}}_{{item2.position}}_{{item2.type}}' bindtap="handleSelectCityPosition">
+                            <image class='next-icon' src='../../assets/image/next.png' />
+                            <text class="name">{{item2.position}}</text>
+                            <text class="type">{{item2.typeName}}</text>
+                        </view>
+                    </block>
+                </block>
+            </view>
+        </block>
+        <view wx:if="{{hasAsked && resultLength == 0}}" class="city-no-data">未找到相关结果~</view>
+        <view wx:if="{{hasAsked && resultLength == -1}}" class="city-no-data">输入内容过短~</view>
+    </scroll-view>
+</view>

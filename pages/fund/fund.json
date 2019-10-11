@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "nodata": "/components/Nodata/Nodata",
+    "select": "/components/Select/Select",
+    "fundcard": "/components/Fundcard/Fundcard"
+  },
+  "navigationBarTitleText": "历史账单"
+}

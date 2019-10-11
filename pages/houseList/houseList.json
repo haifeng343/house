@@ -1,0 +1,14 @@
+{
+  "usingComponents": {
+    "houseSelect": "../../components/houseSelect/houseSelect",
+    "collectDialog": "../../components/collectDialog/collectDialog",
+    "enoughDialog": "../../components/enoughDialog/enoughDialog",
+    "enoughBottomDialog": "../../components/enoughBottomDialog/enoughBottomDialog",
+    "monitorDialog": "../../components/monitorDialog/monitorDialog",
+    "monitorBottomDialog": "../../components/monitorBottomDialog/monitorBottomDialog",
+    "publicDialog": "../../components/publicDialog/publicDialog",
+    "imageExtend": "../../components/imageExtend/imageExtend",
+    "advanceFilter": "../../components/advanceFilter/advanceFilter"
+  },
+  "navigationBarTitleText": "房源列表"
+}

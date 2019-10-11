@@ -1,0 +1,52 @@
+<wxs src="../../utils/filter.wxs" module="filter"/>
+<view class="house_stat">
+  <text>统计详情</text>
+</view>
+<view class="stat_card">
+  <view class="stat_first">
+    <view class="stat_layout tu_layout" bindtap="navigateToTj">
+      <view class="tip tu_tip">途家</view>
+      <view class="stat_tip" wx:if="{{tjCount>0}}">
+        <view class="price">{{sort?'推荐价格':'最低价'}}:{{tjLowPriceData.finalPrice}}/晚</view>
+        <!-- <view class="price" wx:else>最低价:无房源</view> -->
+        <view class="num">房源数:{{tjCount}}套(已选{{tjFilterCount}}套)</view>
+      </view>
+      <image class="tu_image" wx:if="{{tjCount>0}}" src="{{tjLowPriceData.pictureList[0]}}"></image>
+      <image class="tu_image" wx:else src="../../assets/image/small_default_image.png"></image>
+    </view>
+    <view class="stat_layout pig_layout" bindtap="navigateToXz">
+      <view class="tip pig_tip">小猪</view>
+      <view class="stat_tip" wx:if="{{xzCount>0}}">
+        <view class="price" >{{sort?'推荐价格':'最低价'}}:{{xzLowPriceData.finalPrice}}/晚</view>
+        <!-- <view class="price" wx:else>最低价:无房源</view> -->
+        <view class="num">房源数:{{xzCount}}套(已选{{xzFilterCount}}套)</view>
+      </view>
+      <image class="pig_image" wx:if="{{xzCount>0}}" src="{{filter.xzCoverImage(xzLowPriceData.pictureList[0])}}"></image>
+      <image class="pig_image" wx:else src="../../assets/image/small_default_image.png"></image>
+    </view>
+
+  </view>
+
+  <view class="stat_second">
+    <view class="stat_layout mu_layout" bindtap="navigateToMn">
+      <view class="tip mu_tip">木鸟</view>
+      <view class="stat_tip" wx:if="{{mnCount>0}}">
+        <view class="price" >{{sort?'推荐价格':'最低价'}}:{{mnLowPriceData.finalPrice}}/晚</view>
+        <!-- <view class="price" wx:else>最低价:无房源</view> -->
+        <view class="num">房源数:{{mnCount}}套(已选{{mnFilterCount}}套)</view>
+      </view>
+      <image class="mu_image" wx:if="{{mnCount>0}}" src="{{mnLowPriceData.pictureList[0]}}"></image>
+      <image class="pig_image" wx:else src="../../assets/image/small_default_image.png"></image>
+    </view>
+    <view class="stat_layout zen_layout" bindtap="navigateToZg">
+      <view class="tip zen_tip">榛果</view>
+      <view class="stat_tip" wx:if="{{zgCount>0}}">
+        <view class="price" >{{sort?'推荐价格':'最低价'}}:{{zgLowPriceData.finalPrice}}/晚</view>
+        <!-- <view class="price" wx:else>最低价:无房源</view> -->
+        <view class="num">房源数:{{zgCount}}套(已选{{zgFilterCount}}套)</view>
+      </view>
+      <image class="mu_image" wx:if="{{zgCount>0}}" src="{{zgLowPriceData.pictureList[0]}}"></image>
+      <image class="zen_image" wx:else src="../../assets/image/small_default_image.png"></image>
+    </view>
+  </view>
+</view>

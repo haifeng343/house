@@ -1,0 +1,7 @@
+<view class="section">
+  <view class='list'>
+    <view class='item {{selectedNumber == key?"active":""}}' wx:for-index='key' bindtap='chooseNumber' data-number='{{key}}' wx:for='{{numberList}}' wx:key='{{item.value}}'>
+      {{item}}
+    </view>
+  </view>
+</view>

@@ -1,0 +1,13 @@
+<view class="container">
+    <view class="overlay" catchtap="handleCancel" />
+    <view class="dialog-wrapper">
+        <view class="title">提示</view>
+        <view class="message">小程序即将获取您的公开信息(昵称、 头像等)</view>
+        <view class="button-wrapper">
+            <view class="cancel-button" catchtap="handleCancel">取消</view>
+            <button open-type="getUserInfo" catchgetuserinfo="handleGetUserInfo" class="confirm-button">
+                确定
+            </button>
+        </view>
+    </view>
+</view>

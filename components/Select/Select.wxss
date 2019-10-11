@@ -1,0 +1,77 @@
+@import '../../assets/styles/flex.wxss';
+
+@import '../../assets/styles/font.wxss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  position: relative;
+  padding: 0 32rpx;
+  height: 52rpx;
+  border-radius: 26rpx;
+  box-sizing: border-box;
+  border: solid 2rpx #1d1d1d;
+  font-size: 24rpx;
+  color: #1d1d1d;
+  min-width: 160rpx;
+}
+
+.container .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: transparent;
+  z-index: 1123;
+}
+
+.container .label {
+  height: 100%;
+}
+
+.container .label .uniE90D {
+  font-size: 14rpx;
+  margin-left: 6rpx;
+  margin-top: 2rpx;
+}
+
+.container .option-list {
+  position: absolute;
+  top: 58rpx;
+  min-width: 100%;
+  border: solid 2rpx #1d1d1d;
+  border-radius: 8rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  left: 0;
+  background-color: #fff;
+  z-index: 1125;
+}
+
+.container .option-list.hidden {
+  top: -99999px;
+}
+
+.container .option-list .option-item {
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1d1d1d;
+  white-space: nowrap;
+}
+
+
+.container .option-list .option-item.active {
+  color: #E75D28;
+}
+
+.container .option-list .option-item + .option-item {
+  border-top: solid 2rpx #1d1d1d;
+}
+
+

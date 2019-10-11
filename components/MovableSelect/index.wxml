@@ -1,0 +1,5 @@
+<movable-area class="container">
+  <movable-view direction="horizontal" animation="{{false}}" class="option-list" x="{{x}}">
+    <view wx:for="{{optionList}}" wx:key="label" wx:for-index="index" class="option-item {{item.active ? 'active' : ''}}" bindtap="handleSelectItem" data-index="{{index}}">{{item.label}}</view>
+  </movable-view>
+</movable-area>

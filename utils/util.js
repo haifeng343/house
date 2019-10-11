@@ -1,0 +1,135 @@
+const formatTime = date => {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+  const second = date.getSeconds()
+
+  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+}
+
+const formatNumber = n => {
+  n = n.toString()
+  return n[1] ? n : '0' + n
+}
+
+const formatDate = date => {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+  const second = date.getSeconds()
+
+  return [year, month, day].map(formatNumber).join('-')
+}
+
+const formatDateS = date => {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+  const second = date.getSeconds()
+
+  return [year, month, day].map(formatNumber).join("")
+}
+const formatMonthDay = date => {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+  const second = date.getSeconds()
+
+  return [month, day].map(formatNumber).join('-')
+}
+
+const datedifference = (sDate1, sDate2) => { //sDate1和sDate2是2006-12-18格式  
+  var dateSpan,
+    tempDate,
+    iDays;
+  sDate1 = Date.parse(sDate1);
+  sDate2 = Date.parse(sDate2);
+  dateSpan = sDate2 - sDate1;
+  dateSpan = Math.abs(dateSpan);
+  iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
+  return iDays
+};
+const getDays =(strDateStart, strDateEnd) => {
+  var strSeparator = "-"; //日期分隔符
+  var strSeparatorT = " "; //日期分隔符
+  var oDate1;
+  var oDate2;
+  var iDays;
+  oDate1 = strDateStart.split(strSeparatorT)[0].split(strSeparator);
+  oDate2 = strDateEnd.split(strSeparatorT)[0].split(strSeparator);
+  var strDateS = new Date(oDate1[0], oDate1[1] - 1, oDate1[2]);
+  var strDateE = new Date(oDate2[0], oDate2[1] - 1, oDate2[2]);
+  iDays = parseInt(Math.abs(strDateS - strDateE) / 1000 / 60 / 60 / 24);//把相差的毫秒数转换为天数
+  return iDays;
+}
+const objectDiff = (obj1, obj2)=>{
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  else {
+    for (let key in obj1) {
+      if (!obj2.hasOwnProperty(key)) {
+        return false;
+      }
+      //类型相同
+      if (typeof obj1[key] === typeof obj2[key]) {
+        //同为引用类型
+        if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
+          const equal = objectDiff(obj1[key], obj2[key]);
+          if (!equal) {
+            return false;
+          }
+        }
+        //同为基础数据类型
+        if (typeof obj1[key] !== 'object' && typeof obj2[key] !== 'object' && obj1[key] !== obj2[key]) {
+          return false;
+        }
+      }
+      else {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+/*
+* 数组对象 排序 asc升序，desc倒叙
+**/
+const compareSort =(e,type)=>{
+  if(type == 'asc'){
+    return function (a, b) {
+      var value1 = a[e];
+      var value2 = b[e];
+      return value1 - value2;
+    }
+  }else{
+    return function (a, b) {
+      var value1 = a[e];
+      var value2 = b[e];
+      return value2 - value1;
+    }
+  }
+  
+}
+
+module.exports = {
+  formatTime: formatTime,
+  formatDate: formatDate,
+  formatDateS: formatDateS,
+  formatMonthDay: formatMonthDay,
+  datedifference: datedifference,
+  objectDiff: objectDiff,
+  compareSort: compareSort,
+  getDays: getDays
+}

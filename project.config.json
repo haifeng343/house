@@ -1,0 +1,127 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"enhance": false,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.8.1",
+	"appid": "wx95223677eab8c2c7",
+	"projectname": "HouseMini",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 2,
+			"list": [
+				{
+					"id": -1,
+					"name": "搜索",
+					"pathName": "pages/search/search",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "城市选择",
+					"pathName": "pages/citySelect/citySelect",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "地点搜索",
+					"pathName": "pages/positionSelect/positionSelect",
+					"query": "city=中卫",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "历史账单页",
+					"pathName": "pages/fund/fund",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "历史监控",
+					"pathName": "pages/monitorhistory/monitorhistory",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "充值",
+					"pathName": "pages/deposit/deposit",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "城市搜索",
+					"pathName": "pages/citySearch/citySearch",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "绑定手机号",
+					"pathName": "pages/bindPhone/bindPhone",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "房源列表",
+					"pathName": "pages/houseList/houseList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人中心",
+					"pathName": "pages/mine/mine",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
+}
