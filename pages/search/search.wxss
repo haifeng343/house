@@ -6,6 +6,10 @@
 .section {
   height: 100%;
   background: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .banner {
@@ -21,10 +25,9 @@
 
 .content {
   overflow: hidden;
-  margin-top: -240rpx;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
+  margin: -240rpx auto 20rpx;
+  flex: 1;
+  z-index: 1;
   border-bottom-left-radius: 12rpx;
   border-bottom-right-radius: 12rpx;
   /* margin-bottom: 10px; */

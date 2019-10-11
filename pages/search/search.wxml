@@ -14,7 +14,7 @@
             </swiper-item>
         </block>
     </swiper>
-    <view class='content' style='height:{{scrollContentHeight-10}}rpx;'>
+    <view class='content'>
         <view class='search-box'>
             <view class='nav'>
                 <view class='nav_item active'>
