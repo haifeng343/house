@@ -9,7 +9,7 @@
   <block wx:if='{{shownType == 1}}'>
     <scroll-view scroll-y class='search-content' enable-flex>
       <view class='search_item' style='margin-bottom:0;'>
-        <view class='title icon_1'>预算：{{priceText}}</view>
+        <view class='title icon_1'>预算：{{priceText=="不限"?priceText:(priceText+'/晚')}}</view>
         <view class='sort' bindtap='changeSort'>
           <text class='icon-font uniE930 {{searchData.sort === 2?"active":""}}'></text>
           低价优先

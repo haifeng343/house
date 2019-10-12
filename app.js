@@ -35,19 +35,19 @@ App({
       wx.setStorageSync('holidays', JSON.stringify(holidaysObj));
     });
 
-      Http.get('/indexHose.json').then(resp => {
-        const houseType = resp.data.shortLayout
-        const equipments = resp.data.shortFacilities
-        const numberList = resp.data.shortPeople
-        const leaseType = resp.data.shortRentType
-        const hourMoney = resp.data.hourMoney
+    Http.get('/indexHose.json').then(resp => {
+      const houseType = resp.data.shortLayout
+      const equipments = resp.data.shortFacilities
+      const numberList = resp.data.shortPeople
+      const leaseType = resp.data.shortRentType
+      const hourMoney = resp.data.hourMoney
 
-        wx.setStorageSync('houseType', houseType)
-        wx.setStorageSync('equipments', equipments)
-        wx.setStorageSync('numberList', numberList)
-        wx.setStorageSync('leaseType', leaseType)
-        wx.setStorageSync('hourMoney', hourMoney)
-      });
+      wx.setStorageSync('houseType', houseType)
+      wx.setStorageSync('equipments', equipments)
+      wx.setStorageSync('numberList', numberList)
+      wx.setStorageSync('leaseType', leaseType)
+      wx.setStorageSync('hourMoney', hourMoney)
+    });
 
     // Http.get('/indexParam.json').then(resp => {
     //   wx.setStorageSync("hotCity", resp.data.fddHotCity.split(","))
