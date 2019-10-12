@@ -1,15 +1,4 @@
-//房源本地地址 http://192.168.1.53:3001
-//房源测试地址 https://fytest.bangdingding.cn
-const api_address = 'https://fytest.bangdingding.cn';
-
-//本地地址：http://192.168.1.109:9001
-// 开发环境: http://fddserver.pdd.develop
-// 测试环境: http://fddserver.pdd.test
-// 正式环境: https://piao.bangdingding.cn
-//测试环境https://fangtest.bangdingding.cn
-
-
-const default_address = 'https://fangtest.bangdingding.cn'; 
+import { api_address, default_address } from '../utils/httpAddress.js'
 const postApi = data => {
   return new Promise((resolve, reject) => {
     wx.request({
