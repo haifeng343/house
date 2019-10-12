@@ -407,25 +407,14 @@ Page({
   },
   getHotPosition(city) {
     let cityname = city;
-    this.service.indexPosition(cityname).then(rslt => {
+    this.service.getHotPosition(cityname).then(rslt => {
       let searchData = this.data.searchData;
       let data = rslt.data;
       let hotarea = '';
       let hotareatype = '';
-      for (const item of data) {
-        let position = item.split('_');
-        let area = position[1];
-        let type = position[2];
-        if (type == 16) {
-          hotarea = area;
-          hotareatype = type;
-          break;
-        }
-      }
-      if (hotareatype != 16) {
-        (hotarea = data[0].split('_')[1]),
-          (hotareatype = data[0].split('_')[2]);
-      }
+      let index = Math.floor(Math.random() * data.length)
+      hotarea = data[index].name || cityname;
+      hotareatype = data[index].type || '';
       if (searchData.area == '') {
         this.setData({
           hotarea,
@@ -531,7 +520,9 @@ Page({
     this.getbanner();
   },
   onShow() {
-    this.getSearchDataFromGlobal();
+    if (this.data.needOnShow) {
+      this.getSearchDataFromGlobal();
+    }
   },
   onLoad() {
     this.init();
@@ -547,6 +538,7 @@ Page({
       this.setData({ showPriceBlock: false });
       setTimeout(() => {
         this.getSearchDataFromGlobal();
+        this.setData({ needOnShow: true })
       }, 1000);
     });
     this.authSubscription = authSubject.subscribe(isAuth => {

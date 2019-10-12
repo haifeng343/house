@@ -2,8 +2,8 @@ import Http from '../../utils/http';
 import { authSubject } from '../../utils/auth';
 
 export default class index {
-  indexPosition(cityName) {
-    return Http.get('/indexPosition.json', { cityName });
+  getHotPosition(cityName) {
+    return Http.get('/getHotPosition.json', { cityName });
   }
   indexParam() {
     return Http.get('/indexParam.json');

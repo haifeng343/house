@@ -186,33 +186,35 @@
 .section .page .city-list .section .cell-list {
   flex-wrap: wrap;
   padding-left: 26rpx;
+  max-height: 148rpx;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .section .page .city-list .section .cell-list .cell-item {
-  width: 188rpx;
-  height: 60rpx;
-  line-height: 60rpx;
-  border-radius: 60rpx;
+  width: auto;
+  padding: 0 20rpx;
+  height: 54rpx;
+  line-height: 54rpx;
+  border-radius: 54rpx;
   background-color: #f9f9f9;
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #171717;
   font-weight: 400;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20rpx;
-  margin-right: 26rpx;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
-  display: -webkit-box;
-  text-align: center;
+  margin-right: 24rpx;
 }
 
 .hot-image {
   width: 28rpx;
   height: 36rpx;
   margin-right: 12rpx;
+  margin-bottom: 10rpx;
 }
 
 .section .page .city-list .section .cell-list .cell-item.hot {
