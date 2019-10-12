@@ -81,7 +81,6 @@ Page({
       checkOutDate: monitor.checkDate(app.globalData.monitorSearchData.endDate), //离开日期
       cityName: app.globalData.monitorSearchData.city, //入住城市
       locationName: app.globalData.monitorSearchData.area || '全城', //地点
-      allData: [],
       y: 0,
       containerHeight: 9999,
       showUI: true
@@ -685,13 +684,13 @@ Page({
       updateMaxPrice: app.globalData.monitorSearchData.maxPrice,
     }, () => {
       this.scrollFlag = false;
-      if (allData.length > 0) {
+      if (houseData.allData.length > 0) {
         wx.createSelectorQuery()
           .select(`.house_card`)
           .boundingClientRect(rect => {
             this.cardHeight = rect.height + 20; // 高度外加20个像素的margin-bottom
             this.setData({
-              containerHeight: this.cardHeight * allData.length + 100
+              containerHeight: this.cardHeight * houseData.allData.length + 100
             });
           })
           .exec();
@@ -802,11 +801,7 @@ Page({
    * 不再关注；添加黑名单
    */
   delItem(e) {
-    if (this.data.isMonitorHouse === 0) {
-      return;
-    }
     let item = this.data.allData[e.currentTarget.dataset.index]
-
     this.setData({
       monitorEndDisplay:'block',
       deleteItem: item

@@ -332,13 +332,13 @@ Page({
       },
       () => {
         this.scrollFlag = false;
-        if (allData.length > 0) {
+        if (houseData.allData.length > 0) {
           wx.createSelectorQuery()
             .select(`.house_card`)
             .boundingClientRect(rect => {
               this.cardHeight = rect.height + 20; // 高度外加20个像素的margin-bottom
               this.setData({
-                containerHeight: this.cardHeight * allData.length + 100
+                containerHeight: this.cardHeight * houseData.allData.length + 100
               });
             })
             .exec();

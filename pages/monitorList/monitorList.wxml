@@ -41,8 +41,9 @@
             </swiper-item>
           </block>
         </swiper>
-        <image class="star" wx:if="{{item.collection&&isMonitorHouse ===0}}" data-collection="{{item.collection}}" data-Index="{{idx}}" data-productId="{{item.productId}}" catchtap="goToCollection" src="../../assets/image/star_select.png"></image>
-        <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0}}" data-Index="{{idx}}" data-collection="{{item.collection}}" data-productId="{{item.productId}}" catchtap="goToCollection" src="../../assets/image/star.png"></image>
+        <image class="star" wx:if="{{item.collection&&isMonitorHouse ===0}}" data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.productId}}" catchtap="goToCollection" src="../../assets/image/star_select.png"></image>
+        <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0}}" data-index="{{idx}}" data-collection="{{item.collection}}" data-productId="{{item.productId}}" catchtap="goToCollection" src="../../assets/image/star.png"></image>
+        <image class="star" wx:if="{{isMonitorHouse ===1}}" data-index="{{idx}}"  src="../../assets/image/no_follow.png" catchtap="delItem"></image>
         <view class="house_classify" wx:if="{{item.platformId == 'tj'}}">途家</view>
         <view class="house_classify" wx:elif="{{item.platformId == 'xz'}}">小猪</view>
         <view class="house_classify" wx:elif="{{item.platformId == 'mn'}}">木鸟</view>
