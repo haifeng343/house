@@ -17,41 +17,50 @@ page .page .header {
   background-color: #fff;
   padding: 0 32rpx;
   flex: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30rpx;
 }
 
 page .page .header .search-bar-wrapper {
   height: 68rpx;
   border-radius: 34rpx;
-  width: 100%;
+  flex: 1;
   background-color: #f9f9f9;
-  margin-top: 30rpx;
   position:relative;
 }
 
-page .page .header .search-bar-wrapper input {
+page .page .header .search-bar-wrapper .input {
   font-size: 24rpx;
   flex: 1;
 }
-page .page .header .search-bar-wrapper .search-btn {
-  flex:0 0 auto;
-  width:100rpx;
-  height: 44rpx;
-  font-size: 28rpx;
-  background-color: #F1612A;
-  color: #fff;
-  text-align: center;
-  line-height: 44rpx;
-  background: linear-gradient(180deg, rgba(231, 93, 40, 1) 0%, rgba(233, 68, 68, 1) 100%);
-  box-shadow: 2px 2px 4px 0px rgba(198, 55, 35, 0.48);
-  border-radius: 20rpx;
-  margin-right: 26rpx;
-}
+
 
 page .page .header .search-bar-wrapper .uniE908 {
   color: #9b9b9b;
   font-size: 28rpx;
   margin-left: 40rpx;
   margin-right: 16rpx;
+}
+
+.tap-clear {
+  width: 60rpx;
+  height: 68rpx;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.go-back {
+  width: 100rpx;
+  height: 68rpx;
+  font-size: 28rpx;
+  line-height: 68rpx;
+  font-weight: 400;
+  color: rgba(29,29,29,1);
+  text-align: center;
 }
 
 page .page .city-list {
