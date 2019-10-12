@@ -55,9 +55,9 @@ App({
 
   },
   globalData: {
-    tjSwitch:false, //途家查询控制开关
-    xzSwitch: false,
-    mnSwitch: false,
+    tjSwitch: true, //途家查询控制开关
+    xzSwitch: true,
+    mnSwitch: true,
     zgSwitch: true,
     searchData: {
       cityType: '',

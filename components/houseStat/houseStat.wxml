@@ -11,7 +11,7 @@
         <!-- <view class="price" wx:else>最低价:无房源</view> -->
         <view class="num">房源数:{{tjCount}}套(已选{{tjFilterCount}}套)</view>
       </view>
-      <image class="tu_image" wx:if="{{tjCount>0}}" src="{{tjLowPriceData.pictureList[0]}}"></image>
+      <image class="tu_image" wx:if="{{tjFilterCount>0}}" src="{{tjLowPriceData.pictureList[0]}}"></image>
       <image class="tu_image" wx:else src="../../assets/image/small_default_image.png"></image>
     </view>
     <view class="stat_layout pig_layout" bindtap="navigateToXz">
@@ -21,7 +21,7 @@
         <!-- <view class="price" wx:else>最低价:无房源</view> -->
         <view class="num">房源数:{{xzCount}}套(已选{{xzFilterCount}}套)</view>
       </view>
-      <image class="pig_image" wx:if="{{xzCount>0}}" src="{{filter.xzCoverImage(xzLowPriceData.pictureList[0])}}"></image>
+      <image class="pig_image" wx:if="{{xzFilterCount>0}}" src="{{filter.xzCoverImage(xzLowPriceData.pictureList[0])}}"></image>
       <image class="pig_image" wx:else src="../../assets/image/small_default_image.png"></image>
     </view>
 
@@ -35,7 +35,7 @@
         <!-- <view class="price" wx:else>最低价:无房源</view> -->
         <view class="num">房源数:{{mnCount}}套(已选{{mnFilterCount}}套)</view>
       </view>
-      <image class="mu_image" wx:if="{{mnCount>0}}" src="{{mnLowPriceData.pictureList[0]}}"></image>
+      <image class="mu_image" wx:if="{{mnFilterCount>0}}" src="{{mnLowPriceData.pictureList[0]}}"></image>
       <image class="pig_image" wx:else src="../../assets/image/small_default_image.png"></image>
     </view>
     <view class="stat_layout zen_layout" bindtap="navigateToZg">
@@ -45,7 +45,7 @@
         <!-- <view class="price" wx:else>最低价:无房源</view> -->
         <view class="num">房源数:{{zgCount}}套(已选{{zgFilterCount}}套)</view>
       </view>
-      <image class="mu_image" wx:if="{{zgCount>0}}" src="{{zgLowPriceData.pictureList[0]}}"></image>
+      <image class="mu_image" wx:if="{{zgFilterCount>0}}" src="{{zgLowPriceData.pictureList[0]}}"></image>
       <image class="zen_image" wx:else src="../../assets/image/small_default_image.png"></image>
     </view>
   </view>

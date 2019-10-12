@@ -77,8 +77,7 @@ Component({
         })
       //} 
     },
-    stopEvent(){
-      console.log(".....")
-    }
+    stopEvent(){},
+    preventTouchMove() { }
   }
 })

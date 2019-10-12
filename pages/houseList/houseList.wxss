@@ -36,7 +36,7 @@ page {
   height: 112rpx;
 }
 .block {
-  height: 200rpx;
+  height: 220rpx;
 }
 
 .house_detail {

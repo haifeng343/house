@@ -1,4 +1,4 @@
-<view class="mask" bindtap='bindCancel'>
+<view class="mask" bindtap='bindCancel' catchtouchmove="preventTouchMove">
     <view class="mask_content" catchtap='stopEvent'>
       <view class="house_image">
         <image class="image" src="../../assets/image/monitor_warn.png"></image>

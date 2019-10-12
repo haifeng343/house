@@ -72,8 +72,7 @@ Component({
         noteSelect: !this.data.noteSelect
       })
     },
-    stopEvent() {
-      console.log(".....")
-    }
+    stopEvent() {},
+    preventTouchMove() { }
   }
 })

@@ -44,8 +44,7 @@ Component({
     navigateToZg() {
       monitor.navigateToMiniProgram('zg')
     },
-    stopEvent() {
-      console.log(".....")
-    }
+    stopEvent() { },
+    preventTouchMove() { }
   }
 })

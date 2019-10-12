@@ -45,6 +45,7 @@
   right: 28rpx;
   top:50%;
   margin-top: -46rpx;
+  font-size: 28rpx;
 }
 .monit_start .price{color: #FF6363}
 .monit_start text:nth-child(2){margin-right: 20rpx;}

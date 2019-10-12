@@ -1,4 +1,4 @@
-<view class="mask" bindtap="bindConfirm">
+<view class="mask" bindtap="bindConfirm" catchtouchmove="preventTouchMove">
     <view class="mask-out" catchtap="stopEvent">
       <view class="mask-title"><text class="line"></text><text class="title">房源充足</text><text class="line"></text></view>
       <view class="mask-title">符合条件的房源过多,无法添加监控 您可以重新查询,也可以直接前往各平台 查看具体房源。</view>

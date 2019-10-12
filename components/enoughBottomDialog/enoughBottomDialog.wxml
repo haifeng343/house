@@ -1,4 +1,4 @@
-<view class="mask" style="" bindtap='bindConfirm'>
+<view class="mask" style="" bindtap='bindConfirm' catchtouchmove="preventTouchMove">
     <view class="mask-out" catchtap="stopEvent">
       <view class="mask-title"><text class="line"></text><text class="title">哎呀，到底了</text><text class="line"></text></view>
       <view class="mask-title"> 已看完筛选出的50套房源，各平台 还有更多房源可供选择, 您可以前往继续 查询。</view>

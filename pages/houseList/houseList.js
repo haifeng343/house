@@ -93,353 +93,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    //排序方式
-    let tjconditions = [];
-    let xzOrderBy = 'recommend';
-    let mnSort = 0;
-    let zgsortType = 0;
-    if (app.globalData.searchData.sort == 1) {
-      //1推荐 2低价优先
-      tjconditions.push({
-        gType: 4,
-        type: 4,
-        value: 1
-      });
-      xzOrderBy = 'recommend';
-      mnSort = 0;
-      zgsortType = 0;
-    } else {
-      tjconditions.push({
-        gType: 4,
-        type: 4,
-        value: 2
-      });
-      xzOrderBy = 'zuipianyi';
-      mnSort = 2;
-      zgsortType = 2;
-    }
-
-    //入住人数 gueseNumber
-    let tjgueseNumber = 1;
-    if (app.globalData.searchData.gueseNumber != -1) {
-      // 不限人数
-      tjgueseNumber = Number('50' + app.globalData.searchData.gueseNumber);
-      tjconditions.push({
-        gType: 1,
-        type: 6,
-        value: tjgueseNumber
-      });
-    }
-
-    //行政区域 途家
-
-    if (app.globalData.searchData.areaType && app.globalData.searchData.area) {
-      if (app.globalData.searchData.areaId.tj) {
-        tjconditions.push({
-          gType: 2,
-          type: 5,
-          value: app.globalData.searchData.areaId.tj
-        });
-      }
-    } else {
-      //手动定位的不管
-    }
-
-    //户型
-    let mnroomNum = [];
-    let zglayoutRoomList = [];
-    if (app.globalData.searchData.houseType.length) {
-      for (let i = 0; i < app.globalData.searchData.houseType.length; i++) {
-        tjconditions.push({
-          gType: 1,
-          type: 6,
-          value: Number(app.globalData.searchData.houseType[i])
-        });
-        mnroomNum.push(Number(app.globalData.searchData.houseType[i]));
-        zglayoutRoomList.push(Number(app.globalData.searchData.houseType[i]));
-      }
-    }
-    //出租类型
-    let xzLeaseType = 'whole';
-    let mnrentType = [];
-    let zgrentTypeList = [];
-    if (app.globalData.searchData.leaseType === 2) {
-      //2单间 1整租 不选择''
-      tjconditions.push({
-        gType: 1,
-        type: 6,
-        value: 902
-      });
-      xzLeaseType = 'room';
-      mnrentType = [2];
-      zgrentTypeList = [1];
-    }
-    if (app.globalData.searchData.leaseType === 1) {
-      tjconditions.push({
-        gType: 1,
-        type: 6,
-        value: 901
-      });
-      xzLeaseType = 'whole';
-      mnrentType = [1];
-      zgrentTypeList = [0];
-    }
-    //配套设施
-    let xzFacilitys = [];
-    let mnSupport = [];
-    let zgfacilities = [];
-    if (app.globalData.searchData.equipment.length) {
-      for (let i = 0; i < app.globalData.searchData.equipment.length; i++) {
-        let e = app.globalData.searchData.equipment[i] + '';
-        switch (e) {
-          case '1':
-            tjconditions.push({
-              gType: 1,
-              type: 6,
-              value: 201
-            });
-            xzFacilitys.push('facility_Netword');
-            mnSupport.push(2);
-            zgfacilities.push(1);
-            break;
-          case '2':
-            tjconditions.push({
-              gType: 1,
-              type: 6,
-              value: 206
-            });
-            xzFacilitys.push('facility_AirCondition');
-            mnSupport.push(5);
-            zgfacilities.push(10);
-            break;
-          case '3':
-            tjconditions.push({
-              gType: 1,
-              type: 6,
-              value: 205
-            });
-            xzFacilitys.push('facility_Tv');
-            mnSupport.push(3);
-            zgfacilities.push(8);
-            break;
-          case '4':
-            tjconditions.push({
-              gType: 1,
-              type: 6,
-              value: 204
-            });
-            //xzFacilitys.push('洗衣机')
-            mnSupport.push(7);
-            zgfacilities.push(14);
-            break;
-          case '5':
-            tjconditions.push({
-              gType: 1,
-              type: 6,
-              value: 207
-            });
-            //xzFacilitys.push('冰箱')
-            mnSupport.push(8);
-            //zgfacilities.push('冰箱)
-            break;
-          case '6':
-            tjconditions.push({
-              gType: 1,
-              type: 6,
-              value: 203
-            });
-            xzFacilitys.push('facility_Shower');
-            mnSupport.push(9);
-            //zgfacilities.push('全天热水')
-            break;
-          case '7':
-            tjconditions.push({
-              gType: 1,
-              type: 6,
-              value: 202
-            });
-            //xzFacilitys.push('电梯')
-            mnSupport.push(17);
-            zgfacilities.push(4);
-            break;
-        }
-      }
-    }
-    //价格区间
-    let minPrice =
-      app.globalData.searchData.minPrice == 0 ?
-      1 :
-      Number(app.globalData.searchData.minPrice);
-    let maxPrice = Number(app.globalData.searchData.maxPrice);
-    tjconditions.push({
-      gType: 1,
-      type: 7,
-      value: minPrice + ',' + maxPrice
-    });
-
-    //小猪筛选
-    let xzfilterObj = {
-      checkInDay: app.globalData.searchData.beginDate,
-      checkOutDay: app.globalData.searchData.endDate,
-      orderBy: xzOrderBy,
-      //leaseType: xzLeaseType,
-      minPrice: minPrice,
-      maxPrice: maxPrice
-    };
-    if (
-      app.globalData.searchData.leaseType != '' &&
-      app.globalData.searchData.leaseType != 'undefined'
-    ) {
-      xzfilterObj.leaseType = xzLeaseType;
-    }
-    if (app.globalData.searchData.houseType.length > 0) {
-      xzfilterObj.huXing = app.globalData.searchData.houseType.join(',');
-    }
-    if (xzFacilitys.length > 0) {
-      xzfilterObj.facilitys = xzFacilitys.join('|');
-    }
-    //行政区域 小猪
-    if (app.globalData.searchData.areaType && app.globalData.searchData.area) {
-      if (app.globalData.searchData.areaType == 16) {
-        if (app.globalData.searchData.areaId.xz) {
-          xzfilterObj.distId = app.globalData.searchData.areaId.xz;
-        }
-      } else {
-        if (app.globalData.searchData.areaId.xz) {
-          xzfilterObj.locId = app.globalData.searchData.areaId.xz;
-        }
-      }
-    } else {
-      //手动定位的不管
-    }
-
-    //木鸟筛选
-    let mnfilterObj = {
-      beginDate: app.globalData.searchData.beginDate,
-      endDate: app.globalData.searchData.endDate,
-      sort: mnSort,
-      //rentType: mnrentType,
-      priceMax: maxPrice,
-      priceMin: minPrice
-    };
-    if (mnrentType.length > 0) {
-      mnfilterObj.rentType = mnrentType;
-    }
-    if (mnroomNum.length > 0) {
-      mnfilterObj.roomNum = mnroomNum;
-    }
-    if (mnSupport.length > 0) {
-      mnfilterObj.support = mnSupport;
-    }
-    //行政区域 木鸟
-    if (app.globalData.searchData.areaType && app.globalData.searchData.area) {
-      if (app.globalData.searchData.areaType == 16) {
-        if (app.globalData.searchData.areaId.mn) {
-          mnfilterObj.areaId = app.globalData.searchData.areaId.mn;
-        }
-      } else {
-        if (app.globalData.searchData.areaId.mn) {
-          mnfilterObj.landmarkId = app.globalData.searchData.areaId.mn;
-          mnfilterObj.lat = app.globalData.searchData.ltude.mn.split(',')[0];
-          mnfilterObj.lng = app.globalData.searchData.ltude.mn.split(',')[1];
-        }
-      }
-    } else {
-      //手动定位的不管
-    }
-    //榛果筛选
-    let zgfilterObj = {
-      dateBegin: app.globalData.searchData.beginDate.replace(/-/g, ''),
-      dateEnd: app.globalData.searchData.endDate.replace(/-/g, ''),
-      minPrice: minPrice * 100,
-      maxPrice: maxPrice * 100,
-      //rentTypeList: zgrentTypeList,
-      sortType: zgsortType
-    };
-    if (zgrentTypeList.length > 0) {
-      zgfilterObj.rentTypeList = zgrentTypeList;
-    }
-    if (zglayoutRoomList.length > 0) {
-      zgfilterObj.layoutRoomList = zglayoutRoomList;
-    }
-    if (zgfacilities.length > 0) {
-      zgfilterObj.facilities = zgfacilities;
-    }
-    //行政区域 榛果
-    if (app.globalData.searchData.areaType && app.globalData.searchData.area) {
-      zgfilterObj.locationId = -4;
-      zgfilterObj.locationCategoryId = -4;
-      let type = app.globalData.searchData.areaType + '';
-      if (app.globalData.searchData.areaId.zg) {
-        zgfilterObj.locationId = app.globalData.searchData.areaId.zg;
-        if (app.globalData.searchData.areaType != 16) {
-          zgfilterObj.locationLatitude = app.globalData.searchData.ltude.zg.split(
-            ','
-          )[0];
-          zgfilterObj.locationLongitude = app.globalData.searchData.ltude.zg.split(
-            ','
-          )[1];
-        }
-        switch (type) {
-          case '11':
-            zgfilterObj.locationCategoryId = 1;
-            break;
-          case '12':
-            zgfilterObj.locationCategoryId = 2;
-            break;
-          case '13':
-            zgfilterObj.locationCategoryId = -4;
-            break;
-          case '14':
-            zgfilterObj.locationCategoryId = 4;
-            break;
-          case '15':
-            zgfilterObj.locationCategoryId = 5;
-            break;
-          case '16':
-            zgfilterObj.locationCategoryId = 6;
-            break;
-          case '17':
-            zgfilterObj.locationCategoryId = -4;
-            break;
-          case '18':
-            zgfilterObj.locationCategoryId = -4;
-            break;
-        }
-      }
-    } else {
-      //手动定位不管
-    }
-
-    if (app.globalData.searchData.gueseNumber != -1) {
-      xzfilterObj.guestNum = app.globalData.searchData.gueseNumber;
-      mnfilterObj.guestNum = app.globalData.searchData.gueseNumber;
-    }
-    if (app.globalData.searchData.gueseNumber != -1) {
-      if (app.globalData.searchData.gueseNumber == 10) {
-        zgfilterObj.minCheckInNumber = 10;
-      } else {
-        zgfilterObj.minCheckInNumber = app.globalData.searchData.gueseNumber;
-        zgfilterObj.maxCheckInNumber = app.globalData.searchData.gueseNumber;
-      }
-    }
+    let tjScreen = house.tjScreenParam(1)
+    let xzScreen = house.xzScreenParam(1)
+    let mnScreen = house.mnScreenPara(1)
+    let zgScreen = house.zgScreenPara(1)
+    let x = app.globalData.searchData
     this.setData({
-      tjfilter: {
-        beginDate: app.globalData.searchData.beginDate,
-        endDate: app.globalData.searchData.endDate,
-        conditions: tjconditions
-      },
-      xzfilter: xzfilterObj,
-      mnfilter: mnfilterObj,
-      zgfilter: zgfilterObj,
-      checkInDate: app.globalData.searchData.beginDate.split('-')[1] +
-        '.' +
-        app.globalData.searchData.beginDate.split('-')[2],
-      checkOutDate: app.globalData.searchData.endDate.split('-')[1] +
-        '.' +
-        app.globalData.searchData.endDate.split('-')[2],
-      cityName: app.globalData.searchData.city,
-      locationName: app.globalData.searchData.area || '全城',
+      tjfilter: tjScreen,
+      xzfilter: xzScreen,
+      mnfilter: mnScreen,
+      zgfilter: zgScreen,
+      checkInDate: x.beginDate.split('-')[1] +'.' +x.beginDate.split('-')[2],
+      checkOutDate: x.endDate.split('-')[1] +'.' +x.endDate.split('-')[2],
+      cityName: x.city,
+      locationName: x.area || '全城',
       listSortType: 1
     });
     this.getAllData();
@@ -621,166 +288,18 @@ Page({
       zgCount: zgDataObj.zgCount
     })
 
-    let tjFilterData = [],
-      xzFilterData = [],
-      mnFilterData = [],
-      zgFilterData = [];
-    let tjId = [],
-      xzId = [],
-      mnId = [],
-      zgId = [];
-    let maxTotal = 50;
-    let allData = [];
-    for (let i = 0; i < maxTotal; i++) {
-      if (this.data.tjCount >0) {
-        let tj = this.addPlatfromData(allData, tjData, i);
-        if (tj == 0) {
-          break;
-        }
-        if (tj == 1) {
-          let tjObjs = {};
-          let tjObj = tjData[i];
-          tjObjs.platformId = 'tj';
-          tjObjs.curIndex = 1;
-          tjObjs.finishLoadFlag = false;
-          tjObjs.collection = false;
-          tjObjs.unitName = tjObj.unitName;
-          tjObjs.logoUrl = tjObj.logoUrl;
-          tjObjs.pictureList = tjObj.pictureList;
-          tjObjs.preloadDetail =
-            tjObj.preloadDetail.baseBrief[0].title +
-            '/' +
-            tjObj.preloadDetail.baseBrief[1].title +
-            '/' +
-            tjObj.preloadDetail.baseBrief[2].title;
-          tjObjs.finalPrice = Number(tjObj.finalPrice);
-          tjObjs.productId = tjObj.unitId;
-          tjFilterData.push(tjObjs);
-          tjId.push(tjObj.unitId);
-          allData.push(tjObjs);
-        }
-      }
-      if (this.data.xzCount > 0) {
-        let xz = this.addPlatfromData(allData, xzData, i);
-        if (xz == 0) {
-          break;
-        }
-        if (xz == 1) {
-          let xzObjs = {};
-          let xzObj = xzData[i];
-          xzObjs.platformId = 'xz';
-          xzObjs.curIndex = 1;
-          xzObjs.finishLoadFlag = false;
-          xzObjs.collection = false;
-          xzObjs.unitName = xzObj.luTitle;
-          xzObjs.logoUrl = xzObj.landlordheadimgurl;
-          xzObjs.pictureList = xzObj.coverImages;
-          xzObjs.preloadDetail =
-            xzObj.luLeaseType + '/' + xzObj.houseTypeInfo + '/' + xzObj.guestnum;
-          xzObjs.finalPrice = Number(
-            xzObj.showPriceV2.showPrice || xzObj.luPrice
-          );
-          xzObjs.productId = xzObj.luId;
-          xzFilterData.push(xzObjs);
-          xzId.push(xzObj.luId);
-          allData.push(xzObjs);
-        }
-      }
-      if (this.data.mnCount > 0) {
-        let mn = this.addPlatfromData(allData, mnData, i);
-        if (mn == 0) {
-          break;
-        }
-        if (mn == 1) {
-          let mnObjs = {};
-          let mnObj = mnData[i];
-          mnObjs.platformId = 'mn';
-          mnObjs.curIndex = 1;
-          mnObjs.finishLoadFlag = false;
-          mnObjs.collection = false;
-          mnObjs.unitName = mnObj.title;
-          mnObjs.logoUrl = mnObj.image_host;
-          mnObjs.pictureList = mnObj.image_list;
-          mnObjs.preloadDetail =
-            mnObj.rent_type + '/' + mnObj.source_type + '/宜住' + mnObj.max_num;
-          mnObjs.finalPrice = Number(mnObj.sale_price);
-          mnObjs.productId = mnObj.room_id;
-          mnFilterData.push(mnObjs);
-          mnId.push(mnObj.room_id);
-          allData.push(mnObjs);
-        }
-      }
-      if (this.data.zgCount > 0){
-        let zg = this.addPlatfromData(allData, zgData, i);
-        if (zg == 0) {
-          break;
-        }
-        if (zg == 1) {
-          let zgObjs = {};
-          let zgObj = zgData[i];
-          zgObjs.platformId = 'zg';
-          zgObjs.curIndex = 1;
-          zgObjs.finishLoadFlag = false;
-          zgObjs.collection = false;
-          zgObjs.unitName = zgObj.title.replace(/\n/g, ' ');
-          zgObjs.logoUrl = zgObj.hostAvatarUrl;
-          zgObjs.pictureList = zgObj.productImages;
-          zgObjs.preloadDetail =
-            zgObj.rentLayoutDesc + '/' + zgObj.guestNumberDesc;
-          zgObjs.finalPrice = zgObj.discountPrice ?
-            zgObj.discountPrice / 100 :
-            zgObj.price / 100;
-          zgObjs.productId = zgObj.productId;
-          zgFilterData.push(zgObjs);
-          zgId.push(zgObj.productId);
-          allData.push(zgObjs);
-        }
-      }
-    }
-    //总房源数量
-    let allCount = 0
-    if (this.data.tjCount>-1){
-      allCount += this.data.tjCount
-    }
-    if (this.data.xzCount > -1) {
-      allCount += this.data.xzCount
-    }
-    if (this.data.mnCount > -1) {
-      allCount += this.data.mnCount
-    }
-    if (this.data.zgCount > -1) {
-      allCount += this.data.zgCount
-    }
+    let houseData = house.getHouseData({
+      tjCount: tjDataObj.tjCount,
+      xzCount: xzDataObj.xzCount,
+      mnCount: mnDataObj.mnCount,
+      zgCount: zgDataObj.zgCount,
+      tjData,
+      xzData,
+      mnData,
+      zgData
+    })
 
-    //平均价
-    let average =allData.length > 0 ?allData.reduce((sum, {finalPrice}) => sum + finalPrice, 0) /allData.length :0;
-    let sortArr = [...allData];
-    let tjSortArr = [...tjFilterData];
-    let xzSortArr = [...xzFilterData];
-    let mnSortArr = [...mnFilterData];
-    let zgSortArr = [...zgFilterData];
-
-    //所有最低价
-    let lowPrice =allData.length > 0 ?Math.min.apply(Math,allData.map(function(o) {return o.finalPrice;})) :0;
-
-    //所有房源最低价格的数据
-    sortArr.sort(util.compareSort('finalPrice', 'asc'));
-    let lowPriceData = sortArr.length > 0 ? sortArr[0] : '';
-
-    allData = sortArr;
-    //途家最低价格数据
-    tjSortArr.sort(util.compareSort('finalPrice', 'asc'));
-    let tjLowPriceData = tjSortArr.length > 0 ? tjSortArr[0] : '';
-    //小猪最低价格数据
-    xzSortArr.sort(util.compareSort('finalPrice', 'asc'));
-    let xzLowPriceData = xzSortArr.length > 0 ? xzSortArr[0] : '';
-    //木鸟最低价格数据
-    mnSortArr.sort(util.compareSort('finalPrice', 'asc'));
-    let mnLowPriceData = mnSortArr.length > 0 ? mnSortArr[0] : '';
-    //榛果最低价格数据
-    zgSortArr.sort(util.compareSort('finalPrice', 'asc'));
-    let zgLowPriceData = zgSortArr.length > 0 ? zgSortArr[0] : '';
-    if (allCount > 0) {
+    if (houseData.allCount > 0) {
       this.setData({
         countFlag: 1
       });
@@ -791,25 +310,25 @@ Page({
     }
 
     this.setData({
-        allOriginalData: allData,
-        allData: allData.slice(0, 10),
-        allCount,
-        averagePrice: parseInt(average),
-        lowPrice,
-        lowPriceData,
-        tjLowPriceData,
-        xzLowPriceData,
-        mnLowPriceData,
-        zgLowPriceData,
-        tjIdData: tjId,
-        xzIdData: xzId,
-        mnIdData: mnId,
-        zgIdData: zgId,
-        loadingDisplay: 'none',
-        isBack: false,
-        canScroll: true,
-        y: 0,
-        showUI: true
+      allOriginalData: houseData.allData,
+      allData: houseData.allData.slice(0, 5),
+      allCount: houseData.allCount,
+      averagePrice: houseData.averagePrice,
+      lowPrice: houseData.lowPrice,
+      lowPriceData: houseData.lowPriceData,
+      tjLowPriceData: houseData.tjLowPriceData,
+      xzLowPriceData: houseData.xzLowPriceData,
+      mnLowPriceData: houseData.mnLowPriceData,
+      zgLowPriceData: houseData.zgLowPriceData,
+      tjIdData: houseData.tjId,
+      xzIdData: houseData.xzId,
+      mnIdData: houseData.mnId,
+      zgIdData: houseData.zgId,
+      loadingDisplay: 'none',
+      isBack: false,
+      canScroll: true,
+      y: 0,
+      showUI: true
       },
       () => {
         this.scrollFlag = false;
@@ -827,18 +346,7 @@ Page({
       }
     );
   },
-  addPlatfromData(allData, PlatfromData, index) {
-    if (index < PlatfromData.length) {
-      //是否已满
-      if (allData.length >= 50) {
-        return 0; //总已满
-      } else {
-        return 1; //总的未满
-      }
-    } else {
-      return 2; //某个平台满
-    }
-  },
+
   goToPlatformDetail(e) {
     let platform = e.currentTarget.dataset.platform;
     let productid = e.currentTarget.dataset.productid;
@@ -886,12 +394,10 @@ Page({
    * 房源收藏
    */
   goToCollection(e) {
-    //开启收藏
     let num = wx.getStorageSync('collectionNum');
     let index = e.currentTarget.dataset.index;
     let pId = this.data.allData[index].platformId;
     let proId = this.data.allData[index].productId;
-
     house.houseCollection(pId, proId)
     let item = 'allData[' + index + '].collection';
     this.setData({

@@ -57,16 +57,11 @@ Component({
   methods: {
     bindCancel() {
       this.triggerEvent('updateCancelEvent', 'none')
-
     },
     bindConfirm() {
-
       this.triggerEvent('updateConfrimEvent', 'none')
-
     },
-
-    stopEvent() {
-      console.log(".....")
-    }
+    stopEvent() {},
+    preventTouchMove() { }
   }
 })

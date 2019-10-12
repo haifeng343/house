@@ -1,5 +1,5 @@
 <wxs src="../../utils/filter.wxs" module="filter" />
-<scroll-view scroll-top="{{y}}" scroll-y="{{canScroll}}" lower-threshold="{{0}}" scroll-with-animation="{{true}}" throttle="{{false}}" bindscroll="handleScroll" bindscrolltolower="handleReachBottom" class="{{(enoughDisplay =='block'||enoughBottomDisplay =='block'||collectDisplay =='block'||stopDisplay =='block'||updateMonitorDisplay=='block'||showAdvance)?'section_hidden':''}}">
+<scroll-view scroll-top="{{y}}" scroll-y="{{canScroll}}" lower-threshold="{{0}}" scroll-with-animation="{{true}}" throttle="{{false}}" bindscroll="handleScroll" bindscrolltolower="handleReachBottom" class="scroll-view {{(enoughDisplay =='block'||enoughBottomDisplay =='block'||collectDisplay =='block'||stopDisplay =='block'||updateMonitorDisplay=='block'||showAdvance)?'section_hidden':''}}">
   <view class="header {{showUI ? '' : 'hidden'}}">
     <view class="top-nav'">
       <houseSelect id="houseSelect" type='monitor' checkInDate="{{checkInDate}}" checkOutDate="{{checkOutDate}}" cityName="{{cityName}}" locationName="{{locationName}}" bind:clickSelectItem='clickSelectItem'></houseSelect>
@@ -81,19 +81,12 @@
       <text class="monit_btn" bindtap="goSave">保存修改</text>
     </view>
   </view>
-  <!-- <view wx:if="{{countFlag===1&&!scrollIng}}" class="house_shortcuts">
-    <image bindtap="goTop" class="top {{scrollTop>200?'scroll_top':'scroll_none'}}" src="../../assets/image/top.png"></image>
-  </view>
-  <view wx:if="{{countFlag===1&&isMonitorHouse ===0&&!scrollIng}}" class="house_shortcuts">
-    <image bindtap="goSort" class="sort" src="../../assets/image/sort.png"></image>
-  </view> -->
-
   <view wx:if="{{countFlag===1}}" class="house_shortcuts {{showUI ? '' : 'hidden'}}">
     <view>
       <image bindtap="goTop" wx:if="{{showScrollTop}}" class="top" src="../../assets/image/top.png"></image>
     </view>
     <view>
-      <image bindtap="goSort" wx:if="{{showScrollTop&&isMonitorHouse ===0}}" class="sort" src="../../assets/image/sort.png"></image>
+      <image bindtap="goSort" wx:if="{{isMonitorHouse ===0}}" class="sort" src="../../assets/image/sort.png"></image>
     </view>
   </view>
 

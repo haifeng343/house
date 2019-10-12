@@ -36,7 +36,7 @@ page {
   height: 112rpx;
 }
 .block {
-  height: 200rpx;
+  height: 220rpx;
 }
 .house_detail {
   display: flex;
@@ -266,28 +266,19 @@ page {
   transform: translateX(0);
   transition: transform 1s;
 }
-.house_shortcuts .top, .house_shortcuts .sort {
+
+.house_shortcuts .top,
+.house_shortcuts .sort {
   width: 100rpx;
   height: 100rpx;
-  position: fixed;
-  right: 12rpx;
-  z-index: 30
 }
 
 .house_shortcuts .top {
-  bottom: 260rpx;
+  margin-bottom: 20rpx;
 }
 
-.house_shortcuts .scroll_top {
-  display: block;
-}
-
-.house_shortcuts .scroll_none {
-  display: none;
-}
-
-.house_shortcuts .sort {
-  bottom: 140rpx;
+.house_shortcuts.hidden {
+  transform: translateX(calc(100% + 12rpx));
 }
 .house_loading{
   position: fixed;
