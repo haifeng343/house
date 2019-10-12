@@ -41,7 +41,19 @@ App({
       const numberList = resp.data.shortPeople
       const leaseType = resp.data.shortRentType
       const hourMoney = resp.data.hourMoney
-
+      const fddRequestPlatformName = resp.data.fddRequestPlatformName
+      if (fddRequestPlatformName.indexOf('tj')>-1){
+        this.globalData.tjSwitch = true
+      }
+      if (fddRequestPlatformName.indexOf('xz') > -1) {
+        this.globalData.xzSwitch = true
+      }
+      if (fddRequestPlatformName.indexOf('mn') > -1) {
+        this.globalData.mnSwitch = true
+      }
+      if (fddRequestPlatformName.indexOf('zg') > -1) {
+        this.globalData.zgSwitch = true
+      }
       wx.setStorageSync('houseType', houseType)
       wx.setStorageSync('equipments', equipments)
       wx.setStorageSync('numberList', numberList)
@@ -55,10 +67,10 @@ App({
 
   },
   globalData: {
-    tjSwitch: true, //途家查询控制开关
-    xzSwitch: true,
-    mnSwitch: true,
-    zgSwitch: true,
+    tjSwitch: false, //途家查询控制开关
+    xzSwitch: false,
+    mnSwitch: false,
+    zgSwitch: false,
     searchData: {
       cityType: '',
       area: '',
