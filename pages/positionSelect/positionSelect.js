@@ -116,57 +116,6 @@ Page({
     }
   },
 
-  handleSelectCityHistory(event) {
-    let isCity = event.currentTarget.dataset.item.isCity;
-    if (isCity) {
-      this.handleSelectCityByName(event);
-    } else {
-      this.handleSelectCityByPosition(event);
-    }
-  },
-
-  handleSelectCityByName(event) {
-    console.log(event)
-    return
-    let data = event.currentTarget.dataset;
-    let name = data.item.name;
-    const type = specialCity.includes(name) ? 1 : 0;
-    const app = getApp()
-    this.service.getCityInfo(name, type).then(resp => {
-      var cityItem = resp.data[0];
-      let cityJson = JSON.parse(cityItem.json)
-      app.globalData.searchData.city = cityJson.name;
-      app.globalData.searchData.cityId = {};
-      app.globalData.searchData.cityType = type;
-      app.globalData.searchData.area = '';
-      app.globalData.searchData.areaId = {};
-      app.globalData.searchData.areaType = type;
-      app.globalData.monitorSearchData.city = cityJson.name;
-      app.globalData.monitorSearchData.cityId = {};
-      app.globalData.monitorSearchData.cityType = type;
-      app.globalData.monitorSearchData.area = '';
-      app.globalData.monitorSearchData.areaId = {};
-      app.globalData.monitorSearchData.areaType = '';
-      for (const key in cityJson) {
-        if (key === 'mn') {
-          app.globalData.searchData.cityId[key] = cityJson[key].city_id
-          app.globalData.monitorSearchData.cityId[key] = cityJson[key].city_id
-        } else if (key === 'xz') {
-          app.globalData.searchData.cityId[key] = cityJson[key].cityId
-          app.globalData.monitorSearchData.cityId[key] = cityJson[key].cityId
-        } else if (key === 'tj') {
-          app.globalData.searchData.cityId[key] = cityJson[key].id
-          app.globalData.monitorSearchData.cityId[key] = cityJson[key].id
-        } else if (key === 'zg') {
-          app.globalData.searchData.cityId[key] = cityJson[key].id
-          app.globalData.monitorSearchData.cityId[key] = cityJson[key].id
-        }
-      }
-    }).catch(error => {
-      console.error(error);
-    });
-
-  },
   handleSelectCityByPosition(event) {
     let position = event.currentTarget.dataset.item.name;
     let cityName = event.currentTarget.dataset.item.cityName;
@@ -174,7 +123,11 @@ Page({
     let fullName = `${cityName}_${position}_${type}`;
     const app = getApp();
     this.service.getPositionInfoByName(fullName).then(resp => {
-      let data = resp.data;
+      let data = resp.data || '';
+      // 已隐藏
+      if (!data) {
+        return true
+      }
       let info = JSON.parse(resp.data.json);
       if (type == 16) {//行政区  只有areaid
         app.globalData.searchData.areaId = {
@@ -219,7 +172,40 @@ Page({
       app.globalData.searchData.areaType = type;
       app.globalData.monitorSearchData.area = info.name;
       app.globalData.monitorSearchData.areaType = type;
-    }).then(() => {
+    }).then((msg) => {
+      if(msg) {
+        console.log('该数据已隐藏', position)
+        var history = this.data.history
+        for(var index = 0; index < history.length; index++) {
+          if (history[index].name == position) {
+            history.splice(index, 1)
+            break
+          }
+        }
+        this.setData({ history })
+        var positionSearchHistory = wx.getStorageSync('positionSearchHistory')
+        for (var temp = 0; temp < positionSearchHistory.length; temp++) {
+          if (positionSearchHistory[temp].name == position) {
+            positionSearchHistory.splice(temp, 1)
+            break
+          }
+        }
+        wx.setStorageSync('positionSearchHistory', positionSearchHistory)
+        var citySearchHistory = wx.getStorageSync('citySearchHistory')
+        for (var temp2 = 0; temp2 < citySearchHistory.length; temp2++) {
+          if (citySearchHistory[temp2].name == position) {
+            citySearchHistory.splice(temp2, 1)
+            break
+          }
+        }
+        wx.setStorageSync('citySearchHistory', citySearchHistory)
+        wx.showToast({
+          title: '该地点不存在',
+          icon: 'none',
+          duration: 2000
+        })
+        return
+      }
       const type = specialCity.includes(cityName) ? 1 : 0;
       this.service.getCityInfo(cityName, type).then(resp => {
         var cityItem = resp.data[0];
