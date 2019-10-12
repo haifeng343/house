@@ -119,6 +119,7 @@ App({
       maxPrice: 99999,//最高价
       sort: 2,//搜索方式 1推荐 2低价有限
       equipment: []
-    }
+    },
+    hotPosition:[]
   }
 })

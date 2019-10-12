@@ -406,22 +406,25 @@ Page({
     });
   },
   getHotPosition(city) {
-    let cityname = city;
+    let cityname = city
+    const app = getApp()
     this.service.getHotPosition(cityname).then(rslt => {
-      let searchData = this.data.searchData;
-      let data = rslt.data;
-      let hotarea = '';
-      let hotareatype = '';
+      let searchData = this.data.searchData
+      let data = rslt.data
+      let hotarea = ''
+      let hotareatype = ''
       let index = Math.floor(Math.random() * data.length)
-      hotarea = data[index].name || cityname;
-      hotareatype = data[index].type || '';
+      hotarea = data[index].name || cityname
+      hotareatype = data[index].type || ''
       if (searchData.area == '') {
         this.setData({
           hotarea,
           hotareatype
         });
       }
-    });
+      // 热门地点存起来，地点搜索页面使用
+      app.globalData.hotPosition = data
+    })
   },
   getSearchDataFromGlobal() {
     const app = getApp();
