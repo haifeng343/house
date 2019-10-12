@@ -66,6 +66,7 @@
         </view>
       </view>
     </block>
+    <view class="no-more-data" wx:if="{{allData.length}}">暂无更多房源</view>
   </view>
   <view class="monit_start {{bottomType === 1?'monit_stop':''}}" wx:if="{{bottomType === 1&&countFlag === 1}}">
     <view>

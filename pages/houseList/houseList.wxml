@@ -61,8 +61,9 @@
     </block>
     <view class="no-more-data" wx:if="{{allData.length}}">暂无更多房源</view>
   </view>
-  <view class="house_monitor">
-    <button class="monitor_btn" bindtap='startMonitor'>开启监控</button>
+  <view class="house_monitor" wx:if="{{loadingDisplay == 'none'}}">
+    <button wx:if="{{allCount>=50}}" class="monitor_btn" bindtap='startMonitor'>查看更多</button>
+    <button wx:else class="monitor_btn" bindtap='startMonitor'>开启监控</button>
   </view>
   <view wx:if="{{countFlag === 1}}" class="house_shortcuts {{showUI ? '' : 'hidden'}}">
     <view>

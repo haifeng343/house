@@ -39,6 +39,7 @@ Component({
       });
     },
     goCity() {
+      if (this.properties.type == 'monitor'){return}
       this.reSetData()
       wx.navigateTo({
         url: '/pages/citySelect/citySelect'

@@ -57,7 +57,7 @@ Page({
     showUI: true,
     y: 0,
     containerHeight: 9999,
-    canScroll: true
+    canScroll: true,
   },
   topFlag: false,
   cardHeight: 0,
@@ -81,9 +81,11 @@ Page({
       checkOutDate: monitor.checkDate(app.globalData.monitorSearchData.endDate), //离开日期
       cityName: app.globalData.monitorSearchData.city, //入住城市
       locationName: app.globalData.monitorSearchData.area || '全城', //地点
+      allData: [],
       y: 0,
       containerHeight: 9999,
-      showUI: true
+      showUI: true,
+      isBack:true
     })
     this.onShow();
   },
@@ -105,18 +107,6 @@ Page({
         cityName: app.globalData.monitorSearchData.city, //入住城市
         locationName: app.globalData.monitorSearchData.area || '全城', //地点
       });
-      //this.setData({
-        //checkInDate: monitor.checkDate(app.globalData.monitorSearchData.beginDate), //入住日期
-        //checkOutDate: monitor.checkDate(app.globalData.monitorSearchData.endDate), //离开日期
-        //cityName: app.globalData.monitorSearchData.city, //入住城市
-        //locationName: app.globalData.monitorSearchData.area || '全城', //地点
-        // defaultBeginDate: app.globalData.monitorSearchData.beginDate,
-        // defaultEndDate: app.globalData.monitorSearchData.endDate,
-        // defaultCityName: app.globalData.monitorSearchData.city,
-        // defaultLocationName: app.globalData.monitorSearchData.area || '--',
-        // defaultMInPrice: app.globalData.monitorSearchData.minPrice,
-        // defaultMaxPrice: app.globalData.monitorSearchData.maxPrice,
-      //})
     }
     return flag;
   },
@@ -126,9 +116,7 @@ Page({
    */
   onLoad: function () {
     const app = getApp()
-    console.log(app);
     let data = app.globalData.monitorData
-    console.log(data);
     let fee = wx.getStorageSync('hourMoney')||0;
     this.setData({
       monitorId: data.item.id,
@@ -145,6 +133,17 @@ Page({
   onShow: function () {
     //如果选择的结果与监控的条件不一样；就加载查询
     this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true })
+    if (this.data.isBack) { //isBack true表示是按确定按钮变化的
+      this.setData({
+        loadingDisplay: 'block',
+        countFlag: '',
+        allData: [],
+        y: 0,
+        showUI: true,
+        containerHeight: 9999
+      });
+    }
+    if (!this.data.isBack){return} //isBack false表示是从返回键返回的
     if (this.compareData()) {
       this.getMonitorData();
       return
@@ -217,16 +216,24 @@ Page({
       clearTimeout(this.timer);
       this.timer = null;
     }
-    if (this.data.allData.length >= 50) {
-      this.setData({
-        enoughBottomDisplay: 'block',
-        canScroll: false
-      });
-    } else {
-      this.setData({
-        monitorBottomDisplay: 'block',
-        canScroll: false
-      });
+    if (this.bottomType === 2){
+      if (this.data.allData.length >= 50) {
+        this.setData({
+          enoughBottomDisplay: 'block',
+          //canScroll: false
+        });
+      } else {
+        this.setData({
+          monitorBottomDisplay: 'block',
+          //canScroll: false
+        });
+      }
+    }else{
+      wx.showToast({
+        title: '到底了',
+        icon: 'none',
+        duration: 2000
+      })
     }
   },
 
@@ -245,7 +252,39 @@ Page({
       });
     }
   },
-
+  goTop() {
+    this.topFlag = true;
+    this.setData({
+      y: 0,
+      showUI: true,
+      showScrollTop: false
+    });
+  },
+  goSort() {
+    let arr = [...this.data.allOriginalData]
+    let sort = house.sort(arr, this.data.listSortType)
+    if (this.data.listSortType == 2) {
+      this.setData({
+        allData: [],
+        loadingDisplay: 'block',
+        listSortType: 1,
+      })
+    } else {
+      this.setData({
+        allData: [],
+        loadingDisplay: 'block',
+        listSortType: 2,
+      })
+    }
+    this.scrollFlag = false;
+    this.setData({
+      allOriginalData: sort.arr,
+      allData: sort.arr.slice(0, 5),
+      loadingDisplay: 'none',
+      canScroll: true,
+      y: 0,
+    })
+  },
   
   /**
    * 监控详情信息
@@ -575,47 +614,7 @@ Page({
       })
     })
   },
-  goTop() {
-    this.topFlag = true;
-    this.setData({
-      y: 0,
-      showUI: true,
-      showScrollTop: false
-    });
-  },
-  goSort() {
-    let arr = [...this.data.allOriginalData]
-    if (this.data.listSortType == 2) {
-      arr.sort(util.compareSort('finalPrice', 'asc'))
-      wx.showToast({
-        title: '已按最低价排序',
-        icon: 'none',
-        duration: 2000
-      })
-      this.setData({
-        allData: [],
-        loadingDisplay: 'block',
-        listSortType: 1,
-      })
-    } else {
-      arr.sort(util.compareSort('finalPrice', 'desc'))
-      wx.showToast({
-        title: '已按最高价排序',
-        icon: 'none',
-        duration: 2000
-      })
-      this.setData({
-        allData: [],
-        loadingDisplay: 'block',
-        listSortType: 2,
-      })
-    }
-    this.setData({
-      allOriginalData: arr,
-      allData: arr.slice(0, 5),
-      loadingDisplay: 'none'
-    })
-  },
+  
 
   async getAllData() {
     wx.removeStorageSync('collectionObj')
@@ -671,6 +670,7 @@ Page({
       mnIdData: houseData.mnId,
       zgIdData: houseData.zgId,
       loadingDisplay: 'none',
+      isBack: false,
       bottomType: 2,
       isMonitorHouse: 0,
       checkInDate: monitor.checkDate(app.globalData.monitorSearchData.beginDate), //入住日期
@@ -727,6 +727,7 @@ Page({
       fee: this.data.fee,
       monitorId: this.data.monitorId,
       totalFee: this.data.totalFee, //消耗盯盯币
+      isBack: false
     }
     wx.navigateTo({
       url: '../statistics/statistics',

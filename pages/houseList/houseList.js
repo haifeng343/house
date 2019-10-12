@@ -217,15 +217,6 @@ Page({
     }
   },
 
-  /**
-   * 页面滚动触发事件的处理函数
-   */
-  onPageScroll: function(res) {},
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {},
-
   goTop() {
     this.topFlag = true;
     this.setData({
@@ -235,40 +226,29 @@ Page({
     });
   },
   goSort() {
-    let arr = [...this.data.allOriginalData];
+    let arr = [...this.data.allOriginalData]
+    let sort = house.sort(arr, this.data.listSortType)
     if (this.data.listSortType == 2) {
-      arr.sort(util.compareSort('finalPrice', 'asc'));
-      wx.showToast({
-        title: '已按最低价排序',
-        icon: 'none',
-        duration: 2000
-      });
       this.setData({
         allData: [],
         loadingDisplay: 'block',
         listSortType: 1
-      });
+      })
     } else {
-      arr.sort(util.compareSort('finalPrice', 'desc'));
-      wx.showToast({
-        title: '已按最高价排序',
-        icon: 'none',
-        duration: 2000
-      });
       this.setData({
         allData: [],
         loadingDisplay: 'block',
         listSortType: 2
-      });
+      })
     }
     this.scrollFlag = false;
     this.setData({
-      allOriginalData: arr,
-      allData: arr.slice(0, 5),
+      allOriginalData: sort.arr,
+      allData: sort.arr.slice(0, 5),
       loadingDisplay: 'none',
       canScroll: true,
       y: 0,
-    });
+    })
   },
 
   async getAllData() {

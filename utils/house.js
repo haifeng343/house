@@ -954,6 +954,30 @@ const getHouseData = (data)=>{
   })
 }
 
+const sort = (arr,sortType) => {
+  if (sortType == 2) {
+    arr.sort(util.compareSort('finalPrice', 'asc'))
+    sortType = 1
+    wx.showToast({
+      title: '已按最低价排序',
+      icon: 'none',
+      duration: 2000
+    })
+  } else {
+    arr.sort(util.compareSort('finalPrice', 'desc'))
+    sortType = 2
+    wx.showToast({
+      title: '已按最高价排序',
+      icon: 'none',
+      duration: 2000
+    })
+  }
+
+  return {
+    arr,
+    sortType
+  }
+}
 function addPlatfromData(allData, PlatfromData, index) {
   if (index < PlatfromData.length) {
     //是否已满
@@ -977,5 +1001,6 @@ module.exports = {
   xzScreenParam,
   mnScreenPara,
   zgScreenPara,
-  getHouseData
+  getHouseData,
+  sort,
 }

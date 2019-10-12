@@ -350,3 +350,11 @@ page {
   margin: 0 auto;
   font-size: 28rpx;
 }
+.no-more-data {
+  width:100%;
+  text-align: center;
+  color:#A6A6A6;
+  position: absolute;
+  bottom:90px;
+  left:0;
+}
