@@ -15,7 +15,6 @@ Page({
         id: 0
       }
     ],
-    scrollContentHeight: 0,
     hotCity: '',
     hotarea: '',
     hotareaType: '',
@@ -263,8 +262,8 @@ Page({
   },
 
   searchSubmit() {
-    const app = getApp();
-    app.globalData.searchData = this.data.searchData;
+    const app = getApp()
+    app.globalData.searchData = this.data.searchData
     if (
       fecha.parse(app.globalData.searchData.beginDate, 'YYYY-MM-DD') -
       fecha.parse(app.globalData.searchData.endDate, 'YYYY-MM-DD') >
@@ -465,6 +464,7 @@ Page({
     searchData.minPrice = minPrice || 0;
     searchData.maxPrice = maxPrice || 99999;
     searchData.gueseNumber = gueseNumber || 1;
+    searchData.equipment = app.globalData.searchData.equipment || []
     this.setData(
       {
         searchData,
@@ -529,14 +529,6 @@ Page({
   },
   onLoad() {
     this.init();
-    wx.getSystemInfo({
-      success: res => {
-        var helfH = (750 * res.windowHeight) / res.windowWidth - 234;
-        this.setData({
-          scrollContentHeight: helfH
-        });
-      }
-    });
     this.searchDataSubscription = SearchDataSubject.subscribe(() => {
       this.setData({ showPriceBlock: false });
       setTimeout(() => {

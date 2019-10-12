@@ -7,7 +7,7 @@
           <image class="avator" src="{{headPortrait}}" />
           <view>
             <view class="name">{{nickName}}</view>
-            <view class="name">{{mobile}}</view>
+            <view class="name" wx:if='{{mobile}}'>{{mobile}}</view>
           </view>
         </view>
       </block>
