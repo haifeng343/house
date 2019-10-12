@@ -264,7 +264,7 @@ Page({
     this.scrollFlag = false;
     this.setData({
       allOriginalData: arr,
-      allData: arr.slice(0, 10),
+      allData: arr.slice(0, 5),
       loadingDisplay: 'none',
       canScroll: true,
       y: 0,

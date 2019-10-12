@@ -7,4 +7,4 @@ export const api_address = 'https://fytest.bangdingding.cn';
 // 测试环境: http://fddserver.pdd.test
 // 正式环境: https://piao.bangdingding.cn
 //测试环境https://fangtest.bangdingding.cn
-export const default_address = 'http://192.168.1.80:9001'; 
+export const default_address = 'http://fddserver.pdd.develop'; 
