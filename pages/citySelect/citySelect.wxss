@@ -203,11 +203,12 @@
   font-size: 24rpx;
   color: #171717;
   font-weight: 400;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-bottom: 20rpx;
-  margin-right: 24rpx;
+  margin-right: 20rpx;
+  max-width: 570rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .hot-image {
@@ -219,6 +220,15 @@
 
 .section .page .city-list .section .cell-list .cell-item.hot {
   background-color: #faf0e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.section .page .city-list .section .cell-list .cell-item.hot .text {
+  max-width: 200rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .section .page .city-item .title {

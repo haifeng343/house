@@ -48,7 +48,7 @@
             <block wx:for="{{hot}}" wx:for-item="item" wx:key="name">
               <view class="cell-item hot" data-item='{{item}}' bindtap="handleSelectCityByName">
                 <image src='../../assets/image/index/hot.png' class='hot-image' />
-                <text>{{item.name}}</text>
+                <view class="text">{{item.name}}</view>
               </view>
             </block>
           </view>
