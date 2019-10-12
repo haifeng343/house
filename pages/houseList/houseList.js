@@ -31,14 +31,12 @@ Page({
     mnLowPriceData: '',
     zgLowPriceData: '',
     showScrollTop: false,
-    scrollDetail: 0,
     enoughDisplay: 'none',
     enoughBottomDisplay: 'none',
     monitorDisplay: 'none',
     monitorBottomDisplay: 'none',
     collectDisplay: 'none',
     ddCoin: 0,
-    sIndex: 1,
     loadingDisplay: 'block',
     countFlag: '',
     checkInDate: '--', //入住日期
@@ -51,7 +49,9 @@ Page({
     showUI: true,
     y: 0,
     containerHeight: 9999,
-    canScroll: true
+    canScroll: true,
+    enoughBottom:false,
+    monitorBottom: false
   },
   topFlag: false,
   cardHeight: 0,
@@ -89,9 +89,6 @@ Page({
     });
     this.onLoad();
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function(options) {
     let tjScreen = house.tjScreenParam(1)
     let xzScreen = house.xzScreenParam(1)
@@ -111,9 +108,6 @@ Page({
     });
     this.getAllData();
   },
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function() {
     this.getUserInfo();
     this.setData({
@@ -189,15 +183,33 @@ Page({
       this.timer = null;
     }
     if (this.data.allData.length >= 50) {
-      this.setData({
-        enoughBottomDisplay: 'block',
-        canScroll: false
-      });
+      if (!this.data.enoughBottom){
+        this.setData({
+          enoughBottomDisplay: 'block',
+          enoughBottom: true,
+          canScroll: false
+        });
+      }else{
+        wx.showToast({
+          title: '到底了',
+          icon: 'none',
+          duration: 2000
+        })
+      }
     } else {
-      this.setData({
-        monitorBottomDisplay: 'block',
-        canScroll: false
-      });
+      if (!this.data.monitorBottom){
+        this.setData({
+          monitorBottomDisplay: 'block',
+          monitorBottom: true,
+          canScroll: false
+        });
+      }else{
+        wx.showToast({
+          title: '到底了',
+          icon: 'none',
+          duration: 2000
+        })
+      }
     }
   },
 
@@ -308,7 +320,9 @@ Page({
       isBack: false,
       canScroll: true,
       y: 0,
-      showUI: true
+      showUI: true,
+      enoughBottom: false,
+      monitorBottom: false,
       },
       () => {
         this.scrollFlag = false;

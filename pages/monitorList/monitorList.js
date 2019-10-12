@@ -15,8 +15,8 @@ Page({
     tjIdData: [],
     xzCount: 0,
     xzIdData: [],
-    mnIdCount: 0,
-    mnData: [],
+    mnCount: 0,
+    mnIdData: [],
     zgCount: 0,
     zgIdData: [],
     allCount: 0,
@@ -29,14 +29,11 @@ Page({
     xzLowPriceData: '',
     mnLowPriceData: '',
     zgLowPriceData: '',
-    scrollTop: 0,
-    scrollDetail: 0,
     stopDisplay: 'none',
     collectDisplay: 'none',
     enoughDisplay: 'none',
     enoughBottomDisplay: 'none',
     ddCoin: 0,
-    sIndex: 1,
     loadingDisplay: 'block',
     updateMonitorDisplay: 'none',
     countFlag: '',
@@ -44,13 +41,11 @@ Page({
     checkOutDate: '--', //退日期
     cityName: '--',
     locationName: '--',
-    delBtnWidth: 134,
     showAdvance: false,
     showAdvanceType: 0,
     isBack: false,
     hasDifference: false,
     isLoaded: false,
-    removeRight:-162,
     listSortType: 1,//列表排序，1 低到高；2高到低
     monitorEndDisplay:'none',
     showScrollTop: false,
@@ -58,6 +53,7 @@ Page({
     y: 0,
     containerHeight: 9999,
     canScroll: true,
+    enoughBottom: false,
   },
   topFlag: false,
   cardHeight: 0,
@@ -92,6 +88,8 @@ Page({
   compareData() {
     const app = getApp();
     var flag = false;
+    console.log(app.globalData.monitorDefaultData)
+    console.log(app.globalData.monitorSearchData)
     if (util.objectDiff(app.globalData.monitorDefaultData, app.globalData.monitorSearchData)) {
       flag = true;
       this.setData({
@@ -108,12 +106,10 @@ Page({
         locationName: app.globalData.monitorSearchData.area || '全城', //地点
       });
     }
+    console.log(flag)
     return flag;
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function () {
     const app = getApp()
     let data = app.globalData.monitorData
@@ -127,9 +123,6 @@ Page({
     })
     this.getMonitorData();
   },
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
     //如果选择的结果与监控的条件不一样；就加载查询
     this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true })
@@ -216,17 +209,27 @@ Page({
       clearTimeout(this.timer);
       this.timer = null;
     }
-    if (this.bottomType === 2){
+    if (this.data.bottomType === 2){
       if (this.data.allData.length >= 50) {
-        this.setData({
-          enoughBottomDisplay: 'block',
-          //canScroll: false
-        });
-      } else {
-        this.setData({
-          monitorBottomDisplay: 'block',
-          //canScroll: false
-        });
+        if (!this.data.enoughBottom) {
+          this.setData({
+            enoughBottomDisplay: 'block',
+            enoughBottom: true,
+            //canScroll: false
+          });
+        }else{
+          wx.showToast({
+            title: '到底了',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      }else{
+        wx.showToast({
+          title: '到底了',
+          icon: 'none',
+          duration: 2000
+        })
       }
     }else{
       wx.showToast({
@@ -360,7 +363,7 @@ Page({
         area: monitorDetail.locationName,
         areaId: monitorAreaId,
         ltude: monitorLtude,
-        areaType: monitorDetail.locationType,
+        areaType: monitorDetail.locationType+'',
         city: monitorDetail.cityName,//城市名
         cityId: monitorCityId,//城市ID
         cityJson: monitorDetail.cityJson,
@@ -382,7 +385,7 @@ Page({
         area: monitorDetail.locationName,
         areaId: monitorAreaId,
         ltude: monitorLtude,
-        areaType: monitorDetail.locationType,
+        areaType: monitorDetail.locationType + '',
         city: monitorDetail.cityName,//城市名
         cityId: monitorCityId,//城市ID
         cityJson: monitorDetail.cityJson,
@@ -596,6 +599,8 @@ Page({
         bottomType: 1, //0:房源列表；1监控详情房源列表；2监控详情修改之后
         loadingDisplay: 'none',
         countFlag: 1,
+        isBack: false,
+        canScroll: true,
         y: 0,
         showUI: true
       }, () => {
@@ -671,6 +676,10 @@ Page({
       zgIdData: houseData.zgId,
       loadingDisplay: 'none',
       isBack: false,
+      canScroll: true,
+      y: 0,
+      showUI: true,
+      enoughBottom: false,
       bottomType: 2,
       isMonitorHouse: 0,
       checkInDate: monitor.checkDate(app.globalData.monitorSearchData.beginDate), //入住日期
