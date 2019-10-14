@@ -140,7 +140,7 @@ page {
   position: absolute;
   left: -8rpx;
   top: 290rpx;
-  width: 162rpx;
+  width: auto;
   height: 58rpx;
   color: #fff;
   font-size: 32rpx;
