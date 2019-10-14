@@ -8,7 +8,8 @@
     "monitorBottomDialog": "../../components/monitorBottomDialog/monitorBottomDialog",
     "publicDialog": "../../components/publicDialog/publicDialog",
     "imageExtend": "../../components/imageExtend/imageExtend",
-    "advanceFilter": "../../components/advanceFilter/advanceFilter"
+    "advanceFilter": "../../components/advanceFilter/advanceFilter",
+    "noNetwork": "../../components/noNetwork/noNetwork"
   },
   "navigationBarTitleText": "房源列表"
 }

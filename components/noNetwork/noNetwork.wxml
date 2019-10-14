@@ -1,5 +1,5 @@
 <!--components/noNetwork/noNetwork.wxml-->
 <view class="container">
   <image class="image" src="../../assets/image/no_network.png"></image>
-  <view class="title">网络异常，请返回重试</view>
+  <view class="title">{{title}}</view>
 </view>

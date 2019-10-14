@@ -15,12 +15,19 @@
     </view>
   </view>
   <view class="block"></view>
-  <view class="card-list {{countFlag === 0 ? 'section_empty' : ''}}" style="height: {{containerHeight}}px">
+  <view class="card-list {{countFlag === 0||countFlag === 2 ? 'section_empty' : ''}}" style="height: {{containerHeight}}px">
     <view class="search_empty" wx:if="{{countFlag===0&&bottomType === 1}}">
       <view class="search_view">
         <image class="monitor_empty_image" src="../../assets/image/monitor_empty.png"></image>
       </view>
       <view class="search_view search_title">暂时未监控符合条件的房源</view>
+    </view>
+
+    <view  class="search_empty" wx:if="{{countFlag === 2&&countBack}}">
+      <noNetwork title="网络异常，请返回重试"></noNetwork>
+    </view>
+    <view  class="search_empty" wx:if="{{countFlag === 2&&!countBack}}">
+      <noNetwork title="网络异常，请刷新重试"></noNetwork>
     </view>
     <view class="search_empty" wx:if="{{countFlag === 0&&bottomType ===2}}">
       <view class="search_view">
@@ -62,6 +69,13 @@
             <view class="house_type">
               <text>{{item.preloadDetail}}</text>
             </view>
+            <view class="house_tag" wx:if="{{item.priceTag.length}}">
+              <block wx:for="{{item.priceTag}}" wx:for-index="i" wx:for-item="pitem">
+                <text wx:if="{{item.platformId == 'tj'}}">{{pitem.text}}</text>
+                <text wx:if="{{item.platformId == 'xz'}}">{{pitem.title}}</text>
+                <text wx:if="{{item.platformId == 'zg'}}">{{pitem.tagName}}</text>
+              </block>
+            </view>
           </view>
           <view class="house_photo">
             <image class="photo" src="{{item.logoUrl}}"></image>
@@ -70,6 +84,12 @@
       </view>
     </block>
     <view class="no-more-data" wx:if="{{allData.length}}">暂无更多房源</view>
+  </view>
+  <view class="house_monitor" wx:if="{{countFlag===2&&countBack}}">
+    <button class="monitor_btn" bindtap='goBack'>返回重试</button>
+  </view>
+  <view class="house_monitor" wx:if="{{countFlag===2&&!countBack}}">
+    <button class="monitor_btn" bindtap='goRefresh'>立即刷新</button>
   </view>
   <view class="monit_start {{bottomType === 1?'monit_stop':''}}" wx:if="{{bottomType === 1&&countFlag === 1}}">
     <view>
@@ -97,10 +117,6 @@
 
 
   
-  <noNetwork wx:if="{{countFlag===2}}"></noNetwork>
-  <view class="house_monitor" wx:if="{{countFlag===2}}">
-    <button class="monitor_btn" bindtap='goBack'>返回重试</button>
-  </view>
   <view class="house_loading" style="display:{{loadingDisplay}}">
     <image src="../../assets/image/loading.gif"></image>
   </view>
