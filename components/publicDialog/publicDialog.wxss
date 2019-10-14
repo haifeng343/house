@@ -19,6 +19,7 @@
 .mask_content .house_image .image{
   width: 84rpx;
   height: 74rpx;
+  margin-top: 26rpx;
 }
 .mask_content .content{
   width: 624rpx;
