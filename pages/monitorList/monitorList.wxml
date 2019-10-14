@@ -57,7 +57,7 @@
         <view class="house_classify" wx:else="{{item.platformId == 'zg'}}">榛果</view>
         <view class="house_swiper">{{item.curIndex}}/{{item.pictureList.length}}</view>
         <view class="house_price">
-          <text>¥{{item.finalPrice}}/晚{{dayCount==1?'(均价)':''}}</text>
+          <text>¥{{item.finalPrice}}/晚{{dayCount==1?'':'(均价)'}}</text>
           <view class="triangle"></view>
         </view>
         <view class="house_bottom">
