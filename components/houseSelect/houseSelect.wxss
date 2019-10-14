@@ -49,6 +49,9 @@
   border-right: 0;
   border-color: transparent transparent #1D1D1D;
 }
+.house_select .city .gray{
+  border-color: transparent transparent #D6D6D6;
+}
 .house_select .active {
   color: #F1612A;
 }

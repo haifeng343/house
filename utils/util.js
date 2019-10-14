@@ -123,6 +123,13 @@ const compareSort =(e,type)=>{
   
 }
 
+const arrFilter = (array,key,value) =>{
+  var arr = array.filter(function (item) {
+    return item[key] == value;
+  })
+  return arr
+}
+
 module.exports = {
   formatTime: formatTime,
   formatDate: formatDate,
@@ -131,5 +138,6 @@ module.exports = {
   datedifference: datedifference,
   objectDiff: objectDiff,
   compareSort: compareSort,
-  getDays: getDays
+  getDays: getDays,
+  arrFilter: arrFilter
 }

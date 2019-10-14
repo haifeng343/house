@@ -61,6 +61,10 @@ const getTjData = (type, tjfilter) => {
             tjCount = Number(res.data.totalCount)
             return houseApi.getTjList(data2);
           }
+        }else{
+          resolve({
+            network: true
+          })
         }
       })
       .then(res => {
@@ -128,9 +132,8 @@ const getXzData = (type, xzfilter) => {
         });
       } else {
         resolve({
-          arr: [],
-          xzCount
-        });
+          network: true
+        })
       }
     });
   });
@@ -205,25 +208,56 @@ const getMnData = (type, mnfilter) => {
           arr2 = res.data.rooms.list;
           mnCount = Number(res.data.rooms.page.record_count)
         }
-        return houseApi.getMnList(data2);
+        if(res){
+          return houseApi.getMnList(data2);
+        }
+        if(!res){
+          resolve({
+            network: true
+          })
+        }
       })
       .then(res => {
         if (res) {
           arr2.push.apply(arr2, res.data.rooms.list);
+        }
+        if (res&&arr2.length == 0){
           mnCount = Number(res.data.rooms.page.record_count)
         }
-        return houseApi.getMnList(data3);
+        if (res) {
+          return houseApi.getMnList(data3);
+        }
+        if(!res){
+          let arr = arr2.slice(0, 50);
+          resolve({
+            arr,
+            mnCount
+          });
+        }
       })
       .then(res => {
         if (res) {
           arr2.push.apply(arr2, res.data.rooms.list);
+        }
+        if (res &&arr2.length == 0) {
           mnCount = Number(res.data.rooms.page.record_count)
         }
-        return houseApi.getMnList(data4);
+        if(res){
+          return houseApi.getMnList(data4);
+        }
+        if (!res) {
+          let arr = arr2.slice(0, 50);
+          resolve({
+            arr,
+            mnCount
+          });
+        }
       })
       .then(res => {
         if (res) {
           arr2.push.apply(arr2, res.data.rooms.list);
+        }
+        if (res &&arr2.length == 0) {
           mnCount = Number(res.data.rooms.page.record_count)
         }
         let arr = arr2.slice(0, 50);
@@ -288,9 +322,8 @@ const getZgData = (type, zgfilter) => {
         });
       } else {
         resolve({
-          arr: [],
-          zgCount
-        });
+          network: true
+        })
       }
     });
   });
@@ -810,6 +843,7 @@ const getHouseData = (data)=>{
         tjObjs.preloadDetail = tjObj.preloadDetail.baseBrief[0].title + '/' + tjObj.preloadDetail.baseBrief[1].title + '/' + tjObj.preloadDetail.baseBrief[2].title
         tjObjs.finalPrice = Number(tjObj.finalPrice)
         tjObjs.productId = tjObj.unitId
+        tjObjs.priceTag = util.arrFilter(tjObj.priceTags,'type',6)
         tjFilterData.push(tjObjs)
         tjId.push(tjObj.unitId)
         if (tjObjs.finalPrice > 0) {
@@ -835,6 +869,7 @@ const getHouseData = (data)=>{
         xzObjs.preloadDetail = xzObj.luLeaseType + '/' + xzObj.houseTypeInfo + '/' + xzObj.guestnum
         xzObjs.finalPrice = Number(xzObj.showPriceV2.showPrice || xzObj.luPrice)
         xzObjs.productId = xzObj.luId
+        xzObjs.priceTag = util.arrFilter(xzObj.lodgeUnitNewTags, 'title', '长租优惠')
         xzFilterData.push(xzObjs)
         xzId.push(xzObj.luId)
         if (xzObjs.finalPrice > 0) {
@@ -885,6 +920,7 @@ const getHouseData = (data)=>{
         zgObjs.preloadDetail = zgObj.rentLayoutDesc + '/' + zgObj.guestNumberDesc
         zgObjs.finalPrice = zgObj.discountPrice ? zgObj.discountPrice / 100 : zgObj.price / 100
         zgObjs.productId = zgObj.productId
+        zgObjs.priceTag = util.arrFilter(zgObj.productTagList, 'tagId', 30)
         zgFilterData.push(zgObjs)
         zgId.push(zgObj.productId)
         if (zgObjs.finalPrice > 0) {
@@ -954,6 +990,133 @@ const getHouseData = (data)=>{
   })
 }
 
+const getMonitorHouseData = houseList=>{
+  let allData = []; //监控房源列表
+  let tjFilterData = []; //监控途家房源
+  let xzFilterData = []; //监控小猪房源
+  let mnFilterData = []; //监控木鸟房源
+  let zgFilterData = []; //监控榛果房源
+  let tjId = [],
+    xzId = [],
+    mnId = [],
+    zgId = [];
+  for (let i = 0; i < houseList.length; i++) {
+    if (houseList[i].platform == 'tj') {
+      let tjObj = {
+        platformId: houseList[i].platform,
+        curIndex: 1,
+        finishLoadFlag: false,
+        unitName: houseList[i].data.unitName,
+        logoUrl: houseList[i].data.logoUrl,
+        pictureList: houseList[i].data.pictureList,
+        preloadDetail: houseList[i].data.preloadDetail.baseBrief[0].title + '/' + houseList[i].data.preloadDetail.baseBrief[1].title + '/' + houseList[i].data.preloadDetail.baseBrief[2].title,
+        finalPrice: Number(houseList[i].data.finalPrice),
+        productId: houseList[i].data.unitId,
+        priceTag: util.arrFilter(houseList[i].data.priceTags, 'type', 6)
+      }
+      allData.push(tjObj)
+      tjFilterData.push(tjObj)
+      tjId.push(houseList[i].data.unitId)
+    }
+
+    if (houseList[i].platform == 'xz') {
+      let xzObj = {
+        platformId: houseList[i].platform,
+        curIndex: 1,
+        finishLoadFlag: false,
+        unitName: houseList[i].data.luTitle,
+        logoUrl: houseList[i].data.landlordheadimgurl,
+        pictureList: houseList[i].data.coverImages,
+        preloadDetail: houseList[i].data.luLeaseType + '/' + houseList[i].data.houseTypeInfo + '/' + houseList[i].data.guestnum,
+        finalPrice: Number(houseList[i].data.showPriceV2.showPrice || houseList[i].data.luPrice),
+        productId: houseList[i].data.luId,
+        priceTag: util.arrFilter(houseList[i].data.lodgeUnitNewTags, 'title', '长租优惠')
+      }
+      allData.push(xzObj)
+      xzFilterData.push(xzObj)
+      xzId.push(houseList[i].data.luId)
+    }
+
+    if (houseList[i].platform == 'mn') {
+      let mnObj = {
+        platformId: houseList[i].platform,
+        curIndex: 1,
+        finishLoadFlag: false,
+        unitName: houseList[i].data.title,
+        logoUrl: houseList[i].data.image_host,
+        pictureList: houseList[i].data.image_list,
+        preloadDetail: houseList[i].data.rent_type + '/' + houseList[i].data.source_type + '/宜住' + houseList[i].data.max_num,
+        finalPrice: Number(houseList[i].data.sale_price),
+        productId: houseList[i].data.room_id
+      }
+      allData.push(mnObj)
+      mnFilterData.push(mnObj)
+      mnId.push(houseList[i].data.room_id)
+    }
+
+    if (houseList[i].platform == 'zg') {
+      let zgObj = {
+        platformId: 'zg',
+        curIndex: 1,
+        finishLoadFlag: false,
+        unitName: houseList[i].data.title.replace(/\n/g, " "),
+        logoUrl: houseList[i].data.hostAvatarUrl,
+        pictureList: houseList[i].data.productImages,
+        preloadDetail: houseList[i].data.rentLayoutDesc + '/' + houseList[i].data.guestNumberDesc,
+        finalPrice: houseList[i].data.discountPrice ? houseList[i].data.discountPrice / 100 : houseList[i].data.price / 100,
+        productId: houseList[i].data.productId,
+        priceTag : util.arrFilter(houseList[i].data.productTagList, 'tagId', 30)
+      }
+      allData.push(zgObj)
+      zgFilterData.push(zgObj)
+      zgId.push(houseList[i].data.productId)
+    }
+  }
+  //平均价
+  let average = allData.length > 0 ? allData.reduce((sum, { finalPrice }) => sum + finalPrice, 0) / allData.length : 0;
+  let sortArr = [...allData];
+  let tjSortArr = [...tjFilterData];
+  let xzSortArr = [...xzFilterData];
+  let mnSortArr = [...mnFilterData];
+  let zgSortArr = [...zgFilterData];
+
+  //所有最低价
+  let lowPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) { return o.finalPrice; })) : 0;
+
+  //所有房源最低价格的数据
+  sortArr.sort(util.compareSort('finalPrice', 'asc'));
+  let lowPriceData = sortArr.length > 0 ? sortArr[0] : '';
+
+  allData = sortArr;
+  //途家最低价格数据
+  tjSortArr.sort(util.compareSort('finalPrice', 'asc'));
+  let tjLowPriceData = tjSortArr.length > 0 ? tjSortArr[0] : '';
+  //小猪最低价格数据
+  xzSortArr.sort(util.compareSort('finalPrice', 'asc'));
+  let xzLowPriceData = xzSortArr.length > 0 ? xzSortArr[0] : '';
+  //木鸟最低价格数据
+  mnSortArr.sort(util.compareSort('finalPrice', 'asc'));
+  let mnLowPriceData = mnSortArr.length > 0 ? mnSortArr[0] : '';
+  //榛果最低价格数据
+  zgSortArr.sort(util.compareSort('finalPrice', 'asc'));
+  let zgLowPriceData = zgSortArr.length > 0 ? zgSortArr[0] : '';
+  return ({
+    allData,
+    averagePrice: parseInt(average),
+    lowPrice,
+    lowPriceData,
+    tjLowPriceData,
+    xzLowPriceData,
+    mnLowPriceData,
+    zgLowPriceData,
+    tjId,
+    xzId,
+    mnId,
+    zgId,
+  })
+  
+}
+
 const sort = (arr,sortType) => {
   if (sortType == 2) {
     arr.sort(util.compareSort('finalPrice', 'asc'))
@@ -1002,5 +1165,6 @@ module.exports = {
   mnScreenPara,
   zgScreenPara,
   getHouseData,
+  getMonitorHouseData,
   sort,
 }

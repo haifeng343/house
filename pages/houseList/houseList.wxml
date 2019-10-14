@@ -15,13 +15,16 @@
     </view>
   </view>
   <view class="block"></view>
-  <view class="card-list {{countFlag === 0 ? 'section_empty' : ''}}" style="height: {{containerHeight}}px">
+  <view class="card-list {{countFlag === 0||countFlag === 2 ? 'section_empty' : ''}}" style="height: {{containerHeight}}px">
     <view class="search_empty" wx:if="{{countFlag === 0}}">
       <view class="search_view">
         <image class="empty_image" src="../../assets/image/search_empty.png"></image>
       </view>
       <view class="search_view search_title">未找到符合条件的房源</view>
       <view class="search_view search_tip">立即添加监控，第一时间推送房源信息，再也不怕心仪的房源擦肩而过</view>
+    </view>
+    <view  class="search_empty" wx:if="{{countFlag === 2}}">
+      <noNetwork title="网络异常，请刷新重试"></noNetwork>
     </view>
     <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
       <view class="house_card" data-productId="{{item.productId}}" data-platform="{{item.platformId}}" catchtap="goToPlatformDetail">
@@ -52,6 +55,13 @@
             <view class="house_type">
               <text>{{item.preloadDetail}}</text>
             </view>
+            <view class="house_tag" wx:if="{{item.priceTag.length}}">
+              <block wx:for="{{item.priceTag}}" wx:for-index="i" wx:for-item="pitem">
+                <text wx:if="{{item.platformId == 'tj'}}">{{pitem.text}}</text>
+                <text wx:if="{{item.platformId == 'xz'}}">{{pitem.title}}</text>
+                <text wx:if="{{item.platformId == 'zg'}}">{{pitem.tagName}}</text>
+              </block>
+            </view>
           </view>
           <view class="house_photo">
             <image class="photo" src="{{item.logoUrl}}"></image>
@@ -62,8 +72,9 @@
     <view class="no-more-data" wx:if="{{allData.length}}">暂无更多房源</view>
   </view>
   <view class="house_monitor" wx:if="{{loadingDisplay == 'none'}}">
-    <button wx:if="{{allCount>=50}}" class="monitor_btn" bindtap='startMonitor'>查看更多</button>
-    <button wx:else class="monitor_btn" bindtap='startMonitor'>开启监控</button>
+    <button wx:if="{{countFlag ===1 &&allCount>=50}}" class="monitor_btn" bindtap='startMonitor'>查看更多</button>
+    <button wx:if="{{countFlag ===1 &&allCount<50}}" class="monitor_btn" bindtap='startMonitor'>开启监控</button>
+    <button wx:if="{{countFlag ===2}}"class="monitor_btn" bindtap='goRefresh'>立即刷新</button>
   </view>
   <view wx:if="{{countFlag === 1}}" class="house_shortcuts {{showUI ? '' : 'hidden'}}">
     <view>
@@ -73,6 +84,8 @@
       <image bindtap="goSort" class="sort" src="../../assets/image/sort.png"></image>
     </view>
   </view>
+
+  
   <view class="house_loading" style="display:{{loadingDisplay}}">
     <image src="../../assets/image/loading.gif"></image>
   </view>

@@ -127,7 +127,17 @@ Page({
       this.onLoad();
     }
   },
-
+  goRefresh(){
+    this.setData({
+      loadingDisplay: 'block',
+      countFlag: '',
+      allData: [],
+      y: 0,
+      showUI: true,
+      containerHeight: 9999
+    });
+    this.onLoad()
+  },
   handleScroll(event) {
     // 这里虽然写的多了一点,但是把频繁的setData调用减少了很多次
     if (this.scrollFlag === false) {
@@ -269,6 +279,14 @@ Page({
     let xzDataObj = await house.getXzData(1, this.data.xzfilter);
     let mnDataObj = await house.getMnData(1, this.data.mnfilter);
     let zgDataObj = await house.getZgData(1, this.data.zgfilter);
+    if (tjDataObj.network && xzDataObj.network && mnDataObj.network && zgDataObj.network){
+      this.setData({
+        loadingDisplay: 'none',
+        countFlag: 2,
+        canScroll:false
+      })
+      return;
+    }
     let tjData = tjDataObj.arr;
     let xzData = xzDataObj.arr;
     let mnData = mnDataObj.arr;
@@ -297,7 +315,8 @@ Page({
       });
     } else {
       this.setData({
-        countFlag: 0
+        countFlag: 0,
+        canScroll:false
       });
     }
 

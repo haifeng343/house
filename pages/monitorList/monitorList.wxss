@@ -193,8 +193,16 @@ page {
   align-items: center;
 }
 
-/* .house_card .house_type text:first-child{margin-right: 256rpx;}
-.house_card .house_type text:last-child{color: #FF6363} */
+.house_card .house_tag{
+  width: 110rpx;
+  height: 30rpx;
+  color: #FF6363;
+  border:2rpx solid #FF6363;
+  border-radius: 18rpx;
+  font-size: 20rpx;
+  margin-top: 8rpx;
+  text-align: center;
+}
 
 .house_card .distance {
   width: 26rpx;
@@ -336,8 +344,12 @@ page {
   width: 320rpx;
   height: 222rpx;
 }
-
-
+.house_monitor {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 30rpx;
+}
 .house_monitor .monitor_btn {
   width: 480rpx;
   height: 92rpx;

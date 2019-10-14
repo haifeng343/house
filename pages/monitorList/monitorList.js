@@ -106,7 +106,6 @@ Page({
         locationName: app.globalData.monitorSearchData.area || '全城', //地点
       });
     }
-    console.log(flag)
     return flag;
   },
 
@@ -154,7 +153,9 @@ Page({
     })
     this.getAllData();
   },
-
+  goRefresh(){
+    this.onShow()
+  },
   handleScroll(event) {
     // 这里虽然写的多了一点,但是把频繁的setData调用减少了很多次
     if (this.scrollFlag === false) {
@@ -293,15 +294,6 @@ Page({
    * 监控详情信息
    */
   getMonitorData() {
-    let allData = []; //监控房源列表
-    let tjFilterData = []; //监控途家房源
-    let xzFilterData = []; //监控小猪房源
-    let mnFilterData = []; //监控木鸟房源
-    let zgFilterData = []; //监控榛果房源
-    let tjId = [],
-      xzId = [],
-      mnId = [],
-      zgId = [];
     let data = {
       id: this.data.monitorId,
     };
@@ -310,15 +302,14 @@ Page({
         this.setData({
           loadingDisplay: 'none',
           countFlag: 2, 
+          canScroll:false,
+          countBack:true
         })
         return;
       }
-      
       let houseList = res.data.data.houseList; //监控房源
       let monitorDetail = res.data.data.monitorDetail; //监控条件
       let monitorCount = res.data.data.monitorCount; //监控计算
-
-
       let monitorCityId = {}
       let cityList = JSON.parse(monitorDetail.cityJson || '[]')
       for (const key in cityList) {
@@ -332,7 +323,6 @@ Page({
           monitorCityId.zg = cityList.zg.id
         }
       }
-
       let monitorAreaId = {};
       let monitorLtude = {};
       let areaList = JSON.parse(monitorDetail.positionJson || '[]')
@@ -357,7 +347,7 @@ Page({
           zg: areaList.zg && (areaList.zg.id)
         }
       }
-
+      //监控详情条件 ---高级筛选可用改变
       app.globalData.monitorSearchData = {
         cityType: monitorDetail.cityType,
         area: monitorDetail.locationName,
@@ -379,7 +369,7 @@ Page({
         sort: monitorDetail.sortType,//搜索方式 1推荐 2低价有限
         equipment: monitorDetail.facilities && monitorDetail.facilities.split(',') || []
       }
-
+      //监控详情条件 ---监控默认条件
       app.globalData.monitorDefaultData = {
         cityType: monitorDetail.cityType,
         area: monitorDetail.locationName,
@@ -401,195 +391,51 @@ Page({
         sort: monitorDetail.sortType,//搜索方式 1推荐 2低价有限
         equipment: monitorDetail.facilities && monitorDetail.facilities.split(',') || []
       }
-
-      let totalFee = res.data.data.monitorDetail.fee
+      let searchData = app.globalData.monitorSearchData;
+      let defaultData = app.globalData.monitorDefaultData;
       this.setData({
-        checkInDate: monitor.checkDate(app.globalData.monitorSearchData.beginDate), //入住日期
-        checkOutDate: monitor.checkDate(app.globalData.monitorSearchData.endDate), //离开日期
-        cityName: app.globalData.monitorSearchData.city, //入住城市
-        locationName: app.globalData.monitorSearchData.area || '全城', //地点
-        defaultBeginDate: app.globalData.monitorDefaultData.beginDate,
-        defaultEndDate: app.globalData.monitorDefaultData.endDate,
-        defaultCityName: app.globalData.monitorDefaultData.city,
-        defaultLocationName: app.globalData.monitorDefaultData.area || '--',
-        defaultMInPrice: app.globalData.monitorDefaultData.minPrice,
-        defaultMaxPrice: app.globalData.monitorDefaultData.maxPrice,
+        checkInDate: monitor.checkDate(searchData.beginDate), //入住日期
+        checkOutDate: monitor.checkDate(searchData.endDate), //离开日期
+        cityName: searchData.city, //入住城市
+        locationName: searchData.area || '全城', //地点
+        defaultBeginDate: defaultData.beginDate,
+        defaultEndDate: defaultData.endDate,
+        defaultCityName: defaultData.city,
+        defaultLocationName: defaultData.area || '全城',
+        defaultMInPrice: defaultData.minPrice,
+        defaultMaxPrice: defaultData.maxPrice,
         isLoaded: true,
-        totalFee
       })
 
       if (!monitorCount || !monitorCount.allTotal || monitorCount.allTotal == 0 || houseList.length == 0) {
         this.setData({
           countFlag: 0,
           loadingDisplay: 'none',
+          canScroll: false,
           bottomType: 1, //0:房源列表；1监控详情房源列表；2监控详情修改之后
         })
         return;
       }
-
-      for (let i = 0; i < houseList.length; i++) {
-        if (houseList[i].platform == 'tj') {
-          allData.push({
-            platformId: houseList[i].platform,
-            curIndex: 1,
-            finishLoadFlag: false,
-            unitName: houseList[i].data.unitName,
-            logoUrl: houseList[i].data.logoUrl,
-            pictureList: houseList[i].data.pictureList,
-            preloadDetail: houseList[i].data.preloadDetail.baseBrief[0].title + '/' + houseList[i].data.preloadDetail.baseBrief[1].title + '/' + houseList[i].data.preloadDetail.baseBrief[2].title,
-            finalPrice: Number(houseList[i].data.finalPrice),
-            productId: houseList[i].data.unitId,
-            right: 0
-          })
-          tjFilterData.push({
-            platformId: houseList[i].platform,
-            curIndex: 1,
-            finishLoadFlag: false,
-            unitName: houseList[i].data.unitName,
-            logoUrl: houseList[i].data.logoUrl,
-            pictureList: houseList[i].data.pictureList,
-            preloadDetail: houseList[i].data.preloadDetail.baseBrief[0].title + '/' + houseList[i].data.preloadDetail.baseBrief[1].title + '/' + houseList[i].data.preloadDetail.baseBrief[2].title,
-            finalPrice: Number(houseList[i].data.finalPrice),
-            productId: houseList[i].data.unitId,
-          })
-
-          tjId.push(houseList[i].data.unitId)
-        }
-
-        if (houseList[i].platform == 'xz') {
-          allData.push({
-            platformId: houseList[i].platform,
-            curIndex: 1,
-            finishLoadFlag: false,
-            unitName: houseList[i].data.luTitle,
-            logoUrl: houseList[i].data.landlordheadimgurl,
-            pictureList: houseList[i].data.coverImages,
-            preloadDetail: houseList[i].data.luLeaseType + '/' + houseList[i].data.houseTypeInfo + '/' + houseList[i].data.guestnum,
-            finalPrice: Number(houseList[i].data.showPriceV2.showPrice || houseList[i].data.luPrice),
-            productId: houseList[i].data.luId,
-            right: 0
-          })
-          xzFilterData.push({
-            platformId: houseList[i].platform,
-            curIndex: 1,
-            finishLoadFlag: false,
-            unitName: houseList[i].data.luTitle,
-            logoUrl: houseList[i].data.landlordheadimgurl,
-            pictureList: houseList[i].data.coverImages,
-            preloadDetail: houseList[i].data.luLeaseType + '/' + houseList[i].data.houseTypeInfo + '/' + houseList[i].data.guestnum,
-            finalPrice: Number(houseList[i].data.showPriceV2.showPrice || houseList[i].data.luPrice),
-            productId: houseList[i].data.luId,
-          })
-
-          xzId.push(houseList[i].data.luId)
-        }
-
-        if (houseList[i].platform == 'mn') {
-          allData.push({
-            platformId: houseList[i].platform,
-            curIndex: 1,
-            finishLoadFlag: false,
-            unitName: houseList[i].data.title,
-            logoUrl: houseList[i].data.image_host,
-            pictureList: houseList[i].data.image_list,
-            preloadDetail: houseList[i].data.rent_type + '/' + houseList[i].data.source_type + '/宜住' + houseList[i].data.max_num,
-            finalPrice: Number(houseList[i].data.sale_price),
-            productId: houseList[i].data.room_id,
-            right: 0
-          })
-          mnFilterData.push({
-            platformId: houseList[i].platform,
-            curIndex: 1,
-            finishLoadFlag: false,
-            unitName: houseList[i].data.title,
-            logoUrl: houseList[i].data.image_host,
-            pictureList: houseList[i].data.image_list,
-            preloadDetail: houseList[i].data.rent_type + '/' + houseList[i].data.source_type + '/宜住' + houseList[i].data.max_num,
-            finalPrice: Number(houseList[i].data.sale_price),
-            productId: houseList[i].data.room_id,
-          })
-
-          mnId.push(houseList[i].data.room_id)
-        }
-
-        if (houseList[i].platform == 'zg') {
-          allData.push({
-            platformId: 'zg',
-            curIndex: 1,
-            finishLoadFlag: false,
-            unitName: houseList[i].data.title.replace(/\n/g, " "),
-            logoUrl: houseList[i].data.hostAvatarUrl,
-            pictureList: houseList[i].data.productImages,
-            preloadDetail: houseList[i].data.rentLayoutDesc + '/' + houseList[i].data.guestNumberDesc,
-            finalPrice: houseList[i].data.discountPrice ? houseList[i].data.discountPrice / 100 : houseList[i].data.price / 100,
-            productId: houseList[i].data.productId,
-            right: 0
-          })
-          zgFilterData.push({
-            platformId: 'zg',
-            curIndex: 1,
-            finishLoadFlag: false,
-            unitName: houseList[i].data.title.replace(/\n/g, " "),
-            logoUrl: houseList[i].data.hostAvatarUrl,
-            pictureList: houseList[i].data.productImages,
-            preloadDetail: houseList[i].data.rentLayoutDesc + '/' + houseList[i].data.guestNumberDesc,
-            finalPrice: houseList[i].data.discountPrice ? houseList[i].data.discountPrice / 100 : houseList[i].data.price / 100,
-            productId: houseList[i].data.productId
-          })
-
-          zgId.push(houseList[i].data.productId)
-        }
-      }
-      let average = allData.length > 0 ? allData.reduce((sum, {
-        finalPrice
-      }) => sum + finalPrice, 0) / allData.length : 0;
-      let sortArr = [...allData];
-      let tjSortArr = [...tjFilterData]
-      let xzSortArr = [...xzFilterData]
-      let mnSortArr = [...mnFilterData]
-      let zgSortArr = [...zgFilterData]
-
-      //所有房源最低价格的数据
-      sortArr.sort(util.compareSort('finalPrice', 'asc'))
-      let lowPriceData = sortArr[0] || {}
-      //途家最低价格数据
-      tjSortArr.sort(util.compareSort('finalPrice', 'asc'))
-      let tjLowPriceData = tjSortArr[0] || {}
-      //小猪最低价格数据
-      xzSortArr.sort(util.compareSort('finalPrice', 'asc'))
-      let xzLowPriceData = xzSortArr[0] || {}
-      //木鸟最低价格数据
-      mnSortArr.sort(util.compareSort('finalPrice', 'asc'))
-      let mnLowPriceData = mnSortArr[0] || {}
-      //榛果最低价格数据
-      zgSortArr.sort(util.compareSort('finalPrice', 'asc'))
-      let zgLowPriceData = zgSortArr[0] || {}
-
-      //所有最低价
-      let lowPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) {
-        return o.finalPrice
-      })) : 0
-
-
+      let monitorHouseData = house.getMonitorHouseData(houseList);//监控房源列表
       this.setData({
-        allOriginalData: allData,
-        allData: allData.slice(0, 5),
+        allOriginalData: monitorHouseData.allData,
+        allData: monitorHouseData.allData.slice(0, 5),
         allCount: monitorCount.allTotal,
-        averagePrice: parseInt(average),
-        lowPrice: lowPrice,
-        lowPriceData,
-        tjLowPriceData,
-        xzLowPriceData,
-        mnLowPriceData,
-        zgLowPriceData,
+        averagePrice: monitorHouseData.averagePrice,
+        lowPrice: monitorHouseData.lowPrice,
+        lowPriceData: monitorHouseData.lowPriceData,
+        tjLowPriceData: monitorHouseData.tjLowPriceData,
+        xzLowPriceData: monitorHouseData.xzLowPriceData,
+        mnLowPriceData: monitorHouseData.mnLowPriceData,
+        zgLowPriceData: monitorHouseData.zgLowPriceData,
         tjCount: monitorCount.tjTotal,
         xzCount: monitorCount.xzTotal,
         mnCount: monitorCount.mnTotal,
         zgCount: monitorCount.zgTotal,
-        tjIdData: tjId,
-        xzIdData: xzId,
-        mnIdData: mnId,
-        zgIdData: zgId,
+        tjIdData: monitorHouseData.tjId,
+        xzIdData: monitorHouseData.xzId,
+        mnIdData: monitorHouseData.mnId,
+        zgIdData: monitorHouseData.zgId,
         isMonitorHouse: 1, //1;不可收藏；0；可收藏
         taskTime: monitor.taskTime(monitorDetail.monitorTime, monitorDetail.minutes),
         startTimeName: monitor.startTimeName(monitorDetail.startTime),
@@ -627,6 +473,15 @@ Page({
     let xzDataObj = await house.getXzData(2, this.data.xzfilter);
     let mnDataObj = await house.getMnData(2, this.data.mnfilter);
     let zgDataObj = await house.getZgData(2, this.data.zgfilter);
+    if (tjDataObj.network && xzDataObj.network && mnDataObj.network && zgDataObj.network) {
+      this.setData({
+        loadingDisplay: 'none',
+        countFlag: 2,
+        canScroll: false,
+        countBack: false
+      })
+      return;
+    }
     let tjData = tjDataObj.arr;
     let xzData = xzDataObj.arr;
     let mnData = mnDataObj.arr;
@@ -655,7 +510,8 @@ Page({
       });
     } else {
       this.setData({
-        countFlag: 0
+        countFlag: 0,
+        canScroll: false
       });
     }
 

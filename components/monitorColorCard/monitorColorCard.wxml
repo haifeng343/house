@@ -2,6 +2,7 @@
   <movable-area class="area">
     <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
       <view class="{{item.nowHouseCount ==0?'red_bg':'green_bg'}}"></view>
+      <view class="{{item.nowHouseCount ==0?'dred_bg':'dgreen_bg'}}"></view>
       <view class="card_content">
         <view class="card_message">
           <view class="card_date">
