@@ -5,14 +5,14 @@
     </view>
     <view class="city" bindtap='goCity'>
       <view class="text">{{cityName}}</view>
-      <view class="triangle icon-font uniE951 {{type == 'monitor'?'gray':''}}"></view>
+      <view class="triangle {{type == 'monitor'?'gray':''}}"></view>
     </view>
     <view class="scenic_area {{showType==2?'active':''}}" bindtap='showLocationFilter'>
       <view class="text">{{locationName}}</view>
-      <view class="triangle icon-font uniE951"></view>
+      <view class="triangle"></view>
     </view>
     <view class="filter {{showType==1?'active':''}}" bindtap='showAdvanceFilter'>
       <view class="text">高级筛选</view>
-      <view class="triangle icon-font uniE951"></view>
+      <view class="triangle"></view>
     </view>
   </view>
