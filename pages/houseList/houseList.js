@@ -41,6 +41,7 @@ Page({
     countFlag: '',
     checkInDate: '--', //入住日期
     checkOutDate: '--', //退日期
+    dayCount: 1,//入住天数
     cityName: '--',
     locationName: '全城',
     publicDisplay: 'none',
@@ -102,6 +103,7 @@ Page({
       zgfilter: zgScreen,
       checkInDate: x.beginDate.split('-')[1] +'.' +x.beginDate.split('-')[2],
       checkOutDate: x.endDate.split('-')[1] +'.' +x.endDate.split('-')[2],
+      dayCount: x.dayCount,
       cityName: x.city,
       locationName: x.area || '全城',
       listSortType: 1
