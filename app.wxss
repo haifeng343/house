@@ -80,7 +80,7 @@ page {
 /**
 弹窗整体图（下边有波浪线）
 */
-.mask_content{
+.mask_content_back{
   width: 624rpx;
   height: 690rpx;
   margin-top: 200rpx;
