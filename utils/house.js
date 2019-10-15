@@ -455,7 +455,6 @@ const tjScreenParam = type => {
             type: 6,
             value: 207
           });
-          mnSupport.push(8);
           break;
         case '6':
           tjconditions.push({
