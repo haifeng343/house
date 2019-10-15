@@ -89,7 +89,7 @@
   </view>
 
   
-  <view class="house_loading" style="display:{{loadingDisplay}}">
+  <view class="house_loading" style="display:{{loadingDisplay}}" catchtouchmove="preventTouchMove">
     <image src="../../assets/image/loading.gif"></image>
   </view>
   <enoughDialog tjCount="{{tjCount}}" xzCount="{{xzCount}}" mnCount="{{mnCount}}" zgCount="{{zgCount}}" bind:enoughEvent="getEnoughEvent" style="display:{{enoughDisplay}}"></enoughDialog>

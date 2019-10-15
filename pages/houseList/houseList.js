@@ -657,4 +657,5 @@ Page({
       [item]: e.detail.current + 1
     });
   },
+  preventTouchMove(){}
 });
