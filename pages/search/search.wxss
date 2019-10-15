@@ -15,6 +15,8 @@
 .banner {
   width: 750rpx;
   height: 468rpx;
+  position: relative;
+  z-index: 1;
 }
 
 .banner-image {
@@ -24,18 +26,15 @@
 }
 
 .content {
+  position: relative;
   overflow: hidden;
   margin: -240rpx auto 20rpx;
   flex: 1;
-  z-index: 1;
+  z-index: 2;
   border-bottom-left-radius: 12rpx;
   border-bottom-right-radius: 12rpx;
   /* margin-bottom: 10px; */
   box-shadow: 6rpx 10rpx 20rpx 0rpx rgba(0, 0, 0, 0.07);
-}
-
-.banner {
-  position: relative;
 }
 
 .search-box {

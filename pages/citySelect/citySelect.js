@@ -258,7 +258,7 @@ Page({
           }
           wx.setStorageSync('citySearchHistory', citySearchHistory)
           wx.showToast({
-            title: '该地点不存在',
+            title: '该地点已不存在',
             icon: 'none',
             duration: 2000
           })

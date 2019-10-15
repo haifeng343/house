@@ -27,6 +27,6 @@
             </view>
         </block>
         <view wx:if="{{hasAsked && resultLength == 0}}" class="city-no-data">未找到相关结果~</view>
-        <view wx:if="{{hasAsked && resultLength == -1}}" class="city-no-data">输入内容过短~</view>
+        <view wx:if="{{hasAsked && resultLength == -1}}" class="city-no-data">输入内容过少，无法定位</view>
     </scroll-view>
 </view>
