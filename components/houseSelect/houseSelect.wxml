@@ -4,7 +4,7 @@
       <view>退:{{checkOutDate}}</view>
     </view>
     <view class="city" bindtap='goCity'>
-      <view class="text">{{cityName}}</view>
+      <view class="text {{type == 'monitor'?'gray':''}}">{{cityName}}</view>
       <view class="triangle {{type == 'monitor'?'gray':''}}"></view>
     </view>
     <view class="scenic_area {{showType==2?'active':''}}" bindtap='showLocationFilter'>

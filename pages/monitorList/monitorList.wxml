@@ -69,7 +69,7 @@
             <view class="house_type">
               <text>{{item.preloadDetail}}</text>
             </view>
-            <view class="house_tag" wx:if="{{item.priceTag.length}}">
+            <view class="house_tag {{item.priceTag&&item.priceTag.length>0?'':'house_tag_none'}}">
               <block wx:for="{{item.priceTag}}" wx:for-index="i" wx:for-item="pitem" wx:key="{{i}}">
                 <text wx:if="{{item.platformId == 'tj'}}">{{pitem.text}}</text>
                 <text wx:if="{{item.platformId == 'xz'}}">{{pitem.title}}</text>

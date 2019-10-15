@@ -66,7 +66,9 @@
   white-space: nowrap;
   text-align: center;
 }
-
+.house_select .city .gray{
+  color: #D6D6D6
+}
 /* .house_select .scenic_area{
   color: #F1612A
 } */

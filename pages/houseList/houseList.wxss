@@ -221,6 +221,9 @@ page {
   margin-top: 8rpx;
   text-align: center;
 }
+.house_card .house_tag_none{
+  border: none
+}
 
 .house_card .distance {
   width: 26rpx;
