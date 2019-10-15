@@ -39,6 +39,7 @@ Page({
     countFlag: '',
     checkInDate: '--', //入住日期
     checkOutDate: '--', //退日期
+    dayCount: 1,//入住天数
     cityName: '--',
     locationName: '--',
     showAdvance: false,
@@ -75,6 +76,7 @@ Page({
       countFlag: '',
       checkInDate: monitor.checkDate(app.globalData.monitorSearchData.beginDate), //入住日期
       checkOutDate: monitor.checkDate(app.globalData.monitorSearchData.endDate), //离开日期
+      dayCount: app.globalData.monitorSearchData.dayCount,
       cityName: app.globalData.monitorSearchData.city, //入住城市
       locationName: app.globalData.monitorSearchData.area || '全城', //地点
       allData: [],
@@ -102,6 +104,7 @@ Page({
         countFlag: '',
         checkInDate: monitor.checkDate(app.globalData.monitorSearchData.beginDate), //入住日期
         checkOutDate: monitor.checkDate(app.globalData.monitorSearchData.endDate), //离开日期
+        dayCount: app.globalData.monitorSearchData.dayCount,
         cityName: app.globalData.monitorSearchData.city, //入住城市
         locationName: app.globalData.monitorSearchData.area || '全城', //地点
       });
@@ -396,6 +399,7 @@ Page({
       this.setData({
         checkInDate: monitor.checkDate(searchData.beginDate), //入住日期
         checkOutDate: monitor.checkDate(searchData.endDate), //离开日期
+        dayCount: searchData.dayCount,
         cityName: searchData.city, //入住城市
         locationName: searchData.area || '全城', //地点
         defaultBeginDate: defaultData.beginDate,
@@ -540,6 +544,7 @@ Page({
       isMonitorHouse: 0,
       checkInDate: monitor.checkDate(app.globalData.monitorSearchData.beginDate), //入住日期
       checkOutDate: monitor.checkDate(app.globalData.monitorSearchData.endDate), //离开日期
+      dayCount: app.globalData.monitorSearchData.dayCount,
       beginDate: app.globalData.monitorSearchData.beginDate,
       endDate: app.globalData.monitorSearchData.endDate,
       cityName: app.globalData.monitorSearchData.city, //入住城市
