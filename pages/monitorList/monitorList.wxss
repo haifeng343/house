@@ -208,13 +208,15 @@ page {
 
 .house_card .house_tag{
   width: 110rpx;
-  height: 30rpx;
+  height: 34rpx;
   color: #FF6363;
   border:2rpx solid #FF6363;
+  box-sizing: border-box;
   border-radius: 18rpx;
   font-size: 20rpx;
   margin-top: 8rpx;
   text-align: center;
+  line-height: 30rpx;
 }
 .house_card .house_tag_none{
   border: none
