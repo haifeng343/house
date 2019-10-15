@@ -18,7 +18,7 @@
         </view>
     </view>
     <view class='position-box' wx:if='{{hotPosition.length>0}}'>
-        <view class='position-box-title hot-city'>热门城市</view>
+        <view class='position-box-title hot-city'>热门搜索</view>
         <view class='position-list hot-city'>
             <view class='item hot-city' wx:for='{{hotPosition}}' wx:key='{{index}}' bindtap='handleSelectHotPosition' data-item='{{item}}'>
               <image src='../../assets/image/index/hot.png' class='hot-image' />
