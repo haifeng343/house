@@ -293,13 +293,19 @@ Page({
     let xzData = xzDataObj.arr;
     let mnData = mnDataObj.arr;
     let zgData = zgDataObj.arr;
+    let enoughList = [];
+    if (tjDataObj.tjCount > -1) { enoughList.push({ key: 'tj',name:'途家', value: tjDataObj.tjCount})}
+    if (xzDataObj.xzCount > -1) { enoughList.push({ key: 'xz', name: '小猪',value: xzDataObj.xzCount }) }
+    if (mnDataObj.mnCount > -1) { enoughList.push({ key: 'mn', name: '木鸟', value: mnDataObj.mnCount }) }
+    if (zgDataObj.zgCount > -1) { enoughList.push({ key: 'zg', name: '榛果', value: zgDataObj.zgCount }) }
+    enoughList.sort(util.compareSort('value', 'desc'));
     this.setData({
       tjCount: tjDataObj.tjCount,
       xzCount: xzDataObj.xzCount,
       mnCount: mnDataObj.mnCount,
-      zgCount: zgDataObj.zgCount
+      zgCount: zgDataObj.zgCount,
+      enoughList
     })
-
     let houseData = house.getHouseData({
       tjCount: tjDataObj.tjCount,
       xzCount: xzDataObj.xzCount,
@@ -387,10 +393,7 @@ Page({
       xzLowPriceData: this.data.xzLowPriceData,
       mnLowPriceData: this.data.mnLowPriceData,
       zgLowPriceData: this.data.zgLowPriceData,
-      tjCount: this.data.tjCount,
-      xzCount: this.data.xzCount,
-      mnCount: this.data.mnCount,
-      zgCount: this.data.zgCount,
+      enoughList: this.data.enoughList,
       tjFilterCount: this.data.tjIdData,
       xzFilterCount: this.data.xzIdData,
       mnFilterCount: this.data.mnIdData,

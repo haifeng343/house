@@ -421,6 +421,14 @@ Page({
         return;
       }
       let monitorHouseData = house.getMonitorHouseData(houseList);//监控房源列表
+      let enoughList = [];
+      if (monitorCount.tjTotal > -1) { enoughList.push({ key: 'tj', name: '途家', value: monitorCount.tjTotal }) }
+      if (monitorCount.xzTotal > -1) { enoughList.push({ key: 'xz', name: '小猪', value: monitorCount.xzTotal }) }
+      if (monitorCount.mnTotal > -1) { enoughList.push({ key: 'mn', name: '木鸟', value: monitorCount.mnTotal }) }
+      if (monitorCount.zgTotal > -1) { enoughList.push({ key: 'zg', name: '榛果', value: monitorCount.zgTotal }) }
+
+      enoughList.sort(util.compareSort('value', 'desc'));
+      
       this.setData({
         allOriginalData: monitorHouseData.allData,
         allData: monitorHouseData.allData.slice(0, 5),
@@ -432,6 +440,7 @@ Page({
         xzLowPriceData: monitorHouseData.xzLowPriceData,
         mnLowPriceData: monitorHouseData.mnLowPriceData,
         zgLowPriceData: monitorHouseData.zgLowPriceData,
+        enoughList,
         tjCount: monitorCount.tjTotal,
         xzCount: monitorCount.xzTotal,
         mnCount: monitorCount.mnTotal,
@@ -455,13 +464,13 @@ Page({
         showUI: true
       }, () => {
         this.scrollFlag = false;
-        if (allData.length > 0) {
+        if (monitorHouseData.allData.length > 0) {
           wx.createSelectorQuery()
             .select(`.house_card`)
             .boundingClientRect(rect => {
               this.cardHeight = rect.height + 20; // 高度外加20个像素的margin-bottom
               this.setData({
-                containerHeight: this.cardHeight * allData.length + 100
+                containerHeight: this.cardHeight * monitorHouseData.allData.length + 100
               });
             })
             .exec();
@@ -490,11 +499,18 @@ Page({
     let xzData = xzDataObj.arr;
     let mnData = mnDataObj.arr;
     let zgData = zgDataObj.arr;
+    let enoughList = [];
+    if (tjDataObj.tjCount > -1) { enoughList.push({ key: 'tj', name: '途家', value: tjDataObj.tjCount }) }
+    if (xzDataObj.xzCount > -1) { enoughList.push({ key: 'xz', name: '小猪', value: xzDataObj.xzCount }) }
+    if (mnDataObj.mnCount > -1) { enoughList.push({ key: 'mn', name: '木鸟', value: mnDataObj.mnCount }) }
+    if (zgDataObj.zgCount > -1) { enoughList.push({ key: 'zg', name: '榛果', value: zgDataObj.zgCount }) }
+    enoughList.sort(util.compareSort('value', 'desc'));
     this.setData({
       tjCount: tjDataObj.tjCount,
       xzCount: xzDataObj.xzCount,
       mnCount: mnDataObj.mnCount,
-      zgCount: zgDataObj.zgCount
+      zgCount: zgDataObj.zgCount,
+      enoughList
     })
     
     let houseData = house.getHouseData({
@@ -582,10 +598,11 @@ Page({
       xzLowPriceData: this.data.xzLowPriceData,
       mnLowPriceData: this.data.mnLowPriceData,
       zgLowPriceData: this.data.zgLowPriceData,
-      tjCount: this.data.tjCount,
-      xzCount: this.data.xzCount,
-      mnCount: this.data.mnCount,
-      zgCount: this.data.zgCount,
+      // tjCount: this.data.tjCount,
+      // xzCount: this.data.xzCount,
+      // mnCount: this.data.mnCount,
+      // zgCount: this.data.zgCount,
+      enoughList: this.data.enoughList,
       tjFilterCount: this.data.tjIdData,
       xzFilterCount: this.data.xzIdData,
       mnFilterCount: this.data.mnIdData,

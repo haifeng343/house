@@ -14,7 +14,7 @@ const getTjData = (type, tjfilter) => {
     if (!s) {
       resolve({
         arr: [],
-        tjCount: 0 // -1 表示不查询该平台数据
+        tjCount: -1 // -1 表示不查询该平台数据
       });
       return;
     }
@@ -92,7 +92,7 @@ const getXzData = (type, xzfilter) => {
     if (!s) {
       resolve({
         arr: [],
-        xzCount: 0 // -1 表示不查询该平台数据
+        xzCount: -1 // -1 表示不查询该平台数据
       });
       return;
     }
@@ -189,7 +189,7 @@ const getMnData = (type, mnfilter) => {
     if (!s) {
       resolve({
         arr: [],
-        mnCount: 0 // -1 表示不查询该平台数据
+        mnCount: -1 // -1 表示不查询该平台数据
       });
       return;
     }
@@ -282,7 +282,7 @@ const getZgData = (type, zgfilter) => {
     if (!s) {
       resolve({
         arr: [],
-        xzCount: 0 // -1 表示不查询该平台数据
+        xzCount: -1 // -1 表示不查询该平台数据
       });
       return;
     }
