@@ -6,9 +6,9 @@
       <image class="mask_house_l" src="../../assets/image/house_left.png"></image>
       <image class="mask_house_b" src="../../assets/image/house_bottom.png"></image>
       <view class="mask-mold">
-        <view class="mold_first" wx:if="{{list.length == 4}}">
+        <view class="mold_first {{list.length == 3?'mold_three':''}} {{list.length == 2?'mold_two':''}} {{list.length == 1?'mold_one':''}}">
           <block wx:for="{{list}}" wx:key="{{index}}">
-            <view class="mold" catchtap="navigateToPlatform" data-platform="{{item.key}}">
+            <view class="mold {{index ==0&&list.length == 3?'mold_normal':'mold_other'}} {{index ==2&&list.length == 3?'mold_ab':''}}" catchtap="navigateToPlatform" data-platform="{{item.key}}">
               <view class="name">
                 <text>{{item.name}}</text>
                 <image class="arrow" src="../../assets/image/arrow_two.png"></image>
@@ -18,47 +18,6 @@
             </view>
           </block>
         </view>
-
-        <view class="mold_first {{list.length == 3?'mold_three':''}}" wx:if="{{list.length == 3}}">
-          <block wx:for="{{list}}" wx:key="{{index}}">
-            <view class="mold {{index ==0?'mold_normal':'mold_other'}} {{index ==2?'mold_ab':''}}" catchtap="navigateToPlatform" data-platform="{{item.key}}">
-              <view class="name">
-                <text>{{item.name}}</text>
-                <image class="arrow" src="../../assets/image/arrow_two.png"></image>
-              </view>
-              <view class="image"></view>
-              <view class="num">{{item.value}}套</view>
-            </view>
-          </block>
-        </view>
-
-        <view class="mold_first {{list.length == 2?'mold_two':''}}" wx:if="{{list.length == 2}}">
-          <block wx:for="{{list}}" wx:key="{{index}}">
-            <view class="mold" catchtap="navigateToPlatform" data-platform="{{item.key}}">
-              <view class="name">
-                <text>{{item.name}}</text>
-                <image class="arrow" src="../../assets/image/arrow_two.png"></image>
-              </view>
-              <view class="image"></view>
-              <view class="num">{{item.value}}套</view>
-            </view>
-          </block>
-        </view>
-
-        <view class="mold_first {{list.length == 1?'mold_one':''}}" wx:if="{{list.length == 1}}">
-          <block wx:for="{{list}}" wx:key="{{index}}">
-            <view class="mold" catchtap="navigateToPlatform" data-platform="{{item.key}}">
-              <view class="name">
-                <text>{{item.name}}</text>
-                <image class="arrow" src="../../assets/image/arrow_two.png"></image>
-              </view>
-              <view class="image"></view>
-              <view class="num">{{item.value}}套</view>
-            </view>
-          </block>
-        </view>
-        
-
       </view>
       <view class="mask-know" catchtap="bindConfirm">知道了</view>
     </view>
