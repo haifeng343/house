@@ -7,18 +7,10 @@ Page({
     averagePrice: 0,
     lowPrice: 0,
     lowPriceData: '',
-    tjCount: 0,
     tjFilterCount: [],
-    tjLowPriceData: '',
-    xzCount: 0,
     xzFilterCount: [],
-    xzLowPriceData: '',
-    mnCount: 0,
     mnFilterCount: [],
-    mnLowPriceData: '',
-    zgCount: 0,
     zgFilterCount: [],
-    zgLowPriceData: '',
     isMonitorHouse: 0, //1;不可收藏；0；可收藏
     stopDisplay: 'none',
     bottomType: 0,
@@ -27,7 +19,8 @@ Page({
     publicDisplay:'none',
     updateMonitorDisplay: 'none',
     fee: 0,
-    sort: false
+    sort: false,
+    enoughList:[]
   },
 
   /**
@@ -38,27 +31,38 @@ Page({
     let data = app.globalData.houseListData
     let fee = wx.getStorageSync('hourMoney') || 0
     console.log(data)
+    for (let i = 0; i < data.enoughList.length;i++){
+      if (data.enoughList[i].key == 'tj'){
+        data.enoughList[i]['selectCount'] = data.tjFilterCount.length
+        data.enoughList[i]['lowPriceData'] = data.tjLowPriceData
+      }
+      if (data.enoughList[i].key == 'xz') {
+        data.enoughList[i]['selectCount'] = data.xzFilterCount.length
+        data.enoughList[i]['lowPriceData'] = data.xzLowPriceData
+      }
+      if (data.enoughList[i].key == 'mn') {
+        data.enoughList[i]['selectCount'] = data.mnFilterCount.length
+        data.enoughList[i]['lowPriceData'] = data.mnLowPriceData
+      }
+      if (data.enoughList[i].key == 'zg') {
+        data.enoughList[i]['selectCount'] = data.zgFilterCount.length
+        data.enoughList[i]['lowPriceData'] = data.zgLowPriceData
+      }
+    }
     this.setData({
       allCount: data.allCount,
       showCount: data.showCount,
       averagePrice: data.averagePrice,
       lowPrice: data.lowPrice,
       lowPriceData: data.lowPriceData,
-      tjCount: data.tjCount,
+      enoughList: data.enoughList,
       tjFilterCount: data.tjFilterCount,
-      tjLowPriceData: data.tjLowPriceData,
-      xzCount: data.xzCount,
       xzFilterCount: data.xzFilterCount,
-      xzLowPriceData: data.xzLowPriceData,
-      mnCount: data.mnCount,
       mnFilterCount: data.mnFilterCount,
-      mnLowPriceData: data.mnLowPriceData,
-      zgCount: data.zgCount,
       zgFilterCount: data.zgFilterCount,
       ddCoin: data.ddCoin || 0,
       bindPhone: data.bindPhone || false,
       bindPublic: data.bindPublic || false,
-      zgLowPriceData: data.zgLowPriceData,
       isMonitorHouse: data.isMonitorHouse || 0,
       bottomType: data.bottomType || 0,
       taskTime: data.taskTime || '',

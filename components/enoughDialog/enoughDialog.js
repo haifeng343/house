@@ -4,17 +4,8 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    tjCount: {
-      type: Number
-    },
-    xzCount: {
-      type: Number
-    },
-    mnCount: {
-      type: Number
-    },
-    zgCount: {
-      type: Number
+    list:{
+      type:Array
     }
   },
 
@@ -22,13 +13,19 @@ Component({
    * 组件的初始数据
    */
   data: {},
-
   /**
    * 组件的方法列表
    */
   methods: {
     bindConfirm() {
       this.triggerEvent('enoughEvent', 'none');
+    },
+    navigateToPlatform(e){
+      let p = e.currentTarget.dataset.platform
+      if (p == 'tj') { this.navigateToTj() }
+      if (p == 'xz') { this.navigateToXz() }
+      if (p == 'mn') { this.navigateToMn() }
+      if (p == 'zg') { this.navigateToZg() }
     },
     navigateToTj() {
       monitor.navigateToMiniProgram('tj');

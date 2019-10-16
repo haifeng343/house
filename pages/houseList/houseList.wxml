@@ -92,8 +92,8 @@
   <view class="house_loading" style="display:{{loadingDisplay}}" catchtouchmove="preventTouchMove">
     <image src="../../assets/image/loading.gif"></image>
   </view>
-  <enoughDialog tjCount="{{tjCount}}" xzCount="{{xzCount}}" mnCount="{{mnCount}}" zgCount="{{zgCount}}" bind:enoughEvent="getEnoughEvent" style="display:{{enoughDisplay}}"></enoughDialog>
-  <enoughBottomDialog tjCount="{{tjCount}}" xzCount="{{xzCount}}" mnCount="{{mnCount}}" zgCount="{{zgCount}}" bind:enoughBottomEvent="getBottomEnoughEvent" style="display:{{enoughBottomDisplay}}"></enoughBottomDialog>
+  <enoughDialog list="{{enoughList}}"  bind:enoughEvent="getEnoughEvent" style="display:{{enoughDisplay}}"></enoughDialog>
+  <enoughBottomDialog list="{{enoughList}}" bind:enoughBottomEvent="getBottomEnoughEvent" style="display:{{enoughBottomDisplay}}"></enoughBottomDialog>
   <collectDialog bind:collectEvent="getcollectEventEvent" style="display:{{collectDisplay}}"></collectDialog>
   <monitorDialog ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorDisplay}}"></monitorDialog>
   <monitorBottomDialog ddCoin="{{ddCoin}}" bind:monitorrBottomPublicEvent="getMonitorrBottomPublicEvent" bindPublic="{{bindPublic}}" bind:monitorBottomEvent="getMonitorBottomEvent" bind:monitorBottomConfirmEvent="getmonitorBottomConfirmEvent" style="display:{{monitorBottomDisplay}}"></monitorBottomDialog>

@@ -13,10 +13,7 @@
       <view class="statistics_detail">
         <houseStat 
           sort="{{sort}}"
-          tjCount="{{tjCount}}" tjFilterCount="{{tjFilterCount.length}}" tjLowPriceData="{{tjLowPriceData}}"
-          xzCount="{{xzCount}}" xzFilterCount="{{xzFilterCount.length}}" xzLowPriceData="{{xzLowPriceData}}"
-          mnCount="{{mnCount}}" mnFilterCount="{{mnFilterCount.length}}" mnLowPriceData="{{mnLowPriceData}}"
-          zgCount="{{zgCount}}" zgFilterCount="{{zgFilterCount.length}}" zgLowPriceData="{{zgLowPriceData}}"
+          list="{{enoughList}}"
         ></houseStat>
       </view>
     </view>
@@ -58,7 +55,7 @@
     style="display:{{stopDisplay}}">
 </stopDialog>
 
-<enoughDialog tjCount="{{tjCount}}" xzCount="{{xzCount}}" mnCount="{{mnCount}}" zgCount="{{zgCount}}" bind:enoughEvent="getEnoughEvent"  style="display:{{enoughDisplay}}">
+<enoughDialog list="{{enoughList}}" bind:enoughEvent="getEnoughEvent"  style="display:{{enoughDisplay}}">
 </enoughDialog>
 
 <monitorDialog ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent"  style="display:{{monitorDisplay}}"></monitorDialog>
