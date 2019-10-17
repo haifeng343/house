@@ -201,7 +201,7 @@ Page({
         this.setData({
           showUI: true
         });
-      }, 100);
+      }, 700);
     }
   },
 

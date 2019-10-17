@@ -59,6 +59,19 @@ App({
       wx.setStorageSync('numberList', numberList)
       wx.setStorageSync('leaseType', leaseType)
       wx.setStorageSync('hourMoney', hourMoney)
+      let temp = resp.data.shortFacilitiesPram
+      let tempArray = temp.split(',')
+      let equipment = []
+      for(let index = 0; index < tempArray.length; index++) {
+        let number = parseInt(tempArray[index]);
+        if(number > 0) {
+          equipment.push(number+'')
+        }
+      }
+      if(!equipment.length) {
+        equipment = ['1','2']
+      }
+      this.globalData.searchData.equipment = equipment
     });
 
     // Http.get('/indexParam.json').then(resp => {
