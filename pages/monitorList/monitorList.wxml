@@ -83,7 +83,7 @@
         </view>
       </view>
     </block>
-    <view class="no-more-data" wx:if="{{allData.length}}">暂无更多房源</view>
+    <view class="no-more-data" wx:if="{{allData.length}}">已展示全部房源</view>
   </view>
   <view class="house_monitor" wx:if="{{countFlag===2&&countBack}}">
     <button class="monitor_btn" bindtap='goBack'>返回重试</button>
