@@ -2,7 +2,7 @@
   <view wx:if="{{show===1}}" class="card_list">
     <block wx:for="{{data}}" wx:key="{{index}}">
       <monitorColorCard wx:if="{{item.status == 1}}" item="{{item}}" ddCoin="{{ddCoin}}" bind:checkEvent="checkDetail" bind:clickDelete="delItem" bind:clickOpen="openTask"></monitorColorCard>
-      <monitorGrayCard wx:else item="{{item}}" ddCoin="{{ddCoin}}" bind:clickEvent="goToClick" bind:clickDelete="delItem" bind:clickOpen="openTask"></monitorGrayCard>
+      <monitorGrayCard wx:else item="{{item}}" ddCoin="{{ddCoin}}" bind:clickEvent="goToClick" bind:clickDelete="delItem" bind:clickOpen="openTask" bind:clickRecharge="recharge"></monitorGrayCard>
     </block>
   </view>
 

@@ -153,7 +153,7 @@ Page({
     const {
       scrollTop
     } = event.detail;
-    if (this.data.showUI === true) {
+    if (this.data.showUI === true && scrollTop>110) {
       this.setData({
         showUI: false
       });
@@ -194,7 +194,7 @@ Page({
       clearTimeout(this.timer);
       this.timer = null;
     }
-    if (this.data.allData.length >= 50) {
+    if (this.data.containerHeight == this.data.totalHeight && this.data.allCount >= 50) {
       if (!this.data.enoughBottom){
         this.setData({
           enoughBottomDisplay: 'block',
@@ -208,7 +208,8 @@ Page({
           duration: 2000
         })
       }
-    } else {
+    } 
+    if (this.data.containerHeight == this.data.totalHeight && this.data.allCount <50) { 
       if (!this.data.monitorBottom){
         this.setData({
           monitorBottomDisplay: 'block',
@@ -237,6 +238,15 @@ Page({
       this.scrollFlag = false;
       this.setData({
         allData: newArr
+      }, () => {
+        wx.createSelectorQuery()
+          .select(`.house_card`)
+          .boundingClientRect(rect => {
+            this.setData({
+              containerHeight: this.cardHeight * this.data.allData.length + 100
+            });
+          })
+          .exec();
       });
     }
   },
@@ -359,7 +369,8 @@ Page({
             .boundingClientRect(rect => {
               this.cardHeight = rect.height + 20; // 高度外加20个像素的margin-bottom
               this.setData({
-                containerHeight: this.cardHeight * houseData.allData.length + 100
+                containerHeight: this.cardHeight * this.data.allData.length + 100,
+                totalHeight: this.cardHeight * houseData.allData.length + 100
               });
             })
             .exec();
@@ -476,7 +487,7 @@ Page({
 
   //开启监控
   startMonitor() {
-    let count = this.data.allOriginalData.length;
+    let count = this.data.allCount;
     if (count >= 50) {
       this.setData({
         enoughDisplay: 'block',

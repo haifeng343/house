@@ -823,15 +823,28 @@ const getHouseData = (data)=>{
     zgId = [];
   let maxTotal = 50;
   let allData = [];
+
+  let tjData = data.tjData.filter(item=>{
+    return item.allowBooking && Number(item.finalPrice)>0
+  })
+  let xzData = data.xzData.filter(item => {
+    return Number(item.showPriceV2.showPrice || item.luPrice) > 0
+  })
+  let mnData = data.mnData.filter(item => {
+    return Number(item.sale_price) > 0
+  })
+  let zgData = data.zgData.filter(item => {
+    return (item.discountPrice ? item.discountPrice / 100 : item.price / 100) > 0
+  })
   for (let i = 0; i < maxTotal; i++) {
     if (data.tjCount > 0) {
-      let tj = addPlatfromData(allData, data.tjData, i);
+      let tj = addPlatfromData(allData, tjData, i);
       if (tj == 0) {
         break;
       }
-      if (tj == 1 && data.tjData[i].allowBooking) {
+      if (tj == 1) {
         let tjObjs = {};
-        let tjObj = data.tjData[i];
+        let tjObj = tjData[i];
         tjObjs.platformId = 'tj';
         tjObjs.curIndex = 1
         tjObjs.finishLoadFlag = false
@@ -845,19 +858,17 @@ const getHouseData = (data)=>{
         tjObjs.priceTag = util.arrFilter(tjObj.priceTags,'type',6)
         tjFilterData.push(tjObjs)
         tjId.push(tjObj.unitId)
-        if (tjObjs.finalPrice > 0) {
-          allData.push(tjObjs)
-        }
+        allData.push(tjObjs)
       }
     }
     if (data.xzCount > 0) {
-      let xz = addPlatfromData(allData, data.xzData, i);
+      let xz = addPlatfromData(allData, xzData, i);
       if (xz == 0) {
         break;
       }
       if (xz == 1) {
         let xzObjs = {}
-        let xzObj = data.xzData[i];
+        let xzObj = xzData[i];
         xzObjs.platformId = 'xz'
         xzObjs.curIndex = 1
         xzObjs.finishLoadFlag = false
@@ -871,19 +882,17 @@ const getHouseData = (data)=>{
         xzObjs.priceTag = util.arrFilter(xzObj.lodgeUnitNewTags, 'title', '长租优惠')
         xzFilterData.push(xzObjs)
         xzId.push(xzObj.luId)
-        if (xzObjs.finalPrice > 0) {
-          allData.push(xzObjs)
-        }
+        allData.push(xzObjs)
       }
     }
     if (data.mnCount > 0) {
-      let mn = addPlatfromData(allData, data.mnData, i);
+      let mn = addPlatfromData(allData, mnData, i);
       if (mn == 0) {
         break;
       }
       if (mn == 1) {
         let mnObjs = {}
-        let mnObj = data.mnData[i]
+        let mnObj = mnData[i]
         mnObjs.platformId = 'mn'
         mnObjs.curIndex = 1
         mnObjs.finishLoadFlag = false
@@ -896,19 +905,17 @@ const getHouseData = (data)=>{
         mnObjs.productId = mnObj.room_id
         mnFilterData.push(mnObjs)
         mnId.push(mnObj.room_id)
-        if (mnObjs.finalPrice > 0) {
-          allData.push(mnObjs)
-        }
+        allData.push(mnObjs)
       }
     }
     if (data.zgCount > 0) {
-      let zg = addPlatfromData(allData, data.zgData, i);
+      let zg = addPlatfromData(allData, zgData, i);
       if (zg == 0) {
         break;
       }
       if (zg == 1) {
         let zgObjs = {}
-        let zgObj = data.zgData[i]
+        let zgObj = zgData[i]
         zgObjs.platformId = 'zg'
         zgObjs.curIndex = 1
         zgObjs.finishLoadFlag = false
@@ -922,9 +929,7 @@ const getHouseData = (data)=>{
         zgObjs.priceTag = util.arrFilter(zgObj.productTagList, 'tagId', 30)
         zgFilterData.push(zgObjs)
         zgId.push(zgObj.productId)
-        if (zgObjs.finalPrice > 0) {
-          allData.push(zgObjs)
-        }
+        allData.push(zgObjs)
       }
     }
   }

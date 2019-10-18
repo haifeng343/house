@@ -214,7 +214,7 @@ Page({
       this.timer = null;
     }
     if (this.data.bottomType === 2){
-      if (this.data.allData.length >= 50) {
+      if (this.data.containerHeight == this.data.totalHeight && this.data.allCount >= 50) {
         if (!this.data.enoughBottom) {
           this.setData({
             enoughBottomDisplay: 'block',
@@ -228,7 +228,8 @@ Page({
             duration: 2000
           })
         }
-      }else{
+      }
+      if (this.data.containerHeight == this.data.totalHeight && this.data.allCount < 50){
         wx.showToast({
           title: '到底了',
           icon: 'none',
@@ -256,6 +257,15 @@ Page({
       this.scrollFlag = false;
       this.setData({
         allData: newArr
+      },()=>{
+        wx.createSelectorQuery()
+          .select(`.house_card`)
+          .boundingClientRect(rect => {
+            this.setData({
+              containerHeight: this.cardHeight * this.data.allData.length + 100
+            });
+          })
+          .exec();
       });
     }
   },
@@ -470,7 +480,8 @@ Page({
             .boundingClientRect(rect => {
               this.cardHeight = rect.height + 20; // 高度外加20个像素的margin-bottom
               this.setData({
-                containerHeight: this.cardHeight * monitorHouseData.allData.length + 100
+                containerHeight: this.cardHeight * this.data.allData.length + 100,
+                totalHeight: this.cardHeight * monitorHouseData.allData.length + 100
               });
             })
             .exec();
@@ -576,7 +587,8 @@ Page({
           .boundingClientRect(rect => {
             this.cardHeight = rect.height + 20; // 高度外加20个像素的margin-bottom
             this.setData({
-              containerHeight: this.cardHeight * houseData.allData.length + 100
+              containerHeight: this.cardHeight * this.data.allData.length + 100,
+              totalHeight: this.cardHeight * houseData.allData.length + 100
             });
           })
           .exec();

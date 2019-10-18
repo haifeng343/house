@@ -88,6 +88,8 @@ page {
 
 .house_card .swiper {
   height: 360rpx;
+  z-index: -1;
+  position: relative;
 }
 
 .house_card .house_image {

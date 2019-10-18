@@ -84,6 +84,12 @@ Component({
         index: e.currentTarget.dataset.index,
       }
       this.triggerEvent('clickOpen', detail);
+    },
+    recharge(e){
+      let detail = {
+        type: e.currentTarget.dataset.type,
+      }
+      this.triggerEvent('clickRecharge', detail);
     }
   }
 })

@@ -139,7 +139,7 @@ Page({
    * 立即充值，跳转到充值页面
    */
   recharge(e){
-    var type = e.currentTarget.dataset.type
+    var type = e.detail.type
     wx.navigateTo({
       url: `/pages/deposit/deposit?type=${type}`
     });
