@@ -41,7 +41,7 @@ App({
       const numberList = resp.data.shortPeople
       const leaseType = resp.data.shortRentType
       const hourMoney = resp.data.hourMoney
-      const fddRequestPlatformName = resp.data.fddRequestPlatformName
+      const fddRequestPlatformName = resp.data.fddRequestPlatformName||''
       if (fddRequestPlatformName.indexOf('tj')>-1){
         this.globalData.tjSwitch = true
       }
@@ -59,7 +59,7 @@ App({
       wx.setStorageSync('numberList', numberList)
       wx.setStorageSync('leaseType', leaseType)
       wx.setStorageSync('hourMoney', hourMoney)
-      let temp = resp.data.shortFacilitiesPram
+      let temp = resp.data.shortFacilitiesPram || ''
       let tempArray = temp.split(',')
       let equipment = []
       for(let index = 0; index < tempArray.length; index++) {

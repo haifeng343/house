@@ -80,9 +80,9 @@
     <button wx:if="{{countFlag ===2}}"class="monitor_btn" bindtap='goRefresh'>立即刷新</button>
   </view>
   <view wx:if="{{countFlag === 1}}" class="house_shortcuts {{showUI ? '' : 'hidden'}}">
-    <view>
+    <!-- <view>
       <image bindtap="goTop" wx:if="{{showScrollTop}}" class="top" src="../../assets/image/top.png"></image>
-    </view>
+    </view> -->
     <view>
       <image bindtap="goSort" class="sort" src="../../assets/image/sort.png"></image>
     </view>
