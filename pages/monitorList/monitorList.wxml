@@ -1,6 +1,6 @@
 <wxs src="../../utils/filter.wxs" module="filter" />
 <scroll-view scroll-top="{{y}}" scroll-y="{{canScroll}}" lower-threshold="{{0}}" scroll-with-animation="{{true}}" throttle="{{false}}" bindscroll="handleScroll" bindscrolltolower="handleReachBottom" class="scroll-view {{(enoughDisplay =='block'||enoughBottomDisplay =='block'||collectDisplay =='block'||stopDisplay =='block'||updateMonitorDisplay=='block'||showAdvance)?'section_hidden':''}}">
-  <view class="header {{showUI ? '' : 'hidden'}}">
+  <view class="header {{showUI ? '' : ''}}">
     <view class="top-nav'">
       <houseSelect id="houseSelect" type='monitor' checkInDate="{{checkInDate}}" checkOutDate="{{checkOutDate}}" cityName="{{cityName}}" locationName="{{locationName}}" bind:clickSelectItem='clickSelectItem'></houseSelect>
       <view class="bg_border"></view>
