@@ -546,6 +546,13 @@ Page({
    * 底部开启监控确认
    */
   getmonitorBottomConfirmEvent(e) {
+    if (!this.data.bindPhone && !app.globalData.isUserBindPhone) {
+      // 数据绑定手机号，如果未绑定，跳转到手机号绑定页面
+      wx.navigateTo({
+        url: '../bindPhone/bindPhone'
+      });
+      return;
+    }
     this.setData({
       monitorBottomDisplay: e.detail.show,
       canScroll: true
