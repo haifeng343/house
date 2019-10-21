@@ -263,5 +263,5 @@
 }
 
 .section .page .city-item .content .city+.city {
-  border-top: solid 2rpx #e8e8e8;
+  border-top: solid 2rpx rgba(232,232,232,0.5);
 }

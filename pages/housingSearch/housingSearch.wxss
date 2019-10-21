@@ -166,7 +166,7 @@ page .page .city-list .child-city-item .name {
   align-items: center;
   box-sizing: border-box;
   padding-left: 24rpx;
-  border-bottom: solid 2rpx #e8e8e8;
+  border-bottom: solid 2rpx rgba(232,232,232,0.5);
 }
 .city-no-data {
   width: 100%;
