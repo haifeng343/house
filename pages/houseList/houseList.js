@@ -118,6 +118,7 @@ Page({
       canScroll: true
     });
     if (this.data.isBack) {
+      this.scrollFlag = false;
       this.setData({
         loadingDisplay: 'block',
         countFlag: '',
@@ -299,10 +300,10 @@ Page({
       })
       return;
     }
-    let tjData = tjDataObj.arr;
-    let xzData = xzDataObj.arr;
-    let mnData = mnDataObj.arr;
-    let zgData = zgDataObj.arr;
+    let tjData = tjDataObj.arr||[];
+    let xzData = xzDataObj.arr || [];
+    let mnData = mnDataObj.arr || [];
+    let zgData = zgDataObj.arr||[];
     let enoughList = [];
     if (tjDataObj.tjCount > -1) { enoughList.push({ key: 'tj',name:'途家', value: tjDataObj.tjCount})}
     if (xzDataObj.xzCount > -1) { enoughList.push({ key: 'xz', name: '小猪',value: xzDataObj.xzCount }) }
@@ -488,6 +489,7 @@ Page({
   //开启监控
   startMonitor() {
     let count = this.data.allCount;
+    let app = getApp()
     if (count >= 50) {
       this.setData({
         enoughDisplay: 'block',
@@ -546,6 +548,7 @@ Page({
    * 底部开启监控确认
    */
   getmonitorBottomConfirmEvent(e) {
+    let app = getApp()
     if (!this.data.bindPhone && !app.globalData.isUserBindPhone) {
       // 数据绑定手机号，如果未绑定，跳转到手机号绑定页面
       wx.navigateTo({

@@ -129,6 +129,7 @@ Page({
     //如果选择的结果与监控的条件不一样；就加载查询
     this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true })
     if (this.data.isBack) { //isBack true表示是按确定按钮变化的
+      this.scrollFlag = false;
       this.setData({
         loadingDisplay: 'block',
         countFlag: '',
@@ -508,10 +509,10 @@ Page({
       })
       return;
     }
-    let tjData = tjDataObj.arr;
-    let xzData = xzDataObj.arr;
-    let mnData = mnDataObj.arr;
-    let zgData = zgDataObj.arr;
+    let tjData = tjDataObj.arr || [];
+    let xzData = xzDataObj.arr || [];
+    let mnData = mnDataObj.arr || [];
+    let zgData = zgDataObj.arr || [];
     let enoughList = [];
     if (tjDataObj.tjCount > -1) { enoughList.push({ key: 'tj', name: '途家', value: tjDataObj.tjCount }) }
     if (xzDataObj.xzCount > -1) { enoughList.push({ key: 'xz', name: '小猪', value: xzDataObj.xzCount }) }
