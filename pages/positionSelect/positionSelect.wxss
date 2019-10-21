@@ -93,7 +93,7 @@
 
 .section .position-box .position-list.hot-city {
   height: auto;
-  max-height: 148rpx;
+  max-height: 74px;
 }
 
 .section .position-box .position-list.hold {

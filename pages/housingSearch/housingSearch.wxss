@@ -12,12 +12,16 @@ page .page {
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 page .page .header {
   background-color: #fff;
   padding: 0 32rpx;
-  flex: 0;
+  height: 100rpx;
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,6 +37,7 @@ page .page .header .search-bar-wrapper {
 }
 
 page .page .header .search-bar-wrapper .input {
+  height: 30rpx;
   font-size: 24rpx;
   flex: 1;
 }
@@ -64,9 +69,10 @@ page .page .header .search-bar-wrapper .uniE908 {
 }
 
 page .page .city-list {
-  margin-top: 20rpx;
+  /* margin-top: 20rpx; */
+  flex: 1;
+  overflow-y: auto;
   box-sizing: border-box;
-  padding: 0 28rpx;
 }
 
 page .page .city-list .label {
@@ -110,6 +116,7 @@ page .page .city-list .child-city-item {
   align-items: center;
   box-sizing: border-box;
   border-bottom: solid 2rpx #e8e8e8;
+  margin: 0 28rpx;
 }
 
 page .page .city-list .child-city-item .name {

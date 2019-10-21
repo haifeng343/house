@@ -11,12 +11,16 @@ page .page {
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 page .page .header {
   background-color: #fff;
   padding: 0 32rpx;
-  flex: 0;
+  height: 100rpx;
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,12 +30,13 @@ page .page .header {
 page .page .header .search-bar-wrapper {
   height: 68rpx;
   border-radius: 34rpx;
-  flex: 1;
+  width: 100%;
   background-color: #f9f9f9;
   position:relative;
 }
 
 page .page .header .search-bar-wrapper .input {
+  height: 30rpx;
   font-size: 24rpx;
   flex: 1;
 }
@@ -64,9 +69,9 @@ page .page .header .search-bar-wrapper .uniE908 {
 }
 
 page .page .city-list {
-  margin-top: 20rpx;
+  flex: 1;
+  overflow-y: auto;
   box-sizing: border-box;
-  padding: 0 28rpx;
 }
 
 page .page .city-list .label {
@@ -109,8 +114,9 @@ page .page .city-list .child-city-item {
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  padding-left: 100rpx;
   border-bottom: solid 2rpx #e8e8e8;
+  padding-left: 100rpx;
+  margin: 0 28rpx;
 }
 
 page .page .city-list .child-city-item .name {
@@ -132,6 +138,7 @@ page .page .city-list .city-item {
   box-sizing: border-box;
   padding-left: 24rpx;
   border-bottom: solid 2rpx #e8e8e8;
+  margin: 0 28rpx;
 }
 .city-no-data {
   width: 100%;
