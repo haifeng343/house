@@ -205,8 +205,10 @@ page {
   display: flex;
   align-items: center;
 }
-
-.house_card .house_tag{
+.house_card .house_tag {
+  height: 34rpx;
+}
+.house_card .house_tag text{
   width: 110rpx;
   height: 34rpx;
   color: #FF6363;
@@ -217,9 +219,11 @@ page {
   margin-top: 8rpx;
   text-align: center;
   line-height: 30rpx;
+  display: inline-block;
+  margin-right: 20rpx;
 }
-.house_card .house_tag_none{
-  border: none
+.house_card .house_tag .discount{
+  width: 140rpx;
 }
 .house_card .distance {
   width: 26rpx;
