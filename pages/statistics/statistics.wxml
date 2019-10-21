@@ -6,7 +6,7 @@
       </view>
 
       <view class="house_low_price">
-        <houseCard lowPriceData="{{lowPriceData}}" isMonitorHouse="{{isMonitorHouse}}"></houseCard>
+        <houseCard bottomType="{{bottomType}}" lowPriceData="{{lowPriceData}}" isMonitorHouse="{{isMonitorHouse}}"></houseCard>
       </view>
 
       <view class="line"></view>

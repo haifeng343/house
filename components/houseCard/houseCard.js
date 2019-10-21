@@ -7,6 +7,9 @@ Component({
     lowPriceData:{
       type: Object,     // 类型（必填），目前接受的类型包括：String, Number, Boolean, Object, Array, null（表示任意类型）
       //value: {}          // 属性初始值（可选），如果未指定则会根据类型选择一个
+    },
+    bottomType:{
+      type:Number
     }
   },
 
@@ -32,9 +35,12 @@ Component({
       })
     },
     goToPlatformDetail(e) {
+      let app = getApp()
       let platform = e.currentTarget.dataset.platform
       let productid = e.currentTarget.dataset.productid
-      monitor.navigateToMiniProgram(platform, productid)
+      let beginDate = this.properties.bottomType == 0 ? app.globalData.searchData.beginDate : app.globalData.monitorSearchData.beginDate
+      let endDate = this.properties.bottomType == 0 ? app.globalData.searchData.endDate : app.globalData.monitorSearchData.endDate
+      monitor.navigateToMiniProgram(platform, productid, beginDate, endDate)
     },
     goToCollection(e) {
       console.log(e.currentTarget.dataset.productid);
