@@ -237,11 +237,13 @@ Page({
         })
       }
     }else{
-      wx.showToast({
-        title: '到底了',
-        icon: 'none',
-        duration: 2000
-      })
+      if (this.data.containerHeight == this.data.totalHeight) {
+        wx.showToast({
+          title: '到底了',
+          icon: 'none',
+          duration: 2000
+        })
+      }
     }
   },
 
