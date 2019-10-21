@@ -37,7 +37,7 @@
           <view class="cell-list flex-box-center">
             <block wx:for="{{history}}" wx:for-item="item" wx:key="name">
               <view class="cell-item" data-item='{{item}}' bindtap="handleSelectCityHistory">
-                {{item.name}}
+                {{item.name + (item.line?('(地铁)'):'')}}
               </view>
             </block>
           </view>
