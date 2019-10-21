@@ -53,7 +53,7 @@
   justify-content: flex-start;
   align-items: center;
   position: relative;
-  padding-bottom: 180rpx;
+  padding-bottom: 140rpx;
 }
 
 .nav {
@@ -370,7 +370,7 @@
 .search-btn-back {
   position: absolute;
   width: 710rpx;
-  height: 186rpx;
+  height: 146rpx;
   left: 0;
   bottom: 0;
   padding-top: 30rpx;
