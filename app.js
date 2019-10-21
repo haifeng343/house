@@ -1,6 +1,7 @@
 
 import Http from "./utils/http";
 import { authSubject } from "./utils/auth";
+import { searchDataStorage } from "./utils/searchDataStorage"
 import { doWechatLogin } from "./utils/wx";
 import fecha from './utils/fecha';
 //app.js
@@ -59,6 +60,7 @@ App({
       wx.setStorageSync('numberList', numberList)
       wx.setStorageSync('leaseType', leaseType)
       wx.setStorageSync('hourMoney', hourMoney)
+      searchDataStorage.next(true)
       let temp = resp.data.shortFacilitiesPram || ''
       let tempArray = temp.split(',')
       let equipment = []

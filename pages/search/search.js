@@ -4,6 +4,7 @@ import { SearchDataSubject } from '../../utils/searchDataStream';
 import { getLocationInfo } from '../../utils/map';
 import searchService from './service';
 import fecha from '../../utils/fecha';
+import { searchDataStorage } from "../../utils/searchDataStorage"
 Page({
   /**
    * 页面的初始数据
@@ -295,11 +296,16 @@ Page({
     }
   },
   getHouseTypeAndEqu() {
-    this.setData({
-      houseType: wx.getStorageSync('houseType'),
-      equipments: wx.getStorageSync('equipments'),
-      numberList: wx.getStorageSync('numberList'),
-      leaseType: wx.getStorageSync('leaseType')
+    this.searchDataStorage = searchDataStorage.subscribe(hasSearchData => {
+      console.log('hasSearchData=' + hasSearchData);
+      if (hasSearchData) {
+        this.setData({
+          houseType: wx.getStorageSync('houseType'),
+          equipments: wx.getStorageSync('equipments'),
+          numberList: wx.getStorageSync('numberList'),
+          leaseType: wx.getStorageSync('leaseType')
+        });
+      }
     });
   },
   showAuthDialog() {
