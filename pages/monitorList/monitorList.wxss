@@ -29,7 +29,7 @@ page {
 .section_empty{
   display: flex;
   flex-direction: column;
-  height: calc(100% - 200rpx) !important;
+  height: calc(100% - 220rpx) !important;
 }
 .top-nav {
   width: 100%;
