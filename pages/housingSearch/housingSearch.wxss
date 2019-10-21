@@ -105,7 +105,7 @@ page .page .city-list .uniE941 {
 page .page .city-list .child-city-item {
   font-size: 28rpx;
   color: #1d1d1d;
-  height: 80rpx;
+  height: 100rpx;
   display: flex;
   align-items: center;
   box-sizing: border-box;
