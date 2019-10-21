@@ -132,7 +132,6 @@
 }
 
 .search_item {
-  width: 100%;
   height: 108rpx;
   border-bottom: 2rpx solid #f4f4f4;
   display: flex;
@@ -143,7 +142,7 @@
 }
 
 .search-content .search_item {
-  padding: 0 32rpx;
+  margin: 0 32rpx;
   box-sizing: border-box;
 }
 
