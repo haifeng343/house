@@ -13,7 +13,7 @@
         </view>
         <view class='position-list history'>
             <view class='item history' wx:for='{{history}}' wx:key='{{index}}' bindtap='handleSelectCityByPosition' data-item='{{item}}'>
-                {{item.name}}
+                {{item.name + (item.line?('(地铁)'):'')}}
             </view>
         </view>
     </view>

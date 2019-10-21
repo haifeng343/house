@@ -11,6 +11,8 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .section .page .index-list {
@@ -35,9 +37,11 @@
 }
 
 .section .page .header {
+  width: 100%;
+  height: 220rpx;
   background-color: #fff;
   padding: 0 32rpx;
-  flex: 0;
+  box-sizing: border-box;
 }
 
 .section .page .header .search-bar-wrapper {
@@ -85,7 +89,7 @@
   overflow: scroll;
   display: flex;
   flex-direction: column;
-  height: calc(100% - 220rpx);
+  /* height: calc(100% - 220rpx); */
 }
 
 .section .page .city-list .section {

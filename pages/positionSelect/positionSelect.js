@@ -120,7 +120,11 @@ Page({
     let position = event.currentTarget.dataset.item.name;
     let cityName = event.currentTarget.dataset.item.cityName;
     let type = event.currentTarget.dataset.item.type;
+    let line = event.currentTarget.dataset.item.line;
     let fullName = `${cityName}_${position}_${type}`;
+    if (line) {
+      fullName += `_${line}`
+    }
     const app = getApp();
     this.service.getPositionInfoByName(fullName).then(resp => {
       let data = resp.data || '';

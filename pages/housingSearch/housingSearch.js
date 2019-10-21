@@ -180,6 +180,7 @@ Page({
       let info = JSON.parse(resp.data.json);
       let type = position.split("_")[2];
       let cityName = position.split("_")[0];
+      let line = position.split("_")[3]
       if (type == 16) {//行政区  只有areaid
         app.globalData.searchData.areaId = {
           mn: info.mn && info.mn.area_id,
@@ -225,7 +226,7 @@ Page({
       app.globalData.monitorSearchData.areaType = type;
       let hasDiff = false;
       this.data.history.map((item) => {
-        if (item.name === info.name && item.type === type && item.cityName === cityName) {
+        if (item.name === info.name && item.type === type && item.cityName === cityName && !!item.line == !!line) {
           hasDiff = true;
         }
       });
@@ -234,7 +235,8 @@ Page({
           isCity: 0,
           type: type,
           name: info.name,
-          cityName
+          cityName,
+          line
         });
       }
       this.setData({
