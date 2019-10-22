@@ -5,7 +5,7 @@
 </view>
 <view class="house_card" data-productId="{{lowPriceData.productId}}" data-platform="{{lowPriceData.platformId}}" catchtap="goToPlatformDetail">
   <swiper class="swiper" bindchange="swiperChange">
-    <block wx:for="{{lowPriceData.pictureList}}" wx:key="{{index}}">
+    <block wx:for="{{lowPriceData.pictureAllList}}" wx:key="{{index}}">
       <swiper-item wx:if="{{lowPriceData.platformId == 'xz'}}">
         <imageExtend src="{{filter.xzCoverImage(item)}}" data-index="{{index}}"></imageExtend>
       </swiper-item>
@@ -20,7 +20,7 @@
   <view class="house_classify" wx:elif="{{lowPriceData.platformId == 'mn'}}">木鸟</view>
   <view class="house_classify" wx:else="{{lowPriceData.platformId == 'zg'}}">榛果</view>
 
-  <view class="house_swiper">{{index}}/{{lowPriceData.pictureList.length}}</view>
+  <view class="house_swiper">{{index}}/{{lowPriceData.pictureAllList.length}}</view>
   <view class="house_price">¥{{lowPriceData.finalPrice}}/晚</view>
   <view class="house_bottom">
     <view class="house_message">
