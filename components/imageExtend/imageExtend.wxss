@@ -28,9 +28,9 @@
 }
 
 .base-image-container.hidden {
-  animation: hidden 2s linear forwards;
-  /* transition: opacity 1.5s ease-in-out;
-  opacity: 0; */
+  /* animation: hidden 2s linear forwards; */
+  transition: opacity 1.5s ease-in-out;
+  opacity: 0;
 }
 
 .image-extend.source-image {
