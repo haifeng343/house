@@ -851,7 +851,7 @@ const getHouseData = (data)=>{
         tjObjs.collection = false
         tjObjs.unitName = tjObj.unitName;
         tjObjs.logoUrl = tjObj.logoUrl;
-        tjObjs.pictureList = tjObj.pictureList.slice(0,5);
+        tjObjs.pictureList = tjObj.pictureList.slice(0, 1);
         tjObjs.preloadDetail = tjObj.preloadDetail.baseBrief[0].title + '/' + tjObj.preloadDetail.baseBrief[1].title + '/' + tjObj.preloadDetail.baseBrief[2].title
         tjObjs.finalPrice = Number(tjObj.finalPrice)
         tjObjs.productId = tjObj.unitId
@@ -875,7 +875,7 @@ const getHouseData = (data)=>{
         xzObjs.collection = false
         xzObjs.unitName = xzObj.luTitle
         xzObjs.logoUrl = xzObj.landlordheadimgurl
-        xzObjs.pictureList = xzObj.coverImages.slice(0, 5);
+        xzObjs.pictureList = xzObj.coverImages.slice(0, 1);
         xzObjs.preloadDetail = xzObj.luLeaseType + '/' + xzObj.houseTypeInfo + '/' + xzObj.guestnum
         xzObjs.finalPrice = Number(xzObj.showPriceV2.showPrice || xzObj.luPrice)
         xzObjs.productId = xzObj.luId
@@ -902,7 +902,7 @@ const getHouseData = (data)=>{
         mnObjs.collection = false
         mnObjs.unitName = mnObj.title
         mnObjs.logoUrl = mnObj.image_host
-        mnObjs.pictureList = mnObj.image_list.slice(0, 5);
+        mnObjs.pictureList = mnObj.image_list.slice(0, 1);
         mnObjs.preloadDetail = mnObj.rent_type + '/' + mnObj.source_type + '/宜住' + mnObj.max_num
         mnObjs.finalPrice = Number(mnObj.sale_price)
         mnObjs.productId = mnObj.room_id
@@ -925,7 +925,7 @@ const getHouseData = (data)=>{
         zgObjs.collection = false
         zgObjs.unitName = zgObj.title.replace(/\n/g, " ")
         zgObjs.logoUrl = zgObj.hostAvatarUrl
-        zgObjs.pictureList = zgObj.productImages.slice(0, 5);
+        zgObjs.pictureList = zgObj.productImages.slice(0, 1);
         zgObjs.preloadDetail = zgObj.rentLayoutDesc + '/' + zgObj.guestNumberDesc
         zgObjs.finalPrice = zgObj.discountPrice ? zgObj.discountPrice / 100 : zgObj.price / 100
         zgObjs.productId = zgObj.productId
@@ -1018,7 +1018,7 @@ const getMonitorHouseData = houseList=>{
         finishLoadFlag: false,
         unitName: houseList[i].data.unitName,
         logoUrl: houseList[i].data.logoUrl,
-        pictureList: houseList[i].data.pictureList.slice(0, 5),
+        pictureList: houseList[i].data.pictureList.slice(0, 1),
         preloadDetail: houseList[i].data.preloadDetail.baseBrief[0].title + '/' + houseList[i].data.preloadDetail.baseBrief[1].title + '/' + houseList[i].data.preloadDetail.baseBrief[2].title,
         finalPrice: Number(houseList[i].data.finalPrice),
         productId: houseList[i].data.unitId,
@@ -1036,7 +1036,7 @@ const getMonitorHouseData = houseList=>{
         finishLoadFlag: false,
         unitName: houseList[i].data.luTitle,
         logoUrl: houseList[i].data.landlordheadimgurl,
-        pictureList: houseList[i].data.coverImages.slice(0, 5),
+        pictureList: houseList[i].data.coverImages.slice(0, 1),
         preloadDetail: houseList[i].data.luLeaseType + '/' + houseList[i].data.houseTypeInfo + '/' + houseList[i].data.guestnum,
         finalPrice: Number(houseList[i].data.showPriceV2.showPrice || houseList[i].data.luPrice),
         productId: houseList[i].data.luId,
@@ -1057,7 +1057,7 @@ const getMonitorHouseData = houseList=>{
         finishLoadFlag: false,
         unitName: houseList[i].data.title,
         logoUrl: houseList[i].data.image_host,
-        pictureList: houseList[i].data.image_list.slice(0, 5),
+        pictureList: houseList[i].data.image_list.slice(0, 1),
         preloadDetail: houseList[i].data.rent_type + '/' + houseList[i].data.source_type + '/宜住' + houseList[i].data.max_num,
         finalPrice: Number(houseList[i].data.sale_price),
         productId: houseList[i].data.room_id
@@ -1074,7 +1074,7 @@ const getMonitorHouseData = houseList=>{
         finishLoadFlag: false,
         unitName: houseList[i].data.title.replace(/\n/g, " "),
         logoUrl: houseList[i].data.hostAvatarUrl,
-        pictureList: houseList[i].data.productImages.slice(0, 5),
+        pictureList: houseList[i].data.productImages.slice(0, 1),
         preloadDetail: houseList[i].data.rentLayoutDesc + '/' + houseList[i].data.guestNumberDesc,
         finalPrice: houseList[i].data.discountPrice ? houseList[i].data.discountPrice / 100 : houseList[i].data.price / 100,
         productId: houseList[i].data.productId,

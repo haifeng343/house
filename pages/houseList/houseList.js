@@ -130,7 +130,7 @@ Page({
       let timers = setTimeout(() => {
           this.addDataToArray()
           clearTimeout(timers)
-      }, 1500)
+      }, 500)
     }else{
       this.setData({
         loadingShow: false
