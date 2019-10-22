@@ -102,7 +102,7 @@ App({
       houseType: [],//户型 0 一居室 1 二居室 2 三居室 3 4居以上
       minPrice: 0,//最低价
       maxPrice: 99999,//最高价
-      sort: 2,//搜索方式 1推荐 2低价有限
+      sort: 1,//搜索方式 1推荐 2低价有限
       equipment: ['1','2']
     },
     monitorSearchData: {

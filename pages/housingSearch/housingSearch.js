@@ -8,6 +8,17 @@ const service = new SearchService();
 const specialCity = [
 ];
 
+const typeEnum = {
+  11: "景区",
+  12: "高校",
+  13: "机场",
+  14: "医院",
+  15: "商圈",
+  16: "行政区",
+  17: "地铁",
+  18: "车站",
+}
+
 
 Page({
 
@@ -317,7 +328,7 @@ Page({
         position = `${position}(${lineName})`;
       }
       result[cityName].children.push({
-        // typeName: typeEnum[type],
+        typeName: typeEnum[type],
         position,
         type: type
       });

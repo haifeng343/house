@@ -137,6 +137,7 @@ page {
   text-align: center;
   background-color: #fff;
   border: 2rpx solid #e75d28;
+  border-radius: 8rpx;
 }
 
 .search_item .sort .uniE930.active {

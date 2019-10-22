@@ -15,7 +15,8 @@
           <view class="child-city-item" data-city='{{item}}' data-item='{{item.name}}_{{item2.position}}_{{item2.type}}' bindtap="handleSelectCityPosition">
             <view class="next-icon {{'next-icon'+item2.type}}"></view>
             <text class="name">{{item2.position}}</text>
-            <text class="icon-font uniE928" />
+            <!-- <text class="icon-font uniE928" /> -->
+            <text class="type">{{item2.typeName}}</text>
           </view>
         </block>
       </block>
