@@ -194,10 +194,19 @@ Page({
     }, 300)
   },
   goTop() {
-    wx.pageScrollTo({
-      selector:".block",
-      duration: 1500
-    })
+    console.log('到顶部')
+    const version = wx.getSystemInfoSync().SDKVersion
+    if (util.compareVersion(version, '2.7.3') >= 0) {
+      wx.pageScrollTo({
+        selector: ".block",
+        duration: 1500
+      })
+    } else {
+      wx.pageScrollTo({
+        scrollTop: 0,
+        duration: 1500
+      })
+    }
   },
   goSort() {
     let arr = [...this.data.allOriginalData]
