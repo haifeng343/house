@@ -1,5 +1,8 @@
-<movable-area class="container">
-  <movable-view direction="horizontal" animation="{{false}}" class="option-list" x="{{x}}">
-    <view wx:for="{{optionList}}" wx:key="label" wx:for-index="index" class="option-item {{item.active ? 'active' : ''}}" bindtap="handleSelectItem" data-index="{{index}}">{{item.label}}</view>
-  </movable-view>
-</movable-area>
+<view class="container" bindtouchmove="handleTouchMove" bindtouchend="handleTouchEnd" bindtouchstart="handleTouchStart">
+  <view class="scroll-view" style="transform: translateX({{x}}PX);">
+    <view class="option-list">
+      <view wx:for="{{viewData}}" wx:key="index" class="option-item" style="transform: translateX({{item.left}}PX);">{{item.label}}</view>
+    </view>
+  </view>
+  <view style="left:{{activeLeft}}PX" class="active-block"></view>
+</view>

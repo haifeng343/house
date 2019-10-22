@@ -168,17 +168,19 @@ Component({
   methods: {
     handleSelectNumber(event) {
       const index = event.detail;
-      const optionList = this.data.optionList.map((item, itemIndex) => {
-        if (index === itemIndex) {
-          this.data.searchData.gueseNumber = item.value;
-          item.active = true;
-        } else {
-          item.active = false;
-        }
-        return item;
-      });
+      console.log(index)
+      this.data.searchData.gueseNumber = index;
+      // const optionList = this.data.optionList.map((item, itemIndex) => {
+      //   if (index === itemIndex) {
+      //     this.data.searchData.gueseNumber = item.value;
+      //     item.active = true;
+      //   } else {
+      //     item.active = false;
+      //   }
+      //   return item;
+      // });
       this.setData({
-        optionList,
+        // optionList,
         searchData: this.data.searchData
       });
     },

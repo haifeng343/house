@@ -20,7 +20,7 @@
       </view>
       <view class='search_item'>
         <view class='title icon_5'>人数</view>
-        <MovableSelect wx:if="isLoaded" optionList="{{optionList}}" bind:onSelect="handleSelectNumber" />
+        <MovableSelect wx:if="isLoaded" value="{{searchData.gueseNumber}}" bind:change="handleSelectNumber" />
       </view>
       <view class='search_item'>
         <view class='title icon_2'>户型</view>
