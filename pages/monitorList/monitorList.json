@@ -8,7 +8,8 @@
     "advanceFilter": "../../components/advanceFilter/advanceFilter",
     "imageExtend": "../../components/imageExtend/imageExtend",
     "noNetwork": "../../components/noNetwork/noNetwork",
-    "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog"
+    "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog",
+    "mp-loading": "../../components/loading/loading"
   },
   "navigationBarTitleText": "房源监控详情"
 }

@@ -1,5 +1,4 @@
 <wxs src="../../utils/filter.wxs" module="filter" />
-<!-- <scroll-view scroll-top="{{y}}" scroll-y="{{canScroll}}" lower-threshold="{{0}}" scroll-with-animation="{{true}}" throttle="{{false}}" bindscroll="handleScroll" bindscrolltolower="handleReachBottom" class="scroll-view {{(enoughDisplay =='block'||enoughBottomDisplay =='block'||collectDisplay =='block'||stopDisplay =='block'||updateMonitorDisplay=='block'||showAdvance)?'section_hidden':''}}"> -->
 <view>
   <view class="header {{!scrollIng ? '' : ''}}">
     <view class="top-nav'">
@@ -86,6 +85,7 @@
       </view>
     </block>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length}}">已展示全部房源</view>
+    <mp-loading type="dot-red" tips="加载中" show="{{loadingShow}}"></mp-loading>
   </view>
   <view class="house_monitor" wx:if="{{countFlag===2&&countBack}}">
     <button class="monitor_btn" bindtap='goBack'>返回重试</button>
@@ -134,5 +134,4 @@
   </block>
 
   <monitorEndDialog text="确认不再关注" bind:monitorEndEvent="getmonitorEndEvent" bind:monitorEndConfirmEvent="getmonitorEndConfirmEvent" style="display:{{monitorEndDisplay}}"></monitorEndDialog>
-<!-- </scroll-view> -->
 </view>

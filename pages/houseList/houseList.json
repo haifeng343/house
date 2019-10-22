@@ -9,7 +9,8 @@
     "publicDialog": "../../components/publicDialog/publicDialog",
     "imageExtend": "../../components/imageExtend/imageExtend",
     "advanceFilter": "../../components/advanceFilter/advanceFilter",
-    "noNetwork": "../../components/noNetwork/noNetwork"
+    "noNetwork": "../../components/noNetwork/noNetwork",
+    "mp-loading": "../../components/loading/loading"
   },
   "navigationBarTitleText": "房源列表"
 }

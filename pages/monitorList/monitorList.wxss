@@ -18,7 +18,7 @@ page {
 .card-list {
   overflow: hidden;
   position: relative;
-  padding-bottom: 200rpx;
+  padding-bottom: 180rpx;
 }
 .section_hidden{
   width: 100%;
@@ -389,6 +389,6 @@ page {
   text-align: center;
   color:#A6A6A6;
   position: absolute;
-  bottom:90px;
+  bottom:84px;
   left:0;
 }

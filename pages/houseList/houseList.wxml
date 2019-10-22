@@ -1,5 +1,4 @@
 <wxs src="../../utils/filter.wxs" module="filter" />
-<!-- <scroll-view scroll-top="{{y}}" scroll-y="{{canScroll}}" lower-threshold="{{0}}" scroll-with-animation="{{true}}" throttle="{{false}}" bindscroll="handleScroll" bindscrolltolower="handleReachBottom" class="scroll-view {{(enoughDisplay =='block'||enoughBottomDisplay =='block'||monitorDisplay =='block'||monitorBottomDisplay =='block'||collectDisplay =='block'||publicDisplay =='block'||showAdvance)?'section_hidden':''}}"> -->
 <view>
   <view class="header {{!scrollIng ? '' : ''}}">
     <view class="top-nav'">
@@ -74,7 +73,8 @@
         </view>
       </view>
     </block>
-    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length}}">已展示全部房源</view>
+    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&!loadingShow}}">已展示全部房源</view>
+    <mp-loading type="dot-red" tips="加载中" show="{{loadingShow}}"></mp-loading>
   </view>
   <view class="house_monitor" wx:if="{{loadingDisplay == 'none'}}">
     <button wx:if="{{countFlag ===1 &&allCount>=50}}" class="monitor_btn" bindtap='startMonitor'>查看更多</button>
@@ -101,5 +101,4 @@
   <monitorBottomDialog ddCoin="{{ddCoin}}" bind:monitorrBottomPublicEvent="getMonitorrBottomPublicEvent" bindPublic="{{bindPublic}}" bind:monitorBottomEvent="getMonitorBottomEvent" bind:monitorBottomConfirmEvent="getmonitorBottomConfirmEvent" style="display:{{monitorBottomDisplay}}"></monitorBottomDialog>
   <advanceFilter class='{{showAdvance?"":"vhidden"}}' shownType='{{showAdvanceType}}' cityName='{{cityName}}' bind:submit='submitAdvance' />
   <publicDialog style="display:{{publicDisplay}}" bind:publicEvent="getPublicEvent" bind:publicConfrimEvent="getPublicConfrimEvent"></publicDialog>
-<!-- </scroll-view> -->
 </view>

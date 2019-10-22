@@ -123,9 +123,18 @@ Page({
 
   onReachBottom(){
     console.log('到底了')
+    this.setData({
+      loadingShow:true
+    })
     if (this.data.allData < this.data.allOriginalData){
-      this.addDataToArray()
+      let timers = setTimeout(() => {
+          this.addDataToArray()
+          clearTimeout(timers)
+      }, 1500)
     }else{
+      this.setData({
+        loadingShow: false
+      })
       if (this.data.allCount >= 50){
         if (!this.data.enoughBottom) {
           this.setData({
@@ -163,7 +172,8 @@ Page({
       const addArr = this.data.allOriginalData.slice(index,index+5);
       const newArr = [].concat(this.data.allData).concat(addArr);
       this.setData({
-        allData: newArr
+        allData: newArr,
+        loadingShow:false
       })
     }
   },
