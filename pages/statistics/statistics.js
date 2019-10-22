@@ -113,7 +113,7 @@ Page({
    * 立即开始----开启监控
    */
   startMonitor() {
-    let count = this.data.showCount
+    let count = this.data.allCount
     if (count >= 50) {
       this.setData({
         enoughDisplay: 'block',
@@ -318,7 +318,7 @@ Page({
   },
   //保存修改
   goSave() {
-    let count = this.data.showCount
+    let count = this.data.allCount
     if (count >= 50) {
       this.setData({
         enoughDisplay: 'block',

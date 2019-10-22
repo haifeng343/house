@@ -1,5 +1,5 @@
 <view class="{{(stopDisplay =='block'||enoughDisplay =='block'||monitorDisplay =='block'||publicDisplay =='block'||updateMonitorDisplay =='block')?'section_hidden':''}}">
-  <view class="section">
+  <view class="section {{bottomType === 0&&allCount>=50?'section_bottom':''}}">
     <view>
       <view class="statistics_query">
         <houseData allCount="{{allCount}}" showCount="{{showCount}}" averagePrice="{{averagePrice}}" lowPrice="{{lowPrice}}"></houseData>
@@ -18,14 +18,14 @@
       </view>
     </view>
   </view>
-  <view class="monit_start" wx:if="{{bottomType === 0}}">
+  <view class="monit_start" wx:if="{{bottomType === 0&&allCount<50}}">
     <view>
       <text>收费标准:</text>
       <text class="price">¥{{fee}}币/时</text>
       <text>余额:</text>
       <text class="price">¥{{ddCoin}}币</text>
       <!-- <button class="monit_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfoFun">立即开始</button> -->
-      <button class="monit_btn" bindtap='startMonitor'>立即开始</button>
+      <button class="monit_btn" bindtap='startMonitor'>开启监控</button>
     </view>
   </view>
   <view class="monit_start {{bottomType === 1?'monit_stop':''}}" wx:if="{{bottomType === 1}}">

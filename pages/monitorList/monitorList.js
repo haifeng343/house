@@ -467,7 +467,7 @@ Page({
       zgData
     })
 
-    if (houseData.allCount > 0) {
+    if (houseData.allCount > 0 && houseData.allData.length > 0) {
       this.setData({
         countFlag: 1
       });

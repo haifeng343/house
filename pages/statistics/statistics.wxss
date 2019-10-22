@@ -6,6 +6,7 @@
 .section{
   padding-bottom: 128rpx;
 }
+.section_bottom{padding-bottom: 0}
 .statistics_query,.house_low_price,.statistics_detail{
   font-size: 32rpx;
   color: #1D1D1D;
