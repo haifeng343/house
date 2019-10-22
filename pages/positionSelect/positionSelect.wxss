@@ -184,9 +184,9 @@ height: auto;
 
 .hot-image {
   width: 14px;
-  height: 13px;
+  height: 18px;
   margin-right: 6px;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
 }
 
 .section .position-box .position-list .item.hot-city .text {

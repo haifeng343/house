@@ -34,6 +34,7 @@
   line-height: 40rpx;
   flex: 0 0 auto;
   padding: 0 20rpx;
+  text-align: center;
 }
 
 .section .page .header {
@@ -217,9 +218,9 @@
 
 .hot-image {
   width: 14px;
-  height: 13px;
+  height: 18px;
   margin-right: 6px;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
 }
 
 .section .page .city-list .section .cell-list .cell-item.hot {
