@@ -353,6 +353,7 @@ page {
   text-align: center;
   color:#A6A6A6;
   position: absolute;
-  bottom:74px;
+  bottom:78px;
   left:0;
+  font-size: 24rpx;
 }
