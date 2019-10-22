@@ -1,6 +1,7 @@
 <wxs src="../../utils/filter.wxs" module="filter" />
-<scroll-view scroll-top="{{y}}" scroll-y="{{canScroll}}" lower-threshold="{{0}}" scroll-with-animation="{{true}}" throttle="{{false}}" bindscroll="handleScroll" bindscrolltolower="handleReachBottom" class="scroll-view {{(enoughDisplay =='block'||enoughBottomDisplay =='block'||collectDisplay =='block'||stopDisplay =='block'||updateMonitorDisplay=='block'||showAdvance)?'section_hidden':''}}">
-  <view class="header {{showUI ? '' : ''}}">
+<!-- <scroll-view scroll-top="{{y}}" scroll-y="{{canScroll}}" lower-threshold="{{0}}" scroll-with-animation="{{true}}" throttle="{{false}}" bindscroll="handleScroll" bindscrolltolower="handleReachBottom" class="scroll-view {{(enoughDisplay =='block'||enoughBottomDisplay =='block'||collectDisplay =='block'||stopDisplay =='block'||updateMonitorDisplay=='block'||showAdvance)?'section_hidden':''}}"> -->
+<view>
+  <view class="header {{!scrollIng ? '' : ''}}">
     <view class="top-nav'">
       <houseSelect id="houseSelect" type='monitor' checkInDate="{{checkInDate}}" checkOutDate="{{checkOutDate}}" cityName="{{cityName}}" locationName="{{locationName}}" bind:clickSelectItem='clickSelectItem'></houseSelect>
       <view class="bg_border"></view>
@@ -15,7 +16,7 @@
     </view>
   </view>
   <view class="block"></view>
-  <view class="card-list {{countFlag === 0||countFlag === 2 ? 'section_empty' : ''}}" style="height: {{containerHeight}}px">
+  <view class="card-list {{countFlag === 0||countFlag === 2 ? 'section_empty' : ''}}">
     <view class="search_empty" wx:if="{{countFlag===0&&bottomType === 1}}">
       <view class="search_view">
         <image class="monitor_empty_image" src="../../assets/image/monitor_empty.png"></image>
@@ -84,7 +85,7 @@
         </view>
       </view>
     </block>
-    <view class="no-more-data" wx:if="{{allData.length&&containerHeight==totalHeight}}">已展示全部房源</view>
+    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length}}">已展示全部房源</view>
   </view>
   <view class="house_monitor" wx:if="{{countFlag===2&&countBack}}">
     <button class="monitor_btn" bindtap='goBack'>返回重试</button>
@@ -107,10 +108,10 @@
       <text class="monit_btn" bindtap="goSave">保存修改</text>
     </view>
   </view>
-  <view wx:if="{{countFlag===1}}" class="house_shortcuts {{showUI ? '' : 'hidden'}}">
-    <!-- <view>
-      <image bindtap="goTop" wx:if="{{showScrollTop}}" class="top" src="../../assets/image/top.png"></image>
-    </view> -->
+  <view wx:if="{{countFlag===1}}" class="house_shortcuts {{!scrollIng ? '' : 'hidden'}}">
+    <view>
+      <image bindtap="goTop" wx:if="{{scrollTop>500}}" class="top" src="../../assets/image/top.png"></image>
+    </view>
     <view>
       <image bindtap="goSort" wx:if="{{isMonitorHouse ===0}}" class="sort" src="../../assets/image/sort.png"></image>
     </view>
@@ -133,4 +134,5 @@
   </block>
 
   <monitorEndDialog text="确认不再关注" bind:monitorEndEvent="getmonitorEndEvent" bind:monitorEndConfirmEvent="getmonitorEndConfirmEvent" style="display:{{monitorEndDisplay}}"></monitorEndDialog>
-</scroll-view>
+<!-- </scroll-view> -->
+</view>

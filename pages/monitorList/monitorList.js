@@ -49,16 +49,8 @@ Page({
     isLoaded: false,
     listSortType: 1,//列表排序，1 低到高；2高到低
     monitorEndDisplay:'none',
-    showScrollTop: false,
-    showUI: true,
-    y: 0,
-    containerHeight: 9999,
-    canScroll: true,
     enoughBottom: false,
   },
-  topFlag: false,
-  cardHeight: 0,
-  scrollFlag: true,
   clickSelectItem(e) {
     var type = e.detail.type;
     if (type) {
@@ -80,9 +72,6 @@ Page({
       cityName: app.globalData.monitorSearchData.city, //入住城市
       locationName: app.globalData.monitorSearchData.area || '全城', //地点
       allData: [],
-      y: 0,
-      containerHeight: 9999,
-      showUI: true,
       isBack:true
     })
     this.onShow();
@@ -129,14 +118,11 @@ Page({
     //如果选择的结果与监控的条件不一样；就加载查询
     this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true })
     if (this.data.isBack) { //isBack true表示是按确定按钮变化的
-      this.scrollFlag = false;
       this.setData({
         loadingDisplay: 'block',
         countFlag: '',
         allData: [],
-        y: 0,
-        showUI: true,
-        containerHeight: 9999
+        showUI: true
       });
     }
     if (!this.data.isBack){return} //isBack false表示是从返回键返回的
@@ -160,68 +146,24 @@ Page({
   goRefresh(){
     this.onShow()
   },
-  handleScroll(event) {
-    // 这里虽然写的多了一点,但是把频繁的setData调用减少了很多次
-    if (this.scrollFlag === false) {
-      this.scrollFlag = true;
-      return;
-    }
-    if (this.topFlag === true) {
-      this.topFlag = false;
-      return;
-    }
-    const {
-      scrollTop
-    } = event.detail;
-    if (this.data.showUI === true) {
-      this.setData({
-        showUI: false
-      });
-    }
-    if (scrollTop > 600 && this.data.showScrollTop === false) {
-      this.setData({
-        showScrollTop: true
-      });
-    }
-    if (scrollTop < 600 && this.data.showScrollTop === true) {
-      this.setData({
-        showScrollTop: false
-      });
-    }
-    if (this.timer) {
-      clearTimeout(this.timer);
-      this.timer = null;
-    }
-    if (
-      scrollTop > (this.data.allData.length - 5) * this.cardHeight &&
-      this.data.allData.length < this.data.allOriginalData.length
-    ) {
-      this.doAddDataToArray(scrollTop);
-    } else {
-      this.timer = setTimeout(() => {
-        this.setData({
-          showUI: true
-        });
-      }, 700);
-    }
-  },
-
-  handleReachBottom() {
-    this.setData({
-      showUI: true
-    });
-    if (this.timer) {
-      clearTimeout(this.timer);
-      this.timer = null;
-    }
-    if (this.data.bottomType === 2){
-      if (this.data.containerHeight == this.data.totalHeight && this.data.allCount >= 50) {
-        if (!this.data.enoughBottom) {
-          this.setData({
-            enoughBottomDisplay: 'block',
-            enoughBottom: true,
-            //canScroll: false
-          });
+  onReachBottom() {
+    if (this.data.allData.length < this.data.allOriginalData.length) {
+      this.addDataToArray()
+    }else{
+      if (this.data.bottomType === 2) {
+        if (this.data.allCount >= 50){
+          if (!this.data.enoughBottom) {
+            this.setData({
+              enoughBottomDisplay: 'block',
+              enoughBottom: true,
+            });
+          } else {
+            wx.showToast({
+              title: '到底了',
+              icon: 'none',
+              duration: 2000
+            })
+          }
         }else{
           wx.showToast({
             title: '到底了',
@@ -229,16 +171,7 @@ Page({
             duration: 2000
           })
         }
-      }
-      if (this.data.containerHeight == this.data.totalHeight && this.data.allCount < 50){
-        wx.showToast({
-          title: '到底了',
-          icon: 'none',
-          duration: 2000
-        })
-      }
-    }else{
-      if (this.data.containerHeight == this.data.totalHeight) {
+      }else{
         wx.showToast({
           title: '到底了',
           icon: 'none',
@@ -247,38 +180,37 @@ Page({
       }
     }
   },
-
-  doAddDataToArray(scrollTop) {
+  addDataToArray() {
     if (this.data.allData.length < this.data.allOriginalData.length) {
       const index = this.data.allData.length;
-      const endIndex = ~~(scrollTop / this.cardHeight) + 10;
-      const addArr = this.data.allOriginalData.slice(
-        index,
-        Math.min(endIndex, 50)
-      );
+      const addArr = this.data.allOriginalData.slice(index, index + 5);
       const newArr = [].concat(this.data.allData).concat(addArr);
-      this.scrollFlag = false;
       this.setData({
         allData: newArr
-      },()=>{
-        wx.createSelectorQuery()
-          .select(`.house_card`)
-          .boundingClientRect(rect => {
-            this.setData({
-              containerHeight: this.cardHeight * this.data.allData.length + 100
-            });
-          })
-          .exec();
-      });
+      })
     }
   },
-  goTop() {
-    this.topFlag = true;
+  onPageScroll(e) {
     this.setData({
-      y: 0,
-      showUI: true,
-      showScrollTop: false
-    });
+      scrollTop: e.scrollTop,
+      scrollIng: true
+    })
+    let timer = setTimeout(() => {
+      if (this.data.scrollTop === e.scrollTop) {
+        this.setData({
+          scrollTop: e.scrollTop,
+          scrollIng: false
+        })
+        console.log('滚动结束')
+        clearTimeout(timer)
+      }
+    }, 300)
+  },
+  goTop() {
+    wx.pageScrollTo({
+      selector: ".block",
+      duration: 1500
+    })
   },
   goSort() {
     let arr = [...this.data.allOriginalData]
@@ -296,13 +228,10 @@ Page({
         listSortType: 2,
       })
     }
-    this.scrollFlag = false;
     this.setData({
       allOriginalData: sort.arr,
       allData: sort.arr.slice(0, 5),
       loadingDisplay: 'none',
-      canScroll: true,
-      y: 0,
     })
   },
   
@@ -318,7 +247,6 @@ Page({
         this.setData({
           loadingDisplay: 'none',
           countFlag: 2, 
-          canScroll:false,
           countBack:true
         })
         return;
@@ -428,7 +356,6 @@ Page({
         this.setData({
           countFlag: 0,
           loadingDisplay: 'none',
-          canScroll: false,
           bottomType: 1, //0:房源列表；1监控详情房源列表；2监控详情修改之后
         })
         return;
@@ -472,23 +399,6 @@ Page({
         loadingDisplay: 'none',
         countFlag: 1,
         isBack: false,
-        canScroll: true,
-        y: 0,
-        showUI: true
-      }, () => {
-        this.scrollFlag = false;
-        if (monitorHouseData.allData.length > 0) {
-          wx.createSelectorQuery()
-            .select(`.house_card`)
-            .boundingClientRect(rect => {
-              this.cardHeight = rect.height + 20; // 高度外加20个像素的margin-bottom
-              this.setData({
-                containerHeight: this.cardHeight * this.data.allData.length + 100,
-                totalHeight: this.cardHeight * monitorHouseData.allData.length + 100
-              });
-            })
-            .exec();
-        }
       })
     })
   },
@@ -504,7 +414,6 @@ Page({
       this.setData({
         loadingDisplay: 'none',
         countFlag: 2,
-        canScroll: false,
         countBack: false
       })
       return;
@@ -545,7 +454,6 @@ Page({
     } else {
       this.setData({
         countFlag: 0,
-        canScroll: false
       });
     }
 
@@ -566,9 +474,6 @@ Page({
       zgIdData: houseData.zgId,
       loadingDisplay: 'none',
       isBack: false,
-      canScroll: true,
-      y: 0,
-      showUI: true,
       enoughBottom: false,
       bottomType: 2,
       isMonitorHouse: 0,
@@ -582,20 +487,6 @@ Page({
       sortType: app.globalData.monitorSearchData.sort,
       updateMinPrice: app.globalData.monitorSearchData.minPrice,
       updateMaxPrice: app.globalData.monitorSearchData.maxPrice,
-    }, () => {
-      this.scrollFlag = false;
-      if (houseData.allData.length > 0) {
-        wx.createSelectorQuery()
-          .select(`.house_card`)
-          .boundingClientRect(rect => {
-            this.cardHeight = rect.height + 20; // 高度外加20个像素的margin-bottom
-            this.setData({
-              containerHeight: this.cardHeight * this.data.allData.length + 100,
-              totalHeight: this.cardHeight * houseData.allData.length + 100
-            });
-          })
-          .exec();
-      }
     })
   },
   /**

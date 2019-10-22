@@ -47,29 +47,20 @@ Page({
     publicDisplay: 'none',
     isBack: false,
     listSortType: 1, //列表排序，1 低到高；2高到低
-    showUI: true,
-    y: 0,
-    containerHeight: 9999,
-    canScroll: true,
     enoughBottom:false,
     monitorBottom: false
   },
-  topFlag: false,
-  cardHeight: 0,
-  scrollFlag: true,
   clickSelectItem(e) {
     var type = e.detail.type;
     if (type) {
       this.setData({
         showAdvance: true,
         showAdvanceType: type,
-        canScroll: false
       });
     } else {
       this.setData({
         showAdvance: false,
         showAdvanceType: 0,
-        canScroll: true
       });
     }
   },
@@ -77,15 +68,11 @@ Page({
     var houseSelect = this.selectComponent('#houseSelect');
     houseSelect.reSetData();
     console.log('查询完毕');
-    this.scrollFlag = false;
     this.setData({
       showAdvance: false,
-      canScroll: true,
       loadingDisplay: 'block',
       countFlag: '',
       allData: [],
-      y: 0,
-      containerHeight: 9999,
       showUI: true
     });
     this.onLoad();
@@ -114,18 +101,13 @@ Page({
     this.getUserInfo();
     this.setData({
       showAdvance: false,
-      showAdvanceType: 0,
-      canScroll: true
+      showAdvanceType: 0
     });
     if (this.data.isBack) {
-      this.scrollFlag = false;
       this.setData({
         loadingDisplay: 'block',
         countFlag: '',
         allData: [],
-        y: 0,
-        showUI: true,
-        containerHeight: 9999
       });
       this.onLoad();
     }
@@ -135,130 +117,77 @@ Page({
       loadingDisplay: 'block',
       countFlag: '',
       allData: [],
-      y: 0,
-      showUI: true,
-      containerHeight: 9999
     });
     this.onLoad()
   },
-  handleScroll(event) {
-    // 这里虽然写的多了一点,但是把频繁的setData调用减少了很多次
-    if (this.scrollFlag === false) {
-      this.scrollFlag = true;
-      return;
-    }
-    if (this.topFlag === true) {
-      this.topFlag = false;
-      return;
-    }
-    const {
-      scrollTop
-    } = event.detail;
-    if (this.data.showUI === true && scrollTop>110) {
-      this.setData({
-        showUI: false
-      });
-    }
-    if (scrollTop > 600 && this.data.showScrollTop === false) {
-      this.setData({
-        showScrollTop: true
-      });
-    }
-    if (scrollTop < 600 && this.data.showScrollTop === true) {
-      this.setData({
-        showScrollTop: false
-      });
-    }
-    if (this.timer) {
-      clearTimeout(this.timer);
-      this.timer = null;
-    }
-    if (
-      scrollTop > (this.data.allData.length - 5) * this.cardHeight &&
-      this.data.allData.length < this.data.allOriginalData.length
-    ) {
-      this.doAddDataToArray(scrollTop);
-    } else {
-      this.timer = setTimeout(() => {
-        this.setData({
-          showUI: true
-        });
-      }, 700);
-    }
-  },
 
-  handleReachBottom() {
-    this.setData({
-      showUI: true
-    });
-    if (this.timer) {
-      clearTimeout(this.timer);
-      this.timer = null;
-    }
-    if (this.data.containerHeight == this.data.totalHeight && this.data.allCount >= 50) {
-      if (!this.data.enoughBottom){
-        this.setData({
-          enoughBottomDisplay: 'block',
-          enoughBottom: true,
-          canScroll: false
-        });
-      }else{
-        wx.showToast({
-          title: '到底了',
-          icon: 'none',
-          duration: 2000
-        })
+  onReachBottom(){
+    console.log('到底了')
+    if (this.data.allData < this.data.allOriginalData){
+      this.addDataToArray()
+    }else{
+      if (this.data.allCount >= 50){
+        if (!this.data.enoughBottom) {
+          this.setData({
+            enoughBottomDisplay: 'block',
+            enoughBottom: true,
+          });
+        } else {
+          wx.showToast({
+            title: '到底了',
+            icon: 'none',
+            duration: 2000
+          })
+        }
       }
-    } 
-    if (this.data.containerHeight == this.data.totalHeight && this.data.allCount <50) { 
-      if (!this.data.monitorBottom){
-        this.setData({
-          monitorBottomDisplay: 'block',
-          monitorBottom: true,
-          canScroll: false
-        });
-      }else{
-        wx.showToast({
-          title: '到底了',
-          icon: 'none',
-          duration: 2000
-        })
+      if (this.data.allCount < 50){
+        if (!this.data.monitorBottom) {
+          this.setData({
+            monitorBottomDisplay: 'block',
+            monitorBottom: true,
+          });
+        } else {
+          wx.showToast({
+            title: '到底了',
+            icon: 'none',
+            duration: 2000
+          })
+        }
       }
     }
+    
   },
-
-  doAddDataToArray(scrollTop) {
-    if (this.data.allData.length < this.data.allOriginalData.length) {
+  addDataToArray(){
+    if (this.data.allData.length < this.data.allOriginalData.length){
       const index = this.data.allData.length;
-      const endIndex = ~~(scrollTop / this.cardHeight) + 10;
-      const addArr = this.data.allOriginalData.slice(
-        index,
-        Math.min(endIndex, 50)
-      );
+      const addArr = this.data.allOriginalData.slice(index,index+5);
       const newArr = [].concat(this.data.allData).concat(addArr);
-      this.scrollFlag = false;
       this.setData({
         allData: newArr
-      }, () => {
-        wx.createSelectorQuery()
-          .select(`.house_card`)
-          .boundingClientRect(rect => {
-            this.setData({
-              containerHeight: this.cardHeight * this.data.allData.length + 100
-            });
-          })
-          .exec();
-      });
+      })
     }
   },
-
-  goTop() {
-    this.topFlag = true;
+  onPageScroll(e) {
     this.setData({
-      y: 0,
-      showUI: true,
-      showScrollTop: false
-    });
+      scrollTop: e.scrollTop,
+      scrollIng: true
+    })
+    let timer = setTimeout(() => {
+      if (this.data.scrollTop === e.scrollTop) {
+        this.setData({
+          scrollTop: e.scrollTop,
+          scrollIng: false
+        })
+        console.log('滚动结束')
+        clearTimeout(timer)
+      }
+    }, 300)
+  },
+  goTop() {
+    wx.pageScrollTo({
+      selector:".block",
+      duration: 1500
+    })
   },
   goSort() {
     let arr = [...this.data.allOriginalData]
@@ -276,13 +205,10 @@ Page({
         listSortType: 2
       })
     }
-    this.scrollFlag = false;
     this.setData({
       allOriginalData: sort.arr,
       allData: sort.arr.slice(0, 5),
       loadingDisplay: 'none',
-      canScroll: true,
-      y: 0,
     })
   },
 
@@ -296,7 +222,6 @@ Page({
       this.setData({
         loadingDisplay: 'none',
         countFlag: 2,
-        canScroll:false
       })
       return;
     }
@@ -335,7 +260,6 @@ Page({
     } else {
       this.setData({
         countFlag: 0,
-        canScroll:false
       });
     }
 
@@ -356,27 +280,9 @@ Page({
       zgIdData: houseData.zgId,
       loadingDisplay: 'none',
       isBack: false,
-      canScroll: true,
-      y: 0,
-      showUI: true,
       enoughBottom: false,
       monitorBottom: false,
       },
-      () => {
-        this.scrollFlag = false;
-        if (houseData.allData.length > 0) {
-          wx.createSelectorQuery()
-            .select(`.house_card`)
-            .boundingClientRect(rect => {
-              this.cardHeight = rect.height + 20; // 高度外加20个像素的margin-bottom
-              this.setData({
-                containerHeight: this.cardHeight * this.data.allData.length + 100,
-                totalHeight: this.cardHeight * houseData.allData.length + 100
-              });
-            })
-            .exec();
-        }
-      }
     );
   },
 
@@ -442,13 +348,11 @@ Page({
   getEnoughEvent(e) {
     this.setData({
       enoughDisplay: e.detail,
-      canScroll: true
     });
   },
   getBottomEnoughEvent(e) {
     this.setData({
       enoughBottomDisplay: e.detail,
-      canScroll: true
     });
   },
   getPublicEvent(e) {
@@ -541,7 +445,6 @@ Page({
   getMonitorBottomEvent(e) {
     this.setData({
       monitorBottomDisplay: e.detail,
-      canScroll: true
     });
   },
   /**
@@ -558,7 +461,6 @@ Page({
     }
     this.setData({
       monitorBottomDisplay: e.detail.show,
-      canScroll: true
     });
     this.getStartMonitor(e.detail.noteSelect, e.detail.publicSelect);
   },

@@ -1,6 +1,7 @@
 <wxs src="../../utils/filter.wxs" module="filter" />
-<scroll-view scroll-top="{{y}}" scroll-y="{{canScroll}}" lower-threshold="{{0}}" scroll-with-animation="{{true}}" throttle="{{false}}" bindscroll="handleScroll" bindscrolltolower="handleReachBottom" class="scroll-view {{(enoughDisplay =='block'||enoughBottomDisplay =='block'||monitorDisplay =='block'||monitorBottomDisplay =='block'||collectDisplay =='block'||publicDisplay =='block'||showAdvance)?'section_hidden':''}}">
-  <view class="header {{showUI ? '' : ''}}">
+<!-- <scroll-view scroll-top="{{y}}" scroll-y="{{canScroll}}" lower-threshold="{{0}}" scroll-with-animation="{{true}}" throttle="{{false}}" bindscroll="handleScroll" bindscrolltolower="handleReachBottom" class="scroll-view {{(enoughDisplay =='block'||enoughBottomDisplay =='block'||monitorDisplay =='block'||monitorBottomDisplay =='block'||collectDisplay =='block'||publicDisplay =='block'||showAdvance)?'section_hidden':''}}"> -->
+<view>
+  <view class="header {{!scrollIng ? '' : ''}}">
     <view class="top-nav'">
       <houseSelect id="houseSelect" type='house' checkInDate="{{checkInDate}}" checkOutDate="{{checkOutDate}}" cityName="{{cityName}}" locationName="{{locationName}}" bind:clickSelectItem='clickSelectItem'></houseSelect>
       <view class="bg_border"></view>
@@ -15,7 +16,7 @@
     </view>
   </view>
   <view class="block"></view>
-  <view class="card-list {{countFlag === 0||countFlag === 2 ? 'section_empty' : ''}}" style="height: {{containerHeight}}px">
+  <view class="card-list {{countFlag === 0||countFlag === 2 ? 'section_empty' : ''}}">
     <view class="search_empty" wx:if="{{countFlag === 0}}">
       <view class="search_view">
         <image class="empty_image" src="../../assets/image/search_empty.png"></image>
@@ -73,17 +74,17 @@
         </view>
       </view>
     </block>
-    <view class="no-more-data" wx:if="{{allData.length&&containerHeight==totalHeight}}">已展示全部房源</view>
+    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length}}">已展示全部房源</view>
   </view>
   <view class="house_monitor" wx:if="{{loadingDisplay == 'none'}}">
     <button wx:if="{{countFlag ===1 &&allCount>=50}}" class="monitor_btn" bindtap='startMonitor'>查看更多</button>
     <button wx:if="{{(countFlag ===1 &&allCount<50)||countFlag == 0}}" class="monitor_btn" bindtap='startMonitor'>开启监控</button>
     <button wx:if="{{countFlag ===2}}"class="monitor_btn" bindtap='goRefresh'>立即刷新</button>
   </view>
-  <view wx:if="{{countFlag === 1}}" class="house_shortcuts {{showUI ? '' : 'hidden'}}">
-    <!-- <view>
-      <image bindtap="goTop" wx:if="{{showScrollTop}}" class="top" src="../../assets/image/top.png"></image>
-    </view> -->
+  <view wx:if="{{countFlag === 1}}" class="house_shortcuts {{!scrollIng ? '' : 'hidden'}}">
+    <view>
+      <image bindtap="goTop" wx:if="{{scrollTop>500}}" class="top" src="../../assets/image/top.png"></image>
+    </view>
     <view>
       <image bindtap="goSort" class="sort" src="../../assets/image/sort.png"></image>
     </view>
@@ -100,4 +101,5 @@
   <monitorBottomDialog ddCoin="{{ddCoin}}" bind:monitorrBottomPublicEvent="getMonitorrBottomPublicEvent" bindPublic="{{bindPublic}}" bind:monitorBottomEvent="getMonitorBottomEvent" bind:monitorBottomConfirmEvent="getmonitorBottomConfirmEvent" style="display:{{monitorBottomDisplay}}"></monitorBottomDialog>
   <advanceFilter class='{{showAdvance?"":"vhidden"}}' shownType='{{showAdvanceType}}' cityName='{{cityName}}' bind:submit='submitAdvance' />
   <publicDialog style="display:{{publicDisplay}}" bind:publicEvent="getPublicEvent" bind:publicConfrimEvent="getPublicConfrimEvent"></publicDialog>
-</scroll-view>
+<!-- </scroll-view> -->
+</view>
