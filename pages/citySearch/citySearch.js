@@ -47,6 +47,9 @@ Page({
     this.setData({
       value: event.detail.value
     })
+    if (event.detail.value.length > 1) {
+      this.handleSearch()
+    }
   },
   handleSearch() {
     this.setData({

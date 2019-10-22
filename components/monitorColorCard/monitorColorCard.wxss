@@ -157,6 +157,12 @@
   position: absolute;
   top: 50%;
   margin-top: -22rpx;
+  animation: headRotate 1s linear infinite
+}
+@keyframes headRotate{
+  0% {transform: rotate(0deg);}
+  50% {transform: rotate(180deg);}
+  100% {transform: rotate(360deg);}
 }
 .card_time .time_text{
   padding-left: 64rpx;
