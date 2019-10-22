@@ -38,7 +38,8 @@ Page({
     type: '',
     value: '',
     resultLength: 0,
-    hasAsked: false
+    hasAsked: false,
+    isfocus: false
   },
   submitFlag: false,
   service: new SearchService(),
@@ -359,7 +360,11 @@ Page({
   },
 
   clearInput() {
-    this.setData({ value: '', hasAsked: false})
+    this.setData({
+      isfocus: false,
+    }, () => {
+      this.setData({ value: '', hasAsked: false })
+    })
   },
 
   onLoad: function (options) {
