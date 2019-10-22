@@ -283,7 +283,7 @@ page {
 
 .position-content .position-type {
   flex: 0 0 auto;
-  width: 250rpx;
+  width: 230rpx;
   height: calc(100% - 128rpx);
   box-sizing: border-box;
   background-color: #f9f9f9;
@@ -296,15 +296,13 @@ page {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAAJNJREFUGBlNTTkOwjAQnHGBKPhBWroUfCESD6FASPkUVJQ8Il+gSEdLSYvAWFl2gi3swju7cxH5PftNk97pvAg4LI/jrdyDgMhPTIPBujhheO3bdRGwkDD7H8G7J3VKCoqtSTk9qYmGi5kxqJPuKJGaBB7evSNpjgF1qlvOmSS3q9N4zWKNLPJYOQv5Y6pfndU6wy8SFEQagjDcsgAAAABJRU5ErkJggg==);
   background-size: 14rpx 14rpx;
   background-repeat: no-repeat;
-  background-position: 38rpx center;
+  background-position: 30rpx center;
 }
 
 .position-content .position-middle {
-  flex: 1;
-  width: 222rpx;
+  flex: 2;
   height: calc(100% - 128rpx);
   box-sizing: border-box;
-  background-color: #f9f9f9;
   flex-wrap: wrap;
   border-right: 6rpx solid #f3f3f3;
   border-bottom: 2rpx solid #f4efef;
@@ -316,7 +314,7 @@ page {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAAJNJREFUGBlNTTkOwjAQnHGBKPhBWroUfCESD6FASPkUVJQ8Il+gSEdLSYvAWFl2gi3swju7cxH5PftNk97pvAg4LI/jrdyDgMhPTIPBujhheO3bdRGwkDD7H8G7J3VKCoqtSTk9qYmGi5kxqJPuKJGaBB7evSNpjgF1qlvOmSS3q9N4zWKNLPJYOQv5Y6pfndU6wy8SFEQagjDcsgAAAABJRU5ErkJggg==);
   background-size: 14rpx 14rpx;
   background-repeat: no-repeat;
-  background-position: 38rpx center;
+  background-position: 30rpx center;
 }
 
 .position-content .position-middle .item.active.last {
@@ -328,11 +326,10 @@ page {
 }
 
 .position-content .position-last {
-  flex: 1;
+  flex: 3;
   width: 272rpx;
   height: calc(100% - 128rpx);
   box-sizing: border-box;
-  background-color: #f9f9f9;
   flex-wrap: wrap;
   border-bottom: 2rpx solid #f4efef;
   background-color: #fff;
@@ -343,7 +340,7 @@ page {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAYAAACALL/6AAAAAXNSR0IArs4c6QAAAJ1JREFUGBljZCAS/G/QZmN4JMDOSIx6kOLPDxnW/GdgYCOoAaH4vz0DM4s7Xg3oivnnXDqBUwM2xSDnM35K1vZl+M8QxyvHEM3YcPUXSBCXYpAcy39G5tcM//64fX7IuAaoMAQkCPEgxM0gZ4DEYADspI8pehYMf//sZGRgPAiS+M+AXTFIDu4HmCaQICg00E0Gi6MTIE1gjegSSHwA8JlUGZ28Op0AAAAASUVORK5CYII=);
   background-size: 22rpx 16rpx;
   background-repeat: no-repeat;
-  background-position: right center;
+  background-position: 93% center;
 }
 
 .position-content .item {
@@ -353,7 +350,7 @@ page {
   line-height: 92rpx;
   font-size: 28rpx;
   color: #1d1d1d;
-  padding: 0 20rpx 0 60rpx;
+  padding: 0 20rpx 0 50rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
