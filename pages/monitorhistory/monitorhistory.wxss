@@ -1,3 +1,4 @@
+@import '../../assets/styles/font.wxss';
 page,
 .page {
   height: 100%;
@@ -34,4 +35,6 @@ page,
 
 .uniE915 {
   font-size: 20rpx;
+  color: #bec3cd;
+  margin-right: 10rpx;
 }

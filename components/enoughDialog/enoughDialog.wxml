@@ -1,7 +1,7 @@
 <view class="mask" bindtap="bindConfirm" catchtouchmove="preventTouchMove">
     <view class="mask-out {{list.length == 2||list.length == 3||list.length == 1?'mask_two':''}}" catchtap="stopEvent">
       <view class="mask-title"><text class="line"></text><text class="title">房源充足</text><text class="line"></text></view>
-      <view class="mask-title">符合条件的房源过多,无法添加监控 您可以重新查询,也可以直接前往各平台 查看具体房源。</view>
+      <view class="mask-title">{{title}}</view>
       <image class="mask_bell" src="../../assets/image/bell.png"></image>
       <image class="mask_house_l" src="../../assets/image/house_left.png"></image>
       <image class="mask_house_b" src="../../assets/image/house_bottom.png"></image>

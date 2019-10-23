@@ -1,4 +1,4 @@
-<image style="height:{{!isLoaded?1:imageheight}}px;" class="image-extend source-image" src="{{src}}" mode="widthFix" bindload="handleImageLoaded"></image>
+<image class="image-extend source-image" src="{{src}}" mode="aspectFill" bindload="handleImageLoaded"></image>
 <view wx:if="{{!isDestroyBase}}" class="base-image-container  {{!isLoaded ? '' : 'hidden'}}">
-    <image class="image-extend base-image" src="../../assets/image/default_image.png" mode="center"></image>
+    <image class="image-extend base-image" src="../../assets/image/default_image.png" mode="aspectFill"></image>
 </view>

@@ -97,8 +97,8 @@
   <view class="house_loading" style="display:{{loadingDisplay}}" catchtouchmove="preventTouchMove">
     <image src="../../assets/image/loading.gif"></image>
   </view>
-  <enoughDialog list="{{enoughList}}"  bind:enoughEvent="getEnoughEvent" style="display:{{enoughDisplay}}"></enoughDialog>
-  <enoughBottomDialog list="{{enoughList}}" bind:enoughBottomEvent="getBottomEnoughEvent" style="display:{{enoughBottomDisplay}}"></enoughBottomDialog>
+  <enoughDialog title="您已查看全部房源，更多房源可前往各平台查看" list="{{enoughList}}"  bind:enoughEvent="getEnoughEvent" style="display:{{enoughDisplay}}"></enoughDialog>
+  <enoughBottomDialog title="您已查看全部房源，更多房源可前往各平台查看" list="{{enoughList}}" bind:enoughBottomEvent="getBottomEnoughEvent" style="display:{{enoughBottomDisplay}}"></enoughBottomDialog>
   <collectDialog bind:collectEvent="getcollectEventEvent" style="display:{{collectDisplay}}"></collectDialog>
   <monitorDialog ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorDisplay}}"></monitorDialog>
   <monitorBottomDialog ddCoin="{{ddCoin}}" bind:monitorrBottomPublicEvent="getMonitorrBottomPublicEvent" bindPublic="{{bindPublic}}" bind:monitorBottomEvent="getMonitorBottomEvent" bind:monitorBottomConfirmEvent="getmonitorBottomConfirmEvent" style="display:{{monitorBottomDisplay}}"></monitorBottomDialog>

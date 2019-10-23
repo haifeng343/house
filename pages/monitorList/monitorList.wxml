@@ -122,8 +122,8 @@
   <view class="house_loading" style="display:{{loadingDisplay}}" catchtouchmove="preventTouchMove">
     <image src="../../assets/image/loading.gif"></image>
   </view>
-  <enoughDialog list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" style="display:{{enoughDisplay}}"></enoughDialog>
-  <enoughBottomDialog list="{{enoughList}}" bind:enoughBottomEvent="getBottomEnoughEvent" style="display:{{enoughBottomDisplay}}"></enoughBottomDialog>
+  <enoughDialog title="符合条件的房源过多,无法保存修改 您可以重新查询,也可以直接前往各平台 查看具体房源。" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" style="display:{{enoughDisplay}}"></enoughDialog>
+  <enoughBottomDialog title=" 已看完筛选出的50套房源，各平台 还有更多房源可供选择, 您可以前往继续 查询。" list="{{enoughList}}" bind:enoughBottomEvent="getBottomEnoughEvent" style="display:{{enoughBottomDisplay}}"></enoughBottomDialog>
   <collectDialog bind:collectEvent="getcollectEventEvent" style="display:{{collectDisplay}}"></collectDialog>
   <stopDialog bind:stopEvent="getstopEventEvent" bind:stopConfrimEvent="getstopConfirmEventEvent" startTimeName="{{startTimeName}}" taskTime="{{taskTime}}" fee="{{fee}}" totalFee="{{totalFee}}" style="display:{{stopDisplay}}"></stopDialog>
   <updateMonitorDialog bind:updateCancelEvent="getUpdateCancelEvent" bind:updateConfrimEvent="getUpdateConfrimEvent" beginDate="{{beginDate}}" endDate="{{endDate}}" cityName="{{cityName}}" locationName="{{locationName}}" updateMinPrice="{{updateMinPrice}}"

@@ -5,7 +5,10 @@
       <monitorGrayCard wx:else item="{{item}}" ddCoin="{{ddCoin}}" bind:clickEvent="goToClick" bind:clickDelete="delItem" bind:clickOpen="openTask" bind:clickRecharge="recharge"></monitorGrayCard>
     </block>
   </view>
-
+  <view class="tip-wrapper " wx:if="{{show===1 && data.length > 0}}">
+    <text class="icon-font uniE915" />
+    <text>左滑结束监控</text>
+  </view>
   <empty wx:if="{{show===0}}" title="暂未开启监控任务" imgsrc="../../assets/image/monitor_empty.png" class="search_empty">
     <view class="bg_border"></view>
   </empty>

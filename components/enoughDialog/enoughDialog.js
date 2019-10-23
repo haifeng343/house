@@ -6,6 +6,9 @@ Component({
   properties: {
     list:{
       type:Array
+    },
+    title: {
+      type: String
     }
   },
 

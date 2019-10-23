@@ -1,3 +1,4 @@
+@import '../../assets/styles/font.wxss';
 page{
   background-color: #F9F9F9;
   width: 100%;
@@ -20,4 +21,18 @@ page{
 .bg_border{
   background: #F9F9F9;
   height: 12rpx;
+}
+.tip-wrapper {
+  font-size: 24rpx;
+  color: #bec3cd;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40rpx;
+}
+.uniE915 {
+  font-size: 20rpx;
+  color: #bec3cd;
+  margin-right: 10rpx;
 }
