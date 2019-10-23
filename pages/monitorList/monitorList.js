@@ -377,6 +377,11 @@ Page({
           countFlag: 0,
           loadingDisplay: 'none',
           bottomType: 1, //0:房源列表；1监控详情房源列表；2监控详情修改之后
+          taskTime: monitor.taskTime(monitorDetail.monitorTime, monitorDetail.minutes),
+          startTimeName: monitor.startTimeName(monitorDetail.startTime),
+          fee: monitorDetail.fee,
+          monitorId: monitorDetail.id,
+          totalFee: monitorDetail.totalFee, //消耗盯盯币
         })
         return;
       }

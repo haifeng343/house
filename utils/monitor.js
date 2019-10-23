@@ -26,7 +26,7 @@ const startTimeName = startTime => {
 }
 
 const taskTime = (monitorTime, minutes) => {
-  if (monitorTime || monitorTime == 0) {
+  if (monitorTime || monitorTime == 0 && !minutes && minutes != 0) {
     if (~~(monitorTime / 24) === 0) {
       return monitorTime + '小时'
     } else {
