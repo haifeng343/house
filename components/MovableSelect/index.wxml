@@ -1,7 +1,7 @@
 <view class="container" bindtouchmove="handleTouchMove" bindtouchend="handleTouchEnd" bindtouchstart="handleTouchStart">
   <view class="scroll-view" style="transform: translateX({{x}}PX);">
     <view class="option-list">
-      <view wx:for="{{viewData}}" wx:key="index" class="option-item" style="transform: translateX({{item.left}}PX);">{{item.label}}</view>
+      <view bindtap="handleClickOptionItem" data-index="{{item.index}}" wx:for="{{viewData}}" wx:key="index" class="option-item {{currentIndex === item.index ? 'active' : ''}}" style="transform: translateX({{item.left}}PX);">{{item.label}}</view>
     </view>
   </view>
   <view style="left:{{activeLeft}}PX" class="active-block"></view>

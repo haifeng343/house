@@ -54,6 +54,7 @@ Page({
     showType: false,
     exchangeAmount: '',
     userMoney: '0.00',
+    freezeMoney: '0.00',
     showConfirmDialog: false
   },
   service: new DepositService(),
@@ -208,8 +209,8 @@ Page({
    */
   onLoad: function(options) {
     this.service.getUserInfo().then(userInfo => {
-      const { useMoney } = userInfo.userAccount;
-      this.setData({ userMoney: useMoney.toFixed(2) });
+      const { useMoney, freezeMoney } = userInfo.userAccount
+      this.setData({ userMoney: useMoney.toFixed(2), freezeMoney: freezeMoney.toFixed(2) })
     });
     const { type } = options;
     this.setData(

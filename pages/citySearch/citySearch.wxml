@@ -2,7 +2,7 @@
   <view class="header">
     <view class="search-bar-wrapper flex-box-center">
       <text class="icon-font uniE908" />
-      <input class="input" type="text" placeholder="{{value?'':'城市 | 区域 | 位置'}}" placeholder-style="color:#bebebe" bindconfirm="handleSearch" value="{{value}}" bindinput="inputSearch" auto-focus="true" confirm-type="search" />
+      <input class="input" type="text" placeholder="{{value?'':'城市 | 区域 | 位置'}}" placeholder-style="color:#bebebe" bindconfirm="handleSearch" value="{{value}}" bindinput="inputSearch" auto-focus="true" focus="{{isfocus}}" confirm-type="search" />
       <view class="tap-clear" bindtap="clearInput" wx:if='{{value}}'><icon type="clear" size="16" style="color:#C3C3C3"/></view>
     </view>
     <view class="go-back" bindtap="goBack">取消</view>

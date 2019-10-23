@@ -1,4 +1,4 @@
-import * as rxjs from "../../utils/rx.js";
+import * as rxjs from '../../utils/rx.js';
 
 const optionList = [{}];
 
@@ -7,14 +7,26 @@ Component({
     x: 0,
     viewData: [],
     activeLeft: 0,
+    currentIndex: null
   },
   properties: {
     value: {
       type: Number,
-      value: -1,
+      value: -1
     }
   },
   methods: {
+    handleClickOptionItem(event) {
+      const { index } = event.currentTarget.dataset;
+      const point = this.data.viewData.find(item => item.index === index);
+      const x = point.left * -1 + 3 * this.itemWidth;
+      this.setData({
+        x,
+        currentIndex: point.index
+      });
+      this.scrollLeftStream.next(x);
+      this.triggerEvent('change', point.value === 11 ? -1 : point.value);
+    },
     handleTouchStart() {
       this.touchEnd = false;
       this.scrollEndStream.next(false);
@@ -23,15 +35,17 @@ Component({
       if (this.touchEnd === true) {
         return;
       }
-      const {
-        pageX
-      } = event.touches[0];
+      this.isMoved = true;
+      const { pageX } = event.touches[0];
       this.touchMoveStream.next(pageX);
     },
     handleTouchEnd() {
-      this.touchMoveStream.next(0);
-      this.touchEnd = true;
-      this.scrollEndStream.next(true);
+      if (this.isMoved === true) {
+        this.touchMoveStream.next(0);
+        this.touchEnd = true;
+        this.scrollEndStream.next(true);
+        this.isMoved = false;
+      }
     },
     getDifferenceIndexes(slice, startIndex, endIndex) {
       const indexes = [];
@@ -44,27 +58,31 @@ Component({
 
       return indexes;
     },
-    findClosestPoint(sl, iw, dir) {
+    findClosestPoint(sl, iw) {
       const index = Math.round(sl / iw);
       const x = index * iw;
       this.setData({
         x
       });
-      console.log(index, this.data.viewData);
+      let point = null;
       if (index <= 0) {
-        const point = this.data.viewData.find(item => item.left === (Math.abs(index) + 3) * iw);
-        this.triggerEvent('change', point.value === 11 ? -1 : point.value);
+        point = this.data.viewData.find(
+          item => item.left === (Math.abs(index) + 3) * iw
+        );
       } else {
-        const point = this.data.viewData.find(item => item.left === (index - 3) * iw * -1);
-        this.triggerEvent('change', point.value === 11 ? -1 : point.value);
+        point = this.data.viewData.find(
+          item => item.left === (index - 3) * iw * -1
+        );
       }
+      this.setData({ currentIndex: point.index });
+      this.triggerEvent('change', point.value === 11 ? -1 : point.value);
     }
   },
   lifetimes: {
     attached() {
       this.setData({
         viewData: optionList.slice()
-      })
+      });
     },
     ready() {
       this.touchEnd = true;
@@ -74,17 +92,20 @@ Component({
       this.touchMoveStream = new rxjs.BehaviorSubject(0);
       this.currentIndex = -1;
       this.inited = false;
+      this.isMoved = false;
 
-      this.touchMoveSubscription = this.touchMoveStream.pipe(
-        rxjs.operators.pairwise(),
-        rxjs.operators.filter(([p, n]) => n && p),
-        rxjs.operators.map(([p, n]) => this.data.x + (n - p)),
-      ).subscribe(x => {
-        this.setData({
-          x
+      this.touchMoveSubscription = this.touchMoveStream
+        .pipe(
+          rxjs.operators.pairwise(),
+          rxjs.operators.filter(([p, n]) => n && p),
+          rxjs.operators.map(([p, n]) => this.data.x + (n - p))
+        )
+        .subscribe(x => {
+          this.setData({
+            x
+          });
+          this.scrollLeftStream.next(x);
         });
-        this.scrollLeftStream.next(x);
-      })
 
       const scrollDirection = this.scrollLeftStream.pipe(
         rxjs.operators.pairwise(),
@@ -93,7 +114,11 @@ Component({
       );
 
       const indexes = rxjs
-        .combineLatest(this.scrollLeftStream, this.itemWidthStream, scrollDirection)
+        .combineLatest(
+          this.scrollLeftStream,
+          this.itemWidthStream,
+          scrollDirection
+        )
         .pipe(
           rxjs.operators.filter(([sl, iw, dir]) => iw > 0),
           rxjs.operators.map(([sl, iw, dir]) => {
@@ -106,7 +131,9 @@ Component({
         );
 
       const shouldUpdate = indexes.pipe(
-        rxjs.operators.filter(([startIndex]) => startIndex !== this.currentIndex),
+        rxjs.operators.filter(
+          ([startIndex]) => startIndex !== this.currentIndex
+        ),
         rxjs.operators.tap(([startIndex]) => {
           this.currentIndex = startIndex;
         })
@@ -116,18 +143,16 @@ Component({
 
       const dataInView = shouldUpdate.pipe(
         rxjs.operators.withLatestFrom(this.itemWidthStream, scrollDirection),
-        rxjs.operators.map(([
-          [startIndex, endIndex], iw, dir
-        ]) => {
+        rxjs.operators.map(([[startIndex, endIndex], iw, dir]) => {
           if (dataSlice.length === 0) {
             for (let i = startIndex; i <= endIndex; i++) {
               const item = {};
               item.left = i * iw;
               item.index = i;
               if (item.index >= 0) {
-                item.value = item.index % 11 + 1;
+                item.value = (item.index % 11) + 1;
               } else {
-                item.value = item.index % 11 + 12;
+                item.value = (item.index % 11) + 12;
               }
               if (item.value % 11 === 0) {
                 item.label = '不限';
@@ -147,14 +172,15 @@ Component({
             endIndex
           );
 
-          let newIndex = dir < 0 ? endIndex - differenceIndexes.length + 1 : startIndex;
+          let newIndex =
+            dir < 0 ? endIndex - differenceIndexes.length + 1 : startIndex;
 
           differenceIndexes.forEach(index => {
             const item = dataSlice[index];
             item.left = newIndex * iw;
             item.index = newIndex;
             if (newIndex >= 0) {
-              item.value = item.index % 11 + 1;
+              item.value = (item.index % 11) + 1;
             } else {
               // -1 => 0
               // -2 => 10
@@ -172,7 +198,7 @@ Component({
               // -14 => 9
               // -15 => 8
               // -16 => 7
-              item.value = item.index % 11 + 12;
+              item.value = (item.index % 11) + 12;
             }
             if (item.value % 11 === 0) {
               item.label = '不限';
@@ -193,11 +219,13 @@ Component({
           this.inited = true;
           const value = (this.data.value === -1 ? 11 : this.data.value) - 4;
           const x = value * this.itemWidth * -1;
-          console.log(x);
+          const currentIndex =
+            this.data.value === -1 ? 10 : this.data.value - 1;
           this.setData({
-            x
-          })
-          this.scrollLeftStream.next(x)
+            x,
+            currentIndex
+          });
+          this.scrollLeftStream.next(x);
         }
         this.setData({
           viewData
@@ -215,11 +243,18 @@ Component({
         })
         .exec();
 
-      this.scrollEndStream.pipe(rxjs.operators.filter(se => se === true), rxjs.operators.withLatestFrom(this.scrollLeftStream, this.itemWidthStream, scrollDirection)).subscribe(([, sl, iw, dir]) => {
-        this.findClosestPoint(sl, iw, dir);
-      });
-
-
+      this.scrollEndStream
+        .pipe(
+          rxjs.operators.filter(se => se === true),
+          rxjs.operators.withLatestFrom(
+            this.scrollLeftStream,
+            this.itemWidthStream,
+            scrollDirection
+          )
+        )
+        .subscribe(([, sl, iw, dir]) => {
+          this.findClosestPoint(sl, iw, dir);
+        });
     },
     detached() {
       if (this.dataInViewSubscription) {
