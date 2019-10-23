@@ -51,7 +51,7 @@
           <view class="time_text" wx:if="{{item.minutes||item.minutes == 0}}">
             <text>已监控:</text>
             <text class="time_line">{{item.minutes}}</text>
-            <text>分</text>
+            <text>分钟</text>
           </view>
           <view class="time_text" wx:if="{{item.monitorTime||item.monitorTime == 0&&!item.minutes&&item.minutes!=0}}">
             <text>已监控:</text>

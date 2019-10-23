@@ -93,7 +93,7 @@
   <view class="house_monitor" wx:if="{{countFlag===2&&!countBack}}">
     <button class="monitor_btn" bindtap='goRefresh'>立即刷新</button>
   </view>
-  <view class="monit_start {{bottomType === 1?'monit_stop':''}}" wx:if="{{bottomType === 1&&countFlag === 1}}">
+  <view class="monit_start {{bottomType === 1?'monit_stop':''}}" wx:if="{{bottomType === 1&&loadingDisplay === 'none'}}">
     <view>
       <text>监控时长:</text>
       <text class="price">{{taskTime}}</text>
@@ -102,7 +102,7 @@
       <text class="monit_btn" bindtap="stopMonitor">结束监控</text>
     </view>
   </view>
-  <view class="monit_start {{bottomType === 2?'monit_save':''}}" wx:if="{{bottomType === 2&&countFlag === 1}}">
+  <view class="monit_start {{bottomType === 2?'monit_save':''}}" wx:if="{{bottomType === 2&&loadingDisplay === 'none'}}">
     <view>
       <text class="monit_btn monit_back" bindtap="goBack">返回监控</text>
       <text class="monit_btn" bindtap="goSave">保存修改</text>
