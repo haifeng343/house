@@ -20,9 +20,9 @@
   </view>
   <view class="monit_start" wx:if="{{bottomType === 0&&allCount<50}}">
     <view>
-      <text>收费标准:</text>
+      <text class="time_line">收费标准:</text>
       <text class="price">¥{{fee}}币/时</text>
-      <text>余额:</text>
+      <text class="time_line">余额:</text>
       <text class="price">¥{{ddCoin}}币</text>
       <!-- <button class="monit_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfoFun">立即开始</button> -->
       <button class="monit_btn" bindtap='startMonitor'>开启监控</button>
@@ -30,9 +30,9 @@
   </view>
   <view class="monit_start {{bottomType === 1?'monit_stop':''}}" wx:if="{{bottomType === 1}}">
     <view>
-      <text>监控时长:</text>
+      <text class="time_line">监控时长:</text>
       <text class="price">{{taskTime}}</text>
-      <text>消费:</text>
+      <text class="time_line">消费:</text>
       <text class="price">{{totalFee}}币</text>
       <text class="monit_btn" bindtap="stopMonitor">结束监控</text>
     </view>

@@ -54,10 +54,8 @@
 .monit_stop text:nth-child(3){margin-right: 0;}
 .monit_save text:nth-child(2){margin-right: 0}
 .monit_save text:nth-child(3){margin-right: 0;}
-.monit_save .monit_btn{
-  width: 324rpx;
-  right: 38rpx;
-}
+.monit_save .monit_btn{width: 324rpx;right: 38rpx;}
+.monit_start text.time_line,.monit_stop text.time_line{margin-right: 8rpx}
 .monit_save .monit_back{
   width: 324rpx;
   background: #FFFFFF;

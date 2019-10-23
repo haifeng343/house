@@ -277,6 +277,7 @@ page {
 .monit_stop text:nth-child(5){margin-right: 0}
 .monit_stop text:nth-child(2){margin-right: 48rpx;}
 .monit_stop text:nth-child(3){margin-right: 0;}
+.monit_stop text.time_line{margin-right: 8rpx}
 .monit_save .monit_btn{
   width: 324rpx;
   right: 38rpx;

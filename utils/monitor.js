@@ -33,7 +33,7 @@ const taskTime = (monitorTime, minutes) => {
       return ~~(monitorTime / 24) + "天" + monitorTime % 24 + "小时"
     }
   }
-  if (minutes) {
+  if (minutes || minutes == 0) {
     return minutes + '分钟'
   }
 }
