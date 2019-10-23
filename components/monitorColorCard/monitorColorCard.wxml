@@ -22,7 +22,7 @@
               <image wx:else style="width: 26rpx; height: 42rpx;" src="../../assets/image/down_arrow.png"></image>
             </view>
             <view class="card_money" wx:else>
-              <text class="money">查询中</text>
+              <text class="money">暂无房源</text>
             </view>
 
             <view class="card_down_money" wx:if="{{item.minPrice==0&&item.maxPrice==99999}}">
