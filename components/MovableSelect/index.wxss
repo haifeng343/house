@@ -21,6 +21,7 @@
   left: 0;
   top: 4rpx;
   z-index: 1000;
+  pointer-events: none;
 }
 
 .active-block::before {
