@@ -55,7 +55,7 @@
             <input class='form-input' value='{{exchangeAmount}}' bindinput="handleExchangeAmountChange" maxlength="6" />
         </view>
         <view class='form-remain'>
-            可用余额：￥{{userMoney}} 元
+            可用余额：￥{{userMoney}}
             <text class='form-all' bindtap='exchangeAll'>全部兑换</text>
         </view>
         <view class='form-remain form-freeze' wx:if="{{freezeMoney!='0.00'}}">（冻结金额：¥{{freezeMoney}}，可前往票盯盯查看详情）</view>
