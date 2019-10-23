@@ -48,16 +48,17 @@
         </view>
     </view>
     <view wx:else class='exchange-form'>
-        <view class='form-tips'>兑换比例:1元=100币</view>
+        <view class='form-tips'>兑换比例：1 元 = 100 币</view>
         <view class='form-title'>兑换金额</view>
         <view class='form-box'>
             <text class="yen">￥</text>
             <input class='form-input' value='{{exchangeAmount}}' bindinput="handleExchangeAmountChange" maxlength="6" />
         </view>
         <view class='form-remain'>
-            账户余额{{userMoney}}元,
+            可用余额：￥{{userMoney}} 元
             <text class='form-all' bindtap='exchangeAll'>全部兑换</text>
         </view>
+        <view class='form-remain form-freeze' wx:if="{{freezeMoney!='0.00'}}">（冻结金额：¥{{freezeMoney}}，可前往票盯盯查看详情）</view>
         <view class='pay-btn' bindtap="handleShowConfirmdialog">确认兑换</view>
     </view>
     <monitorEndDialog text="确定要兑换吗" bind:monitorEndEvent="getmonitorEndEvent" bind:monitorEndConfirmEvent="getmonitorEndConfirmEvent" wx:if="{{showConfirmDialog}}"></monitorEndDialog>
