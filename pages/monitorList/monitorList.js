@@ -382,6 +382,9 @@ Page({
           fee: monitorDetail.fee,
           monitorId: monitorDetail.id,
           totalFee: monitorDetail.totalFee, //消耗盯盯币
+          allOriginalData:[],
+          allData:[],
+          allCount:0
         })
         return;
       }
