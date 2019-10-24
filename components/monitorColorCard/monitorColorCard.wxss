@@ -1,12 +1,13 @@
 .monitor_card{
   position: relative;
+  width: 100%;
   height: 312rpx;
   color: #FFFFFF;
   display: flex;
   align-items: center;
 }
 .area {
-  width: calc(100% - 134rpx);
+  width: calc(100% - 67px);
   height: 312rpx;
 }
 .wrapper {
@@ -184,7 +185,7 @@
 }
 
 .remove{  
-  width: 134rpx;  
+  width: 67px;  
   height: 100%;  
   position: absolute;  
   top: 0;  

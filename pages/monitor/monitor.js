@@ -104,6 +104,7 @@ Page({
           })
           this.setData({
             monitorStopDisplay: e.detail,
+            data:[]
           })
           this.getMonitorData();
         }

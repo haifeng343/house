@@ -37,7 +37,7 @@ Component({
       const xStream = this.touchendStream.pipe(
         rxjs.operators.withLatestFrom(moveDirectionStream),
         rxjs.operators.filter(([touchend]) => touchend === true),
-        rxjs.operators.map(([touchend, direction]) => (direction > 0 ? 0 : -70))
+        rxjs.operators.map(([touchend, direction]) => (direction > 0 ? 0 : -67))
       );
 
       this.xSubscription = xStream.subscribe(x => {
