@@ -40,8 +40,8 @@
           </view>
         </view>
         <view class="card_total">
-          <text>当前总房源:</text>
-          <text class="romm_num">{{item.nowHouseCount}}套</text>
+          <image class="card_location" src="../../assets/image/location.png"></image>
+          <view>{{item.locationName}}</view>
         </view>
         <view class="card_line">
           <view class="line"></view>
@@ -50,15 +50,21 @@
           <image class="time_monitor" src="../../assets/image/monitor.png"></image>
           <view class="time_text" wx:if="{{item.minutes||item.minutes == 0}}">
             <text>已监控:</text>
-            <text class="time_line">{{item.minutes}}</text>
-            <text>分钟</text>
+            <text class="time_line romm_num">{{item.minutes}}</text>
+            <text>分钟,</text>
+            <text>当前:</text>
+            <text class="time_line romm_num">{{item.nowHouseCount}}</text>
+            <text>套</text>
           </view>
           <view class="time_text" wx:if="{{item.monitorTime||item.monitorTime == 0&&!item.minutes&&item.minutes!=0}}">
             <text>已监控:</text>
-            <text class="time_line" wx:if="{{item.dayNum>0}}">{{item.dayNum}}</text>
+            <text class="time_line romm_num" wx:if="{{item.dayNum>0}}">{{item.dayNum}}</text>
             <text wx:if="{{item.dayNum>0}}">天</text>
-            <text class="time_line">{{item.hourNum}}</text>
-            <text>小时</text>
+            <text class="time_line romm_num">{{item.hourNum}}</text>
+            <text>小时,</text>
+            <text>当前:</text>
+            <text class="time_line romm_num">{{item.nowHouseCount}}</text>
+            <text>套</text>
           </view>
           <text class="detail_btn" data-index="{{item.index}}" catchtap="checkDetail">查询详情</text>
         </view>
