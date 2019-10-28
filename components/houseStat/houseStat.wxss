@@ -28,6 +28,18 @@
   height: 252rpx;
   border-radius: 8rpx
 }
+.stat_first .stat_layout .no_text{
+  position: absolute;
+  bottom: 46rpx;
+  left: 50%;
+  font-size:24rpx;
+  font-weight:500;
+  color:#FFFFFF;
+  text-shadow:0px 1px 1px rgba(0,0,0,0.5);
+  width: 96rpx;
+  margin-left: -48rpx;
+}
+.stat_three .stat_layout .no_text{bottom: 20rpx;}
 .stat_three .stat_normal{
   height: 382rpx;
 }

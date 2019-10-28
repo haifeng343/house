@@ -5,7 +5,7 @@
 <view class="stat_card">
   <view class="stat_first {{list.length == 3?'stat_three':''}} {{list.length == 2?'stat_two':''}} {{list.length == 1?'stat_one':''}}">
     <block wx:for="{{list}}" wx:key="{{index}}">
-      <view class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='xz'?'xz_layout':''}} {{item.key =='mn'?'mn_layout':''}} {{item.key =='zg'?'zg_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
+      <view wx:if="{{item.value}}" class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='xz'?'xz_layout':''}} {{item.key =='mn'?'mn_layout':''}} {{item.key =='zg'?'zg_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
         <view class="tip">{{item.name}}</view>
         <view class="stat_tip">
           <view class="price">{{sort?'推荐价格':'最低价'}}:￥{{item.lowPriceData.finalPrice||'--'}}/晚</view>
@@ -13,6 +13,14 @@
         </view>
         <image class="tu_image" mode="aspectFill" wx:if="{{item.selectCount>0}}" src="{{item.key=='xz'?filter.xzCoverImage(item.lowPriceData.pictureList[0]):item.lowPriceData.pictureList[0]}}"></image>
         <image class="tu_image" mode="aspectFill" wx:else src="../../assets/image/small_default_image.png"></image>
+      </view>
+
+      <view wx:else class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='xz'?'xz_layout':''}} {{item.key =='mn'?'mn_layout':''}} {{item.key =='zg'?'zg_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
+        <image wx:if="{{item.key =='tj'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/tj.png"></image>
+        <image wx:if="{{item.key =='xz'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/xz.png"></image>
+        <image wx:if="{{item.key =='mn'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/mn.png"></image>
+        <image wx:if="{{item.key =='zg'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/zg.png"></image>
+        <text class="no_text">暂无数据</text>
       </view>
     </block>
   </view>
