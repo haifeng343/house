@@ -2,7 +2,7 @@
 <view>
   <view class="header {{!scrollIng ? '' : ''}}">
     <view class="top-nav'">
-      <houseSelect id="houseSelect" type='house' checkInDate="{{checkInDate}}" checkOutDate="{{checkOutDate}}" cityName="{{cityName}}" locationName="{{locationName}}" bind:clickSelectItem='clickSelectItem'></houseSelect>
+      <houseSelect id="houseSelect" type='house' checkInDate="{{checkInDate}}" checkOutDate="{{checkOutDate}}" cityName="{{cityName}}" budget="{{budget}}" locationName="{{locationName}}" bind:clickSelectItem='clickSelectItem'></houseSelect>
       <view class="bg_border"></view>
     </view>
     <view wx:if="{{countFlag === 1}}" class="house_detail">

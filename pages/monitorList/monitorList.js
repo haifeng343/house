@@ -79,8 +79,6 @@ Page({
   compareData() {
     const app = getApp();
     var flag = false;
-    console.log(app.globalData.monitorDefaultData)
-    console.log(app.globalData.monitorSearchData)
     if (util.objectDiff(app.globalData.monitorDefaultData, app.globalData.monitorSearchData)) {
       flag = true;
       this.setData({
@@ -116,7 +114,7 @@ Page({
   },
   onShow: function () {
     //如果选择的结果与监控的条件不一样；就加载查询
-    this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true })
+    //this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true })
     if (this.data.isBack) { //isBack true表示是按确定按钮变化的
       this.setData({
         loadingDisplay: 'block',
@@ -357,6 +355,19 @@ Page({
       }
       let searchData = app.globalData.monitorSearchData;
       let defaultData = app.globalData.monitorDefaultData;
+      let budget = '';
+      if (monitorDetail.minPrice == 0 && monitorDetail.maxPrice == 99999) {
+        budget = '不限'
+      }
+      if (monitorDetail.minPrice == 0 && monitorDetail.maxPrice < 99999) {
+        budget = '￥' + monitorDetail.maxPrice + '以下'
+      }
+      if (monitorDetail.minPrice > 0 && monitorDetail.maxPrice < 99999) {
+        budget = '￥' + monitorDetail.minPrice + '-' + monitorDetail.maxPrice
+      }
+      if (monitorDetail.minPrice > 0 && monitorDetail.maxPrice == 99999) {
+        budget = '￥' + monitorDetail.minPrice + '以上'
+      }
       this.setData({
         checkInDate: monitor.checkDate(searchData.beginDate), //入住日期
         checkOutDate: monitor.checkDate(searchData.endDate), //离开日期
@@ -370,6 +381,7 @@ Page({
         defaultMInPrice: defaultData.minPrice,
         defaultMaxPrice: defaultData.maxPrice,
         isLoaded: true,
+        budget
       })
 
       if (!monitorCount || !monitorCount.allTotal || monitorCount.allTotal == 0 || houseList.length == 0) {
@@ -484,7 +496,20 @@ Page({
         countFlag: 0,
       });
     }
-
+    let y = app.globalData.monitorSearchData;
+    let budget = '';
+    if (y.minPrice == 0 && y.maxPrice == 99999) {
+      budget = '不限'
+    }
+    if (y.minPrice == 0 && y.maxPrice < 99999) {
+      budget = '￥' + y.maxPrice + '以下'
+    }
+    if (y.minPrice > 0 && y.maxPrice < 99999) {
+      budget = '￥' + y.minPrice + '-' + y.maxPrice
+    }
+    if (y.minPrice > 0 && y.maxPrice == 99999) {
+      budget = '￥' + y.minPrice + '以上'
+    }
     this.setData({
       allOriginalData: houseData.allData,
       allData: houseData.allData.slice(0, 5),
@@ -505,16 +530,17 @@ Page({
       enoughBottom: false,
       bottomType: 2,
       isMonitorHouse: 0,
-      checkInDate: monitor.checkDate(app.globalData.monitorSearchData.beginDate), //入住日期
-      checkOutDate: monitor.checkDate(app.globalData.monitorSearchData.endDate), //离开日期
-      dayCount: app.globalData.monitorSearchData.dayCount,
-      beginDate: app.globalData.monitorSearchData.beginDate,
-      endDate: app.globalData.monitorSearchData.endDate,
-      cityName: app.globalData.monitorSearchData.city, //入住城市
-      locationName: app.globalData.monitorSearchData.area || '全城', //地点
-      sortType: app.globalData.monitorSearchData.sort,
-      updateMinPrice: app.globalData.monitorSearchData.minPrice,
-      updateMaxPrice: app.globalData.monitorSearchData.maxPrice,
+      checkInDate: monitor.checkDate(y.beginDate), //入住日期
+      checkOutDate: monitor.checkDate(y.endDate), //离开日期
+      dayCount: y.dayCount,
+      beginDate: y.beginDate,
+      endDate: y.endDate,
+      cityName: y.city, //入住城市
+      locationName: y.area || '全城', //地点
+      sortType: y.sort,
+      updateMinPrice: y.minPrice,
+      updateMaxPrice: y.maxPrice,
+      budget
     })
   },
   /**

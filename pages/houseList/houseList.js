@@ -83,6 +83,19 @@ Page({
     let mnScreen = house.mnScreenPara(1)
     let zgScreen = house.zgScreenPara(1)
     let x = app.globalData.searchData
+    let budget = '';
+    if (x.minPrice == 0 && x.maxPrice == 99999){
+      budget = '不限'
+    }
+    if (x.minPrice == 0 && x.maxPrice < 99999) {
+      budget = '￥' + x.maxPrice+'以下'
+    }
+    if (x.minPrice > 0 && x.maxPrice < 99999) {
+      budget = '￥' + x.minPrice+'-'+x.maxPrice 
+    }
+    if (x.minPrice > 0 && x.maxPrice == 99999) {
+      budget = '￥' + x.minPrice + '以上'
+    }
     this.setData({
       tjfilter: tjScreen,
       xzfilter: xzScreen,
@@ -93,23 +106,25 @@ Page({
       dayCount: x.dayCount,
       cityName: x.city,
       locationName: x.area || '全城',
-      listSortType: 1
+      listSortType: 1,
+      budget: budget
     });
     this.getAllData();
   },
   onShow: function() {
     this.getUserInfo();
-    this.setData({
-      showAdvance: false,
-      showAdvanceType: 0
-    });
+    //this.setData({showAdvance: false,showAdvanceType: 0});
     if (this.data.isBack) {
+      // this.setData({
+      //   loadingDisplay: 'block',
+      //   countFlag: '',
+      //   allData: [],
+      // });
+      // this.onLoad();
+      let x = app.globalData.searchData
       this.setData({
-        loadingDisplay: 'block',
-        countFlag: '',
-        allData: [],
-      });
-      this.onLoad();
+        cityName: x.city,
+      })
     }
   },
   goRefresh(){

@@ -250,7 +250,7 @@ Component({
         lastList: this.data.middleList[type].line || {},
         middleActive: type
       }, () => {
-        if (way == 'subway') {
+        if (way == 'subway' && data.type == this.data.initSelect.initLine && data.station == this.data.initSelect.initKey) {
           this.chooseLast({
             currentTarget: {
               dataset: {
@@ -259,13 +259,13 @@ Component({
             }
           });
         } else {
-          this.chooseLast({
-            currentTarget: {
-              dataset: {
-                type: Object.keys(this.data.lastList)[0]
-              }
-            }
-          });
+          // this.chooseLast({
+          //   currentTarget: {
+          //     dataset: {
+          //       type: Object.keys(this.data.lastList)[0]
+          //     }
+          //   }
+          // });
         }
       });
     },
@@ -592,7 +592,14 @@ Component({
           }
         );
       });
-    }
+    },
+    goCity() {
+      if (this.properties.type == 'monitor') { return }
+      wx.navigateTo({
+        url: '/pages/citySelect/citySelect'
+      });
+    },
+    preventTouchMove(){}
   },
   lifetimes: {
     ready() {

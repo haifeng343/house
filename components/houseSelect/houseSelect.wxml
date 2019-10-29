@@ -1,14 +1,14 @@
-<view class="house_select">
+<view class="house_select" catchtouchmove="preventTouchMove">
     <view class="select_date" bindtap='goDate'>
       <view>住:{{checkInDate}}</view>
       <view>退:{{checkOutDate}}</view>
     </view>
-    <view class="city" bindtap='goCity'>
-      <view class="text {{type == 'monitor'?'gray':''}}">{{cityName}}</view>
-      <view class="triangle {{type == 'monitor'?'gray':''}}"></view>
-    </view>
     <view class="scenic_area {{showType==2?'active':''}}" bindtap='showLocationFilter'>
       <view class="text">{{locationName}}</view>
+      <view class="triangle"></view>
+    </view>
+    <view class="budget {{showType==3?'active':''}}" bindtap='showBudgetFilter'>
+      <view class="text">{{budget}}</view>
       <view class="triangle"></view>
     </view>
     <view class="filter {{showType==1?'active':''}}" bindtap='showAdvanceFilter'>
