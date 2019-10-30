@@ -1,0 +1,80 @@
+@import '../../assets/styles/font.wxss';
+page {
+  height: 100%;
+}
+page .page {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+}
+page .page .header {
+  height: 20rpx;
+  background-color: #f9f9f9;
+}
+page .page .feedback-list {
+  display: flex;
+  flex-direction: column;
+}
+page .page .feedback-list .feedback-item {
+  box-sizing: border-box;
+  padding: 36rpx 0;
+  margin: 0 28rpx;
+  border-bottom: solid 2rpx #e8e8e8;
+}
+page .page .feedback-list .feedback-item .feedback {
+  font-size: 28rpx;
+  line-height: 44rpx;
+  display: flex;
+  margin-bottom: 16rpx;
+  flex-wrap: wrap;
+}
+page .page .feedback-list .feedback-item .feedback .title {
+  background-image: linear-gradient(90deg, #fab161 0%, #f76b1c 100%);
+  height: 44rpx;
+  padding: 0 8rpx;
+  font-size: 28rpx;
+  margin-right: 16rpx;
+  color: #fff;
+  border-radius: 6rpx;
+  flex: 0 0 auto;
+}
+page .page .feedback-list .feedback-item .feedback .content {
+  font-weight: 500;
+  color: #171717;
+  font-size: 32rpx;
+  width: 0;
+  flex: 1 1 auto;
+  word-break: break-all;
+}
+page .page .feedback-list .feedback-item .replay {
+  font-size: 28rpx;
+  line-height: 44rpx;
+  display: flex;
+  margin-bottom: 16rpx;
+}
+page .page .feedback-list .feedback-item .replay .title {
+  background-image: linear-gradient(90deg, #8be092 0%, #7de682 96%);
+  height: 44rpx;
+  padding: 0 8rpx;
+  font-size: 28rpx;
+  margin-right: 16rpx;
+  color: #fff;
+  border-radius: 6rpx;
+  flex: 0 0 auto;
+}
+page .page .feedback-list .feedback-item .replay .content {
+  font-weight: 400;
+  color: #1d1d1d;
+  width: 0;
+  flex: 1 1 auto;
+  word-break: break-all;
+}
+page .page .feedback-list .feedback-item .time {
+  width: 100%;
+  margin-top: 12rpx;
+  font-size: 20rpx;
+  color: #a1a1a1;
+  font-weight: 400;
+  line-height: 28rpx;
+  text-align: right;
+}

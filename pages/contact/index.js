@@ -1,3 +1,5 @@
+import ContactService from './service';
+import { getSessionKey } from '../../utils/wx';
 Page({
   /**
    * 页面的初始数据
@@ -5,6 +7,12 @@ Page({
   data: {
     wechatid: 'bangdingding01'
   },
+
+  isAuth: false,
+
+  submitFlag: false,
+
+  service: new ContactService(),
 
   handleSetClipboardData() {
     wx.setClipboardData({
@@ -25,43 +33,88 @@ Page({
   handleGotoGuide() {
     wx.navigateTo({ url: '/pages/public/public' });
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {},
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {},
+  gotoFeedBack() {
+    wx.navigateTo({ url: '/pages/feedback/index' });
+  },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {},
+  handleClickFeedBack() {
+    if (this.isAuth === true) {
+      this.gotoFeedBack();
+    } else {
+      this.setData({ showAuthDialog: true });
+    }
+  },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {},
+  handleGetUserInfo(event) {
+    const userInfo = event.detail.userInfo.detail;
+    console.log(userInfo);
+    const { iv, encryptedData } = userInfo;
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {},
+    if (!iv || !encryptedData) {
+      wx.showToast({
+        title: '为了更好的使用效果，请同意用户信息授权',
+        icon: 'none'
+      });
+      this.setData({
+        showAuthDialog: false
+      });
+      return;
+    }
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {},
+    if (this.submitFlag === false) {
+      this.submitFlag = true;
+      wx.showLoading({
+        title: '获取授权信息...',
+        mask: true
+      });
+      this.setData({ showAuthDialog: false });
+      getSessionKey().then(sessionKey => {
+        const data = {
+          session_key: sessionKey,
+          iv,
+          encryptedData
+        };
+        this.auth(data);
+      });
+    }
+  },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {},
+  auth(data) {
+    this.service
+      .auth(data)
+      .then(() => {
+        this.submitFlag = false;
+        wx.hideLoading();
+        wx.showToast({
+          title: '登录成功'
+        });
+        this.gotoFeedBack();
+      })
+      .catch(error => {
+        console.error(error);
+        this.submitFlag = false;
+        wx.hideLoading();
+        wx.showToast({
+          title: '登录失败，请稍后重试',
+          icon: 'none'
+        });
+      });
+  },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {}
+  handleCloseAuthDialog() {
+    wx.showToast({
+      title: '为了更好的使用效果，请同意用户信息授权',
+      icon: 'none'
+    });
+    this.setData({
+      showAuthDialog: false
+    });
+  },
+
+  onLoad() {
+    const app = getApp();
+    const { isAuth } = app.globalData;
+    this.isAuth = isAuth;
+  }
 });

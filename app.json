@@ -19,7 +19,9 @@
     "pages/public/public",
     "pages/contact/index",
     "pages/funddetail/index",
-    "pages/housingSearch/housingSearch"
+    "pages/housingSearch/housingSearch",
+    "pages/feedback/index",
+    "pages/userfeedback/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

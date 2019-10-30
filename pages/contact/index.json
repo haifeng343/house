@@ -1,4 +1,7 @@
 {
+  "usingComponents": {
+    "authDialog": "/components/AuthDialog/AuthDialog"
+  },
   "disableScroll": true,
   "navigationBarBackgroundColor": "#E75D28",
   "navigationBarTextStyle": "white",
