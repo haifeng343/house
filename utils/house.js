@@ -813,6 +813,7 @@ const zgScreenPara = type=>{
 }
 
 const getHouseData = (data)=>{
+  let app = getApp();
   let tjFilterData = [],
     xzFilterData = [],
     mnFilterData = [],
@@ -973,7 +974,10 @@ const getHouseData = (data)=>{
   sortArr.sort(util.compareSort('finalPrice', 'asc'));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : '';
 
-  allData = sortArr;
+  let y = data.type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
+  if (y.sort == 2){
+    allData = sortArr;
+  }
   //途家最低价格数据
   tjSortArr.sort(util.compareSort('finalPrice', 'asc'));
   let tjLowPriceData = tjSortArr.length > 0 ? tjSortArr[0] : '';

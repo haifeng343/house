@@ -72,7 +72,8 @@ Page({
       cityName: app.globalData.monitorSearchData.city, //入住城市
       locationName: app.globalData.monitorSearchData.area || '全城', //地点
       allData: [],
-      isBack:true
+      isBack:true,
+      showUI: true
     })
     this.onShow();
   },
@@ -116,12 +117,12 @@ Page({
     //如果选择的结果与监控的条件不一样；就加载查询
     //this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true })
     if (this.data.isBack) { //isBack true表示是按确定按钮变化的
-      this.setData({
-        loadingDisplay: 'block',
-        countFlag: '',
-        allData: [],
-        showUI: true
-      });
+      // this.setData({
+      //   loadingDisplay: 'block',
+      //   countFlag: '',
+      //   allData: [],
+      //   showUI: true
+      // });
     }
     if (!this.data.isBack){return} //isBack false表示是从返回键返回的
     if (this.compareData()) {
@@ -484,7 +485,8 @@ Page({
       tjData,
       xzData,
       mnData,
-      zgData
+      zgData,
+      type: 2
     })
 
     if (houseData.allCount > 0 && houseData.allData.length > 0) {

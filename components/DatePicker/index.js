@@ -236,7 +236,10 @@ Component({
           isBack: true
         }, () => {
           wx.navigateBack({
-            delta: 1
+            delta: 1,
+            success:function(){
+              prevPage.submitAdvance()
+            }
           });
         });
       }

@@ -284,7 +284,8 @@ Page({
       tjData,
       xzData,
       mnData,
-      zgData
+      zgData,
+      type:1
     })
 
     if (houseData.allCount > 0 && houseData.allData.length>0) {
