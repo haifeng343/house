@@ -5,6 +5,7 @@ import { getLocationInfo } from '../../utils/map';
 import searchService from './service';
 import fecha from '../../utils/fecha';
 import { searchDataStorage } from "../../utils/searchDataStorage"
+import getIndexHouseData from "../../utils/indexHoseData"
 Page({
   /**
    * 页面的初始数据
@@ -529,6 +530,10 @@ Page({
     this.getbanner();
   },
   onShow() {
+    if (!wx.getStorageSync('houseType')) {
+      const app = getApp()
+      getIndexHouseData(app)
+    }
     if (this.data.needOnShow) {
       this.getSearchDataFromGlobal();
     }
