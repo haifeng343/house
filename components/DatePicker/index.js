@@ -238,7 +238,9 @@ Component({
           wx.navigateBack({
             delta: 1,
             success:function(){
-              prevPage.submitAdvance()
+              if (prevPage.hasOwnProperty('submitAdvance')){
+                prevPage.submitAdvance()
+              }
             }
           });
         });
