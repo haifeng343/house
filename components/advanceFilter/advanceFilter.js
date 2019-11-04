@@ -478,9 +478,16 @@ Component({
     },
     getHotPosition() {
       const app = getApp();
+      if (this.properties.shownType){
+        wx.showLoading({
+          title: '加载中',
+          mask: true
+        });
+      }
       Http.get('/indexPosition.json', {
         cityName: this.data.city
       }).then(rslt => {
+        wx.hideLoading();
         let data = rslt.data;
         data.unshift(`${this.data.city}_全城_16`);
         this.setData({
