@@ -530,10 +530,13 @@ Page({
     this.getbanner();
   },
   onShow() {
-    if (!wx.getStorageSync('houseType')) {
-      const app = getApp()
-      getIndexHouseData(app)
-    }
+    this.searchDataStorage = searchDataStorage.subscribe(hasSearchData => {
+      console.log('hasSearchData=' + hasSearchData);
+      if (!hasSearchData) {
+        const app = getApp()
+        getIndexHouseData(app)
+      }
+    })
     if (this.data.needOnShow) {
       this.getSearchDataFromGlobal();
     }
