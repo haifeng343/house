@@ -27,7 +27,7 @@
       <noNetwork title="网络异常，请刷新重试"></noNetwork>
     </view>
     <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
-      <houseListCard item="{{item}}" type="{{1}}" idx="{{idx}}"  bind:collectionEvent="goToCollection"></houseListCard>
+      <houseListCard item="{{item}}" type="{{1}}" idx="{{idx}}"  bind:collectionEvent="goToCollection" dayCount="{{dayCount}}"></houseListCard>
     </block>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&!loadingShow}}">
       <text wx:if="{{allData.length<50}}">房源已加载完，若不满意你试试添加监控</text>

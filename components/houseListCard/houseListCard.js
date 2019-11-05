@@ -17,6 +17,9 @@ Component({
     },
     isMonitorHouse:{
       type: Number
+    },
+    dayCount: {
+      type: Number
     }
   },
 
