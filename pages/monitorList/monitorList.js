@@ -69,7 +69,7 @@ Page({
       checkInDate: monitor.checkDate(app.globalData.monitorSearchData.beginDate), //入住日期
       checkOutDate: monitor.checkDate(app.globalData.monitorSearchData.endDate), //离开日期
       dayCount: app.globalData.monitorSearchData.dayCount,
-      cityName: app.globalData.monitorSearchData.city, //入住城市
+      //cityName: app.globalData.monitorSearchData.city, //入住城市
       locationName: app.globalData.monitorSearchData.area || '全城', //地点
       allData: [],
       isBack:true,
@@ -93,7 +93,7 @@ Page({
         checkInDate: monitor.checkDate(app.globalData.monitorSearchData.beginDate), //入住日期
         checkOutDate: monitor.checkDate(app.globalData.monitorSearchData.endDate), //离开日期
         dayCount: app.globalData.monitorSearchData.dayCount,
-        cityName: app.globalData.monitorSearchData.city, //入住城市
+        //cityName: app.globalData.monitorSearchData.city, //入住城市
         locationName: app.globalData.monitorSearchData.area || '全城', //地点
       });
     }
@@ -115,7 +115,7 @@ Page({
   },
   onShow: function () {
     //如果选择的结果与监控的条件不一样；就加载查询
-    //this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true })
+    this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true })
     if (this.data.isBack) { //isBack true表示是按确定按钮变化的
       // this.setData({
       //   loadingDisplay: 'block',
@@ -275,6 +275,9 @@ Page({
       let monitorCount = res.data.data.monitorCount; //监控计算
       let monitorCityId = {}
       let cityList = JSON.parse(monitorDetail.cityJson || '[]')
+      wx.setNavigationBarTitle({
+        title: '短租-' + (monitorDetail.cityName.length > 4 ? monitorDetail.cityName.slice(0, 4) + '...' : monitorDetail.cityName)
+      })
       for (const key in cityList) {
         if (key === 'mn') {
           monitorCityId.mn = cityList.mn.city_id
@@ -440,6 +443,7 @@ Page({
         loadingDisplay: 'none',
         countFlag: 1,
         isBack: false,
+        sortType:monitorDetail.sortType
       })
     })
   },
@@ -572,7 +576,8 @@ Page({
       fee: this.data.fee,
       monitorId: this.data.monitorId,
       totalFee: this.data.totalFee, //消耗盯盯币
-      isBack: false
+      isBack: false,
+      sortType: this.data.sortType
     }
     wx.navigateTo({
       url: '../statistics/statistics',
@@ -638,6 +643,7 @@ Page({
         })
         this.setData({
           monitorEndDisplay: 'none',
+          allData:[]
         })
         this.getMonitorData()
       }
@@ -647,7 +653,7 @@ Page({
    * 不再关注；添加黑名单
    */
   delItem(e) {
-    let item = this.data.allData[e.currentTarget.dataset.index]
+    let item = this.data.allData[e.detail.index]
     this.setData({
       monitorEndDisplay:'block',
       deleteItem: item
@@ -782,13 +788,13 @@ Page({
    */
   goToCollection(e) {
     let num = wx.getStorageSync('collectionNum');
-    let index = e.currentTarget.dataset.index;
+    let index = e.detail.index;
     let pId = this.data.allData[index].platformId;
     let proId = this.data.allData[index].productId;
     house.houseCollection(pId, proId)
     let item = 'allData[' + index + '].collection';
     this.setData({
-      [item]: !e.currentTarget.dataset.collection
+      [item]: !this.data.allData[index].collection
     });
     if (!num) {
       this.setData({
@@ -796,26 +802,18 @@ Page({
       });
     }
   },
-  goToPlatformDetail(e) {
-    let platform = e.currentTarget.dataset.platform
-    let productid = e.currentTarget.dataset.productid
-    monitor.navigateToMiniProgram(
-      platform, 
-      productid, 
-      app.globalData.monitorSearchData.beginDate,
-      app.globalData.monitorSearchData.endDate
-    )
-  },
   getcollectEventEvent(e) {
     this.setData({
       collectDisplay: e.detail,
     })
   },
-  swiperChange(e) {
-    let item = "allData[" + e.currentTarget.dataset.index + "].curIndex";
-    this.setData({
-      [item]: e.detail.current + 1
-    })
+  preventTouchMove() { },
+  handleMovableChange(e) {
+    if (e.detail.source === 'touch') {
+      this.touchmoveStream.next(e.detail.x);
+    }
   },
-  preventTouchMove() { }
+  handleTouchend() {
+    this.touchendStream.next(true);
+  },
 })

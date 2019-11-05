@@ -30,7 +30,6 @@ Page({
     const app = getApp();
     let data = app.globalData.houseListData
     let fee = wx.getStorageSync('hourMoney') || 0
-    console.log(data)
     for (let i = 0; i < data.enoughList.length;i++){
       if (data.enoughList[i].key == 'tj'){
         data.enoughList[i]['selectCount'] = data.tjFilterCount.length
@@ -82,7 +81,7 @@ Page({
       locationName: app.globalData.monitorSearchData.area || '--',
       updateMinPrice: app.globalData.monitorSearchData.minPrice,
       updateMaxPrice: app.globalData.monitorSearchData.maxPrice,
-      sort: app.globalData.searchData.sort==2?false:true,
+      sort: data.sortType==2?false:true,
       fee
     })
   },

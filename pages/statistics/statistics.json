@@ -9,5 +9,5 @@
     "publicDialog": "../../components/publicDialog/publicDialog",
     "updateMonitorDialog": "../../components/updateMonitorDialog/updateMonitorDialog"
   },
-  "navigationBarTitleText": "统计信息"
+  "navigationBarTitleText": "短租-统计信息"
 }

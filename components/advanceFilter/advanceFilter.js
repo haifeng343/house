@@ -478,7 +478,8 @@ Component({
     },
     getHotPosition() {
       const app = getApp();
-      if (this.properties.shownType){
+      console.log(this.properties.shownType)
+      if (this.properties.shownType === '2'){
         wx.showLoading({
           title: '加载中',
           mask: true
@@ -654,6 +655,7 @@ Component({
   },
   observers: {
     cityName: function(city) {
+      console.log(city)
       if (!city || city == '--') {
         return;
       }

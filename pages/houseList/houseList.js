@@ -107,7 +107,8 @@ Page({
       cityName: x.city,
       locationName: x.area || '全城',
       listSortType: 1,
-      budget: budget
+      budget: budget,
+      sortType: x.sort
     });
     this.getAllData();
   },
@@ -321,16 +322,6 @@ Page({
     );
   },
 
-  goToPlatformDetail(e) {
-    let platform = e.currentTarget.dataset.platform;
-    let productid = e.currentTarget.dataset.productid;
-    monitor.navigateToMiniProgram(
-      platform,
-      productid,
-      app.globalData.searchData.beginDate,
-      app.globalData.searchData.endDate
-    );
-  },
   /**
    * 跳转统计详情
    */
@@ -354,7 +345,8 @@ Page({
       ddCoin: this.data.ddCoin,
       bindPhone: this.data.bindPhone,
       bindPublic: this.data.bindPublic,
-      isBack: false
+      isBack: false,
+      sortType: this.data.sortType
     };
     wx.navigateTo({
       url: '../statistics/statistics'
@@ -366,13 +358,13 @@ Page({
    */
   goToCollection(e) {
     let num = wx.getStorageSync('collectionNum');
-    let index = e.currentTarget.dataset.index;
+    let index = e.detail.index;
     let pId = this.data.allData[index].platformId;
     let proId = this.data.allData[index].productId;
     house.houseCollection(pId, proId)
     let item = 'allData[' + index + '].collection';
     this.setData({
-      [item]: !e.currentTarget.dataset.collection
+      [item]: !this.data.allData[index].collection
     });
     if(!num){
       this.setData({
@@ -610,12 +602,6 @@ Page({
   getcollectEventEvent(e) {
     this.setData({
       collectDisplay: e.detail,
-    });
-  },
-  swiperChange(e) {
-    let item = 'allData[' + e.currentTarget.dataset.index + '].curIndex';
-    this.setData({
-      [item]: e.detail.current + 1
     });
   },
   preventTouchMove(){}

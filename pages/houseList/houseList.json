@@ -10,7 +10,8 @@
     "imageExtend": "../../components/imageExtend/imageExtend",
     "advanceFilter": "../../components/advanceFilter/advanceFilter",
     "noNetwork": "../../components/noNetwork/noNetwork",
-    "mp-loading": "../../components/loading/loading"
+    "mp-loading": "../../components/loading/loading",
+    "houseListCard": "../../components/houseListCard/houseListCard"
   },
-  "navigationBarTitleText": "房源列表"
+  "navigationBarTitleText": "短租-房源列表"
 }

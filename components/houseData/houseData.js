@@ -19,6 +19,9 @@ Component({
     lowPrice: {
       type: Number,
       value: 0
+    },
+    sort: {
+      type: Boolean
     }
   },
 
