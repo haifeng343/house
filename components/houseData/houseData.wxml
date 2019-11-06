@@ -20,7 +20,7 @@
           <view class="total_num">{{showCount}}</view>
         </view>
         <view class="data_layout data_low">
-          <view>最低价格/晚</view>
+          <view>{{sort?'推荐价格/晚':'最低价格/晚'}}</view>
           <view class="low_price">¥{{lowPrice}}</view>
         </view>
       </view>

@@ -9,7 +9,8 @@
     "imageExtend": "../../components/imageExtend/imageExtend",
     "noNetwork": "../../components/noNetwork/noNetwork",
     "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog",
-    "mp-loading": "../../components/loading/loading"
+    "mp-loading": "../../components/loading/loading",
+    "houseListCard": "../../components/houseListCard/houseListCard"
   },
-  "navigationBarTitleText": "房源监控详情"
+  "navigationBarTitleText": "短租"
 }

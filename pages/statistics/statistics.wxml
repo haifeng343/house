@@ -2,7 +2,7 @@
   <view class="section {{bottomType === 0&&allCount>=50?'section_bottom':''}}">
     <view>
       <view class="statistics_query">
-        <houseData allCount="{{allCount}}" showCount="{{showCount}}" averagePrice="{{averagePrice}}" lowPrice="{{lowPrice}}"></houseData>
+        <houseData sort="{{sort}}" allCount="{{allCount}}" showCount="{{showCount}}" averagePrice="{{averagePrice}}" lowPrice="{{lowPrice}}"></houseData>
       </view>
 
       <view class="house_low_price">

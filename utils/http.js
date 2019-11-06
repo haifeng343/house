@@ -47,6 +47,7 @@ const request = (
             code: resp.statusCode,
             message: '接口请求失败'
           });
+          wx.hideLoading();
         }
         if (typeof resp.data.code === 'number') {
           if (resp.data.code !== 200) {
@@ -63,6 +64,7 @@ const request = (
         reject({
           message: '你的网络可能开小差了~'
         });
+        wx.hideLoading();
       }
     });
   });
