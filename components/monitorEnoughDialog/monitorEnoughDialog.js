@@ -1,4 +1,4 @@
-const monitor = require('../../utils/monitor.js')
+const monitor = require('../../utils/monitor.js');
 Component({
   /**
    * 组件的属性列表
@@ -7,8 +7,17 @@ Component({
     list: {
       type: Array
     },
-    title:{
+    dialogTitle:{
       type:String
+    },
+    dialogText: {
+      type: String
+    },
+    dialogBtn:{
+      type: String
+    },
+    type:{
+      type:Number
     }
   },
 
@@ -16,13 +25,15 @@ Component({
    * 组件的初始数据
    */
   data: {
+
   },
+
   /**
    * 组件的方法列表
    */
   methods: {
     bindConfirm() {
-      this.triggerEvent('enoughBottomEvent', 'none')
+      this.triggerEvent('enoughEvent', 'none');
     },
     navigateToPlatform(e) {
       let p = e.currentTarget.dataset.platform
@@ -32,16 +43,16 @@ Component({
       if (p == 'zg') { this.navigateToZg() }
     },
     navigateToTj() {
-      monitor.navigateToMiniProgram('tj')
+      monitor.navigateToMiniProgram('tj');
     },
     navigateToXz() {
-      monitor.navigateToMiniProgram('xz')
+      monitor.navigateToMiniProgram('xz');
     },
     navigateToMn() {
-      monitor.navigateToMiniProgram('mn')
+      monitor.navigateToMiniProgram('mn');
     },
     navigateToZg() {
-      monitor.navigateToMiniProgram('zg')
+      monitor.navigateToMiniProgram('zg');
     },
     stopEvent() { },
     preventTouchMove() { }

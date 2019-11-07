@@ -8,7 +8,8 @@ Page({
     monitorStopDisplay:'none',
     monitorEndDisplay:'none',
     monitorStartDisplay:'none',
-    ddCoin:0
+    ddCoin:0,
+    active:1
   },
   onLoad: function (options) {
   },
@@ -23,6 +24,17 @@ Page({
       })
     }
   },
+  monitorChange(){
+    if(this.data.active == 1){
+      this.setData({
+        active: 2
+      })
+    }else{
+      this.setData({
+        active: 1
+      })
+    }
+  },
   getMonitorData(){
     let data={}
     monitorApi.getMonitorList(data).then(res => {
@@ -33,6 +45,12 @@ Page({
           res.data.data[i].dayNum = monitor.setDay(res.data.data[i].monitorTime)
           res.data.data[i].hourNum = monitor.setHour(res.data.data[i].monitorTime)
           res.data.data[i].index = i
+          //res.data.data[i].long = 1
+          if(i==0){
+            res.data.data[i].long = 1
+          }else{
+            res.data.data[i].long = 2
+          }
         }
         this.setData({
           data: res.data.data,

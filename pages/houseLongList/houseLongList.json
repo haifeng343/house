@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "houseLongSelect": "../../components/houseLongSelect/houseLongSelect",
+    "noNetwork": "../../components/noNetwork/noNetwork",
+    "houseLongCard": "../../components/houseLongCard/houseLongCard"
+  },
+  "navigationBarTitleText": "长租-房源列表"
+}

@@ -1,0 +1,95 @@
+<view>
+  <view>
+    <movable-area class="area">
+      <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
+        <view class="card">
+          <view class="card_image">
+            <image src="http://pic1.sc.chinaz.com/files/pic/pic9/201911/zzpic20946.jpg"></image>
+          </view>
+          <view class="card_words">
+            <view class="title">整装/精装两房LOFT康美食没康美食一条街,整装/精装两房LOFT康美食没康美食一条街</view>
+            <view class="room">22m2/3室1厅1卫/南</view>
+            <view class="address"><image src="../../assets/image/location_red.png"></image><text>西湖.翠苑</text></view>
+            <view class="label">
+              <text>精装修</text>
+              <text>拎包入住</text>
+              <text>拎包入住</text>
+              <text>精装修</text>
+              <text>精装修</text>
+              <text>拎包入住</text>
+              <text>拎包入住</text>
+              <text>精装修</text>
+            </view>
+          </view>
+          <view class="classify">房天下</view>
+          <image class="star" src="../../assets/image/star.png"></image>
+          <view class="price">
+            <text>¥2200/月</text>
+            <view class="triangle"></view>
+          </view>
+        </view>
+      </movable-view>
+    </movable-area>
+    <view class="remove">
+      <view>
+        <image src="../../assets/image/no_attention.png"></image>
+        <view>不</view>
+        <view>再</view>
+        <view>关</view>
+        <view>注</view>
+      </view>
+    </view>
+  </view>
+  <view class="card">
+    <view class="card_image">
+      <image src="http://pic1.sc.chinaz.com/files/pic/pic9/201911/zzpic20946.jpg"></image>
+    </view>
+    <view class="card_words">
+      <view class="title">整装/精装两房LOFT康美食没康美食一条街,整装/精装两房LOFT康美食没康美食一条街</view>
+      <view class="room">22m2/3室1厅1卫/南</view>
+      <view class="address"><image src="../../assets/image/location_red.png"></image><text>西湖.翠苑</text></view>
+      <view class="label">
+        <text>精装修</text>
+        <text>拎包入住</text>
+        <text>拎包入住</text>
+        <text>精装修</text>
+        <text>精装修</text>
+        <text>拎包入住</text>
+        <text>拎包入住</text>
+        <text>精装修</text>
+      </view>
+    </view>
+    <view class="classify">房天下</view>
+    <image class="star" src="../../assets/image/star.png"></image>
+    <view class="price">
+      <text>¥2200/月</text>
+      <view class="triangle"></view>
+    </view>
+  </view>
+  <view class="card">
+    <view class="card_image">
+      <image src="http://pic1.sc.chinaz.com/files/pic/pic9/201911/zzpic20946.jpg"></image>
+    </view>
+    <view class="card_words">
+      <view class="title">整装/精装两房LOFT康美食没康美食一条街,整装/精装两房LOFT康美食没康美食一条街</view>
+      <view class="room">22m2/3室1厅1卫/南</view>
+      <view class="address"><image src="../../assets/image/location_red.png"></image><text>西湖.翠苑</text></view>
+      <view class="label">
+        <text>精装修</text>
+        <text>拎包入住</text>
+        <text>拎包入住</text>
+        <text>精装修</text>
+        <text>精装修</text>
+        <text>拎包入住</text>
+        <text>拎包入住</text>
+        <text>精装修</text>
+      </view>
+    </view>
+    <view class="classify">房天下</view>
+    <image class="star" src="../../assets/image/star.png"></image>
+    <view class="price">
+      <text>¥2200/月</text>
+      <view class="triangle"></view>
+    </view>
+  </view>
+</view>

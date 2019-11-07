@@ -1,0 +1,18 @@
+<view class="house_select" catchtouchmove="preventTouchMove">
+    <view class="scenic_area" bindtap='goDate'>
+      <view class="text">区域</view>
+      <view class="triangle"></view>
+    </view>
+    <view class="scenic_type {{showType==2?'active':''}}" bindtap='showLocationFilter'>
+      <view class="text">类型</view>
+      <view class="triangle"></view>
+    </view>
+    <view class="budget {{showType==3?'active':''}}" bindtap='showBudgetFilter'>
+      <view class="text">租金</view>
+      <view class="triangle"></view>
+    </view>
+    <view class="filter {{showType==1?'active':''}}" bindtap='showAdvanceFilter'>
+      <view class="text">高级筛选</view>
+      <view class="triangle"></view>
+    </view>
+  </view>

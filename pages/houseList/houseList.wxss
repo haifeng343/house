@@ -20,13 +20,6 @@ page {
   position: relative;
   padding-bottom: 160rpx;
 }
-.section_hidden {
-  width: 100%;
-  height: 100%;
-}
-.scroll-view {
-  height: 100%;
-}
 .section_empty {
   display: flex;
   flex-direction: column;
@@ -49,15 +42,6 @@ page {
   z-index: 33;
 }
 
-.scroll_detail {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 20;
-  margin-top: 0;
-}
-
 .house_detail view {
   flex: 1;
   color: #1d1d1d;
@@ -76,9 +60,6 @@ page {
   margin-left: 8rpx;
 }
 
-.house_scroll {
-  margin-top: 18rpx;
-}
 
 .house_monitor {
   position: fixed;

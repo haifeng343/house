@@ -31,8 +31,7 @@ Page({
     zgLowPriceData: '',
     stopDisplay: 'none',
     collectDisplay: 'none',
-    enoughDisplay: 'none',
-    enoughBottomDisplay: 'none',
+    monitorenoughDisplay: 'none',
     ddCoin: 0,
     loadingDisplay: 'block',
     updateMonitorDisplay: 'none',
@@ -163,7 +162,10 @@ Page({
         if (this.data.allCount >= 50){
           if (!this.data.enoughBottom) {
             this.setData({
-              enoughBottomDisplay: 'block',
+              monitorenoughDisplay: 'block',
+              dialogTitle: '哎呀，到底了',
+              dialogText: '已看完筛选出的50套房源，各平台 还有更多房源可供选择, 您可以前往继续 查询。',
+              dialogBtn: '取消',
               enoughBottom: true,
             });
           } else {
@@ -669,7 +671,10 @@ Page({
   goSave() {
     if (this.data.allCount>50){
       this.setData({
-        enoughDisplay: 'block'
+        monitorenoughDisplay: 'block',
+        dialogTitle: '房源充足',
+        dialogText: '符合条件的房源过多,无法保存修改 您可以重新查询,也可以直接前往各平台 查看具体房源。',
+        dialogBtn: '知道了'
       })
     }else{
       this.setData({
@@ -679,17 +684,7 @@ Page({
   },
   getEnoughEvent(e) {
     this.setData({
-      enoughDisplay: e.detail,
-    })
-  },
-  getBottomEnoughEvent(e) {
-    this.setData({
-      enoughBottomDisplay: e.detail,
-    })
-  },
-  getBottomEnoughEvent(e) {
-    this.setData({
-      enoughBottomDisplay: e.detail,
+      monitorenoughDisplay: e.detail,
     })
   },
   //保存修改 --取消，再看看

@@ -7,4 +7,4 @@ export const api_address = 'https://fytest.bangdingding.cn';
 //接口开发环境 https://fangdev.bangdingding.cn
 //接口测试环境 https://fangtest.bangdingding.cn
 //接口正式环境 https://fang.bangdingding.cn
-export const default_address = 'https://fangdev.bangdingding.cn'; 
+export const default_address = 'https://fangdev.bangdingding.cn';

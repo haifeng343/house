@@ -1,4 +1,9 @@
 <view class="section {{show === 0?'section_empty':''}}">
+  <view class="tab">
+    <view class="tab_btn">
+      <text class="{{active ===1?'active':''}}" bindtap="monitorChange">短租</text><text class="{{active ===2?'active':''}}" bindtap="monitorChange">长租</text>
+    </view>
+  </view>
   <view wx:if="{{show===1}}" class="card_list">
     <block wx:for="{{data}}" wx:key="{{index}}">
       <monitorColorCard wx:if="{{item.status == 1}}" item="{{item}}" ddCoin="{{ddCoin}}" bind:checkEvent="checkDetail" bind:clickDelete="delItem" bind:clickOpen="openTask"></monitorColorCard>

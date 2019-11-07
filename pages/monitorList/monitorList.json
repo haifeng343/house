@@ -1,8 +1,6 @@
 {
   "usingComponents": {
     "houseSelect": "../../components/houseSelect/houseSelect",
-    "enoughDialog": "../../components/enoughDialog/enoughDialog",
-    "enoughBottomDialog": "../../components/enoughBottomDialog/enoughBottomDialog",
     "stopDialog": "../../components/stopDialog/stopDialog",
     "updateMonitorDialog": "../../components/updateMonitorDialog/updateMonitorDialog",
     "advanceFilter": "../../components/advanceFilter/advanceFilter",
@@ -10,7 +8,8 @@
     "noNetwork": "../../components/noNetwork/noNetwork",
     "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog",
     "mp-loading": "../../components/loading/loading",
-    "houseListCard": "../../components/houseListCard/houseListCard"
+    "houseListCard": "../../components/houseListCard/houseListCard",
+    "monitorEnoughDialog": "../../components/monitorEnoughDialog/monitorEnoughDialog"
   },
   "navigationBarTitleText": "短租"
 }

@@ -1,0 +1,85 @@
+page {width: 100%;height: 100%;}
+.header {
+  transition: transform 0.5s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 33;
+  transform: translateY(0);
+}
+.header.hidden {transform: translateY(-100%);}
+.top-nav {width: 100%;height: 112rpx;}
+.bg_border {background: #f9f9f9;height: 12rpx;}
+.block {height: 200rpx;}
+.house_detail {
+  display: flex;
+  align-items: center;
+  height: 88rpx;
+  background: #fff4f0;
+  padding: 0 20rpx;
+  z-index: 33;
+}
+.house_detail view {flex: 1;color: #1d1d1d;}
+.house_detail .check_detail {color: #f1612a;display: flex;align-items: center;justify-content: flex-end;}
+.house_detail .check_detail .check_more {width: 14rpx;height: 24rpx;margin-left: 8rpx;}
+.card-list {overflow: hidden;position: relative;padding-bottom: 180rpx;}
+.section_empty {display: flex;flex-direction: column;height: calc(100% - 200rpx) !important;}
+.search_empty {flex: 1;background: #ffffff;}
+.search_empty .search_view {display: flex;justify-content: center;}
+.search_empty .search_view:nth-child(1) {margin-top: 160rpx;}
+.search_empty .search_view:nth-child(2) {margin-top: 40rpx;}
+.search_empty .search_view:nth-child(3) {margin-top: 30rpx;text-align: center;margin: 30rpx 108rpx 0;}
+.search_empty .search_title {font-size: 32rpx;color: #1d1d1d;}
+.search_empty .search_tip {font-size: 28rpx;color: #a6a6a6;}
+.search_empty .empty_image {width: 320rpx;height: 250rpx;}
+
+.house_monitor {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 30rpx;
+  z-index: 11
+}
+.house_monitor .monitor_btn {
+  width: 480rpx;
+  height: 92rpx;
+  background:linear-gradient(180deg,rgba(231,93,40,1) 0%,rgba(233,68,68,1) 100%);
+  box-shadow: 4rpx 4rpx 8rpx 0px rgba(198, 55, 35, 0.48);
+  color: #fff;
+  line-height: 92rpx;
+  border-radius: 46rpx;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 28rpx;
+}
+.house_shortcuts {
+  position: fixed;
+  right: 12rpx;
+  bottom: 140rpx;
+  z-index: 30;
+  transform: translateX(0);
+  transition: transform 1s;
+}
+.house_shortcuts .top,.house_shortcuts .sort {width: 100rpx;height: 100rpx;}
+.house_shortcuts .top {margin-bottom: 20rpx;}
+.house_shortcuts.hidden {transform: translateX(calc(100% + 12rpx));}
+.house_loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+.house_loading image {margin-top: 380rpx;width: 750rpx;height: 406rpx;}
+.no-more-data {
+  width:100%;
+  text-align: center;
+  color:#A6A6A6;
+  position: absolute;
+  bottom:70px;
+  left:0;
+  font-size: 24rpx;
+}

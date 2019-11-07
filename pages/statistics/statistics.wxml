@@ -55,8 +55,6 @@
     style="display:{{stopDisplay}}">
 </stopDialog>
 
-<enoughDialog list="{{enoughList}}" bind:enoughEvent="getEnoughEvent"  style="display:{{enoughDisplay}}">
-</enoughDialog>
 
 <monitorDialog ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent"  style="display:{{monitorDisplay}}"></monitorDialog>
 
@@ -80,3 +78,5 @@
     style="display:{{updateMonitorDisplay}}"
   >
 </updateMonitorDialog>
+
+<monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}" type="1" style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" ></monitorEnoughDialog>

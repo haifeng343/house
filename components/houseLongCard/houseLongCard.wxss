@@ -1,0 +1,109 @@
+.card{display: flex;padding: 32rpx 30rpx;border-bottom: 1px solid #E8E8E8;height: 220rpx;position: relative}
+.area{width: calc(100% - 64px);height: 284rpx;}
+.wrapper {
+  width: calc(100vw);
+  height: 284rpx;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  background: #ffffff;
+}
+.card .card_image{width: 234rpx;}
+.card_image image{width: 220rpx;height: 220rpx;}
+.card .card_words{flex: 1;overflow: hidden;}
+.card_words .title{
+  font-size: 32rpx;
+  font-weight:bold;
+  color: #1D1D1D;
+  overflow:hidden;
+  text-overflow:ellipsis; 
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2; 
+  display: -webkit-box;
+  padding-right: 100rpx;
+  margin-bottom: 18rpx;
+  height: 72rpx;
+  line-height: 36rpx;
+}
+.card_words .room{font-size: 24rpx;color: #474747;margin-bottom: 8rpx;}
+.card_words .address{font-size: 24rpx;color: #FF6363;margin-bottom: 18rpx;}
+.card_words .address image{width: 20rpx;height:26rpx;vertical-align: middle;margin-right: 10rpx;}
+.card_words .address text{line-height: 34rpx;vertical-align: middle;}
+.card_words .label text{
+  display: inline-block;
+  font-size: 20rpx;
+  color: #F1612A;
+  padding: 2rpx 8rpx;
+  margin-right: 8rpx;
+  border-radius: 22rpx;
+  background: rgba(241,97,42,0.1);
+}
+.card .star {
+  width: 44rpx;
+  height: 44rpx;
+  position: absolute;
+  top: 28rpx;
+  right: 24rpx;
+  z-index: 7
+}
+.card .classify {
+  position: absolute;
+  top: 32rpx;
+  left: 30rpx;
+  width: 120rpx;
+  height: 38rpx;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  text-align: center;
+  border-radius: 8rpx 0 8rpx 0;
+  line-height: 38rpx;
+  font-size: 28rpx;
+  z-index: 7
+}
+.card .price {
+  position: absolute;
+  left: 22rpx;
+  top: 180rpx;
+  width: auto;
+  height: 50rpx;
+  color: #fff;
+  font-size: 32rpx;
+  line-height: 50rpx;
+  text-align: center;
+  padding: 0 20rpx;
+  background:linear-gradient(180deg,rgba(231,93,40,1) 0%,rgba(233,68,68,1) 100%);
+  border-radius: 4rpx 6rpx 6rpx 0;
+  opacity:0.95;
+  z-index: 7
+}
+
+.card .price .triangle {
+  position: absolute;
+  left: -4rpx;
+  top: 50rpx;
+  width: 0;
+  height: 0;
+  border: 8rpx solid;
+  margin-left: 4rpx; 
+  border-right: 0;
+  border-color: #941200 transparent transparent transparent;
+}
+.remove{  
+  width: 64px; 
+  height: 284rpx; 
+  position: absolute;  
+  top: 0;  
+  right: 0;  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;
+  background: rgb(243, 243, 243);
+  z-index: 1
+}  
+.remove image{width: 32rpx;height:32rpx;margin-left: -2rpx}
+.remove view{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(241,97,42,1);
+  line-height:36rpx;
+}

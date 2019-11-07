@@ -14,7 +14,7 @@ Page({
     isMonitorHouse: 0, //1;不可收藏；0；可收藏
     stopDisplay: 'none',
     bottomType: 0,
-    enoughDisplay: 'none',
+    monitorenoughDisplay: 'none',
     monitorDisplay: 'none',
     publicDisplay:'none',
     updateMonitorDisplay: 'none',
@@ -115,7 +115,10 @@ Page({
     let count = this.data.allCount
     if (count >= 50) {
       this.setData({
-        enoughDisplay: 'block',
+        monitorenoughDisplay: 'block',
+        dialogTitle: '房源充足',
+        dialogText: '符合条件的房源过多,无法保存修改 您可以重新查询,也可以直接前往各平台 查看具体房源。',
+        dialogBtn: '知道了',
         maskShow: true,
       })
     } else {
@@ -320,7 +323,10 @@ Page({
     let count = this.data.allCount
     if (count >= 50) {
       this.setData({
-        enoughDisplay: 'block',
+        monitorenoughDisplay: 'block',
+        dialogTitle: '房源充足',
+        dialogText: '符合条件的房源过多,无法保存修改 您可以重新查询,也可以直接前往各平台 查看具体房源。',
+        dialogBtn: '知道了'
       })
     } else {
       this.setData({
@@ -426,7 +432,7 @@ Page({
 
   getEnoughEvent(e) {
     this.setData({
-      enoughDisplay: e.detail,
+      monitorenoughDisplay: e.detail,
     })
   },
 

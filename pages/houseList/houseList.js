@@ -31,8 +31,7 @@ Page({
     mnLowPriceData: '',
     zgLowPriceData: '',
     showScrollTop: false,
-    enoughDisplay: 'none',
-    enoughBottomDisplay: 'none',
+    monitorenoughDisplay:'none',
     monitorDisplay: 'none',
     monitorBottomDisplay: 'none',
     collectDisplay: 'none',
@@ -154,7 +153,10 @@ Page({
       if (this.data.allCount >= 50){
         if (!this.data.enoughBottom) {
           this.setData({
-            enoughBottomDisplay: 'block',
+            monitorenoughDisplay:'block',
+            dialogTitle: '哎呀，到底了',
+            dialogText: '您已查看全部房源，更多房源可前往各平台查看',
+            dialogBtn: '取消',
             enoughBottom: true,
           });
         } else {
@@ -372,16 +374,15 @@ Page({
       });
     }
   },
+  /**
+   * 房源充足，到底和查看更多弹窗隐藏
+  */
   getEnoughEvent(e) {
     this.setData({
-      enoughDisplay: e.detail,
+      monitorenoughDisplay:e.detail
     });
   },
-  getBottomEnoughEvent(e) {
-    this.setData({
-      enoughBottomDisplay: e.detail,
-    });
-  },
+
   getPublicEvent(e) {
     if (this.data.publicType == 1) {
       this.setData({
@@ -423,7 +424,10 @@ Page({
     let app = getApp()
     if (count >= 50) {
       this.setData({
-        enoughDisplay: 'block',
+        monitorenoughDisplay:'block',
+        dialogTitle:'房源充足',
+        dialogText: '已帮您甄选' + this.data.allOriginalData.length + '套房源，若想查看更多房源，请点击前往各平台查看',
+        dialogBtn:'知道了'
       });
     } else {
       if (!this.data.bindPhone && !app.globalData.isUserBindPhone) {

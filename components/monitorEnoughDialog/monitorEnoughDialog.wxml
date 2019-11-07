@@ -1,0 +1,83 @@
+<view class="mask" bindtap="bindConfirm" catchtouchmove="preventTouchMove">
+  <view class="top_image" catchtap="stopEvent">
+    <image src="../../assets/image/dialog_top.png"></image>
+    <view class="mask_out {{list.length == 3?'mask_three':''}} {{list.length == 2?'mask_two':''}} {{list.length == 1?'mask_one':''}} {{type==1?'mask_n_type':''}}">
+      <view class="mask_title">{{dialogTitle}}</view>
+      <view class="mask_content">{{dialogText}}</view>
+      <view class="mask_mold">
+        <view wx:if="{{list.length != 3}}" class="mold_first {{list.length == 2?'mold_two':''}} {{list.length == 1?'mold_one':''}}">
+          <block wx:if="list.length!=3" wx:for="{{list}}" wx:key="{{index}}">
+            <view class="mold {{index ==0&&list.length == 3?'mold_normal':'mold_other'}} {{index ==2&&list.length == 3?'mold_ab':''}}" catchtap="navigateToPlatform" data-platform="{{item.key}}">
+              <view class="mold_name" wx:if="{{item.key == 'tj'}}">
+                <image wx:if="{{item.value>0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/tj_dialog.png"></image>
+                <image wx:if="{{item.value==0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/tj_none_dialog.png"></image>
+                <view class="num">{{item.value}}套</view>
+              </view>
+              <view class="mold_name" wx:if="{{item.key == 'xz'}}">
+                <image wx:if="{{item.value>0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/xz_dialog.png"></image>
+                <image wx:if="{{item.value==0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/xz_none_dialog.png"></image>
+                <view  class="num">{{item.value}}套</view>
+              </view>
+              <view class="mold_name" wx:if="{{item.key == 'mn'}}">
+                <image wx:if="{{item.value>0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/mn_dialog.png"></image>
+                <image wx:if="{{item.value==0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/mn_none_dialog.png"></image>
+                <view  class="num">{{item.value}}套</view>
+              </view>
+              <view class="mold_name" wx:if="{{item.key == 'zg'}}">
+                <image wx:if="{{item.value>0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/zg_dialog.png"></image>
+                <image wx:if="{{item.value==0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/zg_none_dialog.png"></image>
+                <view  class="num">{{item.value}}套</view>
+              </view>
+            </view>
+          </block>
+        </view>
+        <view wx:else class="mold_first {{list.length == 3?'mold_three':''}}">
+          <block  wx:for="{{list}}" wx:key="{{index}}">
+            <view class="mold {{index ==0&&list.length == 3?'mold_normal':'mold_other'}} {{index ==2&&list.length == 3?'mold_ab':''}}" catchtap="navigateToPlatform" data-platform="{{item.key}}">
+              <view class="mold_name" wx:if="{{index ==0}}">
+                <image wx:if="{{item.value>0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/three_house.png"></image>
+                <image wx:if="{{item.value==0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/three_none.png"></image>
+                <view  class="num">{{item.value}}套</view>
+                <view class="line"></view>
+                <image class="tj_logo" wx:if="{{item.key == 'tj'&&item.value>0}}" src="../../assets/image/tj_logo.png"></image>
+                <image class="xz_logo" wx:if="{{item.key == 'xz'&&item.value>0}}" src="../../assets/image/xz_logo.png"></image>
+                <image class="mn_logo" wx:if="{{item.key == 'mn'&&item.value>0}}" src="../../assets/image/mn_logo.png"></image>
+                <image class="zg_logo" wx:if="{{item.key == 'zg'&&item.value>0}}" src="../../assets/image/zg_logo.png"></image>
+              </view>
+              <view class="mold_name" wx:if="{{index ==1}}">
+                <image wx:if="{{item.value>0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/one_house.png"></image>
+                <image wx:if="{{item.value==0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/one_none.png"></image>
+                <view  class="num">{{item.value}}套</view>
+                <view class="line" wx:if="{{item.value>0}}"></view>
+                <image class="tj_logo" wx:if="{{item.key == 'tj'&&item.value>0}}" src="../../assets/image/tj_logo.png"></image>
+                <image class="tj_n_logo" wx:if="{{item.key == 'tj'&&item.value==0}}" src="../../assets/image/tj_none_logo.png"></image>
+                <image class="xz_logo" wx:if="{{item.key == 'xz'&&item.value>0}}" src="../../assets/image/xz_logo.png"></image>
+                <image class="xz_n_logo" wx:if="{{item.key == 'xz'&&item.value==0}}" src="../../assets/image/xz_none_logo.png"></image>
+                <image class="mn_logo" wx:if="{{item.key == 'mn'&&item.value>0}}" src="../../assets/image/mn_logo.png"></image>
+                <image class="mn_n_logo" wx:if="{{item.key == 'mn'&&item.value==0}}" src="../../assets/image/mn_none_logo.png"></image>
+                <image class="zg_logo" wx:if="{{item.key == 'zg'&&item.value>0}}" src="../../assets/image/zg_logo.png"></image>
+                <image class="zg_n_logo" wx:if="{{item.key == 'zg'&&item.value==0}}" src="../../assets/image/zg_none_logo.png"></image>
+              </view>
+              <view class="mold_name" wx:if="{{index ==2}}">
+                <image wx:if="{{item.value>0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/two_house.png"></image>
+                <image wx:if="{{item.value==0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/two_house.png"></image>
+                <view  class="num">{{item.value}}套</view>
+                <view class="line" wx:if="{{item.value>0}}"></view>
+                <image class="tj_logo" wx:if="{{item.key == 'tj'&&item.value>0}}" src="../../assets/image/tj_logo.png"></image>
+                <image class="tj_n_logo" wx:if="{{item.key == 'tj'&&item.value==0}}" src="../../assets/image/tj_none_logo.png"></image>
+                <image class="xz_logo" wx:if="{{item.key == 'xz'&&item.value>0}}" src="../../assets/image/xz_logo.png"></image>
+                <image class="xz_n_logo" wx:if="{{item.key == 'xz'&&item.value==0}}" src="../../assets/image/xz_none_logo.png"></image>
+                <image class="mn_logo" wx:if="{{item.key == 'mn'&&item.value>0}}" src="../../assets/image/mn_logo.png"></image>
+                <image class="mn_n_logo" wx:if="{{item.key == 'mn'&&item.value==0}}" src="../../assets/image/mn_none_logo.png"></image>
+                <image class="zg_logo" wx:if="{{item.key == 'zg'&&item.value>0}}" src="../../assets/image/zg_logo.png"></image>
+                <image class="zg_n_logo" wx:if="{{item.key == 'zg'&&item.value==0}}" src="../../assets/image/zg_none_logo.png"></image>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+      <view class="mask_know" catchtap="bindConfirm">{{dialogBtn}}</view>
+    </view>
+  </view>
+  
+</view>
