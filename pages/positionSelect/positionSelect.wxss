@@ -86,14 +86,14 @@
 
 .section .position-box .position-list {
   padding-left: 26rpx;
-  height: 148rpx;
-  max-height: 148rpx;
+  height: 70px;
+  max-height: 70px;
   overflow: hidden;
 }
 
 .section .position-box .position-list.hot-city {
   height: auto;
-  max-height: 74px;
+  max-height: 70px;
 }
 
 .section .position-box .position-list.hold {

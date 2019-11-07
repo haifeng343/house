@@ -21,7 +21,8 @@
     "pages/funddetail/index",
     "pages/housingSearch/housingSearch",
     "pages/feedback/index",
-    "pages/userfeedback/index"
+    "pages/userfeedback/index",
+    "pages/citySelectLong/citySelectLong"
   ],
   "window": {
     "backgroundTextStyle": "light",

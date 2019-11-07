@@ -1,0 +1,28 @@
+<view class="page">
+  <view class="section" id="topview">
+    <view class="position">
+      <view class="title position-title">定位</view>
+      <view class="content flex-box-center-between">
+        <view class="pos flex-box-center" data-name='{{userCity.name}}' bindtap="handleSelectCityByName">
+          <text class="name">{{userCity.name}}</text>
+        </view>
+        <block wx:if="{{userCity.name === '定位失败'}}">
+          <view class="repos" bindtap="handleRepos">重新定位</view>
+        </block>
+      </view>
+      <view class="total">共计 15 个城市可选</view>
+    </view>
+  </view>
+  <scroll-view scroll-y='true' throttle="{{false}}" class="city-list" scroll-into-view="{{viewIndex}}">
+    <view class="city-item">
+      <view class="content">
+        <block wx:for="{{data[0].cl}}" wx:for-item="item2" wx:key="name">
+          <view class="city" data-item='{{item2}}' bindtap="handleSelectCity">
+            <text class="name-icon">●</text>
+            {{item2.name}}
+          </view>
+        </block>
+      </view>
+    </view>
+  </scroll-view>
+</view>

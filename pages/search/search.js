@@ -6,6 +6,7 @@ import searchService from './service';
 import fecha from '../../utils/fecha';
 import { searchDataStorage } from "../../utils/searchDataStorage"
 import getIndexHouseData from "../../utils/indexHoseData"
+const longrent = require('../../api/longrent')
 Page({
   /**
    * 页面的初始数据
@@ -61,7 +62,8 @@ Page({
       sort: 1, //搜索方式 1推荐 2低价有限
       equipment: []
     },
-    needOnShow: false
+    needOnShow: false,
+    tabIndex: 1,//1短租，2长租，2二手房
   },
 
   service: new searchService(),
@@ -72,6 +74,11 @@ Page({
   goCitySelect() {
     wx.navigateTo({
       url: '../citySelect/citySelect'
+    });
+  },
+  goCitySelectLong() {
+    wx.navigateTo({
+      url: '../citySelectLong/citySelectLong'
     });
   },
   goDays() {
@@ -390,7 +397,7 @@ Page({
       let hotCity = resp.data.fddHotCity.split(',');
       let searchData = this.data.searchData;
       const app = getApp();
-
+      let temp = false
       if (
         app.globalData.searchData.city &&
         app.globalData.searchData.city != ''
@@ -398,6 +405,7 @@ Page({
         searchData.city = app.globalData.searchData.city;
       } else {
         searchData.city = hotCity[0];
+        temp = true
       }
 
       this.setData(
@@ -407,6 +415,7 @@ Page({
         () => {
           this.getCityInfo(searchData.city);
           this.getHotPosition(searchData.city);
+          temp && this.getUserLocation()
         }
       );
     });
@@ -525,6 +534,22 @@ Page({
       }
     });
   },
+  bindtouchstartsort(event) {
+    // console.log('bindtouchstartsort',event)
+    this.shortY = event.changedTouches[0]?(event.changedTouches[0].pageY || 0):0
+  },
+  bindtouchendsort(event) {
+    // console.log('bindtouchendsort', event, this.shortY)
+    if (this.shortY && this.shortY > event.changedTouches[0].pageY + 50) {
+      console.log("上滑事件")
+      this.setData({ spread: true });
+    }
+  },
+  //table切换
+  changeTab(event) {
+    let tabIndex = event.currentTarget.dataset.index || 1
+    this.setData({ tabIndex, spread: false })
+  },
   init() {
     this.getHouseTypeAndEqu();
     this.getbanner();
@@ -542,6 +567,16 @@ Page({
     }
   },
   onLoad() {
+    // 长租接口
+    // console.log(longrent)
+    // longrent.wiwj.rentSearch({ "city": 1, "page": { "num": 1, "size": 50 }, "filter": {} })
+    // longrent.lianjia.rentSearch({ "city": 110000, "page": { "num": 1, "size": 50 }, "filter": {} })
+    // longrent.fangtianxia.rentSearch({ "city": "北京", "page": { "num": 1, "size": 50 }, "filter": {} })
+    // longrent.wbtc.rentSearch({ "city": "bj", "page": { "num": 1, "size": 50 }, "filter": {} })
+    // longrent.wiwj.rentTip({ "city": 1, "keywords": "天坛" })
+    // longrent.lianjia.rentTip({ "city": 110000, "keywords": "天坛" })
+    // longrent.fangtianxia.rentTip({ "city": "北京", "keywords": "天坛" })
+    // longrent.wbtc.rentTip({ "city": "bj", "keywords": "天坛" })
     this.init();
     this.searchDataSubscription = SearchDataSubject.subscribe(() => {
       this.setData({ showPriceBlock: false });
