@@ -6,7 +6,7 @@ import searchService from './service';
 import fecha from '../../utils/fecha';
 import { searchDataStorage } from "../../utils/searchDataStorage"
 import getIndexHouseData from "../../utils/indexHoseData"
-const longrent = require('../../api/longrent')
+// const longrent = require('../../api/longrent')
 Page({
   /**
    * 页面的初始数据
