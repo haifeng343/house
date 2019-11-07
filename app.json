@@ -23,7 +23,8 @@
     "pages/housingSearch/housingSearch",
     "pages/feedback/index",
     "pages/userfeedback/index",
-    "pages/monitorLongList/monitorLongList"
+    "pages/monitorLongList/monitorLongList",
+    "pages/citySelectLong/citySelectLong"
   ],
   "window": {
     "backgroundTextStyle": "light",
