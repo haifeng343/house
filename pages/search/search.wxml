@@ -98,8 +98,8 @@
                 </scroll-view>
                 <scroll-view scroll-y class="search-content-main {{tabIndex!=2?'hidden':''}}" bindtouchstart="bindtouchstartsort" bindtouchend="bindtouchendsort">
                     <view class='search_item'>
-                        <view class='position' bindtap='goCitySelectLong'>{{searchData.city}}</view>
-                        <view class='positionByHand' bindtap='handleRepos'>{{cityText}}</view>
+                        <view class='position' bindtap='goCitySelectLong'>{{searchLongData.city}}</view>
+                        <view class='positionByHand' bindtap='handleRepos'>{{cityText2}}</view>
                     </view>
                     <view class='search_item'>
                         <view class="scenic {{searchData.area === ''?'':'active'}}">{{searchData.area === ''?'试试搜索：'+hotarea:searchData.area}}</view>
