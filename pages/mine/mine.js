@@ -16,12 +16,15 @@ Page({
     showAuthDialog: false,
     submitFlag: false,
     showShareCard: false,
-    showTipDialog: false
+    showTipDialog: false,
+    shareDesc: ''
   },
   service: new MineService(),
   action: '',
   submitFlag: false,
   authSubscription: null,
+  shareFlag: false,
+  isFirstShare: false,
   /**
    * 生命周期函数--监听页面加载
    */
@@ -46,6 +49,17 @@ Page({
           });
       }
     });
+
+    this.service.checkFirstShare().then(resp => {
+      const { isFirstShare } = resp;
+      this.isFirstShare = isFirstShare;
+      this.setData({
+        shareDesc: isFirstShare ? '可获得兑换券' : ''
+      });
+      if (isFirstShare) {
+        wx.setStorageSync('shareCoupon', JSON.stringify(resp.coupon));
+      }
+    });
   },
   handleGotoDeposit(event) {
     var type = event.currentTarget.dataset.type;
@@ -65,6 +79,17 @@ Page({
 
   handleCloseTipDialog() {
     this.setData({ showTipDialog: false });
+  },
+
+  handleGotoCoupon() {
+    if (this.data.isAuth) {
+      wx.navigateTo({
+        url: '/pages/coupon/coupon'
+      });
+    } else {
+      this.action = 'gotocoupon';
+      this.showAuthDialog();
+    }
   },
 
   handleGotoHistory() {
@@ -111,6 +136,10 @@ Page({
 
       case 'share':
         this.handleGotoHistory();
+        break;
+
+      case 'gotocoupon':
+        this.handleGotoCoupon();
         break;
     }
   },
@@ -196,6 +225,7 @@ Page({
         });
       })
       .catch(error => {
+        console.error(error);
         this.submitFlag = false;
         wx.hideLoading();
         wx.showToast({
@@ -205,15 +235,7 @@ Page({
       });
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {},
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
+  onShow() {
     if (this.data.isAuth) {
       this.service
         .getUserInfo()
@@ -227,36 +249,46 @@ Page({
           });
         });
     }
+
+    if (this.shareFlag === true) {
+      this.requestShare();
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {},
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
+  onUnload() {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {},
+  requestShare() {
+    if (this.isFirstShare === false) {
+      return;
+    }
+    wx.showLoading({
+      title: '请稍候...',
+      mask: true
+    });
+    this.service
+      .requestShare()
+      .then(_ => {
+        wx.hideLoading();
+        this.isFirstShare = false;
+        this.setData({ shareDesc: '' });
+        wx.removeStorageSync('shareCoupon');
+      })
+      .catch(error => {
+        console.error(error);
+        wx.hideLoading();
+        wx.showToast({
+          title: error.message,
+          icon: 'none'
+        });
+      });
+  },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
+  onShareAppMessage() {
+    this.shareFlag = true;
     this.setData({ showShareCard: false });
 
     return {

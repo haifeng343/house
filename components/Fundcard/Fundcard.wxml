@@ -1,11 +1,7 @@
-<view class='container'>
+<view class="container {{items.platformType === 2 ? 'fdd' : 'pdd'}}">
     <view class='icon'>
-    <!--充值：1，1  兑换：7，2  消耗：6，3， 注册赠送：？，4，退款：8，？-->
-      <text class="icon-font font-size uniE93B" wx:if='{{items.type==1}}'></text>
-      <text class="icon-font uniE93C" wx:if='{{items.type==2 || items.type==7}}'></text>
-      <text class="icon-font uniE961" wx:if='{{items.type==3 || items.type==6}}'></text>
-      <text class="icon-font uniE960" wx:if='{{items.type==4}}'></text>
-      <text class="icon-font uniE95F" wx:if='{{items.type==8}}'></text>
+      <!--充值：1 ; 兑换：7,2 ; 消耗：6,3 ; 注册赠送: 4 ; 退款：8，？-->
+      <text class="icon-font {{items.icon}}"></text>
     </view>
     <view class='info'>
         <view class="box-wrapper">

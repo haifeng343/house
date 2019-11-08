@@ -23,11 +23,26 @@
   font-size: 46rpx;
   text-align: center;
   padding-top: 4rpx;
-  background-image: -webkit-linear-gradient(bottom, #E94444, #E75D28); 
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent; 
 }
-.icon ,.icon-font.font-size {
+
+.pdd .icon .icon-font {
+  background-image: -webkit-linear-gradient(
+    top,
+    rgb(37, 223, 215),
+    rgb(16, 188, 174)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fdd .icon .icon-font {
+  background-image: -webkit-linear-gradient(bottom, #e94444, #e75d28);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.icon,
+.icon-font.font-size {
   font-size: 40rpx;
 }
 
@@ -66,16 +81,32 @@
   margin-bottom: 12rpx;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
   width: 100%;
 }
 
 .info .platform {
+  display: flex;
+  align-items: center;
+}
+
+.fdd .info .platform {
   color: #e75d28;
   font-size: 24rpx;
 }
 
+.pdd .info .platform {
+  color: #10bcae;
+  font-size: 24rpx;
+}
+
 .info .platform .number {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
   color: #1d1d1d;
+  width: 280rpx;
 }
 
 .info .money {

@@ -1,0 +1,20 @@
+<view class="{{'container ' + (isLoaded ? '' : 'hidden') + ' ' + (data.type === 3 ? 'fdd' : 'pdd') + ' ' + (data.canUse === false ? 'disabled' : '') + ' ' + (data.canSelect === false ? 'disactive' : '')}}">
+  <block wx:if="{{data.canUse === false}}">
+    <text class="water-mask icon-font {{data.status === 99 ? 'uniE931' : 'uniE932'}}" />
+  </block>
+  <view class="info-wrapper">
+    <view class="name">
+      <text>{{data.name}}</text>
+    </view>
+    <view class="desc">
+      <view class="message">{{data.message}}</view>
+      <view class="expire">有效期:{{data.expireTime}}</view>
+    </view>
+  </view>
+  <view class="action-wrapper">
+    <view class="button" catchtap="handleClickButton">
+      <block wx:if="{{data.type === 3}}">{{'立即兑换'}}</block>
+      <block wx:else>{{'立即使用'}}</block>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,4 @@
+<view class="container">
+  <image class="img" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/%E6%9A%82%E6%97%A0%E4%BC%98%E6%83%A0%403x.png" mode="widthFix" />
+  <view class="desc">暂无抵扣券</view>
+</view>

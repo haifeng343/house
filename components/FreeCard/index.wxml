@@ -1,0 +1,16 @@
+<view class="{{'container ' + (isLoaded ? '' : 'hidden') + ' ' + (data.canUse === false ? 'disabled' : '')}}" catchtap="handleClickContainer">
+  <view class="top">
+    <view class="name">
+      <text class="day">{{data.day}}天</text>
+      <text class="card">体验卡</text>
+    </view>
+    <view class="desc">{{data.message}}</view>
+    <view class="expire">有效期至:{{data.expireTime}}</view>
+  </view>
+  <view class="bottom">
+    <text class="message">体验卡一经使用概不退回</text>
+  </view>
+  <block wx:if="{{data.canUse === false}}">
+    <text class="water-mask icon-font {{data.status === 99 ? 'uniE931' : 'uniE932'}}" />
+  </block>
+</view>

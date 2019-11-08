@@ -85,6 +85,7 @@ Page({
     isLoaded: false
   },
   service: new FundService(),
+  requestFlag: false,
   handleSelectExpand(expand) {
     this.setData({ canScroll: expand === false });
   },
@@ -119,12 +120,12 @@ Page({
   },
 
   handleFundTypeChange(event) {
-    wx.showLoading({
-      title: '获取账单数据...',
-      mask: true
-    });
     const fundListType = +event.currentTarget.dataset.value;
     if (this.data.fundListType !== fundListType) {
+      wx.showLoading({
+        title: '获取账单数据...',
+        mask: true
+      });
       this.setData(
         {
           fundListType,
@@ -167,20 +168,25 @@ Page({
       });
   },
   getCoinFundList() {
-    this.service
-      .getCoinFundList(this.data.timeRange, this.data.billType)
-      .then(fundList => {
-        wx.hideLoading();
-        this.setData({ fundList, isLoaded: true });
-      })
-      .catch(error => {
-        console.error(error);
-        wx.hideLoading();
-        wx.showToast({
-          title: '获取账单数据失败',
-          icon: 'none'
+    if (this.requestFlag === false) {
+      this.requestFlag = true;
+      this.service
+        .getCoinFundList(this.data.timeRange, this.data.billType)
+        .then(fundList => {
+          this.requestFlag = false;
+          wx.hideLoading();
+          this.setData({ fundList, isLoaded: true });
+        })
+        .catch(error => {
+          console.error(error);
+          this.requestFlag = false;
+          wx.hideLoading();
+          wx.showToast({
+            title: '获取账单数据失败',
+            icon: 'none'
+          });
         });
-      });
+    }
   },
 
   /**

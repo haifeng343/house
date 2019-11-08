@@ -10,13 +10,27 @@ const typeUpon = {
   8: 2
 };
 
+const fundIcon = {
+  '1': 'uniE905',
+  '6': 'uniE906',
+  '7': 'uniE95F',
+  '8': 'uniE93C'
+};
+
+const coinFundIcon = {
+  '1': 'uniE93B',
+  '2': 'uniE93C',
+  '3': 'uniE962',
+  '4': 'uniE960',
+  '5': 'uniE963'
+};
+
 export default class FundService {
   getFundList(timeRange, billType) {
     return Http.get('/fdd/user/getFundLog.json', { timeRange, billType })
       .then(resp => Promise.resolve(resp.data))
       .then(fundlist => {
         return fundlist.map(item => {
-          const platform = platformName[item.platformType] || '未知来源';
           const {
             type,
             money,
@@ -24,8 +38,10 @@ export default class FundService {
             orderNo,
             createTime,
             remark,
-            logName
+            logName,
+            platformType
           } = item;
+          const platform = platformName[platformType] || '未知来源';
           return {
             platform,
             type: typeUpon[type] || type, //账单类型
@@ -34,7 +50,9 @@ export default class FundService {
             direction,
             date: createTime,
             remark,
-            logName
+            logName,
+            platformType,
+            icon: fundIcon[type]
           };
         });
       });
@@ -70,6 +88,8 @@ export default class FundService {
               date: createTime,
               remark,
               logName,
+              platformType: 2,
+              icon: coinFundIcon[type],
               payList: !payList
                 ? []
                 : payList.map(item => {

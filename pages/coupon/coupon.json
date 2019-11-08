@@ -1,8 +1,10 @@
 {
+  "backgroundColor": "#12BEAC",
+  "navigationBarTitleText": "我的卡券",
   "usingComponents": {
-    "houseCard":"../../components/houseCard/houseCard",
-    "houseData": "../../components/houseData/houseData",
-    "houseStat": "../../components/houseStat/houseStat"
-  },
-  "navigationBarTitleText": "统计信息"
+    "NoCoupon": "/components/NoCoupon/index",
+    "FreeCard": "/components/FreeCard/index",
+    "CouponCard": "/components/CouponCard/index",
+    "BaseActionDialog": "/components/BaseActionDialog/index"
+  }
 }
