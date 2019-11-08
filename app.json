@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/search/search",
+    "pages/houseLongList/houseLongList",
     "pages/mine/mine",
     "pages/monitorhistory/monitorhistory",
     "pages/deposit/deposit",
@@ -22,7 +23,6 @@
     "pages/housingSearch/housingSearch",
     "pages/feedback/index",
     "pages/userfeedback/index",
-    "pages/houseLongList/houseLongList",
     "pages/monitorLongList/monitorLongList",
     "pages/citySelectLong/citySelectLong"
   ],
