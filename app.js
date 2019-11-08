@@ -123,6 +123,8 @@ App({
       longLayouts: [], //1: 一室, 2: 二室, 3: 三室, 11: 三室及以上, 12: 四室及以上
       longRentTypes: 0, //1: 整租, 2: 合租 3: 主卧, 4: 次卧
       longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
+      minPrice: 0,//最低价
+      maxPrice: 5500,//最高价
     },
     hotPosition:[]
   }

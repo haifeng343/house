@@ -5,7 +5,9 @@ import { getLocationInfo } from '../../utils/map';
 import searchService from './service';
 import fecha from '../../utils/fecha';
 import { searchDataStorage } from "../../utils/searchDataStorage"
+import { searchLongDataStorage } from "../../utils/searchLongDataStorage"
 import getIndexHouseData from "../../utils/indexHouseData"
+import getIndexLongHouseData from "../../utils/indexLongHouseData"
 const longrent = require('../../api/longrent')
 Page({
   /**
@@ -74,6 +76,12 @@ Page({
       longLayouts: [], //1: 一室, 2: 二室, 3: 三室, 11: 三室及以上, 12: 四室及以上
       longRentTypes: 0, //1: 整租, 2: 合租 3: 主卧, 4: 次卧
       longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
+      minPrice: 0,//最低价
+      maxPrice: 5500,//最高价
+    },
+    allLongData:{
+      longRentTypes: [], 
+      longSortTypes:[]
     },
     needOnShow: false,
     tabIndex: 1,//1短租，2长租，2二手房
@@ -284,38 +292,52 @@ Page({
   },
 
   searchSubmit() {
-    const app = getApp()
-    app.globalData.searchData = this.data.searchData
-    if (
-      fecha.parse(app.globalData.searchData.beginDate, 'YYYY-MM-DD') -
-      fecha.parse(app.globalData.searchData.endDate, 'YYYY-MM-DD') >
-      0
-    ) {
-      wx.showToast({
-        title: '入住日期不能大于离开日期，请重新选择',
-        icon: 'none'
-      });
-      return;
-    } else if (fecha.parse(app.globalData.searchData.beginDate, 'YYYY-MM-DD') - fecha.parse(fecha.format(new Date(), 'YYYY-MM-DD'), 'YYYY-MM-DD') < 0) {
+    if(this.data.tabIndex==1) {
+      const app = getApp()
+      app.globalData.searchData = this.data.searchData
+      if (
+        fecha.parse(app.globalData.searchData.beginDate, 'YYYY-MM-DD') -
+        fecha.parse(app.globalData.searchData.endDate, 'YYYY-MM-DD') >
+        0
+      ) {
+        wx.showToast({
+          title: '入住日期不能大于离开日期，请重新选择',
+          icon: 'none'
+        });
+        return;
+      } else if (fecha.parse(app.globalData.searchData.beginDate, 'YYYY-MM-DD') - fecha.parse(fecha.format(new Date(), 'YYYY-MM-DD'), 'YYYY-MM-DD') < 0) {
 
-      wx.showToast({
-        title: '日期已过期，请修改后重新尝试',
-        icon: 'none'
-      });
-      return;
-    }
-    if (this.data.isAuth) {
-      wx.navigateTo({
-        url: '../houseList/houseList'
-        //url: '../houseLongList/houseLongList'
-      });
-    } else {
-      this.showAuthDialog();
-      wx.showLoading({
-        title: '获取登录授权中',
-        mask: true
-      });
-    }
+        wx.showToast({
+          title: '日期已过期，请修改后重新尝试',
+          icon: 'none'
+        });
+        return;
+      }
+      if (this.data.isAuth) {
+        wx.navigateTo({
+          url: '../houseList/houseList'
+          //url: '../houseLongList/houseLongList'
+        });
+      } else {
+        this.showAuthDialog();
+        wx.showLoading({
+          title: '获取登录授权中',
+          mask: true
+        });
+      }
+    } else if (this.data.tabIndex == 2) {
+      if (this.data.isAuth) {
+        wx.navigateTo({
+          url: '../houseLongList/houseLongList'
+        });
+      } else {
+        this.showAuthDialog();
+        wx.showLoading({
+          title: '获取登录授权中',
+          mask: true
+        });
+      }
+    } 
   },
   getHouseTypeAndEqu() {
     this.searchDataStorage = searchDataStorage.subscribe(hasSearchData => {
@@ -327,6 +349,15 @@ Page({
           numberList: wx.getStorageSync('numberList'),
           leaseType: wx.getStorageSync('leaseType')
         });
+      }
+    });
+    this.searchLongDataStorage = searchLongDataStorage.subscribe(hasSearchData => {
+      console.log('hasSearchData=' + hasSearchData);
+      if (hasSearchData) {
+        let allLongData = this.data.allLongData
+        allLongData.longRentTypes = wx.getStorageSync('longRentTypes')
+        allLongData.longSortTypes = wx.getStorageSync('longSortTypes')
+        this.setData({ allLongData });
       }
     });
   },
@@ -457,6 +488,7 @@ Page({
   },
   getSearchDataFromGlobal() {
     const app = getApp();
+    const searchLongData = app.globalData.searchLongData
     const {
       selectedNumber,
       beginDate,
@@ -498,6 +530,7 @@ Page({
     this.setData(
       {
         searchData,
+        searchLongData,
         showPriceBlock: true,
         beginDate: fecha.format(
           fecha.parse(searchData.beginDate, 'YYYY-MM-DD'),
@@ -592,6 +625,41 @@ Page({
     }
     this.setData({  })
   },
+  // 更换房源类型
+  selectRentTypes(event) {
+    let index = event.currentTarget.dataset.index;
+    let searchLongData = this.data.searchLongData;
+    const app = getApp();
+    let data = app.globalData.searchLongData
+    if (searchLongData.longRentTypes == index) {
+      searchLongData.longRentTypes = 0
+      data.longRentTypes = 0
+    } else {
+      searchLongData.longRentTypes = parseInt(index)
+      data.longRentTypes = parseInt(index)
+    }
+    this.setData({
+      searchLongData
+    });
+  },
+  // 更换房源类型
+  selectSortTypes(event) {
+    let index = event.currentTarget.dataset.index;
+    let searchLongData = this.data.searchLongData;
+    const app = getApp();
+    let data = app.globalData.searchLongData
+    if (searchLongData.longSortTypes == index) {
+      searchLongData.longSortTypes = 0
+      data.longSortTypes = 0
+    } else {
+      searchLongData.longSortTypes = parseInt(index)
+      data.longSortTypes = parseInt(index)
+    }
+    console.log(app)
+    this.setData({
+      searchLongData
+    });
+  },
   init() {
     this.getHouseTypeAndEqu();
     this.getbanner();
@@ -602,6 +670,13 @@ Page({
       if (!hasSearchData) {
         const app = getApp()
         getIndexHouseData(app)
+      }
+    })
+    this.searchLongDataStorage = searchLongDataStorage.subscribe(hasSearchData => {
+      console.log('hasSearchData=' + hasSearchData);
+      if (!hasSearchData) {
+        const app = getApp()
+        getIndexLongHouseData()
       }
     })
     if (this.data.needOnShow) {
