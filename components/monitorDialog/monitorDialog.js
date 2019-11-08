@@ -9,6 +9,9 @@ Component({
     },
     bindPublic:{
       type:Boolean
+    },
+    title:{
+      type:String
     }
   },
 

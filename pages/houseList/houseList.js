@@ -33,7 +33,6 @@ Page({
     showScrollTop: false,
     monitorenoughDisplay:'none',
     monitorDisplay: 'none',
-    monitorBottomDisplay: 'none',
     collectDisplay: 'none',
     ddCoin: 0,
     loadingDisplay: 'block',
@@ -167,10 +166,11 @@ Page({
           })
         }
       }
-      if (this.data.allCount < 50){
+      if (this.data.allCount < 50 ){
         if (!this.data.monitorBottom) {
           this.setData({
-            monitorBottomDisplay: 'block',
+            monitorDisplay: 'block',
+            monitorTitle: '到底了!你可以开启监控',
             monitorBottom: true,
           });
         } else {
@@ -384,17 +384,10 @@ Page({
   },
 
   getPublicEvent(e) {
-    if (this.data.publicType == 1) {
-      this.setData({
-        monitorDisplay: 'block',
-        publicDisplay: e.detail
-      });
-    } else {
-      this.setData({
-        monitorBottomDisplay: 'block',
-        publicDisplay: e.detail
-      });
-    }
+    this.setData({
+      monitorDisplay: 'block',
+      publicDisplay: e.detail
+    });
   },
   getPublicConfrimEvent(e) {
     this.setData({
@@ -439,6 +432,7 @@ Page({
       }
       this.setData({
         monitorDisplay: 'block',
+        monitorTitle: '房源监控确认',
       });
     }
   },
@@ -455,6 +449,14 @@ Page({
    * 开启监控确认
    */
   getmonitorConfirmEvent(e) {
+    let app = getApp()
+    if (!this.data.bindPhone && !app.globalData.isUserBindPhone) {
+      // 数据绑定手机号，如果未绑定，跳转到手机号绑定页面
+      wx.navigateTo({
+        url: '../bindPhone/bindPhone'
+      });
+      return;
+    }
     this.setData({
       monitorDisplay: e.detail.show
     });
@@ -467,42 +469,6 @@ Page({
     this.setData({
       monitorDisplay: 'none',
       publicDisplay: e.detail,
-      publicType: 1 //1开始监控 2拉底监控
-    });
-  },
-  /**
-   * 底部开启监控取消
-   */
-  getMonitorBottomEvent(e) {
-    this.setData({
-      monitorBottomDisplay: e.detail,
-    });
-  },
-  /**
-   * 底部开启监控确认
-   */
-  getmonitorBottomConfirmEvent(e) {
-    let app = getApp()
-    if (!this.data.bindPhone && !app.globalData.isUserBindPhone) {
-      // 数据绑定手机号，如果未绑定，跳转到手机号绑定页面
-      wx.navigateTo({
-        url: '../bindPhone/bindPhone'
-      });
-      return;
-    }
-    this.setData({
-      monitorBottomDisplay: e.detail.show,
-    });
-    this.getStartMonitor(e.detail.noteSelect, e.detail.publicSelect);
-  },
-  /**
-   * 底部开启监控--未关注公众号时
-   */
-  getMonitorrBottomPublicEvent(e) {
-    this.setData({
-      monitorBottomDisplay: 'none',
-      publicDisplay: e.detail,
-      publicType: 2 //1开始监控 2拉底监控
     });
   },
   /**

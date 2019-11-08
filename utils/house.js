@@ -1,5 +1,6 @@
 const houseApi = require('../api/houseApi.js');
 const util = require('../utils/util.js')
+const longrent = require('../api/longrent');
 /**
  * 获取途家平台数据
  * type 1 房源列表；2监控详情
@@ -327,6 +328,111 @@ const getZgData = (type, zgfilter) => {
       }
     });
   });
+}
+/**
+ * 获取我爱我家平台数据
+ * type 1 房源列表；2监控详情
+ */
+const getWiwjData = (type, wiwjfilter) =>{
+  let wiwjCount = 0;
+  return new Promise((resolve, reject) => {
+    longrent.wiwj.rentSearch({ "city": 1, "page": { "num": 1, "size": 50 }, "filter": {} }).then(res=>{
+      if (res) {
+        wiwjCount = res.data.count
+        resolve({
+          arr: res.data.list.slice(0, 50),
+          wiwjCount
+        });
+      } else {
+        resolve({
+          network: true
+        })
+      }
+    })
+  })
+}
+
+/**
+ * 获取链家平台数据
+ * type 1 房源列表；2监控详情
+ */
+const getLianjiaData = (type, lianjiafilter) => {
+  let lianjiaCount = 0;
+  return new Promise((resolve, reject) => {
+    longrent.lianjia.rentSearch({ "city": 110000, "page": { "num": 1, "size": 50 }, "filter": {} }).then(res => {
+      if (res) {
+        lianjiaCount = res.data.total
+        resolve({
+          arr: res.data.list.slice(0, 50),
+          lianjiaCount
+        });
+      } else {
+        resolve({
+          network: true
+        })
+      }
+    })
+  })
+}
+
+/**
+ * 获取房天下平台数据
+ * type 1 房源列表；2监控详情
+ */
+const getFangtianxiaData = (type, fangtianxiafilter) => {
+  let fangtianxiaCount = 0;
+  return new Promise((resolve, reject) => {
+    longrent.fangtianxia.rentSearch({ "city": "北京", "page": { "num": 1, "size": 50 }, "filter": {} }).then(res => {
+      if (res) {
+        fangtianxiaCount = Number(res.houses.housecount.text)
+        resolve({
+          arr: res.houses.houseinfo.slice(0, 50),
+          fangtianxiaCount
+        });
+      } else {
+        resolve({
+          network: true
+        })
+      }
+    })
+  })
+}
+
+/**
+ * 获取58同城平台数据
+ * type 1 房源列表；2监控详情
+ */
+const getWbtcData = (type, wbtcfilter) => {
+  let wbtcCount = 0;
+  let arr = [];
+  return new Promise((resolve, reject) => {
+    longrent.wbtc.rentSearch({ "city": "bj", "page": { "num": 1, "size": 50 }, "filter": {} }).then(res => {
+      res.result.getListInfo.infolist.shift()
+      let wbtcCount = res.result.getListInfo.searchNum
+      arr = res.result.getListInfo.infolist
+      if (res && arr.length < 50 && arr.length < wbtcCount){
+        return longrent.wbtc.rentSearch({ "city": "bj", "page": { "num": 2, "size": 50 }, "filter": {} });
+      }else{
+        resolve({
+          arr: arr.slice(0, 50),
+          wbtcCount
+        });
+      }
+      if (!res) {
+        resolve({
+          network: true
+        })
+      }
+    }).then(res=>{
+      if (res) {
+        arr.push.apply(arr, res.result.getListInfo.infolist);
+      }
+      resolve({
+        arr: arr.slice(0, 50),
+        wbtcCount
+      });
+    })
+  })
 }
 
 const houseCollection = (pId, proId) => {
@@ -1145,6 +1251,188 @@ const getMonitorHouseData = houseList=>{
   
 }
 
+const getBrandHouseData = (data)=>{
+  let app = getApp();
+  let allCount = 0;
+  let wiwjFilterData = [],lianjiaFilterData = [];
+  let wiwjId = [],lianjiaId = [];
+  let maxTotal = 50;
+  let allData = [];
+  let wiwjData = data.wiwjData;
+  let lianjiaData = data.lianjiaData;
+  for (let i = 0; i < maxTotal; i++) {
+    if (data.wiwjCount > 0) {
+      let wiwj = addPlatfromData(allData, wiwjData, i);
+      if (wiwj == 0) {
+        break;
+      }
+      if (wiwj == 1) {
+        let wiwjObjs = {
+          platformId:'wiwj',
+          collection:false,
+          sqid: wiwjData[i].sqid,
+          imgurl: wiwjData[i].imgurl,
+          price: wiwjData[i].price,
+          housetitle: wiwjData[i].housetitle,
+          introduce: wiwjData[i].BaseDetail.area + 'm2/' + wiwjData[i].BaseDetail.floorStr + '/' + wiwjData[i].BaseDetail.heading,
+          address: wiwjData[i].qyname + '.' + wiwjData[i].sqname,
+          tagwall: wiwjData[i].tagwall
+        };
+        wiwjFilterData.push(wiwjObjs)
+        wiwjId.push(wiwjObjs.sqid)
+        allData.push(wiwjObjs)
+      }
+    }
+    if (data.lianjiaCount > 0) {
+      let lianjia = addPlatfromData(allData, lianjiaData, i);
+      if (lianjia == 0) {
+        break;
+      }
+      if (lianjia == 1) {
+        let lianjiaObjs = {
+          platformId: 'lianjia',
+          collection: false,
+          sqid: lianjiaData[i].house_code,
+          imgurl: lianjiaData[i].list_picture,
+          price: lianjiaData[i].rent_price_listing,
+          housetitle: lianjiaData[i].house_title,
+          introduce: lianjiaData[i].rent_area + 'm2/' + lianjiaData[i].layout + '/' + lianjiaData[i].frame_orientation,
+          address: lianjiaData[i].district_name + '.' + lianjiaData[i].bizcircle_name,
+          tagwall: lianjiaTagwall(lianjiaData[i].house_tags)
+        };
+        lianjiaFilterData.push(lianjiaObjs)
+        lianjiaId.push(lianjiaObjs.sqid)
+        allData.push(lianjiaObjs)
+      }
+    }
+  }
+  if (data.wiwjCount > -1) {
+    allCount += data.wiwjCount
+  }
+  if (data.lianjiaCount > -1) {
+    allCount += data.lianjiaCount
+  }
+  //平均价
+  let average = allData.length > 0 ? allData.reduce((sum, { price }) => sum + price, 0) / allData.length : 0;
+  let sortArr = [...allData];
+  let wiwjSortArr = [...wiwjFilterData];
+  let lianjiaSortArr = [...lianjiaFilterData];
+  //所有最低价
+  let lowPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) { return o.price; })) : 0;
+
+  //所有房源最低价格的数据
+  sortArr.sort(util.compareSort('price', 'asc'));
+  let lowPriceData = sortArr.length > 0 ? sortArr[0] : '';
+  //我爱我家最低价格数据
+  wiwjSortArr.sort(util.compareSort('price', 'asc'));
+  let wiwjLowPriceData = wiwjSortArr.length > 0 ? wiwjSortArr[0] : '';
+  //链家最低价格数据
+  lianjiaSortArr.sort(util.compareSort('price', 'asc'));
+  let lianjiaLowPriceData = lianjiaSortArr.length > 0 ? lianjiaSortArr[0] : '';
+
+  return ({
+    allData,
+    allCount,
+    averagePrice: parseInt(average),
+    lowPrice,
+    lowPriceData,
+    wiwjLowPriceData,
+    lianjiaLowPriceData,
+    wiwjId,
+    lianjiaId,
+  })
+}
+const getPersonalHouseData = (data) => {
+  let app = getApp();
+  let allCount = 0;
+  let fangtianxiaFilterData = [], wbtcFilterData = [];
+  let fangtianxiaId = [], wbtcId = [];
+  let maxTotal = 50;
+  let allData = [];
+  let fangtianxiaData = data.fangtianxiaData;
+  let wbtcData = data.wbtcData;
+  for (let i = 0; i < maxTotal; i++) {
+    if (data.fangtianxiaCount > 0) {
+      let fangtianxia = addPlatfromData(allData, fangtianxiaData, i);
+      if (fangtianxia == 0) {
+        break;
+      }
+      if (fangtianxia == 1) {
+        let fangtianxiaObjs = {
+          platformId: 'fangtianxia',
+          collection: false,
+          sqid: fangtianxiaData[i].houseid.text,
+          imgurl: fangtianxiaData[i].titleimage.text,
+          price: fangtianxiaData[i].price.text,
+          housetitle: fangtianxiaData[i].title.text,
+          introduce: fangtianxiaData[i].buildarea.text + 'm2/' + fangtianxiaData[i].rentway.text + ' ' + fangtianxiaData[i].room.text+'室',
+          address: fangtianxiaData[i].district.text + '.' + fangtianxiaData[i].comarea.text,
+          tagwall: fangtianxiaData[i].tags.text?fangtianxiaData[i].tags.text.split(" "):[]
+        };
+        fangtianxiaFilterData.push(fangtianxiaObjs)
+        fangtianxiaId.push(fangtianxiaObjs.sqid)
+        allData.push(fangtianxiaObjs)
+      }
+    }
+    if (data.wbtcCount > 0) {
+      let wbtc = addPlatfromData(allData, wbtcData, i);
+      if (wbtc == 0) {
+        break;
+      }
+      if (wbtc == 1) {
+        let wbtcObjs = {
+          platformId: 'wbtc',
+          collection: false,
+          sqid: wbtcData[i].infoID,
+          imgurl: wbtcData[i].picUrl,
+          price: wbtcData[i].priceDict.p,
+          housetitle: wbtcData[i].title,
+          introduce: wbtcData[i].area.split('㎡')[0] + 'm2/' + wbtcData[i].huxing,
+          address: wbtcData[i].lastLocal,
+          tagwall: wbtcData[i].usedTages?wbtcData[i].usedTages.split(','):[]
+        };
+        wbtcFilterData.push(wbtcObjs)
+        wbtcId.push(wbtcObjs.sqid)
+        allData.push(wbtcObjs)
+      }
+    }
+  }
+  if (data.fangtianxiaCount > -1) {
+    allCount += data.fangtianxiaCount
+  }
+  if (data.wbtcCount > -1) {
+    allCount += data.wbtcCount
+  }
+  //平均价
+  let average = allData.length > 0 ? allData.reduce((sum, { price }) => sum + price, 0) / allData.length : 0;
+  let sortArr = [...allData];
+  let fangtianxiaSortArr = [...fangtianxiaFilterData];
+  let wbtcSortArr = [...wbtcFilterData];
+  //所有最低价
+  let lowPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) { return o.price; })) : 0;
+
+  //所有房源最低价格的数据
+  sortArr.sort(util.compareSort('price', 'asc'));
+  let lowPriceData = sortArr.length > 0 ? sortArr[0] : '';
+  //房天下最低价格数据
+  fangtianxiaSortArr.sort(util.compareSort('price', 'asc'));
+  let fangtianxiaLowPriceData = fangtianxiaSortArr.length > 0 ? fangtianxiaSortArr[0] : '';
+  //58同城最低价格数据
+  wbtcSortArr.sort(util.compareSort('price', 'asc'));
+  let wbtcLowPriceData = wbtcSortArr.length > 0 ? wbtcSortArr[0] : '';
+
+  return ({
+    allData,
+    allCount,
+    averagePrice: parseInt(average),
+    lowPrice,
+    lowPriceData,
+    fangtianxiaLowPriceData,
+    wbtcLowPriceData,
+    fangtianxiaId,
+    wbtcId,
+  })
+}
 const sort = (arr,sortType) => {
   if (sortType == 2) {
     arr.sort(util.compareSort('finalPrice', 'asc'))
@@ -1182,6 +1470,13 @@ function addPlatfromData(allData, PlatfromData, index) {
   }
 }
 
+function lianjiaTagwall(tags){
+  let t = [];
+  for(let i=0;i<tags.length;i++){
+    t.push(tags[i].name)
+  }
+  return t
+}
 module.exports = {
   getTjData,
   getXzData,
@@ -1195,4 +1490,10 @@ module.exports = {
   getHouseData,
   getMonitorHouseData,
   sort,
+  getWiwjData,
+  getLianjiaData,
+  getFangtianxiaData,
+  getWbtcData,
+  getBrandHouseData,
+  getPersonalHouseData
 }

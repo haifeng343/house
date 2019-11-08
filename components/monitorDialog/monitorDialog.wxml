@@ -1,7 +1,7 @@
 <view class="mask" bindtap="bindCancel" catchtouchmove="preventTouchMove">
     <view class="mask_content" catchtap="stopEvent">
       <view class="house_image">
-        <view class="house_title">房源监控确认</view>
+        <view class="house_title">{{title}}</view>
       </view>
       <view class="content">
         <view class="text">

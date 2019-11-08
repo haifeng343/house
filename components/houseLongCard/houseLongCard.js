@@ -4,7 +4,16 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    item:{
+      type:Object,
+      value: {}
+    },
+    type:{
+      type:Number
+    },
+    idx: {
+      type: Number
+    },
   },
 
   /**
@@ -58,5 +67,30 @@ Component({
     handleTouchend() {
       this.touchendStream.next(true);
     },
+    goToCollection(e) {
+      let detail = {
+        index: e.currentTarget.dataset.index,
+      }
+      this.triggerEvent('collectionEvent', detail);
+    },
+    goToPlatformDetail(e) {
+      let app = getApp()
+      let platform = e.currentTarget.dataset.platform
+      let productid = e.currentTarget.dataset.productid
+      let beginDate = this.properties.type == 1 ? app.globalData.searchData.beginDate : app.globalData.monitorSearchData.beginDate
+      let endDate = this.properties.type == 1 ? app.globalData.searchData.endDate : app.globalData.monitorSearchData.endDate
+      monitor.navigateToMiniProgram(
+        platform,
+        productid,
+        beginDate,
+        endDate
+      )
+    },
+    delItem(e) {
+      let detail = {
+        index: e.currentTarget.dataset.index,
+      }
+      this.triggerEvent('deleteEvent', detail);
+    }
   }
 })

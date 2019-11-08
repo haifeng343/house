@@ -4,7 +4,7 @@
     "stopDialog": "../../components/stopDialog/stopDialog",
     "updateMonitorDialog": "../../components/updateMonitorDialog/updateMonitorDialog",
     "advanceFilter": "../../components/advanceFilter/advanceFilter",
-    "imageExtend": "../../components/imageExtend/imageExtend",
+    "collectDialog": "../../components/collectDialog/collectDialog",
     "noNetwork": "../../components/noNetwork/noNetwork",
     "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog",
     "mp-loading": "../../components/loading/loading",

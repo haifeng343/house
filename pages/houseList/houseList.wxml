@@ -53,8 +53,8 @@
   </view>
   
   <collectDialog bind:collectEvent="getcollectEventEvent" style="display:{{collectDisplay}}"></collectDialog>
-  <monitorDialog ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorDisplay}}"></monitorDialog>
-  <monitorBottomDialog ddCoin="{{ddCoin}}" bind:monitorrBottomPublicEvent="getMonitorrBottomPublicEvent" bindPublic="{{bindPublic}}" bind:monitorBottomEvent="getMonitorBottomEvent" bind:monitorBottomConfirmEvent="getmonitorBottomConfirmEvent" style="display:{{monitorBottomDisplay}}"></monitorBottomDialog>
+  <monitorDialog title="{{monitorTitle}}" ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorDisplay}}"></monitorDialog>
+
   <advanceFilter class='{{showAdvance?"":"vhidden"}}' shownType='{{showAdvanceType}}' cityName='{{cityName}}' bind:submit='submitAdvance' />
   <publicDialog style="display:{{publicDisplay}}" bind:publicEvent="getPublicEvent" bind:publicConfrimEvent="getPublicConfrimEvent"></publicDialog>
 
