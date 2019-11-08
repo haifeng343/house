@@ -580,8 +580,8 @@ Page({
       searchLongData.longSortTypes = 0
       this.setData({ searchLongData })
       const app = getApp()
-      let data = app.searchLongData
-      data.chooseType = parseInt(tabIndex)
+      let data = app.globalData.searchLongData
+      data.cityType = parseInt(tabIndex)
       data.longBuildAreas = -1
       data.longFloorTypes = []
       data.longHeadings = []
