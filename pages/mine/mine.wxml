@@ -7,12 +7,12 @@
           <image class="avator" src="{{headPortrait}}" />
           <view>
             <view class="name">{{nickName}}</view>
-            <view class="name" wx:if='{{mobile}}'>{{mobile}}</view>
+            <view class="name" wx:if="{{mobile}}">{{mobile}}</view>
           </view>
         </view>
       </block>
-      <block wx:elif="true">
-        <view class="user" bindtap='handleAuth'>
+      <block wx:else>
+        <view class="user" bindtap="handleAuth">
           <image class="avator" src="data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjU2cHgiIGhlaWdodD0iNTZweCIgdmlld0JveD0iMCAwIDU2IDU2IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogICAgPGRlZnM+CiAgICAgICAgPGNpcmNsZSBpZD0icGF0aC0xIiBjeD0iMjgiIGN5PSIyOCIgcj0iMjgiPjwvY2lyY2xlPgogICAgPC9kZWZzPgogICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTk1LjAwMDAwMCwgLTY2LjAwMDAwMCkiPgogICAgICAgICAgICA8ZyBpZD0iQml0bWFwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5NS4wMDAwMDAsIDY2LjAwMDAwMCkiPgogICAgICAgICAgICAgICAgPGcgaWQ9Ikdyb3VwLTQiPgogICAgICAgICAgICAgICAgICAgIDxtYXNrIGlkPSJtYXNrLTIiIGZpbGw9IndoaXRlIj4KICAgICAgICAgICAgICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjcGF0aC0xIj48L3VzZT4KICAgICAgICAgICAgICAgICAgICA8L21hc2s+CiAgICAgICAgICAgICAgICAgICAgPHVzZSBpZD0iTWFzayIgZmlsbD0iI0ZGRkZGRiIgZmlsbC1ydWxlPSJub256ZXJvIiB4bGluazpocmVmPSIjcGF0aC0xIj48L3VzZT4KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNNDQuNzI3NSw0MC4zNzc1IEM0NC4xODc1LDMzLjk4NzUgMzkuODIyNSwyOC43IDMzLjkwNSwyNi43ODc1IEMzNi4zOCwyNS4xOSAzOC4wMjI1LDIyLjQyMjUgMzguMDIyNSwxOS4yNSBDMzguMDIyNSwxNC4yNzc1IDMzLjk3MjUsMTAuMjUgMjksMTAuMjUgQzI0LjAwNSwxMC4yNSAxOS45Nzc1LDE0LjI3NzUgMTkuOTc3NSwxOS4yNSBDMTkuOTc3NSwyMi40MjI1IDIxLjYyLDI1LjE5IDI0LjA5NSwyNi43ODc1IEMxOC4xNzc1LDI4LjcgMTMuODEyNSwzMy45ODc1IDEzLjI3MjUsNDAuMzc3NSBDMTMuMjcyNSw0MC40OSAxMy4yNSw0MC41OCAxMy4yNzI1LDQwLjczNzUgQzEzLjMxNzUsNDEuMyAxMy44MTI1LDQxLjc1IDE0LjM3NSw0MS43NSBDMTUuMDA1LDQxLjc1IDE1LjUsNDEuMjMyNSAxNS41LDQwLjYyNSBDMTYuMDg1LDMzLjY3MjUgMjEuOTEyNSwyOC4yNSAyOSwyOC4yNSBDMzYuMDg3NSwyOC4yNSA0MS44OTI1LDMzLjY3MjUgNDIuNSw0MC42MjUgQzQyLjUsNDEuMjMyNSA0Mi45OTUsNDEuNzUgNDMuNjI1LDQxLjc1IEM0NC4xODc1LDQxLjc1IDQ0LjY4MjUsNDEuMyA0NC43Mjc1LDQwLjczNzUgQzQ0Ljc1LDQwLjU4IDQ0LjcyNzUsNDAuNDkgNDQuNzI3NSw0MC4zNzc1IFogTTIyLjIyNzUsMTkuMjUgQzIyLjIyNzUsMTUuNTE1IDI1LjI2NSwxMi41IDI5LDEyLjUgQzMyLjczNSwxMi41IDM1Ljc3MjUsMTUuNTE1IDM1Ljc3MjUsMTkuMjUgQzM1Ljc3MjUsMjIuOTg1IDMyLjczNSwyNiAyOSwyNiBDMjUuMjY1LDI2IDIyLjIyNzUsMjIuOTg1IDIyLjIyNzUsMTkuMjUgWiIgaWQ9IlNoYXBlIiBmaWxsPSIjRTg1NDMzIiBmaWxsLXJ1bGU9Im5vbnplcm8iIG1hc2s9InVybCgjbWFzay0yKSI+PC9wYXRoPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4=" />
           <view class="name">
             <text>点击授权</text>
@@ -22,37 +22,37 @@
       </block>
       <view class="action-list">
         <view class="action-item">
-          <view class='title'>账户余额(元)</view>
-          <view class='number'>{{totalMoney}}</view>
-          <view class='btn' bindtap='handleGotoDeposit' data-type='1'>充值</view>
+          <view class="title">账户余额(元)</view>
+          <view class="number">{{totalMoney}}</view>
+          <view class="btn" bindtap="handleGotoDeposit" data-type="1">充值</view>
         </view>
         <text class="icon-font uniE927" />
         <view class="action-item">
-          <view class='title' bindtap="handleShowTipDialog">
+          <view class="title" bindtap="handleShowTipDialog">
             <text>盯盯币</text>
             <text class="icon-font uniE92D"></text>
           </view>
-          <view class='number'>{{useCoin}}</view>
-          <view class='btn' bindtap='handleGotoDeposit' data-type='0'>兑换</view>
+          <view class="number">{{useCoin}}</view>
+          <view class="btn" bindtap="handleGotoDeposit" data-type="0">兑换</view>
         </view>
       </view>
     </view>
   </view>
   <scroll-view scroll-y class="menu-list">
-    <view class="menu-item" bindtap='handleGotoFund'>
-      <menuItem label='历史账单' icon='../../assets/image/fund.png' />
+    <view class="menu-item" bindtap="handleGotoFund">
+      <menuItem label="历史账单" icon="uniE966" />
     </view>
-    <!-- <view class="menu-item">
-            <menuItem label='我的卡券' icon='../../assets/image/coupon.png' />
-        </view> -->
-    <view class="menu-item" bindtap='handleGotoHistory'>
-      <menuItem label='历史监控' icon='../../assets/image/monitorhistory.png' />
+    <view class="menu-item" bindtap="handleGotoCoupon">
+      <menuItem label="我的卡券" icon="uniE965" />
     </view>
-    <view class="menu-item" bindtap='handleShare'>
-      <menuItem label='每日分享' icon='../../assets/image/share.png' />
+    <view class="menu-item" bindtap="handleGotoHistory">
+      <menuItem label="历史监控" icon="uniE964" />
     </view>
-    <view class="menu-item" bindtap='handleGotoContact'>
-      <menuItem label='联系客服' icon='../../assets/image/service.png' />
+    <view class="menu-item" bindtap="handleShare">
+      <menuItem label="每日分享" icon="uniE911" desc="{{shareDesc}}"/>
+    </view>
+    <view class="menu-item" bindtap="handleGotoContact">
+      <menuItem label="联系客服" icon="uniE91C" />
     </view>
   </scroll-view>
   <authDialog bind:onConfirm="handleGetUserInfo" bind:onCancel="handleCloseAuthDialog" wx:if="{{showAuthDialog}}" />

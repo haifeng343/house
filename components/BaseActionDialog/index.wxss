@@ -1,0 +1,105 @@
+@import '../../assets/styles/font.wxss';
+
+.container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.overlay {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialog-wrapper {
+  position: relative;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  width: 560rpx;
+  min-height: 460rpx;
+  background-color: #fff;
+  border-radius: 16rpx;
+}
+.dialog-wrapper .content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+.dialog-wrapper .content .icon-wrapper {
+  height: 120rpx;
+  margin: 0 60rpx;
+  border-bottom: solid 2rpx #eff7f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dialog-wrapper .content .icon-wrapper .icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background-color: #F1612A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dialog-wrapper .content .icon-wrapper .icon .icon-font {
+  color: #fff;
+  font-size: 32rpx;
+}
+.dialog-wrapper .content .message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 90rpx;
+}
+.dialog-wrapper .content .message .title {
+  font-weight: 500;
+  font-size: 32rpx;
+  color: #1d1d1d;
+  margin: 24rpx 0;
+}
+.dialog-wrapper .content .message .message-text {
+  font-size: 24rpx;
+  color: #bec3cd;
+  line-height: 36rpx;
+  text-align: center;
+  word-break: break-all;
+}
+.dialog-wrapper .content .button-wrapper {
+  height: 92rpx;
+  margin-top: auto;
+  border-top: solid 2rpx #eff7f6;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.dialog-wrapper .content .button-wrapper .button {
+  width: 50%;
+  height: 100%;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.dialog-wrapper .content .button-wrapper .button + .button::before {
+  content: '';
+  position: absolute;
+  height: 70rpx;
+  width: 2rpx;
+  top: 12rpx;
+  left: -2rpx;
+  background-color: #eff7f6;
+}

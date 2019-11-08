@@ -2,6 +2,18 @@ import Http from '../../utils/http';
 import { authSubject } from '../../utils/auth';
 
 export default class UserService {
+  requestShare() {
+    return Http.post('/fdd/user/fddDailyShareBack.json').then(resp =>
+      Promise.resolve(resp.data)
+    );
+  }
+
+  checkFirstShare() {
+    return Http.get('/fdd/user/checkFddDailyShare.json').then(
+      resp => resp.data
+    );
+  }
+
   getBalance() {
     return Http.get('/user/account/getAccountBalance.json').then(resp => {
       const money = resp.data;

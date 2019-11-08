@@ -7,7 +7,7 @@
         <view class="getcode {{countDown > 0 ? 'disabled' : ''}}" bindtap="handleGetCode">
             获取验证码
             <block wx:if="{{countDown > 0}}">{{"(" + countDown + ")"}}</block>
-            <block wx:elif="true">{{''}}</block>
+            <block wx:else>{{''}}</block>
         </view>
     </view>
     <view class="button-wrapper">

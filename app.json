@@ -24,7 +24,8 @@
     "pages/feedback/index",
     "pages/userfeedback/index",
     "pages/monitorLongList/monitorLongList",
-    "pages/citySelectLong/citySelectLong"
+    "pages/citySelectLong/citySelectLong",
+    "pages/coupon/coupon"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -36,7 +37,8 @@
     "wx5df0be7c6bb02397",
     "wx2aad75253d80f302",
     "wx5048ec7260c49991",
-    "wxc147016e2b3bf9d6"
+    "wxc147016e2b3bf9d6",
+    "wx11970e278167bf3b"
   ],
   "permission": {
     "scope.userLocation": {

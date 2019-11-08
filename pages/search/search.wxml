@@ -102,14 +102,14 @@
                         <view class='positionByHand' bindtap='handleRepos'>{{cityText}}</view>
                     </view>
                     <view class='search_item'>
-                        <view class="scenic {{searchData.area === ''?'':'active'}}" bindtap='goPositionSelect'>{{searchData.area === ''?'试试搜索：'+hotarea:searchData.area}}</view>
+                        <view class="scenic {{searchData.area === ''?'':'active'}}">{{searchData.area === ''?'试试搜索：'+hotarea:searchData.area}}</view>
                     </view>
                     <view class='search_item' style="height:auto;border: 0;">
-                        <view class="select-button active">
+                        <view class="select-button {{searchLongData.chooseType==1?'active':''}}" bindtap="changeLongTab" data-index="1">
                           <view class="select-button-title">品牌中介</view>
                           <view class="select-button-info">房源可靠性比较高</view>
                         </view>
-                        <view class="select-button">
+                        <view class="select-button {{searchLongData.chooseType==2?'active':''}}" bindtap="changeLongTab" data-index="2">
                           <view class="select-button-title">个人房源</view>
                           <view class="select-button-info">无中介费, 租金比较低</view>
                         </view>
@@ -123,14 +123,14 @@
                     <view wx:if="{{spread}}">
                         <view class='search_item noBorder'>
                             <view class='title icon_2'>房源类型</view>
-                            <view class="houseType  {{checkHouseType.checkHouseType(searchData.houseType,index)?'active':''}}" wx:for-index="index" bindtap='selectHouseType' data-index='{{index}}' wx:key='{{item}}' wx:for='{{houseType}}'>
+                            <view class='houseType  {{searchLongData.longRentTypes==index?"active":""}}' wx:for-index="index" bindtap='selectRentTypes' data-index='{{index}}' wx:key='{{item}}' wx:for="{{allLongData.longRentTypes[searchLongData.chooseType-1]}}">
                                 {{item}}
                             </view>
                         </view>
                         <view class='search_item noBorder'>
                             <view class='title icon_3'>房源偏好</view>
-                            <view class='leaseType {{searchData.leaseType==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectLeaseType' data-index='{{index}}' wx:for='{{leaseType}}'>
-                                {{item}}出租
+                            <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypes' data-index='{{index}}' wx:for='{{allLongData.longSortTypes[searchLongData.chooseType-1]}}'>
+                                {{item}}
                             </view>
                         </view>
                     </view>
