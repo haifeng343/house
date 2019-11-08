@@ -105,11 +105,11 @@
                         <view class="scenic {{searchData.area === ''?'':'active'}}" bindtap='goPositionSelect'>{{searchData.area === ''?'试试搜索：'+hotarea:searchData.area}}</view>
                     </view>
                     <view class='search_item' style="height:auto;border: 0;">
-                        <view class="select-button active">
+                        <view class="select-button {{searchLongData.chooseType==1?'active':''}}" bindtap="changeLongTab" data-index="1">
                           <view class="select-button-title">品牌中介</view>
                           <view class="select-button-info">房源可靠性比较高</view>
                         </view>
-                        <view class="select-button">
+                        <view class="select-button {{searchLongData.chooseType==2?'active':''}}" bindtap="changeLongTab" data-index="2">
                           <view class="select-button-title">个人房源</view>
                           <view class="select-button-info">无中介费, 租金比较低</view>
                         </view>

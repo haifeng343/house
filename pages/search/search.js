@@ -5,8 +5,8 @@ import { getLocationInfo } from '../../utils/map';
 import searchService from './service';
 import fecha from '../../utils/fecha';
 import { searchDataStorage } from "../../utils/searchDataStorage"
-import getIndexHouseData from "../../utils/indexHoseData"
-// const longrent = require('../../api/longrent')
+import getIndexHouseData from "../../utils/indexHouseData"
+const longrent = require('../../api/longrent')
 Page({
   /**
    * 页面的初始数据
@@ -61,6 +61,19 @@ Page({
       maxPrice: 99999, //最高价s
       sort: 1, //搜索方式 1推荐 2低价有限
       equipment: []
+    },
+    searchLongData: {
+      chooseType: 1, //1品牌中介，2个人房源
+      city: '',//城市名
+      cityId: {},//城市ID
+      cityJson: '',
+      longBuildAreas: -1,//0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
+      longFloorTypes: [],//1: 低楼层, 2: 中楼层, 3: 高楼层
+      longHeadings: [],//{1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
+      longHouseTags: [],//1: 精装修, 2: 近地铁, 3: 拎包入住, 4: 随时看房, 5: 集中供暖, 6: 新上房源, 7: 配套齐全, 8: 视频看房
+      longLayouts: [], //1: 一室, 2: 二室, 3: 三室, 11: 三室及以上, 12: 四室及以上
+      longRentTypes: 0, //1: 整租, 2: 合租 3: 主卧, 4: 次卧
+      longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
     },
     needOnShow: false,
     tabIndex: 1,//1短租，2长租，2二手房
@@ -551,6 +564,34 @@ Page({
     let tabIndex = event.currentTarget.dataset.index || 1
     this.setData({ tabIndex, spread: false })
   },
+  //长租切换房源
+  changeLongTab(event) {
+    let tabIndex = event.currentTarget.dataset.index||1
+    let searchLongData = this.data.searchLongData;
+    console.log(tabIndex, searchLongData, searchLongData.chooseType)
+    if (tabIndex != searchLongData.chooseType) {
+      searchLongData.chooseType = parseInt(tabIndex)
+      searchLongData.longBuildAreas = -1
+      searchLongData.longFloorTypes = []
+      searchLongData.longHeadings = []
+      searchLongData.longHouseTags = []
+      searchLongData.longLayouts = []
+      searchLongData.longRentTypes = 0
+      searchLongData.longSortTypes = 0
+      this.setData({ searchLongData })
+      const app = getApp()
+      let data = app.searchLongData
+      data.chooseType = parseInt(tabIndex)
+      data.longBuildAreas = -1
+      data.longFloorTypes = []
+      data.longHeadings = []
+      data.longHouseTags = []
+      data.longLayouts = []
+      data.longRentTypes = 0
+      data.longSortTypes = 0
+    }
+    this.setData({  })
+  },
   init() {
     this.getHouseTypeAndEqu();
     this.getbanner();
@@ -573,7 +614,7 @@ Page({
     // longrent.wiwj.rentSearch({ "city": 1, "page": { "num": 1, "size": 50 }, "filter": {} })
     // longrent.lianjia.rentSearch({ "city": 110000, "page": { "num": 1, "size": 50 }, "filter": {} })
     // longrent.fangtianxia.rentSearch({ "city": "北京", "page": { "num": 1, "size": 50 }, "filter": {} })
-    // longrent.wbtc.rentSearch({ "city": "bj", "page": { "num": 1, "size": 50 }, "filter": {} })
+    // longrent.wbtc.rentSearch({ "city": "hz", "page": { "num": 1, "size": 50 }, "filter": { } })
     // longrent.wiwj.rentTip({ "city": 1, "keywords": "天坛" })
     // longrent.lianjia.rentTip({ "city": 110000, "keywords": "天坛" })
     // longrent.fangtianxia.rentTip({ "city": "北京", "keywords": "天坛" })

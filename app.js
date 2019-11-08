@@ -1,6 +1,7 @@
 
 import Http from "./utils/http";
-import getIndexHouseData from "./utils/indexHoseData"
+import getIndexHouseData from "./utils/indexHouseData"
+import getIndexLongHouseData from "./utils/indexLongHouseData"
 import { authSubject } from "./utils/auth";
 import { doWechatLogin } from "./utils/wx";
 import fecha from './utils/fecha';
@@ -37,6 +38,7 @@ App({
     });
 
     getIndexHouseData(this)
+    getIndexLongHouseData()
 
     // Http.get('/indexParam.json').then(resp => {
     //   wx.setStorageSync("hotCity", resp.data.fddHotCity.split(","))
@@ -108,6 +110,19 @@ App({
       maxPrice: 99999,//最高价
       sort: 2,//搜索方式 1推荐 2低价有限
       equipment: []
+    },
+    searchLongData: {
+      chooseType: 1, //1品牌中介，2个人房源
+      city: '',//城市名
+      cityId: {},//城市ID
+      cityJson: '',
+      longBuildAreas: -1,//0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
+      longFloorTypes: [],//1: 低楼层, 2: 中楼层, 3: 高楼层
+      longHeadings: [],//{1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
+      longHouseTags: [],//1: 精装修, 2: 近地铁, 3: 拎包入住, 4: 随时看房, 5: 集中供暖, 6: 新上房源, 7: 配套齐全, 8: 视频看房
+      longLayouts: [], //1: 一室, 2: 二室, 3: 三室, 11: 三室及以上, 12: 四室及以上
+      longRentTypes: 0, //1: 整租, 2: 合租 3: 主卧, 4: 次卧
+      longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
     },
     hotPosition:[]
   }
