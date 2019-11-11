@@ -85,7 +85,7 @@ Page({
       maxPrice: 5500,//最高价
     },
     allLongData:{
-      longRentTypes: [], 
+      longRentTypes: [],
       longSortTypes:[]
     },
     searchLongList: [],
@@ -128,7 +128,7 @@ Page({
         url: '../positionLongSelect/positionLongSelect?city=' + this.data.searchData.city
       });
     }
-   
+
   },
   changeSort() {
     var sort = this.data.searchData.sort;
@@ -222,7 +222,7 @@ Page({
       }
       this.setData({ cityText2: '定位中...' });
       this.getUserLocationLong();
-    } 
+    }
   },
   getUserLocation() {
     getLocationSetting()
@@ -425,7 +425,7 @@ Page({
           mask: true
         });
       }
-    } 
+    }
   },
   getHouseTypeAndEqu() {
     this.searchDataStorage = searchDataStorage.subscribe(hasSearchData => {
@@ -801,6 +801,17 @@ Page({
     this.setData({
       searchLongData
     });
+  },
+  //长租价格条回调
+  handlePriceChange(event) {
+    // console.log(event.detail)
+    let searchLongData = this.data.searchLongData
+    searchLongData.minPrice = event.detail.min
+    searchLongData.maxPrice = event.detail.max
+    this.setData({ searchLongData })
+    const app = getApp()
+    app.globalData.searchLongData.minPrice = event.detail.min
+    app.globalData.searchLongData.maxPrice = event.detail.max
   },
   init() {
     this.getHouseTypeAndEqu();

@@ -19,6 +19,13 @@ const getIndexLongHouseData = () => {
       longRentTypes[index]  = resp.data[index + 1 + ''].longRentTypes || undefined
       longSortTypes[index]  = resp.data[index + 1 + ''].longSortTypes || undefined
     }
+    longBuildAreas[2] = 0
+    longFloorTypes[2] = 1
+    longHeadings[2] = 1
+    longHouseTags[2] = 1
+    longLayouts[2] = 1
+    longRentTypes[2] = 0
+    longSortTypes[2] = 0
     wx.setStorageSync('longBuildAreas', longBuildAreas)
     wx.setStorageSync('longFloorTypes', longFloorTypes)
     wx.setStorageSync('longHeadings', longHeadings)

@@ -115,10 +115,9 @@
                         </view>
                     </view>
                     <view class='search_item' style='height:auto;padding-top:20rpx;'>
-                        <view class='title icon_1'>预算：</view>
+                        <view class='title icon_1'>预算</view>
                         <view style="margin-top: 12rpx;">
-                        <!-- <priceblock wx:if="{{showPriceBlock}}" bind:changePrice='changePrice' priceType='{{priceType}}' min="{{searchData.minPrice}}" max="{{searchData.maxPrice}}"/> -->
-                        <Range min="{{100}}" max="{{10000}}" bind:onChange="handlePriceChange"/>
+                        <Range min="{{searchLongData.minPrice}}" max="{{searchLongData.maxPrice}}" bind:onChange="handlePriceChange"/>
                         </view>
                     </view>
                     <view wx:if="{{spread}}">
