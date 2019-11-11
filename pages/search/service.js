@@ -11,10 +11,12 @@ export default class index {
   getCityList(cityName, type = 0) {
     return Http.get('/selectCity.json', { cityName, type });
   }
+  getLongCityList() {
+    return Http.get('/long/cityList.json');
+  }
   getBanner() {
     return Http.get('/banner/index.json');
   }
-
   getUserInfo() {
     let token = wx.getStorageSync('token');
     return Http.get('/fdd/user/userInfo.json', { token }).then(resp => {

@@ -2,7 +2,6 @@ import Http from "./http";
 import { searchLongDataStorage } from "./searchLongDataStorage"
 const getIndexLongHouseData = () => {
   Http.get('/long/indexHose.json').then(resp => {
-    console.log(resp);
     const longBuildAreas = []
     const longFloorTypes = []
     const longHeadings = []

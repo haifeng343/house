@@ -25,6 +25,7 @@ Page({
     hotareaType: '',
     spread: false,
     cityText: '手动定位',
+    cityText2: '手动定位',
     houseType: {},
     leaseType: {},
     priceType: {
@@ -69,6 +70,10 @@ Page({
       city: '',//城市名
       cityId: {},//城市ID
       cityJson: '',
+      area:'',
+      areaId: {},//地点标识
+      areaType: '',//地点类型
+      ltude: {},//经纬度
       longBuildAreas: -1,//0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
       longFloorTypes: [],//1: 低楼层, 2: 中楼层, 3: 高楼层
       longHeadings: [],//{1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
@@ -83,6 +88,7 @@ Page({
       longRentTypes: [], 
       longSortTypes:[]
     },
+    searchLongList: [],
     needOnShow: false,
     tabIndex: 1,//1短租，2长租，2二手房
   },
@@ -113,9 +119,16 @@ Page({
     });
   },
   goPositionSelect() {
-    wx.navigateTo({
-      url: '../positionSelect/positionSelect?city=' + this.data.searchData.city
-    });
+    if(this.data.tabIndex == 1) {
+      wx.navigateTo({
+        url: '../positionSelect/positionSelect?city=' + this.data.searchData.city
+      });
+    } else if (this.data.tabIndex == 2) {
+      wx.navigateTo({
+        url: '../positionLongSelect/positionLongSelect?city=' + this.data.searchData.city
+      });
+    }
+   
   },
   changeSort() {
     var sort = this.data.searchData.sort;
@@ -197,11 +210,19 @@ Page({
     });
   },
   handleRepos() {
-    if (this.data.cityText !== '手动定位') {
-      return;
-    }
-    this.setData({ cityText: '定位中...' });
-    this.getUserLocation();
+    if(this.data.tabIndex == 1) {
+      if (this.data.cityText !== '手动定位') {
+        return;
+      }
+      this.setData({ cityText: '定位中...' });
+      this.getUserLocation();
+    } else if (this.data.tabIndex == 2) {
+      if (this.data.cityText2 !== '手动定位') {
+        return;
+      }
+      this.setData({ cityText2: '定位中...' });
+      this.getUserLocationLong();
+    } 
   },
   getUserLocation() {
     getLocationSetting()
@@ -214,6 +235,20 @@ Page({
           icon: 'none'
         });
         this.calcCityByLocation();
+      });
+  },
+
+  getUserLocationLong() {
+    getLocationSetting()
+      .then(_ => getLocation())
+      .then(location => this.calcCityByLocationLong(location))
+      .catch(_ => {
+        console.error('long获取定位授权失败啦~');
+        wx.showToast({
+          title: '为了更好的使用效果，请同意地理位置信息授权',
+          icon: 'none'
+        });
+        this.calcCityByLocationLong();
       });
   },
 
@@ -258,6 +293,60 @@ Page({
     } else {
       this.setData({
         cityText: '手动定位'
+      });
+    }
+  },
+
+  calcCityByLocationLong(location) {
+    if (location) {
+      getLocationInfo(location).then(resp => {
+        const city = resp.result.address_component.city;
+        if (city) {
+          for (const pl of this.data.searchLongList) {
+            const cityInfo = city.indexOf(pl.name)
+            if (cityInfo > -1) {
+              let cityItem = pl;
+              const app = getApp()
+              let searchLongData = this.data.searchLongData
+              let name = cityItem.name
+              let cityJson = JSON.parse(cityItem.json)
+              let cityId = {}
+              searchLongData.city = cityItem.name
+              app.globalData.searchLongData.city = cityItem.name
+              searchLongData.cityJson = cityItem.json
+              app.globalData.searchLongData.cityJson = cityItem.json
+              for (const key in cityJson) {
+                if (key === 'wiwj') {
+                  cityId[key] = cityJson[key].id
+                } else if (key === 'tc') {
+                  cityId[key] = cityJson[key].dirname
+                } else if (key === 'lj') {
+                  cityId[key] = cityJson[key].city_id
+                } else if (key === 'ftx') {
+                  cityId[key] = cityJson[key]
+                }
+              }
+              searchLongData.cityId = cityId
+              app.globalData.searchLongData.cityId = cityId
+              this.setData({
+                searchLongData,
+                cityText2: '手动定位'
+              })
+              return
+            }
+          }
+          this.setData({
+            cityText2: '定位城市暂无服务'
+          })
+        } else {
+          this.setData({
+            cityText2: '定位失败'
+          })
+        }
+      });
+    } else {
+      this.setData({
+        cityText2: '手动定位'
       });
     }
   },
@@ -437,6 +526,7 @@ Page({
     });
   },
   getHotCity() {
+    //短租
     this.service.indexParam().then(resp => {
       let hotCity = resp.data.fddHotCity.split(',');
       let searchData = this.data.searchData;
@@ -451,7 +541,6 @@ Page({
         searchData.city = hotCity[0];
         temp = true
       }
-
       this.setData(
         {
           searchData
@@ -460,6 +549,57 @@ Page({
           this.getCityInfo(searchData.city);
           this.getHotPosition(searchData.city);
           temp && this.getUserLocation()
+        }
+      );
+    });
+  },
+  getHotCityLong() {
+    //长租
+    this.service.getLongCityList().then(resp => {
+      let data = resp.data
+      let hotCity = data[0] || ''
+      let searchLongData = this.data.searchLongData
+      const app = getApp()
+      let temp = false
+      if (
+        app.globalData.searchLongData.city &&
+        app.globalData.searchLongData.city != ''
+      ) {
+        searchLongData.city = app.globalData.searchLongData.city
+      } else {
+        let cityItem = hotCity;
+        const app = getApp()
+        let name = cityItem.name
+        let cityJson = JSON.parse(cityItem.json)
+        let cityId = {}
+        searchLongData.city = cityItem.name
+        app.globalData.searchLongData.city = cityItem.name
+        searchLongData.cityJson = cityItem.json
+        app.globalData.searchLongData.cityJson = cityItem.json
+        for (const key in cityJson) {
+          if (key === 'wiwj') {
+            cityId[key] = cityJson[key].id
+          } else if (key === 'tc') {
+            cityId[key] = cityJson[key].dirname
+          } else if (key === 'lj') {
+            cityId[key] = cityJson[key].city_id
+          } else if (key === 'ftx') {
+            cityId[key] = cityJson[key]
+          }
+        }
+        searchLongData.cityId = cityId
+        app.globalData.searchLongData.cityId = cityId
+        temp = true
+      }
+      this.setData(
+        {
+          searchLongData,
+          searchLongList: data
+        },
+        () => {
+          // 获取试试搜索信息
+          // this.getHotPosition(searchData.city);
+          temp && this.getUserLocationLong(false)
         }
       );
     });
@@ -595,12 +735,15 @@ Page({
   changeTab(event) {
     let tabIndex = event.currentTarget.dataset.index || 1
     this.setData({ tabIndex, spread: false })
+    if (tabIndex == 2) {
+      this.getHotCityLong()
+    }
   },
   //长租切换房源
   changeLongTab(event) {
     let tabIndex = event.currentTarget.dataset.index||1
     let searchLongData = this.data.searchLongData;
-    console.log(tabIndex, searchLongData, searchLongData.chooseType)
+    // console.log(tabIndex, searchLongData, searchLongData.chooseType)
     if (tabIndex != searchLongData.chooseType) {
       searchLongData.chooseType = parseInt(tabIndex)
       searchLongData.longBuildAreas = -1
@@ -674,7 +817,6 @@ Page({
     this.searchLongDataStorage = searchLongDataStorage.subscribe(hasSearchData => {
       console.log('hasSearchData=' + hasSearchData);
       if (!hasSearchData) {
-        const app = getApp()
         getIndexLongHouseData()
       }
     })

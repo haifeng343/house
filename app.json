@@ -26,7 +26,8 @@
     "pages/monitorLongList/monitorLongList",
     "pages/citySelectLong/citySelectLong",
     "pages/coupon/coupon",
-    "pages/statisticsLong/statisticsLong"
+    "pages/statisticsLong/statisticsLong",
+    "pages/positionLongSelect/positionLongSelect"
   ],
   "window": {
     "backgroundTextStyle": "light",
