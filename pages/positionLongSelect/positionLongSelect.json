@@ -1,6 +1,6 @@
 {
     "navigationBarTitleText": "长租-房源查询",
     "usingComponents": {
-        "positionSelectItem": "../../components/positionSelectItem/positionSelectItem"
+        "positionLongSelectItem": "../../components/positionLongSelectItem/index"
     }
 }

@@ -1,0 +1,7 @@
+@import '../../assets/styles/font.wxss';
+@import '../../assets/styles/flex.wxss';
+@import '../positionSelectItem/positionSelectItem.wxss';
+
+.position-box {
+  padding: 0 40rpx;
+}
