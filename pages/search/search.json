@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "priceblock": "/components/PriceBlock/index",
-    "authDialog": "/components/AuthDialog/AuthDialog"
+    "authDialog": "/components/AuthDialog/AuthDialog",
+    "Range": "/components/Range/index"
   },
   "navigationBarTitleText": "房盯盯",
   "disableScroll": true

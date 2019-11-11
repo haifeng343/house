@@ -25,6 +25,7 @@
     "pages/userfeedback/index",
     "pages/monitorLongList/monitorLongList",
     "pages/citySelectLong/citySelectLong",
+    "pages/positionLongSelect/positionLongSelect",
     "pages/coupon/coupon"
   ],
   "window": {

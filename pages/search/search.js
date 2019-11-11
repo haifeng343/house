@@ -70,6 +70,10 @@ Page({
       city: '',//城市名
       cityId: {},//城市ID
       cityJson: '',
+      area:'',
+      areaId: {},//地点标识
+      areaType: '',//地点类型
+      ltude: {},//经纬度
       longBuildAreas: -1,//0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
       longFloorTypes: [],//1: 低楼层, 2: 中楼层, 3: 高楼层
       longHeadings: [],//{1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
@@ -115,9 +119,16 @@ Page({
     });
   },
   goPositionSelect() {
-    wx.navigateTo({
-      url: '../positionSelect/positionSelect?city=' + this.data.searchData.city
-    });
+    if(this.data.tabIndex == 1) {
+      wx.navigateTo({
+        url: '../positionSelect/positionSelect?city=' + this.data.searchData.city
+      });
+    } else if (this.data.tabIndex == 2) {
+      wx.navigateTo({
+        url: '../positionLongSelect/positionLongSelect?city=' + this.data.searchData.city
+      });
+    }
+   
   },
   changeSort() {
     var sort = this.data.searchData.sort;
@@ -733,7 +744,7 @@ Page({
   changeLongTab(event) {
     let tabIndex = event.currentTarget.dataset.index||1
     let searchLongData = this.data.searchLongData;
-    console.log(tabIndex, searchLongData, searchLongData.chooseType)
+    // console.log(tabIndex, searchLongData, searchLongData.chooseType)
     if (tabIndex != searchLongData.chooseType) {
       searchLongData.chooseType = parseInt(tabIndex)
       searchLongData.longBuildAreas = -1
