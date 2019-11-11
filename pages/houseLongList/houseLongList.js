@@ -2,11 +2,9 @@ const house = require('../../utils/house.js');
 const regeneratorRuntime = require('../../lib/runtime.js');
 const util = require('../../utils/util.js');
 const userApi = require('../../api/userApi.js');
+const monitorApi = require('../../api/monitorApi.js');
+const app = getApp();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     countFlag: '',
     allOriginalData:[],
@@ -15,10 +13,13 @@ Page({
     averagePrice:0,
     lowPrice:0,
     lowPriceData: {},
+    highAreaData:{},
     wiwjLowPriceData: {},
     lianjiaLowPriceData: {},
     wiwjIdData: [],
     lianjiaIdData: [],
+    fangtianxiaIdData:[],
+    wbtcIdData:[],
     wiwjCount: 0,
     lianjiaCount: 0,
     loadingDisplay:'block',
@@ -30,14 +31,18 @@ Page({
     monitorBottom: false
   },
   onLoad: function (options) {
-    //品牌中介和个人房源区分
-    let houseType = 2
-    if (houseType == 1){
+    //1品牌中介，2个人房源
+    let x = app.globalData.searchLongData
+    if (x.chooseType == 1){
       this.getAllBrandData();
     }else{
       this.getAllPersonalData();
     }
-    
+    this.setData({
+      listSortType: 1,
+      chooseType: x.chooseType,//1品牌中介，2个人房源
+      sortType: x.longSortTypes //1: 低价优先, 2: 空间优先, 3: 最新发布
+    })
   },
   onShow: function () {
     this.getUserInfo();
@@ -125,7 +130,28 @@ Page({
     });
     this.onLoad()
   },
-  goSort() { },
+  goSort() { 
+    let arr = [...this.data.allOriginalData]
+    let sort = house.sort(arr, this.data.listSortType,'price')
+    if (this.data.listSortType == 2) {
+      this.setData({
+        allData: [],
+        loadingDisplay: 'block',
+        listSortType: 1
+      })
+    } else {
+      this.setData({
+        allData: [],
+        loadingDisplay: 'block',
+        listSortType: 2
+      })
+    }
+    this.setData({
+      allOriginalData: sort.arr,
+      allData: sort.arr.slice(0, 5),
+      loadingDisplay: 'none',
+    })
+  },
   onPageScroll(e) {
     this.setData({
       scrollTop: e.scrollTop,
@@ -144,7 +170,7 @@ Page({
   },
   async getAllBrandData(){
     let enoughList = [];
-    let  wiwjDataObj = await house.getWiwjData();
+    let  wiwjDataObj = await house.getWiwjData()
     let  lianjiaDataObj = await house.getLianjiaData()
     if (wiwjDataObj.network && lianjiaDataObj.network) {
       this.setData({
@@ -156,10 +182,10 @@ Page({
     let wiwjData = wiwjDataObj.arr || [];
     let lianjiaData = lianjiaDataObj.arr || [];
     if (wiwjDataObj.wiwjCount > -1) { enoughList.push({ key: 'wiwj', name: '我爱我家', value: wiwjDataObj.wiwjCount }) }
-    if (lianjiaDataObj.lianjiaCount > -1) { enoughList.push({ key: 'lianjia', name: '链家', value: lianjiaDataObj.lianjiaCount }) }
+    if (lianjiaDataObj.lianjiaCount > -1) { enoughList.push({ key: 'lianjia', name: '贝壳', value: lianjiaDataObj.lianjiaCount }) }
     enoughList.sort(util.compareSort('value', 'desc'));
-    console.log(wiwjDataObj)
-    console.log(lianjiaDataObj)
+    //console.log(wiwjDataObj)
+    //console.log(lianjiaDataObj)
     let houseData = house.getBrandHouseData({
       wiwjCount: wiwjDataObj.wiwjCount,
       lianjiaCount: lianjiaDataObj.lianjiaCount,
@@ -177,6 +203,7 @@ Page({
         averagePrice: houseData.averagePrice,
         lowPrice: houseData.lowPrice,
         lowPriceData: houseData.lowPriceData,
+        highAreaData: houseData.highAreaData,
         wiwjLowPriceData: houseData.wiwjLowPriceData,
         lianjiaLowPriceData: houseData.lianjiaLowPriceData,
         wiwjIdData: houseData.wiwjId,
@@ -205,11 +232,11 @@ Page({
     }
     let fangtianxiaData = fangtianxiaDataObj.arr || [];
     let wbtcData = wbtcDataObj.arr || [];
-    if (fangtianxiaDataObj.fangtianxiaCount > -1) { enoughList.push({ key: 'wiwj', name: '房天下', value: fangtianxiaDataObj.fangtianxiaCount }) }
-    if (wbtcDataObj.wbtcCount > -1) { enoughList.push({ key: 'lianjia', name: '58同城', value: wbtcDataObj.wbtcCount }) }
+    if (fangtianxiaDataObj.fangtianxiaCount > -1) { enoughList.push({ key: 'fangtianxia', name: '房天下', value: fangtianxiaDataObj.fangtianxiaCount }) }
+    if (wbtcDataObj.wbtcCount > -1) { enoughList.push({ key: 'wbtc', name: '58同城', value: wbtcDataObj.wbtcCount }) }
     enoughList.sort(util.compareSort('value', 'desc'));
-    console.log(fangtianxiaData)
-    console.log(wbtcData)
+    //console.log(fangtianxiaData)
+    //console.log(wbtcData)
     let houseData = house.getPersonalHouseData({
       fangtianxiaCount: fangtianxiaDataObj.fangtianxiaCount,
       wbtcCount: wbtcDataObj.wbtcCount,
@@ -217,7 +244,7 @@ Page({
       wbtcData,
       type: 1
     })
-    console.log(houseData)
+    //console.log(houseData)
     if (houseData.allCount > 0 && houseData.allData.length > 0) {
       this.setData({
         countFlag: 1,
@@ -227,10 +254,11 @@ Page({
         averagePrice: houseData.averagePrice,
         lowPrice: houseData.lowPrice,
         lowPriceData: houseData.lowPriceData,
+        highAreaData: houseData.highAreaData,
         fangtianxiaLowPriceData: houseData.fangtianxiaLowPriceData,
         wbtcLowPriceData: houseData.wbtcLowPriceData,
-        fangtianxiaId: houseData.fangtianxiaId,
-        wbtcId: houseData.wbtcId,
+        fangtianxiaIdData: houseData.fangtianxiaId,
+        wbtcIdData: houseData.wbtcId,
         fangtianxiaCount: fangtianxiaDataObj.fangtianxiaCount,
         wbtcCount: wbtcDataObj.wbtcCount,
         enoughList,
@@ -257,7 +285,7 @@ Page({
   },
   //开启监控
   startMonitor() {
-    let count = this.data.allCount;
+    let count = this.data.allCount = 40;
     let app = getApp()
     if (count >= 50) {
       this.setData({
@@ -279,6 +307,57 @@ Page({
         monitorTitle: '房源监控确认',
       });
     }
+  },
+  /**
+   * 跳转统计详情
+   */
+  goToDetail() {
+    let app = getApp();
+    if (this.data.chooseType == 1){
+      app.globalData.houseListData = {
+        allCount: this.data.allCount,
+        showCount: this.data.allOriginalData.length,
+        averagePrice: this.data.averagePrice,
+        lowPrice: this.data.lowPrice,
+        lowPriceData: this.data.lowPriceData,
+        highAreaData: this.data.highAreaData,
+        wiwjLowPriceData: this.data.wiwjLowPriceData,
+        lianjiaLowPriceData: this.data.lianjiaLowPriceData,
+        enoughList: this.data.enoughList,
+        wiwjFilterCount: this.data.wiwjIdData,
+        lianjiaFilterCount: this.data.lianjiaIdData,
+        ddCoin: this.data.ddCoin,
+        bindPhone: this.data.bindPhone,
+        bindPublic: this.data.bindPublic,
+        isBack: false,
+        sortType: this.data.sortType,
+        chooseType: this.data.chooseType
+      };
+    }
+    if (this.data.chooseType == 2){
+      app.globalData.houseListData = {
+        allCount: this.data.allCount,
+        showCount: this.data.allOriginalData.length,
+        averagePrice: this.data.averagePrice,
+        lowPrice: this.data.lowPrice,
+        lowPriceData: this.data.lowPriceData,
+        highAreaData: this.data.highAreaData,
+        fangtianxiaLowPriceData: this.data.fangtianxiaLowPriceData,
+        wbtcLowPriceData: this.data.wbtcLowPriceData,
+        enoughList: this.data.enoughList,
+        fangtianxiaFilterCount: this.data.fangtianxiaIdData,
+        wbtcFilterCount: this.data.wbtcIdData,
+        ddCoin: this.data.ddCoin,
+        bindPhone: this.data.bindPhone,
+        bindPublic: this.data.bindPublic,
+        isBack: false,
+        sortType: this.data.sortType,
+        chooseType: this.data.chooseType
+      };
+    }
+    wx.navigateTo({
+      url: '../statistics/statistics?rentType=2'
+    });
   },
   /**
    * 开启监控取消
@@ -303,7 +382,88 @@ Page({
     this.setData({
       monitorDisplay: e.detail.show
     });
-    //this.getStartMonitor(e.detail.noteSelect, e.detail.publicSelect);
+    this.getStartMonitor(e.detail.noteSelect, e.detail.publicSelect);
+  },
+
+  getStartMonitor(noteSelect, publicSelect) {
+    let app = getApp();
+    let y = app.globalData.searchLongData
+    let data={
+      houseSource: y.chooseType,//房源
+      cityName: y.city,//城市名
+      build_area: y.longBuildAreas,//面积
+      minPrice: y.minPrice,
+      maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice
+    }
+    if (y.longFloorTypes.length){ //楼层
+      data['floor_type'] = y.longFloorTypes.join(',');
+    }
+    if (y.longRentTypes) { //房源类型
+      data['rentType'] = y.longRentTypes
+    }
+    if (y.longHeadings.length){//朝向
+      data['heading'] = y.longHeadings
+    }
+    if (y.longHouseTags.length) {//房源亮点
+      data['house_tags'] = y.longHouseTags.join(',');
+    }
+    if (y.longLayouts.length) {//户型
+      data['layoutRoom'] = y.longLayouts.join(',');
+    }
+    //通知方式
+    let notice = [];
+    if (noteSelect) {notice.push(2)}
+    if (publicSelect) {notice.push(1)}
+    data['notice '] = notice.join(',');
+
+    let wiwjId = [...this.data.wiwjIdData];
+    let ljId = [...this.data.lianjiaIdData];
+    let ftxId = [...this.data.fangtianxiaIdData];
+    let tcId = [...this.data.wbtcIdData];
+    let obj = wx.getStorageSync('collectionObj') || {};
+
+    if (obj && obj['wiwj'] && obj['wiwj'].length) {
+      for (let i = 0; i < obj['wiwj'].length; i++) {
+        let index = wiwjId.indexOf(obj['wiwj'][i]);
+        wiwjId.splice(index, 1);
+      }
+    }
+    if (obj && obj['lianjia'] && obj['lianjia'].length) {
+      for (let i = 0; i < obj['lianjia'].length; i++) {
+        let index = ljId.indexOf(obj['lianjia'][i]);
+        ljId.splice(index, 1);
+      }
+    }
+    if (obj && obj['fangtianxia'] && obj['fangtianxia'].length) {
+      for (let i = 0; i < obj['fangtianxia'].length; i++) {
+        let index = ftxId.indexOf(obj['fangtianxia'][i]);
+        ftxId.splice(index, 1);
+      }
+    }
+    if (obj && obj['wbtc'] && obj['wbtc'].length) {
+      for (let i = 0; i < obj['wbtc'].length; i++) {
+        let index = tcId.indexOf(obj['wbtc'][i]);
+        tcId.splice(index, 1);
+      }
+    }
+    let fddShortRentBlock = {};
+    if (y.chooseType == 1){
+      fddShortRentBlock['wiwj'] = wiwjId
+      fddShortRentBlock['lj'] = ljId
+    }else{
+      fddShortRentBlock['ftx'] = ftxId
+      fddShortRentBlock['tc'] = tcId
+    }
+    data['fddShortRentBlock'] = fddShortRentBlock;
+    monitorApi.addLongMonitor(data).then(res => {
+      wx.showToast({
+        title: res.data.resultMsg,
+        duration: 2000
+      });
+      wx.switchTab({
+        url: '../monitor/monitor'
+      });
+    });
   },
   /**
    * 开启监控--未关注公众号时-点击关注号

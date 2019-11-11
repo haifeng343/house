@@ -1,10 +1,9 @@
-
 <view wx:if="{{type!=1}}">
   <movable-area class="area">
     <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
       <view class="card">
         <view class="card_image">
-          <imageExtend src="{{item.imgurl}}"  data-idx="{{idx}}"></imageExtend>
+          <imageExtend src="{{item.imgurl}}" rentType="{{2}}" data-idx="{{idx}}"></imageExtend>
         </view>
         <view class="card_words">
           <view class="title">{{item.housetitle}}</view>
@@ -17,10 +16,9 @@
           </view>
         </view>
         <view class="classify" wx:if="{{item.platformId == 'wiwj'}}">我爱我家</view>
-        <view class="classify" wx:if="{{item.platformId == 'lianjia'}}">链家</view>
-        <view class="classify" wx:if="{{item.platformId == 'fangtianxia'}}">房天下</view>
+        <view class="classify" wx:if="{{item.platformId == 'lj'}}">贝壳</view>
+        <view class="classify" wx:if="{{item.platformId == 'ftx'}}">房天下</view>
         <view class="classify" wx:if="{{item.platformId == 'wbtc'}}">58同城</view>
-        <image class="star" src="../../assets/image/star.png"></image>
         <view class="price">
           <text>¥{{item.price}}/月</text>
           <view class="triangle"></view>
@@ -39,9 +37,9 @@
   </view>
 </view>
 <view wx:else>
-  <view class="card">
+  <view class="card {{bottom?'':'card_none'}}">
     <view class="card_image">
-      <imageExtend src="{{item.imgurl}}"  data-idx="{{idx}}"></imageExtend>
+      <imageExtend src="{{item.imgurl}}" rentType="{{2}}" data-idx="{{idx}}"></imageExtend>
     </view>
     <view class="card_words">
       <view class="title">{{item.housetitle}}</view>
@@ -54,12 +52,11 @@
       </view>
     </view>
     <view class="classify" wx:if="{{item.platformId == 'wiwj'}}">我爱我家</view>
-    <view class="classify" wx:if="{{item.platformId == 'lianjia'}}">链家</view>
+    <view class="classify" wx:if="{{item.platformId == 'lianjia'}}">贝壳</view>
     <view class="classify" wx:if="{{item.platformId == 'fangtianxia'}}">房天下</view>
     <view class="classify" wx:if="{{item.platformId == 'wbtc'}}">58同城</view>
-    <image class="star" src="../../assets/image/star.png"></image>
-    <image class="star" wx:if="{{item.collection}}" data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.sqid}}" catchtap="goToCollection" src="../../assets/image/star_select.png"></image>
-        <image class="star" wx:if="{{!item.collection}}" data-index="{{idx}}" data-collection="{{item.collection}}" data-productId="{{item.sqid}}" catchtap="goToCollection" src="../../assets/image/star.png"></image>
+    <image class="star" wx:if="{{collect&&item.collection}}" data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.sqid}}" catchtap="goToCollection" src="../../assets/image/star_select.png"></image>
+        <image class="star" wx:if="{{collect&&!item.collection}}" data-index="{{idx}}" data-collection="{{item.collection}}" data-productId="{{item.sqid}}" catchtap="goToCollection" src="../../assets/image/star.png"></image>
     <view class="price">
       <text>¥{{item.price}}/月</text>
       <view class="triangle"></view>

@@ -1,4 +1,4 @@
-<image class="image-extend source-image" src="{{src}}" mode="aspectFill" bindload="handleImageLoaded"></image>
-<view wx:if="{{!isDestroyBase}}" class="base-image-container  {{!isLoaded ? '' : 'hidden'}}">
+<image class="image-extend source-image {{rentType ==2?'image-long-extend':'' }}" src="{{src}}" mode="aspectFill" bindload="handleImageLoaded"></image>
+<view wx:if="{{!isDestroyBase}}" class="base-image-container  {{!isLoaded ? '' : 'hidden'}} {{rentType ==2?'image-long-extend':'' }}">
     <image class="image-extend base-image" src="../../assets/image/default_image.png" mode="aspectFill"></image>
 </view>

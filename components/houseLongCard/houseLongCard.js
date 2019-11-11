@@ -14,6 +14,14 @@ Component({
     idx: {
       type: Number
     },
+    collect:{
+      type:Boolean,
+      value:true
+    },
+    bottom:{
+      type: Boolean,
+      value: true
+    }
   },
 
   /**

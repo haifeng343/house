@@ -1,18 +1,32 @@
-<view class="{{(stopDisplay =='block'||enoughDisplay =='block'||monitorDisplay =='block'||publicDisplay =='block'||updateMonitorDisplay =='block')?'section_hidden':''}}">
+<view>
   <view class="section {{bottomType === 0&&allCount>=50?'section_bottom':''}}">
     <view>
       <view class="statistics_query">
         <houseData sort="{{sort}}" allCount="{{allCount}}" showCount="{{showCount}}" averagePrice="{{averagePrice}}" lowPrice="{{lowPrice}}"></houseData>
       </view>
 
-      <view class="house_low_price">
+      <view class="house_low_price" wx:if="{{rentType == 1}}">
         <houseCard bottomType="{{bottomType}}" lowPriceData="{{lowPriceData}}" isMonitorHouse="{{isMonitorHouse}}"></houseCard>
       </view>
-
+      <view class="house_low_price" wx:if="{{rentType == 2}}">
+        <view class="house_low">
+            <image class="price" src="../../assets/image/low_price.png"></image>
+            <text>当前最低</text>
+        </view>
+        <houseLongCard item="{{lowPriceData}}" type="{{1}}" collect="{{false}}" idx="{{0}}"></houseLongCard>
+      </view>
+      <view class="house_low_price" wx:if="{{rentType == 2}}">
+        <view class="house_low">
+            <image class="price" src="../../assets/image/low_price.png"></image>
+            <text>面积最大</text>
+        </view>
+        <houseLongCard item="{{highAreaData}}" type="{{1}}" collect="{{false}}" bottom="{{false}}" idx="{{0}}"></houseLongCard>
+      </view>
       <view class="line"></view>
       <view class="statistics_detail">
         <houseStat 
           sort="{{sort}}"
+          rentType="{{rentType}}"
           list="{{enoughList}}"
         ></houseStat>
       </view>

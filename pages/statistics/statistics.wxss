@@ -1,8 +1,4 @@
-.section_hidden{
-  width: 100%;
-  height: 100%;
-  /* overflow: hidden */
-}
+
 .section{
   padding-bottom: 128rpx;
 }
@@ -13,6 +9,18 @@
   padding: 24rpx 0 0;
   background: #FFFFFF;
 }
+.house_low {
+  margin: 0 28rpx;
+  display: flex;
+  align-items: center;
+}
+
+.house_low .price {
+  width: 22rpx;
+  height: 28rpx;
+  margin-right: 8rpx;
+}
+
 .line{
   width: 100%;
   height: 12rpx;

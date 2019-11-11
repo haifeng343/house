@@ -582,7 +582,7 @@ Page({
       sortType: this.data.sortType
     }
     wx.navigateTo({
-      url: '../statistics/statistics',
+      url: '../statistics/statistics?rentType=1',
     })
   },
   /**

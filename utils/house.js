@@ -1272,11 +1272,12 @@ const getBrandHouseData = (data)=>{
           collection:false,
           sqid: wiwjData[i].sqid,
           imgurl: wiwjData[i].imgurl,
-          price: wiwjData[i].price,
+          price: Number(wiwjData[i].price),
           housetitle: wiwjData[i].housetitle,
           introduce: wiwjData[i].BaseDetail.area + 'm2/' + wiwjData[i].BaseDetail.floorStr + '/' + wiwjData[i].BaseDetail.heading,
           address: wiwjData[i].qyname + '.' + wiwjData[i].sqname,
-          tagwall: wiwjData[i].tagwall
+          tagwall: wiwjData[i].tagwall,
+          area: Number(wiwjData[i].BaseDetail.area)
         };
         wiwjFilterData.push(wiwjObjs)
         wiwjId.push(wiwjObjs.sqid)
@@ -1294,11 +1295,12 @@ const getBrandHouseData = (data)=>{
           collection: false,
           sqid: lianjiaData[i].house_code,
           imgurl: lianjiaData[i].list_picture,
-          price: lianjiaData[i].rent_price_listing,
+          price: Number(lianjiaData[i].rent_price_listing),
           housetitle: lianjiaData[i].house_title,
           introduce: lianjiaData[i].rent_area + 'm2/' + lianjiaData[i].layout + '/' + lianjiaData[i].frame_orientation,
           address: lianjiaData[i].district_name + '.' + lianjiaData[i].bizcircle_name,
-          tagwall: lianjiaTagwall(lianjiaData[i].house_tags)
+          tagwall: lianjiaTagwall(lianjiaData[i].house_tags),
+          area: Number(lianjiaData[i].rent_area)
         };
         lianjiaFilterData.push(lianjiaObjs)
         lianjiaId.push(lianjiaObjs.sqid)
@@ -1315,6 +1317,7 @@ const getBrandHouseData = (data)=>{
   //平均价
   let average = allData.length > 0 ? allData.reduce((sum, { price }) => sum + price, 0) / allData.length : 0;
   let sortArr = [...allData];
+  let areasortArr = [...allData];
   let wiwjSortArr = [...wiwjFilterData];
   let lianjiaSortArr = [...lianjiaFilterData];
   //所有最低价
@@ -1323,6 +1326,13 @@ const getBrandHouseData = (data)=>{
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort('price', 'asc'));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : '';
+  let y = data.type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData;
+  if (y.longSortTypes == 1) {
+    allData = sortArr;
+  }
+  //所有房源面积最大
+  areasortArr.sort(util.compareSort('area', 'desc'));
+  let highAreaData = areasortArr.length > 0 ? areasortArr[0] : '';
   //我爱我家最低价格数据
   wiwjSortArr.sort(util.compareSort('price', 'asc'));
   let wiwjLowPriceData = wiwjSortArr.length > 0 ? wiwjSortArr[0] : '';
@@ -1336,6 +1346,7 @@ const getBrandHouseData = (data)=>{
     averagePrice: parseInt(average),
     lowPrice,
     lowPriceData,
+    highAreaData,
     wiwjLowPriceData,
     lianjiaLowPriceData,
     wiwjId,
@@ -1363,11 +1374,12 @@ const getPersonalHouseData = (data) => {
           collection: false,
           sqid: fangtianxiaData[i].houseid.text,
           imgurl: fangtianxiaData[i].titleimage.text,
-          price: fangtianxiaData[i].price.text,
+          price: Number(fangtianxiaData[i].price.text),
           housetitle: fangtianxiaData[i].title.text,
           introduce: fangtianxiaData[i].buildarea.text + 'm2/' + fangtianxiaData[i].rentway.text + ' ' + fangtianxiaData[i].room.text+'室',
           address: fangtianxiaData[i].district.text + '.' + fangtianxiaData[i].comarea.text,
-          tagwall: fangtianxiaData[i].tags.text?fangtianxiaData[i].tags.text.split(" "):[]
+          tagwall: fangtianxiaData[i].tags.text?fangtianxiaData[i].tags.text.split(" "):[],
+          area: Number(fangtianxiaData[i].buildarea.text)
         };
         fangtianxiaFilterData.push(fangtianxiaObjs)
         fangtianxiaId.push(fangtianxiaObjs.sqid)
@@ -1385,11 +1397,12 @@ const getPersonalHouseData = (data) => {
           collection: false,
           sqid: wbtcData[i].infoID,
           imgurl: wbtcData[i].picUrl,
-          price: wbtcData[i].priceDict.p,
+          price: Number(wbtcData[i].priceDict.p),
           housetitle: wbtcData[i].title,
           introduce: wbtcData[i].area.split('㎡')[0] + 'm2/' + wbtcData[i].huxing,
           address: wbtcData[i].lastLocal,
-          tagwall: wbtcData[i].usedTages?wbtcData[i].usedTages.split(','):[]
+          tagwall: wbtcData[i].usedTages?wbtcData[i].usedTages.split(','):[],
+          area: Number(wbtcData[i].area.split('㎡')[0])
         };
         wbtcFilterData.push(wbtcObjs)
         wbtcId.push(wbtcObjs.sqid)
@@ -1406,6 +1419,7 @@ const getPersonalHouseData = (data) => {
   //平均价
   let average = allData.length > 0 ? allData.reduce((sum, { price }) => sum + price, 0) / allData.length : 0;
   let sortArr = [...allData];
+  let areasortArr = [...allData];
   let fangtianxiaSortArr = [...fangtianxiaFilterData];
   let wbtcSortArr = [...wbtcFilterData];
   //所有最低价
@@ -1414,6 +1428,13 @@ const getPersonalHouseData = (data) => {
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort('price', 'asc'));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : '';
+  let y = data.type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData;
+  if (y.longSortTypes == 1) {
+    allData = sortArr;
+  }
+  //所有房源面积最大
+  areasortArr.sort(util.compareSort('area', 'desc'));
+  let highAreaData = areasortArr.length > 0 ? areasortArr[0] : '';
   //房天下最低价格数据
   fangtianxiaSortArr.sort(util.compareSort('price', 'asc'));
   let fangtianxiaLowPriceData = fangtianxiaSortArr.length > 0 ? fangtianxiaSortArr[0] : '';
@@ -1427,15 +1448,16 @@ const getPersonalHouseData = (data) => {
     averagePrice: parseInt(average),
     lowPrice,
     lowPriceData,
+    highAreaData,
     fangtianxiaLowPriceData,
     wbtcLowPriceData,
     fangtianxiaId,
     wbtcId,
   })
 }
-const sort = (arr,sortType) => {
+const sort = (arr,sortType,key='finalPrice') => {
   if (sortType == 2) {
-    arr.sort(util.compareSort('finalPrice', 'asc'))
+    arr.sort(util.compareSort(key, 'asc'))
     sortType = 1
     wx.showToast({
       title: '已按最低价排序',
@@ -1443,7 +1465,7 @@ const sort = (arr,sortType) => {
       duration: 2000
     })
   } else {
-    arr.sort(util.compareSort('finalPrice', 'desc'))
+    arr.sort(util.compareSort(key, 'desc'))
     sortType = 2
     wx.showToast({
       title: '已按最高价排序',
@@ -1457,6 +1479,7 @@ const sort = (arr,sortType) => {
     sortType
   }
 }
+
 function addPlatfromData(allData, PlatfromData, index) {
   if (index < PlatfromData.length) {
     //是否已满

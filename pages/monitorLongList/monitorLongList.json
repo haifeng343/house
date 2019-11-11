@@ -2,6 +2,13 @@
   "usingComponents": {
     "houseLongSelect": "../../components/houseLongSelect/houseLongSelect",
     "noNetwork": "../../components/noNetwork/noNetwork",
-    "houseLongCard": "../../components/houseLongCard/houseLongCard"
-  }
+    "houseLongCard": "../../components/houseLongCard/houseLongCard",
+    "mp-loading": "../../components/loading/loading",
+    "monitorEnoughDialog": "../../components/monitorEnoughDialog/monitorEnoughDialog",
+    "collectDialog": "../../components/collectDialog/collectDialog",
+    "stopDialog": "../../components/stopDialog/stopDialog",
+    "updateMonitorDialog": "../../components/updateMonitorDialog/updateMonitorDialog",
+    "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog"
+  },
+  "navigationBarTitleText": "长租-房源列表"
 }

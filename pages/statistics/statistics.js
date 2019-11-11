@@ -20,70 +20,116 @@ Page({
     updateMonitorDisplay: 'none',
     fee: 0,
     sort: false,
-    enoughList:[]
+    enoughList:[],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    const app = getApp();
-    let data = app.globalData.houseListData
-    let fee = wx.getStorageSync('hourMoney') || 0
-    for (let i = 0; i < data.enoughList.length;i++){
-      if (data.enoughList[i].key == 'tj'){
-        data.enoughList[i]['selectCount'] = data.tjFilterCount.length
-        data.enoughList[i]['lowPriceData'] = data.tjLowPriceData
+    const app = getApp(); //rentType  1短租 2长租
+    if (options.rentType == 1){
+      wx.setNavigationBarTitle({
+        title: '短租-统计信息'
+      })
+      let data = app.globalData.houseListData
+      let fee = wx.getStorageSync('hourMoney') || 0
+      for (let i = 0; i < data.enoughList.length; i++) {
+        if (data.enoughList[i].key == 'tj') {
+          data.enoughList[i]['selectCount'] = data.tjFilterCount.length
+          data.enoughList[i]['lowPriceData'] = data.tjLowPriceData
+        }
+        if (data.enoughList[i].key == 'xz') {
+          data.enoughList[i]['selectCount'] = data.xzFilterCount.length
+          data.enoughList[i]['lowPriceData'] = data.xzLowPriceData
+        }
+        if (data.enoughList[i].key == 'mn') {
+          data.enoughList[i]['selectCount'] = data.mnFilterCount.length
+          data.enoughList[i]['lowPriceData'] = data.mnLowPriceData
+        }
+        if (data.enoughList[i].key == 'zg') {
+          data.enoughList[i]['selectCount'] = data.zgFilterCount.length
+          data.enoughList[i]['lowPriceData'] = data.zgLowPriceData
+        }
       }
-      if (data.enoughList[i].key == 'xz') {
-        data.enoughList[i]['selectCount'] = data.xzFilterCount.length
-        data.enoughList[i]['lowPriceData'] = data.xzLowPriceData
-      }
-      if (data.enoughList[i].key == 'mn') {
-        data.enoughList[i]['selectCount'] = data.mnFilterCount.length
-        data.enoughList[i]['lowPriceData'] = data.mnLowPriceData
-      }
-      if (data.enoughList[i].key == 'zg') {
-        data.enoughList[i]['selectCount'] = data.zgFilterCount.length
-        data.enoughList[i]['lowPriceData'] = data.zgLowPriceData
-      }
+      this.setData({
+        allCount: data.allCount,
+        showCount: data.showCount,
+        averagePrice: data.averagePrice,
+        lowPrice: data.lowPrice,
+        lowPriceData: data.lowPriceData,
+        enoughList: data.enoughList,
+        tjFilterCount: data.tjFilterCount,
+        xzFilterCount: data.xzFilterCount,
+        mnFilterCount: data.mnFilterCount,
+        zgFilterCount: data.zgFilterCount,
+        ddCoin: data.ddCoin || 0,
+        bindPhone: data.bindPhone || false,
+        bindPublic: data.bindPublic || false,
+        isMonitorHouse: data.isMonitorHouse || 0,
+        bottomType: data.bottomType || 0,
+        taskTime: data.taskTime || '',
+        startTimeName: data.startTimeName || '',
+        fee: data.fee || '',
+        monitorId: data.monitorId || '',
+        totalFee: data.totalFee || '', //消耗盯盯币
+        defaultBeginDate: app.globalData.monitorDefaultData.beginDate,
+        defaultEndDate: app.globalData.monitorDefaultData.endDate,
+        defaultCityName: app.globalData.monitorDefaultData.city,
+        defaultLocationName: app.globalData.monitorDefaultData.area || '--',
+        defaultMInPrice: app.globalData.monitorDefaultData.minPrice,
+        defaultMaxPrice: app.globalData.monitorDefaultData.maxPrice,
+        beginDate: app.globalData.monitorSearchData.beginDate,
+        endDate: app.globalData.monitorSearchData.endDate,
+        cityName: app.globalData.monitorSearchData.city,
+        locationName: app.globalData.monitorSearchData.area || '--',
+        updateMinPrice: app.globalData.monitorSearchData.minPrice,
+        updateMaxPrice: app.globalData.monitorSearchData.maxPrice,
+        sort: data.sortType == 2 ? false : true,
+        fee,
+        rentType:1 //1：短租 2：长租
+      })
     }
-    this.setData({
-      allCount: data.allCount,
-      showCount: data.showCount,
-      averagePrice: data.averagePrice,
-      lowPrice: data.lowPrice,
-      lowPriceData: data.lowPriceData,
-      enoughList: data.enoughList,
-      tjFilterCount: data.tjFilterCount,
-      xzFilterCount: data.xzFilterCount,
-      mnFilterCount: data.mnFilterCount,
-      zgFilterCount: data.zgFilterCount,
-      ddCoin: data.ddCoin || 0,
-      bindPhone: data.bindPhone || false,
-      bindPublic: data.bindPublic || false,
-      isMonitorHouse: data.isMonitorHouse || 0,
-      bottomType: data.bottomType || 0,
-      taskTime: data.taskTime || '',
-      startTimeName: data.startTimeName || '',
-      fee: data.fee || '',
-      monitorId: data.monitorId || '',
-      totalFee: data.totalFee || '', //消耗盯盯币
-      defaultBeginDate: app.globalData.monitorDefaultData.beginDate,
-      defaultEndDate: app.globalData.monitorDefaultData.endDate,
-      defaultCityName: app.globalData.monitorDefaultData.city,
-      defaultLocationName: app.globalData.monitorDefaultData.area || '--',
-      defaultMInPrice: app.globalData.monitorDefaultData.minPrice,
-      defaultMaxPrice: app.globalData.monitorDefaultData.maxPrice,
-      beginDate: app.globalData.monitorSearchData.beginDate,
-      endDate: app.globalData.monitorSearchData.endDate,
-      cityName: app.globalData.monitorSearchData.city,
-      locationName: app.globalData.monitorSearchData.area || '--',
-      updateMinPrice: app.globalData.monitorSearchData.minPrice,
-      updateMaxPrice: app.globalData.monitorSearchData.maxPrice,
-      sort: data.sortType==2?false:true,
-      fee
-    })
+    if (options.rentType == 2){
+      wx.setNavigationBarTitle({
+        title: '长租-统计信息'
+      })
+      let data = app.globalData.houseListData
+      for (let i = 0; i < data.enoughList.length; i++) {
+        if (data.chooseType == 1){
+          if (data.enoughList[i].key == 'wiwj') {
+            data.enoughList[i]['selectCount'] = data.wiwjFilterCount.length
+            data.enoughList[i]['lowPriceData'] = data.wiwjLowPriceData
+          }
+          if (data.enoughList[i].key == 'lianjia') {
+            data.enoughList[i]['selectCount'] = data.lianjiaFilterCount.length
+            data.enoughList[i]['lowPriceData'] = data.lianjiaLowPriceData
+          }
+        }
+        if (data.chooseType == 2) {
+          if (data.enoughList[i].key == 'fangtianxia') {
+            data.enoughList[i]['selectCount'] = data.fangtianxiaFilterCount.length
+            data.enoughList[i]['lowPriceData'] = data.fangtianxiaLowPriceData
+          }
+          if (data.enoughList[i].key == 'wbtc') {
+            data.enoughList[i]['selectCount'] = data.wbtcFilterCount.length
+            data.enoughList[i]['lowPriceData'] = data.wbtcLowPriceData
+          }
+        }
+      }
+      this.setData({
+        allCount: data.allCount,
+        showCount: data.showCount,
+        averagePrice: data.averagePrice,
+        lowPrice: data.lowPrice,
+        lowPriceData: data.lowPriceData,
+        highAreaData: data.highAreaData,
+        enoughList: data.enoughList,
+        bottomType: data.bottomType || 0,
+        sort: data.sortType == 1 ? false : true,
+        rentType: 2 //1：短租 2：长租
+      })
+    }
   },
 
 

@@ -316,7 +316,6 @@ Page({
       if (this.data.isAuth) {
         wx.navigateTo({
           url: '../houseList/houseList'
-          //url: '../houseLongList/houseLongList'
         });
       } else {
         this.showAuthDialog();

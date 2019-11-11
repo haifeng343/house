@@ -12,7 +12,6 @@
   height: 360rpx;
   border-radius: 8rpx;
 }
-
 .image-extend.base-image {
   position: absolute;
   bottom: 0;
@@ -26,7 +25,13 @@
   z-index: 5;
   bottom: 0;
 }
-
+.image-long-extend{
+  height: 220rpx;
+  top: 0;
+}
+.image-long-extend .image-extend.base-image{
+  top:0
+}
 .base-image-container.hidden {
   /* animation: hidden 2s linear forwards; */
   transition: opacity 1.5s ease-in-out;
