@@ -27,7 +27,8 @@
     "pages/citySelectLong/citySelectLong",
     "pages/coupon/coupon",
     "pages/statisticsLong/statisticsLong",
-    "pages/positionLongSelect/positionLongSelect"
+    "pages/positionLongSelect/positionLongSelect",
+    "pages/housingLongSearch/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

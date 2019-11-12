@@ -106,7 +106,7 @@ const wiwj = {
           resolve(res.data)
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -126,7 +126,7 @@ const wiwj = {
           resolve(res.data)
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -173,7 +173,7 @@ const lianjia = {
           resolve(res.data)
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -194,7 +194,7 @@ const lianjia = {
           resolve(res.data)
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -229,7 +229,7 @@ const fangtianxia = {
           resolve(xml2json(res.data.ftx))
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -250,7 +250,7 @@ const fangtianxia = {
           resolve(xml2json(res.data.ftx))
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -301,7 +301,7 @@ const wbtc = {
           resolve(res.data)
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -322,7 +322,7 @@ const wbtc = {
           resolve(res.data)
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })

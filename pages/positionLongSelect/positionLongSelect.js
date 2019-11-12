@@ -213,7 +213,7 @@ Page({
   },
   gotoSearch() {
     wx.navigateTo({
-      url: '../housingSearch/housingSearch'
+      url: '../housingLongSearch/index'
     })
   },
   onLoad: function (options) {
