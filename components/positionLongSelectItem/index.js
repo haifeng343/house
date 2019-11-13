@@ -94,16 +94,16 @@ Component({
         searchLongData.area = info.name
         if (type == 10) {//行政区
           searchLongData.areaType = 1
-          if (info.wiwj) {
+          if (info.wiwj && info.wiwj[0]) {
             searchLongData.areaId.wiwj = info.wiwj[0].id
           }
-          if (info.lj) {
+          if (info.lj && info.lj[0]) {
             searchLongData.areaId.lj = info.lj[0].district_quanpin
           }
-          if (info.ftx) {
+          if (info.ftx && info.ftx[0]) {
             searchLongData.areaId.ftx = info.ftx[0].name
           }
-          if (info.tc) {
+          if (info.tc && info.tc[0]) {
             searchLongData.areaId.tj = info.tc[0].dirname
           }
         } else {
