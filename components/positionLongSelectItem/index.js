@@ -92,8 +92,9 @@ Component({
         let info = JSON.parse(resp.data.json);
         // console.log(data, info)
         searchLongData.area = info.name
+        searchLongData.areaJson = resp.data.json
         if (type == 10) {//行政区
-          searchLongData.areaType = 1
+          searchLongData.areaType = 10
           if (info.wiwj && info.wiwj[0]) {
             searchLongData.areaId.wiwj = info.wiwj[0].id
           }
@@ -107,7 +108,7 @@ Component({
             searchLongData.areaId.tj = info.tc[0].dirname
           }
         } else {
-          searchLongData.areaType = 2
+          searchLongData.areaType = 50
           if (info.wiwj) {
             searchLongData.areaId.wiwj = {
               id : info.wiwj.id,
@@ -115,21 +116,26 @@ Component({
             }
           }
           if (info.lj) {
+            let pData = JSON.parse(resp.data.pjson)
             searchLongData.areaId.lj = {
-              id: info.lj.subway_station_id
+              id: info.lj.subway_station_id,
+              lineid: pData.lj.subway_line_id
             }
           }
           if (info.ftx) {
             searchLongData.areaId.ftx = {
-              id: info.lj.name
+              id: info.ftx.name
             }
           }
           if (info.tc) {
+            let pData = JSON.parse(resp.data.pjson)
             searchLongData.areaId.tj = {
-              id: info.tc.siteid
+              id: info.tc.siteid,
+              lineid: pData.tc.lineid
             }
           }
         }
+        // console.log(info,searchLongData)
         wx.navigateBack({ delta: 1 });
       }).catch(error => {
         console.error(error);

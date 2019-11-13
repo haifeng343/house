@@ -749,6 +749,9 @@ Page({
       searchLongData.longLayouts = []
       searchLongData.longRentTypes = 0
       searchLongData.longSortTypes = 0
+      searchLongData.area = ''
+      searchLongData.areaId = {}
+      searchLongData.areaJson = ''
       this.setData({ searchLongData })
       const app = getApp()
       let data = app.globalData.searchLongData
@@ -760,8 +763,10 @@ Page({
       data.longLayouts = []
       data.longRentTypes = 0
       data.longSortTypes = 0
+      data.area = ''
+      data.areaId = {}
+      data.areaJson = ''
     }
-    this.setData({  })
   },
   // 更换房源类型
   selectRentTypes(event) {
