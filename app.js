@@ -72,9 +72,8 @@ App({
     monitorSearchData: {
       cityType: '',
       area: '',
-      areaId: {},
-      ltude: {},
-      areaType: '',
+      areaId: {},//存各个平台数据信息
+      areaType: 0,//0:未选择 1：行政区 2：地铁 3：附近 4：小区 5：线路 6：商圈
       city: '',//城市名
       cityId: {},//城市ID
       cityJson:'',

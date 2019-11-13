@@ -3,7 +3,7 @@
     <view class="position">
       <view class="title position-title">定位</view>
       <view class="content flex-box-center-between">
-        <view class="pos flex-box-center" data-name='{{userCity.name}}' bindtap="handleSelectCityByName">
+        <view class="pos flex-box-center" data-item='{{userCity.item}}' bindtap="handleSelectCity">
           <text class="name">{{userCity.name}}</text>
         </view>
         <block wx:if="{{userCity.name === '定位失败'}}">

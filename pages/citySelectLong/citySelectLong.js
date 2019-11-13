@@ -35,7 +35,8 @@ Page({
       }
     ],
     userCity: {
-      name: '定位中...'
+      name: '定位中...',
+      item:{}
     }
   },
   service: new CitySelectService(),
@@ -57,6 +58,9 @@ Page({
 
   handleSelectCity(event) {
     let cityItem = event.currentTarget.dataset.item
+    if (!cityItem.name) {
+      return
+    }
     const app = getApp()
     let searchLongData = app.globalData.searchLongData
     let name = cityItem.name
@@ -97,7 +101,8 @@ Page({
 
   calcCityByLocation(location) {
     const userCity = {
-      name: '定位失败'
+      name: '定位失败',
+      item:{}
     };
     if (location) {
       getLocationInfo(location).then(resp => {
@@ -107,11 +112,13 @@ Page({
             const cityInfo = city.indexOf(pl.name)
             if (cityInfo>-1) {
               userCity.name = pl.name
+              userCity.item = pl
               this.setData({ userCity });
               return;
             }
           }
           userCity.name = '定位城市暂无服务'
+          userCity.item = {}
           this.setData({ userCity });
         }
       });
@@ -123,7 +130,8 @@ Page({
   handleRepos() {
     this.setData({
       userCity: {
-        name: '定位中...'
+        name: '定位中...',
+        item:{}
       }
     });
     this.getUserLocation();

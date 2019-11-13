@@ -125,7 +125,7 @@ Page({
       });
     } else if (this.data.tabIndex == 2) {
       wx.navigateTo({
-        url: '../positionLongSelect/positionLongSelect?city=' + this.data.searchData.city
+        url: '../positionLongSelect/positionLongSelect?city=' + this.data.searchLongData.city
       });
     }
 

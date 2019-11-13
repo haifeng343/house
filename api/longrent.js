@@ -106,7 +106,7 @@ const wiwj = {
           resolve(res.data)
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -126,7 +126,7 @@ const wiwj = {
           resolve(res.data)
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -145,7 +145,7 @@ const lianjia = {
   // * 以上合并条件只能同时存在一个 并且和下面附近距离五个参数冲突
   // * poi为附近距离，单位米，
   // * lat为位置纬度（用于计算附近距离），6位有效数字
-  // * lng为位置经度（用于计算附近距离），6位有效数字
+  // * lon为位置经度（用于计算附近距离），6位有效数字
   // * ra为面积（0: "≤40㎡", 1："40-60㎡", 2: "60-80㎡", 3: "80-100㎡", 4: "100-120㎡", 5: "≥120㎡" 单选）
   // * brp为最低租金
   // * erp为最高租金
@@ -173,7 +173,7 @@ const lianjia = {
           resolve(res.data)
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -194,7 +194,7 @@ const lianjia = {
           resolve(res.data)
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -229,7 +229,7 @@ const fangtianxia = {
           resolve(xml2json(res.data.ftx))
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -250,7 +250,7 @@ const fangtianxia = {
           resolve(xml2json(res.data.ftx))
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -301,7 +301,7 @@ const wbtc = {
           resolve(res.data)
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
@@ -322,7 +322,7 @@ const wbtc = {
           resolve(res.data)
         },
         fail: res => {
-          resolve(false)
+          reject(false)
           throwErrorResponse()
         }
       })
