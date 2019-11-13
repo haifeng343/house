@@ -388,7 +388,7 @@ Page({
     let data={
       houseSource: y.chooseType,//房来源:1品牌中介，2个人房源
       cityName: y.city,//城市名称
-      searchJson: JSON.stringify(y.areaJson),//搜索参数拼接
+      searchJson: y.areaJson,//搜索参数拼接
       buildArea: y.longBuildAreas,//面积
       minPrice: y.minPrice,
       maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice
@@ -396,6 +396,12 @@ Page({
     if (y.longSortTypes) { //房源偏好排序类型 1低价优先,2空间优先,3最新发布
       data['sortType'] = y.longSortTypes
     }
+    if (y.areaType) { //位置ID
+      data['locationType'] = y.areaType
+    }
+    if (y.areaType == 50) {//地铁
+      data['parentName '] = y.areaId.subwaysLine
+    } 
     if (y.areaType == 60){ //附近
       //data['longitude'] = y.longitude
       //data['latitude'] = y.latitude
@@ -403,10 +409,6 @@ Page({
     if (y.area) { //位置名称
       data['locationName'] = y.area
     }
-    if (y.areaType) { //位置ID
-      data['locationType'] = y.areaType+'0'
-    }
-    
     if (y.longFloorTypes.length){ //楼层
       data['floorType'] = y.longFloorTypes.join(',');
     }

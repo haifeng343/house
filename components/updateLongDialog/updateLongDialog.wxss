@@ -19,7 +19,7 @@
 
 .mask_content .content{
   width: 624rpx;
-  height: 714rpx;
+  height: 614rpx;
   background: #FFFFFF;
   border-radius:  0 0 16rpx 16rpx;
 }
@@ -61,8 +61,10 @@
 .mask_task .task text{
   display: inline-block;
 }
-.mask_task .task text:nth-child(1){
-  flex: 4
+.mask_task .task view{
+  flex: 5;
+  display: flex;
+  align-items: center
 }
 .mask_task .task .task_right{
   flex: 6;
@@ -90,6 +92,7 @@
   height: 36rpx;
   text-align: center;
   line-height: 36rpx;
+  margin-left: 8rpx;
 }
 .mask_task .task .select_image{
   width: 32rpx;

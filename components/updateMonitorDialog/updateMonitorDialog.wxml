@@ -10,23 +10,23 @@
         </view>
         <view class="mask_task">
           <view class="task">
-            <text>城市:<text class="update" wx:if="{{cityName!=defaultCityName}}">已改</text></text>
+            <view><text>城市:</text><text class="update" wx:if="{{cityName!=defaultCityName}}">已改</text></view>
             <text class="task_right">{{cityName}}</text>
           </view>
           <view class="task">
-            <text>入住时间:<text class="update" wx:if="{{beginDate!=defaultBeginDate}}">已改</text></text>
+            <view><text>入住时间:</text><text class="update" wx:if="{{beginDate!=defaultBeginDate}}">已改</text></view>
             <text class="task_right">{{beginDate}}</text>
           </view>
           <view class="task">
-            <text>退房时间:<text class="update" wx:if="{{endDate!=defaultEndDate}}">已改</text></text>
+            <view><text>退房时间:</text><text class="update" wx:if="{{endDate!=defaultEndDate}}">已改</text></view>
             <text class="task_right">{{endDate}}</text>
           </view>
           <view class="task">
-            <text>地点:<text class="update" wx:if="{{defaultLocationName!=locationName}}">已改</text></text>
+            <view><text>地点:</text><text class="update" wx:if="{{defaultLocationName!=locationName}}">已改</text></view>
             <text class="task_right">{{locationName}}</text>
           </view>
           <view class="task">
-            <text>预算:<text class="update" wx:if="{{updateMinPrice!=defaultMInPrice||updateMaxPrice!=defaultMaxPrice}}">已改</text></text>
+            <view><text>预算:</text><text class="update" wx:if="{{updateMinPrice!=defaultMInPrice||updateMaxPrice!=defaultMaxPrice}}">已改</text></view>
             <text class="task_right" wx:if="{{updateMinPrice==0&&updateMaxPrice==99999}}">不限</text>
             <text class="task_right" wx:if="{{updateMinPrice>0&&updateMaxPrice==99999}}">高于¥{{updateMinPrice}}</text>
             <text class="task_right" wx:if="{{updateMinPrice==0&&updateMaxPrice<99999}}">低于¥{{updateMaxPrice}}</text>

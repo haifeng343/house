@@ -3,10 +3,16 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    updateData:{
+      type:Object
+    },
+    defalutData: {
+      type: Object
+    },
     locationName: {
       type: String,
     },
-    rentType:{
+    rentType: {
       type: Number
     },
     updateMinPrice: {
@@ -28,17 +34,15 @@ Component({
       type: Number
     }
   },
-
-  /**
-   * 组件的初始数据
-   */
-  data: {
-    publicSelect: false,
-    noteSelect: true,
-    unselect: '../../assets/image/unselect.png',
-    selected: '../../assets/image/selected.png',
+  lifetimes: {
+    attached: function () {
+      let app = getApp()
+      console.log(app.globalData.monitorSearchLongData)
+    },
+    detached: function () {
+      // 在组件实例被从页面节点树移除时执行
+    },
   },
-
   /**
    * 组件的方法列表
    */

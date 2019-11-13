@@ -26,7 +26,6 @@
     "pages/monitorLongList/monitorLongList",
     "pages/citySelectLong/citySelectLong",
     "pages/coupon/coupon",
-    "pages/statisticsLong/statisticsLong",
     "pages/positionLongSelect/positionLongSelect",
     "pages/housingLongSearch/index"
   ],
