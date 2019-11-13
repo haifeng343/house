@@ -18,6 +18,7 @@ Page({
     monitorDisplay: 'none',
     publicDisplay:'none',
     updateMonitorDisplay: 'none',
+    updateLongDisplay: 'none',
     fee: 0,
     sort: false,
     enoughList:[],
@@ -349,15 +350,18 @@ Page({
     if (y.longSortTypes) {
       data['sortType'] = y.longSortTypes
     }
+    if (y.areaType) { //位置ID
+      data['locationType'] = y.areaType
+    }
+    if (y.areaType == 50) {//地铁
+      data['parentName '] = y.areaId.subwaysLine
+    }
     if (y.areaType == 60) { //附近
       //data['longitude'] = y.longitude
       //data['latitude'] = y.latitude
     }
     if (y.area) { //位置名称
       data['locationName'] = y.area
-    }
-    if (y.areaType) { //位置ID
-      data['locationType'] = y.areaType
     }
     if (y.longFloorTypes.length) { //楼层
       data['floorType'] = y.longFloorTypes.join(',');
@@ -497,6 +501,7 @@ Page({
   },
   //保存修改
   goSave() {
+    let app = getApp()
     let count = this.data.allCount
     if (count >= 50) {
       this.setData({
@@ -506,9 +511,18 @@ Page({
         dialogBtn: '知道了'
       })
     } else {
-      this.setData({
-        updateMonitorDisplay: 'block',
-      })
+      if(this.data.rentType == 1){
+        this.setData({
+          updateMonitorDisplay: 'block',
+        })
+      }
+      if (this.data.rentType == 2) {
+        this.setData({
+          updateLongDisplay: 'block',
+          updateData: app.globalData.monitorSearchLongData,
+          defalutData: app.globalData.monitorDefaultSearchLongData
+        })
+      }
     }
     
 
@@ -604,8 +618,14 @@ Page({
       })
     })
   },
+  getLongUpdateCancelEvent(e){
+    this.setData({
+      updateLongDisplay: e.detail,
+    })
+  },
+  getLongUpdateConfrimEvent(){
 
-
+  },
   getEnoughEvent(e) {
     this.setData({
       monitorenoughDisplay: e.detail,

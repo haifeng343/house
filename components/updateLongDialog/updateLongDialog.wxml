@@ -1,0 +1,39 @@
+<wxs src="../../utils/filter.wxs" module="filter" />
+<view class="mask" bindtap="bindCancel" catchtouchmove="preventTouchMove">
+    <view class="mask_content" catchtap="stopEvent">
+      <view class="house_image">
+        <view class="house_title">确认变更监控条件</view>
+      </view>
+      <view class="content">
+        <view class="text">
+          <image class="warn_image" src="../../assets/image/warn.png"></image>
+          <text>开启监控后，除已收藏的房源外，当 前所查询的房源都将不再监控内展示。</text>
+        </view>
+        <view class="mask_task">
+          <view class="task">
+            <view><text>地点:</text><text class="update" wx:if="{{updateData.area!=defalutData.area}}">已改</text></view>
+            <text class="task_right">{{updateData.area}}</text>
+          </view>
+          <view class="task">
+            <view><text>类型:</text><text class="update" wx:if="{{updateData.longRentTypes!=defalutData.longRentTypes}}">已改</text></view>
+            <text class="task_right">{{updateData.longRentTypes&&filter.rentType(updateData.longRentTypes)}}</text>
+          </view>
+          <view class="task">
+            <view><text>预算:</text><text class="update" wx:if="{{updateData.minPrice!=defalutData.minPrice||updateData.maxPrice!=defalutData.maxPrice}}">已改</text></view>
+            <text class="task_right" wx:if="{{updateData.minPrice==0&&updateData.maxPrice==10000}}">不限</text>
+            <text class="task_right" wx:if="{{updateData.minPrice>0&&updateData.maxPrice==10000}}">高于¥{{updateData.minPrice}}</text>
+            <text class="task_right" wx:if="{{updateData.minPrice==0&&updateData.maxPrice<10000}}">低于¥{{updateData.maxPrice}}</text>
+            <text class="task_right" wx:if="{{updateData.minPrice>0&&updateData.maxPrice<10000}}">¥{{updateData.minPrice}}-¥{{updateData.maxPrice}}</text>
+          </view>
+          <view class="task">
+            <view><text>高级筛选:</text><text class="update">已改</text></view>
+            <text class="task_right">已修改</text>
+          </view>
+        </view>
+        <view class="mask-btn">
+          <text class="cancel" catchtap="bindCancel">再看看</text>
+          <text class="confirm" catchtap="bindConfirm">确认</text>
+        </view>
+      </view>
+    </view>
+  </view>

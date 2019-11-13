@@ -75,6 +75,9 @@ Page({
   },
   submitAdvance() {
     app.globalData.monitorSearchLongData['minPrice']=1000
+    this.setData({
+      updateData: app.globalData.monitorSearchLongData
+    })
     this.onShow();
   },
   compareData(){
@@ -329,6 +332,7 @@ Page({
         countFlag: 1,
         longSortTypes: monitorDetail.sortType||'',
         chooseType: monitorDetail.houseSource,
+        defalutData: app.globalData.monitorDefaultSearchLongData
       })
     })
   },
@@ -558,6 +562,7 @@ Page({
   },
   //保存修改
   goSave() {
+    //this.data.allCount = 40
     if (this.data.allCount > 50) {
       this.setData({
         monitorenoughDisplay: 'block',

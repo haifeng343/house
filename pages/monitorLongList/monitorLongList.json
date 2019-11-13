@@ -7,8 +7,8 @@
     "monitorEnoughDialog": "../../components/monitorEnoughDialog/monitorEnoughDialog",
     "collectDialog": "../../components/collectDialog/collectDialog",
     "stopDialog": "../../components/stopDialog/stopDialog",
-    "updateMonitorDialog": "../../components/updateMonitorDialog/updateMonitorDialog",
-    "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog"
+    "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog",
+    "updateLongDialog":"../../components/updateLongDialog/updateLongDialog"
   },
   "navigationBarTitleText": "长租-房源列表"
 }
