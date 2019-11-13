@@ -109,7 +109,7 @@ Component({
           }
         } else {
           searchLongData.areaType = 50
-          searchLongData.areaId.subwaysLine = resp.data.subwaysLine
+          // searchLongData.areaId.subwaysLine = resp.data.subwaysLine
           if (info.wiwj) {
             searchLongData.areaId.wiwj = {
               id : info.wiwj.id,
