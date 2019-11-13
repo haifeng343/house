@@ -109,6 +109,7 @@ Component({
           }
         } else {
           searchLongData.areaType = 50
+          searchLongData.areaId.subwaysLine = resp.data.subwaysLine
           if (info.wiwj) {
             searchLongData.areaId.wiwj = {
               id : info.wiwj.id,
@@ -129,7 +130,7 @@ Component({
           }
           if (info.tc) {
             let pData = JSON.parse(resp.data.pjson)
-            searchLongData.areaId.tj = {
+            searchLongData.areaId.tc = {
               id: info.tc.siteid,
               lineid: pData.tc.lineid
             }
