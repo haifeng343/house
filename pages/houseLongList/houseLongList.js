@@ -33,6 +33,10 @@ Page({
   onLoad: function (options) {
     //1品牌中介，2个人房源
     let x = app.globalData.searchLongData
+    let wiwjfilter = house.wiwjScreenParam(1);
+    let ljfilter = house.ljScreenParam(1);
+    let ftxfilter = house.ftxScreenParam(1);
+    let tcfilter = house.tcScreenParam(1);
     if (x.chooseType == 1){
       this.getAllBrandData();
     }else{
@@ -40,6 +44,10 @@ Page({
     }
     this.setData({
       listSortType: 1,
+      wiwjfilter,
+      ljfilter,
+      ftxfilter,
+      tcfilter,
       chooseType: x.chooseType,//1品牌中介，2个人房源
       sortType: x.longSortTypes //1: 低价优先, 2: 空间优先, 3: 最新发布
     })
@@ -171,8 +179,8 @@ Page({
   async getAllBrandData(){
     wx.removeStorageSync('collectionObj');
     let enoughList = [];
-    let  wiwjDataObj = await house.getWiwjData()
-    let  lianjiaDataObj = await house.getLianjiaData()
+    let wiwjDataObj = await house.getWiwjData(1,this.data.wiwjfilter)
+    let lianjiaDataObj = await house.getLianjiaData(1,this.data.ljfilter)
     if (wiwjDataObj.network && lianjiaDataObj.network) {
       this.setData({
         loadingDisplay: 'none',
@@ -223,8 +231,8 @@ Page({
   async getAllPersonalData(){
     wx.removeStorageSync('collectionObj');
     let enoughList = [];
-    let fangtianxiaDataObj = await house.getFangtianxiaData()
-    let wbtcDataObj = await house.getWbtcData()
+    let fangtianxiaDataObj = await house.getFangtianxiaData(1,this.data.ftxfilter)
+    let wbtcDataObj = await house.getWbtcData(1,this.data.tcfilter)
     if (fangtianxiaDataObj.network && wbtcDataObj.network) {
       this.setData({
         loadingDisplay: 'none',

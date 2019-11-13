@@ -333,10 +333,12 @@ const getZgData = (type, zgfilter) => {
  * 获取我爱我家平台数据
  * type 1 房源列表；2监控详情
  */
-const getWiwjData = (type, wiwjfilter) =>{
+const getWiwjData = (type, wiwjfilter = {}) =>{
+  let app =getApp()
   let wiwjCount = 0;
+  let y = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
-    longrent.wiwj.rentSearch({ "city": 2, "page": { "num": 1, "size": 50 }, "filter": {} }).then(res=>{
+    longrent.wiwj.rentSearch({ "city": y.cityId.wiwj, "page": { "num": 1, "size": 50 }, "filter": wiwjfilter }).then(res=>{
       if (res) {
         wiwjCount = res.data.count
         resolve({
@@ -356,10 +358,12 @@ const getWiwjData = (type, wiwjfilter) =>{
  * 获取链家平台数据
  * type 1 房源列表；2监控详情
  */
-const getLianjiaData = (type, lianjiafilter) => {
+const getLianjiaData = (type, lianjiafilter = {}) => {
+  let app = getApp()
   let lianjiaCount = 0;
+  let y = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
-    longrent.lianjia.rentSearch({ "city": 330100, "page": { "num": 1, "size": 50 }, "filter": {} }).then(res => {
+    longrent.lianjia.rentSearch({ "city": y.cityId.lj, "page": { "num": 1, "size": 50 }, "filter": lianjiafilter }).then(res => {
       if (res) {
         lianjiaCount = res.data.total
         resolve({
@@ -379,10 +383,12 @@ const getLianjiaData = (type, lianjiafilter) => {
  * 获取房天下平台数据
  * type 1 房源列表；2监控详情
  */
-const getFangtianxiaData = (type, fangtianxiafilter) => {
+const getFangtianxiaData = (type, fangtianxiafilter = {}) => {
+  let app = getApp()
   let fangtianxiaCount = 0;
+  let y = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
-    longrent.fangtianxia.rentSearch({ "city": "杭州", "page": { "num": 1, "size": 50 }, "filter": {} }).then(res => {
+    longrent.fangtianxia.rentSearch({ "city": y.cityId.ftx, "page": { "num": 1, "size": 50 }, "filter": fangtianxiafilter }).then(res => {
       if (res) {
         fangtianxiaCount = Number(res.houses.housecount.text)
         resolve({
@@ -402,16 +408,18 @@ const getFangtianxiaData = (type, fangtianxiafilter) => {
  * 获取58同城平台数据
  * type 1 房源列表；2监控详情
  */
-const getWbtcData = (type, wbtcfilter) => {
+const getWbtcData = (type, wbtcfilter = {}) => {
+  let app = getApp()
   let wbtcCount = 0;
   let arr = [];
+  let y = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
-    longrent.wbtc.rentSearch({ "city": "hz", "page": { "num": 1, "size": 50 }, "filter": {} }).then(res => {
+    longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 1, "size": 50 }, "filter": wbtcfilter }).then(res => {
       res.result.getListInfo.infolist.shift()
       let wbtcCount = res.result.getListInfo.searchNum
       arr = res.result.getListInfo.infolist
       if (res && arr.length < 50 && arr.length < wbtcCount){
-        return longrent.wbtc.rentSearch({ "city": "bj", "page": { "num": 2, "size": 50 }, "filter": {} });
+        return longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 2, "size": 50 }, "filter": wbtcfilter });
       }else{
         resolve({
           arr: arr.slice(0, 50),
@@ -1605,16 +1613,20 @@ const sort = (arr,sortType,key='finalPrice') => {
   }
 }
 const wiwjScreenParam = type=>{
-
+  let obj={}
+  return obj
 }
 const ljScreenParam = type => {
-
+  let obj = {}
+  return obj
 }
 const ftxScreenParam = type => {
-
+  let obj = {}
+  return obj
 }
 const tcScreenParam = type => {
-
+  let obj = {}
+  return obj
 }
 function addPlatfromData(allData, PlatfromData, index) {
   if (index < PlatfromData.length) {
