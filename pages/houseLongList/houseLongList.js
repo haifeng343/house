@@ -30,9 +30,9 @@ Page({
     enoughBottom: false,
     monitorBottom: false,
     wiwjfilter:{},
-    ljfilter: {},
-    ftxfilter: {},
-    tcfilter: {},
+    ljfilter:{},
+    ftxfilter:{},
+    tcfilter:{},
   },
   onLoad: function (options) {
     //1品牌中介，2个人房源
@@ -56,6 +56,7 @@ Page({
         this.getAllPersonalData();
       }
     })
+    
   },
   onShow: function () {
     this.getUserInfo();
@@ -184,6 +185,7 @@ Page({
   async getAllBrandData(){
     wx.removeStorageSync('collectionObj');
     let enoughList = [];
+    console.log('this.data.wiwjfilter',this.data.wiwjfilter);
     let wiwjDataObj = await house.getWiwjData(1,this.data.wiwjfilter)
     let lianjiaDataObj = await house.getLianjiaData(1,this.data.ljfilter)
     if (wiwjDataObj.network && lianjiaDataObj.network) {

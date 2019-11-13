@@ -95,19 +95,19 @@ function returnData(wiwjData, lianjiaData) {
     var length1 = wiwjData.data.length < 15 ? wiwjData.data.length : 15
     for (var index = 0; index < length1; index++) {
       if (wiwjData.data[index].searchType == 1) {
-        requestData.area.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index] })
+        requestData.area.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index], type:10 })
       }
       if (wiwjData.data[index].searchType == 2) {
-        requestData.buiness.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index] })
+        requestData.buiness.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index], type: 20 })
       }
       if (wiwjData.data[index].searchType == 3) {
-        requestData.xiaoqu.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index] })
+        requestData.xiaoqu.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index], type: 30 })
       }
       if (wiwjData.data[index].searchType == 4) {
-        requestData.line.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index] })
+        requestData.line.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index], type: 40 })
       }
       if (wiwjData.data[index].searchType == 5) {
-        requestData.subway.push({ name: wiwjData.data[index].searchName.replace(/\(.*\)/ig, ''), wiwj: wiwjData.data[index] })
+        requestData.subway.push({ name: wiwjData.data[index].searchName.replace(/\(.*\)/ig, ''), wiwj: wiwjData.data[index], type: 50 })
       }
     }
   }
@@ -127,7 +127,7 @@ function returnData(wiwjData, lianjiaData) {
           }
         }
         if (!isMatch) {
-          requestData.area.push({ name: lianjiaData.data[index].name, lianjia: lianjiaData.data[index] })
+          requestData.area.push({ name: lianjiaData.data[index].name, lianjia: lianjiaData.data[index], type: 10 })
         }
       }
       if (lianjiaData.data[index].type == "bizcircle") {
@@ -142,7 +142,7 @@ function returnData(wiwjData, lianjiaData) {
           }
         }
         if (!isMatch) {
-          requestData.buiness.push({ name: lianjiaData.data[index].name, lianjia: lianjiaData.data[index] })
+          requestData.buiness.push({ name: lianjiaData.data[index].name, lianjia: lianjiaData.data[index], type: 20 })
         }
       }
       if (lianjiaData.data[index].type == "resblock") {
@@ -160,7 +160,7 @@ function returnData(wiwjData, lianjiaData) {
           }
         }
         if (!isMatch) {
-          requestData.xiaoqu.push({ name: lianjiaData.data[index].name, lianjia: lianjiaData.data[index] })
+          requestData.xiaoqu.push({ name: lianjiaData.data[index].name, lianjia: lianjiaData.data[index], type: 30 })
         }
       }
       if (lianjiaData.data[index].type == "station") {
@@ -175,12 +175,14 @@ function returnData(wiwjData, lianjiaData) {
           }
         }
         if (!isMatch) {
-          requestData.subway.push({ name: lianjiaData.data[index].name.replace(/站/ig, ''), lianjia: lianjiaData.data[index] })
+          requestData.subway.push({ name: lianjiaData.data[index].name.replace(/站/ig, ''), lianjia: lianjiaData.data[index], type: 50 })
         }
       }
     }
   }
-  return requestData
+  var requsetTotal = []
+  requsetTotal = requsetTotal.concat(requestData.area).concat(requestData.buiness).concat(requestData.xiaoqu).concat(requestData.line).concat(requestData.subway)
+  return requsetTotal
 }
 
 const getIntermediaryData = (data,keywords)=> {
@@ -226,12 +228,12 @@ function returnData2(ftxData, wbtcData) {
     var length1 = data.length < 15 ? data.length : 15
     for (var index = 0; index < length1; index++) {
       if (data[index].wordtype.text == '商圈') {
-        requestData.buiness.push({ name: data[index].word.text, ftx: data[index] })
+        requestData.buiness.push({ name: data[index].word.text, ftx: data[index], type: 20 })
       }
       if (data[index].wordtype.text == '楼盘' && data[index].ywtype.text == '出租') {
         data[index].coord_x.text = parseFloat(parseFloat(data[index].coord_x.text).toFixed(6))
         data[index].coord_y.text = parseFloat(parseFloat(data[index].coord_y.text).toFixed(6))
-        requestData.xiaoqu.push({ name: data[index].projmainname.text, ftx: data[index] })
+        requestData.xiaoqu.push({ name: data[index].projmainname.text, ftx: data[index], type: 30 })
       }
     }
   }
@@ -240,7 +242,7 @@ function returnData2(ftxData, wbtcData) {
     var length2 = data2.length < 15 ? data2.length : 15
     for (var index = 0; index < length2; index++) {
       if (data2[index].type == 1) {
-        requestData.area.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index] })
+        requestData.area.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index], type: 10 })
       }
       if (data2[index].type == 2) {
         var isMatch = false
@@ -254,7 +256,7 @@ function returnData2(ftxData, wbtcData) {
           }
         }
         if (!isMatch) {
-          requestData.buiness.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index] })
+          requestData.buiness.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index], type: 20 })
         }
       }
       if (data2[index].type == 3) {
@@ -274,16 +276,18 @@ function returnData2(ftxData, wbtcData) {
           }
         }
         if (!isMatch) {
-          requestData.xiaoqu.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index] })
+          requestData.xiaoqu.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index], type: 30 })
         }
       }
 
       if (data2[index].type == 4) {
-        requestData.subway.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index] })
+        requestData.subway.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index], type: 50 })
       }
     }
   }
-  return requestData
+  var requsetTotal = []
+  requsetTotal = requsetTotal.concat(requestData.area).concat(requestData.buiness).concat(requestData.xiaoqu).concat(requestData.line).concat(requestData.subway)
+  return requsetTotal
 }
 
 const getPersonalData = (data, keywords) => {
