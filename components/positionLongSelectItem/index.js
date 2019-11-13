@@ -120,7 +120,7 @@ Component({
             let pData = JSON.parse(resp.data.pjson)
             searchLongData.areaId.lj = {
               id: info.lj.subway_station_id,
-              lineid: pData.lj.subway_line_id
+              lineid: pData.lj[0].subway_line_id
             }
           }
           if (info.ftx) {
