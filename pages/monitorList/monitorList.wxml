@@ -89,6 +89,6 @@
 
   <monitorEndDialog text="确认不再关注" bind:monitorEndEvent="getmonitorEndEvent" bind:monitorEndConfirmEvent="getmonitorEndConfirmEvent" style="display:{{monitorEndDisplay}}"></monitorEndDialog>
 
-  <monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}" type="1" style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" ></monitorEnoughDialog>
+  <monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}" paddingBottom="1" style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" ></monitorEnoughDialog>
 
 </view>

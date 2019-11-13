@@ -6,7 +6,7 @@
     </view>
     <view wx:if="{{countFlag === 1}}" class="house_detail">
       <view>总计:{{allCount}}套</view>
-      <view>{{sortType == 1?'最低价':'推荐价'}}:¥{{lowPrice}}</view>
+      <view>{{longSortTypes == 1?'最低价':'推荐价'}}:¥{{lowPrice}}</view>
       <view class="check_detail" bindtap="goToDetail">
         <text>查看明细</text>
         <image class="check_more" src="../../assets/image/more.png"></image>

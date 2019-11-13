@@ -1,7 +1,7 @@
 <view class="mask" bindtap="bindConfirm" catchtouchmove="preventTouchMove">
   <view class="top_image" catchtap="stopEvent">
     <image src="../../assets/image/dialog_top.png"></image>
-    <view class="mask_out {{list.length == 3?'mask_three':''}} {{list.length == 2?'mask_two':''}} {{list.length == 1?'mask_one':''}} {{type==1?'mask_n_type':''}}">
+    <view class="mask_out {{list.length == 3?'mask_three':''}} {{list.length == 2?'mask_two':''}} {{list.length == 1?'mask_one':''}} {{paddingBottom==1?'mask_n_type':''}}">
       <view class="mask_title">{{dialogTitle}}</view>
       <view class="mask_content">{{dialogText}}</view>
       <view class="mask_mold">

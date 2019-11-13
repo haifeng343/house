@@ -142,7 +142,8 @@ Page({
         totalFee: data.totalFee || '', //消耗盯盯币
         sort: data.sortType == 1 ? false : true,
         rentType: 2, //1：短租 2：长租
-        fee
+        fee,
+        type: (data.bottomType == 1 || data.bottomType == 2)?2:1
       })
     }
   },
@@ -338,14 +339,25 @@ Page({
     let app = getApp();
     let y = app.globalData.searchLongData
     let data = {
-      houseSource: y.chooseType,//房源
-      cityName: y.city,//城市名
-      build_area: y.longBuildAreas,//面积
+      houseSource: y.chooseType,//房来源:1品牌中介，2个人房源
+      cityName: y.city,//城市名称
+      searchJson: y.areaJson,//搜索参数拼接
+      buildArea: y.longBuildAreas,//面积
       minPrice: y.minPrice,
       maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice
     }
     if (y.longSortTypes) {
       data['sortType'] = y.longSortTypes
+    }
+    if (y.areaType == 60) { //附近
+      //data['longitude'] = y.longitude
+      //data['latitude'] = y.latitude
+    }
+    if (y.area) { //位置名称
+      data['locationName'] = y.area
+    }
+    if (y.areaType) { //位置ID
+      data['locationType'] = y.areaType
     }
     if (y.longFloorTypes.length) { //楼层
       data['floorType'] = y.longFloorTypes.join(',');
@@ -354,7 +366,7 @@ Page({
       data['rentType'] = y.longRentTypes
     }
     if (y.longHeadings.length) {//朝向
-      data['heading'] = y.longHeadings
+      data['heading'] = y.longHeadings.join(',');
     }
     if (y.longHouseTags.length) {//房源亮点
       data['houseTags'] = y.longHouseTags.join(',');

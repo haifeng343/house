@@ -1229,7 +1229,7 @@ const getMonitorHouseData = houseList=>{
   sortArr.sort(util.compareSort('finalPrice', 'asc'));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : '';
 
-  allData = sortArr;
+  //allData = sortArr;
   //途家最低价格数据
   tjSortArr.sort(util.compareSort('finalPrice', 'asc'));
   let tjLowPriceData = tjSortArr.length > 0 ? tjSortArr[0] : '';
@@ -1558,7 +1558,7 @@ const getMonitorLongHouseData = houseList=>{
   //所有房源面积最大
   areasortArr.sort(util.compareSort('area', 'desc'));
   let highAreaData = areasortArr.length > 0 ? areasortArr[0] : '';
-  allData = sortArr;
+  //allData = sortArr;
   //我爱我家最低价格数据
   wiwjSortArr.sort(util.compareSort('price', 'asc'));
   let wiwjLowPriceData = wiwjSortArr.length > 0 ? wiwjSortArr[0] : '';

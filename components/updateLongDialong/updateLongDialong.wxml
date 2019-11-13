@@ -1,0 +1,34 @@
+<view class="mask" bindtap="bindCancel" catchtouchmove="preventTouchMove">
+    <view class="mask_content" catchtap="stopEvent">
+      <view class="house_image">
+        <view class="house_title">确认变更监控条件</view>
+      </view>
+      <view class="content">
+        <view class="text">
+          <image class="warn_image" src="../../assets/image/warn.png"></image>
+          <text>开启监控后，除已收藏的房源外，当 前所查询的房源都将不再监控内展示。</text>
+        </view>
+        <view class="mask_task">
+          <view class="task">
+            <text>地点:<text class="update" wx:if="{{defaultLocationName!=locationName}}">已改</text></text>
+            <text class="task_right">{{locationName}}</text>
+          </view>
+          <view class="task">
+            <text>类型:<text class="update" wx:if="{{defaultRentType!=rentType}}">已改</text></text>
+            <text class="task_right">{{rentType}}</text>
+          </view>
+          <view class="task">
+            <text>预算:<text class="update" wx:if="{{updateMinPrice!=defaultMInPrice||updateMaxPrice!=defaultMaxPrice}}">已改</text></text>
+            <text class="task_right" wx:if="{{updateMinPrice==0&&updateMaxPrice==10000}}">不限</text>
+            <text class="task_right" wx:if="{{updateMinPrice>0&&updateMaxPrice==10000}}">高于¥{{updateMinPrice}}</text>
+            <text class="task_right" wx:if="{{updateMinPrice==0&&updateMaxPrice<10000}}">低于¥{{updateMaxPrice}}</text>
+            <text class="task_right" wx:if="{{updateMinPrice>0&&updateMaxPrice<10000}}">¥{{updateMinPrice}}-¥{{updateMaxPrice}}</text>
+          </view>
+        </view>
+        <view class="mask-btn">
+          <text class="cancel" catchtap="bindCancel">再看看</text>
+          <text class="confirm" catchtap="bindConfirm">确认</text>
+        </view>
+      </view>
+    </view>
+  </view>

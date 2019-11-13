@@ -9,24 +9,25 @@
   position: relative;
   z-index: 112;
 }
-.house_select .scenic_area{
-  width: 32%;
+/* .house_select .scenic_area{
+  width: 25%;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   padding-right: 16rpx;
-  padding-left: 20rpx;
+  text-align: center;
   box-sizing: border-box;
 }
 .house_select .scenic_type{
-  width: 19%;
+  width: 25%;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  text-align: center;
   padding-right: 16rpx;
   box-sizing: border-box;
-}
-.house_select .budget{
+} */
+.house_select .scenic_area,.house_select .scenic_type,.house_select .budget,.house_select .filter{
   width: 25%;
   text-align: center;
   display: flex;
@@ -36,8 +37,8 @@
   box-sizing: border-box;
 }
 
-.house_select .filter{
-  width: 24%;
+/* .house_select .filter{
+  width: 25%;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -45,7 +46,7 @@
   text-align: center;
   white-space: nowrap;
   box-sizing: border-box;
-}
+} */
 .house_select .triangle{
   width: 0;
   height: 0;
@@ -61,7 +62,7 @@
   border-color: transparent transparent #F1612A;
 }
 
-.house_select .budget .text, .house_select  {
+.house_select .text  {
   flex: 1;
   overflow: hidden;
   text-overflow:ellipsis;

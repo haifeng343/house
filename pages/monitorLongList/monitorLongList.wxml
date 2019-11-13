@@ -1,12 +1,12 @@
 <view>
   <view class="header">
     <view class="top-nav">
-      <houseLongSelect></houseLongSelect>
+      <houseLongSelect bind:clickSelectItem='clickSelectItem'></houseLongSelect>
       <view class="bg_border"></view>
     </view>
     <view wx:if="{{countFlag === 1}}" class="house_detail">
       <view>总计:{{allCount}}套</view>
-      <view>{{sortType == 1?'最低价':'推荐价'}}:¥{{lowPrice}}</view>
+      <view>{{longSortTypes == 1?'最低价':'推荐价'}}:¥{{lowPrice}}</view>
       <view class="check_detail" bindtap="goToDetail">
         <text>查看明细</text>
         <image class="check_more" src="../../assets/image/more.png"></image>
@@ -89,6 +89,7 @@
 <stopDialog bind:stopEvent="getstopEventEvent" bind:stopConfrimEvent="getstopConfirmEventEvent" startTimeName="{{startTimeName}}" taskTime="{{taskTime}}" fee="{{fee}}" totalFee="{{totalFee}}" style="display:{{stopDisplay}}"></stopDialog>
 <monitorDialog title="{{monitorTitle}}" ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorDisplay}}"></monitorDialog>
 
+<updateMonitorDialog style="display:{{updateMonitorDisplay}}"></updateMonitorDialog>
 <monitorEndDialog text="确认不再关注" bind:monitorEndEvent="getmonitorEndEvent" bind:monitorEndConfirmEvent="getmonitorEndConfirmEvent" style="display:{{monitorEndDisplay}}"></monitorEndDialog>
 
-<monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}"  style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" ></monitorEnoughDialog>
+<monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}"  style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" paddingBottom="1"></monitorEnoughDialog>

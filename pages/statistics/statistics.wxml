@@ -13,14 +13,14 @@
             <image class="price" src="../../assets/image/low_price.png"></image>
             <text>当前最低</text>
         </view>
-        <houseLongCard item="{{lowPriceData}}" type="{{1}}" collect="{{false}}" idx="{{0}}"></houseLongCard>
+        <houseLongCard item="{{lowPriceData}}" type="{{type}}" collect="{{false}}" idx="{{0}}"  isStatist="{{false}}" isMonitorHouse="{{isMonitorHouse}}"></houseLongCard>
       </view>
       <view class="house_low_price" wx:if="{{rentType == 2}}">
         <view class="house_low">
             <image class="price" src="../../assets/image/low_price.png"></image>
             <text>面积最大</text>
         </view>
-        <houseLongCard item="{{highAreaData}}" type="{{1}}" collect="{{false}}" bottom="{{false}}" idx="{{0}}"></houseLongCard>
+        <houseLongCard item="{{highAreaData}}" type="{{type}}" collect="{{false}}" bottom="{{false}}" isStatist="{{false}}" idx="{{0}}" isMonitorHouse="{{isMonitorHouse}}"></houseLongCard>
       </view>
       <view class="line"></view>
       <view class="statistics_detail">
@@ -92,4 +92,4 @@
   >
 </updateMonitorDialog>
 
-<monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}" type="1" style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" ></monitorEnoughDialog>
+<monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}" paddingBottom="1" style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" ></monitorEnoughDialog>

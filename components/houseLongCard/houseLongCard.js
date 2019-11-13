@@ -22,6 +22,10 @@ Component({
     bottom:{ //是否最后底部，统计详情页
       type: Boolean,
       value: true
+    },
+    isStatist:{ //是否不是统计详情页  false：统计详情
+      type: Boolean,
+      value: true
     }
   },
 
