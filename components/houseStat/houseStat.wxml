@@ -28,7 +28,7 @@
 <view class="stat_card" wx:if="{{rentType == 2}}">
   <view class="stat_first {{list.length == 3?'stat_three':''}}  {{list.length == 1?'stat_one':''}}">
     <block wx:for="{{list}}" wx:key="{{index}}">
-      <view wx:if="{{item.value}}" class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='wiwj'||item.key =='fangtianxia'?'wiwj_layout':''}} {{item.key =='lianjia'||item.key =='wbtc'?'lianjia_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
+      <view wx:if="{{item.value}}" class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='wiwj'||item.key =='ftx'?'wiwj_layout':''}} {{item.key =='lj'||item.key =='tc'?'lianjia_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
         <view class="tip">{{item.name}}</view>
         <view class="stat_tip">
           <view class="price">{{sort?'推荐价':'最低价'}}:￥{{item.lowPriceData.price||'--'}}/晚</view>
@@ -39,9 +39,9 @@
 
       <view wx:else class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
         <image wx:if="{{item.key =='wiwj'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/wiwj.png"></image>
-        <image wx:if="{{item.key =='lianjia'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/lianjia.png"></image>
-        <image wx:if="{{item.key =='fangtianxia'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/fangtianxia.png"></image>
-        <image wx:if="{{item.key =='wbtc'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/wbtc.png"></image>
+        <image wx:if="{{item.key =='lj'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/lianjia.png"></image>
+        <image wx:if="{{item.key =='ftx'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/fangtianxia.png"></image>
+        <image wx:if="{{item.key =='tc'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/wbtc.png"></image>
         <text class="no_text">暂无数据</text>
       </view>
     </block>

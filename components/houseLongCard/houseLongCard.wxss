@@ -1,9 +1,10 @@
+.move{position: relative}
 .card{display: flex;padding: 32rpx 0;margin:0 30rpx;border-bottom: 1px solid #E8E8E8;height: 220rpx;position: relative}
 .card_none{border-bottom: none}
-.area{width: calc(100% - 64px);height: 284rpx;}
+.area{width: calc(100% - 64px);height: 286rpx;}
 .wrapper {
   width: calc(100vw);
-  height: 284rpx;
+  height: 286rpx;
   position: relative;
   overflow: hidden;
   z-index: 2;

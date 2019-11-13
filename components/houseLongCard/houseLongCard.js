@@ -1,4 +1,5 @@
 import * as rxjs from '../../utils/rx';
+const monitor = require('../../utils/monitor.js')
 Component({
   /**
    * 组件的属性列表
@@ -8,17 +9,17 @@ Component({
       type:Object,
       value: {}
     },
-    type:{
+    type: { //1：查询房源列表  2：监控房源列表
       type:Number
     },
     idx: {
       type: Number
     },
-    collect:{
-      type:Boolean,
-      value:true
+    isMonitorHouse:{  //是否可以收藏按钮
+      type: Number,
+      value:0
     },
-    bottom:{
+    bottom:{ //是否最后底部，统计详情页
       type: Boolean,
       value: true
     }
@@ -85,13 +86,11 @@ Component({
       let app = getApp()
       let platform = e.currentTarget.dataset.platform
       let productid = e.currentTarget.dataset.productid
-      let beginDate = this.properties.type == 1 ? app.globalData.searchData.beginDate : app.globalData.monitorSearchData.beginDate
-      let endDate = this.properties.type == 1 ? app.globalData.searchData.endDate : app.globalData.monitorSearchData.endDate
-      monitor.navigateToMiniProgram(
+      let city = this.properties.type == 1 ? app.globalData.searchLongData.cityId : app.globalData.monitorSearchLongData.cityId
+      monitor.navigateToLongMiniProgram(
         platform,
         productid,
-        beginDate,
-        endDate
+        city
       )
     },
     delItem(e) {

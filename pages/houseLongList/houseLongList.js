@@ -169,6 +169,7 @@ Page({
     }, 300)
   },
   async getAllBrandData(){
+    wx.removeStorageSync('collectionObj');
     let enoughList = [];
     let  wiwjDataObj = await house.getWiwjData()
     let  lianjiaDataObj = await house.getLianjiaData()
@@ -182,7 +183,7 @@ Page({
     let wiwjData = wiwjDataObj.arr || [];
     let lianjiaData = lianjiaDataObj.arr || [];
     if (wiwjDataObj.wiwjCount > -1) { enoughList.push({ key: 'wiwj', name: '我爱我家', value: wiwjDataObj.wiwjCount }) }
-    if (lianjiaDataObj.lianjiaCount > -1) { enoughList.push({ key: 'lianjia', name: '贝壳', value: lianjiaDataObj.lianjiaCount }) }
+    if (lianjiaDataObj.lianjiaCount > -1) { enoughList.push({ key: 'lj', name: '贝壳', value: lianjiaDataObj.lianjiaCount }) }
     enoughList.sort(util.compareSort('value', 'desc'));
     //console.log(wiwjDataObj)
     //console.log(lianjiaDataObj)
@@ -220,6 +221,7 @@ Page({
     }
   },
   async getAllPersonalData(){
+    wx.removeStorageSync('collectionObj');
     let enoughList = [];
     let fangtianxiaDataObj = await house.getFangtianxiaData()
     let wbtcDataObj = await house.getWbtcData()
@@ -232,8 +234,8 @@ Page({
     }
     let fangtianxiaData = fangtianxiaDataObj.arr || [];
     let wbtcData = wbtcDataObj.arr || [];
-    if (fangtianxiaDataObj.fangtianxiaCount > -1) { enoughList.push({ key: 'fangtianxia', name: '房天下', value: fangtianxiaDataObj.fangtianxiaCount }) }
-    if (wbtcDataObj.wbtcCount > -1) { enoughList.push({ key: 'wbtc', name: '58同城', value: wbtcDataObj.wbtcCount }) }
+    if (fangtianxiaDataObj.fangtianxiaCount > -1) { enoughList.push({ key: 'ftx', name: '房天下', value: fangtianxiaDataObj.fangtianxiaCount }) }
+    if (wbtcDataObj.wbtcCount > -1) { enoughList.push({ key: 'tc', name: '58同城', value: wbtcDataObj.wbtcCount }) }
     enoughList.sort(util.compareSort('value', 'desc'));
     //console.log(fangtianxiaData)
     //console.log(wbtcData)
@@ -285,7 +287,7 @@ Page({
   },
   //开启监控
   startMonitor() {
-    let count = this.data.allCount = 40;
+    let count = this.data.allCount;
     let app = getApp()
     if (count >= 50) {
       this.setData({
@@ -395,8 +397,11 @@ Page({
       minPrice: y.minPrice,
       maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice
     }
+    if (y.longSortTypes){
+      data['sortType'] = y.longSortTypes
+    }
     if (y.longFloorTypes.length){ //楼层
-      data['floor_type'] = y.longFloorTypes.join(',');
+      data['floorType'] = y.longFloorTypes.join(',');
     }
     if (y.longRentTypes) { //房源类型
       data['rentType'] = y.longRentTypes
@@ -405,7 +410,7 @@ Page({
       data['heading'] = y.longHeadings
     }
     if (y.longHouseTags.length) {//房源亮点
-      data['house_tags'] = y.longHouseTags.join(',');
+      data['houseTags'] = y.longHouseTags.join(',');
     }
     if (y.longLayouts.length) {//户型
       data['layoutRoom'] = y.longLayouts.join(',');
@@ -414,43 +419,41 @@ Page({
     let notice = [];
     if (noteSelect) {notice.push(2)}
     if (publicSelect) {notice.push(1)}
-    data['notice '] = notice.join(',');
-
-    let wiwjId = [...this.data.wiwjIdData];
-    let ljId = [...this.data.lianjiaIdData];
-    let ftxId = [...this.data.fangtianxiaIdData];
-    let tcId = [...this.data.wbtcIdData];
+    data['notice'] = notice.join(',');
     let obj = wx.getStorageSync('collectionObj') || {};
-
-    if (obj && obj['wiwj'] && obj['wiwj'].length) {
-      for (let i = 0; i < obj['wiwj'].length; i++) {
-        let index = wiwjId.indexOf(obj['wiwj'][i]);
-        wiwjId.splice(index, 1);
-      }
-    }
-    if (obj && obj['lianjia'] && obj['lianjia'].length) {
-      for (let i = 0; i < obj['lianjia'].length; i++) {
-        let index = ljId.indexOf(obj['lianjia'][i]);
-        ljId.splice(index, 1);
-      }
-    }
-    if (obj && obj['fangtianxia'] && obj['fangtianxia'].length) {
-      for (let i = 0; i < obj['fangtianxia'].length; i++) {
-        let index = ftxId.indexOf(obj['fangtianxia'][i]);
-        ftxId.splice(index, 1);
-      }
-    }
-    if (obj && obj['wbtc'] && obj['wbtc'].length) {
-      for (let i = 0; i < obj['wbtc'].length; i++) {
-        let index = tcId.indexOf(obj['wbtc'][i]);
-        tcId.splice(index, 1);
-      }
-    }
     let fddShortRentBlock = {};
     if (y.chooseType == 1){
+      let wiwjId = [...this.data.wiwjIdData];
+      let ljId = [...this.data.lianjiaIdData];
+      if (obj && obj['wiwj'] && obj['wiwj'].length) {
+        for (let i = 0; i < obj['wiwj'].length; i++) {
+          let index = wiwjId.indexOf(obj['wiwj'][i]);
+          wiwjId.splice(index, 1);
+        }
+      }
+      if (obj && obj['lj'] && obj['lj'].length) {
+        for (let i = 0; i < obj['lj'].length; i++) {
+          let index = ljId.indexOf(obj['lj'][i]);
+          ljId.splice(index, 1);
+        }
+      }
       fddShortRentBlock['wiwj'] = wiwjId
       fddShortRentBlock['lj'] = ljId
     }else{
+      let ftxId = [...this.data.fangtianxiaIdData];
+      let tcId = [...this.data.wbtcIdData];
+      if (obj && obj['ftx'] && obj['ftx'].length) {
+        for (let i = 0; i < obj['ftx'].length; i++) {
+          let index = ftxId.indexOf(obj['ftx'][i]);
+          ftxId.splice(index, 1);
+        }
+      }
+      if (obj && obj['tc'] && obj['tc'].length) {
+        for (let i = 0; i < obj['tc'].length; i++) {
+          let index = tcId.indexOf(obj['tc'][i]);
+          tcId.splice(index, 1);
+        }
+      }
       fddShortRentBlock['ftx'] = ftxId
       fddShortRentBlock['tc'] = tcId
     }
@@ -460,6 +463,7 @@ Page({
         title: res.data.resultMsg,
         duration: 2000
       });
+      app.switchRent = 2;
       wx.switchTab({
         url: '../monitor/monitor'
       });
@@ -506,7 +510,7 @@ Page({
     let num = wx.getStorageSync('collectionNum');
     let index = e.detail.index;
     let pId = this.data.allData[index].platformId;
-    let proId = this.data.allData[index].sqid;
+    let proId = this.data.allData[index].housesid;
     house.houseCollection(pId, proId)
     let item = 'allData[' + index + '].collection';
     this.setData({

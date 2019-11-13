@@ -28,6 +28,26 @@
                 <image wx:if="{{item.value==0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/zg_none_dialog.png"></image>
                 <view  class="num">{{item.value}}套</view>
               </view>
+              <view class="mold_name" wx:if="{{item.key == 'wiwj'}}">
+                <image wx:if="{{item.value>0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/wiwj_dialog.png"></image>
+                <image wx:if="{{item.value==0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/wiwj_none_dialog.png"></image>
+                <view  class="num">{{item.value}}套</view>
+              </view>
+              <view class="mold_name" wx:if="{{item.key == 'lj'}}">
+                <image wx:if="{{item.value>0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/lianjia_dialog.png"></image>
+                <image wx:if="{{item.value==0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/lianjia_none_dialog.png"></image>
+                <view  class="num">{{item.value}}套</view>
+              </view>
+              <view class="mold_name" wx:if="{{item.key == 'ftx'}}">
+                <image wx:if="{{item.value>0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/fangtianxia_dialog.png"></image>
+                <image wx:if="{{item.value==0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/fangtianxia_none_dialog.png"></image>
+                <view  class="num">{{item.value}}套</view>
+              </view>
+              <view class="mold_name" wx:if="{{item.key == 'tc'}}">
+                <image wx:if="{{item.value>0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/wbtc_dialog.png"></image>
+                <image wx:if="{{item.value==0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/wbtc_none_dialog.png"></image>
+                <view  class="num">{{item.value}}套</view>
+              </view>
             </view>
           </block>
         </view>

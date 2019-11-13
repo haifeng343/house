@@ -1,9 +1,9 @@
-<view class="monitor_card monitor_gray_card {{item.long ==2?'monitor_long_card':''}}" data-index="{{item.index}}" data-type='1' bindtap="handleClick">
+<view class="monitor_card monitor_gray_card {{item.longRentType ==2?'monitor_long_card':''}}" data-index="{{item.index}}" data-type='1' bindtap="handleClick">
   <movable-area class="area">
     <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
       <view class="bg"></view>
       <view class="card_content">
-        <view wx:if="{{item.long == 1}}">
+        <view wx:if="{{item.longRentType == 1}}">
           <view class="card_message">
             <view class="card_date">
               <view>住:{{item.beginDay}}</view>
@@ -48,8 +48,8 @@
           <view class="card_message">
             <view class="card_address">
               <view class="text">{{item.cityName}}</view>
-              <view class="type"><text>品牌中介</text></view>
-              <view class="type"><text>整租</text></view>
+              <view class="type"><text>{{item.houseSource ==1?'品牌中介':'个人房源'}}</text></view>
+              <view class="type"><text>{{item.rentType&&filter.rentType(item.rentType)}}</text></view>
             </view>
             <view class="card_budget {{item.status == 12?'past_card':''}} {{item.actualPrice?'':'card_search'}}">
               <view class="card_money" wx:if="{{item.status == 12}}">

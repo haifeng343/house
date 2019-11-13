@@ -1,10 +1,11 @@
-<view data-index="{{item.index}}" class="monitor_card {{item.nowHouseCount ==0?'monitor_red_card':''}} {{item.long ==2?'monitor_long_card':''}}" catchtap="checkDetail">
+<wxs src="../../utils/filter.wxs" module="filter" />
+<view data-index="{{item.index}}" class="monitor_card {{item.nowHouseCount ==0?'monitor_red_card':''}} {{item.longRentType ==2?'monitor_long_card':''}}" catchtap="checkDetail">
   <movable-area class="area">
     <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
       <view class="{{item.nowHouseCount ==0?'red_bg':'green_bg'}}"></view>
       <view class="{{item.nowHouseCount ==0?'dred_bg':'dgreen_bg'}}"></view>
       <view class="card_content">
-        <view wx:if="{{item.long == 1}}">
+        <view wx:if="{{item.longRentType == 1}}">
           <view class="card_message">
             <view class="card_date">
               <view>住:{{item.beginDay}}</view>
@@ -49,8 +50,8 @@
           <view class="card_message">
             <view class="card_address">
               <view class="text">{{item.cityName}}</view>
-              <view class="type"><text>品牌中介</text></view>
-              <view class="type"><text>整租</text></view>
+              <view class="type"><text>{{item.houseSource ==1?'品牌中介':'个人房源'}}</text></view>
+              <view class="type" wx:if="{{item.rentType}}"><text>{{item.rentType&&filter.rentType(item.rentType)}}</text></view>
             </view>
             <view class="card_budget {{item.actualPrice?'':'card_search'}}">
               <view class="card_money" wx:if="{{item.actualPrice}}">

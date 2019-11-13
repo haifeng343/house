@@ -91,6 +91,32 @@ const navigateToMiniProgram = (plateform, productid, beginDate, endDate) => {
   }
 }
 
+const navigateToLongMiniProgram = (plateform, productid,city) => {
+  if (plateform == 'wiwj') {
+    wx.navigateToMiniProgram({
+      appId: 'wxaf705dee544e08d9',
+      path: 'pages/zufang_detail/zufang_detail?houseId=' + productid + '&cityId' + city.wiwj
+    })
+  }
+  if (plateform == 'lj') {
+    wx.navigateToMiniProgram({
+      appId: 'wxcfd8224218167d98',
+      path: 'subpackages/rent/pages/detail/index?city_id=' + city.lj+'&house_code=' + productid
+    })
+  }
+  if (plateform == 'ftx') {
+    wx.navigateToMiniProgram({
+      appId: 'wxffbb41ec9b99a969',
+      path: 'pages/zf/detail/grdetail?houseid=' + productid + '&cityname' + city.ftx
+    })
+  }
+  if (plateform == 'tc') {
+    wx.navigateToMiniProgram({
+      appId: 'wxc97b21c63d084d92',
+      path: 'pages/houseplugin/__plugin__/wxaea78830c7829f80/zufang/pages/rent-detail/index?infoId=' + productid
+    })
+  }
+}
 module.exports = {
   setDate: setDate,
   setDay: setDay,
@@ -99,5 +125,6 @@ module.exports = {
   taskTime: taskTime,
   checkDate: checkDate,
   json2Form: json2Form,
-  navigateToMiniProgram: navigateToMiniProgram
+  navigateToMiniProgram: navigateToMiniProgram,
+  navigateToLongMiniProgram
 }

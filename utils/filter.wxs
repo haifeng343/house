@@ -4,7 +4,21 @@ var xzCoverImage = function (url) {
     return url.replace('imgsec', 'image').replace('imgshowsource/', '').replace('webp', 'jpg')
   }
 }
-
+var rentType = function (type) {
+  if (type ==1) {
+    return '整租'
+  }
+  if (type == 2) {
+    return '合租'
+  }
+  if (type == 3) {
+    return '主卧'
+  }
+  if (type == 4) {
+    return '次卧'
+  }
+}
 module.exports = {
-  xzCoverImage: xzCoverImage
+  xzCoverImage: xzCoverImage,
+  rentType: rentType
 }

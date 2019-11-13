@@ -32,7 +32,7 @@ const addLongMonitor = data => {
   })
 }
 /**
- * 开启监控
+ * 开启监控-短租
 */
 const startMonitor = data => {
   return new Promise((resolve, reject) => {
@@ -47,7 +47,22 @@ const startMonitor = data => {
   })
 }
 /**
- * 修改监控
+ * 开启监控-长租
+*/
+const startLongMonitor = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.postApiMonitorForm(monitor.json2Form(data), '/fdd/longRentMonitor/startMonitor.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
+/**
+ * 修改监控-短租
 */
 const updateMonitor = data => {
   return new Promise((resolve, reject) => {
@@ -62,12 +77,42 @@ const updateMonitor = data => {
   })
 }
 /**
- * 结束监控
+ * 修改监控-长租
+*/
+const updateLongMonitor = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.postApiMonitorForm(monitor.json2Form(data), '/fdd/longRentMonitor/updateMonitor.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
+/**
+ * 结束监控-短租
 */
 const endMonitor = data => {
   return new Promise((resolve, reject) => {
     data.token = wx.getStorageSync('token')
     api.postApiMonitorForm(monitor.json2Form(data),'/fdd/shortMonitor/endMonitor.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
+/**
+ * 结束监控-长租
+*/
+const endLongMonitor = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.getApiMonitor(data, '/fdd/longRentMonitor/endLongRentMonitor.json').then(res => {
       if (res.statusCode == 200 && res.data.success) {
         resolve(res)
       } else {
@@ -107,7 +152,7 @@ const getMonitorLongList = data => {
   })
 }
 /**
- * 监控详情
+ * 监控详情-短租
 */
 const monitorDetail = data =>{
   return new Promise((resolve, reject) => {
@@ -122,9 +167,24 @@ const monitorDetail = data =>{
     })
   })
 }
-
 /**
- * 不再关注，添加黑名单
+ * 监控详情-长租
+*/
+const monitorLongDetail = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.getApiMonitor(data, '/fdd/longRentMonitor/getLongRentDetailById.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        resolve(false)
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
+/**
+ * 不再关注，添加黑名单-短租
 */
 const addFddShortRentBlock = data => {
   return new Promise((resolve, reject) => {
@@ -138,7 +198,21 @@ const addFddShortRentBlock = data => {
     })
   })
 }
-
+/**
+ * 不再关注，添加黑名单-长租
+*/
+const addFddLongRentBlock = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.postApiMonitorForm(monitor.json2Form(data), '/fdd/longRentMonitor/addBlacklist.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
 const throwErrorResponse = (data)=>{
   wx.showToast({
     title: data.resultMsg,
@@ -155,5 +229,10 @@ module.exports = {
   addFddShortRentBlock: addFddShortRentBlock,
   getMonitorList: getMonitorList,
   addLongMonitor,
-  getMonitorLongList
+  startLongMonitor,
+  updateLongMonitor,
+  endLongMonitor,
+  getMonitorLongList,
+  monitorLongDetail,
+  addFddLongRentBlock 
 }

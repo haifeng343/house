@@ -100,8 +100,6 @@
 }
 .card_total .romm_num{
   background: #FFFFFF;
-  width:76rpx;
-  height: 44rpx;
   text-align: center;
   display: inline-block;
   margin-left: 8rpx;

@@ -48,7 +48,7 @@
   </view>
   <view wx:if="{{countFlag === 1}}" class="house_shortcuts {{!scrollIng ? '' : 'hidden'}}">
     <view>
-      <image bindtap="goTop"  class="top" src="../../assets/image/top.png"></image>
+      <image bindtap="goTop" wx:if="{{scrollTop>500}}" class="top" src="../../assets/image/top.png"></image>
     </view>
     <view>
       <image bindtap="goSort" class="sort" src="../../assets/image/sort.png"></image>

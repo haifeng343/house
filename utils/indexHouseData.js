@@ -9,7 +9,7 @@ const getIndexHouseData = (app)=>{
     const hourMoney = resp.data.hourMoney
     const fddRequestPlatformName = resp.data.fddRequestPlatformName || ''
     if (fddRequestPlatformName.indexOf('tj') > -1) {
-      app.globalData.tjSwitch = false
+      app.globalData.tjSwitch = true
     }
     if (fddRequestPlatformName.indexOf('xz') > -1) {
       app.globalData.xzSwitch = true

@@ -38,7 +38,6 @@
       <text class="price">¥{{fee}}币/时</text>
       <text class="time_line">余额:</text>
       <text class="price">¥{{ddCoin}}币</text>
-      <!-- <button class="monit_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfoFun">立即开始</button> -->
       <button class="monit_btn" bindtap='startMonitor'>开启监控</button>
     </view>
   </view>
@@ -70,7 +69,7 @@
 </stopDialog>
 
 
-<monitorDialog ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent"  style="display:{{monitorDisplay}}"></monitorDialog>
+<monitorDialog title="{{monitorTitle}}" ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent"  style="display:{{monitorDisplay}}"></monitorDialog>
 
 <publicDialog style="display:{{publicDisplay}}" bind:publicEvent="getPublicEvent" bind:publicConfrimEvent="getPublicConfrimEvent"></publicDialog>
 
