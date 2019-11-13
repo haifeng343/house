@@ -105,7 +105,7 @@ Component({
             searchLongData.areaId.ftx = info.ftx[0].name
           }
           if (info.tc && info.tc[0]) {
-            searchLongData.areaId.tj = info.tc[0].dirname
+            searchLongData.areaId.tc = info.tc[0].dirname
           }
         } else {
           searchLongData.areaType = 50
