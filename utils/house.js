@@ -1613,21 +1613,529 @@ const sort = (arr,sortType,key='finalPrice') => {
   }
 }
 const wiwjScreenParam = type=>{
+  const app = getApp()
+  let searchData = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData
   let obj={}
+
+  // 价钱
+  let minPrice = searchData.minPrice
+  let maxPrice = searchData.maxPrice == 10000 ? 99999 : searchData.maxPrice
+  obj.price = minPrice + ',' + maxPrice
+
+  // 房源偏好 低价/空间/最新
+  let longSortTypes = searchData.longSortTypes
+  if (longSortTypes==1) {
+    obj.psort = 1
+  }
+  if (longSortTypes == 2) {
+    obj.psort = 4
+  }
+  if (longSortTypes == 3) {
+    obj.psort = 5
+  }
+
+  // 房源类型 整租/合租
+  let longRentTypes = searchData.longRentTypes
+  if (longRentTypes == 1) {
+    obj.renttype = 1
+  }
+  if (longRentTypes == 2) {
+    obj.renttype = 2
+  }
+
+  // 户型 一室、两室、三室及以上
+  let longLayouts = searchData.longLayouts.concat()
+  if (longLayouts.length) {
+    let length = longLayouts.length
+    if (longLayouts[length-1]==11) {
+      longLayouts[length - 1] = '3,4,5,9'
+    }
+    let broom = ''
+    for(let temp = 0; temp < length; temp++) {
+      if(temp) {
+        broom += ','
+      }
+      broom += longLayouts[temp]
+    }
+    obj.broom = broom
+  }
+
+  //朝向
+  let longHeadings = searchData.longHeadings.concat()
+  if (longHeadings.length) {
+    let heading = ''
+    if (longHeadings.indexOf(1) > -1) {
+      heading = '1'
+    }
+    if (longHeadings.indexOf(2) > -1) {
+      if (heading) { heading += ',' }
+      heading += '2'
+    }
+    if (longHeadings.indexOf(3) > -1) {
+      if (heading) { heading += ',' }
+      heading += '3'
+    }
+    if (longHeadings.indexOf(4) > -1) {
+      if (heading) { heading += ',' }
+      heading += '4'
+    }
+    if (longHeadings.indexOf(10) > -1) {
+      if (heading) { heading += ',' }
+      heading += '10'
+    }
+    obj.heading = heading
+  }
+
+  //房源亮点
+  let longHouseTags = searchData.longHouseTags.concat()
+  if (longHouseTags.length) {
+    // obj.decoratetype = ''
+    if (longLayouts.indexOf(1) > -1) {
+      obj.decoratetype = '3'
+    }
+    obj.tags = ''
+    if (longLayouts.indexOf(2) > -1) {
+      obj.tags = '1'
+    }
+    if (longLayouts.indexOf(3) > -1) {
+      if (obj.tags) {
+        obj.tags += ','
+      }
+      obj.tags += '32'
+    }
+    if (longLayouts.indexOf(4) > -1) {
+      if (obj.tags) {
+        obj.tags += ','
+      }
+      obj.tags += '4'
+    }
+    if (longLayouts.indexOf(5) > -1) {
+      if (obj.tags) {
+        obj.tags += ','
+      }
+      obj.tags += '64'
+    }
+    if (longLayouts.indexOf(6) > -1) {
+      if (obj.tags) {
+        obj.tags += ','
+      }
+      obj.tags += '4103'
+    }
+  }
+
+  //面积
+  let longBuildAreas = searchData.longBuildAreas
+  if (longBuildAreas == 0) {
+    obj.buildarea = '0,40'
+  }
+  if (longBuildAreas == 1) {
+    obj.buildarea = '40,60'
+  }
+  if (longBuildAreas == 2) {
+    obj.buildarea = '60,80'
+  }
+  if (longBuildAreas == 3) {
+    obj.buildarea = '80,100'
+  }
+  if (longBuildAreas == 4) {
+    obj.buildarea = '100,120'
+  }
+  if (longBuildAreas == 5) {
+    obj.buildarea = '120,1000'
+  }
+
+
+  //楼层
+  let longFloorTypes = searchData.longFloorTypes.concat()
+  if (longFloorTypes.length) {
+    let floortype = ''
+    if (longFloorTypes.indexOf(1) > -1) {
+      floortype = '-1,1'
+    }
+    if (longFloorTypes.indexOf(2) > -1) {
+      if (floortype) { floortype += ',' }
+      floortype += '2'
+    }
+    if (longFloorTypes.indexOf(3) > -1) {
+      if (floortype) { floortype += ',' }
+      floortype += '3'
+    }
+    obj.floortype = floortype
+  }
+  
+
+  console.log('obj',obj)
   return obj
 }
 const ljScreenParam = type => {
+  const app = getApp()
+  let searchData = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData
   let obj = {}
+  obj.condition = ''
+
+  // 价钱
+  let minPrice = searchData.minPrice
+  let maxPrice = searchData.maxPrice == 10000 ? 99999 : searchData.maxPrice
+  obj.condition += 'brp' + minPrice + 'erp' + maxPrice
+
+  // 房源偏好
+  let longSortTypes = searchData.longSortTypes
+  if (longSortTypes == 1) {
+    obj.condition += 'rco21'
+  }
+  if (longSortTypes == 2) {
+    obj.condition += 'rco32'
+  }
+  if (longSortTypes == 3) {
+    obj.condition += 'rco11'
+  }
+
+  // 房源类型 整租/合租
+  // 户型 一室、两室、三室及以上
+  let longLayouts = searchData.longLayouts.concat()
+  let longRentTypes = searchData.longRentTypes
+  if (longLayouts.length) {
+    if (longRentTypes == 1) {
+      if (longLayouts.indexOf(1) > -1) {
+        obj.condition += 'zrn1'
+      }
+      if (longLayouts.indexOf(2) > -1) {
+        obj.condition += 'zrn2'
+      }
+      if (longLayouts.indexOf(3) > -1 || longLayouts.indexOf(11) > -1) {
+        obj.condition += 'zrn3'
+      }
+    } else if (longRentTypes == 2) {
+      if (longLayouts.indexOf(2) > -1) {
+        obj.condition += 'hrn2'
+      }
+      if (longLayouts.indexOf(3) > -1) {
+        obj.condition += 'hrn3'
+      }
+      if (longLayouts.indexOf(12) > -1) {
+        obj.condition += 'hrn4'
+      }
+    } else {
+      if (longLayouts.indexOf(1) > -1) {
+        obj.condition += 'zrn1'
+      }
+      if (longLayouts.indexOf(2) > -1) {
+        obj.condition += 'zrn2'
+        obj.condition += 'hrn2'
+      }
+      if (longLayouts.indexOf(3) > -1) {
+        obj.condition += 'hrn3'
+      }
+      if (longLayouts.indexOf(11) > -1) {
+        obj.condition += 'zrn3'
+        obj.condition += 'hrn3'
+        obj.condition += 'hrn4'
+      }
+      if (longLayouts.indexOf(12) > -1) {
+        obj.condition += 'hrn4'
+      }
+    }
+  } else {
+    if (longRentTypes == 1) {
+      obj.condition += 'zrn0'
+    } else if (longRentTypes == 2) {
+      obj.condition += 'hrn0'
+    }
+  }
+
+  //朝向
+  let longHeadings = searchData.longHeadings.concat()
+  if (longHeadings.length) {
+    if (longHeadings.indexOf(1) > -1) {
+      obj.condition += 'f100500000001'
+    }
+    if (longHeadings.indexOf(2) > -1) {
+      obj.condition += 'f100500000005'
+    }
+    if (longHeadings.indexOf(3) > -1) {
+      obj.condition += 'f100500000003'
+    }
+    if (longHeadings.indexOf(4) > -1) {
+      obj.condition += 'f100500000007'
+    }
+    if (longHeadings.indexOf(10) > -1) {
+      obj.condition += 'f100500000009'
+    }
+  }
+
+  //房源亮点
+  let longHouseTags = searchData.longHouseTags.concat()
+  if (longHouseTags.length) {
+    if (longHouseTags.indexOf(1) > -1) {
+      obj.condition += 'de1'
+    }
+    if (longHouseTags.indexOf(2) > -1) {
+      obj.condition += 'su1'
+    }
+    if (longHouseTags.indexOf(3) > -1) {
+      obj.condition += 'bc1'
+    }
+    if (longHouseTags.indexOf(4) > -1) {
+      obj.condition += 'hk1'
+    }
+    if (longHouseTags.indexOf(5) > -1) {
+      obj.condition += 'ct1'
+    }
+    if (longHouseTags.indexOf(6) > -1) {
+      obj.condition += 'in1'
+    }
+  }
+
+  //面积
+  let longBuildAreas = searchData.longBuildAreas
+  if (longBuildAreas == 0) {
+    obj.condition += 'ra0'
+  }
+  if (longBuildAreas == 1) {
+    obj.condition += 'ra1'
+  }
+  if (longBuildAreas == 2) {
+    obj.condition += 'ra2'
+  }
+  if (longBuildAreas == 3) {
+    obj.condition += 'ra3'
+  }
+  if (longBuildAreas == 4) {
+    obj.condition += 'ra4'
+  }
+  if (longBuildAreas == 5) {
+    obj.condition += 'ra5'
+  }
+
+  //楼层
+  let longFloorTypes = searchData.longFloorTypes.concat()
+  if (longFloorTypes.length) {
+    if (longFloorTypes.indexOf(1) > -1) {
+      obj.condition += 'lc200500000003'
+    }
+    if (longFloorTypes.indexOf(2) > -1) {
+      obj.condition += '200500000002'
+    }
+    if (longFloorTypes.indexOf(3) > -1) {
+      obj.condition += '200500000001'
+    }
+  }
+  console.log(obj)
+
   return obj
 }
 const ftxScreenParam = type => {
+  const app = getApp()
+  let searchData = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData
   let obj = {}
+
+  // 价钱
+  let minPrice = searchData.minPrice
+  let maxPrice = searchData.maxPrice == 10000 ? 99999 : searchData.maxPrice
+  obj.pricerange = '[' + minPrice + ',' + maxPrice + ']'
+
+  // 房源偏好
+  let longSortTypes = searchData.longSortTypes
+  if (longSortTypes == 1) {
+    obj.orderby = 4
+  }
+  if (longSortTypes == 2) {
+    obj.orderby = 7
+  }
+  if (longSortTypes == 3) {
+    obj.orderby = 16
+  }
+
+  // 房源类型 整租/合租
+  let longRentTypes = searchData.longRentTypes
+  if (longRentTypes == 1) {
+    obj.rtype = 'zz'
+  }
+  if (longRentTypes == 2) {
+    obj.renttype = 'hz'
+  }
+  if (longRentTypes == 3) {
+    obj.rtype = 'hzzw'
+  }
+  if (longRentTypes == 4) {
+    obj.renttype = 'hzciwo'
+  }
+
+  // 户型 一室、两室、三室及以上
+  let longLayouts = searchData.longLayouts.concat()
+  if (longLayouts.length) {
+    let length = longLayouts.length
+    if (longLayouts[length - 1] == 12) {
+      longLayouts[length - 1] = '4,5,99'
+    }
+    let room = ''
+    for (let temp = 0; temp < length; temp++) {
+      if (temp) {
+        room += ','
+      }
+      room += longLayouts[temp]
+    }
+    obj.room = room
+  }
+
+  //朝向
+  let longHeadings = searchData.longHeadings.concat()
+  if (longHeadings.length) {
+    let towards = ''
+    if (longHeadings.indexOf(1) > -1) {
+      towards = '东,东北,东南'
+    }
+    if (longHeadings.indexOf(2) > -1) {
+      if (towards) { towards += ','}
+      towards += '西,西北,西南'
+    }
+    if (longHeadings.indexOf(3) > -1) {
+      if (towards) { towards += ',' }
+      towards += '南,东南,西南'
+    }
+    if (longHeadings.indexOf(4) > -1) {
+      if (towards) { towards += ',' }
+      towards += '北,东北,西北'
+    }
+    if (longHeadings.indexOf(10) > -1) {
+      if (towards) { towards += ',' }
+      towards += '南北'
+    }
+    obj.towards = towards
+  }
+
+  // 房源亮点
+  let longHouseTags = searchData.longHouseTags.concat()
+  if (longHouseTags.length) {
+    let tags = ''
+    if (longHouseTags.indexOf(1) > -1) {
+      tags += '精装修'
+    }
+    if (longHouseTags.indexOf(2) > -1) {
+      if (tags) { tags += ',' }
+      tags += '紧邻地铁'
+    }
+    if (longHouseTags.indexOf(7) > -1) {
+      if (tags) { tags += ',' }
+      tags += '家电齐全'
+    }
+    if (longHouseTags.indexOf(8) > -1) {
+      if (tags) { tags += ',' }
+      tags += '视频看房'
+    }
+    obj.tags = tags
+  }
+  console.log(obj)
+
   return obj
 }
 const tcScreenParam = type => {
+  const app = getApp()
+  let searchData = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData
   let obj = {}
+  obj.filterParams = {}
+
+  // 价钱
+  let minPrice = searchData.minPrice
+  let maxPrice = searchData.maxPrice == 10000 ? 99999 : searchData.maxPrice
+  obj.filterParams['param1016--param1610'] = minPrice + '_' + maxPrice
+
+  // 房源偏好
+  let longSortTypes = searchData.longSortTypes
+  if (longSortTypes == 1) {
+    obj.filterParams.sort = "zufangprice_asc"
+  }
+  if (longSortTypes == 2) {
+    obj.filterParams.sort = "zufangarea_desc"
+  }
+  if (longSortTypes == 3) {
+    obj.filterParams.sort = "postdate_desc"
+  }
+
+  // 房源类型 整租/合租
+  let longRentTypes = searchData.longRentTypes
+  if (longRentTypes == 1) {
+    obj.filterParams.cateid = 8
+  }
+  if (longRentTypes == 2) {
+    obj.filterParams.renttype = 10
+  }
+  if (longRentTypes == 3) {
+    obj.filterParams['param1601--param1601'] = '00--1'
+  }
+  if (longRentTypes == 4) {
+    obj.filterParams['param1601--param1601'] = '00--2'
+  }
+
+  // 户型 一室、两室、三室及以上
+  let longLayouts = searchData.longLayouts.concat()
+  if (longLayouts.length) {
+    let length = longLayouts.length
+    if (longLayouts[length - 1] == 12) {
+      longLayouts[length - 1] = '4|5|6|7'
+    }
+    let broom = ''
+    for (let temp = 0; temp < length; temp++) {
+      if (temp) {
+        broom += '|'
+      }
+      broom += longLayouts[temp]
+    }
+    obj.filterParams['param1590--param1612'] = broom
+  }
+
+  //朝向
+  let longHeadings = searchData.longHeadings.concat()
+  if (longHeadings.length) {
+    let heading = ''
+    if (longHeadings.indexOf(1) > -1) {
+      heading = '1#7#9--1#5#11'
+    }
+    if (longHeadings.indexOf(2) > -1) {
+      if (heading) { heading += ',' }
+      heading += '3#8#10--3#6#12'
+    }
+    if (longHeadings.indexOf(3) > -1) {
+      if (heading) { heading += ',' }
+      heading += '2#7#8--2#5#6'
+    }
+    if (longHeadings.indexOf(4) > -1) {
+      if (heading) { heading += ',' }
+      heading += '4#9#10--4#11#12'
+    }
+    if (longHeadings.indexOf(10) > -1) {
+      if (heading) { heading += ',' }
+      heading += '5--10'
+    }
+    obj.filterParams['param1021--param1058'] = heading
+  }
+
+  //房源亮点
+  let longHouseTags = searchData.longHouseTags.concat()
+  if (longHouseTags.length) {
+    let tags = ''
+    if (longHouseTags.indexOf(1) > -1) {
+      tags += '683018--9'
+    }
+    if (longHouseTags.indexOf(2) > -1) {
+      if (tags) { tags += ',' }
+      tags += '683019--5'
+    }
+    if (longHouseTags.indexOf(7) > -1) {
+      if (tags) { tags += ',' }
+      tags += '4--8'
+    }
+    if (longHouseTags.indexOf(8) > -1) {
+      if (tags) { tags += ',' }
+      tags += 'param111299~~param111497..5~~1--00'
+    }
+    obj.filterParams['param12135--param12482'] = tags
+  }
+  console.log(obj)
+
   return obj
 }
+
 function addPlatfromData(allData, PlatfromData, index) {
   if (index < PlatfromData.length) {
     //是否已满

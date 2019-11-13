@@ -56,6 +56,7 @@ Page({
         this.getAllPersonalData();
       }
     })
+    
   },
   onShow: function () {
     this.getUserInfo();
