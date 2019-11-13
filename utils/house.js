@@ -1604,7 +1604,18 @@ const sort = (arr,sortType,key='finalPrice') => {
     sortType
   }
 }
+const wiwjScreenParam = type=>{
 
+}
+const ljScreenParam = type => {
+
+}
+const ftxScreenParam = type => {
+
+}
+const tcScreenParam = type => {
+
+}
 function addPlatfromData(allData, PlatfromData, index) {
   if (index < PlatfromData.length) {
     //是否已满
@@ -1644,5 +1655,9 @@ module.exports = {
   getWbtcData,
   getBrandHouseData,
   getPersonalHouseData,
-  getMonitorLongHouseData
+  getMonitorLongHouseData,
+  wiwjScreenParam,
+  ljScreenParam,
+  ftxScreenParam,
+  tcScreenParam
 }
