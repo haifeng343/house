@@ -12,13 +12,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    result: {
-      area:[],
-      buiness: [],
-      xiaoqu: [],
-      line: [],
-      subway: []
-    },
+    result: [],
     history: [],
     type: '',
     value: '',
@@ -45,7 +39,7 @@ Page({
     })
     if (this.data.value.length < 2) {
       this.setData({
-        result: {},
+        result: [],
         hasAsked: true,
         resultLength: -1
       })
@@ -67,7 +61,7 @@ Page({
         this.submitFlag = false;
         if (res) {
           console.log(res)
-          let length = res.area.length + res.buiness.length + res.line.length + res.subway.length + res.xiaoqu.length
+          let length = res.length
           this.setData({
             hasAsked: true,
             resultLength: length,
@@ -93,7 +87,7 @@ Page({
         this.submitFlag = false;
         if (res) {
           console.log(res)
-          let length = res.area.length + res.buiness.length + res.line.length + res.subway.length + res.xiaoqu.length
+          let length = res.length
           this.setData({
             hasAsked: true,
             resultLength: length,

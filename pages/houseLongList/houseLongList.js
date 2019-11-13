@@ -28,7 +28,11 @@ Page({
     collectDisplay: 'none',
     publicDisplay: 'none',
     enoughBottom: false,
-    monitorBottom: false
+    monitorBottom: false,
+    wiwjfilter:{},
+    ljfilter:{},
+    ftxfilter:{},
+    tcfilter:{},
   },
   onLoad: function (options) {
     //1品牌中介，2个人房源
@@ -37,11 +41,6 @@ Page({
     let ljfilter = house.ljScreenParam(1);
     let ftxfilter = house.ftxScreenParam(1);
     let tcfilter = house.tcScreenParam(1);
-    if (x.chooseType == 1){
-      this.getAllBrandData();
-    }else{
-      this.getAllPersonalData();
-    }
     this.setData({
       listSortType: 1,
       wiwjfilter,
@@ -50,6 +49,12 @@ Page({
       tcfilter,
       chooseType: x.chooseType,//1品牌中介，2个人房源
       sortType: x.longSortTypes //1: 低价优先, 2: 空间优先, 3: 最新发布
+    },()=>{
+      if (x.chooseType == 1) {
+        this.getAllBrandData();
+      } else {
+        this.getAllPersonalData();
+      }
     })
   },
   onShow: function () {
@@ -179,6 +184,7 @@ Page({
   async getAllBrandData(){
     wx.removeStorageSync('collectionObj');
     let enoughList = [];
+    console.log('this.data.wiwjfilter',this.data.wiwjfilter);
     let wiwjDataObj = await house.getWiwjData(1,this.data.wiwjfilter)
     let lianjiaDataObj = await house.getLianjiaData(1,this.data.ljfilter)
     if (wiwjDataObj.network && lianjiaDataObj.network) {

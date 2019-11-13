@@ -9,33 +9,13 @@
     <view class="go-back" bindtap="goBack">取消</view>
   </view>
   <scroll-view scroll-y class="city-list flex-column">
-    <block wx:for="{{item}}" wx:for="{{result.area}}" wx:key='{{index}}'>
-      <view class="child-item" data-type='1' data-item='{{item}}' bindtap="handleSelect">
-        <view class="child-item-type">行政</view>
-        <view class="child-item-name">{{item.name}}</view>
-      </view>
-    </block>
-    <block wx:for="{{item}}" wx:for="{{result.buiness}}" wx:key='{{index}}'>
-      <view class="child-item" data-type='6' data-item='{{item}}' bindtap="handleSelect">
-        <view class="child-item-type">商圈</view>
-        <view class="child-item-name">{{item.name}}</view>
-      </view>
-    </block>
-    <block wx:for="{{item}}" wx:for="{{result.line}}" wx:key='{{index}}'>
-      <view class="child-item" data-type='5' data-item='{{item}}' bindtap="handleSelect">
-        <view class="child-item-type">线路</view>
-        <view class="child-item-name">{{item.name}}</view>
-      </view>
-    </block>
-    <block wx:for="{{item}}" wx:for="{{result.subway}}" wx:key='{{index}}'>
-      <view class="child-item" data-type='2' data-item='{{item}}' bindtap="handleSelect">
-        <view class="child-item-type">地铁</view>
-        <view class="child-item-name">{{item.name}}</view>
-      </view>
-    </block>
-    <block wx:for="{{item}}" wx:for="{{result.xiaoqu}}" wx:key='{{index}}'>
-      <view class="child-item" data-type='4' data-item='{{item}}' bindtap="handleSelect">
-        <view class="child-item-type">小区</view>
+    <block wx:for="{{item}}" wx:for="{{result}}" wx:key='{{index}}'>
+      <view class="child-item" data-item='{{item}}' bindtap="handleSelect">
+        <view class="child-item-type" wx:if="{{item.type==10}}">行政</view>
+        <view class="child-item-type" wx:if="{{item.type==20}}">商圈</view>
+        <view class="child-item-type" wx:if="{{item.type==30}}">小区</view>
+        <view class="child-item-type" wx:if="{{item.type==40}}">线路</view>
+        <view class="child-item-type" wx:if="{{item.type==50}}">地铁</view>
         <view class="child-item-name">{{item.name}}</view>
       </view>
     </block>
