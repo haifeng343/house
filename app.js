@@ -73,7 +73,7 @@ App({
       cityType: '',
       area: '',
       areaId: {},//存各个平台数据信息
-      areaType: 0,//0:未选择 1：行政区 2：地铁 3：附近 4：小区 5：线路 6：商圈
+      areaType: '',
       city: '',//城市名
       cityId: {},//城市ID
       cityJson:'',
@@ -117,8 +117,8 @@ App({
       cityJson: '',
       area:'',// 地点
       areaId: {},//地点标识
-      areaType: '',//地点类型
-      ltude:{},//经纬度
+      areaType: 0,//地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
+      areaJson:{},//json
       longBuildAreas: -1,//0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
       longFloorTypes: [],//1: 低楼层, 2: 中楼层, 3: 高楼层
       longHeadings: [],//{1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
