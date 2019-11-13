@@ -58,6 +58,9 @@ Page({
 
   handleSelectCity(event) {
     let cityItem = event.currentTarget.dataset.item
+    if (!cityItem.name) {
+      return
+    }
     const app = getApp()
     let searchLongData = app.globalData.searchLongData
     let name = cityItem.name
