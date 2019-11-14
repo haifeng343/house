@@ -45,7 +45,7 @@ const chooseArea = (fullname, city, chooseType)=> {
       }
     } else {
       result.areaType = 50
-      searchLongData.areaId.subwaysLine = resp.data.subwaysLine
+      result.areaId.subwaysLine = resp.data.subwaysLine
       if (info.wiwj) {
         result.areaId.wiwj = {
           id: info.wiwj.id,
