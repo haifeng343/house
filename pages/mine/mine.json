@@ -2,7 +2,8 @@
   "usingComponents": {
     "menuItem": "/components/MenuItem/MenuItem",
     "authDialog": "/components/AuthDialog/AuthDialog",
-    "ShareCard": "/components/ShareCard/index"
+    "ShareCard": "/components/ShareCard/index",
+    "CouponDialog": "/components/CouponDialog/index"
   },
   "navigationBarTitleText": "个人中心",
   "navigationBarBackgroundColor": "#e8592c",

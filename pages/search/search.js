@@ -613,6 +613,9 @@ Page({
       );
     });
   },
+  handleCloseCouponDialog() {
+    this.setData({ showCouponDialog: false });
+  },
   getHotPosition(city) {
     let cityname = city;
     const app = getApp();

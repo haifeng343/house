@@ -158,5 +158,5 @@
     <view wx:if="{{showAuthDialog}}">
         <authDialog bind:onConfirm="handleGetUserInfo" bind:onCancel="handleCloseAuthDialog" />
     </view>
-    <CouponDialog wx:if="{{showCouponDialog}}" couponList="{{couponList}}" title="被优惠券砸中啦" />
+    <CouponDialog wx:if="{{showCouponDialog}}" couponList="{{couponList}}" title="被优惠券砸中啦" bind:onClose="handleCloseCouponDialog"/>
 </view>

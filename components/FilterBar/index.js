@@ -341,7 +341,7 @@ Component({
           });
         } else {
           this.setData({
-            [field]: optionItem.active ? value : null
+            [field]: optionItem.active ? value : typeItem.defaultValue
           });
         }
         this.setData({
@@ -389,9 +389,8 @@ Component({
       if (filterItem) {
         const optionItem = filterItem.list.find(item => item.value === value);
 
-        optionItem.active = !optionItem.active;
-
         if (filterItem.multi) {
+          optionItem.active = !optionItem.active;
           const arr = this.data[field];
           if (optionItem.active) {
             arr.push(optionItem.value);
@@ -401,15 +400,20 @@ Component({
           this.setData({
             [field]: arr.slice().sort((a, b) => a - b)
           });
+        } else if (filterItem.cancelable === true) {
+          optionItem.active = !optionItem.active;
+          this.setData({
+            [field]: optionItem.active ? value : filterItem.defaultValue
+          });
         } else {
           this.setData({
-            [field]: optionItem.active ? value : null
+            [field]: value
           });
         }
         this.setData({
           ["map.filter"]: this.data.map.filter.map(item1 => {
             if (item1.field === field) {
-              if (item1.multi !== true) {
+              if (item1.multi !== true && item1.cancelable !== true) {
                 item1.list.forEach(item2 => {
                   if (item2.value === value) {
                     item2.active = true;
@@ -568,6 +572,8 @@ Component({
       }
 
       this.changeList = new Set();
+
+      console.log(result);
 
       this.triggerEvent("onSubmit", result);
     },

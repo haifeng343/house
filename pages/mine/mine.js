@@ -17,7 +17,9 @@ Page({
     submitFlag: false,
     showShareCard: false,
     showTipDialog: false,
-    shareDesc: ""
+    shareDesc: "",
+    couponList: [],
+    showCouponDialog: false
   },
   service: new MineService(),
   action: "",
@@ -56,9 +58,6 @@ Page({
       this.setData({
         shareDesc: isFirstShare ? "可获得兑换券" : ""
       });
-      if (isFirstShare) {
-        wx.setStorageSync("shareCoupon", JSON.stringify(resp.coupon));
-      }
     });
   },
   handleGotoDeposit(event) {
@@ -156,6 +155,9 @@ Page({
     this.setData({
       showAuthDialog: false
     });
+  },
+  handleCloseCouponDialog() {
+    this.setData({ showCouponDialog: false });
   },
   showAuthDialog() {
     wx.showLoading({
@@ -271,11 +273,11 @@ Page({
     });
     this.service
       .requestShare()
-      .then(_ => {
+      .then(couponList => {
+        console.log(couponList);
         wx.hideLoading();
         this.isFirstShare = false;
-        this.setData({ shareDesc: "" });
-        wx.removeStorageSync("shareCoupon");
+        this.setData({ shareDesc: "", showCouponDialog: true, couponList });
       })
       .catch(error => {
         console.error(error);

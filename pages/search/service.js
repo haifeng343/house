@@ -1,5 +1,12 @@
 import Http from "../../utils/http";
 import { authSubject } from "../../utils/auth";
+const daysZH = {
+  1: "一天",
+  2: "两天",
+  3: "三天",
+  4: "四天",
+  5: "五天"
+};
 
 export default class index {
   getHotPosition(cityName) {

@@ -11,9 +11,7 @@ Component({
   },
   methods: {
     handleClose() {
-      if (typeof this.props.onClose === "function") {
-        this.props.onClose();
-      }
+      this.triggerEvent("onClose");
     }
   }
 });

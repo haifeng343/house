@@ -1,5 +1,5 @@
 <view class="container">
-  <view class="overlay" catchtap="dispatchEvent" />
+  <view class="overlay" bindtap="handleClose" />
   <view class="dialog-wrapper">
     <image class="bg" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/弹窗背景.png" />
     <view class="content">
@@ -42,7 +42,7 @@
         </block>
       </view>
     </view>
-    <view class="close-button" catchtap="dispatchEvent">
+    <view class="close-button" bindtap="handleClose">
       <text class="icon-font uniE91F" />
     </view>
   </view>
