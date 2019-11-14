@@ -1833,7 +1833,7 @@ const ljScreenParam = type => {
   }
   if (areaType == 20 || areaType == 30) {
     if (searchData.areaId.lj) {
-      obj.condition = searchData.areaId.lj
+      obj.condition = 'rs'+searchData.areaId.lj
     } else {
       keysword = true
     }

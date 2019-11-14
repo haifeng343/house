@@ -118,25 +118,42 @@ const chooseSlectData = (data)=> {
   let result = {areaId: {}}
   result.areaType = type
   result.area = data.name
-  result.areaJson = JSON.stringify(data)
+  // result.areaJson = JSON.stringify(data)
+  let areaJson = {}
   if (type == 10) {
     result.areaId = {}
     if (data.wiwj) {
       result.areaId.wiwj = data.wiwj.searchId
+      areaJson.wiwj = {
+        districtids: data.wiwj.searchId
+      }
     }
     if (data.lianjia) {
       result.areaId.lj = data.lianjia.uri.replace(/\//ig, '')
+      areaJson.lj = {
+        bizcircle_quanpin: data.lianjia.uri.replace(/\//ig, '')
+      }
     }
   }
   if (type == 20) {
     if (data.wiwj) {
       result.areaId.wiwj = data.wiwj.searchId
+      areaJson.wiwj = {
+        sqids: data.wiwj.searchId
+      }
     }
     if (data.lianjia) {
       result.areaId.lj = data.lianjia.uri
+      areaJson.lj = {
+        bizcircle_quanpin: data.lianjia.uri
+      }
     }
     if (data.ftx) {
       result.areaId.ftx = {
+        district: data.ftx.district.text,
+        comarea: data.ftx.word.text
+      }
+      areaJson.ftx = {
         district: data.ftx.district.text,
         comarea: data.ftx.word.text
       }
@@ -234,9 +251,12 @@ const nearByData =(data,index)=> {
   }
   let result = {
     area: area,
-    areaId: data,
-    areaType: 60,
-    nearby: nearby
+    areaId: {
+      nearby: nearby,
+      latitude: data.latitude,
+      longitude: data.longitude
+    },
+    areaType: 60
   }
   return result
 }
