@@ -121,7 +121,6 @@ const chooseSlectData = (data)=> {
   // result.areaJson = JSON.stringify(data)
   let areaJson = {}
   if (type == 10) {
-    result.areaId = {}
     if (data.wiwj) {
       result.areaId.wiwj = data.wiwj.searchId
       areaJson.wiwj = {
@@ -165,20 +164,33 @@ const chooseSlectData = (data)=> {
         id: data.wiwj.searchId,
         name: data.wiwj.searchName
       }
+      areaJson.wiwj = {
+        communityid: data.wiwj.searchId,
+        zn: data.wiwj.searchName
+      }
     }
     if (data.lianjia) {
       result.areaId.lj = data.lianjia.uri
+      areaJson.lj = {
+        uri: data.wiwj.searchId
+      }
     }
   }
   if (type == 40) {
     if (data.wiwj) {
       result.areaId.wiwj = data.wiwj.searchId
+      areaJson.wiwj = {
+        lineid: data.wiwj.searchId
+      }
     }
   }
   if (type == 50) {
-    result.areaId = {}
     if (data.wiwj) {
       result.areaId.wiwj = {
+        id: data.wiwj.searchId,
+        lineid: data.wiwj.parentId
+      }
+      areaJson.wiwj = {
         id: data.wiwj.searchId,
         lineid: data.wiwj.parentId
       }
@@ -189,8 +201,13 @@ const chooseSlectData = (data)=> {
         id: list[1].replace(/[^0-9]/ig, ''),
         lineid: list[0].replace(/[^0-9]/ig, '')
       }
+      areaJson.wiwj = {
+        subway_station_id: list[1].replace(/[^0-9]/ig, ''),
+        subway_line_id: list[0].replace(/[^0-9]/ig, '')
+      }
     }
   }
+  result.areaJson = JSON.stringify(areaJson)
   return result
 }
 
