@@ -383,6 +383,8 @@ Component({
               [`map.${dataField}`]: this.data.map[dataField].slice(),
               [targetField]: Array.isArray(this.data[targetField]) ? [] : -1
             });
+
+            this.changeList.add(targetField);
           }
         }
 
