@@ -514,9 +514,7 @@ Page({
           title: "登录成功"
         });
 
-        wx.navigateTo({
-          url: "../houseList/houseList"
-        });
+        this.searchSubmit()
       })
       .catch(() => {
         this.submitFlag = false;
