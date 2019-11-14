@@ -233,6 +233,7 @@ Page({
       });
     } else {
       this.setData({
+        loadingDisplay: 'none',
         countFlag: 0,
       });
     }
@@ -282,6 +283,7 @@ Page({
       });
     } else {
       this.setData({
+        loadingDisplay: 'none',
         countFlag: 0,
       });
     }
@@ -405,7 +407,7 @@ Page({
       data['locationType'] = y.areaType
     }
     if (y.areaType == 50) {//地铁
-      data['parentName '] = y.areaId.subwaysLine
+      if (y.areaId.subwaysLine) { data['parentName '] = y.areaId.subwaysLine}
     } 
     if (y.areaType == 60){ //附近
       //data['longitude'] = y.longitude

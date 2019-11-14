@@ -1,6 +1,6 @@
 <view class="move" wx:if="{{isMonitorHouse ===1&&isStatist}}">
   <movable-area class="area">
-    <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
+    <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{(idx==0&&isFirst)?-67:x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
       <view class="card" data-productId="{{item.housesid}}" data-platform="{{item.platformId}}" catchtap="goToPlatformDetail">
         <view class="card_image">
           <imageExtend src="{{item.imgurl}}" rentType="{{2}}" data-idx="{{idx}}"></imageExtend>

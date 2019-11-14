@@ -26,6 +26,10 @@ Component({
     isStatist:{ //是否不是统计详情页  false：统计详情
       type: Boolean,
       value: true
+    },
+    isFirst:{
+      type: Boolean,
+      value: false
     }
   },
 
