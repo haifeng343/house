@@ -1,5 +1,6 @@
 import positionService from './service';
 const service = new positionService();
+import { chooseArea } from '../../utils/longSetSearchData.js'
 const typeNameEnum = {
   "area": '行政',
   "subway": '地铁'
@@ -84,63 +85,12 @@ Component({
     chooseArea(event) {
       let name = event.currentTarget.dataset.name
       let fullname = event.currentTarget.dataset.fullname
-      let type = event.currentTarget.dataset.type
       const app = getApp();
       let searchLongData = app.globalData.searchLongData
-      service.getPositionInfoByName(fullname, searchLongData.city, searchLongData.chooseType).then(resp => {
-        let data = resp.data;
-        let info = JSON.parse(resp.data.json);
-        // console.log(data, info)
-        searchLongData.area = info.name
-        searchLongData.areaJson = resp.data.json
-        if (type == 10) {//行政区
-          searchLongData.areaType = 10
-          if (info.wiwj && info.wiwj[0]) {
-            searchLongData.areaId.wiwj = info.wiwj[0].id
-          }
-          if (info.lj && info.lj[0]) {
-            searchLongData.areaId.lj = info.lj[0].district_quanpin
-          }
-          if (info.ftx && info.ftx[0]) {
-            searchLongData.areaId.ftx = info.ftx[0].name
-          }
-          if (info.tc && info.tc[0]) {
-            searchLongData.areaId.tc = info.tc[0].dirname
-          }
-        } else {
-          searchLongData.areaType = 50
-          // searchLongData.areaId.subwaysLine = resp.data.subwaysLine
-          if (info.wiwj) {
-            searchLongData.areaId.wiwj = {
-              id : info.wiwj.id,
-              lineid: info.wiwj.lineid
-            }
-          }
-          if (info.lj) {
-            let pData = JSON.parse(resp.data.pjson)
-            searchLongData.areaId.lj = {
-              id: info.lj.subway_station_id,
-              lineid: pData.lj[0].subway_line_id
-            }
-          }
-          if (info.ftx) {
-            searchLongData.areaId.ftx = {
-              id: info.ftx.name
-            }
-          }
-          if (info.tc) {
-            let pData = JSON.parse(resp.data.pjson)
-            searchLongData.areaId.tc = {
-              id: info.tc.siteid,
-              lineid: pData.tc.lineid
-            }
-          }
-        }
-        // console.log(info,searchLongData)
+      chooseArea(fullname, searchLongData.city, searchLongData.chooseType).then(resp=>{
+        app.globalData.searchLongData = Object.assign(app.globalData.searchLongData,resp)
         wx.navigateBack({ delta: 1 });
-      }).catch(error => {
-        console.error(error);
-      });
+      })
     },
   },
   lifetimes: {

@@ -2,7 +2,7 @@
 import SearchService from './service';
 const service = new SearchService();
 const longRentTip = require('../../utils/longRentTip')
-import longSetSearchData from '../../utils/longSetSearchData'
+import { longSetSearchData } from '../../utils/longSetSearchData'
 
 const specialCity = [
 ];
@@ -24,7 +24,7 @@ Page({
   submitFlag: false,
   service: new SearchService(),
   inputSearch(event) {
-    console.log(event);
+    // console.log(event);
     this.setData({
       value: event.detail.value
     })
@@ -61,7 +61,7 @@ Page({
         wx.hideLoading();
         this.submitFlag = false;
         if (res) {
-          console.log(res)
+          // console.log(res)
           let length = res.length
           this.setData({
             hasAsked: true,
@@ -87,7 +87,7 @@ Page({
         wx.hideLoading();
         this.submitFlag = false;
         if (res) {
-          console.log(res)
+          // console.log(res)
           let length = res.length
           this.setData({
             hasAsked: true,
@@ -111,10 +111,9 @@ Page({
     }
   },
   handleSelect(event) {
-    console.log(longSetSearchData)
     let data = event.currentTarget.dataset.item
     let type = data.type
-    console.log(event, data, type)
+    // console.log(event, data, type)
     const app = getApp()
     let searchLongData = app.globalData.searchLongData
     searchLongData.areaType = type
@@ -172,22 +171,22 @@ Page({
         }
       }
     }
-    console.log(searchLongData)
+    // console.log(searchLongData)
     longSetSearchData(data, searchLongData.city, searchLongData.chooseType)
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1]; //当前页面
     var prevPage = pages[pages.length - 3]; //上一个页面
     //直接调用上一个页面对象的setData()方法，把数据存到上一个页面中去
-    prevPage.setData(
-      {
-        isBack: true
-      },
-      () => {
-        wx.navigateBack({
-          delta: 2
-        });
-      }
-    );
+    // prevPage.setData(
+    //   {
+    //     isBack: true
+    //   },
+    //   () => {
+    //     wx.navigateBack({
+    //       delta: 2
+    //     });
+    //   }
+    // );
   },
 
   /**返回上一级 */
