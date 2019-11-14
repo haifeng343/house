@@ -9,6 +9,14 @@ const getPositionInfoByName=(positionKey, cityName, type)=> {
 const longSetSearchData = (data, city, type) => {
   console.log('设置搜索历史')
   console.log(data,city,type)
+  let item = chooseSlectData(data)
+  console.log(item)
+  let history = [].concat(wx.getStorageSync('longSearchHistory_' + city + '_' + type)||[])
+  history.unshift(item) 
+  if (history.length > 10) {
+    history = history.slice(0, 10);
+  }
+  wx.setStorageSync('longSearchHistory_' + city + '_' + type, history);
 }
 
 //选择长租地点列表数据处理
