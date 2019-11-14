@@ -1,15 +1,15 @@
 // pages/mine/mine.js
-import { authSubject } from '../../utils/auth';
-import { getSessionKey } from '../../utils/wx';
-import MineService from './service';
+import { authSubject } from "../../utils/auth";
+import { getSessionKey } from "../../utils/wx";
+import MineService from "./service";
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    nickName: '',
-    mobile: '',
-    headPortrait: '',
+    nickName: "",
+    mobile: "",
+    headPortrait: "",
     useCoin: 0,
     totalMoney: 0,
     isAuth: false,
@@ -17,10 +17,10 @@ Page({
     submitFlag: false,
     showShareCard: false,
     showTipDialog: false,
-    shareDesc: ''
+    shareDesc: ""
   },
   service: new MineService(),
-  action: '',
+  action: "",
   submitFlag: false,
   authSubscription: null,
   shareFlag: false,
@@ -30,7 +30,7 @@ Page({
    */
   onLoad() {
     this.authSubscription = authSubject.subscribe(isAuth => {
-      console.log('isAuth=' + isAuth);
+      console.log("isAuth=" + isAuth);
       if (isAuth) {
         this.service
           .getUserInfo()
@@ -44,7 +44,7 @@ Page({
           .catch(error => {
             wx.showToast({
               title: `获取用户信息失败!${error.message}`,
-              icon: 'none'
+              icon: "none"
             });
           });
       }
@@ -54,10 +54,10 @@ Page({
       const { isFirstShare } = resp;
       this.isFirstShare = isFirstShare;
       this.setData({
-        shareDesc: isFirstShare ? '可获得兑换券' : ''
+        shareDesc: isFirstShare ? "可获得兑换券" : ""
       });
       if (isFirstShare) {
-        wx.setStorageSync('shareCoupon', JSON.stringify(resp.coupon));
+        wx.setStorageSync("shareCoupon", JSON.stringify(resp.coupon));
       }
     });
   },
@@ -68,7 +68,7 @@ Page({
         url: `/pages/deposit/deposit?type=${type}`
       });
     } else {
-      this.action = 'gotodeposit';
+      this.action = "gotodeposit";
       this.showAuthDialog();
     }
   },
@@ -84,10 +84,10 @@ Page({
   handleGotoCoupon() {
     if (this.data.isAuth) {
       wx.navigateTo({
-        url: '/pages/coupon/coupon'
+        url: "/pages/coupon/coupon"
       });
     } else {
-      this.action = 'gotocoupon';
+      this.action = "gotocoupon";
       this.showAuthDialog();
     }
   },
@@ -95,10 +95,10 @@ Page({
   handleGotoHistory() {
     if (this.data.isAuth) {
       wx.navigateTo({
-        url: '/pages/monitorhistory/monitorhistory'
+        url: "/pages/monitorhistory/monitorhistory"
       });
     } else {
-      this.action = 'gotohistory';
+      this.action = "gotohistory";
       this.showAuthDialog();
     }
   },
@@ -110,48 +110,48 @@ Page({
   handleGotoFund() {
     if (this.data.isAuth) {
       wx.navigateTo({
-        url: '/pages/fund/fund'
+        url: "/pages/fund/fund"
       });
     } else {
-      this.action = 'gotofund';
+      this.action = "gotofund";
       this.showAuthDialog();
     }
   },
   handleAction() {
     const { action } = this;
-    this.action = '';
+    this.action = "";
 
     switch (action) {
-      case 'gotodeposit':
+      case "gotodeposit":
         this.handleGotoDeposit();
         break;
 
-      case 'gotofund':
+      case "gotofund":
         this.handleGotoFund();
         break;
 
-      case 'gotohistory':
+      case "gotohistory":
         this.handleGotoHistory();
         break;
 
-      case 'share':
+      case "share":
         this.handleGotoHistory();
         break;
 
-      case 'gotocoupon':
+      case "gotocoupon":
         this.handleGotoCoupon();
         break;
     }
   },
   handleAuth() {
-    this.action = '';
+    this.action = "";
     this.showAuthDialog();
   },
 
   handleCloseAuthDialog() {
     wx.showToast({
-      title: '为了更好的使用效果，请同意用户信息授权',
-      icon: 'none'
+      title: "为了更好的使用效果，请同意用户信息授权",
+      icon: "none"
     });
     this.setData({
       showAuthDialog: false
@@ -159,7 +159,7 @@ Page({
   },
   showAuthDialog() {
     wx.showLoading({
-      title: '获取登录授权中',
+      title: "获取登录授权中",
       mask: true
     });
 
@@ -171,8 +171,8 @@ Page({
       .catch(() => {
         wx.hideLoading();
         wx.showToast({
-          title: '获取登录授权失败',
-          icon: 'none'
+          title: "获取登录授权失败",
+          icon: "none"
         });
       });
   },
@@ -191,8 +191,8 @@ Page({
 
     if (!iv || !encryptedData) {
       wx.showToast({
-        title: '为了更好的使用效果，请同意用户信息授权',
-        icon: 'none'
+        title: "为了更好的使用效果，请同意用户信息授权",
+        icon: "none"
       });
       return;
     }
@@ -200,7 +200,7 @@ Page({
     if (this.submitFlag === false) {
       this.submitFlag = true;
       wx.showLoading({
-        title: '获取授权信息...',
+        title: "获取授权信息...",
         mask: true
       });
       this.setData({ showAuthDialog: false });
@@ -221,7 +221,7 @@ Page({
         this.submitFlag = false;
         wx.hideLoading();
         wx.showToast({
-          title: '登录成功'
+          title: "登录成功"
         });
       })
       .catch(error => {
@@ -229,8 +229,8 @@ Page({
         this.submitFlag = false;
         wx.hideLoading();
         wx.showToast({
-          title: '登录失败，请稍后重试',
-          icon: 'none'
+          title: "登录失败，请稍后重试",
+          icon: "none"
         });
       });
   },
@@ -245,7 +245,7 @@ Page({
         .catch(error => {
           wx.showToast({
             title: `获取用户信息失败!${error.message}`,
-            icon: 'none'
+            icon: "none"
           });
         });
     }
@@ -266,7 +266,7 @@ Page({
       return;
     }
     wx.showLoading({
-      title: '请稍候...',
+      title: "请稍候...",
       mask: true
     });
     this.service
@@ -274,15 +274,15 @@ Page({
       .then(_ => {
         wx.hideLoading();
         this.isFirstShare = false;
-        this.setData({ shareDesc: '' });
-        wx.removeStorageSync('shareCoupon');
+        this.setData({ shareDesc: "" });
+        wx.removeStorageSync("shareCoupon");
       })
       .catch(error => {
         console.error(error);
         wx.hideLoading();
         wx.showToast({
           title: error.message,
-          icon: 'none'
+          icon: "none"
         });
       });
   },
@@ -292,8 +292,10 @@ Page({
     this.setData({ showShareCard: false });
 
     return {
-      title: '房盯盯-实时监控全网低价折扣房源',
-      path: 'pages/search/search'
+      title: "房盯盯-实时监控全网低价折扣房源",
+      path: "pages/search/search",
+      imageUrl:
+        "https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/share.png"
     };
   }
 });
