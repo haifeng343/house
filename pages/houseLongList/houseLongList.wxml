@@ -1,7 +1,7 @@
 <view>
   <view class="header">
     <view class="top-nav">
-      <FilterBar data="{{searchLongData}}" positionData="{{positionData}}" />
+      <FilterBar data="{{searchLongData}}" positionData="{{positionData}}" bind:onSubmit="submit" />
       <view class="bg_border"></view>
     </view>
     <view wx:if="{{countFlag === 1}}" class="house_detail">

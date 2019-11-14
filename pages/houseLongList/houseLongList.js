@@ -72,10 +72,21 @@ Page({
   onShow: function() {
     this.getUserInfo();
   },
-  submit(){
+  submit(e){
     //把改变的值重新
-    //app.globalData.searchLongData['']
-    this.onLoad()
+    console.log(e.detail)
+    let arr = Object.keys(e.detail);
+    if(arr.length){
+      for (let key in e.detail){
+        app.globalData.searchLongData[key] = e.detail[key]
+      }
+      this.setData({
+        loadingDisplay: 'block',
+        countFlag: '',
+        allData: [],
+      });
+      this.onLoad()
+    }
   },
   onReachBottom() {
     console.log("到底了");
@@ -340,7 +351,7 @@ Page({
   },
   //开启监控
   startMonitor() {
-    let count = this.data.allCount = 41;
+    let count = this.data.allCount;
     let app = getApp()
     if (count >= 50) {
       this.setData({
@@ -460,10 +471,6 @@ Page({
       //位置ID
       data["locationType"] = y.areaType;
     }
-    if (y.areaType == 50) {
-      //地铁
-      data["parentName "] = y.areaId.subwaysLine;
-    }
     if (y.areaType == 50) {//地铁
       if (y.areaId.subwaysLine) { data['parentName '] = y.areaId.subwaysLine}
     } 
@@ -543,7 +550,6 @@ Page({
     }
     data["fddShortRentBlock"] = fddShortRentBlock;
     console.log(data);
-    return;
     monitorApi.addLongMonitor(data).then(res => {
       wx.showToast({
         title: res.data.resultMsg,

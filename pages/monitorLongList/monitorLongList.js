@@ -4,6 +4,7 @@ const monitorApi = require('../../api/monitorApi.js')
 const regeneratorRuntime = require('../../lib/runtime.js');
 const util = require('../../utils/util.js');
 const userApi = require('../../api/userApi.js');
+import positionService from "../positionLongSelect/service";
 const app = getApp();
 Page({
   data: {
@@ -45,30 +46,6 @@ Page({
     this.getMonitorData();
   },
   onShow: function () {
-    // if (this.compareData()) {
-    //   this.getMonitorData();
-    //   return
-    // }
-    // let x = app.globalData.monitorSearchLongData
-    // let wiwjfilter = house.wiwjScreenParam(2);
-    // let ljfilter = house.ljScreenParam(2);
-    // let ftxfilter = house.ftxScreenParam(2);
-    // let tcfilter = house.tcScreenParam(2);
-    // this.setData({
-    //   listSortType: 1,
-    //   wiwjfilter,
-    //   ljfilter,
-    //   ftxfilter,
-    //   tcfilter,
-    //   chooseType: x.chooseType,//1品牌中介，2个人房源
-    //   longSortTypes: x.longSortTypes //1: 低价优先, 2: 空间优先, 3: 最新发布
-    // }, () => {
-    //   if (x.chooseType == 1) {
-    //     this.getAllBrandData();
-    //   } else {
-    //     this.getAllPersonalData();
-    //   }
-    // })
     this.getUserInfo();
   },
   onHouseShow(){
@@ -93,26 +70,22 @@ Page({
       }
     })
   },
-  clickSelectItem(){
-    this.submitAdvance();
-  },
-  submitAdvance() {
-    app.globalData.monitorSearchLongData['minPrice']=1000
-    this.setData({
-      updateData: app.globalData.monitorSearchLongData
-    })
-    this.onHouseShow();
-    // if(条件变化){
-    //   this.onHouseShow();
-    // }
-  },
-  compareData(){
-    const app = getApp();
-    var flag = false;
-    if (util.objectDiff(app.globalData.monitorSearchLongData, app.globalData.monitorDefaultSearchLongData)) {
-      flag = true;
+  submit(e) {
+    //把改变的值重新
+    console.log(e.detail)
+    let arr = Object.keys(e.detail);
+    if (arr.length) {
+      for (let key in e.detail) {
+        app.globalData.monitorSearchLongData[key] = e.detail[key]
+      }
+      this.setData({
+        loadingDisplay: 'block',
+        countFlag: '',
+        allData: [],
+        updateData:Object.assign({}, app.globalData.monitorSearchLongData),
+      });
+      this.onHouseShow()
     }
-    return flag;
   },
   onReachBottom() {
     console.log('到底了')
@@ -299,6 +272,12 @@ Page({
         minPrice: monitorDetail.minPrice,//最低价
         maxPrice: monitorDetail.maxPrice == 99999 ? 10000 : monitorDetail.maxPrice,//最高价 不限99999
       }
+      let x = app.globalData.monitorSearchLongData
+      console.log(x.city)
+      new positionService().getSearchHoset(x.city, x.chooseType).then(resp => {
+        const positionData = resp.data;
+        this.setData({ positionData });
+      });
       if (!monitorCount || !monitorCount.allTotal || monitorCount.allTotal == 0 || houseList.length == 0) {
         this.setData({
           countFlag: 0,
@@ -369,7 +348,8 @@ Page({
         countFlag: 1,
         longSortTypes: monitorDetail.sortType||'',
         chooseType: monitorDetail.houseSource,
-        defalutData: app.globalData.monitorDefaultSearchLongData
+        updateData: Object.assign({}, app.globalData.monitorSearchLongData),
+        defalutData: Object.assign({}, app.globalData.monitorDefaultSearchLongData),
       })
     })
   },

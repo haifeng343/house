@@ -392,7 +392,7 @@ const getFangtianxiaData = (type, fangtianxiafilter = {}) => {
       if (res) {
         fangtianxiaCount = Number(res.houses.housecount.text)
         resolve({
-          arr: res.houses.houseinfo&&res.houses.houseinfo.slice(0, 50),
+          arr: res.houses.houseinfo && Array.isArray(res.houses.houseinfo) ? res.houses.houseinfo.slice(0, 50) : [res.houses.houseinfo],
           fangtianxiaCount
         });
       } else {
