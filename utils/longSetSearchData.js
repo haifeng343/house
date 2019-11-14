@@ -273,7 +273,8 @@ const nearByData =(data,index)=> {
       latitude: data.latitude,
       longitude: data.longitude
     },
-    areaType: 60
+    areaType: 60,
+    areaJson: ''
   }
   return result
 }

@@ -768,6 +768,7 @@ Page({
       searchLongData.longSortTypes = 0;
       searchLongData.area = "";
       searchLongData.areaId = {};
+      searchLongData.areaType = 0
       searchLongData.areaJson = "";
       this.setData({ searchLongData });
       const app = getApp();

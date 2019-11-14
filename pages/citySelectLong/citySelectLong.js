@@ -3,17 +3,6 @@ import { getLocationSetting, getLocation } from '../../utils/wx';
 import { getLocationInfo } from '../../utils/map';
 import CitySelectService from './service';
 
-const specialCity = [
-  '香港',
-  '澳门',
-  '台北',
-  '高雄',
-  '台中',
-  '花莲',
-  '台南',
-  '马祖'
-];
-
 Page({
   /**
    * 页面的初始数据
@@ -80,6 +69,10 @@ Page({
       }
     }
     searchLongData.cityId = cityId
+    searchLongData.area = ''
+    searchLongData.areaId = {}
+    searchLongData.areaType = 0
+    searchLongData.areaJson = ''
     wx.navigateBack({
       delta: 1
     });
