@@ -7,10 +7,10 @@
           if(page+1 == totalPage && lastPage!=0){
               maxHeight = lastPage*singleItemHeight
           }else{
-                maxHeight = 4*singleItemHeight
+                maxHeight = 5*singleItemHeight
           }
       }else{
-          maxHeight = 2*singleItemHeight;
+          maxHeight = 3*singleItemHeight;
       }
       return maxHeight
   };
