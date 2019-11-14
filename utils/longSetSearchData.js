@@ -12,6 +12,12 @@ const longSetSearchData = (data, city, type) => {
   let item = chooseSlectData(data)
   console.log(item)
   let history = [].concat(wx.getStorageSync('longSearchHistory_' + city + '_' + type)||[])
+  for(let index = 0; index < history.length; index++) {
+    if (history[index].area == item.area && history[index].areaType == item.areaType) {
+      history = history.splice(index+1,1)
+      break
+    }
+  }
   history.unshift(item) 
   if (history.length > 10) {
     history = history.slice(0, 10);
@@ -141,8 +147,24 @@ const chooseSlectData = (data)=> {
   return result
 }
 
+//判断是否显示附近
+const isShowNearby = (city)=> {
+  return new Promise((resolve, reject) => {
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userLocation'] === false) {
+          return resolve(false)
+        } else {
+          return resolve(res)
+        }
+      }
+    })
+  })
+}
+
 export {
   longSetSearchData,
   chooseArea,
-  chooseSlectData
+  chooseSlectData,
+  isShowNearby
 }
