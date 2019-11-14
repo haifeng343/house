@@ -342,7 +342,7 @@ const getWiwjData = (type, wiwjfilter = {}) =>{
       if (res) {
         wiwjCount = res.data.count
         resolve({
-          arr: res.data.list.slice(0, 50),
+          arr: res.data.list&&res.data.list.slice(0, 50),
           wiwjCount
         });
       } else {
@@ -367,7 +367,7 @@ const getLianjiaData = (type, lianjiafilter = {}) => {
       if (res) {
         lianjiaCount = res.data.total
         resolve({
-          arr: res.data.list.slice(0, 50),
+          arr: res.data.list&&res.data.list.slice(0, 50),
           lianjiaCount
         });
       } else {
@@ -392,7 +392,7 @@ const getFangtianxiaData = (type, fangtianxiafilter = {}) => {
       if (res) {
         fangtianxiaCount = Number(res.houses.housecount.text)
         resolve({
-          arr: res.houses.houseinfo.slice(0, 50),
+          arr: res.houses.houseinfo&&res.houses.houseinfo.slice(0, 50),
           fangtianxiaCount
         });
       } else {
@@ -417,7 +417,7 @@ const getWbtcData = (type, wbtcfilter = {}) => {
     longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 1, "size": 50 }, "filter": wbtcfilter }).then(res => {
       res.result.getListInfo.infolist.shift()
       let wbtcCount = res.result.getListInfo.searchNum
-      arr = res.result.getListInfo.infolist
+      arr = res.result.getListInfo.infolist&&res.result.getListInfo.infolist
       if (res && arr.length < 50 && arr.length < wbtcCount){
         return longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 2, "size": 50 }, "filter": wbtcfilter });
       }else{
@@ -433,7 +433,7 @@ const getWbtcData = (type, wbtcfilter = {}) => {
       }
     }).then(res=>{
       if (res) {
-        arr.push.apply(arr, res.result.getListInfo.infolist);
+        arr.push.apply(arr, res.result.getListInfo.infolist||[]);
       }
       resolve({
         arr: arr.slice(0, 50),

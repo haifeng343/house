@@ -61,6 +61,11 @@ Page({
   onShow: function () {
     this.getUserInfo();
   },
+  submit(){
+    //把改变的值重新
+    //app.globalData.searchLongData['']
+    this.onLoad()
+  },
   onReachBottom() {
     console.log('到底了')
     this.setData({
@@ -296,7 +301,7 @@ Page({
   },
   //开启监控
   startMonitor() {
-    let count = this.data.allCount;
+    let count = this.data.allCount = 41;
     let app = getApp()
     if (count >= 50) {
       this.setData({

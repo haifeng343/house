@@ -42,12 +42,36 @@ Page({
     this.setData({
       monitorId: data.item.id,
     })
+    this.getMonitorData();
   },
   onShow: function () {
-    if (this.compareData()) {
-      this.getMonitorData();
-      return
-    }
+    // if (this.compareData()) {
+    //   this.getMonitorData();
+    //   return
+    // }
+    // let x = app.globalData.monitorSearchLongData
+    // let wiwjfilter = house.wiwjScreenParam(2);
+    // let ljfilter = house.ljScreenParam(2);
+    // let ftxfilter = house.ftxScreenParam(2);
+    // let tcfilter = house.tcScreenParam(2);
+    // this.setData({
+    //   listSortType: 1,
+    //   wiwjfilter,
+    //   ljfilter,
+    //   ftxfilter,
+    //   tcfilter,
+    //   chooseType: x.chooseType,//1品牌中介，2个人房源
+    //   longSortTypes: x.longSortTypes //1: 低价优先, 2: 空间优先, 3: 最新发布
+    // }, () => {
+    //   if (x.chooseType == 1) {
+    //     this.getAllBrandData();
+    //   } else {
+    //     this.getAllPersonalData();
+    //   }
+    // })
+    this.getUserInfo();
+  },
+  onHouseShow(){
     let x = app.globalData.monitorSearchLongData
     let wiwjfilter = house.wiwjScreenParam(2);
     let ljfilter = house.ljScreenParam(2);
@@ -68,7 +92,6 @@ Page({
         this.getAllPersonalData();
       }
     })
-    this.getUserInfo();
   },
   clickSelectItem(){
     this.submitAdvance();
@@ -78,7 +101,10 @@ Page({
     this.setData({
       updateData: app.globalData.monitorSearchLongData
     })
-    this.onShow();
+    this.onHouseShow();
+    // if(条件变化){
+    //   this.onHouseShow();
+    // }
   },
   compareData(){
     const app = getApp();
