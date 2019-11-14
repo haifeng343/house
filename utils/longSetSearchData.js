@@ -35,20 +35,33 @@ const chooseArea = (fullname, city, chooseType)=> {
     let info = JSON.parse(resp.data.json);
     // console.log(data, info)
     result.area = info.name
-    result.areaJson = resp.data.json
+    // result.areaJson = resp.data.json
+    let areaJson = {}
     if (type == 10) {//行政区
       result.areaType = 10
       if (info.wiwj && info.wiwj[0]) {
         result.areaId.wiwj = info.wiwj[0].id
+        areaJson.wiwj = {
+          districtids: info.wiwj[0].id
+        }
       }
       if (info.lj && info.lj[0]) {
         result.areaId.lj = info.lj[0].district_quanpin
+        areaJson.lj = {
+          bizcircle_quanpin: info.lj[0].district_quanpin
+        }
       }
       if (info.ftx && info.ftx[0]) {
         result.areaId.ftx = info.ftx[0].name
+        areaJson.ftx = {
+          district: info.ftx[0].name
+        }
       }
       if (info.tc && info.tc[0]) {
         result.areaId.tc = info.tc[0].dirname
+        areaJson.tc = {
+          filterArea: info.tc[0].dirname
+        }
       }
     } else {
       result.areaType = 50
@@ -58,6 +71,10 @@ const chooseArea = (fullname, city, chooseType)=> {
           id: info.wiwj.id,
           lineid: info.wiwj.lineid
         }
+        areaJson.wiwj = {
+          lineid: info.wiwj.lineid,
+          stationid: info.wiwj.id
+        }
       }
       if (info.lj) {
         let pData = JSON.parse(resp.data.pjson)
@@ -65,10 +82,17 @@ const chooseArea = (fullname, city, chooseType)=> {
           id: info.lj.subway_station_id,
           lineid: pData.lj[0].subway_line_id
         }
+        areaJson.lj = {
+          subway_station_id: info.lj.subway_station_id,
+          subway_line_id: pData.lj[0].subway_line_id
+        }
       }
       if (info.ftx) {
         result.areaId.ftx = {
           id: info.ftx.name
+        }
+        areaJson.ftx = {
+          search_text: info.ftx.name
         }
       }
       if (info.tc) {
@@ -77,8 +101,13 @@ const chooseArea = (fullname, city, chooseType)=> {
           id: info.tc.siteid,
           lineid: pData.tc.lineid
         }
+        areaJson.tc = {
+          param12557: info.tc.siteid,
+          ditieId: pData.tc.lineid
+        }
       }
     }
+    result.areaJson = JSON.stringify(areaJson)
     return Promise.resolve(result)
   })
 }
@@ -192,17 +221,22 @@ const isShowNearby = (city)=> {
 // 存附近
 const nearByData =(data,index)=> {
   let area = ''
+  let nearby = 0
   if (index == 1) {
     area = '附近 1km'
+    nearby = 1
   } else if (index == 2) {
     area = '附近 2km'
+    nearby = 2
   } else {
     area = '附近 3km'
+    nearby =3
   }
   let result = {
     area: area,
     areaId: data,
-    areaType: 60
+    areaType: 60,
+    nearby: nearby
   }
   return result
 }
