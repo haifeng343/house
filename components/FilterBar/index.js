@@ -347,15 +347,27 @@ Component({
         this.setData({
           ["map.type"]: this.data.map.type.map(item1 => {
             if (item1.field === field) {
-              if (item1.multi !== true) {
+              if (item1.multi !== true && item1.cancelable !== true) {
                 item1.list.forEach(item2 => {
-                  if (item2.value !== value) {
+                  if (item2.value === value) {
+                    item2.active = true;
+                  } else {
+                    item2.active = false;
+                  }
+                });
+              } else if (
+                item1.cancelable === true &&
+                optionItem.active === true
+              ) {
+                item1.list.forEach(item2 => {
+                  if (item2.value === value) {
+                    item2.active = true;
+                  } else {
                     item2.active = false;
                   }
                 });
               }
             }
-
             return item1;
           })
         });
@@ -414,6 +426,17 @@ Component({
           ["map.filter"]: this.data.map.filter.map(item1 => {
             if (item1.field === field) {
               if (item1.multi !== true && item1.cancelable !== true) {
+                item1.list.forEach(item2 => {
+                  if (item2.value === value) {
+                    item2.active = true;
+                  } else {
+                    item2.active = false;
+                  }
+                });
+              } else if (
+                item1.cancelable === true &&
+                optionItem.active === true
+              ) {
                 item1.list.forEach(item2 => {
                   if (item2.value === value) {
                     item2.active = true;
