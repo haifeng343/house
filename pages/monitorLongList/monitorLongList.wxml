@@ -40,7 +40,7 @@
     
     <view class="house_card">
       <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
-        <houseLongCard item="{{item}}" type="{{2}}" isMonitorHouse="{{isMonitorHouse}}" idx="{{idx}}" bind:collectionEvent="goToCollection" bind:deleteEvent="delItem"></houseLongCard>
+        <houseLongCard item="{{item}}" type="{{2}}" isMonitorHouse="{{isMonitorHouse}}" idx="{{idx}}" isFirst="{{isFirst}}" bind:collectionEvent="goToCollection" bind:deleteEvent="delItem"></houseLongCard>
       </block>
     </view>
     

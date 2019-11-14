@@ -326,6 +326,17 @@ Page({
         if (monitorCount.ftxTotal > -1) { enoughList.push({ key: 'ftx', name: '房天下', value: monitorCount.ftxTotal }) }
         if (monitorCount.tcTotal > -1) { enoughList.push({ key: 'tc', name: '58同城', value: monitorCount.tcTotal }) }
       }
+      let num = wx.getStorageSync('monitorLeftNum');
+      if (!num) {
+        wx.setStorageSync('monitorLeftNum', 1);
+        this.setData({
+          isFirst:true
+        })
+      }else{
+        this.setData({
+          isFirst: false
+        })
+      }
       this.setData({
         allOriginalData: monitorHouseData.allData,
         allData: monitorHouseData.allData.slice(0, 5),
