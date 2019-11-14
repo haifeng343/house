@@ -1638,7 +1638,8 @@ const wiwjScreenParam = type=>{
   }
   if (areaType == 30) {
     if (searchData.areaId.wiwj) {
-      obj.communityId = searchData.areaId.wiwj
+      obj.communityid = searchData.areaId.wiwj.id
+      obj.zn = searchData.areaId.wiwj.name
     } else {
       keysword = true
     }

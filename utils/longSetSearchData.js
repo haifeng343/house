@@ -11,6 +11,7 @@ const longSetSearchData = (data, city, type) => {
   console.log(data,city,type)
 }
 
+//选择长租地点列表数据处理
 const chooseArea = (fullname, city, chooseType)=> {
   return getPositionInfoByName(fullname, city, chooseType).then(resp => {
     let type = fullname.split('_')[1]
@@ -36,6 +37,7 @@ const chooseArea = (fullname, city, chooseType)=> {
       }
     } else {
       result.areaType = 50
+      searchLongData.areaId.subwaysLine = resp.data.subwaysLine
       if (info.wiwj) {
         result.areaId.wiwj = {
           id: info.wiwj.id,
@@ -66,7 +68,73 @@ const chooseArea = (fullname, city, chooseType)=> {
   })
 }
 
+//搜索列表数据处理
+const chooseSlectData = (data)=> {
+  let type = data.type
+  let result = {areaId: {}}
+  result.areaType = type
+  result.area = data.name
+  result.areaJson = JSON.stringify(data)
+  if (type == 10) {
+    result.areaId = {}
+    if (data.wiwj) {
+      result.areaId.wiwj = data.wiwj.searchId
+    }
+    if (data.lianjia) {
+      result.areaId.lj = data.lianjia.uri.replace(/\//ig, '')
+    }
+  }
+  if (type == 20) {
+    if (data.wiwj) {
+      result.areaId.wiwj = data.wiwj.searchId
+    }
+    if (data.lianjia) {
+      result.areaId.lj = data.lianjia.uri
+    }
+    if (data.ftx) {
+      result.areaId.ftx = {
+        district: data.ftx.district.text,
+        comarea: data.ftx.word.text
+      }
+    }
+  }
+  if (type == 30) {
+    if (data.wiwj) {
+      result.areaId.wiwj = {
+        id: data.wiwj.searchId,
+        name: data.wiwj.searchName
+      }
+    }
+    if (data.lianjia) {
+      result.areaId.lj = data.lianjia.uri
+    }
+  }
+  if (type == 40) {
+    if (data.wiwj) {
+      result.areaId.wiwj = data.wiwj.searchId
+    }
+  }
+  if (type == 50) {
+    result.areaId = {}
+    if (data.wiwj) {
+      result.areaId.wiwj = {
+        id: data.wiwj.searchId,
+        lineid: data.wiwj.parentId
+      }
+    }
+    if (data.lianjia) {
+      let list = data.lianjia.uri.split('s')
+      result.areaId.lj = {
+        id: list[1].replace(/[^0-9]/ig, ''),
+        lineid: list[0].replace(/[^0-9]/ig, '')
+      }
+    }
+  }
+  return result
+}
+
 export {
   longSetSearchData,
-  chooseArea
+  chooseArea,
+  chooseSlectData
 }
