@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "RightPanel": "../RightPanel/index",
+    "TopPanel": "../TopPanel/index",
+    "Range": "../Range/index"
+  }
+}

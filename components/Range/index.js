@@ -1,13 +1,16 @@
-import * as rxjs from '../../utils/rx.js';
+import * as rxjs from "../../utils/rx.js";
 
 Component({
   data: {
     leftX: 0,
     rightX: 0,
-    minText: 0,
-    maxText: '不限',
+    minValue: 0,
+    maxValue: 0,
+    minText: "",
+    maxText: "",
     containerWidth: 0,
-    isLoaded: false
+    isLoaded: false,
+    useCustom: false
   },
   properties: {
     min: {
@@ -21,6 +24,17 @@ Component({
     showInput: {
       type: Boolean,
       value: false
+    },
+    custom: {
+      type: Boolean,
+      value: false,
+      observer(newvalue) {
+        this.setData({
+          useCustom: newvalue,
+          maxText: this.data.maxValue,
+          minText: this.data.minValue
+        });
+      }
     }
   },
   containerLeft: 0,
@@ -29,8 +43,8 @@ Component({
   blockHalfWidth: 0,
   blockWidth: 0,
   methods: {
-    handleLeftTouchStart() {
-      this.moveDirectionStream.next('left');
+    handleLeftTouchStart(event) {
+      this.moveDirectionStream.next("left");
       this.touchendStream.next(false);
       this.touchEnd = false;
     },
@@ -54,32 +68,43 @@ Component({
         });
       }
     },
+    handleClickCustom() {
+      this.setData({
+        useCustom: !this.data.useCustom,
+        maxText: this.data.maxValue,
+        minText: this.data.minValue
+      });
+    },
     handleMinPriceChange(event) {
-      const value = +event.detail.value;
-      if (!Number.isNaN(value) && value < this.data.max) {
-        this.calcLeftXByValue(value);
-        this.isMoved = true;
-        this.touchendStream.next(true);
-      }
+      const { maxValue } = this.data;
+      const minValue = +event.detail.value;
+
+      this.triggerEvent("onChange", {
+        min: minValue,
+        max: maxValue,
+        custom: true
+      });
     },
     handleMaxPriceChange(event) {
-      let value = +event.detail.value;
-      if (!Number.isNaN(value) && value > this.data.min) {
-        this.calcRightXByValue(value);
-        this.isMoved = true;
-        this.touchendStream.next(true);
-      }
+      const { minValue } = this.data;
+      const maxValue = +event.detail.value;
+
+      this.triggerEvent("onChange", {
+        min: minValue,
+        max: maxValue,
+        custom: true
+      });
     },
-    handleLeftTouchEnd() {
+    handleLeftTouchEnd(event) {
       this.touchendStream.next(true);
       this.touchEnd = true;
     },
-    handleRightTouchEnd() {
+    handleRightTouchEnd(event) {
       this.touchendStream.next(true);
       this.touchEnd = true;
     },
-    handleRightTouchStart() {
-      this.moveDirectionStream.next('right');
+    handleRightTouchStart(event) {
+      this.moveDirectionStream.next("right");
       this.touchendStream.next(false);
       this.touchEnd = false;
     },
@@ -103,23 +128,16 @@ Component({
         });
       }
     },
-    calcLeftXByValue(value) {
-      const leftX = ~~(((value / 100) * 100) / this.funX);
+    calcLeftX() {
+      const leftX = ~~(((this.data.min / 100) * 100) / this.funX);
       this.setData({
-        leftX,
-        min: value,
-        minText: value
+        leftX
       });
     },
-    calcRightXByValue(value) {
-      if (value > 10000) {
-        value = 10000;
-      }
-      const rightX = (~~(value / 100) * 100 - this.funY) / this.funX;
+    calcRightX() {
+      const rightX = (~~(this.data.max / 100) * 100 - this.funY) / this.funX;
       this.setData({
-        rightX,
-        max: value,
-        maxText: value === 10000 ? '不限' : value
+        rightX
       });
     }
   },
@@ -128,7 +146,7 @@ Component({
       this.inited = false;
 
       this.touchmoveStream = new rxjs.BehaviorSubject(0);
-      this.moveDirectionStream = new rxjs.BehaviorSubject('right');
+      this.moveDirectionStream = new rxjs.BehaviorSubject("right");
       this.touchendStream = new rxjs.BehaviorSubject(false);
       this.containerWidthStream = new rxjs.BehaviorSubject(0);
       this.blockWidthStream = new rxjs.BehaviorSubject(0);
@@ -159,16 +177,31 @@ Component({
           this.funY = funY;
 
           if (this.data.min > 0) {
-            this.calcLeftXByValue(this.data.min);
+            this.calcLeftX();
           }
 
           if (this.data.max < 10000) {
-            this.calcRightXByValue(this.data.max);
+            this.calcRightX();
           }
 
           this.setData({
-            isLoaded: true
+            minValue: this.data.min,
+            maxValue: this.data.max
           });
+
+          if (this.data.custom === true) {
+            this.setData({
+              useCustom: true,
+              minText: this.data.min,
+              maxText: this.data.max
+            });
+          }
+
+          setTimeout(() => {
+            this.setData({
+              isLoaded: true
+            });
+          }, 50);
         });
 
       this.createSelectorQuery()
@@ -194,7 +227,7 @@ Component({
 
       this.touchmoveSubscription = this.touchmoveStream
         .pipe(rxjs.operators.withLatestFrom(this.moveDirectionStream))
-        .subscribe(([, dir]) => {
+        .subscribe(([x, dir]) => {
           if (this.inited === false) {
             this.inited = true;
             return;
@@ -232,21 +265,19 @@ Component({
            *
            **/
 
-          if (dir === 'left') {
+          if (dir === "left") {
             const min = Math.round((this.data.leftX * this.funX) / 100) * 100;
 
             this.setData({
-              min,
-              minText: min
+              minValue: min
             });
-          } else if (dir === 'right') {
+          } else if (dir === "right") {
             const max =
               Math.round((this.data.rightX * this.funX + this.funY) / 100) *
               100;
 
             this.setData({
-              max,
-              maxText: max === 10000 ? '不限' : max
+              maxValue: max
             });
           }
         });
@@ -264,11 +295,12 @@ Component({
       );
 
       this.xSubscription = xStream.subscribe(([x, dir]) => {
-        const { min, max } = this.data;
+        const { minValue, maxValue } = this.data;
 
-        this.triggerEvent('onChange', {
-          min,
-          max
+        this.triggerEvent("onChange", {
+          min: minValue,
+          max: maxValue,
+          custom: false
         });
       });
     },
