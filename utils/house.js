@@ -1617,6 +1617,49 @@ const wiwjScreenParam = type=>{
   let searchData = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData
   let obj={}
 
+  //筛选
+  let areaType = searchData.areaType
+  //判断是否为关键字搜索
+  let keysword = false
+  //区域
+  if (areaType == 10) {
+    if (searchData.areaId.wiwj) {
+      obj.districtids = searchData.areaId.wiwj
+    } else {
+      keysword = true
+    }
+  }
+  if (areaType == 20) {
+    if (searchData.areaId.wiwj) {
+      obj.sqids = searchData.areaId.wiwj
+    } else {
+      keysword = true
+    }
+  }
+  if (areaType == 30) {
+    if (searchData.areaId.wiwj) {
+      obj.communityid = searchData.areaId.wiwj.id
+      obj.zn = searchData.areaId.wiwj.name
+    } else {
+      keysword = true
+    }
+  }
+  if (areaType == 40) {
+    if (searchData.areaId.wiwj) {
+      obj.lineid = searchData.areaId.wiwj
+    } else {
+      keysword = true
+    }
+  }
+  if (areaType == 50) {
+    if (searchData.areaId.wiwj && searchData.areaId.wiwj.id) {
+      obj.lineid = searchData.areaId.wiwj.lineid
+      obj.stationid = searchData.areaId.wiwj.id
+    } else {
+      keysword = true
+    }
+  }
+
   // 价钱
   let minPrice = searchData.minPrice
   let maxPrice = searchData.maxPrice == 10000 ? 99999 : searchData.maxPrice
@@ -1762,7 +1805,10 @@ const wiwjScreenParam = type=>{
     }
     obj.floortype = floortype
   }
-  
+
+  if (keysword) {
+    obj.keywords = searchData.area
+  }
 
   console.log('obj',obj)
   return obj
@@ -1772,6 +1818,36 @@ const ljScreenParam = type => {
   let searchData = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData
   let obj = {}
   obj.condition = ''
+
+  //筛选
+  let areaType = searchData.areaType
+  //判断是否为关键字搜索
+  let keysword = false
+  //区域
+  if (areaType == 10) {
+    if (searchData.areaId.lj) {
+      obj.condition = searchData.areaId.lj + '/'
+    } else {
+      keysword = true
+    }
+  }
+  if (areaType == 20 || areaType == 30) {
+    if (searchData.areaId.lj) {
+      obj.condition = searchData.areaId.lj
+    } else {
+      keysword = true
+    }
+  }
+  if (areaType == 40) {
+    keysword = true
+  }
+  if (areaType == 50) {
+    if (searchData.areaId.lj && searchData.areaId.lj.id) {
+      obj.condition += 'li' + searchData.areaId.lj.lineid + 's' + searchData.areaId.lj.id + '/'
+    } else {
+      keysword = true
+    }
+  }
 
   // 价钱
   let minPrice = searchData.minPrice
@@ -1920,6 +1996,11 @@ const ljScreenParam = type => {
       obj.condition += '200500000001'
     }
   }
+
+  if (keysword) {
+    obj.condition += 'rs'
+  }
+
   console.log(obj)
 
   return obj
@@ -1928,6 +2009,37 @@ const ftxScreenParam = type => {
   const app = getApp()
   let searchData = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData
   let obj = {}
+
+  //筛选
+  let areaType = searchData.areaType
+  //判断是否为关键字搜索
+  let keysword = false
+  //区域
+  if (areaType == 10) {
+    if (searchData.areaId.ftx) {
+      obj.district = searchData.areaId.ftx
+    } else {
+      keysword = true
+    }
+  }
+  if (areaType == 20) {
+    if (searchData.areaId.ftx) {
+      obj.district = searchData.areaId.ftx.district
+      obj.comarea = searchData.areaId.ftx.comarea
+    } else {
+      keysword = true
+    }
+  }
+  if (areaType == 30 || areaType == 40) {
+    keysword = true
+  }
+  if (areaType == 50) {
+    if (searchData.areaId.ftx && searchData.areaId.ftx.id) {
+      obj.search_text = searchData.areaId.ftx.id
+    } else {
+      keysword = true
+    }
+  }
 
   // 价钱
   let minPrice = searchData.minPrice
@@ -2025,6 +2137,11 @@ const ftxScreenParam = type => {
     }
     obj.tags = tags
   }
+
+  if (keysword) {
+    obj.key = searchData.area
+  }
+
   console.log(obj)
 
   return obj
@@ -2034,6 +2151,31 @@ const tcScreenParam = type => {
   let searchData = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData
   let obj = {}
   obj.filterParams = {}
+
+  //筛选
+  let areaType = searchData.areaType
+  //判断是否为关键字搜索
+  let keysword = false
+  //区域
+  if (areaType == 10) {
+    if (searchData.areaId.tc) {
+      obj.filterParams.filterArea = searchData.areaId.tc
+      obj.filterParams.filterLocal = searchData.areaId.tc
+    } else {
+      keysword = true
+    }
+  }
+  if (areaType == 20 || areaType == 30 || areaType == 40) {
+    keysword = true
+  }
+  if (areaType == 50) {
+    if (searchData.areaId.tc && searchData.areaId.tc.id) {
+      obj.filterParams.ditieId = searchData.areaId.tc.lineid
+      obj.filterParams.param12557 = searchData.areaId.tc.id
+    } else {
+      keysword = true
+    }
+  }
 
   // 价钱
   let minPrice = searchData.minPrice
@@ -2131,6 +2273,11 @@ const tcScreenParam = type => {
     }
     obj.filterParams['param12135--param12482'] = tags
   }
+
+  if (keysword) {
+    obj.key = searchData.area
+  }
+
   console.log(obj)
 
   return obj

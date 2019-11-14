@@ -2,6 +2,7 @@
 import SearchService from './service';
 const service = new SearchService();
 const longRentTip = require('../../utils/longRentTip')
+import { longSetSearchData, chooseSlectData } from '../../utils/longSetSearchData'
 
 const specialCity = [
 ];
@@ -23,7 +24,7 @@ Page({
   submitFlag: false,
   service: new SearchService(),
   inputSearch(event) {
-    console.log(event);
+    // console.log(event);
     this.setData({
       value: event.detail.value
     })
@@ -60,7 +61,7 @@ Page({
         wx.hideLoading();
         this.submitFlag = false;
         if (res) {
-          console.log(res)
+          // console.log(res)
           let length = res.length
           this.setData({
             hasAsked: true,
@@ -86,7 +87,7 @@ Page({
         wx.hideLoading();
         this.submitFlag = false;
         if (res) {
-          console.log(res)
+          // console.log(res)
           let length = res.length
           this.setData({
             hasAsked: true,
@@ -111,15 +112,11 @@ Page({
   },
   handleSelect(event) {
     let data = event.currentTarget.dataset.item
-    let type = parseInt(event.currentTarget.dataset.type)
-    // console.log(event, data, type)
     const app = getApp()
     let searchLongData = app.globalData.searchLongData
-    searchLongData.area = data.name
-    searchLongData.areaId = data
-    searchLongData.areaType = type
-
-    // wx.setStorageSync('positionSearchHistory', history);
+    app.globalData.searchLongData = Object.assign(app.globalData.searchLongData ,chooseSlectData(data))
+  
+    longSetSearchData(data, searchLongData.city, searchLongData.chooseType)
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1]; //当前页面
     var prevPage = pages[pages.length - 3]; //上一个页面
