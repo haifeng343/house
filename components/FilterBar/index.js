@@ -332,9 +332,9 @@ Component({
         if (typeItem.multi) {
           const arr = this.data[field];
           if (optionItem.active) {
-            arr.push(optionItem);
+            arr.push(optionItem.value);
           } else {
-            arr.splice(arr.indexOf(optionItem), 1);
+            arr.splice(arr.indexOf(optionItem.value), 1);
           }
           this.setData({
             [field]: arr.slice()
