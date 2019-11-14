@@ -5,6 +5,7 @@ import {
   longSetSearchData,
   chooseSlectData
 } from "../../utils/longSetSearchData";
+import { isShowNearby, nearByData } from "../../utils/longSetSearchData.js";
 
 const resetMap = {
   longRentTypes: [
@@ -205,7 +206,6 @@ Component({
         longRentTip
           .getIntermediaryData(cityId, searchKey)
           .then(resp => {
-            console.log(resp);
             this.setData({
               searchResultList: resp.map(item =>
                 Object.assign(
@@ -374,8 +374,8 @@ Component({
           }
         }
 
-        if (!this.changeList.includes(field)) {
-          this.changeList.push(field);
+        if (!this.changeList.has(field)) {
+          this.changeList.add(field);
         }
       }
     },
@@ -424,9 +424,7 @@ Component({
           })
         });
 
-        if (!this.changeList.includes(field)) {
-          this.changeList.push(field);
-        }
+        this.changeList.add(field);
       }
     },
 
@@ -477,10 +475,8 @@ Component({
       const { max, min, custom } = event.detail;
       this.rangeCustom = custom;
       this.setData({ maxPrice: max, minPrice: min });
-      if (!this.changeList.includes("minPrice")) {
-        this.changeList.push("minPrice");
-        this.changeList.push("maxPrice");
-      }
+      this.changeList.add("minPrice");
+      this.changeList.add("maxPrice");
     },
 
     handleSelectAreaType(event) {
@@ -496,15 +492,27 @@ Component({
         const areaItem = areaList[currentAreaType].list[index];
         chooseArea(areaItem.value, insideData.city, insideData.chooseType).then(
           resp => {
-            Object.keys(resp).forEach(key => this.changeList.push(key));
+            Object.keys(resp).forEach(key => this.changeList.add(key));
             this.setData(resp);
           }
         );
+      } else if (currentAreaType === 2) {
+        const targetItem = areaList[currentAreaType].list[index];
+        this.changeList.add("area");
+        this.changeList.add("areaJson");
+        this.changeList.add("areaType");
+        this.changeList.add("areaId");
+        this.setData({
+          area: `附近 ${targetItem.label}`,
+          areaJson: "",
+          areaType: 60,
+          areaId: this.location
+        });
       } else if (currentAreaType === 3) {
         const targetItem = areaList[currentAreaType].list[index];
         Object.keys(targetItem)
           .filter(key => areaKey.includes(key))
-          .forEach(key => this.changeList.push(key));
+          .forEach(key => this.changeList.add(key));
         this.setData(targetItem);
       }
 
@@ -523,7 +531,7 @@ Component({
           insideData.city,
           insideData.chooseType
         ).then(resp => {
-          Object.keys(resp).forEach(key => this.changeList.push(key));
+          Object.keys(resp).forEach(key => this.changeList.add(key));
           this.setData(resp);
         });
       }
@@ -555,13 +563,11 @@ Component({
         }
       }
 
-      if (this.changeList.includes("minPrice") && this.rangeCustom === true) {
+      if (this.changeList.has("minPrice") && this.rangeCustom === true) {
         this.setData({ rangeCustom: true });
       }
 
-      this.changeList = [];
-
-      console.log(result);
+      this.changeList = new Set();
 
       this.triggerEvent("onSubmit", result);
     },
@@ -580,6 +586,7 @@ Component({
       const { areaList } = insideData;
 
       const { city, chooseType } = outsideData;
+
       if (outsideData.areaType === 0) {
       } else if (outsideData.areaType === 10) {
         currentArea = areaList[currentAreaType].list.findIndex(
@@ -600,6 +607,16 @@ Component({
             }
           }
         });
+      } else if (outsideData.areaType === 60) {
+        // 附近
+        const area = outsideData.area.replace("附近 ", "");
+        currentAreaType = 2;
+        for (let i = 0; i < areaList[currentAreaType].list.length; i++) {
+          if (areaList[currentAreaType].list[i].label === area) {
+            currentArea = i;
+            break;
+          }
+        }
       } else {
         // 搜索结果
         currentAreaType = 3;
@@ -610,6 +627,30 @@ Component({
           }
         }
       }
+
+      isShowNearby(city).then(resp => {
+        if (!resp) {
+          currentAreaType = 0;
+          currentArea = 0;
+          currentStation = 0;
+          this.setData({ "areaList[2]": [] });
+        } else if (this.data.areaList[2].length === 0) {
+          this.setData({
+            "areaList[2].list": [
+              {
+                label: "1km"
+              },
+              {
+                label: "3km"
+              },
+              {
+                label: "5km"
+              }
+            ]
+          });
+        }
+        this.location = resp || {};
+      });
 
       const history =
         wx.getStorageSync("longSearchHistory_" + city + "_" + chooseType) || [];
@@ -646,7 +687,7 @@ Component({
   },
   lifetimes: {
     attached() {
-      this.changeList = [];
+      this.changeList = new Set();
 
       this.rangeCustom = false;
 
