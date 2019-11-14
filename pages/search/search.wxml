@@ -17,10 +17,10 @@
     <view class='content'>
         <view class='search-box'>
             <view class='nav'>
-                <view class="nav_item {{tabIndex==1?'active':''}}" bindtap='changeTab' data-index='1' style="border-top-left-radius:{{tabIndex==1?'':'12rpx'}}">
+                <view class="nav_item short {{tabIndex==1?'active':''}}" bindtap='changeTab' data-index='1' style="border-top-left-radius:{{tabIndex==1?'':'12rpx'}}">
                     <text class='nav_item_text'>短租</text>
                 </view>
-                <view class="nav_item {{tabIndex==2?'active':''}}" bindtap='changeTab' data-index='2'>
+                <view class="nav_item long {{tabIndex==2?'active':''}}" bindtap='changeTab' data-index='2'>
                   <text class='nav_item_text'>长租</text>
                 </view>
                 <view class='nav_item' bindtap='notOnLine' style='border-top-right-radius:12rpx;'>
