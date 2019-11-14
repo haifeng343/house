@@ -1659,6 +1659,13 @@ const wiwjScreenParam = type=>{
       keysword = true
     }
   }
+  if (areaType == 60) {
+    if (searchData.areaId.nearby) {
+      obj.lng = searchData.areaId.longitude
+      obj.lat = searchData.areaId.latitude
+      obj.nearby = searchData.areaId.nearby
+    }
+  }
 
   // 价钱
   let minPrice = searchData.minPrice
@@ -1846,6 +1853,13 @@ const ljScreenParam = type => {
       obj.condition += 'li' + searchData.areaId.lj.lineid + 's' + searchData.areaId.lj.id + '/'
     } else {
       keysword = true
+    }
+  }
+  if (areaType == 60) {
+    if (searchData.areaId.nearby) {
+      obj.condition += 'lon' + searchData.areaId.longitude
+      obj.condition += 'lat' + searchData.areaId.latitude
+      obj.condition += 'poi' + parseInt(searchData.areaId.nearby) * 1000
     }
   }
 
@@ -2040,6 +2054,13 @@ const ftxScreenParam = type => {
       keysword = true
     }
   }
+  if (areaType == 60) {
+    if (searchData.areaId.nearby) {
+      obj.X1 = searchData.areaId.longitude
+      obj.Y1 = searchData.areaId.latitude
+      obj.distance = searchData.areaId.nearby
+    }
+  }
 
   // 价钱
   let minPrice = searchData.minPrice
@@ -2174,6 +2195,13 @@ const tcScreenParam = type => {
       obj.filterParams.param12557 = searchData.areaId.tc.id
     } else {
       keysword = true
+    }
+  }
+  if (areaType == 60) {
+    if (searchData.areaId.nearby) {
+      obj.circleLon = searchData.areaId.longitude
+      obj.circleLat = searchData.areaId.latitude
+      obj.filterParams.distance = parseInt(searchData.areaId.nearby)*1000
     }
   }
 
