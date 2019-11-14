@@ -15,7 +15,7 @@
             <text class="task_right">{{updateData.area}}</text>
           </view>
           <view class="task">
-            <view><text>类型:</text><text class="update" wx:if="{{updateData.longRentTypes!=defalutData.longRentTypes}}">已改</text></view>
+            <view><text>类型:</text><text class="update" wx:if="{{updateData.longRentTypes!=defalutData.longRentTypes||filter.arrCompare(updateData.longLayouts,defalutData.longLayouts)==2}}">已改</text></view>
             <text class="task_right">{{updateData.longRentTypes&&filter.rentType(updateData.longRentTypes)}}</text>
           </view>
           <view class="task">
@@ -26,7 +26,7 @@
             <text class="task_right" wx:if="{{updateData.minPrice>0&&updateData.maxPrice<10000}}">¥{{updateData.minPrice}}-¥{{updateData.maxPrice}}</text>
           </view>
           <view class="task">
-            <view><text>高级筛选:</text><text class="update">已改</text></view>
+            <view><text>高级筛选:</text><text class="update" wx:if="{{filter.arrCompare(updateData.longSortTypes,defalutData.longSortTypes)==2||filter.arrCompare(updateData.longBuildAreas,defalutData.longBuildAreas)==2||filter.arrCompare(updateData.longFloorTypes,defalutData.longFloorTypes)==2||filter.arrCompare(updateData.longHeadings,defalutData.longHeadings)==2||filter.arrCompare(updateData.longHouseTags,defalutData.longHouseTags)==2}}">已改</text></view>
             <text class="task_right">已修改</text>
           </view>
         </view>

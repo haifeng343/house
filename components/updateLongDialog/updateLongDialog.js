@@ -36,8 +36,6 @@ Component({
   },
   lifetimes: {
     attached: function () {
-      let app = getApp()
-      console.log(app.globalData.monitorSearchLongData)
     },
     detached: function () {
       // 在组件实例被从页面节点树移除时执行

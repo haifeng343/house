@@ -240,14 +240,14 @@ Page({
         cityId: monitorCityId,//城市ID
         cityJson: monitorDetail.cityJson,
         area: monitorDetail.locationName || '',// 地点
-        areaId: {},//地点标识
-        areaType: 0,//地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
-        areaJson: {},//json
+        areaId: JSON.parse(monitorDetail.areaJson||{}),//地点标识
+        areaType: monitorDetail.locationType,//地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
+        areaJson: monitorDetail.searchJson,//json
         longBuildAreas: monitorDetail.buildArea,//0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
-        longFloorTypes: monitorDetail.floorType ? monitorDetail.floorType.split(',') : [],//1: 低楼层, 2: 中楼层, 3: 高楼层
-        longHeadings: monitorDetail.heading ? monitorDetail.heading.split(',') : [],//{1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
-        longHouseTags: monitorDetail.houseTags ? monitorDetail.houseTags.split(',') : [],//1: 精装修, 2: 近地铁, 3: 拎包入住, 4: 随时看房, 5: 集中供暖, 6: 新上房源, 7: 配套齐全, 8: 视频看房
-        longLayouts: monitorDetail.layoutRoom ? monitorDetail.layoutRoom.split(',') : [], //1: 一室, 2: 二室, 3: 三室, 11: 三室及以上, 12: 四室及以上
+        longFloorTypes: monitorDetail.floorType ? monitorDetail.floorType.split(',').map(item => +item) : [],//1: 低楼层, 2: 中楼层, 3: 高楼层
+        longHeadings: monitorDetail.heading ? monitorDetail.heading.split(',').map(item => +item) : [],//{1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
+        longHouseTags: monitorDetail.houseTags ? monitorDetail.houseTags.split(',').map(item => +item) : [],//1: 精装修, 2: 近地铁, 3: 拎包入住, 4: 随时看房, 5: 集中供暖, 6: 新上房源, 7: 配套齐全, 8: 视频看房
+        longLayouts: monitorDetail.layoutRoom ? monitorDetail.layoutRoom.split(',').map(item => +item) : [], //1: 一室, 2: 二室, 3: 三室, 11: 三室及以上, 12: 四室及以上
         longRentTypes: monitorDetail.rentType || 0, //1: 整租, 2: 合租 3: 主卧, 4: 次卧
         longSortTypes: monitorDetail.sortType || 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
         minPrice: monitorDetail.minPrice,//最低价
@@ -259,21 +259,20 @@ Page({
         cityId: monitorCityId,//城市ID
         cityJson: monitorDetail.cityJson,
         area: monitorDetail.locationName||'',// 地点
-        areaId: {},//地点标识
-        areaType: 0,//地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
-        areaJson: {},//json
+        areaId: JSON.parse(monitorDetail.areaJson || {}),//地点标识
+        areaType: monitorDetail.locationType,//地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
+        areaJson: monitorDetail.searchJson,//json
         longBuildAreas: monitorDetail.buildArea,//0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
-        longFloorTypes: monitorDetail.floorType ? monitorDetail.floorType.split(',') : [],//1: 低楼层, 2: 中楼层, 3: 高楼层
-        longHeadings: monitorDetail.heading ? monitorDetail.heading.split(',') : [],//{1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
-        longHouseTags: monitorDetail.houseTags ? monitorDetail.houseTags.split(',') : [],//1: 精装修, 2: 近地铁, 3: 拎包入住, 4: 随时看房, 5: 集中供暖, 6: 新上房源, 7: 配套齐全, 8: 视频看房
-        longLayouts: monitorDetail.layoutRoom ? monitorDetail.layoutRoom.split(','):[], //1: 一室, 2: 二室, 3: 三室, 11: 三室及以上, 12: 四室及以上
+        longFloorTypes: monitorDetail.floorType ? monitorDetail.floorType.split(',').map(item => +item) : [],//1: 低楼层, 2: 中楼层, 3: 高楼层
+        longHeadings: monitorDetail.heading ? monitorDetail.heading.split(',').map(item=>+item) : [],//{1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
+        longHouseTags: monitorDetail.houseTags ? monitorDetail.houseTags.split(',').map(item => +item) : [],//1: 精装修, 2: 近地铁, 3: 拎包入住, 4: 随时看房, 5: 集中供暖, 6: 新上房源, 7: 配套齐全, 8: 视频看房
+        longLayouts: monitorDetail.layoutRoom ? monitorDetail.layoutRoom.split(',').map(item => +item):[], //1: 一室, 2: 二室, 3: 三室, 11: 三室及以上, 12: 四室及以上
         longRentTypes: monitorDetail.rentType||0, //1: 整租, 2: 合租 3: 主卧, 4: 次卧
         longSortTypes: monitorDetail.sortType||0, //1: 低价优先, 2: 空间优先, 3: 最新发布
         minPrice: monitorDetail.minPrice,//最低价
         maxPrice: monitorDetail.maxPrice == 99999 ? 10000 : monitorDetail.maxPrice,//最高价 不限99999
       }
       let x = app.globalData.monitorSearchLongData
-      console.log(x.city)
       new positionService().getSearchHoset(x.city, x.chooseType).then(resp => {
         const positionData = resp.data;
         this.setData({ positionData });
@@ -290,7 +289,9 @@ Page({
           totalFee: monitorDetail.totalFee, //消耗盯盯币
           allOriginalData: [],
           allData: [],
-          allCount: 0
+          allCount: 0,
+          updateData: Object.assign({}, app.globalData.monitorSearchLongData),
+          defalutData: Object.assign({}, app.globalData.monitorDefaultSearchLongData),
         })
         return;
       }
@@ -579,7 +580,6 @@ Page({
   },
   //保存修改
   goSave() {
-    //this.data.allCount = 40
     if (this.data.allCount > 50) {
       this.setData({
         monitorenoughDisplay: 'block',
@@ -600,7 +600,111 @@ Page({
     })
   },
   getUpdateConfrimEvent(e){
+    let app = getApp();
+    let y = app.globalData.monitorSearchLongData;
+    console.log(y);
+    let data = {
+      //houseSource: y.chooseType, //房来源:1品牌中介，2个人房源
+      //cityName: y.city, //城市名称
+      id: this.data.monitorId,
+      searchJson: y.areaJson, //搜索参数拼接
+      buildArea: y.longBuildAreas, //面积
+      minPrice: y.minPrice,
+      maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice,
+      areaJson: JSON.stringify(y.areaId)
+    };
+    if (y.longSortTypes) {
+      //房源偏好排序类型 1低价优先,2空间优先,3最新发布
+      data["sortType"] = y.longSortTypes;
+    }
+    if (y.areaType) {
+      //位置ID
+      data["locationType"] = y.areaType;
+    }
+    if (y.areaType == 50) {//地铁
+      if (y.areaId.subwaysLine) { data['parentName '] = y.areaId.subwaysLine }
+    }
+    if (y.areaType == 60) { //附近
+      data['longitude'] = y.areaId.longitude
+      data['latitude'] = y.areaId.latitude
+      data['nearby'] = y.areaId.nearby
+    }
+    if (y.area) {
+      //位置名称
+      data["locationName"] = y.area;
+    }
+    if (y.longFloorTypes.length) {
+      //楼层
+      data["floorType"] = y.longFloorTypes.join(",");
+    }
+    if (y.longRentTypes) {
+      //房源类型
+      data["rentType"] = y.longRentTypes;
+    }
+    if (y.longHeadings.length) {
+      //朝向
+      data["heading"] = y.longHeadings.join(",");
+    }
+    if (y.longHouseTags.length) {
+      //房源亮点
+      data["houseTags"] = y.longHouseTags.join(",");
+    }
+    if (y.longLayouts.length) {
+      //户型
+      data["layoutRoom"] = y.longLayouts.join(",");
+    }
 
+    let obj = wx.getStorageSync("collectionObj") || {};
+    let fddShortRentBlock = {};
+    if (y.chooseType == 1) {
+      let wiwjId = [...this.data.wiwjIdData];
+      let ljId = [...this.data.lianjiaIdData];
+      if (obj && obj["wiwj"] && obj["wiwj"].length) {
+        for (let i = 0; i < obj["wiwj"].length; i++) {
+          let index = wiwjId.indexOf(obj["wiwj"][i]);
+          wiwjId.splice(index, 1);
+        }
+      }
+      if (obj && obj["lj"] && obj["lj"].length) {
+        for (let i = 0; i < obj["lj"].length; i++) {
+          let index = ljId.indexOf(obj["lj"][i]);
+          ljId.splice(index, 1);
+        }
+      }
+      fddShortRentBlock["wiwj"] = wiwjId;
+      fddShortRentBlock["lj"] = ljId;
+    } else {
+      let ftxId = [...this.data.fangtianxiaIdData];
+      let tcId = [...this.data.wbtcIdData];
+      if (obj && obj["ftx"] && obj["ftx"].length) {
+        for (let i = 0; i < obj["ftx"].length; i++) {
+          let index = ftxId.indexOf(obj["ftx"][i]);
+          ftxId.splice(index, 1);
+        }
+      }
+      if (obj && obj["tc"] && obj["tc"].length) {
+        for (let i = 0; i < obj["tc"].length; i++) {
+          let index = tcId.indexOf(obj["tc"][i]);
+          tcId.splice(index, 1);
+        }
+      }
+      fddShortRentBlock["ftx"] = ftxId;
+      fddShortRentBlock["tc"] = tcId;
+    }
+    data["fddShortRentBlock"] = fddShortRentBlock;
+    console.log(data);
+    monitorApi.updateLongMonitor(data).then(res => {
+      wx.showToast({
+        title: res.data.resultMsg,
+        duration: 2000
+      });
+      this.setData({
+        updateMonitorDisplay: e.detail,
+      })
+      wx.navigateBack({
+        delta: 1
+      })
+    });
   },
   //返回到监控列表页面
   goBack() {

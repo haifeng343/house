@@ -345,7 +345,8 @@ Page({
       searchJson: y.areaJson,//搜索参数拼接
       buildArea: y.longBuildAreas,//面积
       minPrice: y.minPrice,
-      maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice
+      maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice,
+      areaJson: JSON.stringify(y.cityId)
     }
     if (y.longSortTypes) {
       data['sortType'] = y.longSortTypes
@@ -357,8 +358,9 @@ Page({
       if (y.areaId.subwaysLine) { data['parentName '] = y.areaId.subwaysLine }
     } 
     if (y.areaType == 60) { //附近
-      //data['longitude'] = y.longitude
-      //data['latitude'] = y.latitude
+      data['longitude'] = y.areaId.longitude
+      data['latitude'] = y.areaId.latitude
+      data['nearby'] = y.areaId.nearby
     }
     if (y.area) { //位置名称
       data['locationName'] = y.area
@@ -623,8 +625,112 @@ Page({
       updateLongDisplay: e.detail,
     })
   },
-  getLongUpdateConfrimEvent(){
+  getLongUpdateConfrimEvent(e) {
+    let app = getApp();
+    let y = app.globalData.monitorSearchLongData;
+    console.log(y);
+    let data = {
+      //houseSource: y.chooseType, //房来源:1品牌中介，2个人房源
+      //cityName: y.city, //城市名称
+      id: this.data.monitorId,
+      searchJson: y.areaJson, //搜索参数拼接
+      buildArea: y.longBuildAreas, //面积
+      minPrice: y.minPrice,
+      maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice,
+      areaJson: JSON.stringify(y.areaId)
+    };
+    if (y.longSortTypes) {
+      //房源偏好排序类型 1低价优先,2空间优先,3最新发布
+      data["sortType"] = y.longSortTypes;
+    }
+    if (y.areaType) {
+      //位置ID
+      data["locationType"] = y.areaType;
+    }
+    if (y.areaType == 50) {//地铁
+      if (y.areaId.subwaysLine) { data['parentName '] = y.areaId.subwaysLine }
+    }
+    if (y.areaType == 60) { //附近
+      data['longitude'] = y.areaId.longitude
+      data['latitude'] = y.areaId.latitude
+      data['nearby'] = y.areaId.nearby
+    }
+    if (y.area) {
+      //位置名称
+      data["locationName"] = y.area;
+    }
+    if (y.longFloorTypes.length) {
+      //楼层
+      data["floorType"] = y.longFloorTypes.join(",");
+    }
+    if (y.longRentTypes) {
+      //房源类型
+      data["rentType"] = y.longRentTypes;
+    }
+    if (y.longHeadings.length) {
+      //朝向
+      data["heading"] = y.longHeadings.join(",");
+    }
+    if (y.longHouseTags.length) {
+      //房源亮点
+      data["houseTags"] = y.longHouseTags.join(",");
+    }
+    if (y.longLayouts.length) {
+      //户型
+      data["layoutRoom"] = y.longLayouts.join(",");
+    }
 
+    let obj = wx.getStorageSync("collectionObj") || {};
+    let fddShortRentBlock = {};
+    if (y.chooseType == 1) {
+      let wiwjId = [...this.data.wiwjIdData];
+      let ljId = [...this.data.lianjiaIdData];
+      if (obj && obj["wiwj"] && obj["wiwj"].length) {
+        for (let i = 0; i < obj["wiwj"].length; i++) {
+          let index = wiwjId.indexOf(obj["wiwj"][i]);
+          wiwjId.splice(index, 1);
+        }
+      }
+      if (obj && obj["lj"] && obj["lj"].length) {
+        for (let i = 0; i < obj["lj"].length; i++) {
+          let index = ljId.indexOf(obj["lj"][i]);
+          ljId.splice(index, 1);
+        }
+      }
+      fddShortRentBlock["wiwj"] = wiwjId;
+      fddShortRentBlock["lj"] = ljId;
+    } else {
+      let ftxId = [...this.data.fangtianxiaIdData];
+      let tcId = [...this.data.wbtcIdData];
+      if (obj && obj["ftx"] && obj["ftx"].length) {
+        for (let i = 0; i < obj["ftx"].length; i++) {
+          let index = ftxId.indexOf(obj["ftx"][i]);
+          ftxId.splice(index, 1);
+        }
+      }
+      if (obj && obj["tc"] && obj["tc"].length) {
+        for (let i = 0; i < obj["tc"].length; i++) {
+          let index = tcId.indexOf(obj["tc"][i]);
+          tcId.splice(index, 1);
+        }
+      }
+      fddShortRentBlock["ftx"] = ftxId;
+      fddShortRentBlock["tc"] = tcId;
+    }
+    data["fddShortRentBlock"] = fddShortRentBlock;
+    console.log(data);
+    monitorApi.updateLongMonitor(data).then(res => {
+      wx.showToast({
+        title: res.data.resultMsg,
+        duration: 2000
+      });
+      this.setData({
+        updateMonitorDisplay: e.detail,
+      })
+      wx.navigateBack({
+        delta: 1
+      })
+    });
   },
   getEnoughEvent(e) {
     this.setData({

@@ -461,7 +461,8 @@ Page({
       searchJson: y.areaJson, //搜索参数拼接
       buildArea: y.longBuildAreas, //面积
       minPrice: y.minPrice,
-      maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice
+      maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice,
+      areaJson: JSON.stringify(y.cityId)
     };
     if (y.longSortTypes) {
       //房源偏好排序类型 1低价优先,2空间优先,3最新发布
@@ -475,8 +476,9 @@ Page({
       if (y.areaId.subwaysLine) { data['parentName '] = y.areaId.subwaysLine}
     } 
     if (y.areaType == 60){ //附近
-      //data['longitude'] = y.longitude
-      //data['latitude'] = y.latitude
+      data['longitude'] = y.areaId.longitude
+      data['latitude'] = y.areaId.latitude
+      data['nearby'] = y.areaId.nearby
     }
     if (y.area) {
       //位置名称
