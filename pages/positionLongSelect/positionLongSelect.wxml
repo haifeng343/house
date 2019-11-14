@@ -17,16 +17,16 @@
             </view>
         </view>
     </view>
-    <view class='position-box'>
+    <view class='position-box' wx:if="{{nearby}}">
         <view class='position-box-title nearby'>附近</view>
         <view class='position-list'>
-            <view class='item'>
+            <view class='item' bindtap="handleSelectNearBy" data-index="1">
               <view class="text">1km</view>
             </view>
-            <view class='item'>
+            <view class='item' bindtap="handleSelectNearBy" data-index="2">
               <view class="text">2km</view>
             </view>
-            <view class='item'>
+            <view class='item' bindtap="handleSelectNearBy" data-index="3">
               <view class="text">3km</view>
             </view>
         </view>
