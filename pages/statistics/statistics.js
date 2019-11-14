@@ -346,7 +346,7 @@ Page({
       buildArea: y.longBuildAreas,//面积
       minPrice: y.minPrice,
       maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice,
-      areaJson: JSON.stringify(y.cityId)
+      areaJson: JSON.stringify(y.areaId)
     }
     if (y.longSortTypes) {
       data['sortType'] = y.longSortTypes
@@ -728,7 +728,7 @@ Page({
         updateMonitorDisplay: e.detail,
       })
       wx.navigateBack({
-        delta: 1
+        delta: 2
       })
     });
   },

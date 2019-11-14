@@ -403,6 +403,8 @@ Page({
     } else {
       this.setData({
         countFlag: 0,
+        loadingDisplay: 'none',
+        bottomType: 2,
       });
     }
   },
@@ -455,6 +457,8 @@ Page({
     } else {
       this.setData({
         countFlag: 0,
+        loadingDisplay: 'none',
+        bottomType: 2,
       });
     }
   },

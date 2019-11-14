@@ -462,7 +462,7 @@ Page({
       buildArea: y.longBuildAreas, //面积
       minPrice: y.minPrice,
       maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice,
-      areaJson: JSON.stringify(y.cityId)
+      areaJson: JSON.stringify(y.areaId)
     };
     if (y.longSortTypes) {
       //房源偏好排序类型 1低价优先,2空间优先,3最新发布

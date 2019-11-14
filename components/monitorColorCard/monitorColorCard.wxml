@@ -42,7 +42,7 @@
           <view class="card_total">
             <view class="location">
               <image class="card_location" src="../../assets/image/location.png"></image>
-              <view>{{item.locationName}}</view>
+              <view>{{item.locationName||'全城'}}</view>
             </view>
           </view>
         </view>
