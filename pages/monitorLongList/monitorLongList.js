@@ -277,7 +277,7 @@ Page({
         const positionData = resp.data;
         this.setData({ positionData });
       });
-      if (!monitorCount || !monitorCount.allTotal || monitorCount.allTotal == 0 || houseList.length == 0) {
+      if (!monitorCount || !monitorCount.allTotal || monitorCount.allTotal == 0 || !houseList ||houseList.length == 0) {
         this.setData({
           countFlag: 0,
           loadingDisplay: 'none',

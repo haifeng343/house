@@ -164,7 +164,7 @@ page {
   text-align: center;
   color:#A6A6A6;
   position: absolute;
-  bottom:78px;
+  bottom:73px;
   left:0;
   font-size: 24rpx;
 }
