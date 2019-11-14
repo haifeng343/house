@@ -1,0 +1,7 @@
+<div class="container {{show ? '' : 'hidden'}}">
+  <view class="overlay" bindtap="handleClosePanel"></view>
+  <view></view>
+  <view class="wrapper">
+    <slot></slot>
+  </view>
+</div>

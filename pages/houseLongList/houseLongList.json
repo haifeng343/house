@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "houseLongSelect": "../../components/houseLongSelect/houseLongSelect",
+    "FilterBar": "../../components/FilterBar/index",
     "noNetwork": "../../components/noNetwork/noNetwork",
     "houseLongCard": "../../components/houseLongCard/houseLongCard",
     "mp-loading": "../../components/loading/loading",

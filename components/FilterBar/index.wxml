@@ -1,0 +1,87 @@
+<wxs src="../../utils/tools.wxs" module="tools" />
+<view class="container">
+  <view class="tab-list">
+    <view wx:for="{{filterList}}" wx:key="{{item.title}}" class="tab-item {{item.class}} {{item.active ? 'active' : ''}}" bindtap="handleClickTabitem" data-item="{{item}}">
+      <text class="tab-title">{{item.title}}</text>
+      <text class="icon-font uniE951"></text>
+    </view>
+  </view>
+</view>
+<RightPanel wx:if="{{showRightPanel}}" filter="{{map.filter}}" type="{{longRentTypes}}" bind:onClose="handleHideRightPanel" bind:onSelect="handleSelectFilter" bind:onSubmit="handleSubmit" bind:onReset="handleReset"/>
+<view class="toppanel-container" wx:if="{{showTopPanel}}">
+  <TopPanel id="TopPanel" bind:onClose="handleHideTopPanel">
+    <view class="price-panel" wx:if="{{currentPanel === 'price'}}">
+      <view class="content-wrapper">
+        <view class="price-title">预算</view>
+        <view class="price-range-wrapper">
+          <Range showInput="{{true}}" min="{{minPrice}}" max="{{maxPrice}}" bind:onChange="handlePriceChange" custom="{{rangeCustom}}"/>
+        </view>
+      </view>
+      <view class="button-wrapper">
+        <view class="button button-submit" bindtap="handleSubmit">查看房源</view>
+      </view>
+    </view>
+    <view class="type-panel" wx:if="{{currentPanel === 'type'}}">
+      <view class="filter-list">
+        <block wx:for="{{map.type}}" wx:key="{{item.title}}">
+          <view class="filter-item" wx:if="{{!item.showType || tools.includes(item.showType, longRentTypes)}}">
+            <view class="filter-title">{{item.title}}</view>
+            <view class="option-list">
+              <block wx:for="{{item.list}}" wx:key="{{item2.label}}" wx:for-item="item2">
+                <view wx:if="{{!item2.showType || tools.includes(item2.showType, longRentTypes)}}" class="option-item {{item2.active ? 'active' : ''}}" bindtap="handleSelectType" data-value="{{item2.value}}" data-field="{{item.field}}">
+                  {{item2.label}}
+                </view>
+              </block>
+            </view>
+          </view>
+        </block>
+      </view>
+      <view class="button-wrapper">
+        <view class="button button-submit" bindtap="handleSubmit">查看房源</view>
+      </view>
+    </view>
+    <view class="area-panel" wx:if="{{currentPanel === 'area'}}">
+      <view class="search-wrapper">
+        <view class="input-wrapper">
+          <text class="icon-font uniE908" />
+          <text class="icon-font uniE907" bindtap="handleClearSearchKey" />
+          <input type="text" bindinput="handleSearchInputChange" value="{{searchKey}}" />
+        </view>
+        <text class="search-cancel" bindtap="handleCancelSearch">取消</text>
+      </view>
+      <view wx:if="{{isSearch}}" class="search-result-wrapper">
+        <scroll-view scroll-y class="search-result-list">
+          <view wx:for="{{searchResultList}}" wx:key="{{item.label}}" class="search-result-item" bindtap="handleSelectSearchResult" data-item="{{item}}">
+            <view class="search-result-tag">{{item.tag}}</view>
+            <view class="search-result-text">{{item.label}}</view>
+            <text class="icon-font uniE90C"></text>
+          </view>
+        </scroll-view>
+      </view>
+      <block wx:if="{{!isSearch}}">
+        <view class="area-wrapper">
+          <scroll-view scroll-y class="area-list level1">
+            <block wx:for="{{areaList}}" wx:key="{{item.title}}">
+              <view class="area-item {{currentAreaType === index ? 'active' : ''}}" wx:if="{{item.list.length > 0}}" bindtap="handleSelectAreaType" data-index="{{index}}">
+                {{item.title}}
+              </view>
+            </block>
+          </scroll-view>
+          <scroll-view scroll-y class="area-list level2 " wx:if="{{areaList[currentAreaType].list}}">
+            <view class="area-item {{currentArea === index ? 'active' : ''}}" wx:for="{{areaList[currentAreaType].list}}" wx:key="{{item.label}}" bindtap="handleSelectArea" data-index="{{index}}">
+              {{item.label}}
+            </view>
+          </scroll-view>
+          <scroll-view scroll-y class="area-list level3" wx:if="{{areaList[currentAreaType].list[currentArea].list}}">
+            <view class="area-item {{currentStation === index ? 'active' : ''}}" wx:for="{{areaList[currentAreaType].list[currentArea].list}}" wx:key="{{item.label}}" bindtap="handleSelectStation" data-index="{{index}}">
+              {{item.label}}
+            </view>
+          </scroll-view>
+        </view>
+        <view class="button-wrapper">
+          <view class="button button-submit" bindtap="handleSubmit">查看房源</view>
+        </view>
+      </block>
+    </view>
+  </TopPanel>
+</view>

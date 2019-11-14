@@ -109,6 +109,7 @@
   display: flex;
   font-size: 28rpx;
   font-weight: 400;
+  align-items: center;
 }
 
 .title {
@@ -172,4 +173,32 @@ input {
   transform: translateX(-50%) translateY(-50%);
   background-color: #fff;
   top: 4rpx;
+}
+
+.uniE930 {
+  width: 24rpx;
+  height: 24rpx;
+  color: #fff;
+  line-height: 24rpx;
+  font-size: 20rpx;
+  text-align: center;
+  background-color: #fff;
+  border: 2rpx solid #e75d28;
+  border-radius: 6rpx;
+  margin-right: 12rpx;
+}
+
+.uniE930.active {
+  color: #fff;
+  background-color: #e75d28;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: -20rpx;
+  width: calc(100% + 40rpx);
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 9999;
 }
