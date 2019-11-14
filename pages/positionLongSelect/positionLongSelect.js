@@ -1,4 +1,5 @@
 import positionService from './service';
+import { isShowNearby, nearByData } from '../../utils/longSetSearchData.js'
 
 const typeEnum = {
   10: "area",
@@ -27,6 +28,11 @@ Page({
     },
     isScroll: false,
     singleItemHeight: 0,
+    nearby: false,// 是否显示附近
+    nearbyData: { // 经纬度
+      latitude: '',
+      longitude: ''
+    }
   },
   service: new positionService(),
 
@@ -81,6 +87,13 @@ Page({
     app.globalData.searchLongData = Object.assign(app.globalData.searchLongData,item)
     wx.navigateBack({ delta: 1 });
   },
+  handleSelectNearBy(event) {
+    let index = event.currentTarget.dataset.index
+    let result = nearByData(this.data.nearbyData, index)
+    const app = getApp()
+    app.globalData.searchLongData = Object.assign(app.globalData.searchLongData,result)
+    wx.navigateBack({ delta: 1 });
+  },
   gotoSearch() {
     wx.navigateTo({
       url: '../housingLongSearch/index'
@@ -101,6 +114,7 @@ Page({
       title: '加载中',
       mask: true
     });
+    //获取列表数据
     this.service.getSearchHoset(city, app.globalData.searchLongData.chooseType || 1).then(resp => {
       wx.hideLoading();
       let data = resp.data;
@@ -118,9 +132,19 @@ Page({
       this.setData({
         list
       })
-
     }).catch(error => {
       console.error(error);
     });
+    // 判断时候显示附近
+    isShowNearby(city).then(resp=>{
+      console.log(resp)
+      // return
+      if(resp) {
+        this.setData({
+          nearby: true,
+          nearbyData: resp
+        })
+      }
+    })
   }
 })

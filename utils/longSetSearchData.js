@@ -1,4 +1,5 @@
 import Http from './http';
+import { getLocationInfo } from './map';
 
 const getPositionInfoByName=(positionKey, cityName, type)=> {
   return Http.post('/long/positionDetail.json', { positionKey, cityName, type });
@@ -147,24 +148,69 @@ const chooseSlectData = (data)=> {
   return result
 }
 
+
+//高德坐标转百度（传入经度、纬度）
+const bd_encrypt = (gg_lng, gg_lat)=> {
+  var X_PI = Math.PI * 3000.0 / 180.0;
+  var x = gg_lng, y = gg_lat;
+  var z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * X_PI);
+  var theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * X_PI);
+  var bd_lng = z * Math.cos(theta) + 0.0065;
+  var bd_lat = z * Math.sin(theta) + 0.006;
+  return {
+    latitude: bd_lat,
+    longitude: bd_lng
+  };
+}
+
 //判断是否显示附近
 const isShowNearby = (city)=> {
   return new Promise((resolve, reject) => {
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userLocation'] === false) {
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+        getLocationInfo(res).then(resp => {
+          const cityName = resp.result.address_component.city;
+          console.log(cityName, res)
+          if (cityName && (cityName.indexOf(city) > -1)) {
+            let result = bd_encrypt(res.longitude, res.latitude)
+            return resolve(result)
+          } else {
+            return resolve(false)
+          }
+        }).catch(()=>{
           return resolve(false)
-        } else {
-          return resolve(res)
-        }
+        });
+      },
+      fail: function (res) {
+        return resolve(false)
       }
     })
   })
+}
+
+// 存附近
+const nearByData =(data,index)=> {
+  let area = ''
+  if (index == 1) {
+    area = '附近 1km'
+  } else if (index == 2) {
+    area = '附近 2km'
+  } else {
+    area = '附近 3km'
+  }
+  let result = {
+    area: area,
+    areaId: data,
+    areaType: 60
+  }
+  return result
 }
 
 export {
   longSetSearchData,
   chooseArea,
   chooseSlectData,
-  isShowNearby
+  isShowNearby,
+  nearByData
 }
