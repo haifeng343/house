@@ -354,26 +354,25 @@ Component({
                   }
                 });
               }
-
-              if (typeof resetMap[item1.field] !== "undefined") {
-                const resetList = resetMap[item1.field];
-                for (const [dataField, targetField] of resetList) {
-                  this.data.map[dataField]
-                    .find(item => item.field === targetField)
-                    .list.forEach(item => (item.active = false));
-
-                  if (dataField !== "type") {
-                    this.setData({
-                      [`map.${dataField}`]: this.data.map[dataField].slice()
-                    });
-                  }
-                }
-              }
             }
 
             return item1;
           })
         });
+
+        if (typeof resetMap[field] !== "undefined") {
+          const resetList = resetMap[field];
+          for (const [dataField, targetField] of resetList) {
+            this.data.map[dataField]
+              .find(item => item.field === targetField)
+              .list.forEach(item => (item.active = false));
+
+            this.setData({
+              [`map.${dataField}`]: this.data.map[dataField].slice(),
+              [targetField]: Array.isArray(this.data[targetField]) ? [] : -1
+            });
+          }
+        }
 
         if (!this.changeList.includes(field)) {
           this.changeList.push(field);
@@ -559,6 +558,10 @@ Component({
       if (this.changeList.includes("minPrice") && this.rangeCustom === true) {
         this.setData({ rangeCustom: true });
       }
+
+      this.changeList = [];
+
+      console.log(result);
 
       this.triggerEvent("onSubmit", result);
     },
