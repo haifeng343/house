@@ -1,33 +1,3 @@
-<!-- <view class="page">
-  <view class='nav'>
-    <view class='nav-item {{fundListType === 1 ? "active" : ""}}' data-value="1" bindtap='handleFundTypeChange'>
-      <view class='text'>余额账单</view>
-      <view class='border'></view>
-    </view>
-    <view class='nav-item {{fundListType === 2 ? "active" : ""}}' data-value="2" bindtap='handleFundTypeChange'>
-      <view class='text'>盯盯币账单</view>
-      <view class='border'></view>
-    </view>
-  </view>
-  <view wx:if="{{isLoaded === true && monitorList.length === 0}}" class="no-data">
-    <nodata message="暂无历史监控" />
-  </view>
-  <view class="monitor-list" wx:if="{{isLoaded === true && monitorList.length > 0}}">
-    <scroll-view scroll-y class="fund-list">
-      <view class="monitor-item" wx:for="{{monitorList}}" wx:key="id">
-        <MonitorCard data="{{item}}" bind:onRemove="handleRemove" />
-      </view>
-    </scroll-view>
-  </view>
-  <view class="tip-wrapper " wx:if="{{isLoaded === true && monitorList.length > 0}}">
-    <text class="icon-font uniE915" />
-    <text>左滑删除监控</text>
-  </view>
-
-  <monitorEndDialog text="确认要删除该监控吗" bind:monitorEndEvent="getmonitorEndEvent" bind:monitorEndConfirmEvent="getmonitorEndConfirmEvent" style="display:{{monitorEndDisplay}}"></monitorEndDialog>
-</view> -->
-
-
 <view class="page flex-column">
   <view class='nav'>
     <view class='nav-item {{fundListType === 1 ? "active" : ""}}' data-value="1" bindtap='handleFundTypeChange'>
@@ -39,10 +9,10 @@
       <view class='border'></view>
     </view>
   </view>
+  <view wx:if="{{isLoaded === true && monitorList.length === 0}}" class="no-data">
+    <nodata message="暂无历史监控" />
+  </view>
   <block class="monitor-list" wx:if="{{isLoaded === true && monitorList.length > 0}}">
-    <view wx:if="{{isLoaded === true && monitorList.length === 0}}" class="no-data">
-      <nodata message="暂无历史监控" />
-    </view>
     <scroll-view scroll-y class="fund-list">
       <view class="monitor-item" wx:for="{{monitorList}}" wx:key="id">
         <MonitorCard data="{{item}}" bind:onRemove="handleRemove" />
