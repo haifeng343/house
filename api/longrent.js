@@ -103,7 +103,11 @@ const wiwj = {
         },
         data: buildParams(params, true),
         success: res => {
-          resolve(res.data)
+          if(res.data) {
+            resolve(res.data)
+          } else {
+            reject(false)
+          }
         },
         fail: res => {
           reject(false)
@@ -123,7 +127,11 @@ const wiwj = {
         },
         data: { keywords: keywords, searchtype:2},
         success: res => {
-          resolve(res.data)
+          if (res.data) {
+            resolve(res.data)
+          } else {
+            reject(false)
+          }
         },
         fail: res => {
           reject(false)
@@ -170,7 +178,11 @@ const lianjia = {
         },
         data: buildParams(params, true),
         success: res => {
-          resolve(res.data)
+          if (res.data) {
+            resolve(res.data)
+          } else {
+            reject(false)
+          }
         },
         fail: res => {
           reject(false)
@@ -191,7 +203,11 @@ const lianjia = {
           Authorization: auth
         },
         success: res => {
-          resolve(res.data)
+          if (res.data) {
+            resolve(res.data)
+          } else {
+            reject(false)
+          }
         },
         fail: res => {
           reject(false)
@@ -226,7 +242,11 @@ const fangtianxia = {
           ftx: { city, page, filter }
         },
         success: res => {
-          resolve(xml2json(res.data.ftx))
+          if (res.data.ftx) {
+            resolve(xml2json(res.data.ftx))
+          } else {
+            reject(false)
+          }
         },
         fail: res => {
           reject(false)
@@ -246,8 +266,11 @@ const fangtianxia = {
           ftx: { city, keywords }
         },
         success: res => {
-          console.log(xml2json(res.data.ftx))
-          resolve(xml2json(res.data.ftx))
+          if (res.data.ftx) {
+            resolve(xml2json(res.data.ftx))
+          } else {
+            reject(false)
+          }
         },
         fail: res => {
           reject(false)
@@ -298,7 +321,11 @@ const wbtc = {
         },
         data: buildParams(params, true),
         success: res => {
-          resolve(res.data)
+          if (res.data) {
+            resolve(res.data)
+          } else {
+            reject(false)
+          }
         },
         fail: res => {
           reject(false)
@@ -319,7 +346,11 @@ const wbtc = {
         },
         data: buildParams(params, true),
         success: res => {
-          resolve(res.data)
+          if (res.data) {
+            resolve(res.data)
+          } else {
+            reject(false)
+          }
         },
         fail: res => {
           reject(false)
