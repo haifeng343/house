@@ -304,11 +304,15 @@ Component({
         case "area":
           this.setData({
             showTopPanel: true,
-            currentPanel: "area",
-            level2View: "activelevel2",
-            level3View: "activelevel3"
+            currentPanel: "area"
           });
           this.getAreaData();
+          wx.nextTick(() => {
+            this.setData({
+              level2View: "activelevel2",
+              level3View: "activelevel3"
+            });
+          });
           break;
       }
     },
