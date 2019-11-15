@@ -160,7 +160,7 @@ Page({
     }
   },
   goRefresh() {
-    this.onShow()
+    this.onLoad()
   },
   goSort() {
     let arr = [...this.data.allOriginalData]
