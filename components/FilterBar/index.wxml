@@ -69,19 +69,19 @@
           <scroll-view scroll-y class="area-list level1">
             <block wx:for="{{areaList}}" wx:key="{{item.title}}">
               <view class="area-item {{currentAreaType === index ? 'active' : ''}}" wx:if="{{item.list.length > 0}}" bindtap="handleSelectAreaType" data-index="{{index}}">
-                {{item.title}}
+                <text>{{item.title}}</text>
               </view>
             </block>
           </scroll-view>
           <scroll-view scroll-into-view="{{level2View}}" scroll-y class="area-list level2 " wx:if="{{areaList[currentAreaType].list}}">
             <view id="{{currentArea === index ? 'activelevel2' : ''}}" class="area-item {{currentArea === index ? 'active' : ''}} {{!item.list ? 'no-child' : 'has-child'}}" wx:for="{{areaList[currentAreaType].list}}" wx:key="{{item.label}}" bindtap="handleSelectArea" data-index="{{index}}">
-              <text>{{item.label}}</text>
+              <text class="area-label">{{item.label}}</text>
               <text class="icon-font uniE930" wx:if="{{!item.list && currentArea === index}}" />
             </view>
           </scroll-view>
           <scroll-view scroll-into-view="{{level3View}}" scroll-y class="area-list level3" wx:if="{{areaList[currentAreaType].list[currentArea].list}}">
             <view id="{{currentArea === index ? 'activelevel3' : ''}}" class="area-item {{currentStation === index ? 'active' : ''}}" wx:for="{{areaList[currentAreaType].list[currentArea].list}}" wx:key="{{item.label}}" bindtap="handleSelectStation" data-index="{{index}}">
-              <text>{{item.label}}</text>
+              <text class="area-label">{{item.label}}</text>
               <text class="icon-font uniE930" wx:if="{{currentStation === index}}" />
             </view>
           </scroll-view>

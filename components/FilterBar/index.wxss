@@ -248,6 +248,14 @@
   color: #f1612a;
 }
 
+.area-list.level2 .area-item {
+  padding-right: 120rpx;
+}
+
+.area-list.level3 .area-item {
+  padding-right: 60rpx;
+}
+
 .area-list .area-item {
   width: 100%;
   height: 92rpx;
@@ -260,6 +268,17 @@
   position: relative;
   box-sizing: border-box;
   padding-left: 60rpx;
+}
+
+.area-list .area-item text {
+  white-space: nowrap;
+}
+
+.area-list.level2 .area-item .area-label,
+.area-list.level3 .area-item .area-label {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .area-list.level2 {
