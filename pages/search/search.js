@@ -328,7 +328,15 @@ Page({
                 }
               }
               searchLongData.cityId = cityId;
+              searchLongData.area = ''
+              searchLongData.areaId = {}
+              searchLongData.areaType = 0
+              searchLongData.areaJson = ''
               app.globalData.searchLongData.cityId = cityId;
+              app.globalData.searchLongData.area = ''
+              app.globalData.searchLongData.areaId = {}
+              app.globalData.searchLongData.areaType = 0
+              app.globalData.searchLongData.areaJson = ''
               this.setData({
                 searchLongData,
                 cityText2: "手动定位"
