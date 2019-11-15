@@ -2007,10 +2007,10 @@ const ljScreenParam = type => {
       obj.condition += 'lc200500000003'
     }
     if (longFloorTypes.indexOf(2) > -1) {
-      obj.condition += '200500000002'
+      obj.condition += 'lc200500000002'
     }
     if (longFloorTypes.indexOf(3) > -1) {
-      obj.condition += '200500000001'
+      obj.condition += 'lc200500000001'
     }
   }
 
