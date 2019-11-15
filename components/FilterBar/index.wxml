@@ -7,14 +7,14 @@
     </view>
   </view>
 </view>
-<RightPanel wx:if="{{showRightPanel}}" filter="{{map.filter}}" type="{{longRentTypes}}" bind:onClose="handleHideRightPanel" bind:onSelect="handleSelectFilter" bind:onSubmit="handleSubmit" bind:onReset="handleReset"/>
+<RightPanel wx:if="{{showRightPanel}}" filter="{{map.filter}}" type="{{longRentTypes}}" bind:onClose="handleHideRightPanel" bind:onSelect="handleSelectFilter" bind:onSubmit="handleSubmit" bind:onReset="handleReset" />
 <view class="toppanel-container" wx:if="{{showTopPanel}}">
   <TopPanel id="TopPanel" bind:onClose="handleHideTopPanel">
     <view class="price-panel" wx:if="{{currentPanel === 'price'}}">
       <view class="content-wrapper">
         <view class="price-title">预算</view>
         <view class="price-range-wrapper">
-          <Range showInput="{{true}}" min="{{minPrice}}" max="{{maxPrice}}" bind:onChange="handlePriceChange" custom="{{rangeCustom}}"/>
+          <Range showInput="{{true}}" min="{{minPrice}}" max="{{maxPrice}}" bind:onChange="handlePriceChange" custom="{{rangeCustom}}" />
         </view>
       </view>
       <view class="button-wrapper">

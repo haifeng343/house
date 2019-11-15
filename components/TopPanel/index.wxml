@@ -1,4 +1,4 @@
-<div class="container {{show ? '' : 'hidden'}}">
+<div class="container {{show ? '' : 'hidden'}}" catchtouchmove="preventTouchMove">
   <view class="overlay" bindtap="handleClosePanel"></view>
   <view></view>
   <view class="wrapper">
