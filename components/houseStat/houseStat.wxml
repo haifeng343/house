@@ -5,7 +5,7 @@
 <view class="stat_card" wx:if="{{rentType == 1}}">
   <view class="stat_first {{list.length == 3?'stat_three':''}}  {{list.length == 1?'stat_one':''}}">
     <block wx:for="{{list}}" wx:key="{{index}}">
-      <view wx:if="{{item.value}}" class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='xz'?'xz_layout':''}} {{item.key =='mn'?'mn_layout':''}} {{item.key =='zg'?'zg_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
+      <view wx:if="{{item.value&&item.selectCount}}" class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='xz'?'xz_layout':''}} {{item.key =='mn'?'mn_layout':''}} {{item.key =='zg'?'zg_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
         <view class="tip">{{item.name}}</view>
         <view class="stat_tip">
           <view class="price">{{sort?'推荐价':'最低价'}}:￥{{item.lowPriceData.finalPrice||'--'}}/晚</view>
@@ -28,7 +28,7 @@
 <view class="stat_card" wx:if="{{rentType == 2}}">
   <view class="stat_first {{list.length == 3?'stat_three':''}}  {{list.length == 1?'stat_one':''}}">
     <block wx:for="{{list}}" wx:key="{{index}}">
-      <view wx:if="{{item.value}}" class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='wiwj'||item.key =='ftx'?'wiwj_layout':''}} {{item.key =='lj'||item.key =='tc'?'lianjia_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
+      <view wx:if="{{item.value&&item.selectCount}}" class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='wiwj'||item.key =='ftx'?'wiwj_layout':''}} {{item.key =='lj'||item.key =='tc'?'lianjia_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
         <view class="tip">{{item.name}}</view>
         <view class="stat_tip">
           <view class="price">{{sort?'推荐价':'最低价'}}:￥{{item.lowPriceData.price||'--'}}/晚</view>
