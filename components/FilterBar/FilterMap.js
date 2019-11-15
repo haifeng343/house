@@ -80,6 +80,7 @@ export default JSON.stringify({
         title: "面积",
         field: "longBuildAreas",
         showType: [1],
+        defaultValue: -1,
         list: [
           {
             label: "不限",

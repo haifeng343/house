@@ -301,6 +301,8 @@ Component({
           return item;
         })
       });
+
+      this.checkReset();
     },
     handleHideTopPanel() {
       this.animationFlag = false;
@@ -311,6 +313,7 @@ Component({
           return item;
         })
       });
+      this.checkReset();
     },
     handleSelectType(event) {
       const { value, field } = event.currentTarget.dataset;
@@ -381,13 +384,22 @@ Component({
 
         if (typeof resetList !== "undefined") {
           for (const [dataField, targetField] of resetList) {
-            this.data.map[dataField]
-              .find(item => item.field === targetField)
-              .list.forEach(item => (item.active = false));
+            const targetItem = this.data.map[dataField].find(
+              item => item.field === targetField
+            );
+            targetItem.list.forEach(item => {
+              if (item.value !== targetItem.defaultValue) {
+                item.active = false;
+              } else {
+                item.action = true;
+              }
+            });
 
             this.setData({
               [`map.${dataField}`]: this.data.map[dataField].slice(),
-              [targetField]: Array.isArray(this.data[targetField]) ? [] : -1
+              [targetField]: Array.isArray(this.data[targetField])
+                ? []
+                : targetItem.defaultValue
             });
 
             this.changeList.add(targetField);
@@ -465,7 +477,7 @@ Component({
       }
     },
 
-    handleReset() {
+    handleResetFilter() {
       const outsideData = this.data.data;
 
       const insideData = this.data;
@@ -506,6 +518,69 @@ Component({
       });
 
       this.setData(Object.assign({}, assginData, { map: insideData.map }));
+    },
+
+    handleResetType() {
+      const outsideData = this.data.data;
+
+      const insideData = this.data;
+
+      const assginData = {};
+
+      Object.keys(insideData)
+        .filter(key => typeof outsideData[key] !== "undefined")
+        .filter(key => insideData.map.type.find(item => item.field === key))
+        .forEach(key => {
+          if (Array.isArray(outsideData[key])) {
+            assginData[key] = Object.assign([], outsideData[key]);
+          } else if (typeof outsideData[key] === "object") {
+            assginData[key] = Object.assign({}, outsideData[key]);
+          } else {
+            assginData[key] = outsideData[key];
+          }
+        });
+
+      Object.keys(assginData).forEach(key => {
+        const typeItem = insideData.map.type.find(item => item.field === key);
+        if (typeItem) {
+          typeItem.list.forEach(item => {
+            if (
+              Array.isArray(assginData[key]) &&
+              assginData[key].includes(item.value)
+            ) {
+              item.active = true;
+            } else if (item.value === assginData[key]) {
+              item.active = true;
+            } else {
+              item.active = false;
+            }
+          });
+        }
+      });
+
+      this.setData(Object.assign({}, assginData, { map: insideData.map }));
+    },
+
+    handleResetPrice() {
+      const { minPrice, maxPrice } = this.data.data;
+      this.setData({ minPrice, maxPrice, rangeCustom: false });
+    },
+
+    checkReset() {
+      wx.nextTick(() => {
+        if (
+          this.data.showRightPanel === false &&
+          this.data.showTopPanel === false
+        ) {
+          this.resetAll();
+        }
+      });
+    },
+
+    resetAll() {
+      this.handleResetFilter();
+      this.handleResetType();
+      this.handleResetPrice();
     },
 
     handlePriceChange(event) {
@@ -605,8 +680,6 @@ Component({
       }
 
       this.changeList = new Set();
-
-      console.log(result);
 
       this.triggerEvent("onSubmit", result);
     },
