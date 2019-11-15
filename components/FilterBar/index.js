@@ -5,14 +5,7 @@ import {
   longSetSearchData,
   chooseSlectData
 } from "../../utils/longSetSearchData";
-import { isShowNearby, nearByData } from "../../utils/longSetSearchData.js";
-
-const resetMap = {
-  longRentTypes: [
-    ["type", "longLayouts"],
-    ["filter", "longBuildAreas"]
-  ]
-};
+import { isShowNearby } from "../../utils/longSetSearchData.js";
 
 const areaKey = ["area", "areaId", "areaJson", "areaType"];
 
@@ -327,53 +320,66 @@ Component({
       if (typeItem) {
         const optionItem = typeItem.list.find(item => item.value === value);
 
-        optionItem.active = !optionItem.active;
+        let action = "";
 
-        if (typeItem.multi) {
-          const arr = this.data[field];
-          if (optionItem.active) {
-            arr.push(optionItem.value);
-          } else {
-            arr.splice(arr.indexOf(optionItem.value), 1);
+        if (optionItem.active === true) {
+          if (typeItem.multi) {
+            action = "cancelselectmulti";
+          } else if (typeItem.cancelable === true) {
+            action = "cancelselect";
           }
-          this.setData({
-            [field]: arr.slice()
-          });
         } else {
-          this.setData({
-            [field]: optionItem.active ? value : typeItem.defaultValue
-          });
+          if (typeItem.multi) {
+            action = "selectmulti";
+          } else {
+            action = "selectandcancel";
+          }
+        }
+
+        const arr = this.data[field];
+
+        switch (action) {
+          case "cancelselectmulti":
+            optionItem.active = false;
+            arr.splice(arr.indexOf(optionItem.value), 1);
+            this.setData({
+              [field]: arr.slice().sort((a, b) => a - b)
+            });
+            break;
+          case "cancelselect":
+            optionItem.active = false;
+            this.setData({
+              [field]: typeItem.defaultValue
+            });
+            break;
+          case "selectmulti":
+            optionItem.active = true;
+            arr.push(optionItem.value);
+            this.setData({
+              [field]: arr.slice().sort((a, b) => a - b)
+            });
+            break;
+          case "selectandcancel":
+            optionItem.active = true;
+            this.setData({
+              [field]: optionItem.value
+            });
+            typeItem.list.forEach(item => {
+              if (item.value !== optionItem.value) {
+                item.active = false;
+              }
+            });
+            break;
         }
         this.setData({
-          ["map.type"]: this.data.map.type.map(item1 => {
-            if (item1.field === field) {
-              if (item1.multi !== true && item1.cancelable !== true) {
-                item1.list.forEach(item2 => {
-                  if (item2.value === value) {
-                    item2.active = true;
-                  } else {
-                    item2.active = false;
-                  }
-                });
-              } else if (
-                item1.cancelable === true &&
-                optionItem.active === true
-              ) {
-                item1.list.forEach(item2 => {
-                  if (item2.value === value) {
-                    item2.active = true;
-                  } else {
-                    item2.active = false;
-                  }
-                });
-              }
-            }
-            return item1;
-          })
+          ["map.type"]: this.data.map.type.map(item => item)
         });
 
-        if (typeof resetMap[field] !== "undefined") {
-          const resetList = resetMap[field];
+        this.changeList.add(field);
+
+        const { resetList } = typeItem;
+
+        if (typeof resetList !== "undefined") {
           for (const [dataField, targetField] of resetList) {
             this.data.map[dataField]
               .find(item => item.field === targetField)
@@ -387,10 +393,6 @@ Component({
             this.changeList.add(targetField);
           }
         }
-
-        if (!this.changeList.has(field)) {
-          this.changeList.add(field);
-        }
       }
     },
 
@@ -403,54 +405,60 @@ Component({
       if (filterItem) {
         const optionItem = filterItem.list.find(item => item.value === value);
 
-        if (filterItem.multi) {
-          optionItem.active = !optionItem.active;
-          const arr = this.data[field];
-          if (optionItem.active) {
-            arr.push(optionItem.value);
-          } else {
-            arr.splice(arr.indexOf(optionItem.value), 1);
-          }
-          this.setData({
-            [field]: arr.slice().sort((a, b) => a - b)
-          });
-        } else if (filterItem.cancelable === true) {
-          optionItem.active = !optionItem.active;
-          this.setData({
-            [field]: optionItem.active ? value : filterItem.defaultValue
-          });
-        } else {
-          this.setData({
-            [field]: value
-          });
-        }
-        this.setData({
-          ["map.filter"]: this.data.map.filter.map(item1 => {
-            if (item1.field === field) {
-              if (item1.multi !== true && item1.cancelable !== true) {
-                item1.list.forEach(item2 => {
-                  if (item2.value === value) {
-                    item2.active = true;
-                  } else {
-                    item2.active = false;
-                  }
-                });
-              } else if (
-                item1.cancelable === true &&
-                optionItem.active === true
-              ) {
-                item1.list.forEach(item2 => {
-                  if (item2.value === value) {
-                    item2.active = true;
-                  } else {
-                    item2.active = false;
-                  }
-                });
-              }
-            }
+        let action = "";
 
-            return item1;
-          })
+        if (optionItem.active === true) {
+          if (filterItem.multi) {
+            action = "cancelselectmulti";
+          } else if (filterItem.cancelable === true) {
+            action = "cancelselect";
+          }
+        } else {
+          if (filterItem.multi) {
+            action = "selectmulti";
+          } else {
+            action = "selectandcancel";
+          }
+        }
+
+        const arr = this.data[field];
+
+        switch (action) {
+          case "cancelselectmulti":
+            optionItem.active = false;
+            arr.splice(arr.indexOf(optionItem.value), 1);
+            this.setData({
+              [field]: arr.slice().sort((a, b) => a - b)
+            });
+            break;
+          case "cancelselect":
+            optionItem.active = false;
+            this.setData({
+              [field]: filterItem.defaultValue
+            });
+            break;
+          case "selectmulti":
+            optionItem.active = true;
+            arr.push(optionItem.value);
+            this.setData({
+              [field]: arr.slice().sort((a, b) => a - b)
+            });
+            break;
+          case "selectandcancel":
+            optionItem.active = true;
+            this.setData({
+              [field]: optionItem.value
+            });
+            filterItem.list.forEach(item => {
+              if (item.value !== optionItem.value) {
+                item.active = false;
+              }
+            });
+            break;
+        }
+
+        this.setData({
+          ["map.filter"]: this.data.map.filter.map(item => item)
         });
 
         this.changeList.add(field);
@@ -672,10 +680,10 @@ Component({
                 label: "1km"
               },
               {
-                label: "3km"
+                label: "2km"
               },
               {
-                label: "5km"
+                label: "3km"
               }
             ]
           });
@@ -750,10 +758,10 @@ Component({
               label: "1km"
             },
             {
-              label: "3km"
+              label: "2km"
             },
             {
-              label: "5km"
+              label: "3km"
             }
           ]
         },

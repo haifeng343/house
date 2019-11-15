@@ -10,7 +10,7 @@
         <text class="message-text">已自动发放到您的账户</text>
       </view>
       <view class="coupon-list">
-        <block wx:for="{{couponList}}" wx:for-item="item" wx:for-index="i1121">
+        <block wx:for="{{couponList}}" wx:for-item="item" wx:key="{{item.id}}">
           <block wx:if="{{item.type === 2}}">
             <view class="free-item">
               <view class="top">

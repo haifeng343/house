@@ -7,6 +7,10 @@ export default JSON.stringify({
         field: "longRentTypes",
         cancelable: true,
         defaultValue: 0,
+        resetList: [
+          ["type", "longLayouts"],
+          ["filter", "longBuildAreas"]
+        ],
         list: [
           {
             label: "整租",
@@ -15,14 +19,6 @@ export default JSON.stringify({
           {
             label: "合租",
             value: 2
-          },
-          {
-            label: "主卧",
-            value: 3
-          },
-          {
-            label: "次卧",
-            value: 4
           }
         ]
       },
@@ -218,6 +214,14 @@ export default JSON.stringify({
           {
             label: "合租",
             value: 2
+          },
+          {
+            label: "主卧",
+            value: 3
+          },
+          {
+            label: "次卧",
+            value: 4
           }
         ]
       },
@@ -237,10 +241,6 @@ export default JSON.stringify({
           {
             label: "三室",
             value: 3
-          },
-          {
-            label: "三室及以上",
-            value: 11
           },
           {
             label: "四室及以上",

@@ -1,5 +1,5 @@
 <wxs src="../../utils/tools.wxs" module="tools" />
-<view class="container {{show ? '' : 'hidden'}}">
+<view class="container {{show ? '' : 'hidden'}}" catchtouchmove="preventTouchMove">
   <view class="overlay" bindtap="handleClosePanel"></view>
   <view class="content-wrapper">
     <scroll-view scroll-y class="filter-list">

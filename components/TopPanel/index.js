@@ -6,9 +6,10 @@ Component({
     handleClosePanel() {
       this.setData({ show: false });
       setTimeout(() => {
-        this.triggerEvent('onClose');
+        this.triggerEvent("onClose");
       }, 220);
-    }
+    },
+    preventTouchMove() {}
   },
   lifetimes: {
     ready() {

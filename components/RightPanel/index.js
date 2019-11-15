@@ -16,21 +16,23 @@ Component({
     handleClosePanel() {
       this.setData({ show: false });
       setTimeout(() => {
-        this.triggerEvent('onClose');
+        this.triggerEvent("onClose");
       }, 220);
     },
 
     handleSelectFilter(event) {
       const { value, field } = event.currentTarget.dataset;
-      this.triggerEvent('onSelect', { value, field });
+      this.triggerEvent("onSelect", { value, field });
     },
 
+    preventTouchMove() {},
+
     handleSubmit() {
-      this.triggerEvent('onSubmit');
+      this.triggerEvent("onSubmit");
     },
 
     handleReset() {
-      this.triggerEvent('onReset');
+      this.triggerEvent("onReset");
     }
   },
   lifetimes: {

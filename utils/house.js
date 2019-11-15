@@ -2012,7 +2012,7 @@ const ljScreenParam = type => {
   }
 
   if (keysword) {
-    obj.condition += 'rs'
+    obj.condition += 'rs' + searchData.area
   }
 
   console.log(obj)

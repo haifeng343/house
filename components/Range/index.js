@@ -269,7 +269,7 @@ Component({
             const min = Math.round((this.data.leftX * this.funX) / 100) * 100;
 
             this.setData({
-              minValue: min
+              minValue: this.data.max - min < 100 ? this.data.max - 100 : min
             });
           } else if (dir === "right") {
             const max =
@@ -277,7 +277,7 @@ Component({
               100;
 
             this.setData({
-              maxValue: max
+              maxValue: max - this.data.min < 100 ? this.data.min + 100 : max
             });
           }
         });
