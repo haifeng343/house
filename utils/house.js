@@ -2149,7 +2149,7 @@ const ftxScreenParam = type => {
     }
     if (longHouseTags.indexOf(2) > -1) {
       if (tags) { tags += ',' }
-      tags += '紧邻地铁'
+      tags += '近地铁'
     }
     if (longHouseTags.indexOf(7) > -1) {
       if (tags) { tags += ',' }
