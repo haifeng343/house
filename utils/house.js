@@ -417,7 +417,7 @@ const getWbtcData = (type, wbtcfilter = {}) => {
     longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 1, "size": 50 }, "filter": wbtcfilter }).then(res => {
       res.result.getListInfo.infolist.shift()
       wbtcCount = res.result.getListInfo.searchNum
-      arr = res.result.getListInfo.infolist
+      arr = res.result.getListInfo.infolist||[]
       if (res && arr.length < 50 && arr.length < wbtcCount){
         return longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 2, "size": 50 }, "filter": wbtcfilter });
       }else{
