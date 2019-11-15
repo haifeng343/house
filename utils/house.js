@@ -413,13 +413,16 @@ const getWbtcData = (type, wbtcfilter = {}) => {
   let wbtcCount = 0;
   let arr = [];
   let y = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData;
+  let timer = null;
   return new Promise((resolve, reject) => {
     longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 1, "size": 50 }, "filter": wbtcfilter }).then(res => {
       res.result.getListInfo.infolist.shift()
       wbtcCount = res.result.getListInfo.searchNum
       arr = res.result.getListInfo.infolist||[]
       if (res && arr.length < 50 && arr.length < wbtcCount){
-        return longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 2, "size": 50 }, "filter": wbtcfilter });
+        timer = setTimeout(()=>{
+          return longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 2, "size": 50 }, "filter": wbtcfilter });
+        },2000)
       }else{
         resolve({
           arr: arr.slice(0, 50),
@@ -434,6 +437,7 @@ const getWbtcData = (type, wbtcfilter = {}) => {
       if (res) {
         arr.push.apply(arr, res.result.getListInfo.infolist||[]);
       }
+      clearTimeout(timer);
       resolve({
         arr: arr.slice(0, 50),
         wbtcCount
