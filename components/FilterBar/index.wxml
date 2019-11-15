@@ -7,7 +7,7 @@
     </view>
   </view>
 </view>
-<RightPanel wx:if="{{showRightPanel}}" filter="{{map.filter}}" type="{{longRentTypes}}" bind:onClose="handleHideRightPanel" bind:onSelect="handleSelectFilter" bind:onSubmit="handleSubmit" bind:onReset="handleReset" />
+<RightPanel wx:if="{{showRightPanel}}" filter="{{map.filter}}" type="{{longRentTypes}}" bind:onClose="handleHideRightPanel" bind:onSelect="handleSelectFilter" bind:onSubmit="handleSubmit" bind:onReset="handleResetFilter" />
 <view class="toppanel-container" wx:if="{{showTopPanel}}">
   <TopPanel id="TopPanel" bind:onClose="handleHideTopPanel">
     <view class="price-panel" wx:if="{{currentPanel === 'price'}}">
