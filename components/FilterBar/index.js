@@ -244,10 +244,20 @@ Component({
       }
     },
     handleClearSearchKey() {
-      this.setData({ searchKey: "" });
+      this.setData({ searchKey: "", searchResultList: [] });
     },
     handleCancelSearch() {
-      this.setData({ isSearch: false });
+      if (this.data.isSearch === true) {
+        this.setData({ isSearch: false, searchKey: "" });
+      } else {
+        this.animationFlag = true;
+        const topPanel = this.selectComponent("#TopPanel");
+        if (topPanel) {
+          topPanel.handleClosePanel();
+        } else {
+          this.animationFlag = false;
+        }
+      }
     },
     handleClickTabitem(event) {
       if (this.animationFlag === true) {
