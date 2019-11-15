@@ -19,7 +19,7 @@
 </wxs>
 <view class='position-box'>
     <view class='position-box-title {{key}} spread{{totalPage}}'>{{data.name}}</view>
-    <view class='positon-box-spread ' bindtap='spreadItem' wx:if='{{lines>2}}'>
+    <view class='positon-box-spread ' bindtap='spreadItem' wx:if='{{lines>3}}'>
         {{spread?'收起':'展开'}}
         <text class='icon-font uniE90C'></text>
     </view>
