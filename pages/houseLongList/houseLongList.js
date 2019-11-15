@@ -74,7 +74,6 @@ Page({
   },
   submit(e){
     //把改变的值重新
-    console.log(e.detail)
     let arr = Object.keys(e.detail);
     if(arr.length){
       for (let key in e.detail){
@@ -211,7 +210,6 @@ Page({
   async getAllBrandData() {
     wx.removeStorageSync("collectionObj");
     let enoughList = [];
-    console.log("this.data.wiwjfilter", this.data.wiwjfilter);
     let wiwjDataObj = await house.getWiwjData(1, this.data.wiwjfilter);
     let lianjiaDataObj = await house.getLianjiaData(1, this.data.ljfilter);
     if (wiwjDataObj.network && lianjiaDataObj.network) {
@@ -454,7 +452,6 @@ Page({
   getStartMonitor(noteSelect, publicSelect) {
     let app = getApp();
     let y = app.globalData.searchLongData;
-    console.log(y);
     let data = {
       houseSource: y.chooseType, //房来源:1品牌中介，2个人房源
       cityName: y.city, //城市名称
@@ -551,7 +548,6 @@ Page({
       fddShortRentBlock["tc"] = tcId;
     }
     data["fddShortRentBlock"] = fddShortRentBlock;
-    console.log(data);
     monitorApi.addLongMonitor(data).then(res => {
       wx.showToast({
         title: res.data.resultMsg,

@@ -72,7 +72,6 @@ Page({
   },
   submit(e) {
     //把改变的值重新
-    console.log(e.detail)
     let arr = Object.keys(e.detail);
     if (arr.length) {
       for (let key in e.detail) {
@@ -241,7 +240,7 @@ Page({
         cityJson: monitorDetail.cityJson,
         area: monitorDetail.locationName || '',// 地点
         areaId: JSON.parse(monitorDetail.areaJson||{}),//地点标识
-        areaType: monitorDetail.locationType,//地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
+        areaType: monitorDetail.locationType || 0,//地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
         areaJson: monitorDetail.searchJson,//json
         longBuildAreas: monitorDetail.buildArea,//0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
         longFloorTypes: monitorDetail.floorType ? monitorDetail.floorType.split(',').map(item => +item) : [],//1: 低楼层, 2: 中楼层, 3: 高楼层
@@ -260,7 +259,7 @@ Page({
         cityJson: monitorDetail.cityJson,
         area: monitorDetail.locationName||'',// 地点
         areaId: JSON.parse(monitorDetail.areaJson || {}),//地点标识
-        areaType: monitorDetail.locationType,//地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
+        areaType: monitorDetail.locationType || 0,//地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
         areaJson: monitorDetail.searchJson,//json
         longBuildAreas: monitorDetail.buildArea,//0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
         longFloorTypes: monitorDetail.floorType ? monitorDetail.floorType.split(',').map(item => +item) : [],//1: 低楼层, 2: 中楼层, 3: 高楼层
@@ -606,7 +605,6 @@ Page({
   getUpdateConfrimEvent(e){
     let app = getApp();
     let y = app.globalData.monitorSearchLongData;
-    console.log(y);
     let data = {
       //houseSource: y.chooseType, //房来源:1品牌中介，2个人房源
       //cityName: y.city, //城市名称
@@ -696,7 +694,6 @@ Page({
       fddShortRentBlock["tc"] = tcId;
     }
     data["fddShortRentBlock"] = fddShortRentBlock;
-    console.log(data);
     monitorApi.updateLongMonitor(data).then(res => {
       wx.showToast({
         title: res.data.resultMsg,
