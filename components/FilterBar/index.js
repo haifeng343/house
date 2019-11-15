@@ -225,7 +225,6 @@ Component({
         longRentTip
           .getPersonalData(cityId, searchKey)
           .then(resp => {
-            console.log(resp);
             this.setData({
               searchResultList: resp.map(item =>
                 Object.assign(
@@ -611,9 +610,13 @@ Component({
       this.handleResetSearch();
     },
 
+    handlePriceCustom(event) {
+      const rangeCustom = event.detail;
+      this.setData({ rangeCustom });
+    },
+
     handlePriceChange(event) {
-      const { max, min, custom } = event.detail;
-      this.rangeCustom = custom;
+      const { max, min } = event.detail;
       this.setData({ maxPrice: max, minPrice: min });
       this.changeList.add("minPrice");
       this.changeList.add("maxPrice");
@@ -725,6 +728,36 @@ Component({
     },
 
     handleSubmit() {
+      if (
+        Number.isNaN(this.data.minPrice) ||
+        this.data.minPrice < 0 ||
+        this.data.minPrice > 10000 ||
+        this.data.minPrice !== ~~this.data.minPrice
+      ) {
+        wx.showToast({ title: "请输入正确的最低价", icon: "none" });
+        return;
+      }
+
+      if (
+        Number.isNaN(this.data.minPrice) ||
+        this.data.maxPrice < 100 ||
+        this.data.maxPrice > 10000 ||
+        this.data.maxPrice !== ~~this.data.maxPrice
+      ) {
+        wx.showToast({ title: "请输入正确的最高价", icon: "none" });
+        return;
+      }
+
+      if (this.data.minPrice >= this.data.maxPrice) {
+        wx.showToast({ title: "最高价至少比最低价高100", icon: "none" });
+        return;
+      }
+
+      if (this.data.maxPrice - this.data.minPrice < 100) {
+        wx.showToast({ title: "最低价不得高于最高价", icon: "none" });
+        return;
+      }
+
       this.setData({
         showRightPanel: false,
         showTopPanel: false,

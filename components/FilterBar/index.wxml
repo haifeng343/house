@@ -17,7 +17,7 @@
           <text>预算</text>
         </view>
         <view class="price-range-wrapper">
-          <Range showInput="{{true}}" min="{{minPrice}}" max="{{maxPrice}}" bind:onChange="handlePriceChange" custom="{{rangeCustom}}" />
+          <Range showInput="{{true}}" min="{{minPrice}}" max="{{maxPrice}}" bind:onChange="handlePriceChange" custom="{{rangeCustom}}" bind:onCustom="handlePriceCustom" />
         </view>
       </view>
       <view class="button-wrapper">
