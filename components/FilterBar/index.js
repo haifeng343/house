@@ -604,6 +604,14 @@ Component({
     handleSelectAreaType(event) {
       const { index } = event.currentTarget.dataset;
       this.setData({ currentAreaType: index, currentArea: 0 });
+      const e = {
+        currentTarget: {
+          dataset: {
+            index: 0
+          }
+        }
+      };
+      this.handleSelectArea(e);
     },
 
     handleSelectArea(event) {
@@ -612,12 +620,41 @@ Component({
       const insideData = this.data.data;
       if (currentAreaType === 0) {
         const areaItem = areaList[currentAreaType].list[index];
-        chooseArea(areaItem.value, insideData.city, insideData.chooseType).then(
-          resp => {
+        if (areaItem.value !== null) {
+          chooseArea(
+            areaItem.value,
+            insideData.city,
+            insideData.chooseType
+          ).then(resp => {
             Object.keys(resp).forEach(key => this.changeList.add(key));
             this.setData(resp);
-          }
-        );
+          });
+        } else {
+          this.changeList.add("area");
+          this.changeList.add("areaJson");
+          this.changeList.add("areaType");
+          this.changeList.add("areaId");
+          this.setData({
+            area: "",
+            areaJson: "",
+            areaType: 0,
+            areaId: {}
+          });
+        }
+      } else if (currentAreaType === 1) {
+        const areaItem = areaList[currentAreaType].list[index];
+        if (areaItem.value === null) {
+          this.changeList.add("area");
+          this.changeList.add("areaJson");
+          this.changeList.add("areaType");
+          this.changeList.add("areaId");
+          this.setData({
+            area: "",
+            areaJson: "",
+            areaType: 0,
+            areaId: {}
+          });
+        }
       } else if (currentAreaType === 2) {
         const targetItem = areaList[currentAreaType].list[index];
         this.changeList.add("area");
@@ -771,7 +808,7 @@ Component({
             ]
           });
         }
-        this.location = resp || {};
+        this.location = Object.assign({ nearby: 1 }, resp || {});
       });
 
       const history =
