@@ -848,6 +848,13 @@ Page({
     this.getbanner();
   },
   onShow() {
+    const app = getApp()
+    let searchLongData = app.globalData.searchLongData
+    searchLongData.longBuildAreas = -1;
+    searchLongData.longFloorTypes = [];
+    searchLongData.longHeadings = [];
+    searchLongData.longHouseTags = [];
+    searchLongData.longLayouts = [];
     this.searchDataStorage = searchDataStorage.subscribe(hasSearchData => {
       console.log("hasSearchData=" + hasSearchData);
       if (!hasSearchData) {
