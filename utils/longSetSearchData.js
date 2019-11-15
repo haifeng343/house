@@ -172,7 +172,7 @@ const chooseSlectData = (data)=> {
     if (data.lianjia) {
       result.areaId.lj = data.lianjia.uri
       areaJson.lj = {
-        uri: data.wiwj.searchId
+        uri: data.lianjia.uri
       }
     }
   }
