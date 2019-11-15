@@ -75,7 +75,9 @@ Component({
     area: "",
     areaId: {},
     areaJson: "",
-    areaType: 0
+    areaType: 0,
+    level2View: "",
+    level3View: ""
   },
   properties: {
     data: {
@@ -152,10 +154,11 @@ Component({
       value: [],
       observer(newvalue) {
         if (newvalue && newvalue.length > 0) {
+          const baseAreaList = JSON.parse(this.baseAreaList);
           newvalue
             .map(item => item.split("_"))
             .forEach(([name, type, subname]) => {
-              const target = this.baseAreaList.find(item => item.type === type);
+              const target = baseAreaList.find(item => item.type === type);
               if (target) {
                 if (!subname) {
                   target.list.push({
@@ -183,7 +186,7 @@ Component({
                 }
               }
             });
-          this.setData({ areaList: this.baseAreaList });
+          this.setData({ areaList: baseAreaList });
         }
       }
     }
@@ -222,12 +225,13 @@ Component({
         longRentTip
           .getPersonalData(cityId, searchKey)
           .then(resp => {
+            console.log(resp);
             this.setData({
               searchResultList: resp.map(item =>
                 Object.assign(
                   {
-                    label: item.area,
-                    tag: areaTagMap[item.areaType]
+                    label: item.name,
+                    tag: areaTagMap[item.type]
                   },
                   item
                 )
@@ -298,7 +302,12 @@ Component({
           this.setData({ showTopPanel: true, currentPanel: "type" });
           break;
         case "area":
-          this.setData({ showTopPanel: true, currentPanel: "area" });
+          this.setData({
+            showTopPanel: true,
+            currentPanel: "area",
+            level2View: "activelevel2",
+            level3View: "activelevel3"
+          });
           this.getAreaData();
           break;
       }
@@ -530,6 +539,10 @@ Component({
       this.setData(Object.assign({}, assginData, { map: insideData.map }));
     },
 
+    handleResetSearch() {
+      this.setData({ searchKey: "", isSearch: false, searchResultList: [] });
+    },
+
     handleResetType() {
       const outsideData = this.data.data;
 
@@ -591,6 +604,7 @@ Component({
       this.handleResetFilter();
       this.handleResetType();
       this.handleResetPrice();
+      this.handleResetSearch();
     },
 
     handlePriceChange(event) {
@@ -661,12 +675,21 @@ Component({
         this.changeList.add("areaJson");
         this.changeList.add("areaType");
         this.changeList.add("areaId");
-        this.setData({
-          area: `附近 ${targetItem.label}`,
-          areaJson: "",
-          areaType: 60,
-          areaId: this.location
-        });
+        if (targetItem.label !== "不限") {
+          this.setData({
+            area: `附近 ${targetItem.label}`,
+            areaJson: "",
+            areaType: 60,
+            areaId: this.location
+          });
+        } else {
+          this.setData({
+            area: "",
+            areaJson: "",
+            areaType: 0,
+            areaId: {}
+          });
+        }
       } else if (currentAreaType === 3) {
         const targetItem = areaList[currentAreaType].list[index];
         Object.keys(targetItem)
@@ -796,6 +819,10 @@ Component({
         } else if (this.data.areaList[2].length === 0) {
           this.setData({
             "areaList[2].list": [
+              ,
+              {
+                label: "不限"
+              },
               {
                 label: "1km"
               },
@@ -842,6 +869,16 @@ Component({
         currentAreaType: 3,
         currentArea: 0
       });
+
+      const e = {
+        currentTarget: {
+          dataset: {
+            index: 0
+          }
+        }
+      };
+
+      this.handleSelectArea(e);
     }
   },
   lifetimes: {
@@ -850,7 +887,7 @@ Component({
 
       this.rangeCustom = false;
 
-      this.baseAreaList = [
+      this.baseAreaList = JSON.stringify([
         {
           title: "行政区",
           type: "10",
@@ -875,6 +912,9 @@ Component({
           title: "附近",
           list: [
             {
+              label: "不限"
+            },
+            {
               label: "1km"
             },
             {
@@ -889,7 +929,7 @@ Component({
           title: "搜索历史",
           list: []
         }
-      ];
+      ]);
     }
   }
 });
