@@ -12,6 +12,10 @@ Component({
     },
     title:{
       type:String
+    },
+    type:{
+      type: Number,
+      value: 1 //1:短租，2长租
     }
   },
 
@@ -27,9 +31,16 @@ Component({
   },
 
   attached: function () {
-    this.setData({
-      fee: wx.getStorageSync('hourMoney') || 0
-    })
+    if (this.properties.type ==1){
+      this.setData({
+        fee: wx.getStorageSync('hourMoney') || 0
+      })
+    }
+    if (this.properties.type == 2) {
+      this.setData({
+        fee: wx.getStorageSync('hourLongMoney') || 0
+      })
+    }
   },
 
   /**
