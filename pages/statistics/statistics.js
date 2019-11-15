@@ -331,6 +331,7 @@ Page({
         title: res.data.resultMsg,
         duration: 2000
       })
+      app.switchRent = 1;
       wx.switchTab({
         url: '../monitor/monitor'
       })
