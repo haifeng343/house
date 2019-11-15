@@ -345,11 +345,11 @@ const getWiwjData = (type, wiwjfilter = {}) =>{
           arr: res.data.list&&res.data.list.slice(0, 50),
           wiwjCount
         });
-      } else {
-        resolve({
-          network: true
-        })
       }
+    }).catch(e=>{
+      resolve({
+        network: true
+      })
     })
   })
 }
@@ -370,11 +370,11 @@ const getLianjiaData = (type, lianjiafilter = {}) => {
           arr: res.data.list&&res.data.list.slice(0, 50),
           lianjiaCount
         });
-      } else {
-        resolve({
-          network: true
-        })
       }
+    }).catch(e=>{
+      resolve({
+        network: true
+      })
     })
   })
 }
@@ -395,11 +395,11 @@ const getFangtianxiaData = (type, fangtianxiafilter = {}) => {
           arr: res.houses.houseinfo && Array.isArray(res.houses.houseinfo) ? res.houses.houseinfo.slice(0, 50) : [res.houses.houseinfo],
           fangtianxiaCount
         });
-      } else {
-        resolve({
-          network: true
-        })
       }
+    }).catch((e) => {
+      resolve({
+        network: true
+      })
     })
   })
 }
@@ -417,7 +417,7 @@ const getWbtcData = (type, wbtcfilter = {}) => {
     longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 1, "size": 50 }, "filter": wbtcfilter }).then(res => {
       res.result.getListInfo.infolist.shift()
       wbtcCount = res.result.getListInfo.searchNum
-      arr = res.result.getListInfo.infolist&&res.result.getListInfo.infolist
+      arr = res.result.getListInfo.infolist
       if (res && arr.length < 50 && arr.length < wbtcCount){
         return longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 2, "size": 50 }, "filter": wbtcfilter });
       }else{
@@ -426,11 +426,10 @@ const getWbtcData = (type, wbtcfilter = {}) => {
           wbtcCount
         });
       }
-      if (!res) {
-        resolve({
-          network: true
-        })
-      }
+    }).catch((e) => {
+      resolve({
+        network: true
+      })
     }).then(res=>{
       if (res) {
         arr.push.apply(arr, res.result.getListInfo.infolist||[]);

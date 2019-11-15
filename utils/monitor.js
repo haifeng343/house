@@ -95,7 +95,7 @@ const navigateToLongMiniProgram = (plateform, productid,city) => {
   if (plateform == 'wiwj') {
     wx.navigateToMiniProgram({
       appId: 'wxaf705dee544e08d9',
-      path: productid?'pages/zufang_detail/zufang_detail?houseId=' + productid + '&cityId' + city.wiwj:''
+      path: productid?'pages/zufang_detail/zufang_detail?houseId=' + productid + '&cityId=' + city.wiwj:''
     })
   }
   if (plateform == 'lj') {
@@ -107,7 +107,7 @@ const navigateToLongMiniProgram = (plateform, productid,city) => {
   if (plateform == 'ftx') {
     wx.navigateToMiniProgram({
       appId: 'wxffbb41ec9b99a969',
-      path: productid ? 'pages/zf/detail/grdetail?houseid=' + productid + '&cityname' + city.ftx : ''
+      path: productid ? 'pages/zf/detail/grdetail?houseid=' + productid + '&cityname=' + city.ftx : ''
     })
   }
   if (plateform == 'tc') {

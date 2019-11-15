@@ -404,6 +404,9 @@ Page({
         countFlag: 0,
         loadingDisplay: 'none',
         bottomType: 2,
+        allOriginalData: houseData.allData,
+        allData: houseData.allData.slice(0, 5),
+        allCount: houseData.allCount,
       });
     }
   },
@@ -458,6 +461,9 @@ Page({
         countFlag: 0,
         loadingDisplay: 'none',
         bottomType: 2,
+        allOriginalData: houseData.allData,
+        allData: houseData.allData.slice(0, 5),
+        allCount: houseData.allCount,
       });
     }
   },

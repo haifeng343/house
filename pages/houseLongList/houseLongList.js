@@ -5,7 +5,7 @@ const userApi = require("../../api/userApi.js");
 const monitorApi = require("../../api/monitorApi.js");
 const app = getApp();
 import positionService from "../positionLongSelect/service";
-
+import { SearchLongDataSubject } from "../../utils/searchLongDataStream";
 Page({
   data: {
     countFlag: "",
@@ -79,6 +79,7 @@ Page({
       for (let key in e.detail){
         app.globalData.searchLongData[key] = e.detail[key]
       }
+      SearchLongDataSubject.next()
       this.setData({
         loadingDisplay: 'block',
         countFlag: '',
@@ -266,6 +267,9 @@ Page({
       this.setData({
         loadingDisplay: 'none',
         countFlag: 0,
+        allOriginalData: houseData.allData,
+        allData: houseData.allData.slice(0, 5),
+        allCount: houseData.allCount,
       });
     }
   },
@@ -331,6 +335,9 @@ Page({
       this.setData({
         loadingDisplay: 'none',
         countFlag: 0,
+        allOriginalData: houseData.allData,
+        allData: houseData.allData.slice(0, 5),
+        allCount: houseData.allCount,
       });
     }
   },
