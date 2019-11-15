@@ -127,7 +127,7 @@
                     <view class='search_item' style='height:auto;padding-top:20rpx;'>
                         <view class='title icon_1'>预算</view>
                         <view style="margin-top: 12rpx;">
-                            <Range min="{{searchLongData.minPrice}}" max="{{searchLongData.maxPrice}}" bind:onChange="handlePriceChange" />
+                            <Range wx:if="{{showLongPriceBlock}}" min="{{searchLongData.minPrice}}" max="{{searchLongData.maxPrice}}" bind:onChange="handlePriceChange" />
                         </view>
                     </view>
                     <view wx:if="{{spread}}">

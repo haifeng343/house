@@ -1,6 +1,7 @@
 import { getLocationSetting, getLocation, getSessionKey } from "../../utils/wx";
 import { authSubject } from "../../utils/auth";
 import { SearchDataSubject } from "../../utils/searchDataStream";
+import { SearchLongDataSubject } from "../../utils/searchLongDataStream";
 import { getLocationInfo } from "../../utils/map";
 import searchService from "./service";
 import fecha from "../../utils/fecha";
@@ -8,7 +9,6 @@ import { searchDataStorage } from "../../utils/searchDataStorage";
 import { searchLongDataStorage } from "../../utils/searchLongDataStorage";
 import getIndexHouseData from "../../utils/indexHouseData";
 import getIndexLongHouseData from "../../utils/indexLongHouseData";
-const longrent = require("../../api/longrent");
 Page({
   /**
    * 页面的初始数据
@@ -48,6 +48,7 @@ Page({
     beginDate: "",
     endDate: "",
     showPriceBlock: false,
+    showLongPriceBlock: false,
     searchData: {
       cityType: "",
       area: "",
@@ -683,6 +684,7 @@ Page({
         searchData,
         searchLongData,
         showPriceBlock: true,
+        showLongPriceBlock: true,
         beginDate: fecha.format(
           fecha.parse(searchData.beginDate, "YYYY-MM-DD"),
           "MM[月]DD[日]"
@@ -869,19 +871,16 @@ Page({
     }
   },
   onLoad() {
-    // 长租接口
-    // console.log(longrent)
-    // longrent.wiwj.rentSearch({ "city": 1, "page": { "num": 1, "size": 50 }, "filter": {} })
-    // longrent.lianjia.rentSearch({ "city": 110000, "page": { "num": 1, "size": 50 }, "filter": {} })
-    // longrent.fangtianxia.rentSearch({ "city": "北京", "page": { "num": 1, "size": 50 }, "filter": {} })
-    // longrent.wbtc.rentSearch({ "city": "hz", "page": { "num": 1, "size": 50 }, "filter": { } })
-    // longrent.wiwj.rentTip({ "city": 1, "keywords": "天坛" })
-    // longrent.lianjia.rentTip({ "city": 110000, "keywords": "天坛" })
-    // longrent.fangtianxia.rentTip({ "city": "北京", "keywords": "天坛" })
-    // longrent.wbtc.rentTip({ "city": "bj", "keywords": "天坛" })
     this.init();
     this.searchDataSubscription = SearchDataSubject.subscribe(() => {
       this.setData({ showPriceBlock: false });
+      setTimeout(() => {
+        this.getSearchDataFromGlobal();
+        this.setData({ needOnShow: true });
+      }, 1000);
+    });
+    this.searchLongDataSubscription = SearchLongDataSubject.subscribe(() => {
+      this.setData({ showLongPriceBlock: false });
       setTimeout(() => {
         this.getSearchDataFromGlobal();
         this.setData({ needOnShow: true });
