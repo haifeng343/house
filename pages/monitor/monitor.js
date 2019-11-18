@@ -31,15 +31,17 @@ Page({
       })
     }
   },
-  monitorChange(){
-    if(this.data.active == 1){
+  monitorChange(e){
+    var index = e.currentTarget.dataset.index;
+    if(this.data.active == 1&&this.data.active!=index){
       app.switchRent = 2
       this.setData({
         show:'',
         active: 2
       })
       this.getLongMonitorData()
-    }else{
+    }
+    if (this.data.active == 2 && this.data.active != index) {
       app.switchRent = 1
       this.setData({
         show: '',

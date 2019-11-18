@@ -253,6 +253,7 @@ Page({
       allOriginalData: sort.arr,
       allData: sort.arr.slice(0, 5),
       loadingDisplay: 'none',
+      isFirst: false
     })
   },
   
@@ -414,7 +415,17 @@ Page({
       if (monitorCount.zgTotal > -1) { enoughList.push({ key: 'zg', name: '榛果', value: monitorCount.zgTotal }) }
 
       enoughList.sort(util.compareSort('value', 'desc'));
-      
+      let num = wx.getStorageSync('monitorLeftNum');
+      if (!num && houseList && houseList.length > 1) {
+        wx.setStorageSync('monitorLeftNum', 1);
+        this.setData({
+          isFirst: true
+        })
+      } else {
+        this.setData({
+          isFirst: false
+        })
+      }
       this.setData({
         allOriginalData: monitorHouseData.allData,
         allData: monitorHouseData.allData.slice(0, 5),

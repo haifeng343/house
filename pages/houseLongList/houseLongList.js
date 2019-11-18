@@ -108,7 +108,7 @@ Page({
           this.setData({
             monitorenoughDisplay: "block",
             dialogTitle: "哎呀，到底了",
-            dialogText: "您已查看全部房源，更多房源可前往各平台查看",
+            dialogText: "您已查看全部房源，更多房源可前往各平台查看。",
             dialogBtn: "取消",
             enoughBottom: true
           });

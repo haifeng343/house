@@ -20,6 +20,10 @@ Component({
     },
     dayCount: {
       type: Number
+    },
+    isFirst: {
+      type: Boolean,
+      value: false
     }
   },
 
