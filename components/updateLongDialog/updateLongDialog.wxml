@@ -16,7 +16,7 @@
           </view>
           <view class="task">
             <view><text>类型:</text><text class="update" wx:if="{{updateData.longRentTypes!=defalutData.longRentTypes||filter.arrCompare(updateData.longLayouts,defalutData.longLayouts)==2}}">已改</text></view>
-            <text class="task_right">{{updateData.longRentTypes&&filter.rentType(updateData.longRentTypes)}}</text>
+            <text class="task_right">{{filter.rentType(updateData.longRentTypes)}}</text>
           </view>
           <view class="task">
             <view><text>预算:</text><text class="update" wx:if="{{updateData.minPrice!=defalutData.minPrice||updateData.maxPrice!=defalutData.maxPrice}}">已改</text></view>
