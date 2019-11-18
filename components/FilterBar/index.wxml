@@ -80,7 +80,7 @@
             </view>
           </scroll-view>
           <scroll-view scroll-into-view="{{level3View}}" scroll-y class="area-list level3" wx:if="{{areaList[currentAreaType].list[currentArea].list}}">
-            <view id="{{currentArea === index ? 'activelevel3' : ''}}" class="area-item {{currentStation === index ? 'active' : ''}}" wx:for="{{areaList[currentAreaType].list[currentArea].list}}" wx:key="{{item.label}}" bindtap="handleSelectStation" data-index="{{index}}">
+            <view id="{{currentStation === index ? 'activelevel3' : ''}}" class="area-item {{currentStation === index ? 'active' : ''}}" wx:for="{{areaList[currentAreaType].list[currentArea].list}}" wx:key="{{item.label}}" bindtap="handleSelectStation" data-index="{{index}}">
               <text class="area-label">{{item.label}}</text>
               <text class="icon-font uniE930" wx:if="{{currentStation === index}}" />
             </view>
