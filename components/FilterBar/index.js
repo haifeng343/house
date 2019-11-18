@@ -876,7 +876,7 @@ Component({
             ]
           });
         }
-        this.location = Object.assign({ nearby: 1 }, resp || {});
+        this.location = Object.assign({ nearby: 1, isHistory: false }, resp || {});
       });
 
       this.setData({
