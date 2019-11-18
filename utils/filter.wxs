@@ -17,6 +17,9 @@ var rentType = function (type) {
   if (type == 4) {
     return '次卧'
   }
+  if (type == 0) {
+    return '不限'
+  }
 }
 
 var arrCompare=function(arr1,arr2){
