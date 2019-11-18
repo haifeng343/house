@@ -27,9 +27,9 @@
       <text class="sub-title">(单位: 元／月)</text>
     </view>
     <view class="input-wrapper">
-      <input disabled="{{!useCustom}}" bindinput="handleMinPriceChange" maxlength="6" type="number" value="{{minText}}" placeholder="最低价" placeholder-class="input-placeholder" />
+      <input disabled="{{!useCustom}}" bindinput="handleMinPriceChange" maxlength="6" type="number" value="{{minInputValue}}" placeholder="最低价" placeholder-class="input-placeholder" />
       <text>-</text>
-      <input disabled="{{!useCustom}}" bindinput="handleMaxPriceChange" maxlength="6" type="number" value="{{maxText}}" placeholder="最高价" placeholder-class="input-placeholder" />
+      <input disabled="{{!useCustom}}" bindinput="handleMaxPriceChange" maxlength="6" type="number" value="{{maxInputValue}}" placeholder="最高价" placeholder-class="input-placeholder" />
     </view>
   </view>
 </view>

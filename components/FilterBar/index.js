@@ -7,7 +7,7 @@ import {
 } from "../../utils/longSetSearchData";
 import { isShowNearby } from "../../utils/longSetSearchData.js";
 
-const areaKey = ["area", "areaId", "areaJson", "areaType"];
+const areaKey = ["area", "areaId", "areaJson", "areaType", "isHistory"];
 
 const areaTagMap = {
   "0": "未选择",
@@ -198,7 +198,7 @@ Component({
       const searchKey = event.detail.value;
       const { cityId, chooseType } = this.data.data;
       this.setData({ searchKey });
-      if (chooseType == 1) {
+      if (chooseType === 1) {
         longRentTip
           .getIntermediaryData(cityId, searchKey)
           .then(resp => {
@@ -590,6 +590,8 @@ Component({
     handleResetPrice() {
       const { minPrice, maxPrice } = this.data.data;
       this.setData({ minPrice, maxPrice, rangeCustom: this.rangeCustom });
+      this.changeList.add("minPrice");
+      this.changeList.add("maxPrice");
     },
 
     checkReset() {
@@ -663,11 +665,13 @@ Component({
           this.changeList.add("areaJson");
           this.changeList.add("areaType");
           this.changeList.add("areaId");
+          this.changeList.add("isHistory");
           this.setData({
             area: "",
             areaJson: "",
             areaType: 0,
-            areaId: {}
+            areaId: {},
+            isHistory: false
           });
         }
       } else if (currentAreaType === 1) {
@@ -677,11 +681,13 @@ Component({
           this.changeList.add("areaJson");
           this.changeList.add("areaType");
           this.changeList.add("areaId");
+          this.changeList.add("isHistory");
           this.setData({
             area: "",
             areaJson: "",
             areaType: 0,
-            areaId: {}
+            areaId: {},
+            isHistory: false
           });
         }
       } else if (currentAreaType === 2) {
@@ -690,19 +696,25 @@ Component({
         this.changeList.add("areaJson");
         this.changeList.add("areaType");
         this.changeList.add("areaId");
+        this.changeList.add("isHistory");
         if (targetItem.label !== "不限") {
           this.setData({
             area: `附近 ${targetItem.label}`,
             areaJson: "",
             areaType: 60,
-            areaId: this.location
+            areaId: Object.assign(
+              { nearby: +targetItem.label.replace("km", "") },
+              this.location
+            ),
+            isHistory: false
           });
         } else {
           this.setData({
             area: "",
             areaJson: "",
             areaType: 0,
-            areaId: {}
+            areaId: {},
+            isHistory: false
           });
         }
       } else if (currentAreaType === 3) {
@@ -809,8 +821,16 @@ Component({
 
       const history =
         wx.getStorageSync("longSearchHistory_" + city + "_" + chooseType) || [];
-
-      if (outsideData.areaType === 0) {
+      if (outsideData.isHistory === true) {
+        // 搜索结果
+        currentAreaType = 3;
+        for (let i = 0; i < history.length; i++) {
+          if (history[i].area === outsideData.area) {
+            currentArea = i;
+            break;
+          }
+        }
+      } else if (outsideData.areaType === 0) {
       } else if (outsideData.areaType === 10) {
         currentArea = areaList[currentAreaType].list.findIndex(
           item => item.label === outsideData.area
@@ -836,15 +856,6 @@ Component({
         currentAreaType = 2;
         for (let i = 0; i < areaList[currentAreaType].list.length; i++) {
           if (areaList[currentAreaType].list[i].label === area) {
-            currentArea = i;
-            break;
-          }
-        }
-      } else {
-        // 搜索结果
-        currentAreaType = 3;
-        for (let i = 0; i < history.length; i++) {
-          if (history[i].area === outsideData.area) {
             currentArea = i;
             break;
           }
@@ -876,7 +887,7 @@ Component({
             ]
           });
         }
-        this.location = Object.assign({ nearby: 1, isHistory: false }, resp || {});
+        this.location = resp;
       });
 
       this.setData({
