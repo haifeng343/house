@@ -48,6 +48,10 @@
   right: 24rpx;
   z-index: 7
 }
+.card .star_select{
+  width: 40rpx;
+  height: 40rpx;
+}
 .card .classify {
   position: absolute;
   top: 32rpx;

@@ -49,7 +49,7 @@
             <view class="card_address">
               <view class="text">{{item.cityName}}</view>
               <view class="type"><text>{{item.houseSource ==1?'品牌中介':'个人房源'}}</text></view>
-              <view class="type"><text>{{item.rentType&&filter.rentType(item.rentType)}}</text></view>
+              <view class="type" wx:if="{{item.rentType}}"><text>{{item.rentType&&filter.rentType(item.rentType)}}</text></view>
             </view>
             <view class="card_budget {{item.status == 12?'past_card':''}} {{item.actualPrice?'':'card_search'}}">
               <view class="card_money" wx:if="{{item.status == 12}}">

@@ -28,6 +28,10 @@
   z-index: 7
 }
 
+.house_card .star_select{
+  width: 40rpx;
+  height: 40rpx;
+}
 .house_card .house_classify {
   position: absolute;
   top: 0;

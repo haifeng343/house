@@ -416,9 +416,14 @@ const getWbtcData = (type, wbtcfilter = {}) => {
   let timer = null;
   return new Promise((resolve, reject) => {
     longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 1, "size": 50 }, "filter": wbtcfilter }).then(res => {
-      res.result.getListInfo.infolist.shift()
+      if (res.result.getListInfo.infolist && res.result.getListInfo.infolist[0]['itemtype'] ==='listTangram'){
+        res.result.getListInfo.infolist.shift()
+      }
       wbtcCount = res.result.getListInfo.searchNum
       arr = res.result.getListInfo.infolist||[]
+      if (arr.length > wbtcCount){
+        wbtcCount = arr.length
+      }
       if (res && arr.length < 50 && arr.length < wbtcCount){
         timer = setTimeout(()=>{
           return longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 2, "size": 50 }, "filter": wbtcfilter });
@@ -1270,7 +1275,7 @@ const getBrandHouseData = (data)=>{
   let maxTotal = 50;
   let allData = [];
   let wiwjData = data.wiwjData;
-  let lianjiaData = data.lianjiaData;
+  let lianjiaData = lianjianFilter(data.lianjiaData);
   for (let i = 0; i < maxTotal; i++) {
     if (data.wiwjCount > 0) {
       let wiwj = addPlatfromData(allData, wiwjData, i);
@@ -2333,6 +2338,11 @@ function lianjiaTagwall(tags){
     t.push(tags[i].name)
   }
   return t
+}
+
+function lianjianFilter(arr){
+  let newArr = arr.filter(item => { return !/^\d+$/.test(item.house_code)})
+  return newArr
 }
 module.exports = {
   getTjData,

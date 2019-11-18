@@ -57,7 +57,7 @@
     <view class="classify" wx:if="{{item.platformId == 'lj'}}">贝壳</view>
     <view class="classify" wx:if="{{item.platformId == 'ftx'}}">房天下</view>
     <view class="classify" wx:if="{{item.platformId == 'tc'}}">58同城</view>
-    <image class="star" wx:if="{{item.collection&&isMonitorHouse ===0&&isStatist}}" data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.housesid}}" catchtap="goToCollection" src="../../assets/image/star_select.png"></image>
+    <image class="star star_select" wx:if="{{item.collection&&isMonitorHouse ===0&&isStatist}}" data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.housesid}}" catchtap="goToCollection" src="../../assets/image/star_select.png"></image>
         <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0&&isStatist}}" data-index="{{idx}}" data-collection="{{item.collection}}" data-productId="{{item.housesid}}" catchtap="goToCollection" src="../../assets/image/star.png"></image>
     <view class="price">
       <text>¥{{item.price}}/月</text>

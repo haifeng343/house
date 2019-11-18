@@ -86,7 +86,7 @@
 
 .monitor_card .card_total{font-size: 32rpx;padding-left: 44rpx;}
 .monitor_long_card .card_total{display: flex}
-.monitor_long_card .card_total .location{width: 400rpx;}
+.monitor_long_card .card_total .location{width: 300rpx;}
 .monitor_long_card .card_total .card_price{flex: 1;text-align: right;margin-right: 38rpx;}
 .monitor_card .card_line{padding: 0 44rpx;}
 .monitor_card .card_line .line{
