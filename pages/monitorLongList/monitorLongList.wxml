@@ -76,7 +76,7 @@
       <image bindtap="goTop" wx:if="{{scrollTop>500}}" class="top" src="../../assets/image/top.png"></image>
     </view>
     <view>
-      <image bindtap="goSort" wx:if="{{isMonitorHouse ===0}}" class="sort" src="../../assets/image/sort.png"></image>
+      <image bindtap="goSort"  class="sort" src="../../assets/image/sort.png"></image>
     </view>
   </view>
   <view class="house_loading" style="display:{{loadingDisplay}}" catchtouchmove="preventTouchMove">
