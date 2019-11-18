@@ -319,7 +319,6 @@ const wbtc = {
           imei: SOUFUN_IMEI,
           productorid: 1
         },
-        data: buildParams(params, true),
         success: res => {
           if (res.data) {
             resolve(res.data)
@@ -329,7 +328,6 @@ const wbtc = {
         },
         fail: res => {
           reject(false)
-          throwErrorResponse()
         }
       })
     })
