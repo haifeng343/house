@@ -608,6 +608,14 @@ Component({
       this.handleResetType();
       this.handleResetPrice();
       this.handleResetSearch();
+      this.handleResetView();
+    },
+
+    handleResetView() {
+      this.setData({
+        level2View: "",
+        level3View: ""
+      });
     },
 
     handlePriceCustom(event) {
@@ -749,12 +757,7 @@ Component({
       }
 
       if (this.data.minPrice >= this.data.maxPrice) {
-        wx.showToast({ title: "最高价至少比最低价高100", icon: "none" });
-        return;
-      }
-
-      if (this.data.maxPrice - this.data.minPrice < 100) {
-        wx.showToast({ title: "最低价不得高于最高价", icon: "none" });
+        wx.showToast({ title: "最高价必须高于最低价", icon: "none" });
         return;
       }
 
@@ -806,6 +809,9 @@ Component({
 
       const { city, chooseType } = outsideData;
 
+      const history =
+        wx.getStorageSync("longSearchHistory_" + city + "_" + chooseType) || [];
+
       if (outsideData.areaType === 0) {
       } else if (outsideData.areaType === 10) {
         currentArea = areaList[currentAreaType].list.findIndex(
@@ -839,8 +845,8 @@ Component({
       } else {
         // 搜索结果
         currentAreaType = 3;
-        for (let i = 0; i < areaList[currentAreaType].list.length; i++) {
-          if (areaList[currentAreaType].list[i].label === outsideData.area) {
+        for (let i = 0; i < history.length; i++) {
+          if (history[i].area === outsideData.area) {
             currentArea = i;
             break;
           }
@@ -874,9 +880,6 @@ Component({
         }
         this.location = Object.assign({ nearby: 1 }, resp || {});
       });
-
-      const history =
-        wx.getStorageSync("longSearchHistory_" + city + "_" + chooseType) || [];
 
       this.setData({
         currentAreaType,

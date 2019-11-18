@@ -1748,32 +1748,32 @@ const wiwjScreenParam = type=>{
   let longHouseTags = searchData.longHouseTags.concat()
   if (longHouseTags.length) {
     // obj.decoratetype = ''
-    if (longLayouts.indexOf(1) > -1) {
+    if (longHouseTags.indexOf(1) > -1) {
       obj.decoratetype = '3'
     }
     obj.tags = ''
-    if (longLayouts.indexOf(2) > -1) {
+    if (longHouseTags.indexOf(2) > -1) {
       obj.tags = '1'
     }
-    if (longLayouts.indexOf(3) > -1) {
+    if (longHouseTags.indexOf(3) > -1) {
       if (obj.tags) {
         obj.tags += ','
       }
       obj.tags += '32'
     }
-    if (longLayouts.indexOf(4) > -1) {
+    if (longHouseTags.indexOf(4) > -1) {
       if (obj.tags) {
         obj.tags += ','
       }
       obj.tags += '4'
     }
-    if (longLayouts.indexOf(5) > -1) {
+    if (longHouseTags.indexOf(5) > -1) {
       if (obj.tags) {
         obj.tags += ','
       }
       obj.tags += '64'
     }
-    if (longLayouts.indexOf(6) > -1) {
+    if (longHouseTags.indexOf(6) > -1) {
       if (obj.tags) {
         obj.tags += ','
       }
