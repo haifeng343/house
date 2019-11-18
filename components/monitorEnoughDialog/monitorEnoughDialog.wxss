@@ -27,35 +27,36 @@
 .mask_mold{margin: 20rpx 28rpx 0;}
 .mask_mold .mold_first{display: flex;flex-wrap: wrap;position: relative;justify-content:space-between;}
 .mask_mold .mold_one{justify-content:center}
-.mold{width:254rpx ;height: 188rpx;}
-.mold .mold_name{width:254rpx ;height: 188rpx;position: relative;display: flex;}
+.mold{width:254rpx ;height: 188rpx;position: relative;}
+.mold .mold_name{width:254rpx ;height: 188rpx;}
 .mold image{width:254rpx;height: 188rpx;}
 .mold .mold_name .num{font-size:36rpx;color: #FFFFFF;font-weight:500; position: absolute;  bottom: 40rpx;width:254rpx;text-align: center}
-.mask_mold .mold_three .mold_normal{height: 254rpx;}
-.mask_mold .mold_three .mold_other{height: 120rpx;}
+.mask_mold .mold_three .mold_normal{display: flex;height: 254rpx;justify-content: center;align-items: center}
+.mask_mold .mold_three .mold_other{display: flex;height: 120rpx;justify-content: center;align-items: center}
 .mask_mold .mold_three .mold_normal image{height: 254rpx;}
 .mask_mold .mold_three .mold_other image{height: 120rpx;}
 .mask_mold .mold_three .mold_other .num{font-size:32rpx;}
 .mask_mold .mold_three .mold_ab{position: absolute;right: 0;bottom: 0;}
+
 .mask_mold .mold_three .mold_normal .num{bottom: 56rpx;}
-.mask_mold .mold_three .mold_normal .mold_name{display: flex;height: 254rpx;justify-content: center;align-items: center}
-.mask_mold .mold_three .mold_normal .line{width: 140rpx;height: 2rpx;position: absolute; background: #FFFFFF}
-.mask_mold .mold_three .mold_normal .tj_logo{width: 126rpx;height: 32rpx;position: absolute;  top: 64rpx;}
-.mask_mold .mold_three .mold_normal .xz_logo{width: 98rpx;height: 48rpx;position: absolute;  top: 64rpx;}
-.mask_mold .mold_three .mold_normal .mn_logo{width: 48rpx;height: 32rpx;position: absolute;  top: 64rpx;}
-.mask_mold .mold_three .mold_normal .zg_logo{width: 130rpx;height: 32rpx;position: absolute;  top: 64rpx;}
+.mask_mold .mold_three .mold_normal .mold_name{height: 254rpx;}
+.mask_mold .mold_three .mold_normal .line{width: 140rpx;height: 2rpx;position: absolute; background: #FFFFFF;left: 50%;top:50%;margin-left: -70rpx}
+.mask_mold .mold_three .mold_normal .tj_logo{width: 126rpx;height: 32rpx;position: absolute;  top: 64rpx;left: 50%;margin-left: -63rpx}
+.mask_mold .mold_three .mold_normal .xz_logo{width: 98rpx;height: 48rpx;position: absolute;  top: 64rpx;left: 50%;margin-left: -49rpx}
+.mask_mold .mold_three .mold_normal .mn_logo{width: 48rpx;height: 32rpx;position: absolute;  top: 64rpx;left: 50%;margin-left: -24rpx}
+.mask_mold .mold_three .mold_normal .zg_logo{width: 130rpx;height: 32rpx;position: absolute;  top: 64rpx;left: 50%;margin-left: -65rpx}
 
 .mask_mold .mold_three .mold_other .num{bottom: 8rpx;}
-.mask_mold .mold_three .mold_other .mold_name{display: flex;height: 120rpx;justify-content: center;align-items: center}
-.mask_mold .mold_three .mold_other .line{width: 100rpx;height: 2rpx;position: absolute; background: #FFFFFF}
-.mask_mold .mold_three .mold_other .tj_logo{width: 126rpx;height: 32rpx;position: absolute;  top: 16rpx;}
-.mask_mold .mold_three .mold_other .xz_logo{width: 98rpx;height: 48rpx;position: absolute;  top: 16rpx;}
-.mask_mold .mold_three .mold_other .mn_logo{width: 48rpx;height: 32rpx;position: absolute;  top: 16rpx;}
-.mask_mold .mold_three .mold_other .zg_logo{width: 130rpx;height: 32rpx;position: absolute;  top: 16rpx;}
-.mask_mold .mold_three .mold_other .tj_n_logo{width: 174rpx;height: 52rpx;position: absolute;  top: 16rpx;}
-.mask_mold .mold_three .mold_other .xz_n_logo{width: 130rpx;height: 66rpx;position: absolute;  top: 16rpx;}
-.mask_mold .mold_three .mold_other .mn_n_logo{width: 84rpx;height: 60rpx;position: absolute;  top: 16rpx;}
-.mask_mold .mold_three .mold_other .zg_n_logo{width: 190rpx;height: 56rpx;position: absolute;  top: 16rpx;}
+.mask_mold .mold_three .mold_other .mold_name{height: 120rpx;}
+.mask_mold .mold_three .mold_other .line{width: 100rpx;height: 2rpx;position: absolute; background: #FFFFFF;left: 50%;top:50%;margin-left: -50rpx}
+.mask_mold .mold_three .mold_other .tj_logo{width: 126rpx;height: 32rpx;position: absolute;  top: 16rpx;left: 50%;margin-left: -63rpx}
+.mask_mold .mold_three .mold_other .xz_logo{width: 98rpx;height: 48rpx;position: absolute;  top: 16rpx;left: 50%;margin-left: -49rpx}
+.mask_mold .mold_three .mold_other .mn_logo{width: 48rpx;height: 32rpx;position: absolute;  top: 16rpx;left: 50%;margin-left: -24rpx}
+.mask_mold .mold_three .mold_other .zg_logo{width: 130rpx;height: 32rpx;position: absolute;  top: 16rpx;left: 50%;margin-left: -65rpx}
+.mask_mold .mold_three .mold_other .tj_n_logo{width: 174rpx;height: 52rpx;position: absolute;  top: 16rpx;margin-left: -63rpx}
+.mask_mold .mold_three .mold_other .xz_n_logo{width: 130rpx;height: 66rpx;position: absolute;  top: 16rpx;margin-left: -63rpx}
+.mask_mold .mold_three .mold_other .mn_n_logo{width: 84rpx;height: 60rpx;position: absolute;  top: 16rpx;margin-left: -63rpx}
+.mask_mold .mold_three .mold_other .zg_n_logo{width: 190rpx;height: 56rpx;position: absolute;  top: 16rpx;margin-left: -63rpx}
 .mask_out .mask_know{
   width: 482rpx;
   height: 92rpx;
