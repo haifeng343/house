@@ -75,7 +75,9 @@ Component({
     area: "",
     areaId: {},
     areaJson: "",
-    areaType: 0
+    areaType: 0,
+    level2View: "",
+    level3View: ""
   },
   properties: {
     data: {
@@ -152,10 +154,11 @@ Component({
       value: [],
       observer(newvalue) {
         if (newvalue && newvalue.length > 0) {
+          const baseAreaList = JSON.parse(this.baseAreaList);
           newvalue
             .map(item => item.split("_"))
             .forEach(([name, type, subname]) => {
-              const target = this.baseAreaList.find(item => item.type === type);
+              const target = baseAreaList.find(item => item.type === type);
               if (target) {
                 if (!subname) {
                   target.list.push({
@@ -183,7 +186,7 @@ Component({
                 }
               }
             });
-          this.setData({ areaList: this.baseAreaList });
+          this.setData({ areaList: baseAreaList });
         }
       }
     }
@@ -226,8 +229,8 @@ Component({
               searchResultList: resp.map(item =>
                 Object.assign(
                   {
-                    label: item.area,
-                    tag: areaTagMap[item.areaType]
+                    label: item.name,
+                    tag: areaTagMap[item.type]
                   },
                   item
                 )
@@ -298,8 +301,17 @@ Component({
           this.setData({ showTopPanel: true, currentPanel: "type" });
           break;
         case "area":
-          this.setData({ showTopPanel: true, currentPanel: "area" });
+          this.setData({
+            showTopPanel: true,
+            currentPanel: "area"
+          });
           this.getAreaData();
+          wx.nextTick(() => {
+            this.setData({
+              level2View: "activelevel2",
+              level3View: "activelevel3"
+            });
+          });
           break;
       }
     },
@@ -530,6 +542,10 @@ Component({
       this.setData(Object.assign({}, assginData, { map: insideData.map }));
     },
 
+    handleResetSearch() {
+      this.setData({ searchKey: "", isSearch: false, searchResultList: [] });
+    },
+
     handleResetType() {
       const outsideData = this.data.data;
 
@@ -591,11 +607,24 @@ Component({
       this.handleResetFilter();
       this.handleResetType();
       this.handleResetPrice();
+      this.handleResetSearch();
+      this.handleResetView();
+    },
+
+    handleResetView() {
+      this.setData({
+        level2View: "",
+        level3View: ""
+      });
+    },
+
+    handlePriceCustom(event) {
+      const rangeCustom = event.detail;
+      this.setData({ rangeCustom });
     },
 
     handlePriceChange(event) {
-      const { max, min, custom } = event.detail;
-      this.rangeCustom = custom;
+      const { max, min } = event.detail;
       this.setData({ maxPrice: max, minPrice: min });
       this.changeList.add("minPrice");
       this.changeList.add("maxPrice");
@@ -661,12 +690,21 @@ Component({
         this.changeList.add("areaJson");
         this.changeList.add("areaType");
         this.changeList.add("areaId");
-        this.setData({
-          area: `附近 ${targetItem.label}`,
-          areaJson: "",
-          areaType: 60,
-          areaId: this.location
-        });
+        if (targetItem.label !== "不限") {
+          this.setData({
+            area: `附近 ${targetItem.label}`,
+            areaJson: "",
+            areaType: 60,
+            areaId: this.location
+          });
+        } else {
+          this.setData({
+            area: "",
+            areaJson: "",
+            areaType: 0,
+            areaId: {}
+          });
+        }
       } else if (currentAreaType === 3) {
         const targetItem = areaList[currentAreaType].list[index];
         Object.keys(targetItem)
@@ -698,6 +736,31 @@ Component({
     },
 
     handleSubmit() {
+      if (
+        Number.isNaN(this.data.minPrice) ||
+        this.data.minPrice < 0 ||
+        this.data.minPrice > 10000 ||
+        this.data.minPrice !== ~~this.data.minPrice
+      ) {
+        wx.showToast({ title: "请输入正确的最低价", icon: "none" });
+        return;
+      }
+
+      if (
+        Number.isNaN(this.data.minPrice) ||
+        this.data.maxPrice < 100 ||
+        this.data.maxPrice > 10000 ||
+        this.data.maxPrice !== ~~this.data.maxPrice
+      ) {
+        wx.showToast({ title: "请输入正确的最高价", icon: "none" });
+        return;
+      }
+
+      if (this.data.minPrice >= this.data.maxPrice) {
+        wx.showToast({ title: "最高价必须高于最低价", icon: "none" });
+        return;
+      }
+
       this.setData({
         showRightPanel: false,
         showTopPanel: false,
@@ -746,6 +809,9 @@ Component({
 
       const { city, chooseType } = outsideData;
 
+      const history =
+        wx.getStorageSync("longSearchHistory_" + city + "_" + chooseType) || [];
+
       if (outsideData.areaType === 0) {
       } else if (outsideData.areaType === 10) {
         currentArea = areaList[currentAreaType].list.findIndex(
@@ -779,8 +845,8 @@ Component({
       } else {
         // 搜索结果
         currentAreaType = 3;
-        for (let i = 0; i < areaList[currentAreaType].list.length; i++) {
-          if (areaList[currentAreaType].list[i].label === outsideData.area) {
+        for (let i = 0; i < history.length; i++) {
+          if (history[i].area === outsideData.area) {
             currentArea = i;
             break;
           }
@@ -796,6 +862,10 @@ Component({
         } else if (this.data.areaList[2].length === 0) {
           this.setData({
             "areaList[2].list": [
+              ,
+              {
+                label: "不限"
+              },
               {
                 label: "1km"
               },
@@ -810,9 +880,6 @@ Component({
         }
         this.location = Object.assign({ nearby: 1 }, resp || {});
       });
-
-      const history =
-        wx.getStorageSync("longSearchHistory_" + city + "_" + chooseType) || [];
 
       this.setData({
         currentAreaType,
@@ -842,6 +909,16 @@ Component({
         currentAreaType: 3,
         currentArea: 0
       });
+
+      const e = {
+        currentTarget: {
+          dataset: {
+            index: 0
+          }
+        }
+      };
+
+      this.handleSelectArea(e);
     }
   },
   lifetimes: {
@@ -850,7 +927,7 @@ Component({
 
       this.rangeCustom = false;
 
-      this.baseAreaList = [
+      this.baseAreaList = JSON.stringify([
         {
           title: "行政区",
           type: "10",
@@ -875,6 +952,9 @@ Component({
           title: "附近",
           list: [
             {
+              label: "不限"
+            },
+            {
               label: "1km"
             },
             {
@@ -889,7 +969,7 @@ Component({
           title: "搜索历史",
           list: []
         }
-      ];
+      ]);
     }
   }
 });

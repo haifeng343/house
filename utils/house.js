@@ -1285,7 +1285,7 @@ const getBrandHouseData = (data)=>{
           imgurl: wiwjData[i].imgurl,
           price: Number(wiwjData[i].price),
           housetitle: wiwjData[i].housetitle,
-          introduce: wiwjData[i].BaseDetail.area + 'm2/' + wiwjData[i].BaseDetail.floorStr + '/' + wiwjData[i].BaseDetail.heading,
+          introduce: wiwjData[i].BaseDetail.area + '㎡/' + wiwjData[i].BaseDetail.floorStr + '/' + wiwjData[i].BaseDetail.heading,
           address: wiwjData[i].qyname + '.' + wiwjData[i].sqname,
           tagwall: wiwjData[i].tagwall,
           area: Number(wiwjData[i].BaseDetail.area)
@@ -1308,7 +1308,7 @@ const getBrandHouseData = (data)=>{
           imgurl: lianjiaData[i].list_picture,
           price: Number(lianjiaData[i].rent_price_listing),
           housetitle: lianjiaData[i].house_title,
-          introduce: lianjiaData[i].rent_area + 'm2/' + lianjiaData[i].layout + '/' + lianjiaData[i].frame_orientation,
+          introduce: lianjiaData[i].rent_area + '㎡/' + lianjiaData[i].layout + '/' + lianjiaData[i].frame_orientation,
           address: lianjiaData[i].district_name + '.' + lianjiaData[i].bizcircle_name,
           tagwall: lianjiaTagwall(lianjiaData[i].house_tags),
           area: Number(lianjiaData[i].rent_area)
@@ -1387,7 +1387,7 @@ const getPersonalHouseData = (data) => {
           imgurl: fangtianxiaData[i].titleimage.text,
           price: Number(fangtianxiaData[i].price.text),
           housetitle: fangtianxiaData[i].title.text,
-          introduce: fangtianxiaData[i].buildarea.text + 'm2/' + fangtianxiaData[i].rentway.text + ' ' + fangtianxiaData[i].room.text+'室',
+          introduce: fangtianxiaData[i].buildarea.text + '㎡/' + fangtianxiaData[i].rentway.text + ' ' + fangtianxiaData[i].room.text+'室',
           address: fangtianxiaData[i].district.text + '.' + fangtianxiaData[i].comarea.text,
           tagwall: fangtianxiaData[i].tags.text?fangtianxiaData[i].tags.text.split(" "):[],
           area: Number(fangtianxiaData[i].buildarea.text)
@@ -1410,7 +1410,7 @@ const getPersonalHouseData = (data) => {
           imgurl: wbtcData[i].picUrl,
           price: Number(wbtcData[i].priceDict.p),
           housetitle: wbtcData[i].title,
-          introduce: wbtcData[i].area.split('㎡')[0] + 'm2/' + wbtcData[i].huxing,
+          introduce: wbtcData[i].area.split('㎡')[0] + '㎡/' + wbtcData[i].huxing,
           address: wbtcData[i].lastLocal,
           tagwall: wbtcData[i].usedTages?wbtcData[i].usedTages.split(','):[],
           area: Number(wbtcData[i].area.split('㎡')[0])
@@ -1482,7 +1482,7 @@ const getMonitorLongHouseData = houseList=>{
         imgurl: houseList[i].data.imgurl,
         price: Number(houseList[i].data.price),
         housetitle: houseList[i].data.housetitle,
-        introduce: houseList[i].data.BaseDetail.area + 'm2/' + houseList[i].data.BaseDetail.floorStr + '/' + houseList[i].data.BaseDetail.heading,
+        introduce: houseList[i].data.BaseDetail.area + '㎡/' + houseList[i].data.BaseDetail.floorStr + '/' + houseList[i].data.BaseDetail.heading,
         address: houseList[i].data.qyname + '.' + houseList[i].data.sqname,
         tagwall: houseList[i].data.tagwall,
         area: Number(houseList[i].data.BaseDetail.area)
@@ -1499,7 +1499,7 @@ const getMonitorLongHouseData = houseList=>{
         imgurl: houseList[i].data.list_picture,
         price: Number(houseList[i].data.rent_price_listing),
         housetitle: houseList[i].data.house_title,
-        introduce: houseList[i].data.rent_area + 'm2/' + houseList[i].data.layout + '/' + houseList[i].data.frame_orientation,
+        introduce: houseList[i].data.rent_area + '㎡/' + houseList[i].data.layout + '/' + houseList[i].data.frame_orientation,
         address: houseList[i].data.district_name + '.' + houseList[i].data.bizcircle_name,
         tagwall: lianjiaTagwall(houseList[i].data.house_tags),
         area: Number(houseList[i].data.rent_area)
@@ -1515,7 +1515,7 @@ const getMonitorLongHouseData = houseList=>{
         imgurl: houseList[i].data.titleimage,
         price: Number(houseList[i].data.price),
         housetitle: houseList[i].data.title,
-        introduce: houseList[i].data.buildarea + 'm2/' + houseList[i].data.rentway + ' ' + houseList[i].data.room + '室',
+        introduce: houseList[i].data.buildarea + '㎡/' + houseList[i].data.rentway + ' ' + houseList[i].data.room + '室',
         address: houseList[i].data.district + '.' + houseList[i].data.comarea,
         tagwall: houseList[i].data.tags ? houseList[i].data.tags.split(" ") : [],
         area: Number(houseList[i].data.buildarea)
@@ -1532,7 +1532,7 @@ const getMonitorLongHouseData = houseList=>{
         imgurl: houseList[i].data.picUrl,
         price: Number(houseList[i].data.priceDict.p),
         housetitle: houseList[i].data.title,
-        introduce: houseList[i].data.area.split('㎡')[0] + 'm2/' + houseList[i].data.huxing,
+        introduce: houseList[i].data.area.split('㎡')[0] + '㎡/' + houseList[i].data.huxing,
         address: houseList[i].data.lastLocal,
         tagwall: houseList[i].data.usedTages ? houseList[i].data.usedTages.split(',') : [],
         area: Number(houseList[i].data.area.split('㎡')[0])

@@ -12,9 +12,12 @@
   <TopPanel id="TopPanel" bind:onClose="handleHideTopPanel">
     <view class="price-panel" wx:if="{{currentPanel === 'price'}}">
       <view class="content-wrapper">
-        <view class="price-title">预算</view>
+        <view class="price-title">
+          <image src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTFweCIgaGVpZ2h0PSIxNHB4IiB2aWV3Qm94PSIwIDAgMTEgMTQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjUuMDAwMDAwLCAtMzY2LjAwMDAwMCkiIGZpbGwtcnVsZT0ibm9uemVybyI+CiAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI2LjAwMDAwMCwgMzYxLjAwMDAwMCkiPgogICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsIDYuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICAgICAgPHBvbHlnb24gZmlsbD0iI0U3NUQyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNC45ODMwNDcsIDcuMTU2ODU0KSByb3RhdGUoNDUuMDAwMDAwKSB0cmFuc2xhdGUoLTQuOTgzMDQ3LCAtNy4xNTY4NTQpICIgcG9pbnRzPSIxLjQ4MzA0NjUzIDMuNjU2ODU0MjUgOC40ODMwNDY1MyAzLjY1Njg1NDI1IDguNDgzMDQ2NTMgMTAuNjU2ODU0MiAxLjQ4MzA0NjUzIDEwLjY1Njg1NDIiPjwvcG9seWdvbj4KICAgICAgICAgICAgICAgICAgICA8cG9seWxpbmUgc3Ryb2tlPSIjMUQxRDFEIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0Ljk0OTc0NywgNC45NDk3NDcpIHJvdGF0ZSg0NS4wMDAwMDApIHRyYW5zbGF0ZSgtNC45NDk3NDcsIC00Ljk0OTc0NykgIiBwb2ludHM9IjEuNDQ5NzQ3NDcgOC40NDk3NDc0NyAxLjQ0OTc0NzQ3IDEuNDQ5NzQ3NDcgOC40NDk3NDc0NyAxLjQ0OTc0NzQ3Ij48L3BvbHlsaW5lPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4=" class="title-icon" />
+          <text>预算</text>
+        </view>
         <view class="price-range-wrapper">
-          <Range showInput="{{true}}" min="{{minPrice}}" max="{{maxPrice}}" bind:onChange="handlePriceChange" custom="{{rangeCustom}}" />
+          <Range showInput="{{true}}" min="{{minPrice}}" max="{{maxPrice}}" bind:onChange="handlePriceChange" custom="{{rangeCustom}}" bind:onCustom="handlePriceCustom" />
         </view>
       </view>
       <view class="button-wrapper">
@@ -25,7 +28,10 @@
       <view class="filter-list">
         <block wx:for="{{map.type}}" wx:key="{{item.title}}">
           <view class="filter-item" wx:if="{{!item.showType || tools.includes(item.showType, longRentTypes)}}">
-            <view class="filter-title">{{item.title}}</view>
+            <view class="filter-title">
+              <image wx:if="{{item.icon}}" src="{{item.icon}}" class="title-icon" />
+              <text>{{item.title}}</text>
+            </view>
             <view class="option-list">
               <block wx:for="{{item.list}}" wx:key="{{item2.label}}" wx:for-item="item2">
                 <view wx:if="{{!item2.showType || tools.includes(item2.showType, longRentTypes)}}" class="option-item {{item2.active ? 'active' : ''}}" bindtap="handleSelectType" data-value="{{item2.value}}" data-field="{{item.field}}">
@@ -63,18 +69,20 @@
           <scroll-view scroll-y class="area-list level1">
             <block wx:for="{{areaList}}" wx:key="{{item.title}}">
               <view class="area-item {{currentAreaType === index ? 'active' : ''}}" wx:if="{{item.list.length > 0}}" bindtap="handleSelectAreaType" data-index="{{index}}">
-                {{item.title}}
+                <text>{{item.title}}</text>
               </view>
             </block>
           </scroll-view>
-          <scroll-view scroll-y class="area-list level2 " wx:if="{{areaList[currentAreaType].list}}">
-            <view class="area-item {{currentArea === index ? 'active' : ''}}" wx:for="{{areaList[currentAreaType].list}}" wx:key="{{item.label}}" bindtap="handleSelectArea" data-index="{{index}}">
-              {{item.label}}
+          <scroll-view scroll-into-view="{{level2View}}" scroll-y class="area-list level2 " wx:if="{{areaList[currentAreaType].list}}">
+            <view id="{{currentArea === index ? 'activelevel2' : ''}}" class="area-item {{currentArea === index ? 'active' : ''}} {{!item.list ? 'no-child' : 'has-child'}}" wx:for="{{areaList[currentAreaType].list}}" wx:key="{{item.label}}" bindtap="handleSelectArea" data-index="{{index}}">
+              <text class="area-label">{{item.label}}</text>
+              <text class="icon-font uniE930" wx:if="{{!item.list && currentArea === index}}" />
             </view>
           </scroll-view>
-          <scroll-view scroll-y class="area-list level3" wx:if="{{areaList[currentAreaType].list[currentArea].list}}">
-            <view class="area-item {{currentStation === index ? 'active' : ''}}" wx:for="{{areaList[currentAreaType].list[currentArea].list}}" wx:key="{{item.label}}" bindtap="handleSelectStation" data-index="{{index}}">
-              {{item.label}}
+          <scroll-view scroll-into-view="{{level3View}}" scroll-y class="area-list level3" wx:if="{{areaList[currentAreaType].list[currentArea].list}}">
+            <view id="{{currentStation === index ? 'activelevel3' : ''}}" class="area-item {{currentStation === index ? 'active' : ''}}" wx:for="{{areaList[currentAreaType].list[currentArea].list}}" wx:key="{{item.label}}" bindtap="handleSelectStation" data-index="{{index}}">
+              <text class="area-label">{{item.label}}</text>
+              <text class="icon-font uniE930" wx:if="{{currentStation === index}}" />
             </view>
           </scroll-view>
         </view>

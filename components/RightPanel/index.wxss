@@ -60,9 +60,8 @@
   font-size: 32rpx;
   color: #1d1d1d;
   font-weight: 500;
-  height: 44rpx;
-  display: flex;
-  align-items: center;
+  position: relative;
+  padding-left: 40rpx;
 }
 
 .option-list {
@@ -129,4 +128,13 @@
 .button-confirm {
   color: #fff;
   background-image: linear-gradient(180deg, #e75d28 0%, #e94444 100%);
+}
+
+.title-icon {
+  position: absolute;
+  width: 11px;
+  height: 14px;
+  top: 50%;
+  left: 12rpx;
+  transform: translateY(-50%);
 }

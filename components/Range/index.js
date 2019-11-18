@@ -69,11 +69,13 @@ Component({
       }
     },
     handleClickCustom() {
+      const useCustom = !this.data.useCustom;
       this.setData({
-        useCustom: !this.data.useCustom,
+        useCustom,
         maxText: this.data.maxValue,
         minText: this.data.minValue
       });
+      this.triggerEvent("onCustom", useCustom);
     },
     handleMinPriceChange(event) {
       const { maxValue } = this.data;
@@ -81,8 +83,7 @@ Component({
 
       this.triggerEvent("onChange", {
         min: minValue,
-        max: maxValue,
-        custom: true
+        max: maxValue
       });
     },
     handleMaxPriceChange(event) {
@@ -91,8 +92,7 @@ Component({
 
       this.triggerEvent("onChange", {
         min: minValue,
-        max: maxValue,
-        custom: true
+        max: maxValue
       });
     },
     handleLeftTouchEnd(event) {
@@ -299,8 +299,7 @@ Component({
 
         this.triggerEvent("onChange", {
           min: minValue,
-          max: maxValue,
-          custom: false
+          max: maxValue
         });
       });
     },

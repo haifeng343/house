@@ -1,4 +1,4 @@
-import CouponService from './service';
+import CouponService from "./service";
 
 Page({
   /**
@@ -23,17 +23,18 @@ Page({
    */
   onLoad: function() {
     wx.showLoading({
-      title: '',
+      title: "",
       mask: true
     });
-    this.getCouponList();
+    this.getCouponList().then(_ => {
+      wx.hideLoading();
+    });
   },
 
   getCouponList() {
-    this.service
+    return this.service
       .getData(this.data.currentTabValue)
       .then(resp => {
-        wx.hideLoading();
         const { couponList, tabList } = resp;
         this.setData({ isLoaded: true, couponList });
         if (tabList) {
@@ -45,7 +46,7 @@ Page({
         wx.hideLoading();
         wx.showToast({
           title: `获取卡券数据失败!请联系客服!${error.message}`,
-          icon: 'none'
+          icon: "none"
         });
       });
   },
@@ -59,10 +60,12 @@ Page({
       { currentTabValue: tabValue, isLoaded: false, couponList: [] },
       () => {
         wx.showLoading({
-          title: '',
+          title: "",
           mask: true
         });
-        this.getCouponList();
+        this.getCouponList().then(_ => {
+          wx.hideLoading();
+        });
       }
     );
   },
@@ -74,7 +77,7 @@ Page({
       if (this.submitFlag === false) {
         this.submitFlag = true;
         wx.showLoading({
-          title: '',
+          title: "",
           mask: true
         });
         this.service
@@ -83,8 +86,8 @@ Page({
             this.submitFlag = false;
             wx.hideLoading();
             wx.showToast({
-              title: `兑换成功!`,
-              icon: 'none'
+              title: `成功兑换${item.day}盯盯币!`,
+              icon: "none"
             });
             this.getCouponList();
           })
@@ -94,7 +97,7 @@ Page({
             wx.hideLoading();
             wx.showToast({
               title: `兑换盯盯币失败!请联系客服!${error.message}`,
-              icon: 'none'
+              icon: "none"
             });
           });
       }
@@ -110,7 +113,7 @@ Page({
   handleActionConfirm() {
     this.setData({ showActionDialog: false });
     wx.navigateToMiniProgram({
-      appId: 'wx11970e278167bf3b',
+      appId: "wx11970e278167bf3b",
       path: `pages/home/index`
     });
   }

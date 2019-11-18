@@ -27,7 +27,7 @@
               </view>
             </block>
           </view>
-          <view class="rule" bindtap="handleGotoCouponRule">
+          <view wx:if="{{false}}" class="rule" bindtap="handleGotoCouponRule">
             <text>使用规则</text>
             <text class="icon-font uniE92A" />
           </view>
