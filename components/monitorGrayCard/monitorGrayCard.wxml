@@ -1,3 +1,4 @@
+<wxs src="../../utils/filter.wxs" module="filter" />
 <view class="monitor_card monitor_gray_card {{item.longRentType ==2?'monitor_long_card':''}}" data-index="{{item.index}}" data-type='1' bindtap="handleClick">
   <movable-area class="area">
     <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
