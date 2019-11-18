@@ -2236,7 +2236,7 @@ const tcScreenParam = type => {
     obj.filterParams.cateid = 8
   }
   if (longRentTypes == 2) {
-    obj.filterParams.renttype = 10
+    obj.filterParams.cateid = 10
   }
   if (longRentTypes == 3) {
     obj.filterParams['param1601--param1601'] = '00--1'
