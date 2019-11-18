@@ -1,7 +1,7 @@
 <view class="section {{show === 0||show === 2?'section_empty':''}}">
   <view class="tab">
     <view class="tab_btn">
-      <text class="{{active ===1?'active':''}}" bindtap="monitorChange">短租</text><text class="{{active ===2?'active':''}}" bindtap="monitorChange">长租</text>
+      <text class="{{active ===1?'active':''}}" bindtap="monitorChange" data-index="1">短租</text><text class="{{active ===2?'active':''}}" bindtap="monitorChange" data-index="2">长租</text>
     </view>
   </view>
   <view wx:if="{{show===1}}" class="card_list">

@@ -2,7 +2,7 @@
 <view class="house_card" data-productId="{{item.productId}}" data-platform="{{item.platformId}}" data-index="{{idx}}" catchtap="goToPlatformDetail">
   <view wx:if="{{isMonitorHouse ===1}}">
     <movable-area class="area">
-      <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
+      <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{(idx==0&&isFirst)?-67:x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
         <view class="swiper">
           <block wx:for="{{item.pictureList}}" wx:key="{{index}}" wx:for-item="items">
             <imageExtend wx:if="{{item.platformId == 'xz'}}" src="{{filter.xzCoverImage(items)}}" data-index="{{index}}" data-idx="{{idx}}"></imageExtend>

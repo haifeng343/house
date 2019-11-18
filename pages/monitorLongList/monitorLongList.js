@@ -184,6 +184,7 @@ Page({
       allOriginalData: sort.arr,
       allData: sort.arr.slice(0, 5),
       loadingDisplay: 'none',
+      isFirst: false
     })
   },
   onPageScroll(e) {
@@ -307,8 +308,9 @@ Page({
         if (monitorCount.ftxTotal > -1) { enoughList.push({ key: 'ftx', name: '房天下', value: monitorCount.ftxTotal }) }
         if (monitorCount.tcTotal > -1) { enoughList.push({ key: 'tc', name: '58同城', value: monitorCount.tcTotal }) }
       }
+      enoughList.sort(util.compareSort('value', 'desc'));
       let num = wx.getStorageSync('monitorLeftNum');
-      if (!num) {
+      if (!num && houseList && houseList.length>1) {
         wx.setStorageSync('monitorLeftNum', 1);
         this.setData({
           isFirst:true
