@@ -91,7 +91,7 @@
         <view class="card_time">
           <image class="time_monitor" src="../../assets/image/monitor.png"></image>
           <view class="time_text" wx:if="{{item.minutes||item.minutes == 0}}">
-            <text>已监控:</text>
+            <text>监控:</text>
             <text class="time_line romm_num">{{item.minutes}}</text>
             <text>分钟,</text>
             <text>当前:</text>
@@ -99,7 +99,7 @@
             <text>套</text>
           </view>
           <view class="time_text" wx:if="{{item.monitorTime||item.monitorTime == 0&&!item.minutes&&item.minutes!=0}}">
-            <text>已监控:</text>
+            <text>监控:</text>
             <text class="time_line romm_num" wx:if="{{item.dayNum>0}}">{{item.dayNum}}</text>
             <text wx:if="{{item.dayNum>0}}">天</text>
             <text class="time_line romm_num">{{item.hourNum}}</text>

@@ -148,7 +148,7 @@
   color: #5CD6B6;
   text-align: center;
   display: inline-block;
-  padding: 0 8rpx;
+  padding: 0 4rpx;
 }
 .monitor_red_card .card_time .romm_num{
   color: #DA4E3A
@@ -191,10 +191,10 @@
   100% {transform: rotate(360deg);}
 }
 .card_time .time_text{
-  padding-left: 64rpx;
+  padding-left: 50rpx;
 }
 .card_time .time_text text{
-  margin-right: 8rpx;
+  margin-right: 4rpx;
 }
 .card_time .time_text .pay_money{
   background: #D6D6D6;
@@ -205,9 +205,7 @@
   border-radius: 4rpx;
   padding: 0 14rpx;
 }
-.card_time .time_line{
-  /* text-decoration: underline */
-}
+
 
 .remove{  
   width: 67px;  

@@ -20,7 +20,7 @@
               <view class="card_money" wx:else>
                 <text wx:if="{{item.actualPrice}}">¥</text>
                 <text wx:if="{{item.actualPrice}}" class="money">{{item.actualPrice}}</text>
-                <text wx:if="{{!item.actualPrice}}" class="money">查询中</text>
+                <text wx:if="{{!item.actualPrice}}" class="money">已暂停</text>
               </view>
               <view class="card_down_money" wx:if="{{item.minPrice==0&&item.maxPrice==99999}}">
                 <text>预算:不限</text>
@@ -58,7 +58,7 @@
               <view class="card_money" wx:else>
                 <text wx:if="{{item.actualPrice}}">¥</text>
                 <text wx:if="{{item.actualPrice}}" class="money">{{item.actualPrice}}</text>
-                <text wx:if="{{!item.actualPrice}}" class="money">查询中</text>
+                <text wx:if="{{!item.actualPrice}}" class="money">已暂停</text>
               </view>
             </view>
           </view>
