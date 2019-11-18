@@ -22,6 +22,9 @@ Component({
     },
     sort: {
       type: Boolean
+    },
+    rentType:{
+      type: Number,
     }
   },
 

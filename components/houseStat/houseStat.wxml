@@ -31,7 +31,7 @@
       <view wx:if="{{item.value&&item.selectCount}}" class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='wiwj'||item.key =='ftx'?'wiwj_layout':''}} {{item.key =='lj'||item.key =='tc'?'lianjia_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
         <view class="tip">{{item.name}}</view>
         <view class="stat_tip">
-          <view class="price">{{sort?'推荐价':'最低价'}}:￥{{item.lowPriceData.price||'--'}}/晚</view>
+          <view class="price">{{sort?'推荐价':'最低价'}}:￥{{item.lowPriceData.price||'--'}}/月</view>
           <view class="num">房源数:{{item.value||'--'}}套(已选{{item.selectCount||'--'}}套)</view>
         </view>
         <image class="tu_image" mode="aspectFill" src="{{item.lowPriceData.imgurl}}"></image>

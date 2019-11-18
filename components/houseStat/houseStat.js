@@ -11,7 +11,7 @@ Component({
       type: Boolean
     },
     rentType:{
-      type: String
+      type: Number
     }
   },
 
