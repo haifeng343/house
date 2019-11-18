@@ -1,4 +1,4 @@
-import DepositService from './service.js';
+import DepositService from "./service.js";
 Page({
   /**
    * 页面的初始数据
@@ -49,12 +49,12 @@ Page({
       }
     ],
     money: 500,
-    moneyText: '5.00',
+    moneyText: "5.00",
     coin: 500,
     showType: false,
-    exchangeAmount: '',
-    userMoney: '0.00',
-    freezeMoney: '0.00',
+    exchangeAmount: "",
+    userMoney: "0.00",
+    freezeMoney: "0.00",
     showConfirmDialog: false
   },
   service: new DepositService(),
@@ -74,13 +74,13 @@ Page({
     const exchangeAmount = ~~this.data.exchangeAmount;
     if (!exchangeAmount) {
       wx.showToast({
-        title: '请输入要兑换金额',
-        icon: 'none'
+        title: "请输入要兑换金额",
+        icon: "none"
       });
     } else if (this.submitFlag === false) {
       this.submitFlag = true;
       wx.showLoading({
-        title: '正在兑换...',
+        title: "正在兑换...",
         mask: true
       });
       this.service
@@ -88,10 +88,10 @@ Page({
         .then(resp => {
           this.submitFlag = false;
           wx.showToast({
-            title: '兑换成功!'
+            title: "兑换成功!"
           });
           this.setData({
-            userMoney: this.data.userMoney - exchangeAmount
+            userMoney: (this.data.userMoney - exchangeAmount).toFixed(2)
           });
           setTimeout(() => {
             wx.navigateBack({ delta: 1 });
@@ -102,7 +102,7 @@ Page({
           wx.hideLoading();
           wx.showToast({
             title: `兑换盯盯币失败,请联系客服!${error.message}`,
-            icon: 'none'
+            icon: "none"
           });
         });
     }
@@ -118,13 +118,13 @@ Page({
         this.setData({ exchangeAmount: ~~this.data.userMoney });
         wx.showToast({
           title: `最多可以兑换${~~this.data.userMoney}元`,
-          icon: 'none'
+          icon: "none"
         });
       } else {
         this.setData({ exchangeAmount: value });
       }
     } else if (!Number.isNaN(value)) {
-      this.setData({ exchangeAmount: '' });
+      this.setData({ exchangeAmount: "" });
     } else {
       this.setData({ exchangeAmount: this.data.exchangeAmount });
     }
@@ -133,14 +133,14 @@ Page({
     if (this.data.coin === 0) {
       wx.showToast({
         title: `请先选择要充值的数量`,
-        icon: 'none'
+        icon: "none"
       });
       return;
     }
     if (this.submitFlag === false) {
       this.submitFlag = true;
       wx.showLoading({
-        title: '创建支付订单...',
+        title: "创建支付订单...",
         mask: true
       });
       this.service
@@ -151,12 +151,12 @@ Page({
             timeStamp: params.timeStamp,
             nonceStr: params.nonceStr,
             package: params.packageIs,
-            signType: 'MD5',
+            signType: "MD5",
             paySign: params.paySign,
             success: () => {
               this.submitFlag = false;
               wx.showToast({
-                title: '支付成功!'
+                title: "支付成功!"
               });
               setTimeout(() => {
                 wx.navigateBack({ delta: 1 });
@@ -166,8 +166,8 @@ Page({
               this.submitFlag = false;
               wx.hideLoading();
               wx.showToast({
-                title: '支付失败，请稍后重试',
-                icon: 'none'
+                title: "支付失败，请稍后重试",
+                icon: "none"
               });
             }
           });
@@ -177,7 +177,7 @@ Page({
           wx.hideLoading();
           wx.showToast({
             title: `创建支付订单失败,请联系客服!${error.message}`,
-            icon: 'none'
+            icon: "none"
           });
         });
     }
@@ -187,8 +187,8 @@ Page({
     const exchangeAmount = ~~this.data.exchangeAmount;
     if (!exchangeAmount) {
       wx.showToast({
-        title: '请输入要兑换金额',
-        icon: 'none'
+        title: "请输入要兑换金额",
+        icon: "none"
       });
     } else {
       this.setData({ showConfirmDialog: true });
@@ -209,8 +209,11 @@ Page({
    */
   onLoad: function(options) {
     this.service.getUserInfo().then(userInfo => {
-      const { useMoney, freezeMoney } = userInfo.userAccount
-      this.setData({ userMoney: useMoney.toFixed(2), freezeMoney: freezeMoney.toFixed(2) })
+      const { useMoney, freezeMoney } = userInfo.userAccount;
+      this.setData({
+        userMoney: useMoney.toFixed(2),
+        freezeMoney: freezeMoney.toFixed(2)
+      });
     });
     const { type } = options;
     this.setData(

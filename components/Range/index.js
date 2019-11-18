@@ -10,7 +10,9 @@ Component({
     maxText: "",
     containerWidth: 0,
     isLoaded: false,
-    useCustom: false
+    useCustom: false,
+    minInputValue: "",
+    maxInputValue: ""
   },
   properties: {
     min: {
@@ -43,7 +45,7 @@ Component({
   blockHalfWidth: 0,
   blockWidth: 0,
   methods: {
-    handleLeftTouchStart(event) {
+    handleLeftTouchStart() {
       this.moveDirectionStream.next("left");
       this.touchendStream.next(false);
       this.touchEnd = false;
@@ -71,15 +73,35 @@ Component({
     handleClickCustom() {
       const useCustom = !this.data.useCustom;
       this.setData({
-        useCustom,
-        maxText: this.data.maxValue,
-        minText: this.data.minValue
+        useCustom
       });
+      if (useCustom) {
+        this.setData({
+          maxInputValue:
+            this.data.maxValue === 10000 ? 9999 : this.data.maxValue,
+          minInputValue: this.data.minValue
+        });
+      } else {
+        this.setData({
+          maxInputValue: "",
+          minInputValue: ""
+        });
+      }
       this.triggerEvent("onCustom", useCustom);
     },
     handleMinPriceChange(event) {
-      const { maxValue } = this.data;
-      const minValue = +event.detail.value;
+      const maxValue = +this.data.maxInputValue;
+      let minValue = event.detail.value;
+      if (minValue) {
+        minValue = +minValue;
+        if (minValue > 9999) {
+          minValue = 9999;
+        }
+
+        this.setData({
+          minInputValue: minValue
+        });
+      }
 
       this.triggerEvent("onChange", {
         min: minValue,
@@ -87,23 +109,33 @@ Component({
       });
     },
     handleMaxPriceChange(event) {
-      const { minValue } = this.data;
-      const maxValue = +event.detail.value;
+      const minValue = +this.data.minInputValue;
+      let maxValue = event.detail.value;
+      if (maxValue) {
+        maxValue = +maxValue;
+        if (maxValue > 9999) {
+          maxValue = 9999;
+        }
+
+        this.setData({
+          maxInputValue: maxValue
+        });
+      }
 
       this.triggerEvent("onChange", {
         min: minValue,
         max: maxValue
       });
     },
-    handleLeftTouchEnd(event) {
+    handleLeftTouchEnd() {
       this.touchendStream.next(true);
       this.touchEnd = true;
     },
-    handleRightTouchEnd(event) {
+    handleRightTouchEnd() {
       this.touchendStream.next(true);
       this.touchEnd = true;
     },
-    handleRightTouchStart(event) {
+    handleRightTouchStart() {
       this.moveDirectionStream.next("right");
       this.touchendStream.next(false);
       this.touchEnd = false;
@@ -194,7 +226,9 @@ Component({
               this.setData({
                 useCustom: true,
                 minText: this.data.min,
-                maxText: this.data.max
+                maxText: this.data.max,
+                minInputValue: this.data.min,
+                maxInputValue: this.data.max
               });
             }
 
