@@ -2093,13 +2093,13 @@ const ftxScreenParam = type => {
     obj.rtype = 'zz'
   }
   if (longRentTypes == 2) {
-    obj.renttype = 'hz'
+    obj.rtype = 'hz'
   }
   if (longRentTypes == 3) {
     obj.rtype = 'hzzw'
   }
   if (longRentTypes == 4) {
-    obj.renttype = 'hzciwo'
+    obj.rtype = 'hzciwo'
   }
 
   // 户型 一室、两室、三室及以上
