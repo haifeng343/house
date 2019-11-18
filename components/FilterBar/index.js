@@ -757,12 +757,7 @@ Component({
       }
 
       if (this.data.minPrice >= this.data.maxPrice) {
-        wx.showToast({ title: "最高价至少比最低价高100", icon: "none" });
-        return;
-      }
-
-      if (this.data.maxPrice - this.data.minPrice < 100) {
-        wx.showToast({ title: "最低价不得高于最高价", icon: "none" });
+        wx.showToast({ title: "最高价必须高于最低价", icon: "none" });
         return;
       }
 
