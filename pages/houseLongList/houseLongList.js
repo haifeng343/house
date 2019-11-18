@@ -73,6 +73,7 @@ Page({
     this.getUserInfo();
   },
   submit(e){
+    console.log(e)
     //把改变的值重新
     let arr = Object.keys(e.detail);
     if(arr.length){

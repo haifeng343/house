@@ -15,7 +15,7 @@ const longSetSearchData = (data, city, type) => {
   let history = [].concat(wx.getStorageSync('longSearchHistory_' + city + '_' + type)||[])
   for(let index = 0; index < history.length; index++) {
     if (history[index].area == item.area && history[index].areaType == item.areaType) {
-      history = history.splice(index+1,1)
+      history.splice(index,1)
       break
     }
   }
@@ -35,6 +35,7 @@ const chooseArea = (fullname, city, chooseType)=> {
     let info = JSON.parse(resp.data.json);
     // console.log(data, info)
     result.area = info.name
+    result.isHistory = false
     // result.areaJson = resp.data.json
     let areaJson = {}
     if (type == 10) {//行政区
@@ -118,6 +119,7 @@ const chooseSlectData = (data)=> {
   let result = {areaId: {}}
   result.areaType = type
   result.area = data.name
+  result.isHistory = true
   // result.areaJson = JSON.stringify(data)
   let areaJson = {}
   if (type == 10) {
@@ -274,9 +276,41 @@ const nearByData =(data,index)=> {
       longitude: data.longitude
     },
     areaType: 60,
-    areaJson: ''
+    areaJson: '',
+    isHistory: false
   }
   return result
+}
+
+const changeHistoryStorage = (data)=> {
+  console.log('changeHistoryStorage');
+  let city = data.city
+  let type = data.chooseType
+  let item = data
+  if(!item.isHistory) {
+    return
+  }
+  let temp = ''
+  let tempIndex = 0
+  let history = [].concat(wx.getStorageSync('longSearchHistory_' + city + '_' + type) || [])
+  for (let index = 0; index < history.length; index++) {
+    if (history[index].area == item.area && history[index].areaType == item.areaType) {
+      temp = history[index]
+      tempIndex = index
+      if(index) {
+        history.splice(index, 1)
+      }
+      break
+    }
+  }
+  if (!tempIndex) {
+    return
+  }
+  history.unshift(temp)
+  if (history.length > 10) {
+    history = history.slice(0, 10);
+  }
+  wx.setStorageSync('longSearchHistory_' + city + '_' + type, history);
 }
 
 export {
@@ -284,5 +318,6 @@ export {
   chooseArea,
   chooseSlectData,
   isShowNearby,
-  nearByData
+  nearByData,
+  changeHistoryStorage
 }

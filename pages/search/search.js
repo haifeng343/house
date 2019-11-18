@@ -1,7 +1,7 @@
 import { getLocationSetting, getLocation, getSessionKey } from "../../utils/wx";
 import { authSubject } from "../../utils/auth";
 import { SearchDataSubject } from "../../utils/searchDataStream";
-import { SearchLongDataSubject } from "../../utils/searchLongDataStream";
+import { SearchLongDataSubject, SearchLongMonitorDataSubject } from "../../utils/searchLongDataStream";
 import { getLocationInfo } from "../../utils/map";
 import searchService from "./service";
 import fecha from "../../utils/fecha";
@@ -9,6 +9,7 @@ import { searchDataStorage } from "../../utils/searchDataStorage";
 import { searchLongDataStorage } from "../../utils/searchLongDataStorage";
 import getIndexHouseData from "../../utils/indexHouseData";
 import getIndexLongHouseData from "../../utils/indexLongHouseData";
+import { changeHistoryStorage } from "../../utils/longSetSearchData"
 Page({
   /**
    * 页面的初始数据
@@ -895,11 +896,19 @@ Page({
       }, 1000);
     });
     this.searchLongDataSubscription = SearchLongDataSubject.subscribe(() => {
+      const app = getApp()
+      let searchLongData = app.globalData.searchLongData
+      changeHistoryStorage(searchLongData)
       this.setData({ showLongPriceBlock: false });
       setTimeout(() => {
         this.getSearchDataFromGlobal();
         this.setData({ needOnShow: true });
       }, 1000);
+    });
+    this.searchLongMonitorDataSubscription = SearchLongMonitorDataSubject.subscribe(() => {
+      const app = getApp()
+      let monitorSearchLongData = app.globalData.monitorSearchLongData
+      changeHistoryStorage(monitorSearchLongData)
     });
   }
 });

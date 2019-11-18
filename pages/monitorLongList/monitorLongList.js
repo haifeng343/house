@@ -5,6 +5,7 @@ const regeneratorRuntime = require('../../lib/runtime.js');
 const util = require('../../utils/util.js');
 const userApi = require('../../api/userApi.js');
 import positionService from "../positionLongSelect/service";
+import { SearchLongMonitorDataSubject } from "../../utils/searchLongDataStream";
 const app = getApp();
 Page({
   data: {
@@ -77,6 +78,7 @@ Page({
       for (let key in e.detail) {
         app.globalData.monitorSearchLongData[key] = e.detail[key]
       }
+      SearchLongMonitorDataSubject.next()
       this.setData({
         loadingDisplay: 'block',
         countFlag: '',

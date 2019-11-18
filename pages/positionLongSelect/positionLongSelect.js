@@ -1,5 +1,5 @@
 import positionService from './service';
-import { isShowNearby, nearByData } from '../../utils/longSetSearchData.js'
+import { isShowNearby, nearByData, changeHistoryStorage } from '../../utils/longSetSearchData.js'
 
 const typeEnum = {
   10: "area",
@@ -85,6 +85,7 @@ Page({
     let item = event.currentTarget.dataset.item
     const app = getApp()
     app.globalData.searchLongData = Object.assign(app.globalData.searchLongData,item)
+    changeHistoryStorage(app.globalData.searchLongData)
     wx.navigateBack({ delta: 1 });
   },
   handleSelectNearBy(event) {
