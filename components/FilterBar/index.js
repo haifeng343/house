@@ -589,7 +589,7 @@ Component({
 
     handleResetPrice() {
       const { minPrice, maxPrice } = this.data.data;
-      this.setData({ minPrice, maxPrice, rangeCustom: false });
+      this.setData({ minPrice, maxPrice, rangeCustom: this.rangeCustom });
     },
 
     checkReset() {
@@ -785,9 +785,7 @@ Component({
         }
       }
 
-      if (this.changeList.has("minPrice") && this.rangeCustom === true) {
-        this.setData({ rangeCustom: true });
-      }
+      this.rangeCustom = this.data.rangeCustom;
 
       this.changeList = new Set();
 

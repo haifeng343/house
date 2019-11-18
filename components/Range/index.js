@@ -143,163 +143,165 @@ Component({
   },
   lifetimes: {
     ready() {
-      this.inited = false;
+      setTimeout(() => {
+        this.inited = false;
 
-      this.touchmoveStream = new rxjs.BehaviorSubject(0);
-      this.moveDirectionStream = new rxjs.BehaviorSubject("right");
-      this.touchendStream = new rxjs.BehaviorSubject(false);
-      this.containerWidthStream = new rxjs.BehaviorSubject(0);
-      this.blockWidthStream = new rxjs.BehaviorSubject(0);
-      this.funX = 0;
-      this.funY = 0;
+        this.touchmoveStream = new rxjs.BehaviorSubject(0);
+        this.moveDirectionStream = new rxjs.BehaviorSubject("right");
+        this.touchendStream = new rxjs.BehaviorSubject(false);
+        this.containerWidthStream = new rxjs.BehaviorSubject(0);
+        this.blockWidthStream = new rxjs.BehaviorSubject(0);
+        this.funX = 0;
+        this.funY = 0;
 
-      this.createSelectorQuery()
-        .select(`.move-view`)
-        .boundingClientRect(rect => {
-          const blockWidth = rect.width;
-          this.blockWidth = blockWidth;
-          this.blockHalfWidth = blockWidth / 2;
-          this.blockWidthStream.next(blockWidth);
-        })
-        .exec();
+        this.createSelectorQuery()
+          .select(`.move-view`)
+          .boundingClientRect(rect => {
+            const blockWidth = rect.width;
+            this.blockWidth = blockWidth;
+            this.blockHalfWidth = blockWidth / 2;
+            this.blockWidthStream.next(blockWidth);
+          })
+          .exec();
 
-      this.widthSubscription = rxjs
-        .combineLatest(this.containerWidthStream, this.blockWidthStream)
-        .subscribe(([containerWidth, blockWidth]) => {
-          const deltaWidth = containerWidth - blockWidth;
+        this.widthSubscription = rxjs
+          .combineLatest(this.containerWidthStream, this.blockWidthStream)
+          .subscribe(([containerWidth, blockWidth]) => {
+            const deltaWidth = containerWidth - blockWidth;
 
-          const funX = +(9900 / deltaWidth).toFixed(2);
+            const funX = +(9900 / deltaWidth).toFixed(2);
 
-          const funY = +(10000 - funX * containerWidth).toFixed(2);
+            const funY = +(10000 - funX * containerWidth).toFixed(2);
 
-          this.funX = funX;
+            this.funX = funX;
 
-          this.funY = funY;
+            this.funY = funY;
 
-          if (this.data.min > 0) {
-            this.calcLeftX();
-          }
+            if (this.data.min > 0) {
+              this.calcLeftX();
+            }
 
-          if (this.data.max < 10000) {
-            this.calcRightX();
-          }
+            if (this.data.max < 10000) {
+              this.calcRightX();
+            }
 
-          this.setData({
-            minValue: this.data.min,
-            maxValue: this.data.max
+            this.setData({
+              minValue: this.data.min,
+              maxValue: this.data.max
+            });
+
+            if (this.data.custom === true) {
+              this.setData({
+                useCustom: true,
+                minText: this.data.min,
+                maxText: this.data.max
+              });
+            }
+
+            setTimeout(() => {
+              this.setData({
+                isLoaded: true
+              });
+            }, 50);
           });
 
-          if (this.data.custom === true) {
+        this.createSelectorQuery()
+          .select(`.background-line`)
+          .boundingClientRect(rect => {
+            const containerWidth = rect.width;
             this.setData({
-              useCustom: true,
-              minText: this.data.min,
-              maxText: this.data.max
+              rightX: containerWidth,
+              leftX: 0,
+              containerWidth
             });
-          }
 
-          setTimeout(() => {
-            this.setData({
-              isLoaded: true
-            });
-          }, 50);
-        });
+            this.containerWidthStream.next(containerWidth);
+          })
+          .exec();
 
-      this.createSelectorQuery()
-        .select(`.background-line`)
-        .boundingClientRect(rect => {
-          const containerWidth = rect.width;
-          this.setData({
-            rightX: containerWidth,
-            leftX: 0,
-            containerWidth
+        this.createSelectorQuery()
+          .select(`.container`)
+          .boundingClientRect(rect => {
+            this.containerLeft = rect.left;
+          })
+          .exec();
+
+        this.touchmoveSubscription = this.touchmoveStream
+          .pipe(rxjs.operators.withLatestFrom(this.moveDirectionStream))
+          .subscribe(([x, dir]) => {
+            if (this.inited === false) {
+              this.inited = true;
+              return;
+            }
+            /**
+             * 公式推导过程
+             *
+             * 左滑块极值点: 0 => 0 ; 线宽 - 1 * 滑块宽度 => 9900
+             *
+             * 右滑块极值点 线宽 => 10000 ; 0 + 1 * 滑块宽度 => 100
+             *
+             * 观察可以得到 Δw = 线宽 - 1 * 滑块宽度
+             *
+             * 由左滑块极值推出公式
+             *
+             * ① 0 * x + y = 0
+             *
+             * ② Δw * x + y = 9900
+             *
+             * ② - ① 后移项得 x = 9900 / Δw y = 0
+             *
+             * 由右滑块极值推出公式为
+             *
+             * ① 线宽 * x + y = 10000
+             *
+             * ② 1 * 滑块宽度 * x + y = 100
+             *
+             * ① - ② 得 (线宽 - 1 * 滑块宽度) * x = 9900
+             *
+             * 即 Δw * x = 9900
+             *
+             * 代入后可得
+             *
+             * y = 10000 - x * Δw
+             *
+             **/
+
+            if (dir === "left") {
+              const min = Math.round((this.data.leftX * this.funX) / 100) * 100;
+
+              this.setData({
+                minValue: this.data.max - min < 100 ? this.data.max - 100 : min
+              });
+            } else if (dir === "right") {
+              const max =
+                Math.round((this.data.rightX * this.funX + this.funY) / 100) *
+                100;
+
+              this.setData({
+                maxValue: max - this.data.min < 100 ? this.data.min + 100 : max
+              });
+            }
           });
 
-          this.containerWidthStream.next(containerWidth);
-        })
-        .exec();
+        const xStream = this.touchendStream.pipe(
+          rxjs.operators.withLatestFrom(
+            this.touchmoveStream,
+            this.moveDirectionStream
+          ),
+          rxjs.operators.filter(
+            ([touchend]) => touchend === true && this.isMoved === true
+          ),
+          rxjs.operators.tap(() => (this.isMoved = false)),
+          rxjs.operators.map(([touchend, x, dir]) => [x, dir])
+        );
 
-      this.createSelectorQuery()
-        .select(`.container`)
-        .boundingClientRect(rect => {
-          this.containerLeft = rect.left;
-        })
-        .exec();
+        this.xSubscription = xStream.subscribe(([x, dir]) => {
+          const { minValue, maxValue } = this.data;
 
-      this.touchmoveSubscription = this.touchmoveStream
-        .pipe(rxjs.operators.withLatestFrom(this.moveDirectionStream))
-        .subscribe(([x, dir]) => {
-          if (this.inited === false) {
-            this.inited = true;
-            return;
-          }
-          /**
-           * 公式推导过程
-           *
-           * 左滑块极值点: 0 => 0 ; 线宽 - 1 * 滑块宽度 => 9900
-           *
-           * 右滑块极值点 线宽 => 10000 ; 0 + 1 * 滑块宽度 => 100
-           *
-           * 观察可以得到 Δw = 线宽 - 1 * 滑块宽度
-           *
-           * 由左滑块极值推出公式
-           *
-           * ① 0 * x + y = 0
-           *
-           * ② Δw * x + y = 9900
-           *
-           * ② - ① 后移项得 x = 9900 / Δw y = 0
-           *
-           * 由右滑块极值推出公式为
-           *
-           * ① 线宽 * x + y = 10000
-           *
-           * ② 1 * 滑块宽度 * x + y = 100
-           *
-           * ① - ② 得 (线宽 - 1 * 滑块宽度) * x = 9900
-           *
-           * 即 Δw * x = 9900
-           *
-           * 代入后可得
-           *
-           * y = 10000 - x * Δw
-           *
-           **/
-
-          if (dir === "left") {
-            const min = Math.round((this.data.leftX * this.funX) / 100) * 100;
-
-            this.setData({
-              minValue: this.data.max - min < 100 ? this.data.max - 100 : min
-            });
-          } else if (dir === "right") {
-            const max =
-              Math.round((this.data.rightX * this.funX + this.funY) / 100) *
-              100;
-
-            this.setData({
-              maxValue: max - this.data.min < 100 ? this.data.min + 100 : max
-            });
-          }
-        });
-
-      const xStream = this.touchendStream.pipe(
-        rxjs.operators.withLatestFrom(
-          this.touchmoveStream,
-          this.moveDirectionStream
-        ),
-        rxjs.operators.filter(
-          ([touchend]) => touchend === true && this.isMoved === true
-        ),
-        rxjs.operators.tap(() => (this.isMoved = false)),
-        rxjs.operators.map(([touchend, x, dir]) => [x, dir])
-      );
-
-      this.xSubscription = xStream.subscribe(([x, dir]) => {
-        const { minValue, maxValue } = this.data;
-
-        this.triggerEvent("onChange", {
-          min: minValue,
-          max: maxValue
+          this.triggerEvent("onChange", {
+            min: minValue,
+            max: maxValue
+          });
         });
       });
     },
