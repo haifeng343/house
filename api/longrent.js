@@ -332,6 +332,40 @@ const wbtc = {
       })
     })
   },
+  rentSearch2: function ({ city, page = DEFAULT_PAGE, filter = {} }) {
+    let sidDict = { "PGTID": "194983956205443570889119688", "GTID": "102183851205443989792845262", "nameoflist": "23_index|gerenfangyuan|b" };
+    let tParams = { "list_from": "index|gerenfangyuan|b", "list_extra": "geren", "showFilterNum": true };
+    let ts = new Date().valueOf();
+    let signature = generateTongChengSign(city + TONGCHENG_VER + "android" + SOUFUN_IMEI + "" + ts);
+    let params = { tabkey: "allcity", action: "getListInfo", curVer: TONGCHENG_VER, appId: 1, signature, page: page.num, localname: city, os: "android", format: "json", geotype: "baidu", v: 1, ts, sidDict: JSON.stringify(sidDict), params: JSON.stringify(tParams) };
+    let { location, filterParams, geoia, key, circleLon, circleLat } = filter;
+    if (filterParams) {
+      filterParams = JSON.stringify(filterParams);
+    }
+    Object.assign(params, { location, filterParams, geoia, key, circleLon, circleLat });
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        wx.request({
+          url: wbtc_address + '/api/list/chuzu?' + buildParams(params, true),
+          method: 'GET',
+          header: {
+            imei: SOUFUN_IMEI,
+            productorid: 1
+          },
+          success: res => {
+            if (res.data) {
+              resolve(res.data)
+            } else {
+              reject(false)
+            }
+          },
+          fail: res => {
+            reject(false)
+          }
+        })
+      },2000)
+    })
+  },
   rentTip: function ({city, keywords}) {
     let params = { action: "getHouseOnMapSuggestion", curVer: TONGCHENG_VER, appId: 1, v: 1, searchKey: keywords, format: "json", localname: city, os: "android" };
     return new Promise((resolve, reject) => {

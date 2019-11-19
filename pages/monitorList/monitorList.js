@@ -472,7 +472,8 @@ Page({
       this.setData({
         loadingDisplay: 'none',
         countFlag: 2,
-        countBack: false
+        countBack: false,
+        bottomType:''
       })
       return;
     }

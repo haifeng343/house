@@ -413,7 +413,6 @@ const getWbtcData = (type, wbtcfilter = {}) => {
   let wbtcCount = 0;
   let arr = [];
   let y = type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData;
-  let timer = null;
   return new Promise((resolve, reject) => {
     longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 1, "size": 50 }, "filter": wbtcfilter }).then(res => {
       if (res.result.getListInfo.infolist && res.result.getListInfo.infolist[0]['itemtype'] ==='listTangram'){
@@ -425,9 +424,7 @@ const getWbtcData = (type, wbtcfilter = {}) => {
         wbtcCount = arr.length
       }
       if (res && arr.length < 50 && arr.length < wbtcCount){
-        timer = setTimeout(()=>{
-          return longrent.wbtc.rentSearch({ "city": y.cityId.tc, "page": { "num": 2, "size": 50 }, "filter": wbtcfilter });
-        },2000)
+          return longrent.wbtc.rentSearch2({ "city": y.cityId.tc, "page": { "num": 2, "size": 50 }, "filter": wbtcfilter });
       }else{
         resolve({
           arr: arr.slice(0, 50),
@@ -442,7 +439,9 @@ const getWbtcData = (type, wbtcfilter = {}) => {
       if (res) {
         arr.push.apply(arr, res.result.getListInfo.infolist||[]);
       }
-      clearTimeout(timer);
+      if (arr.length > wbtcCount) {
+        wbtcCount = arr.length
+      }
       resolve({
         arr: arr.slice(0, 50),
         wbtcCount

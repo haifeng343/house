@@ -119,9 +119,11 @@ page {
   width: 324rpx;
   background: #FFFFFF;
   color: #E75D28;
-  border: 1rpx solid #E75D28;
+  border: 1px solid #E75D28;
   left: 38rpx;
+  box-shadow: none;
 }
+.monit_save .monit_update{box-shadow: none;}
 .house_shortcuts {
   position: fixed;
   right: 12rpx;

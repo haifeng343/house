@@ -162,7 +162,7 @@ Page({
     }
   },
   goRefresh() {
-    this.onLoad()
+    this.onHouseShow()
   },
   goSort() {
     let arr = [...this.data.allOriginalData]
@@ -366,6 +366,8 @@ Page({
       this.setData({
         loadingDisplay: 'none',
         countFlag: 2,
+        countBack: false,
+        bottomType: ''
       })
       return;
     }
@@ -423,6 +425,8 @@ Page({
       this.setData({
         loadingDisplay: 'none',
         countFlag: 2,
+        countBack: false,
+        bottomType:''
       })
       return;
     }

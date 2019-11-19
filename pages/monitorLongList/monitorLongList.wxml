@@ -67,7 +67,7 @@
   <view class="monit_start {{bottomType === 2?'monit_save':''}}" wx:if="{{bottomType === 2&&loadingDisplay === 'none'}}">
     <view>
       <text class="monit_btn monit_back" bindtap="goBack">返回监控</text>
-      <text class="monit_btn" bindtap="goSave">保存修改</text>
+      <text class="monit_btn monit_update" bindtap="goSave">保存修改</text>
     </view>
   </view>
   
