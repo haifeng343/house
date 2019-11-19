@@ -73,6 +73,7 @@ Page({
     searchLongData.areaId = {}
     searchLongData.areaType = 0
     searchLongData.areaJson = ''
+    searchLongData.isHistory = false
     wx.navigateBack({
       delta: 1
     });
