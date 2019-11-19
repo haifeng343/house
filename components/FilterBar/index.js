@@ -202,21 +202,25 @@ Component({
         clearTimeout(this.timer);
       }
       this.timer = setTimeout(() => {
+        this.promiseVersion += 1;
         if (chooseType === 1) {
           longRentTip
-            .getIntermediaryData(cityId, searchKey)
+            .getIntermediaryData(cityId, searchKey, this.promiseVersion)
             .then(resp => {
-              this.setData({
-                searchResultList: resp.map(item =>
-                  Object.assign(
-                    {
-                      label: item.name,
-                      tag: areaTagMap[item.type]
-                    },
-                    item
+              const { result, promiseVersion } = resp;
+              if (this.promiseVersion === promiseVersion) {
+                this.setData({
+                  searchResultList: result.map(item =>
+                    Object.assign(
+                      {
+                        label: item.name,
+                        tag: areaTagMap[item.type]
+                      },
+                      item
+                    )
                   )
-                )
-              });
+                });
+              }
             })
             .catch(error => {
               console.error(error);
@@ -227,19 +231,22 @@ Component({
             });
         } else {
           longRentTip
-            .getPersonalData(cityId, searchKey)
+            .getPersonalData(cityId, searchKey, this.promiseVersion)
             .then(resp => {
-              this.setData({
-                searchResultList: resp.map(item =>
-                  Object.assign(
-                    {
-                      label: item.name,
-                      tag: areaTagMap[item.type]
-                    },
-                    item
+              const { result, promiseVersion } = resp;
+              if (this.promiseVersion === promiseVersion) {
+                this.setData({
+                  searchResultList: result.map(item =>
+                    Object.assign(
+                      {
+                        label: item.name,
+                        tag: areaTagMap[item.type]
+                      },
+                      item
+                    )
                   )
-                )
-              });
+                });
+              }
             })
             .catch(error => {
               console.error(error);
@@ -956,6 +963,8 @@ Component({
       this.changeList = new Set();
 
       this.rangeCustom = false;
+
+      this.promiseVersion = 0;
 
       this.baseAreaList = JSON.stringify([
         {
