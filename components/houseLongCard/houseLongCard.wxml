@@ -14,17 +14,15 @@
               <text>{{itemTag}}</text>
             </block>
           </view>
+          <view class="card_price">
+            <text class="p">{{item.price}}</text>
+            <text class="m">元/月</text>
+          </view>
         </view>
-        <view class="classify" wx:if="{{item.platformId == 'wiwj'}}">我爱我家</view>
-        <view class="classify" wx:if="{{item.platformId == 'lj'}}">贝壳</view>
-        <view class="classify" wx:if="{{item.platformId == 'ftx'}}">房天下</view>
-        <view class="classify" wx:if="{{item.platformId == 'tc'}}">58同城</view>
-        <!-- <image class="star" wx:if="{{item.collection&&isMonitorHouse ===0}}" data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.housesid}}" catchtap="goToCollection" src="../../assets/image/star_select.png"></image>
-        <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0}}" data-index="{{idx}}" data-collection="{{item.collection}}" data-productId="{{item.housesid}}" catchtap="goToCollection" src="../../assets/image/star.png"></image> -->
-        <view class="price">
-          <text>¥{{item.price}}/月</text>
-          <view class="triangle"></view>
-        </view>
+        <view class="classify image" wx:if="{{item.platformId == 'wiwj'}}"><image src="../../assets/image/card_wiwj.png"></image></view>
+        <view class="classify image" wx:if="{{item.platformId == 'lj'}}"><image src="../../assets/image/card_lj.png"></image></view>
+        <view class="classify image" wx:if="{{item.platformId == 'ftx'}}"><image src="../../assets/image/card_ftx.png"></image></view>
+        <view class="classify image" wx:if="{{item.platformId == 'tc'}}"><image src="../../assets/image/card_tc.png"></image></view>
       </view>
     </movable-view>
   </movable-area>
@@ -52,16 +50,19 @@
           <text>{{itemTag}}</text>
         </block>
       </view>
+      <view class="card_price">
+        <text class="p">{{item.price}}</text>
+        <text class="m">元/月</text>
+      </view>
     </view>
-    <view class="classify" wx:if="{{item.platformId == 'wiwj'}}">我爱我家</view>
-    <view class="classify" wx:if="{{item.platformId == 'lj'}}">贝壳</view>
-    <view class="classify" wx:if="{{item.platformId == 'ftx'}}">房天下</view>
-    <view class="classify" wx:if="{{item.platformId == 'tc'}}">58同城</view>
-    <image class="star star_select" wx:if="{{item.collection&&isMonitorHouse ===0&&isStatist}}" data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.housesid}}" catchtap="goToCollection" src="../../assets/image/star_select.png"></image>
-        <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0&&isStatist}}" data-index="{{idx}}" data-collection="{{item.collection}}" data-productId="{{item.housesid}}" catchtap="goToCollection" src="../../assets/image/star.png"></image>
-    <view class="price">
-      <text>¥{{item.price}}/月</text>
-      <view class="triangle"></view>
+    <view class="classify image" wx:if="{{item.platformId == 'wiwj'}}"><image src="../../assets/image/card_wiwj.png"></image></view>
+    <view class="classify image" wx:if="{{item.platformId == 'lj'}}"><image src="../../assets/image/card_lj.png"></image></view>
+    <view class="classify image" wx:if="{{item.platformId == 'ftx'}}"><image src="../../assets/image/card_ftx.png"></image></view>
+    <view class="classify image" wx:if="{{item.platformId == 'tc'}}"><image src="../../assets/image/card_tc.png"></image></view>
+    <view class="card_star" catchtap="goToCollection" data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.housesid}}">
+      <image class="star star_select" wx:if="{{item.collection&&isMonitorHouse ===0&&isStatist}}"  src="../../assets/image/star_select.png"></image>
+      <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0&&isStatist}}"  src="../../assets/image/star.png"></image>
     </view>
+    
   </view>
 </view>

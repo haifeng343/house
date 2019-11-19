@@ -19,13 +19,20 @@
 .house_card .swiper {
   height: 360rpx;
 }
+.house_card .card_star{
+  width: 140rpx;
+  height: 140rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 7
+}
 .house_card .star {
   width: 44rpx;
   height: 44rpx;
   position: absolute;
   top: 24rpx;
   right: 24rpx;
-  z-index: 7
 }
 
 .house_card .star_select{

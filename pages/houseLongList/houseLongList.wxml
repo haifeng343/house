@@ -4,10 +4,10 @@
       <FilterBar data="{{searchLongData}}" positionData="{{positionData}}" bind:onSubmit="submit" />
       <view class="bg_border"></view>
     </view>
-    <view wx:if="{{countFlag === 1}}" class="house_detail">
+    <view wx:if="{{countFlag === 1}}" class="house_detail" bindtap="goToDetail">
       <view>总计:{{allCount}}套</view>
       <view>{{longSortTypes == 1?'最低价':'推荐价'}}:¥{{lowPrice}}</view>
-      <view class="check_detail" bindtap="goToDetail">
+      <view class="check_detail">
         <text>查看明细</text>
         <image class="check_more" src="../../assets/image/more.png"></image>
       </view>

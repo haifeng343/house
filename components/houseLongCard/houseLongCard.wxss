@@ -10,27 +10,27 @@
   z-index: 2;
   background: #ffffff;
 }
-.card .card_image{width: 234rpx;}
+.card .card_image{width: 252rpx;}
 .card_image image{width: 220rpx;height: 220rpx;}
-.card .card_words{flex: 1;overflow: hidden;}
+.card .card_words{flex: 1;}
 .card_words .title{
   font-size: 32rpx;
   font-weight:bold;
   color: #1D1D1D;
   overflow:hidden;
   text-overflow:ellipsis; 
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:2; 
-  display: -webkit-box;
-  padding-right: 100rpx;
-  margin-bottom: 18rpx;
-  height: 72rpx;
+  white-space: nowrap;
+  padding-right: 60rpx;
+  margin-bottom: 10rpx;
+  width: 380rpx;
+  height: 36rpx;
   line-height: 36rpx;
 }
-.card_words .room{font-size: 24rpx;color: #474747;margin-bottom: 8rpx;}
-.card_words .address{font-size: 24rpx;color: #FF6363;margin-bottom: 14rpx;}
+.card_words .room{font-size: 24rpx;color: #474747;margin-bottom: 10rpx;}
+.card_words .address{font-size: 24rpx;color: #FF6363;margin-bottom: 10rpx;}
 .card_words .address image{width: 20rpx;height:26rpx;vertical-align: middle;margin-right: 10rpx;}
 .card_words .address text{line-height: 34rpx;vertical-align: middle;}
+.card_words .label{height: 44rpx;overflow:hidden;}
 .card_words .label text{
   display: inline-block;
   font-size: 20rpx;
@@ -40,13 +40,24 @@
   border-radius: 22rpx;
   background: rgba(241,97,42,0.1);
 }
+.card_words .card_price{color: #F1612A;line-height:40rpx;}
+.card_words .card_price .p{font-size: 40rpx;}
+.card_words .card_price .m{font-size: 24rpx;}
+.card .card_star{
+  position: absolute;
+  top: 0;
+  right: -30rpx;
+  z-index: 7;
+  width: 100rpx;
+  height: 140rpx;
+}
 .card .star {
-  width: 44rpx;
-  height: 44rpx;
   position: absolute;
   top: 28rpx;
-  right: 24rpx;
-  z-index: 7
+  right: 30rpx;
+  z-index: 7;
+  width: 44rpx;
+  height: 44rpx;
 }
 .card .star_select{
   width: 40rpx;
@@ -54,11 +65,10 @@
 }
 .card .classify {
   position: absolute;
-  top: 32rpx;
+  top: 40rpx;
   left: 0;
   width: 120rpx;
   height: 38rpx;
-  background-color: rgba(0, 0, 0, 0.3);
   color: #fff;
   text-align: center;
   border-radius: 8rpx 0 8rpx 0;
@@ -66,6 +76,7 @@
   font-size: 28rpx;
   z-index: 7
 }
+.card .image image{width: 86rpx;height:34rpx}
 .card .price {
   position: absolute;
   left: -8rpx;

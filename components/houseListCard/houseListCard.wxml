@@ -9,8 +9,10 @@
             <imageExtend wx:else src="{{filter.xzCoverImage(items)}}" data-index="{{index}}" data-idx="{{idx}}"></imageExtend>
           </block>
         </view>
-        <image class="star star_select" wx:if="{{item.collection&&isMonitorHouse ===0}}" data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.productId}}" catchtap="goToCollection" src="../../assets/image/star_select.png"></image>
-        <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0}}" data-index="{{idx}}" data-collection="{{item.collection}}" data-productId="{{item.productId}}" catchtap="goToCollection" src="../../assets/image/star.png"></image>
+        <view class="card_star" catchtap="goToCollection" data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.productId}}">
+          <image class="star star_select" wx:if="{{item.collection&&isMonitorHouse ===0}}"  src="../../assets/image/star_select.png"></image>
+          <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0}}"  src="../../assets/image/star.png"></image>
+        </view>
         <view class="house_classify" wx:if="{{item.platformId == 'tj'}}">途家</view>
         <view class="house_classify" wx:elif="{{item.platformId == 'xz'}}">小猪</view>
         <view class="house_classify" wx:elif="{{item.platformId == 'mn'}}">木鸟</view>
@@ -38,8 +40,11 @@
         <imageExtend wx:else src="{{filter.xzCoverImage(items)}}" data-index="{{index}}" data-idx="{{idx}}"></imageExtend>
       </block>
     </view>
-    <image class="star star_select" wx:if="{{item.collection&&isMonitorHouse ===0}}" data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.productId}}" catchtap="goToCollection" src="../../assets/image/star_select.png"></image>
-    <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0}}" data-index="{{idx}}" data-collection="{{item.collection}}" data-productId="{{item.productId}}" catchtap="goToCollection" src="../../assets/image/star.png"></image>
+    <view class="card_star" catchtap="goToCollection"  data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.productId}}">
+      <image class="star star_select" wx:if="{{item.collection&&isMonitorHouse ===0}}"  src="../../assets/image/star_select.png"></image>
+      <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0}}"   src="../../assets/image/star.png"></image>
+    </view>
+    
     <view class="house_classify" wx:if="{{item.platformId == 'tj'}}">途家</view>
     <view class="house_classify" wx:elif="{{item.platformId == 'xz'}}">小猪</view>
     <view class="house_classify" wx:elif="{{item.platformId == 'mn'}}">木鸟</view>
