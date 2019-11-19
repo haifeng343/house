@@ -91,6 +91,11 @@
   overflow: hidden;
 }
 
+.section .position-box .position-list.history {
+  height: auto;
+  max-height: unset;
+}
+
 .section .position-box .position-list.hot-city {
   height: auto;
   max-height: 70px;

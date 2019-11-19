@@ -622,7 +622,12 @@ Component({
 
     handlePriceCustom(event) {
       const rangeCustom = event.detail;
-      this.setData({ rangeCustom });
+      this.setData({
+        rangeCustom,
+        maxPrice: this.data.maxPrice === 10000 ? 9999 : this.data.maxPrice
+      });
+      this.changeList.add("minPrice");
+      this.changeList.add("maxPrice");
     },
 
     handlePriceChange(event) {

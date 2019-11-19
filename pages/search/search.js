@@ -421,7 +421,13 @@ Page({
         });
         return;
       }
-      if (this.data.isAuth) {
+      let searchData = this.data.searchData;
+      if (!searchData.city) {
+        wx.showToast({
+          title: "请先选择城市",
+          icon: 'none'
+        });
+      } else if (this.data.isAuth) {
         wx.navigateTo({
           url: "../houseList/houseList"
         });
@@ -433,7 +439,13 @@ Page({
         });
       }
     } else if (this.data.tabIndex == 2) {
-      if (this.data.isAuth) {
+      let searchLongData = this.data.searchLongData;
+      if (!searchLongData.city) {
+        wx.showToast({
+          title: "请先选择城市",
+          icon: 'none'
+        });
+      } else if (this.data.isAuth){
         wx.navigateTo({
           url: "../houseLongList/houseLongList"
         });
@@ -567,7 +579,7 @@ Page({
         () => {
           this.getCityInfo(searchData.city);
           this.getHotPosition(searchData.city);
-          temp && this.getUserLocation();
+          // temp && this.getUserLocation();
         }
       );
     });
@@ -618,7 +630,7 @@ Page({
         () => {
           // 获取试试搜索信息
           // this.getHotPosition(searchData.city);
-          temp && this.getUserLocationLong(false);
+          // temp && this.getUserLocationLong(false);
         }
       );
     });
@@ -760,8 +772,11 @@ Page({
   changeTab(event) {
     let tabIndex = event.currentTarget.dataset.index || 1;
     this.setData({ tabIndex, spread: false });
+    if (tabIndex == 1) {
+      this.getHotCity()
+    }
     if (tabIndex == 2) {
-      this.getHotCityLong();
+      this.getHotCityLong()
     }
   },
   //长租切换房源
@@ -900,10 +915,6 @@ Page({
       let searchLongData = app.globalData.searchLongData
       changeHistoryStorage(searchLongData)
       this.setData({ showLongPriceBlock: false });
-      setTimeout(() => {
-        this.getSearchDataFromGlobal();
-        this.setData({ needOnShow: true });
-      }, 1000);
     });
     this.searchLongMonitorDataSubscription = SearchLongMonitorDataSubject.subscribe(() => {
       const app = getApp()

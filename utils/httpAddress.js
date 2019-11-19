@@ -10,7 +10,7 @@ export const api_address = 'https://fytest.bangdingding.cn';
 export const default_address = 'https://fangtest.bangdingding.cn';
 
 //三方平台数据api
-export const wiwj_address = "https://appapi.5i5j.com"
+export const wiwj_address         = "https://appapi.5i5j.com"
 export const lianjia_address      = "https://app.api.lianjia.com"
 export const fangtianxia_address1 = "https://soufunapp.3g.fang.com"
 export const fangtianxia_address2 = "https://soufunappesf.3g.fang.com"

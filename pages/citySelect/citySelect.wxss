@@ -188,7 +188,7 @@
   background-size: 22rpx 24rpx;
 }
 
-.section .page .city-list .section .cell-list {
+.section .cell-list {
   flex-wrap: wrap;
   padding-left: 13px;
   max-height: 70px;
@@ -197,8 +197,12 @@
   justify-content: flex-start;
   align-items: flex-start;
 }
+.search-history .cell-list {
+  height: auto;
+  max-height: unset;
+}
 
-.section .page .city-list .section .cell-list .cell-item {
+.cell-list .cell-item {
   width: auto;
   padding: 0 10px;
   height: 27px;
@@ -223,13 +227,13 @@
   margin-bottom: 3px;
 }
 
-.section .page .city-list .section .cell-list .cell-item.hot {
+.cell-list .cell-item.hot {
   background-color: #faf0e6;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.section .page .city-list .section .cell-list .cell-item.hot .text {
+.cell-list .cell-item.hot .text {
   max-width: 200rpx;
   overflow: hidden;
   white-space: nowrap;
