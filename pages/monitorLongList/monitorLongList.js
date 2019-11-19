@@ -162,6 +162,11 @@ Page({
     }
   },
   goRefresh() {
+    this.setData({
+      loadingDisplay: 'block',
+      countFlag: '',
+      allData: [],
+    });
     this.onHouseShow()
   },
   goSort() {
