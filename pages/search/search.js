@@ -421,7 +421,13 @@ Page({
         });
         return;
       }
-      if (this.data.isAuth) {
+      let searchData = this.data.searchData;
+      if (!searchData.city) {
+        wx.showToast({
+          title: "请先选择城市",
+          icon: 'none'
+        });
+      } else if (this.data.isAuth) {
         wx.navigateTo({
           url: "../houseList/houseList"
         });
@@ -439,7 +445,6 @@ Page({
           title: "请先选择城市",
           icon: 'none'
         });
-        return
       } else if (this.data.isAuth){
         wx.navigateTo({
           url: "../houseLongList/houseLongList"
@@ -767,8 +772,11 @@ Page({
   changeTab(event) {
     let tabIndex = event.currentTarget.dataset.index || 1;
     this.setData({ tabIndex, spread: false });
+    if (tabIndex == 1) {
+      this.getHotCity()
+    }
     if (tabIndex == 2) {
-      this.getHotCityLong();
+      this.getHotCityLong()
     }
   },
   //长租切换房源
