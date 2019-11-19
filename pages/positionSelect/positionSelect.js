@@ -74,47 +74,6 @@ Page({
     wx.setStorageSync('positionSearchHistory', [])
     this.setData({ history: [] })
   },
-  changeTab(event) {
-    this.setData({ isScroll: true }, () => {
-      let item = event.currentTarget.dataset.item;
-      let scrollTop = this.data.scrollTop;
-      scrollTop[item] = scrollTop[item] + 148;
-      this.setData({
-        scrollTop, isScroll: false
-      })
-    })
-  },
-  scrollToLower(event) {
-    let item = event.currentTarget.dataset.item;
-    let scrollTop = this.data.scrollTop;
-    scrollTop[item] = 0;
-    this.setData({
-      scrollTop
-    })
-  },
-  scrollItem(event) {
-    console.log(1)
-  },
-  spreadItem(event) {
-    let item = event.currentTarget.dataset.item;
-    let length = parseInt(event.currentTarget.dataset.length);
-    if (length > 20) {
-      let showAll = this.data.showAll;
-      let showAllItem = showAll[item]
-      showAll[item] = !showAllItem;
-      this.setData({
-        showAll
-      })
-    } else {
-
-      let spread = this.data.spread;
-      let spreadItem = spread[item]
-      spread[item] = !spreadItem;
-      this.setData({
-        spread
-      })
-    }
-  },
 
   handleSelectCityByPosition(event) {
     let position = event.currentTarget.dataset.item.name;
@@ -241,8 +200,8 @@ Page({
     }).catch(error => {
       console.error(error);
     });
-
   },
+  
   handleSelectHotPosition(event) {
     const app = getApp();
     let position = event.currentTarget.dataset.item.name;
