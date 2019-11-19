@@ -888,7 +888,7 @@ Page({
         }
       }
     );
-    if (this.data.needOnShow) {
+    if (this.data.needOnShow && this.data.tabIndex == 1) {
       this.getSearchDataFromGlobal();
     }
 
