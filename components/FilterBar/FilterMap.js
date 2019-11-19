@@ -196,14 +196,6 @@ export default JSON.stringify({
           {
             label: "新上房源",
             value: 6
-          },
-          {
-            label: "配套齐全",
-            value: 7
-          },
-          {
-            label: "视频看房",
-            value: 8
           }
         ]
       }
