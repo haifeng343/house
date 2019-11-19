@@ -717,6 +717,9 @@ Page({
         )
       },
       () => {
+        if (this.data.tabIndex != 1) {
+          return
+        }
         this.getHotCity();
         let min = 0,
           max = 0;
@@ -888,7 +891,7 @@ Page({
         }
       }
     );
-    if (this.data.needOnShow && this.data.tabIndex == 1) {
+    if (this.data.needOnShow) {
       this.getSearchDataFromGlobal();
     }
 
