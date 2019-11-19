@@ -201,10 +201,7 @@ function returnData(wiwjData, lianjiaData) {
         }
         if (!isMatch) {
           // requestData.xiaoqu.push({ name: lianjiaData.data[index].name, lianjia: lianjiaData.data[index], type: 30 })
-          requestData.xiaoqu.push({
-            name: lianjiaData.data[index].name,
-            type: 30
-          });
+          requestData.xiaoqu.push({ name: lianjiaData.data[index].name, type: 30 })
         }
       }
       if (lianjiaData.data[index].type == "station") {
@@ -233,18 +230,11 @@ function returnData(wiwjData, lianjiaData) {
       }
     }
   }
-  let dataArray = [];
-  for (let index = 0; index < requestData.xiaoqu.length; index++) {
-    dataArray.push({
-      name: requestData.xiaoqu[index].name,
-      type: requestData.xiaoqu[index].type
-    });
-  }
   var requsetTotal = [];
   requsetTotal = requsetTotal
     .concat(requestData.area)
     .concat(requestData.buiness)
-    .concat(dataArray)
+    .concat(requestData.xiaoqu)
     .concat(requestData.line)
     .concat(requestData.subway);
   return requsetTotal;

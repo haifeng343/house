@@ -161,16 +161,16 @@ const chooseSlectData = (data)=> {
     }
   }
   if (type == 30) {
-    // if (data.wiwj) {
-    //   result.areaId.wiwj = {
-    //     id: data.wiwj.searchId,
-    //     name: data.wiwj.searchName
-    //   }
-    //   areaJson.wiwj = {
-    //     communityid: data.wiwj.searchId,
-    //     zn: data.wiwj.searchName
-    //   }
-    // }
+    if (data.wiwj) {
+      result.areaId.wiwj = {
+        id: data.wiwj.searchId,
+        name: data.wiwj.searchName
+      }
+      areaJson.wiwj = {
+        communityid: data.wiwj.searchId,
+        zn: data.wiwj.searchName
+      }
+    }
     // if (data.lianjia) {
     //   result.areaId.lj = data.lianjia.uri
     //   areaJson.lj = {
