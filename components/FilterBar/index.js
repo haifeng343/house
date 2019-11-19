@@ -198,53 +198,58 @@ Component({
       const searchKey = event.detail.value;
       const { cityId, chooseType } = this.data.data;
       this.setData({ searchKey });
-      if (chooseType === 1) {
-        longRentTip
-          .getIntermediaryData(cityId, searchKey)
-          .then(resp => {
-            this.setData({
-              searchResultList: resp.map(item =>
-                Object.assign(
-                  {
-                    label: item.name,
-                    tag: areaTagMap[item.type]
-                  },
-                  item
-                )
-              )
-            });
-          })
-          .catch(error => {
-            console.error(error);
-            wx.showToast({
-              title: "网络异常",
-              icon: "none"
-            });
-          });
-      } else {
-        longRentTip
-          .getPersonalData(cityId, searchKey)
-          .then(resp => {
-            this.setData({
-              searchResultList: resp.map(item =>
-                Object.assign(
-                  {
-                    label: item.name,
-                    tag: areaTagMap[item.type]
-                  },
-                  item
-                )
-              )
-            });
-          })
-          .catch(error => {
-            console.error(error);
-            wx.showToast({
-              title: "网络异常",
-              icon: "none"
-            });
-          });
+      if (this.timer) {
+        clearTimeout(this.timer);
       }
+      this.timer = setTimeout(() => {
+        if (chooseType === 1) {
+          longRentTip
+            .getIntermediaryData(cityId, searchKey)
+            .then(resp => {
+              this.setData({
+                searchResultList: resp.map(item =>
+                  Object.assign(
+                    {
+                      label: item.name,
+                      tag: areaTagMap[item.type]
+                    },
+                    item
+                  )
+                )
+              });
+            })
+            .catch(error => {
+              console.error(error);
+              wx.showToast({
+                title: "网络异常",
+                icon: "none"
+              });
+            });
+        } else {
+          longRentTip
+            .getPersonalData(cityId, searchKey)
+            .then(resp => {
+              this.setData({
+                searchResultList: resp.map(item =>
+                  Object.assign(
+                    {
+                      label: item.name,
+                      tag: areaTagMap[item.type]
+                    },
+                    item
+                  )
+                )
+              });
+            })
+            .catch(error => {
+              console.error(error);
+              wx.showToast({
+                title: "网络异常",
+                icon: "none"
+              });
+            });
+        }
+      }, 200);
     },
     handleClearSearchKey() {
       this.setData({ searchKey: "", searchResultList: [] });
