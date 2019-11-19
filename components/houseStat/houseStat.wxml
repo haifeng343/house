@@ -11,7 +11,8 @@
           <view class="price">{{sort?'推荐价':'最低价'}}:￥{{item.lowPriceData.finalPrice||'--'}}/晚</view>
           <view class="num">房源数:{{item.value||'--'}}套(已选{{item.selectCount||'--'}}套)</view>
         </view>
-        <image class="tu_image" mode="aspectFill" src="{{item.key=='xz'?filter.xzCoverImage(item.lowPriceData.pictureList[0]):item.lowPriceData.pictureList[0]}}"></image>
+        <image class="tu_image" mode="aspectFill" wx:if="item.lowPriceData.pictureList[0]" src="{{item.key=='xz'?filter.xzCoverImage(item.lowPriceData.pictureList[0]):item.lowPriceData.pictureList[0]}}"></image>
+        <image class="tu_image" mode="aspectFill" wx:else src="../../assets/image/default_image.png"></image>
       </view>
 
       <view wx:else class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='xz'?'xz_layout':''}} {{item.key =='mn'?'mn_layout':''}} {{item.key =='zg'?'zg_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
@@ -34,7 +35,8 @@
           <view class="price">{{sort?'推荐价':'最低价'}}:￥{{item.lowPriceData.price||'--'}}/月</view>
           <view class="num">房源数:{{item.value||'--'}}套(已选{{item.selectCount||'--'}}套)</view>
         </view>
-        <image class="tu_image" mode="aspectFill" src="{{item.lowPriceData.imgurl}}"></image>
+        <image class="tu_image" mode="aspectFill" wx:if="{{item.lowPriceData.imgurl}}" src="{{item.lowPriceData.imgurl}}"></image>
+        <image class="tu_image" mode="aspectFill" wx:else src="../../assets/image/default_image.png"></image>
       </view>
 
       <view wx:else class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
