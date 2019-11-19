@@ -694,6 +694,17 @@ Component({
             areaId: {},
             isHistory: false
           });
+        } else {
+          const e = {
+            currentTarget: {
+              dataset: {
+                index: 0
+              }
+            }
+          };
+          wx.nextTick(() => {
+            this.handleSelectStation(e);
+          });
         }
       } else if (currentAreaType === 2) {
         const targetItem = areaList[currentAreaType].list[index];
