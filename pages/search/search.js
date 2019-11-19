@@ -433,7 +433,14 @@ Page({
         });
       }
     } else if (this.data.tabIndex == 2) {
-      if (this.data.isAuth) {
+      let searchLongData = this.data.searchLongData;
+      if (!searchLongData.city) {
+        wx.showToast({
+          title: "请先选择城市",
+          icon: 'none'
+        });
+        return
+      } else if (this.data.isAuth){
         wx.navigateTo({
           url: "../houseLongList/houseLongList"
         });
@@ -900,10 +907,6 @@ Page({
       let searchLongData = app.globalData.searchLongData
       changeHistoryStorage(searchLongData)
       this.setData({ showLongPriceBlock: false });
-      setTimeout(() => {
-        this.getSearchDataFromGlobal();
-        this.setData({ needOnShow: true });
-      }, 1000);
     });
     this.searchLongMonitorDataSubscription = SearchLongMonitorDataSubject.subscribe(() => {
       const app = getApp()
