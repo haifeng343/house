@@ -101,8 +101,7 @@ function returnData(wiwjData, lianjiaData) {
         requestData.buiness.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index], type: 20 })
       }
       if (wiwjData.data[index].searchType == 3) {
-        // requestData.xiaoqu.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index], type: 30 })
-        requestData.xiaoqu.push({ name: wiwjData.data[index].searchName, type: 30 })
+        requestData.xiaoqu.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index], type: 30 })
       }
       if (wiwjData.data[index].searchType == 4) {
         requestData.line.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index], type: 40 })
@@ -182,8 +181,12 @@ function returnData(wiwjData, lianjiaData) {
       }
     }
   }
+  let dataArray = [];
+  for (let index = 0; index < requestData.xiaoqu.length; index++) {
+    dataArray.push({ name: requestData.xiaoqu[index].name, type: requestData.xiaoqu[index].type })
+  }
   var requsetTotal = []
-  requsetTotal = requsetTotal.concat(requestData.area).concat(requestData.buiness).concat(requestData.xiaoqu).concat(requestData.line).concat(requestData.subway)
+  requsetTotal = requsetTotal.concat(requestData.area).concat(requestData.buiness).concat(dataArray).concat(requestData.line).concat(requestData.subway)
   return requsetTotal
 }
 
@@ -235,8 +238,7 @@ function returnData2(ftxData, wbtcData) {
       if (data[index].wordtype.text == '楼盘' && data[index].ywtype.text == '出租') {
         data[index].coord_x.text = parseFloat(parseFloat(data[index].coord_x.text).toFixed(6))
         data[index].coord_y.text = parseFloat(parseFloat(data[index].coord_y.text).toFixed(6))
-        // requestData.xiaoqu.push({ name: data[index].projmainname.text, ftx: data[index], type: 30 })
-        requestData.xiaoqu.push({ name: data[index].projmainname.text, type: 30 })
+        requestData.xiaoqu.push({ name: data[index].projmainname.text, ftx: data[index], type: 30 })
       }
     }
   }
@@ -289,8 +291,12 @@ function returnData2(ftxData, wbtcData) {
       }
     }
   }
+  let dataArray = [];
+  for (let index = 0; index < requestData.xiaoqu.length; index++) {
+    dataArray.push({ name: requestData.xiaoqu[index].name, type: requestData.xiaoqu[index].type })
+  }
   var requsetTotal = []
-  requsetTotal = requsetTotal.concat(requestData.area).concat(requestData.buiness).concat(requestData.xiaoqu).concat(requestData.line).concat(requestData.subway)
+  requsetTotal = requsetTotal.concat(requestData.area).concat(requestData.buiness).concat(dataArray).concat(requestData.line).concat(requestData.subway)
   return requsetTotal
 }
 
