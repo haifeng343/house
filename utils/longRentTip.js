@@ -101,7 +101,8 @@ function returnData(wiwjData, lianjiaData) {
         requestData.buiness.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index], type: 20 })
       }
       if (wiwjData.data[index].searchType == 3) {
-        requestData.xiaoqu.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index], type: 30 })
+        // requestData.xiaoqu.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index], type: 30 })
+        requestData.xiaoqu.push({ name: wiwjData.data[index].searchName, type: 30 })
       }
       if (wiwjData.data[index].searchType == 4) {
         requestData.line.push({ name: wiwjData.data[index].searchName, wiwj: wiwjData.data[index], type: 40 })
@@ -153,14 +154,15 @@ function returnData(wiwjData, lianjiaData) {
               var distance = getFlatternDistance(requestData.xiaoqu[temp].wiwj.y, requestData.xiaoqu[temp].wiwj.x, lianjiaData.data[index].latitude, lianjiaData.data[index].longitude)
               if (distance < 500) {
                 isMatch = true
-                requestData.xiaoqu[temp].lianjia = lianjiaData.data[index]
+                // requestData.xiaoqu[temp].lianjia = lianjiaData.data[index]
                 break
               }
             }
           }
         }
         if (!isMatch) {
-          requestData.xiaoqu.push({ name: lianjiaData.data[index].name, lianjia: lianjiaData.data[index], type: 30 })
+          // requestData.xiaoqu.push({ name: lianjiaData.data[index].name, lianjia: lianjiaData.data[index], type: 30 })
+          requestData.xiaoqu.push({ name: lianjiaData.data[index].name, type: 30 })
         }
       }
       if (lianjiaData.data[index].type == "station") {
@@ -233,7 +235,8 @@ function returnData2(ftxData, wbtcData) {
       if (data[index].wordtype.text == '楼盘' && data[index].ywtype.text == '出租') {
         data[index].coord_x.text = parseFloat(parseFloat(data[index].coord_x.text).toFixed(6))
         data[index].coord_y.text = parseFloat(parseFloat(data[index].coord_y.text).toFixed(6))
-        requestData.xiaoqu.push({ name: data[index].projmainname.text, ftx: data[index], type: 30 })
+        // requestData.xiaoqu.push({ name: data[index].projmainname.text, ftx: data[index], type: 30 })
+        requestData.xiaoqu.push({ name: data[index].projmainname.text, type: 30 })
       }
     }
   }
@@ -269,14 +272,15 @@ function returnData2(ftxData, wbtcData) {
               var distance = getFlatternDistance(requestData.xiaoqu[temp].ftx.coord_y.text, requestData.xiaoqu[temp].ftx.coord_x.text, data2[index].lat, data2[index].lon)
               if (distance < 500) {
                 isMatch = true
-                requestData.xiaoqu[temp].wbtc = data2[index]
+                // requestData.xiaoqu[temp].wbtc = data2[index]
                 break
               }
             }
           }
         }
         if (!isMatch) {
-          requestData.xiaoqu.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index], type: 30 })
+          // requestData.xiaoqu.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index], type: 30 })
+          requestData.xiaoqu.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), type: 30 })
         }
       }
 
