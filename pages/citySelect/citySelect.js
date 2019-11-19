@@ -127,7 +127,7 @@ Page({
   handleSelectCityByName(event) {
     let data = event.currentTarget.dataset;
     let name = data.name || data.item.name;
-    if (!name && name != '定位失败') {
+    if (!name || name == '定位失败') {
       return
     }
     const type = specialCity.includes(name) ? 1 : this.data.currentTabValue;
