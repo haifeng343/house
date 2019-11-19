@@ -34,11 +34,11 @@ Page({
     this.authSubscription = authSubject.subscribe(isAuth => {
       console.log("isAuth=" + isAuth);
       if (isAuth) {
+        this.setData({ isAuth });
         this.service
           .getUserInfo()
           .then(userInfo => {
             this.setData(userInfo);
-            this.setData({ isAuth });
             if (this.action) {
               this.handleAction();
             }
