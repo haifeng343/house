@@ -579,7 +579,7 @@ Page({
         () => {
           this.getCityInfo(searchData.city);
           this.getHotPosition(searchData.city);
-          temp && this.getUserLocation();
+          // temp && this.getUserLocation();
         }
       );
     });
@@ -630,7 +630,7 @@ Page({
         () => {
           // 获取试试搜索信息
           // this.getHotPosition(searchData.city);
-          temp && this.getUserLocationLong(false);
+          // temp && this.getUserLocationLong(false);
         }
       );
     });
