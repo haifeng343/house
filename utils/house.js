@@ -2305,7 +2305,7 @@ const ljScreenParam = type => {
         obj.push(condition + "rs" + a);
       }
     } else {
-      obj.push(condition);
+      obj.push(condition + "rs" + area);
     }
   } else {
     obj.push(condition);
