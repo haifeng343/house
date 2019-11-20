@@ -49,7 +49,10 @@
     </view>
   </view>
   <view class="house_loading" style="display:{{loadingDisplay}}" catchtouchmove="preventTouchMove">
-    <image src="../../assets/image/loading.gif"></image>
+    <view class="loading_image">
+      <image src="../../assets/image/loading.gif"></image>
+      <view class="text">正在获取全网低价房源，请稍后...</view>
+    </view>
   </view>
   
   <collectDialog bind:collectEvent="getcollectEventEvent" style="display:{{collectDisplay}}"></collectDialog>
