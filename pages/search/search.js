@@ -1,7 +1,10 @@
 import { getLocationSetting, getLocation, getSessionKey } from "../../utils/wx";
 import { authSubject } from "../../utils/auth";
 import { SearchDataSubject } from "../../utils/searchDataStream";
-import { SearchLongDataSubject, SearchLongMonitorDataSubject } from "../../utils/searchLongDataStream";
+import {
+  SearchLongDataSubject,
+  SearchLongMonitorDataSubject
+} from "../../utils/searchLongDataStream";
 import { getLocationInfo } from "../../utils/map";
 import searchService from "./service";
 import fecha from "../../utils/fecha";
@@ -9,7 +12,7 @@ import { searchDataStorage } from "../../utils/searchDataStorage";
 import { searchLongDataStorage } from "../../utils/searchLongDataStorage";
 import getIndexHouseData from "../../utils/indexHouseData";
 import getIndexLongHouseData from "../../utils/indexLongHouseData";
-import { changeHistoryStorage } from "../../utils/longSetSearchData"
+import { changeHistoryStorage } from "../../utils/longSetSearchData";
 Page({
   /**
    * 页面的初始数据
@@ -257,39 +260,50 @@ Page({
   calcCityByLocation(location) {
     if (location) {
       getLocationInfo(location).then(resp => {
-        const city = resp.result.address_component.city;
+        let city = resp.result.address_component.city;
         if (city) {
-          this.service.getCityList(city).then(rslt => {
-            var data = rslt.data[0];
-            let json = JSON.parse(data.json);
-            let searchData = this.data.searchData;
-            searchData.city = data.name;
-            searchData.area = "";
-            searchData.areaType = "";
-            searchData.cityId = {
-              tj: json.tj && json.tj.id,
-              mn: json.mn && json.mn.city_id,
-              zg: json.zg && json.zg.id,
-              xz: json.xz && json.xz.cityId
-            };
-            searchData.ltude = {
-              tj: resp.result.location.lat + "," + resp.result.location.lng,
-              mn: resp.result.location.lat + "," + resp.result.location.lng,
-              zg: resp.result.location.lat + "," + resp.result.location.lng,
-              xz: resp.result.location.lat + "," + resp.result.location.lng
-            };
-            this.setData(
-              {
-                searchData,
+          if (city.indexOf("市") === city.length - 1) {
+            city = city.substring(0, city.length - 1);
+          }
+          this.service
+            .getCityList(city)
+            .then(rslt => {
+              var data = rslt.data[0];
+              let json = JSON.parse(data.json);
+              let searchData = this.data.searchData;
+              searchData.city = data.name;
+              searchData.area = "";
+              searchData.areaType = "";
+              searchData.cityId = {
+                tj: json.tj && json.tj.id,
+                mn: json.mn && json.mn.city_id,
+                zg: json.zg && json.zg.id,
+                xz: json.xz && json.xz.cityId
+              };
+              searchData.ltude = {
+                tj: resp.result.location.lat + "," + resp.result.location.lng,
+                mn: resp.result.location.lat + "," + resp.result.location.lng,
+                zg: resp.result.location.lat + "," + resp.result.location.lng,
+                xz: resp.result.location.lat + "," + resp.result.location.lng
+              };
+              this.setData(
+                {
+                  searchData,
+                  cityText: "手动定位"
+                },
+                () => {
+                  const app = getApp();
+                  app.globalData.searchData = this.data.searchData;
+                  this.getHotPosition(this.data.searchData.city);
+                }
+              );
+            })
+            .catch(error => {
+              console.error(error);
+              this.setData({
                 cityText: "手动定位"
-              },
-              () => {
-                const app = getApp();
-                app.globalData.searchData = this.data.searchData;
-                this.getHotPosition(this.data.searchData.city);
-              }
-            );
-          });
+              });
+            });
         }
       });
     } else {
@@ -329,15 +343,15 @@ Page({
                 }
               }
               searchLongData.cityId = cityId;
-              searchLongData.area = ''
-              searchLongData.areaId = {}
-              searchLongData.areaType = 0
-              searchLongData.areaJson = ''
+              searchLongData.area = "";
+              searchLongData.areaId = {};
+              searchLongData.areaType = 0;
+              searchLongData.areaJson = "";
               app.globalData.searchLongData.cityId = cityId;
-              app.globalData.searchLongData.area = ''
-              app.globalData.searchLongData.areaId = {}
-              app.globalData.searchLongData.areaType = 0
-              app.globalData.searchLongData.areaJson = ''
+              app.globalData.searchLongData.area = "";
+              app.globalData.searchLongData.areaId = {};
+              app.globalData.searchLongData.areaType = 0;
+              app.globalData.searchLongData.areaJson = "";
               this.setData({
                 searchLongData,
                 cityText2: "手动定位"
@@ -425,7 +439,7 @@ Page({
       if (!searchData.city) {
         wx.showToast({
           title: "请先选择城市",
-          icon: 'none'
+          icon: "none"
         });
       } else if (this.data.isAuth) {
         wx.navigateTo({
@@ -443,9 +457,9 @@ Page({
       if (!searchLongData.city) {
         wx.showToast({
           title: "请先选择城市",
-          icon: 'none'
+          icon: "none"
         });
-      } else if (this.data.isAuth){
+      } else if (this.data.isAuth) {
         wx.navigateTo({
           url: "../houseLongList/houseLongList"
         });
@@ -536,7 +550,7 @@ Page({
           title: "登录成功"
         });
 
-        this.searchSubmit()
+        this.searchSubmit();
       })
       .catch(() => {
         this.submitFlag = false;
@@ -717,7 +731,7 @@ Page({
       },
       () => {
         if (this.data.tabIndex != 1) {
-          return
+          return;
         }
         this.getHotCity();
         let min = 0,
@@ -776,10 +790,10 @@ Page({
     let tabIndex = event.currentTarget.dataset.index || 1;
     this.setData({ tabIndex, spread: false });
     if (tabIndex == 1) {
-      this.getHotCity()
+      this.getHotCity();
     }
     if (tabIndex == 2) {
-      this.getHotCityLong()
+      this.getHotCityLong();
     }
   },
   //长租切换房源
@@ -798,7 +812,7 @@ Page({
       searchLongData.longSortTypes = 0;
       searchLongData.area = "";
       searchLongData.areaId = {};
-      searchLongData.areaType = 0
+      searchLongData.areaType = 0;
       searchLongData.areaJson = "";
       this.setData({ searchLongData });
       const app = getApp();
@@ -867,8 +881,8 @@ Page({
     this.getbanner();
   },
   onShow() {
-    const app = getApp()
-    let searchLongData = app.globalData.searchLongData
+    const app = getApp();
+    let searchLongData = app.globalData.searchLongData;
     searchLongData.longBuildAreas = -1;
     searchLongData.longFloorTypes = [];
     searchLongData.longHeadings = [];
@@ -914,15 +928,17 @@ Page({
       }, 1000);
     });
     this.searchLongDataSubscription = SearchLongDataSubject.subscribe(() => {
-      const app = getApp()
-      let searchLongData = app.globalData.searchLongData
-      changeHistoryStorage(searchLongData)
+      const app = getApp();
+      let searchLongData = app.globalData.searchLongData;
+      changeHistoryStorage(searchLongData);
       this.setData({ showLongPriceBlock: false });
     });
-    this.searchLongMonitorDataSubscription = SearchLongMonitorDataSubject.subscribe(() => {
-      const app = getApp()
-      let monitorSearchLongData = app.globalData.monitorSearchLongData
-      changeHistoryStorage(monitorSearchLongData)
-    });
+    this.searchLongMonitorDataSubscription = SearchLongMonitorDataSubject.subscribe(
+      () => {
+        const app = getApp();
+        let monitorSearchLongData = app.globalData.monitorSearchLongData;
+        changeHistoryStorage(monitorSearchLongData);
+      }
+    );
   }
 });

@@ -2307,6 +2307,8 @@ const ljScreenParam = type => {
     } else {
       obj.push(condition);
     }
+  } else {
+    obj.push(condition);
   }
 
   return obj;
