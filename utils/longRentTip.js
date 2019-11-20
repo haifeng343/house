@@ -89,7 +89,7 @@ function sameWordsCount(set1 = "", set2 = "") {
   return count;
 }
 
-function returnData(wiwjData, lianjiaData) {
+function returnData(wiwjData, lianjiaData, keywords) {
   var requestData = { area: [], buiness: [], xiaoqu: [], line: [], subway: [] }; //地点、商圈、小区、线路、地铁站
   if (!!wiwjData && wiwjData.data && wiwjData.data instanceof Array) {
     var length1 = wiwjData.data.length < 15 ? wiwjData.data.length : 15;
@@ -237,6 +237,14 @@ function returnData(wiwjData, lianjiaData) {
     .concat(requestData.xiaoqu)
     .concat(requestData.line)
     .concat(requestData.subway);
+  var keywordSet = minWordsSet(keywords||'');
+  requsetTotal = requsetTotal.sort((item1, item2) => {
+    var st1 = minWordsSet(item1.name || '');
+    var st2 = minWordsSet(item2.name || '');
+    var sameWords1 = sameWordsCount(st1, keywordSet);
+    var sameWords2 = sameWordsCount(st2, keywordSet);
+    return sameWords2 - sameWords1;
+  });
   return requsetTotal;
 }
 
@@ -263,13 +271,13 @@ const getIntermediaryData = (data, keywords, promiseVersion) => {
         results1 = results;
         count++;
         if (count === 2) {
-          resolve({ promiseVersion, result: returnData(results1, results2) });
+          resolve({ promiseVersion, result: returnData(results1, results2, keywords) });
         }
       })
       .catch(() => {
         count++;
         if (count === 2) {
-          resolve({ promiseVersion, result: returnData(results1, results2) });
+          resolve({ promiseVersion, result: returnData(results1, results2, keywords) });
         }
       });
     longrent.lianjia
@@ -290,13 +298,13 @@ const getIntermediaryData = (data, keywords, promiseVersion) => {
         results2 = results;
         count++;
         if (count === 2) {
-          resolve({ promiseVersion, result: returnData(results1, results2) });
+          resolve({ promiseVersion, result: returnData(results1, results2, keywords) });
         }
       })
       .catch(() => {
         count++;
         if (count === 2) {
-          resolve({ promiseVersion, result: returnData(results1, results2) });
+          resolve({ promiseVersion, result: returnData(results1, results2, keywords) });
         }
       });
   });
