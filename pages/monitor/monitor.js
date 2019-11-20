@@ -17,11 +17,11 @@ Page({
     let token = wx.getStorageSync('token');
     if (token) {
       if (app.switchRent == 1 || !app.switchRent) { 
-        this.setData({ active:1})
+        this.setData({ active: 1, data:[]})
         this.getMonitorData()
       }
       if (app.switchRent == 2) {
-        this.setData({ active: 2 })
+        this.setData({ active: 2, data: [] })
         this.getLongMonitorData()
       }
       this.getUserInfo()

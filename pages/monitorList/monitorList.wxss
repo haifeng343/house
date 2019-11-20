@@ -222,8 +222,6 @@ page {
   width:100%;
   text-align: center;
   color:#A6A6A6;
-  position: absolute;
-  bottom:88px;
-  left:0;
-  font-size: 24rpx
+  font-size: 24rpx;
+  margin-top: -10px
 }
