@@ -335,7 +335,7 @@ Page({
     fddShortRentBlock.zg = zgId
     data.fddShortRentBlock = fddShortRentBlock
     wx.showLoading({
-      title: '',
+      title: '正在添加监控...',
       mask: true
     });
     monitorApi.addMonitor(data).then(res => {
@@ -438,7 +438,7 @@ Page({
     }
     data['fddShortRentBlock'] = fddShortRentBlock;
     wx.showLoading({
-      title: '',
+      title: '正在添加监控...',
       mask: true
     });
     monitorApi.addLongMonitor(data).then(res => {
