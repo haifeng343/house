@@ -621,6 +621,12 @@ Page({
     })
   },
   getUpdateConfrimEvent(e){
+    this.setData({
+      updateMonitorDisplay: e.detail
+    });
+    this.getUpdateMonitor();
+  },
+  getUpdateMonitor(){
     let app = getApp();
     let y = app.globalData.monitorSearchLongData;
     let data = {
@@ -712,14 +718,16 @@ Page({
       fddShortRentBlock["tc"] = tcId;
     }
     data["fddShortRentBlock"] = fddShortRentBlock;
+    wx.showLoading({
+      title: '正在修改监控...',
+      mask: true
+    });
     monitorApi.updateLongMonitor(data).then(res => {
+      wx.hideLoading();
       wx.showToast({
         title: res.data.resultMsg,
         duration: 2000
       });
-      this.setData({
-        updateMonitorDisplay: e.detail,
-      })
       wx.navigateBack({
         delta: 1
       })

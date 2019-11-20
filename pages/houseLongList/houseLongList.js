@@ -104,7 +104,7 @@ Page({
       this.setData({
         loadingShow: false
       });
-      if (this.data.allCount >= 50) {
+      if (this.data.allCount > 50) {
         if (!this.data.enoughBottom) {
           this.setData({
             monitorenoughDisplay: "block",
@@ -121,7 +121,7 @@ Page({
           });
         }
       }
-      if (this.data.allCount < 50) {
+      if (this.data.allCount <= 50) {
         if (!this.data.monitorBottom) {
           this.setData({
             monitorDisplay: "block",
@@ -366,7 +366,7 @@ Page({
   startMonitor() {
     let count = this.data.allCount;
     let app = getApp();
-    if (count >= 50) {
+    if (count > 50) {
       this.setData({
         monitorenoughDisplay: "block",
         dialogTitle: "房源充足",

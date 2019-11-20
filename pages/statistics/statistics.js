@@ -554,9 +554,16 @@ Page({
       updateMonitorDisplay: e.detail,
     })
   },
-
   //保存修改 --确认
-  getUpdateConfrimEvent(e) {
+  getUpdateConfrimEvent(e){
+    this.setData({
+      updateMonitorDisplay: e.detail,
+    })
+    this.getUpdateMonitor()
+  },
+  
+  getUpdateMonitor() {
+    let app = getApp();
     let data = {
       id: this.data.monitorId,
       beginDate: app.globalData.monitorSearchData.beginDate, //入住日期
@@ -626,13 +633,15 @@ Page({
     fddShortRentBlock.mn = mnId
     fddShortRentBlock.zg = zgId
     data.fddShortRentBlock = fddShortRentBlock
+    wx.showLoading({
+      title: '正在修改监控...',
+      mask: true
+    });
     monitorApi.updateMonitor(data).then(res => {
+      wx.hideLoading();
       wx.showToast({
         title: res.data.resultMsg,
         duration: 2000
-      })
-      this.setData({
-        updateMonitorDisplay: e.detail,
       })
       wx.navigateBack({
         delta: 2
@@ -644,7 +653,13 @@ Page({
       updateLongDisplay: e.detail,
     })
   },
-  getLongUpdateConfrimEvent(e) {
+  getLongUpdateConfrimEvent(e){
+    this.setData({
+      updateLongDisplay: e.detail,
+    })
+    this.getUpdateLongMonitor()
+  },
+  getUpdateLongMonitor() {
     let app = getApp();
     let y = app.globalData.monitorSearchLongData;
     console.log(y);
@@ -737,15 +752,16 @@ Page({
       fddShortRentBlock["tc"] = tcId;
     }
     data["fddShortRentBlock"] = fddShortRentBlock;
-    console.log(data);
+    wx.showLoading({
+      title: '正在修改监控...',
+      mask: true
+    });
     monitorApi.updateLongMonitor(data).then(res => {
+      wx.hideLoading();
       wx.showToast({
         title: res.data.resultMsg,
         duration: 2000
       });
-      this.setData({
-        updateMonitorDisplay: e.detail,
-      })
       wx.navigateBack({
         delta: 2
       })

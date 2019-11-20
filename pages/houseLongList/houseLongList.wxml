@@ -31,16 +31,16 @@
       </block>
     </view>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&!loadingShow}}">
-      <text wx:if="{{allData.length<50}}">房源已加载完，若不满意你试试添加监控</text>
-      <text wx:else>已展示全部房源</text>
+      <text wx:if="{{allCount>50}}">已展示全部房源</text>
+      <text wx:else>房源已加载完，若不满意你试试添加监控</text>
     </view>
     <mp-loading type="dot-red" tips="加载中" show="{{loadingShow}}"></mp-loading>
   </view>
   <view class="house_monitor" wx:if="{{loadingDisplay == 'none'}}">
-    <button wx:if="{{countFlag ===1 &&allCount>=50}}" class="monitor_btn" bindtap='startMonitor'>
+    <button wx:if="{{countFlag ===1 &&allCount>50}}" class="monitor_btn" bindtap='startMonitor'>
       查看更多
     </button>
-    <button wx:if="{{(countFlag ===1 &&allCount<50)||countFlag == 0}}" class="monitor_btn" bindtap='startMonitor'>
+    <button wx:if="{{(countFlag ===1 &&allCount<=50)||countFlag == 0}}" class="monitor_btn" bindtap='startMonitor'>
       开启监控
     </button>
     <button wx:if="{{countFlag ===2}}" class="monitor_btn" bindtap='goRefresh'>立即刷新</button>

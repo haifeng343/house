@@ -703,9 +703,16 @@ Page({
       updateMonitorDisplay: e.detail,
     })
   },
-
   //保存修改 --确认
-  getUpdateConfrimEvent(e) {
+  getUpdateConfrimEvent(e){
+    this.setData({
+      updateMonitorDisplay: e.detail
+    });
+    this.getUpdateMonitor();
+  },
+
+  getUpdateMonitor() {
+    let app = getApp();
     let data = {
       id: this.data.monitorId,
       beginDate: app.globalData.monitorSearchData.beginDate, //入住日期
@@ -775,13 +782,15 @@ Page({
     fddShortRentBlock.mn = mnId
     fddShortRentBlock.zg = zgId
     data.fddShortRentBlock = fddShortRentBlock
+    wx.showLoading({
+      title: '正在修改监控...',
+      mask: true
+    });
     monitorApi.updateMonitor(data).then(res => {
+      wx.hideLoading();
       wx.showToast({
         title: res.data.resultMsg,
         duration: 2000
-      })
-      this.setData({
-        updateMonitorDisplay: e.detail,
       })
       wx.navigateBack({
         delta: 1
