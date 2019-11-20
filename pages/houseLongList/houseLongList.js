@@ -6,6 +6,7 @@ const monitorApi = require("../../api/monitorApi.js");
 const app = getApp();
 import positionService from "../positionLongSelect/service";
 import { SearchLongDataSubject } from "../../utils/searchLongDataStream";
+import Http from "../../utils/http.js";
 Page({
   data: {
     countFlag: "",
@@ -66,6 +67,7 @@ Page({
         } else {
           this.getAllPersonalData();
         }
+        this.getIndexLongHouseData();
       }
     );
   },
@@ -208,6 +210,12 @@ Page({
         clearTimeout(timer);
       }
     }, 300);
+  },
+  getIndexLongHouseData() {
+    Http.get('/long/indexHose.json').then(resp => {
+      const hourLongMoney = resp.data.hourMoney || 2
+      wx.setStorageSync('hourLongMoney', hourLongMoney)
+    })
   },
   async getAllBrandData() {
     wx.removeStorageSync("collectionObj");

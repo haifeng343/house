@@ -5,6 +5,7 @@ const util = require('../../utils/util.js');
 const monitor = require('../../utils/monitor.js');
 const house = require('../../utils/house.js');
 const regeneratorRuntime = require('../../lib/runtime.js');
+import Http from "../../utils/http.js";
 const app = getApp();
 Page({
   data: {
@@ -108,6 +109,7 @@ Page({
       budget: budget,
       sortType: x.sort
     });
+    this.getIndexHouseData()
     this.getAllData();
   },
   onShow: function() {
@@ -248,7 +250,12 @@ Page({
       loadingDisplay: 'none',
     })
   },
-
+  getIndexHouseData(){
+    Http.get('/indexHose.json').then(resp => {
+      const hourMoney = resp.data.hourMoney||1
+      wx.setStorageSync('hourMoney', hourMoney)
+    })
+  },
   async getAllData() {
     wx.removeStorageSync('collectionObj');
     let tjDataObj = await house.getTjData(1, this.data.tjfilter);

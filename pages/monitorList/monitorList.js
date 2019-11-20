@@ -102,13 +102,11 @@ Page({
   onLoad: function () {
     const app = getApp()
     let data = app.globalData.monitorData
-    let fee = wx.getStorageSync('hourMoney')||0;
     this.setData({
       monitorId: data.item.id,
       monitorItem: data.item,
       startTimeName: monitor.startTimeName(data.item.startTime),
       taskTime: monitor.taskTime(data.item.monitorTime, data.item.minutes),
-      fee
     })
     this.getMonitorData();
   },

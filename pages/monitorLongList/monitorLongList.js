@@ -208,7 +208,6 @@ Page({
       }
     }, 300)
   },
-
   getMonitorData(){
     let data = {
       monitorId: this.data.monitorId,

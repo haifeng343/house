@@ -33,8 +33,13 @@ Page({
       wx.setNavigationBarTitle({
         title: '短租-统计信息'
       })
-      let data = app.globalData.houseListData
-      let fee = wx.getStorageSync('hourMoney') || 0
+      let data = app.globalData.houseListData;
+      let fee = 1;
+      if(data.fee){
+        fee = data.fee
+      }else{
+        fee = wx.getStorageSync('hourMoney') || 1
+      }
       for (let i = 0; i < data.enoughList.length; i++) {
         if (data.enoughList[i].key == 'tj') {
           data.enoughList[i]['selectCount'] = data.tjFilterCount.length
@@ -71,7 +76,6 @@ Page({
         bottomType: data.bottomType || 0,
         taskTime: data.taskTime || '',
         startTimeName: data.startTimeName || '',
-        fee: data.fee || '',
         monitorId: data.monitorId || '',
         totalFee: data.totalFee || '', //消耗盯盯币
         defaultBeginDate: app.globalData.monitorDefaultData.beginDate,
@@ -96,7 +100,12 @@ Page({
         title: '长租-统计信息'
       })
       let data = app.globalData.houseListData
-      let fee = wx.getStorageSync('hourLongMoney') || 0
+      let fee = 2;
+      if (data.fee) {
+        fee = data.fee
+      } else {
+        fee = wx.getStorageSync('hourLongMoney') || 2
+      }
       for (let i = 0; i < data.enoughList.length; i++) {
         if (data.chooseType == 1){
           if (data.enoughList[i].key == 'wiwj') {
@@ -138,7 +147,6 @@ Page({
         bottomType: data.bottomType || 0,
         taskTime: data.taskTime || '',
         startTimeName: data.startTimeName || '',
-        fee: data.fee || '',
         monitorId: data.monitorId || '',
         totalFee: data.totalFee || '', //消耗盯盯币
         sort: data.sortType == 1 ? false : true,

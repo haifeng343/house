@@ -87,7 +87,7 @@
 
 <collectDialog bind:collectEvent="getcollectEventEvent" style="display:{{collectDisplay}}"></collectDialog>
 <stopDialog bind:stopEvent="getstopEventEvent" bind:stopConfrimEvent="getstopConfirmEventEvent" startTimeName="{{startTimeName}}" taskTime="{{taskTime}}" fee="{{fee}}" totalFee="{{totalFee}}" style="display:{{stopDisplay}}"></stopDialog>
-<monitorDialog title="{{monitorTitle}}" ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorDisplay}}"></monitorDialog>
+
 
 <updateLongDialog bind:updateCancelEvent="getUpdateCancelEvent" bind:updateConfrimEvent="getUpdateConfrimEvent" updateData="{{updateData}}" defalutData="{{defalutData}}" style="display:{{updateMonitorDisplay}}"></updateLongDialog>
 

@@ -93,5 +93,19 @@ Component({
     },
     stopEvent(){},
     preventTouchMove() { }
+  },
+  observers:{
+    type:function(type){
+      if (type == 1) {
+        this.setData({
+          fee: wx.getStorageSync('hourMoney') || 0
+        })
+      }
+      if (type == 2) {
+        this.setData({
+          fee: wx.getStorageSync('hourLongMoney') || 0
+        })
+      }
+    }
   }
 })
