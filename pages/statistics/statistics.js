@@ -334,7 +334,12 @@ Page({
     fddShortRentBlock.mn = mnId
     fddShortRentBlock.zg = zgId
     data.fddShortRentBlock = fddShortRentBlock
+    wx.showLoading({
+      title: '',
+      mask: true
+    });
     monitorApi.addMonitor(data).then(res => {
+      wx.hideLoading();
       wx.showToast({
         title: res.data.resultMsg,
         duration: 2000
@@ -432,7 +437,12 @@ Page({
       fddShortRentBlock['tc'] = tcId
     }
     data['fddShortRentBlock'] = fddShortRentBlock;
+    wx.showLoading({
+      title: '',
+      mask: true
+    });
     monitorApi.addLongMonitor(data).then(res => {
+      wx.hideLoading();
       wx.showToast({
         title: res.data.resultMsg,
         duration: 2000
