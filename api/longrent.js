@@ -218,36 +218,53 @@ const lianjia = {
   // * rs为关键词 注意关键词和区域地铁彼此冲突只能选一个
   // * r为排序（co11最新,co21低价，co22:高价， co31:小面积，co32:大面积，不传为默认）
   // * 亮点信息su1: 近地铁 bc1: 拎包入住 de1: 精装修  ct1: 集中供暖 rpw1: 押一付一 in1: 新上 ht1: 认证公寓 hk1: 随时看房 vr1: VR房源
-  rentSearch: function({ city, page = DEFAULT_PAGE, filter = {} }) {
-    let params = {
-      city_id: city,
-      offset: (page.num - 1) * page.size,
-      limit: page.size,
-      condition: filter.condition
-    };
-    let signStr = generateSignStr(params);
-    let queryStr = buildParams(params, true);
-    let auth = authSign(signStr);
-    return new Promise((resolve, reject) => {
-      wx.request({
-        url: lianjia_address + "/Rentplat/v2/house/list?" + queryStr,
-        method: "GET",
-        header: {
-          Authorization: auth
-        },
-        data: buildParams(params, true),
-        success: res => {
-          if (res.data) {
-            resolve(res.data);
-          } else {
-            reject(false);
-          }
-        },
-        fail: res => {
-          reject(false);
-          throwErrorResponse();
+  rentSearch: function({ city, page = DEFAULT_PAGE, filterList = [] }) {
+    const promiseList = [];
+    for (const filter of filterList) {
+      let params = {
+        city_id: city,
+        offset: (page.num - 1) * page.size,
+        limit: page.size,
+        condition: filter
+      };
+      let signStr = generateSignStr(params);
+      let queryStr = buildParams(params, true);
+      let auth = authSign(signStr);
+      promiseList.push(
+        new Promise((resolve, reject) => {
+          wx.request({
+            url: lianjia_address + "/Rentplat/v2/house/list?" + queryStr,
+            method: "GET",
+            header: {
+              Authorization: auth
+            },
+            data: buildParams(params, true),
+            success: res => {
+              if (res.data) {
+                resolve(res.data);
+              } else {
+                reject(false);
+              }
+            },
+            fail: res => {
+              reject(false);
+            }
+          });
+        })
+      );
+    }
+
+    return Promise.all(promiseList).then(resp => {
+      let found = false;
+      for (const r of resp) {
+        if (r.data.list.length > 0) {
+          found = true;
+          return Promise.resolve(r);
         }
-      });
+      }
+      if (found === false) {
+        return Promise.resolve(resp[0]);
+      }
     });
   },
   // type: bizcircle（商圈）， station（地铁站）， resblock（小区）， district（行政区）
@@ -272,7 +289,6 @@ const lianjia = {
         },
         fail: res => {
           reject(false);
-          throwErrorResponse();
         }
       });
     });

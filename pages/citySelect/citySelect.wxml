@@ -59,7 +59,7 @@
           <view class="title">{{item.p}}</view>
           <view class="content">
             <block wx:for="{{item.cl}}" wx:for-item="item2" wx:key="name">
-              <view class="city" data-item='{{item2}}' bindtap="handleSelectCity">
+              <view class="city" data-name='{{item2.name}}' bindtap="handleSelectCity">
                 {{item2.name}}
               </view>
             </block>

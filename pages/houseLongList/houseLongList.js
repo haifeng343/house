@@ -33,7 +33,7 @@ Page({
     enoughBottom: false,
     monitorBottom: false,
     wiwjfilter: {},
-    ljfilter: {},
+    ljfilter: [],
     ftxfilter: {},
     tcfilter: {},
     searchLongData: {},
@@ -62,7 +62,7 @@ Page({
         longSortTypes: x.longSortTypes //1: 低价优先, 2: 空间优先, 3: 最新发布
       },
       () => {
-        if (x.chooseType == 1) {
+        if (x.chooseType === 1) {
           this.getAllBrandData();
         } else {
           this.getAllPersonalData();
@@ -74,21 +74,20 @@ Page({
   onShow: function() {
     this.getUserInfo();
   },
-  submit(e){
-    console.log(e)
+  submit(e) {
     //把改变的值重新
     let arr = Object.keys(e.detail);
-    if(arr.length){
-      for (let key in e.detail){
-        app.globalData.searchLongData[key] = e.detail[key]
+    if (arr.length) {
+      for (let key in e.detail) {
+        app.globalData.searchLongData[key] = e.detail[key];
       }
-      SearchLongDataSubject.next()
+      SearchLongDataSubject.next();
       this.setData({
-        loadingDisplay: 'block',
-        countFlag: '',
-        allData: [],
+        loadingDisplay: "block",
+        countFlag: "",
+        allData: []
       });
-      this.onLoad()
+      this.onLoad();
     }
   },
   onReachBottom() {
@@ -176,7 +175,7 @@ Page({
   goSort() {
     let arr = [...this.data.allOriginalData];
     let sort = house.sort(arr, this.data.listSortType, "price");
-    if (this.data.listSortType == 2) {
+    if (this.data.listSortType === 2) {
       this.setData({
         allData: [],
         loadingDisplay: "block",
@@ -212,10 +211,10 @@ Page({
     }, 300);
   },
   getIndexLongHouseData() {
-    Http.get('/long/indexHose.json').then(resp => {
-      const hourLongMoney = resp.data.hourMoney || 2
-      wx.setStorageSync('hourLongMoney', hourLongMoney)
-    })
+    Http.get("/long/indexHose.json").then(resp => {
+      const hourLongMoney = resp.data.hourMoney || 2;
+      wx.setStorageSync("hourLongMoney", hourLongMoney);
+    });
   },
   async getAllBrandData() {
     wx.removeStorageSync("collectionObj");
@@ -274,11 +273,11 @@ Page({
       });
     } else {
       this.setData({
-        loadingDisplay: 'none',
+        loadingDisplay: "none",
         countFlag: 0,
         allOriginalData: houseData.allData,
         allData: houseData.allData.slice(0, 5),
-        allCount: houseData.allCount,
+        allCount: houseData.allCount
       });
     }
   },
@@ -342,11 +341,11 @@ Page({
       });
     } else {
       this.setData({
-        loadingDisplay: 'none',
+        loadingDisplay: "none",
         countFlag: 0,
         allOriginalData: houseData.allData,
         allData: houseData.allData.slice(0, 5),
-        allCount: houseData.allCount,
+        allCount: houseData.allCount
       });
     }
   },
@@ -366,7 +365,7 @@ Page({
   //开启监控
   startMonitor() {
     let count = this.data.allCount;
-    let app = getApp()
+    let app = getApp();
     if (count >= 50) {
       this.setData({
         monitorenoughDisplay: "block",
@@ -411,7 +410,7 @@ Page({
       sortType: this.data.longSortTypes,
       chooseType: this.data.chooseType
     };
-    if (this.data.chooseType == 1) {
+    if (this.data.chooseType === 1) {
       app.globalData.houseListData[
         "wiwjLowPriceData"
       ] = this.data.wiwjLowPriceData;
@@ -423,7 +422,7 @@ Page({
         "lianjiaFilterCount"
       ] = this.data.lianjiaIdData;
     }
-    if (this.data.chooseType == 2) {
+    if (this.data.chooseType === 2) {
       app.globalData.houseListData[
         "fangtianxiaLowPriceData"
       ] = this.data.fangtianxiaLowPriceData;
@@ -474,7 +473,7 @@ Page({
       searchJson: y.areaJson, //搜索参数拼接
       buildArea: y.longBuildAreas, //面积
       minPrice: y.minPrice,
-      maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice,
+      maxPrice: y.maxPrice === 10000 ? 99999 : y.maxPrice,
       areaJson: JSON.stringify(y.areaId)
     };
     if (y.longSortTypes) {
@@ -485,13 +484,17 @@ Page({
       //位置ID
       data["locationType"] = y.areaType;
     }
-    if (y.areaType == 50) {//地铁
-      if (y.areaId.subwaysLine) { data['parentName '] = y.areaId.subwaysLine}
-    } 
-    if (y.areaType == 60){ //附近
-      data['longitude'] = y.areaId.longitude
-      data['latitude'] = y.areaId.latitude
-      data['nearby'] = y.areaId.nearby
+    if (y.areaType === 50) {
+      //地铁
+      if (y.areaId.subwaysLine) {
+        data["parentName "] = y.areaId.subwaysLine;
+      }
+    }
+    if (y.areaType === 60) {
+      //附近
+      data["longitude"] = y.areaId.longitude;
+      data["latitude"] = y.areaId.latitude;
+      data["nearby"] = y.areaId.nearby;
     }
     if (y.area) {
       //位置名称
@@ -528,7 +531,7 @@ Page({
     data["notice"] = notice.join(",");
     let obj = wx.getStorageSync("collectionObj") || {};
     let fddShortRentBlock = {};
-    if (y.chooseType == 1) {
+    if (y.chooseType === 1) {
       let wiwjId = [...this.data.wiwjIdData];
       let ljId = [...this.data.lianjiaIdData];
       if (obj && obj["wiwj"] && obj["wiwj"].length) {
