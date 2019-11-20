@@ -338,7 +338,6 @@ Page({
               app.globalData.searchLongData.areaId = {}
               app.globalData.searchLongData.areaType = 0
               app.globalData.searchLongData.areaJson = ''
-              app.globalData.searchLongData.isHistory = false
               this.setData({
                 searchLongData,
                 cityText2: "手动定位"
@@ -815,7 +814,6 @@ Page({
       data.area = "";
       data.areaId = {};
       data.areaJson = "";
-      data.isHistory = false
     }
   },
   // 更换房源类型

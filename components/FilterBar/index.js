@@ -7,7 +7,7 @@ import {
 } from "../../utils/longSetSearchData";
 import { isShowNearby } from "../../utils/longSetSearchData.js";
 
-const areaKey = ["area", "areaId", "areaJson", "areaType", "isHistory"];
+const areaKey = ["area", "areaId", "areaJson", "areaType"];
 
 const areaTagMap = {
   "0": "未选择",
@@ -682,13 +682,11 @@ Component({
           this.changeList.add("areaJson");
           this.changeList.add("areaType");
           this.changeList.add("areaId");
-          this.changeList.add("isHistory");
           this.setData({
             area: "",
             areaJson: "",
             areaType: 0,
-            areaId: {},
-            isHistory: false
+            areaId: {}
           });
         }
       } else if (currentAreaType === 1) {
@@ -698,13 +696,11 @@ Component({
           this.changeList.add("areaJson");
           this.changeList.add("areaType");
           this.changeList.add("areaId");
-          this.changeList.add("isHistory");
           this.setData({
             area: "",
             areaJson: "",
             areaType: 0,
-            areaId: {},
-            isHistory: false
+            areaId: {}
           });
         } else {
           const e = {
@@ -724,7 +720,6 @@ Component({
         this.changeList.add("areaJson");
         this.changeList.add("areaType");
         this.changeList.add("areaId");
-        this.changeList.add("isHistory");
         if (targetItem.label !== "不限") {
           this.setData({
             area: `附近 ${targetItem.label}`,
@@ -733,16 +728,14 @@ Component({
             areaId: Object.assign(
               { nearby: +targetItem.label.replace("km", "") },
               this.location
-            ),
-            isHistory: false
+            )
           });
         } else {
           this.setData({
             area: "",
             areaJson: "",
             areaType: 0,
-            areaId: {},
-            isHistory: false
+            areaId: {}
           });
         }
       } else if (currentAreaType === 3) {
@@ -849,14 +842,22 @@ Component({
 
       const history =
         wx.getStorageSync("longSearchHistory_" + city + "_" + chooseType) || [];
-      if (outsideData.isHistory === true) {
+      if (outsideData.areaJson.includes('"isHistory":true')) {
         // 搜索结果
         currentAreaType = 3;
+        let found = false;
         for (let i = 0; i < history.length; i++) {
           if (history[i].area === outsideData.area) {
             currentArea = i;
+            found = true;
             break;
           }
+        }
+
+        if (found === false) {
+          currentArea = 0;
+          const { area, areaId, areaJson, areaType } = outsideData;
+          history.unshift({ area, areaId, areaJson, areaType });
         }
       } else if (outsideData.areaType === 0) {
       } else if (outsideData.areaType === 10) {

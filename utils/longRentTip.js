@@ -39,7 +39,7 @@ function getFlatternDistance(lat1, lng1, lat2, lng2) {
 
 //匹配行政区
 const matchArea = (name, matchName) => {
-  if (name.replace(/[市区县]/gi, "") == matchName.replace(/[市区县]/gi, "")) {
+  if (name.replace(/[市区县]/gi, "") === matchName.replace(/[市区县]/gi, "")) {
     return true;
   }
   return false;
@@ -47,7 +47,7 @@ const matchArea = (name, matchName) => {
 
 //匹配商圈
 const matchBusiness = (name, matchName) => {
-  if (name == matchName.replace(/\[.*\]/gi, "")) {
+  if (name === matchName.replace(/\[.*\]/gi, "")) {
     return true;
   }
   return false;
@@ -55,7 +55,7 @@ const matchBusiness = (name, matchName) => {
 
 //匹配地铁站
 const matchSubway = (name, matchName) => {
-  if (name.replace(/站/gi, "") == matchName.replace(/站/gi, "")) {
+  if (name.replace(/站/gi, "") === matchName.replace(/站/gi, "")) {
     return true;
   }
   return false;
@@ -91,38 +91,38 @@ function sameWordsCount(set1 = "", set2 = "") {
 
 function returnData(wiwjData, lianjiaData) {
   var requestData = { area: [], buiness: [], xiaoqu: [], line: [], subway: [] }; //地点、商圈、小区、线路、地铁站
-  if (wiwjData.data && wiwjData.data instanceof Array) {
+  if (!!wiwjData && wiwjData.data && wiwjData.data instanceof Array) {
     var length1 = wiwjData.data.length < 15 ? wiwjData.data.length : 15;
     for (var index = 0; index < length1; index++) {
-      if (wiwjData.data[index].searchType == 1) {
+      if (wiwjData.data[index].searchType === 1) {
         requestData.area.push({
           name: wiwjData.data[index].searchName,
           wiwj: wiwjData.data[index],
           type: 10
         });
       }
-      if (wiwjData.data[index].searchType == 2) {
+      if (wiwjData.data[index].searchType === 2) {
         requestData.buiness.push({
           name: wiwjData.data[index].searchName,
           wiwj: wiwjData.data[index],
           type: 20
         });
       }
-      if (wiwjData.data[index].searchType == 3) {
+      if (wiwjData.data[index].searchType === 3) {
         requestData.xiaoqu.push({
           name: wiwjData.data[index].searchName,
           wiwj: wiwjData.data[index],
           type: 30
         });
       }
-      if (wiwjData.data[index].searchType == 4) {
+      if (wiwjData.data[index].searchType === 4) {
         requestData.line.push({
           name: wiwjData.data[index].searchName,
           wiwj: wiwjData.data[index],
           type: 40
         });
       }
-      if (wiwjData.data[index].searchType == 5) {
+      if (wiwjData.data[index].searchType === 5) {
         requestData.subway.push({
           name: wiwjData.data[index].searchName.replace(/\(.*\)/gi, ""),
           wiwj: wiwjData.data[index],
@@ -131,11 +131,10 @@ function returnData(wiwjData, lianjiaData) {
       }
     }
   }
-  if (lianjiaData.data && lianjiaData.data instanceof Array) {
+  if (!!lianjiaData && lianjiaData.data && lianjiaData.data instanceof Array) {
     var length2 = lianjiaData.data.length < 15 ? lianjiaData.data.length : 15;
     for (var index = 0; index < length2; index++) {
-      // console.log(index, lianjiaData.data[index])
-      if (lianjiaData.data[index].type == "district") {
+      if (lianjiaData.data[index].type === "district") {
         var isMatch = false;
         for (var temp = 0; temp < requestData.area.length; temp++) {
           if (
@@ -156,10 +155,10 @@ function returnData(wiwjData, lianjiaData) {
           });
         }
       }
-      if (lianjiaData.data[index].type == "bizcircle") {
+      if (lianjiaData.data[index].type === "bizcircle") {
         var isMatch = false;
         for (var temp = 0; temp < requestData.buiness.length; temp++) {
-          if (requestData.buiness[temp].name == lianjiaData.data[index].name) {
+          if (requestData.buiness[temp].name === lianjiaData.data[index].name) {
             isMatch = true;
             if (requestData.buiness[temp].wiwj) {
               requestData.buiness[temp].lianjia = lianjiaData.data[index];
@@ -175,7 +174,7 @@ function returnData(wiwjData, lianjiaData) {
           });
         }
       }
-      if (lianjiaData.data[index].type == "resblock") {
+      if (lianjiaData.data[index].type === "resblock") {
         var isMatch = false;
         for (var temp = 0; temp < requestData.xiaoqu.length; temp++) {
           if (
@@ -193,18 +192,19 @@ function returnData(wiwjData, lianjiaData) {
               );
               if (distance < 500) {
                 isMatch = true;
-                // requestData.xiaoqu[temp].lianjia = lianjiaData.data[index]
                 break;
               }
             }
           }
         }
         if (!isMatch) {
-          // requestData.xiaoqu.push({ name: lianjiaData.data[index].name, lianjia: lianjiaData.data[index], type: 30 })
-          requestData.xiaoqu.push({ name: lianjiaData.data[index].name, type: 30 })
+          requestData.xiaoqu.push({
+            name: lianjiaData.data[index].name,
+            type: 30
+          });
         }
       }
-      if (lianjiaData.data[index].type == "station") {
+      if (lianjiaData.data[index].type === "station") {
         var isMatch = false;
         for (var temp = 0; temp < requestData.subway.length; temp++) {
           if (
@@ -247,31 +247,55 @@ const getIntermediaryData = (data, keywords, promiseVersion) => {
     var results2 = null;
     longrent.wiwj
       .rentTip({ city: data.wiwj, keywords: keywords })
+      .then(resp => {
+        const results = [];
+        const resultMap = [];
+        for (const r of resp.data) {
+          if (resultMap.includes(`%%${r.searchType}%%__${r.searchName}`)) {
+            continue;
+          }
+          results.push(r);
+          resultMap.push(`%%${r.searchType}%%__${r.searchName}`);
+        }
+        return Promise.resolve({ data: results });
+      })
       .then(results => {
         results1 = results;
         count++;
-        if (count == 2) {
+        if (count === 2) {
           resolve({ promiseVersion, result: returnData(results1, results2) });
         }
       })
       .catch(() => {
         count++;
-        if (count == 2) {
+        if (count === 2) {
           resolve({ promiseVersion, result: returnData(results1, results2) });
         }
       });
     longrent.lianjia
       .rentTip({ city: data.lj, keywords: keywords })
+      .then(resp => {
+        const results = [];
+        const resultMap = [];
+        for (const r of resp.data) {
+          if (resultMap.includes(`%%${r.type}%%__${r.name}`)) {
+            continue;
+          }
+          results.push(r);
+          resultMap.push(`%%${r.type}%%__${r.name}`);
+        }
+        return Promise.resolve({ data: results });
+      })
       .then(results => {
         results2 = results;
         count++;
-        if (count == 2) {
+        if (count === 2) {
           resolve({ promiseVersion, result: returnData(results1, results2) });
         }
       })
       .catch(() => {
         count++;
-        if (count == 2) {
+        if (count === 2) {
           resolve({ promiseVersion, result: returnData(results1, results2) });
         }
       });
@@ -280,7 +304,12 @@ const getIntermediaryData = (data, keywords, promiseVersion) => {
 
 function returnData2(ftxData, wbtcData) {
   var requestData = { area: [], buiness: [], xiaoqu: [], line: [], subway: [] }; //地点、商圈、小区、线路、地铁站
-  if (ftxData.hits && ftxData.hits.hit && ftxData.hits.hit instanceof Array) {
+  if (
+    !!ftxData &&
+    ftxData.hits &&
+    ftxData.hits.hit &&
+    ftxData.hits.hit instanceof Array
+  ) {
     var data = ftxData.hits.hit;
     if (!data instanceof Array) {
       data = [];
@@ -288,7 +317,7 @@ function returnData2(ftxData, wbtcData) {
     }
     var length1 = data.length < 15 ? data.length : 15;
     for (var index = 0; index < length1; index++) {
-      if (data[index].wordtype.text == "商圈") {
+      if (data[index].wordtype.text === "商圈") {
         requestData.buiness.push({
           name: data[index].word.text,
           ftx: data[index],
@@ -296,8 +325,8 @@ function returnData2(ftxData, wbtcData) {
         });
       }
       if (
-        data[index].wordtype.text == "楼盘" &&
-        data[index].ywtype.text == "出租"
+        data[index].wordtype.text === "楼盘" &&
+        data[index].ywtype.text === "出租"
       ) {
         data[index].coord_x.text = parseFloat(
           parseFloat(data[index].coord_x.text).toFixed(6)
@@ -314,6 +343,7 @@ function returnData2(ftxData, wbtcData) {
     }
   }
   if (
+    !!wbtcData &&
     wbtcData.result &&
     wbtcData.result.getHouseOnMapSuggestion &&
     wbtcData.result.getHouseOnMapSuggestion.dataList instanceof Array
@@ -321,14 +351,14 @@ function returnData2(ftxData, wbtcData) {
     var data2 = wbtcData.result.getHouseOnMapSuggestion.dataList;
     var length2 = data2.length < 15 ? data2.length : 15;
     for (var index = 0; index < length2; index++) {
-      if (data2[index].type == 1) {
+      if (data2[index].type === 1) {
         requestData.area.push({
           name: data2[index].name.replace(/\[.*\]/gi, ""),
           wbtc: data2[index],
           type: 10
         });
       }
-      if (data2[index].type == 2) {
+      if (data2[index].type === 2) {
         var isMatch = false;
         for (var temp = 0; temp < requestData.buiness.length; temp++) {
           if (
@@ -349,7 +379,7 @@ function returnData2(ftxData, wbtcData) {
           });
         }
       }
-      if (data2[index].type == 3) {
+      if (data2[index].type === 3) {
         // requestData.xiaoqu.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index] })
         var isMatch = false;
         for (var temp = 0; temp < requestData.xiaoqu.length; temp++) {
@@ -379,7 +409,7 @@ function returnData2(ftxData, wbtcData) {
         }
       }
 
-      if (data2[index].type == 4) {
+      if (data2[index].type === 4) {
         requestData.subway.push({
           name: data2[index].name.replace(/\[.*\]/gi, ""),
           wbtc: data2[index],
@@ -406,38 +436,84 @@ function returnData2(ftxData, wbtcData) {
 }
 
 const getPersonalData = (data, keywords, promiseVersion) => {
-  // console.log(data,keywords)
   return new Promise(resolve => {
     var count = 0;
     var results1 = null;
     var results2 = null;
     longrent.fangtianxia
       .rentTip({ city: data.ftx, keywords: keywords })
+      .then(resp => {
+        if (!!resp.hits && !!resp.hits.hit) {
+          const results = [];
+          const resultMap = [];
+          for (const r of resp.hits.hit) {
+            if (resultMap.includes(`%%${r.wordtype.text}%%__${r.word.text}`)) {
+              continue;
+            }
+            results.push(r);
+            resultMap.push(`%%${r.wordtype.text}%%__${r.word.text}`);
+          }
+          return Promise.resolve({
+            hits: {
+              hit: results
+            }
+          });
+        } else {
+          return Promise.resolve(resp);
+        }
+      })
       .then(results => {
         results1 = results;
         count++;
-        if (count == 2) {
+        if (count === 2) {
           resolve({ promiseVersion, result: returnData2(results1, results2) });
         }
       })
-      .catch(() => {
+      .catch(error => {
+        console.error(error);
         count++;
-        if (count == 2) {
+        if (count === 2) {
           resolve({ promiseVersion, result: returnData2(results1, results2) });
         }
       });
     longrent.wbtc
       .rentTip({ city: data.tc, keywords: keywords })
+      .then(resp => {
+        if (
+          !!resp.result &&
+          !!resp.result.getHouseOnMapSuggestion &&
+          !!resp.result.getHouseOnMapSuggestion.dataList
+        ) {
+          const results = [];
+          const resultMap = [];
+          for (const r of resp.result.getHouseOnMapSuggestion.dataList) {
+            if (resultMap.includes(`%%${r.type}%%__${r.name}`)) {
+              continue;
+            }
+            results.push(r);
+            resultMap.push(`%%${r.type}%%__${r.name}`);
+          }
+          return Promise.resolve({
+            result: {
+              getHouseOnMapSuggestion: {
+                dataList: results
+              }
+            }
+          });
+        }
+        return Promise.resolve(resp);
+      })
       .then(results => {
         results2 = results;
         count++;
-        if (count == 2) {
+        if (count === 2) {
           resolve({ promiseVersion, result: returnData2(results1, results2) });
         }
       })
-      .catch(() => {
+      .catch(error => {
+        console.error(error);
         count++;
-        if (count == 2) {
+        if (count === 2) {
           resolve({ promiseVersion, result: returnData2(results1, results2) });
         }
       });
