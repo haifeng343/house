@@ -40,15 +40,6 @@ Page({
       hasAsked: false
     });
 
-    if (this.data.value.length < 2) {
-      this.setData({
-        result: [],
-        hasAsked: true,
-        resultLength: -1
-      });
-      return;
-    }
-
     let searchLongData = app.globalData.searchLongData;
 
     if (this.timer) {
@@ -75,7 +66,8 @@ Page({
               });
             }
           })
-          .catch(() => {
+          .catch(error => {
+            console.error(error);
             wx.showToast({
               title: "网络异常",
               icon: "none"
@@ -91,7 +83,7 @@ Page({
           .then(resp => {
             const { result, promiseVersion } = resp;
             if (this.promiseVersion === promiseVersion) {
-              let length = res.length;
+              let length = result.length;
               this.setData({
                 hasAsked: true,
                 resultLength: length,
@@ -99,7 +91,8 @@ Page({
               });
             }
           })
-          .catch(() => {
+          .catch(error => {
+            console.error(error);
             wx.showToast({
               title: "网络异常",
               icon: "none"
