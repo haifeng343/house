@@ -55,7 +55,8 @@
                     </view>
                     <view class='search_item'>
                         <view class="scenic {{searchData.area === ''?'':'active'}}" bindtap='goPositionSelect'>
-                            {{searchData.area === ''?'试试搜索：'+hotarea:searchData.area}}
+                            <text class="scenic-text">{{searchData.area === ''?'试试搜索：'+hotarea:searchData.area}}</text>
+                            <text class="icon-font {{searchData.area === '' ? 'uniE90C' : 'uniE901'}}" catchtap="handleClearScenic" />
                         </view>
                     </view>
                     <view class='search_item' style='height:auto;padding-top:20rpx;'>
@@ -111,7 +112,8 @@
                     </view>
                     <view class='search_item'>
                         <view class="scenic {{searchLongData.area === ''?'':'active'}}" bindtap='goPositionSelect'>
-                            {{searchLongData.area === ''?'请输入小区/商圈/地铁站':searchLongData.area}}
+                            <text class="scenic-text">{{searchLongData.area === ''?'请输入小区/商圈/地铁站':searchLongData.area}}</text>
+                            <text class="icon-font {{searchLongData.area === '' ? 'uniE90C' : 'uniE901'}}" catchtap="handleClearScenic" />
                         </view>
                     </view>
                     <view class='search_item' style="height:auto;border: 0;">
@@ -158,5 +160,5 @@
     <view wx:if="{{showAuthDialog}}">
         <authDialog bind:onConfirm="handleGetUserInfo" bind:onCancel="handleCloseAuthDialog" />
     </view>
-    <CouponDialog wx:if="{{showCouponDialog}}" couponList="{{couponList}}" title="被优惠券砸中啦" bind:onClose="handleCloseCouponDialog"/>
+    <CouponDialog wx:if="{{showCouponDialog}}" couponList="{{couponList}}" title="被优惠券砸中啦" bind:onClose="handleCloseCouponDialog" />
 </view>

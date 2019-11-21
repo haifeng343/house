@@ -237,10 +237,10 @@ function returnData(wiwjData, lianjiaData, keywords) {
     .concat(requestData.xiaoqu)
     .concat(requestData.line)
     .concat(requestData.subway);
-  var keywordSet = minWordsSet(keywords||'');
+  var keywordSet = minWordsSet(keywords || "");
   requsetTotal = requsetTotal.sort((item1, item2) => {
-    var st1 = minWordsSet(item1.name || '');
-    var st2 = minWordsSet(item2.name || '');
+    var st1 = minWordsSet(item1.name || "");
+    var st2 = minWordsSet(item2.name || "");
     var sameWords1 = sameWordsCount(st1, keywordSet);
     var sameWords2 = sameWordsCount(st2, keywordSet);
     return sameWords2 - sameWords1;
@@ -271,13 +271,19 @@ const getIntermediaryData = (data, keywords, promiseVersion) => {
         results1 = results;
         count++;
         if (count === 2) {
-          resolve({ promiseVersion, result: returnData(results1, results2, keywords) });
+          resolve({
+            promiseVersion,
+            result: returnData(results1, results2, keywords)
+          });
         }
       })
       .catch(() => {
         count++;
         if (count === 2) {
-          resolve({ promiseVersion, result: returnData(results1, results2, keywords) });
+          resolve({
+            promiseVersion,
+            result: returnData(results1, results2, keywords)
+          });
         }
       });
     longrent.lianjia
@@ -298,19 +304,26 @@ const getIntermediaryData = (data, keywords, promiseVersion) => {
         results2 = results;
         count++;
         if (count === 2) {
-          resolve({ promiseVersion, result: returnData(results1, results2, keywords) });
+          resolve({
+            promiseVersion,
+            result: returnData(results1, results2, keywords)
+          });
         }
       })
       .catch(() => {
         count++;
         if (count === 2) {
-          resolve({ promiseVersion, result: returnData(results1, results2, keywords) });
+          resolve({
+            promiseVersion,
+            result: returnData(results1, results2, keywords)
+          });
         }
       });
   });
 };
 
 function returnData2(ftxData, wbtcData) {
+  console.log(ftxData, wbtcData);
   var requestData = { area: [], buiness: [], xiaoqu: [], line: [], subway: [] }; //地点、商圈、小区、线路、地铁站
   if (
     !!ftxData &&
@@ -388,11 +401,12 @@ function returnData2(ftxData, wbtcData) {
         }
       }
       if (data2[index].type === 3) {
-        // requestData.xiaoqu.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index] })
         var isMatch = false;
         for (var temp = 0; temp < requestData.xiaoqu.length; temp++) {
           var name = data2[index].name.replace(/\[.*\]/gi, "");
-          if (matchXiaoqu(requestData.xiaoqu[temp].name, name)) {
+          if (name === requestData.xiaoqu[temp].name) {
+            isMatch = true;
+          } else if (matchXiaoqu(requestData.xiaoqu[temp].name, name)) {
             if (requestData.xiaoqu[temp].ftx) {
               var distance = getFlatternDistance(
                 requestData.xiaoqu[temp].ftx.coord_y.text,
@@ -402,14 +416,12 @@ function returnData2(ftxData, wbtcData) {
               );
               if (distance < 500) {
                 isMatch = true;
-                // requestData.xiaoqu[temp].wbtc = data2[index]
                 break;
               }
             }
           }
         }
         if (!isMatch) {
-          // requestData.xiaoqu.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index], type: 30 })
           requestData.xiaoqu.push({
             name: data2[index].name.replace(/\[.*\]/gi, ""),
             type: 30

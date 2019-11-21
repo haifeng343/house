@@ -122,12 +122,12 @@ Page({
     });
   },
   goPositionSelect() {
-    if (this.data.tabIndex == 1) {
+    if (this.data.tabIndex === 1) {
       wx.navigateTo({
         url:
           "../positionSelect/positionSelect?city=" + this.data.searchData.city
       });
-    } else if (this.data.tabIndex == 2) {
+    } else if (this.data.tabIndex === 2) {
       wx.navigateTo({
         url:
           "../positionLongSelect/positionLongSelect?city=" +
@@ -137,7 +137,7 @@ Page({
   },
   changeSort() {
     var sort = this.data.searchData.sort;
-    this.data.searchData.sort = sort == 1 ? 2 : 1;
+    this.data.searchData.sort = sort === 1 ? 2 : 1;
     this.setData({
       searchData: this.data.searchData
     });
@@ -145,7 +145,7 @@ Page({
   selectLeaseType(event) {
     let index = event.currentTarget.dataset.index;
     let searchData = this.data.searchData;
-    if (searchData.leaseType == index) {
+    if (searchData.leaseType === index) {
       searchData.leaseType = "";
     } else {
       searchData.leaseType = Number(index);
@@ -215,13 +215,13 @@ Page({
     });
   },
   handleRepos() {
-    if (this.data.tabIndex == 1) {
+    if (this.data.tabIndex === 1) {
       if (this.data.cityText !== "手动定位") {
         return;
       }
       this.setData({ cityText: "定位中..." });
       this.getUserLocation();
-    } else if (this.data.tabIndex == 2) {
+    } else if (this.data.tabIndex === 2) {
       if (this.data.cityText2 !== "手动定位") {
         return;
       }
@@ -411,7 +411,7 @@ Page({
   },
 
   searchSubmit() {
-    if (this.data.tabIndex == 1) {
+    if (this.data.tabIndex === 1) {
       const app = getApp();
       app.globalData.searchData = this.data.searchData;
       if (
@@ -452,7 +452,7 @@ Page({
           mask: true
         });
       }
-    } else if (this.data.tabIndex == 2) {
+    } else if (this.data.tabIndex === 2) {
       let searchLongData = this.data.searchLongData;
       if (!searchLongData.city) {
         wx.showToast({
@@ -509,6 +509,26 @@ Page({
           icon: "none"
         });
       });
+  },
+
+  handleClearScenic() {
+    if (this.data.tabIndex === 1 && !!this.data.searchData.area) {
+      this.setData({
+        "searchData.area": "",
+        "searchData.areaId": {},
+        "searchData.ltude": {},
+        "searchData.areaType": ""
+      });
+    } else if (this.data.tabIndex === 2 && !!this.data.searchLongData.area) {
+      this.setData({
+        "searchLongData.area": "",
+        "searchLongData.areaId": {},
+        "searchLongData.areaType": "",
+        "searchLongData.areaJson": {}
+      });
+    } else {
+      this.goPositionSelect();
+    }
   },
 
   handleGetUserInfo(e) {
@@ -579,7 +599,7 @@ Page({
       let temp = false;
       if (
         app.globalData.searchData.city &&
-        app.globalData.searchData.city != ""
+        app.globalData.searchData.city !== ""
       ) {
         searchData.city = app.globalData.searchData.city;
       } else {
@@ -608,7 +628,7 @@ Page({
       let temp = false;
       if (
         app.globalData.searchLongData.city &&
-        app.globalData.searchLongData.city != ""
+        app.globalData.searchLongData.city !== ""
       ) {
         searchLongData.city = app.globalData.searchLongData.city;
       } else {
@@ -663,7 +683,7 @@ Page({
       let index = Math.floor(Math.random() * data.length);
       hotarea = data[index].name || cityname;
       hotareatype = data[index].type || "";
-      if (searchData.area == "") {
+      if (searchData.area === "") {
         this.setData({
           hotarea,
           hotareatype
@@ -730,7 +750,7 @@ Page({
         )
       },
       () => {
-        if (this.data.tabIndex != 1) {
+        if (this.data.tabIndex !== 1) {
           return;
         }
         this.getHotCity();
@@ -738,9 +758,9 @@ Page({
           max = 0;
         for (const key in this.data.priceType) {
           const item = this.data.priceType[key];
-          if (item == searchData.minPrice) {
+          if (item === searchData.minPrice) {
             min = key;
-          } else if (item == searchData.maxPrice) {
+          } else if (item === searchData.maxPrice) {
             max = key;
           } else if (searchData.maxPrice === 99999) {
             max = 4;
@@ -787,22 +807,22 @@ Page({
   },
   //table切换
   changeTab(event) {
-    let tabIndex = event.currentTarget.dataset.index || 1;
+    let tabIndex = +event.currentTarget.dataset.index || 1;
     this.setData({ tabIndex, spread: false });
-    if (tabIndex == 1) {
+    if (tabIndex === 1) {
       this.getHotCity();
     }
-    if (tabIndex == 2) {
+    if (tabIndex === 2) {
       this.getHotCityLong();
     }
   },
   //长租切换房源
   changeLongTab(event) {
-    let tabIndex = event.currentTarget.dataset.index || 1;
+    let tabIndex = +event.currentTarget.dataset.index || 1;
     let searchLongData = this.data.searchLongData;
     // console.log(tabIndex, searchLongData, searchLongData.chooseType)
-    if (tabIndex != searchLongData.chooseType) {
-      searchLongData.chooseType = parseInt(tabIndex);
+    if (tabIndex !== searchLongData.chooseType) {
+      searchLongData.chooseType = tabIndex;
       searchLongData.longBuildAreas = -1;
       searchLongData.longFloorTypes = [];
       searchLongData.longHeadings = [];
@@ -817,7 +837,7 @@ Page({
       this.setData({ searchLongData });
       const app = getApp();
       let data = app.globalData.searchLongData;
-      data.cityType = parseInt(tabIndex);
+      data.cityType = tabIndex;
       data.longBuildAreas = -1;
       data.longFloorTypes = [];
       data.longHeadings = [];
@@ -836,7 +856,7 @@ Page({
     let searchLongData = this.data.searchLongData;
     const app = getApp();
     let data = app.globalData.searchLongData;
-    if (searchLongData.longRentTypes == index) {
+    if (searchLongData.longRentTypes === index) {
       searchLongData.longRentTypes = 0;
       data.longRentTypes = 0;
     } else {
@@ -853,7 +873,7 @@ Page({
     let searchLongData = this.data.searchLongData;
     const app = getApp();
     let data = app.globalData.searchLongData;
-    if (searchLongData.longSortTypes == index) {
+    if (searchLongData.longSortTypes === index) {
       searchLongData.longSortTypes = 0;
       data.longSortTypes = 0;
     } else {
@@ -918,10 +938,11 @@ Page({
       });
     }
   },
-  onLoad() {
+  onLoad(params) {
+    const { tab } = params;
     this.init();
     this.searchDataSubscription = SearchDataSubject.subscribe(() => {
-      this.setData({ showPriceBlock: false });
+      this.setData({ showPriceBlock: false, tabIndex: tab || 1 });
       setTimeout(() => {
         this.getSearchDataFromGlobal();
         this.setData({ needOnShow: true });
