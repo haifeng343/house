@@ -1562,7 +1562,7 @@ const getPersonalHouseData = data => {
   let maxTotal = 50;
   let allData = [];
   let fangtianxiaData = data.fangtianxiaData;
-  let wbtcData = data.wbtcData;
+  let wbtcData = wbtcFilter(data.wbtcData);
   for (let i = 0; i < maxTotal; i++) {
     if (data.fangtianxiaCount > 0) {
       let fangtianxia = addPlatfromData(allData, fangtianxiaData, i);
@@ -2659,6 +2659,13 @@ function lianjiaTagwall(tags) {
 function lianjianFilter(arr) {
   let newArr = arr.filter(item => {
     return !/^\d+$/.test(item.house_code);
+  });
+  return newArr;
+}
+
+function wbtcFilter(arr){
+  let newArr = arr.filter(item => {
+    return !item.isApartment
   });
   return newArr;
 }
