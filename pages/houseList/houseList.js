@@ -254,6 +254,9 @@ Page({
     Http.get('/indexHose.json').then(resp => {
       const hourMoney = resp.data.hourMoney||1
       wx.setStorageSync('hourMoney', hourMoney)
+      this.setData({
+        fee: hourMoney
+      })
     })
   },
   async getAllData() {

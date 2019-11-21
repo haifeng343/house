@@ -16,6 +16,9 @@ Component({
     type:{
       type: Number,
       value: 1 //1:短租，2长租
+    },
+    fee:{
+      type: Number,
     }
   },
 
@@ -27,22 +30,7 @@ Component({
     noteSelect: true,
     unselect: '../../assets/image/unselect.png',
     selected: '../../assets/image/selected.png',
-    fee: 0
   },
-
-  attached: function () {
-    if (this.properties.type ==1){
-      this.setData({
-        fee: wx.getStorageSync('hourMoney') || 0
-      })
-    }
-    if (this.properties.type == 2) {
-      this.setData({
-        fee: wx.getStorageSync('hourLongMoney') || 0
-      })
-    }
-  },
-
   /**
    * 组件的方法列表
    */
@@ -93,19 +81,5 @@ Component({
     },
     stopEvent(){},
     preventTouchMove() { }
-  },
-  observers:{
-    type:function(type){
-      if (type == 1) {
-        this.setData({
-          fee: wx.getStorageSync('hourMoney') || 0
-        })
-      }
-      if (type == 2) {
-        this.setData({
-          fee: wx.getStorageSync('hourLongMoney') || 0
-        })
-      }
-    }
   }
 })

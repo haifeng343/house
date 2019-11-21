@@ -214,6 +214,9 @@ Page({
     Http.get("/long/indexHose.json").then(resp => {
       const hourLongMoney = resp.data.hourMoney || 2;
       wx.setStorageSync("hourLongMoney", hourLongMoney);
+      this.setData({
+        fee: hourLongMoney
+      })
     });
   },
   async getAllBrandData() {

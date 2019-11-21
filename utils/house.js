@@ -468,7 +468,7 @@ const getWbtcData = (type, wbtcfilter = {}) => {
       })
       .then(res => {
         if (
-          res.result.getListInfo.infolist &&
+          res.result.getListInfo.infolist && res.result.getListInfo.infolist.length>0&&
           res.result.getListInfo.infolist[0]["itemtype"] === "listTangram"
         ) {
           res.result.getListInfo.infolist.shift();
@@ -1613,7 +1613,7 @@ const getPersonalHouseData = data => {
           housetitle: wbtcData[i].title,
           introduce:
             wbtcData[i].area.split("㎡")[0] + "㎡/" + wbtcData[i].huxing,
-          address: wbtcData[i].lastLocal,
+          address: wbtcData[i].lastLocal || wbtcData[i].rightLabel,
           tagwall: wbtcData[i].usedTages
             ? wbtcData[i].usedTages.split(",")
             : [],
@@ -1779,7 +1779,7 @@ const getMonitorLongHouseData = houseList => {
           houseList[i].data.area.split("㎡")[0] +
           "㎡/" +
           houseList[i].data.huxing,
-        address: houseList[i].data.lastLocal,
+        address: houseList[i].data.lastLocal || wbtcData[i].rightLabel,
         tagwall: houseList[i].data.usedTages
           ? houseList[i].data.usedTages.split(",")
           : [],
