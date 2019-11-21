@@ -239,23 +239,29 @@ Page({
       monitorStartDisplay: e.detail,
     })
   },
-  /**
-   * 立即开启
-   */
   getmonitorStartConfirmEvent(e){
+    this.setData({
+      monitorStartDisplay: e.detail,
+    })
+    this.getMonitorStart()
+  },
+  //立即开启
+  getMonitorStart(){
     let data = {
       monitorId: this.data.startItem.id
     }
+    wx.showLoading({
+      title: '正在开启监控...',
+      mask: true
+    });
     if(this.data.active == 1){
       monitorApi.startMonitor(data).then(res => {
+        wx.hideLoading();
         if (res.data.success) {
           wx.showToast({
             title: res.data.resultMsg,
             icon: 'success',
             duration: 2000
-          })
-          this.setData({
-            monitorStartDisplay: e.detail,
           })
           this.getMonitorData();
         }
@@ -263,14 +269,12 @@ Page({
     }
     if (this.data.active == 2) {
       monitorApi.startLongMonitor(data).then(res => {
+        wx.hideLoading();
         if (res.data.success) {
           wx.showToast({
             title: res.data.resultMsg,
             icon: 'success',
             duration: 2000
-          })
-          this.setData({
-            monitorStartDisplay: e.detail,
           })
           this.getLongMonitorData();
         }
