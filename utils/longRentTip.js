@@ -401,7 +401,6 @@ function returnData2(ftxData, wbtcData) {
         }
       }
       if (data2[index].type === 3) {
-        // requestData.xiaoqu.push({ name: data2[index].name.replace(/\[.*\]/ig, ''), wbtc: data2[index] })
         var isMatch = false;
         for (var temp = 0; temp < requestData.xiaoqu.length; temp++) {
           var name = data2[index].name.replace(/\[.*\]/gi, "");
