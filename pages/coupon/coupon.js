@@ -114,7 +114,7 @@ Page({
     this.setData({ showActionDialog: false });
     wx.navigateToMiniProgram({
       appId: "wx11970e278167bf3b",
-      path: `pages/home/index`
+      path: "pages/orderdirectplus/index"
     });
   }
 });
