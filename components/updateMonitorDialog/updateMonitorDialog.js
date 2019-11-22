@@ -44,12 +44,7 @@ Component({
   /**
    * 组件的初始数据
    */
-  data: {
-    publicSelect: false,
-    noteSelect: true,
-    unselect: '../../assets/image/unselect.png',
-    selected: '../../assets/image/selected.png',
-  },
+  data: {},
 
   /**
    * 组件的方法列表

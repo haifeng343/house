@@ -28,8 +28,6 @@ Component({
   data: {
     publicSelect: false,
     noteSelect: true,
-    unselect: '../../assets/image/unselect.png',
-    selected: '../../assets/image/selected.png',
   },
   /**
    * 组件的方法列表

@@ -1,4 +1,5 @@
 @import "/app.wxss";
+@import '../../assets/styles/font.wxss';
 .mask{
   position: fixed;
   top: 0;
@@ -78,14 +79,6 @@
 .task .task_select:nth-child(2){
   justify-content: flex-end;
 }
-.task .task_right .select_image{
-  margin-right: 8rpx;
-}
-
-.mask_task .task .select_image{
-  width: 32rpx;
-  height: 32rpx;
-}
 .mask_task .ding{
   font-size: 24rpx;
   color: #1D1D1D;
@@ -116,4 +109,26 @@
   border-radius: 46rpx;
   text-align: center;
   line-height: 92rpx;
+}
+
+
+.task_select .uniE930 {
+  display: inline-block;
+  width: 28rpx;
+  height: 28rpx;
+  color: #fff;
+  line-height: 36rpx;
+  font-size: 20rpx;
+  text-align: center;
+  background-color: #fff;
+  border: 2rpx solid #e75d28;
+  border-radius: 4rpx;
+  margin-right: 8rpx;
+}
+.task_select .active{
+  color: #FFFFFF;
+  background-color: #E75D28;
+  border:none;
+  width: 32rpx;
+  height: 32rpx;
 }

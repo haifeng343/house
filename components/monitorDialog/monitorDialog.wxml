@@ -21,13 +21,12 @@
             <text>通知方式:</text>
             <view class="task_right">
               <view class="task_select" catchtap="bindPublic">
-                <image wx:if="{{publicSelect}}" class="select_image" src="{{selected}}"></image>
-                <image wx:else class="select_image" src="{{unselect}}"></image>
+                <view  wx:if="{{publicSelect}}" class="icon-font uniE930 active"></view>
+                <view  wx:else class="icon-font uniE930"></view>
                 <text class="official">公众号</text>
               </view>
               <view class="task_select">
-                <image wx:if="{{noteSelect}}" class="select_image" src="{{selected}}"></image>
-                <image wx:else class="select_image" src="{{unselect}}"></image>
+                <view  wx:if="{{noteSelect}}" class="icon-font uniE930 active"></view>
                 <text>短信</text>
               </view>
             </view>
