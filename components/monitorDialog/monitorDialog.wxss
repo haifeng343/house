@@ -132,3 +132,10 @@
   width: 32rpx;
   height: 32rpx;
 }
+.task_select .note_active{
+  color: #FFFFFF;
+  background-color: #C0C7D0;
+  border:none;
+  width: 32rpx;
+  height: 32rpx;
+}

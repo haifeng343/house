@@ -26,7 +26,7 @@
                 <text class="official">公众号</text>
               </view>
               <view class="task_select">
-                <view  wx:if="{{noteSelect}}" class="icon-font uniE930 active"></view>
+                <view  wx:if="{{noteSelect}}" class="icon-font uniE930 note_active "></view>
                 <text>短信</text>
               </view>
             </view>
