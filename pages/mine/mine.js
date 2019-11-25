@@ -19,7 +19,8 @@ Page({
     showTipDialog: false,
     shareDesc: "",
     couponList: [],
-    showCouponDialog: false
+    showCouponDialog: false,
+    couponDesc: ""
   },
   service: new MineService(),
   action: "",
@@ -27,32 +28,9 @@ Page({
   authSubscription: null,
   shareFlag: false,
   isFirstShare: false,
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad() {
-    this.authSubscription = authSubject.subscribe(isAuth => {
-      console.log("isAuth=" + isAuth);
-      if (isAuth) {
-        this.setData({ isAuth });
-        this.service
-          .getUserInfo()
-          .then(userInfo => {
-            this.setData(userInfo);
-            if (this.action) {
-              this.handleAction();
-            }
-          })
-          .catch(error => {
-            wx.showToast({
-              title: `获取用户信息失败!${error.message}`,
-              icon: "none"
-            });
-          });
-      }
-    });
 
-    this.service.checkFirstShare().then(resp => {
+  checkFirstShare() {
+    return this.service.checkFirstShare().then(resp => {
       const { isFirstShare } = resp;
       this.isFirstShare = isFirstShare;
       this.setData({
@@ -60,6 +38,35 @@ Page({
       });
     });
   },
+
+  getUserInfo() {
+    return this.service
+      .getUserInfo()
+      .then(userInfo => {
+        this.setData(userInfo);
+        if (this.action) {
+          this.handleAction();
+          this.action = "";
+        }
+      })
+      .catch(error => {
+        React.api.showToast({
+          title: `获取用户信息失败!${error.message}`,
+          icon: "none"
+        });
+      });
+  },
+
+  getCouponCount() {
+    return this.service.getCouponCount().then(couponCount => {
+      if (couponCount > 0) {
+        this.setData({ couponDesc: `${couponCount}张兑换券可用` });
+      } else {
+        this.setData({ couponDesc: "" });
+      }
+    });
+  },
+
   handleGotoDeposit(event) {
     var type = event.currentTarget.dataset.type;
     if (this.data.isAuth) {
@@ -239,17 +246,19 @@ Page({
 
   onShow() {
     if (this.data.isAuth) {
-      this.service
-        .getUserInfo()
-        .then(userInfo => {
-          this.setData(userInfo);
-        })
-        .catch(error => {
-          wx.showToast({
-            title: `获取用户信息失败!${error.message}`,
-            icon: "none"
-          });
-        });
+      this.getCouponCount();
+      this.getUserInfo();
+      this.checkFirstShare();
+    } else if (!this.authSubscription) {
+      this.authSubscription = authSubject.subscribe(isAuth => {
+        console.log("isAuth=" + isAuth);
+        if (isAuth) {
+          this.setData({ isAuth });
+          this.getCouponCount();
+          this.getUserInfo();
+          this.checkFirstShare();
+        }
+      });
     }
 
     if (this.shareFlag === true) {
