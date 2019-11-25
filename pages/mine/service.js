@@ -87,7 +87,7 @@ export default class UserService {
   }
 
   getCouponCount() {
-    return Http.get("/user/coupon/getUsable.json", { couponType: 3 })
+    return Http.get("/fdd/userCoupon/getUsable.json", { couponType: 3 })
       .then(resp => Promise.resolve(resp.data || []))
       .then(couponList => Promise.resolve(couponList.length));
   }
