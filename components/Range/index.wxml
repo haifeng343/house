@@ -1,0 +1,35 @@
+<view class="{{isLoaded ? '' : 'hidden'}}">
+  <view class="container">
+    <view wx:if="{{useCustom}}" class="overlay"></view>
+    <view class="background-line">
+      <view class="price">¥{{minValue}}-{{maxValue >= 10000 ? '不限' : '¥' + maxValue}}</view>
+      <view class='distance' style='left:{{leftX}}px;width:{{rightX-leftX}}px;'></view>
+      <text class="price-left">0</text>
+      <text class="price-right">不限</text>
+      <view class="point-left"></view>
+      <view class="point-right"></view>
+    </view>
+    <view class="move-view move-view-left" bindtouchstart="handleLeftTouchStart" bindtouchmove="handleLeftTouchMove" bindtouchend="handleLeftTouchEnd" style="transform: translateX({{leftX}}px);">
+      <view class="block">
+        <text class="icon-font {{leftX === 0 ? 'uniE953' : 'uniE955'}}" />
+      </view>
+    </view>
+    <view class="move-view move-view-right" bindtouchstart="handleRightTouchStart" bindtouchmove="handleRightTouchMove" bindtouchend="handleRightTouchEnd" style="transform: translateX({{rightX}}px);">
+      <view class="block">
+        <text class="icon-font {{rightX >= containerWidth ? 'uniE954' : 'uniE955'}}" />
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{showInput}}" class="input-container">
+    <view class="title-wrapper" bindtap="handleClickCustom">
+      <view class="icon-font uniE930 {{useCustom ? 'active' : ''}}"></view>
+      <text class="title">自定义</text>
+      <text class="sub-title">(单位: 元／月)</text>
+    </view>
+    <view class="input-wrapper">
+      <input disabled="{{!useCustom}}" bindinput="handleMinPriceChange" maxlength="6" type="number" value="{{minInputValue}}" placeholder="最低价" placeholder-class="input-placeholder" />
+      <text>-</text>
+      <input disabled="{{!useCustom}}" bindinput="handleMaxPriceChange" maxlength="6" type="number" value="{{maxInputValue}}" placeholder="最高价" placeholder-class="input-placeholder" />
+    </view>
+  </view>
+</view>

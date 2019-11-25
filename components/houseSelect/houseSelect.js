@@ -16,6 +16,9 @@ Component({
     locationName: {
       type: String,
     },
+    budget:{
+      type: String,
+    },
     type: {
       type: String
     }
@@ -38,12 +41,6 @@ Component({
         url: '/pages/days/days?type=' + this.properties.type
       });
     },
-    goCity() {
-      this.reSetData()
-      wx.navigateTo({
-        url: '/pages/citySelect/citySelect'
-      });
-    },
     showLocationFilter() {
       var shown = this.data.shown
       if (shown && this.data.showType == 2) {
@@ -64,12 +61,23 @@ Component({
         this.triggerEvent('clickSelectItem', { type: 1 })
       }
     },
+    showBudgetFilter(){
+      var shown = this.data.shown;
+      if (shown && this.data.showType == 3) {
+        this.setData({ showType: 0, shown: false })
+        this.triggerEvent('clickSelectItem', { type: 0 })
+      } else {
+        this.setData({ showType: 3, shown: true })
+        this.triggerEvent('clickSelectItem', { type: 3 })
+      }
+    },
     reSetData() {
       console.log('houseSelect,reSetData');
       this.setData({
         shown: false,
         showType: 0
       })
-    }
+    },
+    preventTouchMove() { }
   }
 })

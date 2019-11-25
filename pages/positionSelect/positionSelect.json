@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "房源查询",
+    "navigationBarTitleText": "短租-房源查询",
     "usingComponents": {
         "positionSelectItem": "../../components/positionSelectItem/positionSelectItem"
     }

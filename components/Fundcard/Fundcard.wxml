@@ -1,5 +1,8 @@
-<view class='container'>
-    <view class='icon icon{{items.type}}'></view>
+<view class="container {{items.platformType === 2 ? 'fdd' : 'pdd'}}">
+    <view class='icon'>
+      <!--充值：1 ; 兑换：7,2 ; 消耗：6,3 ; 注册赠送: 4 ; 退款：8，？-->
+      <text class="icon-font {{items.icon}}"></text>
+    </view>
     <view class='info'>
         <view class="box-wrapper">
             <view class='box box-left'>

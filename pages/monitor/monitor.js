@@ -8,20 +8,69 @@ Page({
     monitorStopDisplay:'none',
     monitorEndDisplay:'none',
     monitorStartDisplay:'none',
-    ddCoin:0
+    ddCoin:0,
+    active:1
   },
   onLoad: function (options) {
   },
   onShow:function(){
     let token = wx.getStorageSync('token');
     if (token) {
-      this.getMonitorData();
+      if (app.switchRent == 1 || !app.switchRent) { 
+        this.setData({ active: 1, data:[]})
+        this.getMonitorData()
+      }
+      if (app.switchRent == 2) {
+        this.setData({ active: 2, data: [] })
+        this.getLongMonitorData()
+      }
       this.getUserInfo()
     } else {
       this.setData({
         show: 0
       })
     }
+  },
+  monitorChange(e){
+    var index = e.currentTarget.dataset.index;
+    if(this.data.active == 1&&this.data.active!=index){
+      app.switchRent = 2
+      this.setData({
+        show:'',
+        active: 2
+      })
+      this.getLongMonitorData()
+    }
+    if (this.data.active == 2 && this.data.active != index) {
+      app.switchRent = 1
+      this.setData({
+        show: '',
+        active: 1
+      })
+      this.getMonitorData()
+    }
+  },
+  getLongMonitorData(){
+    let data = {}
+    monitorApi.getMonitorLongList(data).then(res => {
+      if (res.data.data.length) {
+        for (let i = 0; i < res.data.data.length; i++) {
+          res.data.data[i].dayNum = monitor.setDay(res.data.data[i].monitorTime)
+          res.data.data[i].hourNum = monitor.setHour(res.data.data[i].monitorTime)
+          res.data.data[i].index = i
+          res.data.data[i].longRentType = 2
+          //res.data.data[i].status = 11
+        }
+        this.setData({
+          data: res.data.data,
+          show: 1
+        })
+      } else {
+        this.setData({
+          show: 0
+        })
+      }
+    })
   },
   getMonitorData(){
     let data={}
@@ -33,6 +82,7 @@ Page({
           res.data.data[i].dayNum = monitor.setDay(res.data.data[i].monitorTime)
           res.data.data[i].hourNum = monitor.setHour(res.data.data[i].monitorTime)
           res.data.data[i].index = i
+          res.data.data[i].longRentType = 1
         }
         this.setData({
           data: res.data.data,
@@ -95,8 +145,9 @@ Page({
     let data={
       monitorId: this.data.deleteItem.id
     }
-    monitorApi.endMonitor(data).then(res => {
-        if(res.data.success){
+    if(this.data.active == 1){
+      monitorApi.endMonitor(data).then(res => {
+        if (res.data.success) {
           wx.showToast({
             title: res.data.resultMsg,
             icon: 'success',
@@ -104,10 +155,29 @@ Page({
           })
           this.setData({
             monitorStopDisplay: e.detail,
+            data: []
           })
           this.getMonitorData();
         }
-    })
+      })
+    }
+    if (this.data.active == 2) {
+      monitorApi.endLongMonitor(data).then(res => {
+        if (res.data.success) {
+          wx.showToast({
+            title: res.data.resultMsg,
+            icon: 'success',
+            duration: 2000
+          })
+          this.setData({
+            monitorStopDisplay: e.detail,
+            data: []
+          })
+          this.getLongMonitorData();
+        }
+      })
+    }
+    
   },
   getmonitorEndEvent(e){
     this.setData({
@@ -121,25 +191,44 @@ Page({
     let data = {
       monitorId: this.data.deleteItem.id
     }
-    monitorApi.endMonitor(data).then(res => {
-      if (res.data.success) {
-        wx.showToast({
-          title: res.data.resultMsg,
-          icon: 'success',
-          duration: 2000
-        })
-        this.setData({
-          monitorEndDisplay: e.detail,
-        })
-        this.getMonitorData();
-      }
-    })
+    if(this.data.active == 1){
+      monitorApi.endMonitor(data).then(res => {
+        if (res.data.success) {
+          wx.showToast({
+            title: res.data.resultMsg,
+            icon: 'success',
+            duration: 2000
+          })
+          this.setData({
+            monitorEndDisplay: e.detail,
+            data: []
+          })
+          this.getMonitorData();
+        }
+      })
+    }
+    if (this.data.active == 2) {
+      monitorApi.endLongMonitor(data).then(res => {
+        if (res.data.success) {
+          wx.showToast({
+            title: res.data.resultMsg,
+            icon: 'success',
+            duration: 2000
+          })
+          this.setData({
+            monitorEndDisplay: e.detail,
+            data: []
+          })
+          this.getLongMonitorData();
+        }
+      })
+    }
   },
   /**
    * 立即充值，跳转到充值页面
    */
   recharge(e){
-    var type = e.currentTarget.dataset.type
+    var type = e.detail.type
     wx.navigateTo({
       url: `/pages/deposit/deposit?type=${type}`
     });
@@ -150,26 +239,48 @@ Page({
       monitorStartDisplay: e.detail,
     })
   },
-  /**
-   * 立即开启
-   */
   getmonitorStartConfirmEvent(e){
+    this.setData({
+      monitorStartDisplay: e.detail,
+    })
+    this.getMonitorStart()
+  },
+  //立即开启
+  getMonitorStart(){
     let data = {
       monitorId: this.data.startItem.id
     }
-    monitorApi.startMonitor(data).then(res => {
-      if (res.data.success) {
-        wx.showToast({
-          title: res.data.resultMsg,
-          icon: 'success',
-          duration: 2000
-        })
-        this.setData({
-          monitorStartDisplay: e.detail,
-        })
-        this.getMonitorData();
-      }
-    })
+    wx.showLoading({
+      title: '正在开启监控...',
+      mask: true
+    });
+    if(this.data.active == 1){
+      monitorApi.startMonitor(data).then(res => {
+        wx.hideLoading();
+        if (res.data.success) {
+          wx.showToast({
+            title: res.data.resultMsg,
+            icon: 'success',
+            duration: 2000
+          })
+          this.getMonitorData();
+        }
+      })
+    }
+    if (this.data.active == 2) {
+      monitorApi.startLongMonitor(data).then(res => {
+        wx.hideLoading();
+        if (res.data.success) {
+          wx.showToast({
+            title: res.data.resultMsg,
+            icon: 'success',
+            duration: 2000
+          })
+          this.getLongMonitorData();
+        }
+      })
+    }
+    
   },
   /**
    * 立即开启弹窗
@@ -204,49 +315,90 @@ Page({
    */
   checkDetail(e){
     var item = this.data.data[e.detail.index]
-    app.globalData.monitorSearchData = {
-      cityType: '',
-      area: '',
-      areaId: {},
-      ltude: {},
-      areaType: '',
-      city: '',//城市名
-      cityId: {},//城市ID
-      beginDate: '',//开始日期
-      endDate: '',//离开日期
-      dayCount: 0,
-      gueseNumber: 1,//入住人数
-      leaseType: 1,//房间类型  0单间 1整租
-      houseType: [],//户型 0 一居室 1 二居室 2 三居室 3 4居以上
-      minPrice: 0,//最低价
-      maxPrice: 99999,//最高价
-      sort: 0,//搜索方式 0推荐 1低价有限
-      equipment: []
+    if(this.data.active == 1){
+      app.globalData.monitorSearchData = {
+        cityType: '',
+        area: '',
+        areaId: {},
+        ltude: {},
+        areaType: '',
+        city: '',//城市名
+        cityId: {},//城市ID
+        beginDate: '',//开始日期
+        endDate: '',//离开日期
+        dayCount: 0,
+        gueseNumber: 1,//入住人数
+        leaseType: 1,//房间类型  0单间 1整租
+        houseType: [],//户型 0 一居室 1 二居室 2 三居室 3 4居以上
+        minPrice: 0,//最低价
+        maxPrice: 99999,//最高价
+        sort: 0,//搜索方式 0推荐 1低价有限
+        equipment: []
+      }
+      app.globalData.monitorDefaultData = {
+        cityType: '',
+        area: '',
+        areaId: {},
+        ltude: {},
+        areaType: '',
+        city: '',//城市名
+        cityId: {},//城市ID
+        beginDate: '',//开始日期
+        endDate: '',//离开日期
+        dayCount: 0,
+        gueseNumber: 1,//入住人数
+        leaseType: 1,//房间类型  0单间 1整租
+        houseType: [],//户型 0 一居室 1 二居室 2 三居室 3 4居以上
+        minPrice: 0,//最低价
+        maxPrice: 99999,//最高价
+        sort: 0,//搜索方式 0推荐 1低价有限
+        equipment: []
+      }
+      app.globalData.monitorData = {
+        item: item
+      }
+      wx.navigateTo({
+        url: '../monitorList/monitorList',
+      })
     }
-    app.globalData.monitorDefaultData = {
-      cityType: '',
-      area: '',
-      areaId: {},
-      ltude: {},
-      areaType: '',
-      city: '',//城市名
-      cityId: {},//城市ID
-      beginDate: '',//开始日期
-      endDate: '',//离开日期
-      dayCount: 0,
-      gueseNumber: 1,//入住人数
-      leaseType: 1,//房间类型  0单间 1整租
-      houseType: [],//户型 0 一居室 1 二居室 2 三居室 3 4居以上
-      minPrice: 0,//最低价
-      maxPrice: 99999,//最高价
-      sort: 0,//搜索方式 0推荐 1低价有限
-      equipment: []
+    
+    if(this.data.active == 2){
+      app.globalData.monitorSearchLongData={
+        chooseType: 1, //1品牌中介，2个人房源
+        city: '',//城市名
+        cityId: {},//城市ID
+        cityJson: '',
+        longBuildAreas: -1,//0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
+        longFloorTypes: [],//1: 低楼层, 2: 中楼层, 3: 高楼层
+        longHeadings: [],//{1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
+        longHouseTags: [],//1: 精装修, 2: 近地铁, 3: 拎包入住, 4: 随时看房, 5: 集中供暖, 6: 新上房源, 7: 配套齐全, 8: 视频看房
+        longLayouts: [], //1: 一室, 2: 二室, 3: 三室, 11: 三室及以上, 12: 四室及以上
+        longRentTypes: 0, //1: 整租, 2: 合租 3: 主卧, 4: 次卧
+        longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
+        minPrice: 0,//最低价
+        maxPrice: 5500,//最高价 不限99999
+      }
+      app.globalData.monitorDefaultSearchLongData = {
+        chooseType: 1, //1品牌中介，2个人房源
+        city: '',//城市名
+        cityId: {},//城市ID
+        cityJson: '',
+        longBuildAreas: -1,//0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
+        longFloorTypes: [],//1: 低楼层, 2: 中楼层, 3: 高楼层
+        longHeadings: [],//{1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
+        longHouseTags: [],//1: 精装修, 2: 近地铁, 3: 拎包入住, 4: 随时看房, 5: 集中供暖, 6: 新上房源, 7: 配套齐全, 8: 视频看房
+        longLayouts: [], //1: 一室, 2: 二室, 3: 三室, 11: 三室及以上, 12: 四室及以上
+        longRentTypes: 0, //1: 整租, 2: 合租 3: 主卧, 4: 次卧
+        longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
+        minPrice: 0,//最低价
+        maxPrice: 5500,//最高价 不限99999
+      }
+      app.globalData.monitorLongData = {
+        item: item
+      }
+      wx.navigateTo({
+        url: '../monitorLongList/monitorLongList',
+      })
     }
-    app.globalData.monitorData = {
-      item: item
-    }
-    wx.navigateTo({
-      url: '../monitorList/monitorList',
-    })
   }
 })

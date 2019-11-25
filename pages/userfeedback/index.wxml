@@ -1,0 +1,20 @@
+<view class="page">
+    <view class="header"></view>
+    <view class="feedback-list">
+        <block wx:for="{{feedbackList}}" wx:for-item="item" wx:key="id">
+            <view class="feedback-item">
+                <view class="feedback">
+                    <text class="title">意见</text>
+                    <text class="content">{{item.suggestion}}</text>
+                </view>
+                <block wx:if="{{item.content}}">
+                    <view class="replay">
+                        <text class="title">回复</text>
+                        <text class="content">{{item.content}}</text>
+                    </view>
+                </block>
+                <view class="time">更新于{{item.updateTime}}</view>
+            </view>
+        </block>
+    </view>
+</view>

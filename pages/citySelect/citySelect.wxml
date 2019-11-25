@@ -37,7 +37,7 @@
           <view class="cell-list flex-box-center">
             <block wx:for="{{history}}" wx:for-item="item" wx:key="name">
               <view class="cell-item" data-item='{{item}}' bindtap="handleSelectCityHistory">
-                {{item.name}}
+                {{item.name + (item.line?('(地铁)'):'')}}
               </view>
             </block>
           </view>
@@ -48,7 +48,7 @@
             <block wx:for="{{hot}}" wx:for-item="item" wx:key="name">
               <view class="cell-item hot" data-item='{{item}}' bindtap="handleSelectCityByName">
                 <image src='../../assets/image/index/hot.png' class='hot-image' />
-                {{item.name}}
+                <view class="text">{{item.name}}</view>
               </view>
             </block>
           </view>
@@ -59,7 +59,7 @@
           <view class="title">{{item.p}}</view>
           <view class="content">
             <block wx:for="{{item.cl}}" wx:for-item="item2" wx:key="name">
-              <view class="city" data-item='{{item2}}' bindtap="handleSelectCity">
+              <view class="city" data-name='{{item2.name}}' bindtap="handleSelectCity">
                 {{item2.name}}
               </view>
             </block>

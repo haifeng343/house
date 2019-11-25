@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.container .img {
+  width: 86%;
+  margin: 32rpx auto 12rpx auto;
+}
+.container .desc {
+  color: #1d1d1d;
+  font-size: 28rpx;
+  line-height: 40rpx;
+  text-align: center;
+}
+.container .highlight {
+  color: #10bcae;
+}
+.container .rec {
+  margin: 92rpx 20rpx 52rpx 20rpx;
+}

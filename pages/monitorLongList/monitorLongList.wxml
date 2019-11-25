@@ -1,0 +1,99 @@
+<view>
+  <view class="header">
+    <view class="top-nav">
+      <FilterBar data="{{updateData}}" positionData="{{positionData}}" bind:onSubmit="submit" />
+      <view class="bg_border"></view>
+    </view>
+    <view wx:if="{{countFlag === 1}}" class="house_detail" bindtap="goToDetail">
+      <view>总计:{{allCount}}套</view>
+      <view>{{longSortTypes == 1?'最低价':'推荐价'}}:¥{{lowPrice}}</view>
+      <view class="check_detail">
+        <text>查看明细</text>
+        <image class="check_more" src="../../assets/image/more.png"></image>
+      </view>
+    </view>
+  </view>
+  <view class="block"></view>
+  <view class="card-list {{countFlag === 0||countFlag === 2 ? 'section_empty' : ''}}">
+    <view class="search_empty" wx:if="{{countFlag === 0&&bottomType === 1}}">
+      <view class="search_view">
+        <image class="monitor_empty_image" src="../../assets/image/monitor_empty.png"></image>
+      </view>
+      <view class="search_view search_title">暂时未监控符合条件的房源</view>
+    </view>
+
+    
+    <view  class="search_empty" wx:if="{{countFlag === 2&&countBack}}">
+      <noNetwork title="网络异常，请返回重试"></noNetwork>
+    </view>
+    <view  class="search_empty" wx:if="{{countFlag === 2&&!countBack}}">
+      <noNetwork title="网络异常，请刷新重试"></noNetwork>
+    </view>
+
+    <view class="search_empty" wx:if="{{countFlag === 0&&bottomType ===2}}">
+      <view class="search_view">
+        <image class="empty_image" src="../../assets/image/search_empty.png"></image>
+      </view>
+      <view class="search_view search_title">未找到符合条件的房源</view>
+      <view class="search_view search_tip">立即添加监控，第一时间推送房源信息，再也不怕心仪的房源擦肩而过</view>
+    </view>
+    
+    <view class="house_card">
+      <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
+        <houseLongCard item="{{item}}" type="{{2}}" isMonitorHouse="{{isMonitorHouse}}" idx="{{idx}}" isFirst="{{isFirst}}" bind:collectionEvent="goToCollection" bind:deleteEvent="delItem"></houseLongCard>
+      </block>
+    </view>
+    
+    
+    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length}}">已展示全部房源</view>
+    <mp-loading type="dot-red" tips="加载中" show="{{loadingShow}}"></mp-loading>
+  </view>
+
+  <view class="house_monitor" wx:if="{{countFlag===2&&countBack}}">
+    <button class="monitor_btn" bindtap='goBack'>返回重试</button>
+  </view>
+  <view class="house_monitor" wx:if="{{countFlag===2&&!countBack}}">
+    <button class="monitor_btn" bindtap='goRefresh'>立即刷新</button>
+  </view>
+  <view class="monit_start {{bottomType === 1?'monit_stop':''}}" wx:if="{{bottomType === 1&&loadingDisplay === 'none'}}">
+    <view>
+      <text class="time_line">监控时长:</text>
+      <text class="price">{{taskTime}}</text>
+      <text class="time_line">消费:</text>
+      <text class="price">{{totalFee}}币</text>
+      <text class="monit_btn" bindtap="stopMonitor">结束监控</text>
+    </view>
+  </view>
+  <view class="monit_start {{bottomType === 2?'monit_save':''}}" wx:if="{{bottomType === 2&&loadingDisplay === 'none'}}">
+    <view>
+      <text class="monit_btn monit_back" bindtap="goBack">返回监控</text>
+      <text class="monit_btn monit_update" bindtap="goSave">保存修改</text>
+    </view>
+  </view>
+  
+  <view wx:if="{{countFlag===1}}" class="house_shortcuts {{!scrollIng ? '' : 'hidden'}}">
+    <view>
+      <image bindtap="goTop" wx:if="{{scrollTop>500}}" class="top" src="../../assets/image/top.png"></image>
+    </view>
+    <view>
+      <image bindtap="goSort"  class="sort" src="../../assets/image/sort.png"></image>
+    </view>
+  </view>
+  <view class="house_loading" style="display:{{loadingDisplay}}" catchtouchmove="preventTouchMove">
+    <view class="loading_image">
+      <image src="../../assets/image/loading.gif"></image>
+      <view class="text">正在获取全网低价房源，请稍后...</view>
+    </view>
+  </view>
+
+</view>
+
+<collectDialog bind:collectEvent="getcollectEventEvent" style="display:{{collectDisplay}}"></collectDialog>
+<stopDialog bind:stopEvent="getstopEventEvent" bind:stopConfrimEvent="getstopConfirmEventEvent" startTimeName="{{startTimeName}}" taskTime="{{taskTime}}" fee="{{fee}}" totalFee="{{totalFee}}" style="display:{{stopDisplay}}"></stopDialog>
+
+
+<updateLongDialog bind:updateCancelEvent="getUpdateCancelEvent" bind:updateConfrimEvent="getUpdateConfrimEvent" updateData="{{updateData}}" defalutData="{{defalutData}}" style="display:{{updateMonitorDisplay}}"></updateLongDialog>
+
+<monitorEndDialog text="确认不再关注" bind:monitorEndEvent="getmonitorEndEvent" bind:monitorEndConfirmEvent="getmonitorEndConfirmEvent" style="display:{{monitorEndDisplay}}"></monitorEndDialog>
+
+<monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}"  style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" paddingBottom="1"></monitorEnoughDialog>

@@ -9,6 +9,16 @@ Component({
     },
     bindPublic:{
       type:Boolean
+    },
+    title:{
+      type:String
+    },
+    type:{
+      type: Number,
+      value: 1 //1:短租，2长租
+    },
+    fee:{
+      type: Number,
     }
   },
 
@@ -18,17 +28,7 @@ Component({
   data: {
     publicSelect: false,
     noteSelect: true,
-    unselect: '../../assets/image/unselect.png',
-    selected: '../../assets/image/selected.png',
-    fee: 0
   },
-
-  attached: function () {
-    this.setData({
-      fee: wx.getStorageSync('hourMoney') || 0
-    })
-  },
-
   /**
    * 组件的方法列表
    */
@@ -77,8 +77,7 @@ Component({
         })
       //} 
     },
-    stopEvent(){
-      console.log(".....")
-    }
+    stopEvent(){},
+    preventTouchMove() { }
   }
 })

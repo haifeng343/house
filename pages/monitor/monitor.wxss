@@ -1,23 +1,35 @@
-page{
-  background-color: #F9F9F9;
-  width: 100%;
-  height: 100%;
+@import '../../assets/styles/font.wxss';
+page{background-color: #F9F9F9;width: 100%;height: 100%;}
+.tab{height: 120rpx;background: #FFFFFF;display: flex;justify-content: center;align-items: center;}
+.tab_btn{
+  width:468rpx;
+  height:84rpx;
+  background:rgba(247,247,247,1);
+  border-radius:42rpx;
+  margin: 0 auto;
+  font-weight:500;
+  font-size:28rpx;
 }
-.section{
-  padding: 24rpx 8rpx 0;
+.tab_btn text{
+  display: inline-block;
+  width:228rpx;
+  height:84rpx;
+  line-height: 84rpx;
+  text-align: center;
+  border-radius: 42rpx;
 }
-
-.section_empty{
+.tab_btn .active{background: #F1612A;width:240rpx;color: #FFFFFF;}
+.card_list{padding: 12rpx 8rpx 0;}
+.section_empty{display: flex;height: 100%;padding: 0;flex-direction: column}
+.search_empty{flex: 1;background: #FFFFFF;}
+.bg_border{background: #F9F9F9;height: 12rpx;}
+.tip-wrapper {
+  font-size: 24rpx;
+  color: #bec3cd;
   display: flex;
-  height: 100%;
-  padding: 0;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40rpx;
 }
-.search_empty{
-  flex: 1;
-  background: #FFFFFF;
-  
-}
-.bg_border{
-  background: #F9F9F9;
-  height: 12rpx;
-}
+.uniE915 {font-size: 20rpx;color: #bec3cd;margin-right: 10rpx;}

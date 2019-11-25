@@ -1,0 +1,49 @@
+<view class="container">
+  <view class="overlay" bindtap="handleClose" />
+  <view class="dialog-wrapper">
+    <image class="bg" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/弹窗背景.png" />
+    <view class="content">
+      <image class="bg1" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/飞机.png" />
+      <image class="bg2" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/旅游城市建筑.png" />
+      <view class="title">{{title}}</view>
+      <view class="message">
+        <text class="message-text">已自动发放到您的账户</text>
+      </view>
+      <view class="coupon-list">
+        <block wx:for="{{couponList}}" wx:for-item="item" wx:key="{{item.id}}">
+          <block wx:if="{{item.type === 2}}">
+            <view class="free-item">
+              <view class="top">
+                <view class="name">
+                  <text class="day">{{item.name}}</text>
+                  <text class="card">体验卡</text>
+                </view>
+                <view class="desc">{{item.message}}</view>
+                <view class="expire">有效期:{{item.expireTime}}</view>
+              </view>
+              <view class="bottom">
+                <text class="tips">体验卡一经使用概不退回</text>
+              </view>
+            </view>
+          </block>
+          <block wx:elif="true">
+            <view class="coupon-item {{item.type === 3 ? 'fdd' : 'pdd'}}">
+              <view class="info-wrapper">
+                <view class="name">
+                  <text>{{item.name}}</text>
+                </view>
+                <view class="desc">
+                  <view class="message">{{item.message}}</view>
+                  <view class="expire">有效期:{{item.expireTime}}</view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </block>
+      </view>
+    </view>
+    <view class="close-button" bindtap="handleClose">
+      <text class="icon-font uniE91F" />
+    </view>
+  </view>
+</view>

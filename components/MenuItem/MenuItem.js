@@ -1,16 +1,15 @@
-
-
 Component({
-    data: {
+  data: {},
+  properties: {
+    icon: {
+      type: String
     },
-    properties: {
-        icon: {
-            type: String,
-        },
-        label: {
-            type: String,
-        }
+    label: {
+      type: String
     },
-    lifetimes: {
+    desc: {
+      type: String
     }
-})
+  },
+  lifetimes: {}
+});

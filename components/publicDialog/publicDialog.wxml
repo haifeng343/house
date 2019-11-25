@@ -1,4 +1,4 @@
-<view class="mask" bindtap="bindClose">
+<view class="mask" bindtap="bindClose" catchtouchmove="preventTouchMove">
     <view class="mask_content" catchtap="stopEvent">
       <view class="house_image">
         <image class="image" src="../../assets/image/wechat.png"></image>

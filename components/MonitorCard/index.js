@@ -5,6 +5,9 @@ Component({
     data: {
       type: Object,
       value: {}
+    },
+    rentType:{
+      type:Number
     }
   },
 

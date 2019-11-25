@@ -3,47 +3,58 @@
 @import '../../assets/styles/flex.wxss';
 
 :host {
-    display: flex;
-    width: 100%;
-    background-color: #fff;
-    height: 108rpx;
-    box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  background-color: #fff;
+  height: 108rpx;
+  box-sizing: border-box;
 }
 
 .container {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .container .icon {
-    height: 62rpx;
-    width: 62rpx;
-    border-radius: 31rpx;
-    margin: 0 28rpx;
+  height: 64rpx;
+  width: 64rpx;
+  border-radius: 50%;
+  margin: 0 28rpx;
+  background-color: #fff5f2;
+  font-size: 32rpx;
+  color: #e75d28;
 }
 
-.container .icon-image {
-    height: 62rpx;
-    width: 62rpx;
-    border-radius: 31rpx;
-    background-color: #FFF5F2;
+.uniE965 {
+  font-size: 28rpx;
+}
+
+.uniE911 {
+  font-size: 28rpx;
 }
 
 .container .label {
-    border-bottom: solid 2rpx #f4f4f4;
-    margin-right: 28rpx;
-    flex: 1 1 auto;
-    height: 100%;
-    box-sizing: border-box;
+  border-bottom: solid 2rpx #f4f4f4;
+  margin-right: 28rpx;
+  flex: 1 1 auto;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .container .label .label-text {
-    color: #1d1d1d;
-    font-weight: 400;
-    font-size: 32rpx;
+  color: #1d1d1d;
+  font-weight: 400;
+  font-size: 32rpx;
 }
 
 .container .label .uniE90C {
-    color: #bec3cd;
-    font-size: 28rpx;
+  color: #bec3cd;
+  font-size: 28rpx;
+}
+
+.label-desc {
+  font-size: 28rpx;
+  color: #e75d28;
+  margin-left: auto;
+  margin-right: 24rpx;
 }

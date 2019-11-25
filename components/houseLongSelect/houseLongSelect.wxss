@@ -1,0 +1,71 @@
+.house_select{
+  display: flex;
+  align-items: center;
+  height: 100rpx;
+  background: #FFFFFF;
+  color: #1d1d1d;
+  font-weight: bold;
+  border-top:1rpx solid #E8E8E8;
+  position: relative;
+  z-index: 112;
+}
+/* .house_select .scenic_area{
+  width: 25%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-right: 16rpx;
+  text-align: center;
+  box-sizing: border-box;
+}
+.house_select .scenic_type{
+  width: 25%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  text-align: center;
+  padding-right: 16rpx;
+  box-sizing: border-box;
+} */
+.house_select .scenic_area,.house_select .scenic_type,.house_select .budget,.house_select .filter{
+  width: 25%;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-right: 16rpx;
+  box-sizing: border-box;
+}
+
+/* .house_select .filter{
+  width: 25%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-right: 20rpx;
+  text-align: center;
+  white-space: nowrap;
+  box-sizing: border-box;
+} */
+.house_select .triangle{
+  width: 0;
+  height: 0;
+  border: 12rpx solid;
+  margin-left: 10rpx;
+  border-right: 0;
+  border-color: transparent transparent #1D1D1D;
+}
+.house_select .active {
+  color: #F1612A;
+}
+.house_select .active .triangle {
+  border-color: transparent transparent #F1612A;
+}
+
+.house_select .text  {
+  flex: 1;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}

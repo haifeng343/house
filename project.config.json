@@ -13,7 +13,7 @@
 		"coverView": true,
 		"autoAudits": false,
 		"checkInvalidKey": true,
-		"checkSiteMap": true,
+		"checkSiteMap": false,
 		"uploadWithSourceMap": true,
 		"babelSetting": {
 			"ignore": [],
@@ -46,6 +46,10 @@
 		},
 		"game": {
 			"currentL": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
@@ -119,6 +123,12 @@
 					"name": "个人中心",
 					"pathName": "pages/mine/mine",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "卡券",
+					"pathName": "pages/coupon/coupon",
 					"scene": null
 				}
 			]

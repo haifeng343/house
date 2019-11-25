@@ -236,7 +236,12 @@ Component({
           isBack: true
         }, () => {
           wx.navigateBack({
-            delta: 1
+            delta: 1,
+            success:function(){
+              if (prevPage.hasOwnProperty('submitAdvance')){
+                prevPage.submitAdvance()
+              }
+            }
           });
         });
       }

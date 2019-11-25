@@ -8,6 +8,17 @@ const service = new SearchService();
 const specialCity = [
 ];
 
+const typeEnum = {
+  11: "景区",
+  12: "高校",
+  13: "机场",
+  14: "医院",
+  15: "商圈",
+  16: "行政区",
+  17: "地铁",
+  18: "车站",
+}
+
 
 Page({
 
@@ -20,7 +31,8 @@ Page({
     type: '',
     value: '',
     resultLength: 0,
-    hasAsked: false
+    hasAsked: false,
+    isfocus: false
   },
   submitFlag: false,
   service: new SearchService(),
@@ -29,6 +41,9 @@ Page({
     this.setData({
       value: event.detail.value
     })
+    if (event.detail.value.length > 1) {
+      this.handleSearch()
+    }
   },
   handleSearch() {
     var app = getApp();
@@ -180,6 +195,7 @@ Page({
       let info = JSON.parse(resp.data.json);
       let type = position.split("_")[2];
       let cityName = position.split("_")[0];
+      let line = position.split("_")[3]
       if (type == 16) {//行政区  只有areaid
         app.globalData.searchData.areaId = {
           mn: info.mn && info.mn.area_id,
@@ -225,7 +241,7 @@ Page({
       app.globalData.monitorSearchData.areaType = type;
       let hasDiff = false;
       this.data.history.map((item) => {
-        if (item.name === info.name && item.type === type && item.cityName === cityName) {
+        if (item.name === info.name && item.type === type && item.cityName === cityName && !!item.line == !!line) {
           hasDiff = true;
         }
       });
@@ -234,7 +250,8 @@ Page({
           isCity: 0,
           type: type,
           name: info.name,
-          cityName
+          cityName,
+          line
         });
       }
       this.setData({
@@ -315,7 +332,7 @@ Page({
         position = `${position}(${lineName})`;
       }
       result[cityName].children.push({
-        // typeName: typeEnum[type],
+        typeName: typeEnum[type],
         position,
         type: type
       });
@@ -325,23 +342,29 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
+  /**返回上一级 */
+  goBack() {
+    wx.navigateBack({
+      delta: 1
+    });
+  },
+
+  clearInput() {
+    this.setData({
+      isfocus: false,
+    },()=>{
+      this.setData({ value: '', hasAsked: false })
+    })
+  },
+
   onLoad: function () {
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
   onReady: function () {
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
     let history = wx.getStorageSync('positionSearchHistory') || [];
     this.setData({
@@ -349,37 +372,22 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
   onHide: function () {
 
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
   onUnload: function () {
 
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
 
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage: function () {
 
   }

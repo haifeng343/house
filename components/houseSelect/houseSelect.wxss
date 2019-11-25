@@ -14,8 +14,8 @@
   padding-left: 20rpx;
   box-sizing: border-box;
 }
-.house_select .city{
-  width: 22%;
+.house_select .budget{
+  width: 25%;
   text-align: center;
   display: flex;
   justify-content: space-between;
@@ -24,7 +24,7 @@
   box-sizing: border-box;
 }
 .house_select .scenic_area{
-  width: 35%;
+  width: 32%;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -41,7 +41,7 @@
   white-space: nowrap;
   box-sizing: border-box;
 }
-.house_select .city .triangle,.house_select .filter .triangle,.house_select .scenic_area .triangle{
+.house_select .budget .triangle,.house_select .filter .triangle,.house_select .scenic_area .triangle{
   width: 0;
   height: 0;
   border: 12rpx solid;
@@ -56,14 +56,10 @@
   border-color: transparent transparent #F1612A;
 }
 
-.house_select .city .text, .house_select .scenic_area .text {
+.house_select .budget .text, .house_select .scenic_area .text {
   flex: 1;
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
   text-align: center;
 }
-
-/* .house_select .scenic_area{
-  color: #F1612A
-} */

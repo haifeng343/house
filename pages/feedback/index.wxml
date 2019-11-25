@@ -1,0 +1,16 @@
+<view class="page">
+  <view class="header">
+    <view class="title">留下您的问题和建议</view>
+    <view class="icon-wrapper" bindtap="handleGotoUserFeedBack">
+      <text class="icon-font uniE94A"></text>
+    </view>
+  </view>
+  <view class="content">
+    <textarea placeholder="请填写8个字以上的问题描述方便我们更好帮助您" maxlength="100" bindinput="handleFeedBackChange"></textarea>
+    <view class="count">{{count}}/100</view>
+    <view class="desc">根据留言我们客服会依次后续跟进，您也可以直接联系我们的微信客服。</view>
+  </view>
+  <view class="button-wrapper">
+    <view class="button" bindtap="handleSubmitFeedBack">提交</view>
+  </view>
+</view>

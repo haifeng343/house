@@ -1,20 +1,21 @@
 <view class="page">
-    <image src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/Group%203%403x.png" class="bg" mode="widthFix" />
-    <view class="content">
-        <view class="h1">
-            <text>监控</text>
-            <text class="highlight">低价机票/房源</text>
-        </view>
-        <view class="h2">公众号或客服联系我们</view>
-        <view class="qr">
-            <image src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/wechat-service.jpeg" class="qrimage" />
-        </view>
-        <view class="h3">【微信客服：{{wechatid}}】</view>
-        <view class="button" bindtap="handleSetClipboardData">
-            复制
-        </view>
-        <view class="big-button" bindtap="handleGotoGuide">
-            关注公众号引导
-        </view>
+  <image src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/Group%203%403x.png" class="bg" mode="widthFix" />
+  <view class="feedback" bindtap="handleClickFeedBack">
+    <text>留言反馈</text>
+    <text class="icon-font uniE949"></text>
+  </view>
+  <view class="content">
+    <view class="h1">
+      <text>监控</text>
+      <text class="highlight">低价房源</text>
     </view>
+    <view class="h2">公众号或客服联系我们</view>
+    <view class="qr">
+      <image src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/wechat-service.jpeg" class="qrimage" />
+    </view>
+    <view class="h3">【微信客服：{{wechatid}}】</view>
+    <view class="button" bindtap="handleSetClipboardData">复制</view>
+    <view class="big-button" bindtap="handleGotoGuide">关注公众号引导</view>
+  </view>
+  <authDialog wx:if="{{showAuthDialog}}" bind:onConfirm="handleGetUserInfo" bind:onCancel="handleCloseAuthDialog" />
 </view>

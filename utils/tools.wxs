@@ -1,0 +1,10 @@
+function includes(list, item) {
+  if (!list) {
+    return false;
+  }
+  return list.indexOf(item) > -1;
+}
+
+module.exports = {
+  includes: includes
+};

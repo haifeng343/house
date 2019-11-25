@@ -12,7 +12,6 @@
   height: 360rpx;
   border-radius: 8rpx;
 }
-
 .image-extend.base-image {
   position: absolute;
   bottom: 0;
@@ -23,21 +22,27 @@
   position: absolute;
   width: 100%;
   height: 360rpx;
-  z-index: 2;
+  z-index: 5;
   bottom: 0;
 }
-
+.image-long-extend{
+  height: 220rpx;
+  top: 0;
+}
+.image-long-extend .image-extend.base-image{
+  top:0
+}
 .base-image-container.hidden {
-  animation: hidden 2s linear forwards;
-  /* transition: opacity 1.5s ease-in-out;
-  opacity: 0; */
+  /* animation: hidden 2s linear forwards; */
+  transition: opacity 1.5s ease-in-out;
+  opacity: 0;
 }
 
 .image-extend.source-image {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 4;
 }
 
 @keyframes hidden {

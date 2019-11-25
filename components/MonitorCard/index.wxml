@@ -2,7 +2,7 @@
   <movable-area class="area">
     <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
       <view class="bg"></view>
-      <view class="tag"></view>
+      <view class="tag {{rentType == 2?'long_tag':''}}"></view>
       <text class="icon-font uniE929" />
       <view class="content">
         <view class="top">

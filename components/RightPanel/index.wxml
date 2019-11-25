@@ -1,0 +1,27 @@
+<wxs src="../../utils/tools.wxs" module="tools" />
+<view class="container {{show ? '' : 'hidden'}}" catchtouchmove="preventTouchMove">
+  <view class="overlay" bindtap="handleClosePanel"></view>
+  <view class="content-wrapper">
+    <scroll-view scroll-y class="filter-list">
+      <block wx:for="{{filter}}" wx:key="{{item.title}}">
+        <view wx:if="{{!item.showType || tools.includes(item.showType, type)}}" class="filter-item">
+          <view class="filter-title">
+            <image wx:if="{{item.icon}}" src="{{item.icon}}" class="title-icon" />
+            <text>{{item.title}}</text>
+          </view>
+          <view class="option-list">
+            <block wx:for="{{item.list}}" wx:for-item="item2" wx:key="{{item2.label}}">
+              <view wx:if="{{!item2.showType || tools.includes(item2.showType, type)}}" class="option-item {{item2.active ? 'active' : ''}}" bindtap="handleSelectFilter" data-value="{{item2.value}}" data-field="{{item.field}}">
+                {{item2.label}}
+              </view>
+            </block>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+    <view class="button-wrapper">
+      <view class="button button-reset" bindtap="handleReset">重置</view>
+      <view class="button button-confirm" bindtap="handleSubmit">确定</view>
+    </view>
+  </view>
+</view>

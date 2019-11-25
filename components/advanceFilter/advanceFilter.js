@@ -168,17 +168,19 @@ Component({
   methods: {
     handleSelectNumber(event) {
       const index = event.detail;
-      const optionList = this.data.optionList.map((item, itemIndex) => {
-        if (index === itemIndex) {
-          this.data.searchData.gueseNumber = item.value;
-          item.active = true;
-        } else {
-          item.active = false;
-        }
-        return item;
-      });
+      console.log(index)
+      this.data.searchData.gueseNumber = index;
+      // const optionList = this.data.optionList.map((item, itemIndex) => {
+      //   if (index === itemIndex) {
+      //     this.data.searchData.gueseNumber = item.value;
+      //     item.active = true;
+      //   } else {
+      //     item.active = false;
+      //   }
+      //   return item;
+      // });
       this.setData({
-        optionList,
+        // optionList,
         searchData: this.data.searchData
       });
     },
@@ -248,7 +250,7 @@ Component({
         lastList: this.data.middleList[type].line || {},
         middleActive: type
       }, () => {
-        if (way == 'subway') {
+        if (way == 'subway' && data.type == this.data.initSelect.initLine && data.station == this.data.initSelect.initKey) {
           this.chooseLast({
             currentTarget: {
               dataset: {
@@ -257,13 +259,13 @@ Component({
             }
           });
         } else {
-          this.chooseLast({
-            currentTarget: {
-              dataset: {
-                type: Object.keys(this.data.lastList)[0]
-              }
-            }
-          });
+          // this.chooseLast({
+          //   currentTarget: {
+          //     dataset: {
+          //       type: Object.keys(this.data.lastList)[0]
+          //     }
+          //   }
+          // });
         }
       });
     },
@@ -476,9 +478,17 @@ Component({
     },
     getHotPosition() {
       const app = getApp();
+      console.log(this.properties.shownType)
+      if (this.properties.shownType === '2'){
+        wx.showLoading({
+          title: '加载中',
+          mask: true
+        });
+      }
       Http.get('/indexPosition.json', {
         cityName: this.data.city
       }).then(rslt => {
+        wx.hideLoading();
         let data = rslt.data;
         data.unshift(`${this.data.city}_全城_16`);
         this.setData({
@@ -590,7 +600,14 @@ Component({
           }
         );
       });
-    }
+    },
+    goCity() {
+      if (this.properties.type == 'monitor') { return }
+      wx.navigateTo({
+        url: '/pages/citySelect/citySelect'
+      });
+    },
+    preventTouchMove(){}
   },
   lifetimes: {
     ready() {
@@ -638,6 +655,7 @@ Component({
   },
   observers: {
     cityName: function(city) {
+      console.log(city)
       if (!city || city == '--') {
         return;
       }

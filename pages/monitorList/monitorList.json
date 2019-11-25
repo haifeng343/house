@@ -1,14 +1,15 @@
 {
   "usingComponents": {
     "houseSelect": "../../components/houseSelect/houseSelect",
-    "enoughDialog": "../../components/enoughDialog/enoughDialog",
-    "enoughBottomDialog": "../../components/enoughBottomDialog/enoughBottomDialog",
     "stopDialog": "../../components/stopDialog/stopDialog",
     "updateMonitorDialog": "../../components/updateMonitorDialog/updateMonitorDialog",
     "advanceFilter": "../../components/advanceFilter/advanceFilter",
-    "imageExtend": "../../components/imageExtend/imageExtend",
+    "collectDialog": "../../components/collectDialog/collectDialog",
     "noNetwork": "../../components/noNetwork/noNetwork",
-    "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog"
+    "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog",
+    "mp-loading": "../../components/loading/loading",
+    "houseListCard": "../../components/houseListCard/houseListCard",
+    "monitorEnoughDialog": "../../components/monitorEnoughDialog/monitorEnoughDialog"
   },
-  "navigationBarTitleText": "房源监控详情"
+  "navigationBarTitleText": "短租"
 }

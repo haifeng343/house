@@ -34,6 +34,8 @@ Component({
     },
     bindConfirm() {
       this.triggerEvent('stopConfrimEvent', 'none')
-    }
+    },
+    stopEvent() { },
+    preventTouchMove() {}
   }
 })

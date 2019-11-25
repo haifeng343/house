@@ -1,26 +1,51 @@
-<view class="section">
-  <view>
-    <view class="statistics_query">
-      <houseData></houseData>
-    </view>
-
-    <view class="house_low_price">
-      <houseCard></houseCard>
-    </view>
-
-    <view class="line"></view>
-    <view class="statistics_detail">
-      <houseStat></houseStat>
+<view class="page">
+  <view class="header">
+    <view class="tab-list">
+      <block wx:for="{{tabList}}" wx:for-item="item" wx:key="label">
+        <view class="tab-item {{item.value === currentTabValue ? 'active' : ''}}" data-value="{{item.value}}" bindtap="handleTabChange">
+          <text>{{item.label}}</text>
+        </view>
+      </block>
     </view>
   </view>
-</view>
-<view class="monit_start">
-  <view>
-    <text>收费标准:</text>
-    <text class="price">¥200</text>
-    <text>/日</text>
-    <text>余额:</text>
-    <text class="price">¥200</text>
-    <text class="monit_btn">立即开始</text>
-  </view>
+  <block wx:if="{{isLoaded}}">
+    <scroll-view scroll-y class="scroll-view">
+      <block wx:if="{{couponList.length === 0}}">
+        <NoCoupon />
+      </block>
+      <block wx:else>
+        <view>
+          <view class="coupon-list">
+            <block wx:for="{{couponList}}" wx:for-item="item" wx:key="id">
+              <view class="coupon-item">
+                <block wx:if="{{item.type === 2}}">
+                  <FreeCard data="{{item}}" data-item="{{item}}" bind:onUse="handleUseCoupon" />
+                </block>
+                <block wx:else>
+                  <CouponCard data="{{item}}" data-item="{{item}}" bind:onUse="handleUseCoupon" />
+                </block>
+              </view>
+            </block>
+          </view>
+          <view wx:if="{{false}}" class="rule" bindtap="handleGotoCouponRule">
+            <text>使用规则</text>
+            <text class="icon-font uniE92A" />
+          </view>
+          <block wx:if="{{type === 2}}">
+            <view style="height: 160rpx;" />
+          </block>
+          <block wx:else>
+            <view style="height: 40rpx;" />
+          </block>
+        </view>
+      </block>
+    </scroll-view>
+  </block>
+  <block wx:if="{{showActionDialog === true}}">
+    <BaseActionDialog bind:onConfirm="handleActionConfirm" bind:onCancel="handleActionCancel">
+      <text>该卡券仅限票盯盯监控使用，具体使用规则请前往</text>
+      <text class="highlight" style="color: #1d1d1d; font-weight: 500;">票盯盯</text>
+      <text>小程序查看</text>
+    </BaseActionDialog>
+  </block>
 </view>

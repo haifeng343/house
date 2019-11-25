@@ -1,5 +1,5 @@
-<view class="mask">
-    <view class="mask_content">
+<view class="mask" bindtap="bindCancel" catchtouchmove="preventTouchMove">
+    <view class="mask_content mask_content_back" catchtap="stopEvent">
       <view class="">
         <view class="mask_collect">结束监控</view>
         <view class="mask_task">

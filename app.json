@@ -19,7 +19,15 @@
     "pages/public/public",
     "pages/contact/index",
     "pages/funddetail/index",
-    "pages/housingSearch/housingSearch"
+    "pages/housingSearch/housingSearch",
+    "pages/feedback/index",
+    "pages/userfeedback/index",
+    "pages/houseLongList/houseLongList",
+    "pages/monitorLongList/monitorLongList",
+    "pages/citySelectLong/citySelectLong",
+    "pages/coupon/coupon",
+    "pages/positionLongSelect/positionLongSelect",
+    "pages/housingLongSearch/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -31,7 +39,12 @@
     "wx5df0be7c6bb02397",
     "wx2aad75253d80f302",
     "wx5048ec7260c49991",
-    "wxc147016e2b3bf9d6"
+    "wxc147016e2b3bf9d6",
+    "wx11970e278167bf3b",
+    "wxaf705dee544e08d9",
+    "wxcfd8224218167d98",
+    "wxffbb41ec9b99a969",
+    "wxc97b21c63d084d92"
   ],
   "permission": {
     "scope.userLocation": {

@@ -1,7 +1,7 @@
-<view class="mask" bindtap="bindCancel">
+<view class="mask" bindtap="bindCancel" catchtouchmove="preventTouchMove">
     <view class="mask_content" catchtap="stopEvent">
       <view class="house_image">
-        <view class="house_title">房源监控确认</view>
+        <view class="house_title">{{title}}</view>
       </view>
       <view class="content">
         <view class="text">
@@ -21,13 +21,12 @@
             <text>通知方式:</text>
             <view class="task_right">
               <view class="task_select" catchtap="bindPublic">
-                <image wx:if="{{publicSelect}}" class="select_image" src="{{selected}}"></image>
-                <image wx:else class="select_image" src="{{unselect}}"></image>
+                <view  wx:if="{{publicSelect}}" class="icon-font uniE930 active"></view>
+                <view  wx:else class="icon-font uniE930"></view>
                 <text class="official">公众号</text>
               </view>
               <view class="task_select">
-                <image wx:if="{{noteSelect}}" class="select_image" src="{{selected}}"></image>
-                <image wx:else class="select_image" src="{{unselect}}"></image>
+                <view  wx:if="{{noteSelect}}" class="icon-font uniE930 note_active "></view>
                 <text>短信</text>
               </view>
             </view>

@@ -2,51 +2,50 @@
 <view class="house_stat">
   <text>统计详情</text>
 </view>
-<view class="stat_card">
-  <view class="stat_first">
-    <view class="stat_layout tu_layout" bindtap="navigateToTj">
-      <view class="tip tu_tip">途家</view>
-      <view class="stat_tip" wx:if="{{tjCount>0}}">
-        <view class="price">{{sort?'推荐价格':'最低价'}}:{{tjLowPriceData.finalPrice}}/晚</view>
-        <!-- <view class="price" wx:else>最低价:无房源</view> -->
-        <view class="num">房源数:{{tjCount}}套(已选{{tjFilterCount}}套)</view>
+<view class="stat_card" wx:if="{{rentType == 1}}">
+  <view class="stat_first {{list.length == 3?'stat_three':''}}  {{list.length == 1?'stat_one':''}}">
+    <block wx:for="{{list}}" wx:key="{{index}}">
+      <view wx:if="{{item.value&&item.selectCount}}" class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='xz'?'xz_layout':''}} {{item.key =='mn'?'mn_layout':''}} {{item.key =='zg'?'zg_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
+        <view class="tip">{{item.name}}</view>
+        <view class="stat_tip">
+          <view class="price">{{sort?'推荐价':'最低价'}}:￥{{item.lowPriceData.finalPrice||'--'}}/晚</view>
+          <view class="num">房源数:{{item.value||'--'}}套(已选{{item.selectCount||'--'}}套)</view>
+        </view>
+        <image class="tu_image" mode="aspectFill" wx:if="item.lowPriceData.pictureList[0]" src="{{item.key=='xz'?filter.xzCoverImage(item.lowPriceData.pictureList[0]):item.lowPriceData.pictureList[0]}}"></image>
+        <image class="tu_image" mode="aspectFill" wx:else src="../../assets/image/default_image.png"></image>
       </view>
-      <image class="tu_image" wx:if="{{tjCount>0}}" src="{{tjLowPriceData.pictureList[0]}}"></image>
-      <image class="tu_image" wx:else src="../../assets/image/small_default_image.png"></image>
-    </view>
-    <view class="stat_layout pig_layout" bindtap="navigateToXz">
-      <view class="tip pig_tip">小猪</view>
-      <view class="stat_tip" wx:if="{{xzCount>0}}">
-        <view class="price" >{{sort?'推荐价格':'最低价'}}:{{xzLowPriceData.finalPrice}}/晚</view>
-        <!-- <view class="price" wx:else>最低价:无房源</view> -->
-        <view class="num">房源数:{{xzCount}}套(已选{{xzFilterCount}}套)</view>
-      </view>
-      <image class="pig_image" wx:if="{{xzCount>0}}" src="{{filter.xzCoverImage(xzLowPriceData.pictureList[0])}}"></image>
-      <image class="pig_image" wx:else src="../../assets/image/small_default_image.png"></image>
-    </view>
 
+      <view wx:else class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='xz'?'xz_layout':''}} {{item.key =='mn'?'mn_layout':''}} {{item.key =='zg'?'zg_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
+        <image wx:if="{{item.key =='tj'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/tj.png"></image>
+        <image wx:if="{{item.key =='xz'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/xz.png"></image>
+        <image wx:if="{{item.key =='mn'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/mn.png"></image>
+        <image wx:if="{{item.key =='zg'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/zg.png"></image>
+        <text class="no_text">暂无数据</text>
+      </view>
+    </block>
   </view>
+</view>
 
-  <view class="stat_second">
-    <view class="stat_layout mu_layout" bindtap="navigateToMn">
-      <view class="tip mu_tip">木鸟</view>
-      <view class="stat_tip" wx:if="{{mnCount>0}}">
-        <view class="price" >{{sort?'推荐价格':'最低价'}}:{{mnLowPriceData.finalPrice}}/晚</view>
-        <!-- <view class="price" wx:else>最低价:无房源</view> -->
-        <view class="num">房源数:{{mnCount}}套(已选{{mnFilterCount}}套)</view>
+<view class="stat_card" wx:if="{{rentType == 2}}">
+  <view class="stat_first {{list.length == 3?'stat_three':''}}  {{list.length == 1?'stat_one':''}}">
+    <block wx:for="{{list}}" wx:key="{{index}}">
+      <view wx:if="{{item.value&&item.selectCount}}" class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='wiwj'||item.key =='ftx'?'wiwj_layout':''}} {{item.key =='lj'||item.key =='tc'?'lianjia_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
+        <view class="tip">{{item.name}}</view>
+        <view class="stat_tip">
+          <view class="price">{{sort?'推荐价':'最低价'}}:￥{{item.lowPriceData.price||'--'}}/月</view>
+          <view class="num">房源数:{{item.value||'--'}}套(已选{{item.selectCount||'--'}}套)</view>
+        </view>
+        <image class="tu_image" mode="aspectFill" wx:if="{{item.lowPriceData.imgurl}}" src="{{item.lowPriceData.imgurl}}"></image>
+        <image class="tu_image" mode="aspectFill" wx:else src="../../assets/image/default_image.png"></image>
       </view>
-      <image class="mu_image" wx:if="{{mnCount>0}}" src="{{mnLowPriceData.pictureList[0]}}"></image>
-      <image class="pig_image" wx:else src="../../assets/image/small_default_image.png"></image>
-    </view>
-    <view class="stat_layout zen_layout" bindtap="navigateToZg">
-      <view class="tip zen_tip">榛果</view>
-      <view class="stat_tip" wx:if="{{zgCount>0}}">
-        <view class="price" >{{sort?'推荐价格':'最低价'}}:{{zgLowPriceData.finalPrice}}/晚</view>
-        <!-- <view class="price" wx:else>最低价:无房源</view> -->
-        <view class="num">房源数:{{zgCount}}套(已选{{zgFilterCount}}套)</view>
+
+      <view wx:else class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
+        <image wx:if="{{item.key =='wiwj'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/wiwj.png"></image>
+        <image wx:if="{{item.key =='lj'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/lianjia.png"></image>
+        <image wx:if="{{item.key =='ftx'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/fangtianxia.png"></image>
+        <image wx:if="{{item.key =='tc'}}" class="tu_image" mode="aspectFill"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/wbtc.png"></image>
+        <text class="no_text">暂无数据</text>
       </view>
-      <image class="mu_image" wx:if="{{zgCount>0}}" src="{{zgLowPriceData.pictureList[0]}}"></image>
-      <image class="zen_image" wx:else src="../../assets/image/small_default_image.png"></image>
-    </view>
+    </block>
   </view>
 </view>

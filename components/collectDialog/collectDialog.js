@@ -21,8 +21,7 @@ Component({
     bindConfirm(){
       this.triggerEvent('collectEvent','none')
     },
-    stopEvent() {
-      console.log(".....")
-    }
+    stopEvent() { },
+    preventTouchMove() { }
   }
 })

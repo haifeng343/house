@@ -1,46 +1,89 @@
-<view data-index="{{item.index}}" class="monitor_card {{item.nowHouseCount ==0?'monitor_red_card':''}}" catchtap="checkDetail">
+<wxs src="../../utils/filter.wxs" module="filter" />
+<view data-index="{{item.index}}" class="monitor_card {{item.nowHouseCount ==0?'monitor_red_card':''}} {{item.longRentType ==2?'monitor_long_card':''}}" catchtap="checkDetail">
   <movable-area class="area">
     <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
       <view class="{{item.nowHouseCount ==0?'red_bg':'green_bg'}}"></view>
+      <view class="{{item.nowHouseCount ==0?'dred_bg':'dgreen_bg'}}"></view>
       <view class="card_content">
-        <view class="card_message">
-          <view class="card_date">
-            <view>住:{{item.beginDay}}</view>
-            <view>退:{{item.endDay}}</view>
-          </view>
-          <view class="card_address">
-            <image style="width: 56rpx; height: 54rpx;" src="../../assets/image/city.png"></image>
-            <view class="text">{{item.cityName}}</view>
-          </view>
-          <view class="card_budget {{item.actualPrice?'':'card_search'}}">
-            <view class="card_money" wx:if="{{item.actualPrice}}">
-              <text>¥</text>
-              <text class="money">{{item.actualPrice}}</text>
+        <view wx:if="{{item.longRentType == 1}}">
+          <view class="card_message">
+            <view class="card_date">
+              <view>住:{{item.beginDay}}</view>
+              <view>退:{{item.endDay}}</view>
+            </view>
+            <view class="card_address">
+              <image style="width: 56rpx; height: 54rpx;" src="../../assets/image/city.png"></image>
+              <view class="text">{{item.cityName}}</view>
+            </view>
+            <view class="card_budget {{item.actualPrice?'':'card_search'}}">
+              <view class="card_money" wx:if="{{item.actualPrice}}">
+                <text>¥</text>
+                <text class="money">{{item.actualPrice}}</text>
+                <text>起</text>
+              </view>
+              <view class="card_money" wx:else>
+                <text class="money">暂无房源</text>
+              </view>
 
-              <image wx:if="{{item.actualPrice>item.maxPrice}}" style="width: 26rpx; height: 42rpx;" src="../../assets/image/up_arrow.png"></image>
-              <image wx:else style="width: 26rpx; height: 42rpx;" src="../../assets/image/down_arrow.png"></image>
+              <view class="card_down_money" wx:if="{{item.minPrice==0&&item.maxPrice==99999}}">
+                <text>预算:不限</text>
+              </view>
+              <view class="card_down_money" wx:if="{{item.minPrice==0&&item.maxPrice<99999}}">
+                <text>预算:低于¥{{item.maxPrice}}</text>
+              </view>
+              <view class="card_down_money" wx:if="{{item.minPrice>0&&item.maxPrice==99999}}">
+                <text>预算:高于¥{{item.minPrice}}</text>
+              </view>
+              <view class="card_down_money" wx:if="{{item.minPrice>0&&item.maxPrice<99999}}">
+                <text>预算:¥{{item.minPrice}}-¥{{item.maxPrice}}</text>
+              </view>
             </view>
-            <view class="card_money" wx:else>
-              <text class="money">查询中</text>
-            </view>
-
-            <view class="card_down_money" wx:if="{{item.minPrice==0&&item.maxPrice==99999}}">
-              <text>预算:不限</text>
-            </view>
-            <view class="card_down_money" wx:if="{{item.minPrice==0&&item.maxPrice<99999}}">
-              <text>预算:低于¥{{item.maxPrice}}</text>
-            </view>
-            <view class="card_down_money" wx:if="{{item.minPrice>0&&item.maxPrice==99999}}">
-              <text>预算:高于¥{{item.minPrice}}</text>
-            </view>
-            <view class="card_down_money" wx:if="{{item.minPrice>0&&item.maxPrice<99999}}">
-              <text>预算:¥{{item.minPrice}}-¥{{item.maxPrice}}</text>
+          </view>
+          <view class="card_total">
+            <view class="location">
+              <image class="card_location" src="../../assets/image/location.png"></image>
+              <view>{{item.locationName?item.locationName:'全城'}}</view>
             </view>
           </view>
         </view>
-        <view class="card_total">
-          <text>当前总房源:</text>
-          <text class="romm_num">{{item.nowHouseCount}}套</text>
+        <view wx:else>
+          <view class="card_message">
+            <view class="card_address">
+              <view class="text">{{item.cityName}}</view>
+              <view class="type"><text>{{item.houseSource ==1?'品牌中介':'个人房源'}}</text></view>
+              <view class="type" wx:if="{{item.rentType}}"><text>{{item.rentType&&filter.rentType(item.rentType)}}</text></view>
+            </view>
+            <view class="card_budget {{item.actualPrice?'':'card_search'}}">
+              <view class="card_money" wx:if="{{item.actualPrice}}">
+                <text>¥</text>
+                <text class="money">{{item.actualPrice}}</text>
+                <text>起</text>
+              </view>
+              <view class="card_money" wx:else>
+                <text class="money">暂无房源</text>
+              </view>
+            </view>
+          </view>
+          <view class="card_total">
+            <view class="location">
+              <image class="card_location" src="../../assets/image/location.png"></image>
+              <view>{{item.locationName?item.locationName:'全城'}}</view>
+            </view>
+            <view class="card_price">
+              <view class="card_down_money" wx:if="{{item.minPrice==0&&item.maxPrice==99999}}">
+                <text>预算:不限</text>
+              </view>
+              <view class="card_down_money" wx:if="{{item.minPrice==0&&item.maxPrice<99999}}">
+                <text>预算:低于¥{{item.maxPrice}}</text>
+              </view>
+              <view class="card_down_money" wx:if="{{item.minPrice>0&&item.maxPrice==99999}}">
+                <text>预算:高于¥{{item.minPrice}}</text>
+              </view>
+              <view class="card_down_money" wx:if="{{item.minPrice>0&&item.maxPrice<99999}}">
+                <text>预算:¥{{item.minPrice}}-¥{{item.maxPrice}}</text>
+              </view>
+            </view>
+          </view>
         </view>
         <view class="card_line">
           <view class="line"></view>
@@ -48,16 +91,22 @@
         <view class="card_time">
           <image class="time_monitor" src="../../assets/image/monitor.png"></image>
           <view class="time_text" wx:if="{{item.minutes||item.minutes == 0}}">
-            <text>已监控:</text>
-            <text class="time_line">{{item.minutes}}</text>
-            <text>分</text>
+            <text>监控:</text>
+            <text class="time_line romm_num">{{item.minutes}}</text>
+            <text>分钟,</text>
+            <text>当前:</text>
+            <text class="time_line romm_num">{{item.nowHouseCount}}</text>
+            <text>套</text>
           </view>
           <view class="time_text" wx:if="{{item.monitorTime||item.monitorTime == 0&&!item.minutes&&item.minutes!=0}}">
-            <text>已监控:</text>
-            <text class="time_line" wx:if="{{item.dayNum>0}}">{{item.dayNum}}</text>
+            <text>监控:</text>
+            <text class="time_line romm_num" wx:if="{{item.dayNum>0}}">{{item.dayNum}}</text>
             <text wx:if="{{item.dayNum>0}}">天</text>
-            <text class="time_line">{{item.hourNum}}</text>
-            <text>小时</text>
+            <text class="time_line romm_num">{{item.hourNum}}</text>
+            <text>小时,</text>
+            <text>当前:</text>
+            <text class="time_line romm_num">{{item.nowHouseCount}}</text>
+            <text>套</text>
           </view>
           <text class="detail_btn" data-index="{{item.index}}" catchtap="checkDetail">查询详情</text>
         </view>

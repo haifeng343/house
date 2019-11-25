@@ -11,9 +11,18 @@
             清除历史
             <text class="icon-font uniE939"></text>
         </view>
-        <view class='position-list  history'>
-            <view class='item history' wx:for='{{history}}' wx:key='{{index}}' bindtap='handleSelectCityHistory' data-item='{{item}}'>
-                {{item.name}}
+        <view class='position-list history'>
+            <view class='item history' wx:for='{{history}}' wx:key='{{index}}' bindtap='handleSelectCityByPosition' data-item='{{item}}'>
+                {{item.name + (item.line?('(地铁)'):'')}}
+            </view>
+        </view>
+    </view>
+    <view class='position-box' wx:if='{{hotPosition.length>0}}'>
+        <view class='position-box-title hot-city'>热门搜索</view>
+        <view class='position-list hot-city'>
+            <view class='item hot-city' wx:for='{{hotPosition}}' wx:key='{{index}}' bindtap='handleSelectHotPosition' data-item='{{item}}'>
+              <image src='../../assets/image/index/hot.png' class='hot-image' />
+              <view class="text">{{item.name}}</view>
             </view>
         </view>
     </view>

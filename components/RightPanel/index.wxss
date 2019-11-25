@@ -1,0 +1,140 @@
+.container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  z-index: 999;
+  flex-direction: column;
+}
+
+.overlay {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  transition: opacity 0.2s linear;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+}
+
+.container.hidden .content-wrapper {
+  transform: translateX(100%);
+}
+
+.container.hidden .overlay {
+  opacity: 0;
+}
+
+.content-wrapper {
+  width: 80%;
+  background-color: #fff;
+  position: relative;
+  z-index: 222;
+  height: 100%;
+  align-self: flex-end;
+  transform: translateX(0);
+  transition: transform 0.2s linear;
+  box-sizing: border-box;
+  padding-top: 36rpx;
+  padding-left: 24rpx;
+  overflow: hidden;
+}
+
+.filter-list {
+  height: calc(100% - 128rpx);
+  width: calc(100% + 40rpx);
+  overflow: hidden;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 48rpx;
+  width: calc(100% - 40rpx);
+}
+
+.filter-title {
+  font-size: 32rpx;
+  color: #1d1d1d;
+  font-weight: 500;
+  position: relative;
+  padding-left: 40rpx;
+}
+
+.option-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+}
+
+.option-item {
+  height: 48rpx;
+  min-width: 160rpx;
+  box-sizing: border-box;
+  border: solid 2rpx #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+  font-size: 28rpx;
+  color: #1d1d1d;
+  font-weight: 400;
+  background-color: #f0f0f0;
+  border-radius: 48rpx;
+  margin-bottom: 26rpx;
+  padding: 0 24rpx;
+}
+
+.option-item.active {
+  border-color: #d33721;
+  background-color: #f1612a;
+  color: #fff;
+}
+
+.button-wrapper {
+  border-top: solid 2rpx #f4efef;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #fff;
+  height: 112rpx;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  right: 0;
+}
+
+.button {
+  width: 200rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  height: 72rpx;
+  font-weight: 500;
+  border-radius: 36rpx;
+}
+
+.button-reset {
+  border: solid 2rpx #e75d28;
+  color: #e75d28;
+}
+
+.button-confirm {
+  color: #fff;
+  background-image: linear-gradient(180deg, #e75d28 0%, #e94444 100%);
+}
+
+.title-icon {
+  position: absolute;
+  width: 11px;
+  height: 14px;
+  top: 50%;
+  left: 12rpx;
+  transform: translateY(-50%);
+}

@@ -1,9 +1,4 @@
-//本地地址：http://192.168.1.109:9001
-// 开发环境: http://fddserver.pdd.develop
-// 测试环境: http://fddserver.pdd.test
-// 正式环境: https://piao.bangdingding.cn
-// 测试环境: https://fangtest.bangdingding.cn
-const baseUrl = 'https://fangtest.bangdingding.cn';
+import { default_address } from './httpAddress.js'
 // process.env.NODE_ENV === 'production'
 //   ? 'https://piao.bangdingding.cn'
 //   : process.env.NODE_ENV === 'test'
@@ -35,7 +30,7 @@ const request = (
 ) => {
   const token = wx.getStorageSync('token');
   if (url.startsWith('/')) {
-    url = `${baseUrl}${url}`;
+    url = `${default_address}${url}`;
     data = Object.assign({
       token
     }, data);
@@ -52,6 +47,7 @@ const request = (
             code: resp.statusCode,
             message: '接口请求失败'
           });
+          wx.hideLoading();
         }
         if (typeof resp.data.code === 'number') {
           if (resp.data.code !== 200) {
@@ -68,6 +64,7 @@ const request = (
         reject({
           message: '你的网络可能开小差了~'
         });
+        wx.hideLoading();
       }
     });
   });

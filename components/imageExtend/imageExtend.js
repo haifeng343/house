@@ -10,6 +10,10 @@ Component({
   properties: {
     src: {
       type: String
+    },
+    rentType:{
+      type: Number,
+      value:1 //1：短租 2：长租
     }
   },
 

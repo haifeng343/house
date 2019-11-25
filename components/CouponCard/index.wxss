@@ -1,0 +1,131 @@
+@import '../../assets/styles/font.wxss';
+:host {
+  display: flex;
+  width: 658rpx;
+  height: 176rpx;
+}
+
+.water-mask {
+  position: absolute;
+  font-size: 146rpx;
+  color: #bebebe;
+  top: 14rpx;
+  right: 48rpx;
+}
+
+.container {
+  width: 658rpx;
+  height: 176rpx;
+  display: flex;
+  align-items: center;
+  background-size: 658rpx 176rpx;
+  background-repeat: no-repeat;
+  position: relative;
+  background-image: url('https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/抵扣券背景.png');
+}
+.container.hidden {
+  opacity: 0 !important;
+}
+.container.fdd {
+  background-image: url('https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/兑换券背景.png');
+}
+.container.fdd .info-wrapper .desc .expire {
+  color: #e96645;
+  background-color: rgba(255, 255, 255, 0.72);
+}
+.container.fdd .action-wrapper .button {
+  color: #f1612a;
+}
+.container:not(.disabled).disactive {
+  opacity: 0.3;
+}
+
+.container.disabled {
+  background-image: url('https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/抵扣券背景禁用.png');
+}
+.container.disabled .info-wrapper .desc .expire {
+  color: #e0e0e0;
+}
+.container.disabled .action-wrapper .button {
+  color: #e0e0e0;
+}
+
+.info-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.info-wrapper .name {
+  display: flex;
+  margin-left: 40rpx;
+}
+.info-wrapper .name text {
+  font-size: 40rpx;
+  line-height: 40rpx;
+  font-weight: 500;
+  color: transparent;
+  background: linear-gradient(180deg, white 0%, rgba(255, 255, 255, 0.22) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.info-wrapper .desc {
+  margin-left: 20rpx;
+}
+.info-wrapper .desc .message {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #fff;
+  line-height: 44rpx;
+}
+.info-wrapper .desc .expire {
+  color: #10bcae;
+  font-size: 24rpx;
+  line-height: 30rpx;
+  height: 30rpx;
+  background-color: rgba(255, 255, 255, 0.72);
+  text-align: center;
+  border-radius: 2rpx;
+  margin-top: 6rpx;
+}
+
+.action-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-left: auto;
+}
+.action-wrapper .button {
+  color: #10bcae;
+  background-color: #fff;
+  width: 122rpx;
+  height: 48rpx;
+  border-radius: 24rpx;
+  font-size: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 32rpx;
+}
+.action-wrapper .uniE946 {
+  color: #fff;
+  margin-right: 68rpx;
+  font-size: 48rpx;
+}
+.action-wrapper .check-box {
+  width: 48rpx;
+  height: 48rpx;
+  box-sizing: border-box;
+  border-radius: 24rpx;
+  border: solid 4rpx #fff;
+  background-color: transparent;
+  color: #fff;
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 68rpx;
+}
+.action-wrapper .check-box.active {
+  color: #10bcae;
+  background-color: #fff;
+}

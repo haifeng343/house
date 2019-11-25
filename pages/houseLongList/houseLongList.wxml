@@ -1,0 +1,66 @@
+<view>
+  <view class="header">
+    <view class="top-nav">
+      <FilterBar data="{{searchLongData}}" positionData="{{positionData}}" bind:onSubmit="submit" />
+      <view class="bg_border"></view>
+    </view>
+    <view wx:if="{{countFlag === 1}}" class="house_detail" bindtap="goToDetail">
+      <view>总计:{{allCount}}套</view>
+      <view>{{longSortTypes == 1?'最低价':'推荐价'}}:¥{{lowPrice}}</view>
+      <view class="check_detail">
+        <text>查看明细</text>
+        <image class="check_more" src="../../assets/image/more.png"></image>
+      </view>
+    </view>
+  </view>
+  <view class="block"></view>
+  <view class="card-list {{countFlag === 0||countFlag === 2 ? 'section_empty' : ''}}">
+    <view class="search_empty" wx:if="{{countFlag === 0}}">
+      <view class="search_view">
+        <image class="empty_image" src="../../assets/image/search_empty.png"></image>
+      </view>
+      <view class="search_view search_title">未找到符合条件的房源</view>
+      <view class="search_view search_tip">立即添加监控，第一时间推送房源信息，再也不怕心仪的房源擦肩而过</view>
+    </view>
+    <view class="search_empty" wx:if="{{countFlag === 2}}">
+      <noNetwork title="网络异常，请刷新重试"></noNetwork>
+    </view>
+    <view class="house_card">
+      <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
+        <houseLongCard item="{{item}}" type="{{1}}" idx="{{idx}}" bind:collectionEvent="goToCollection"></houseLongCard>
+      </block>
+    </view>
+    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&!loadingShow}}">
+      <text wx:if="{{allCount>50}}">已展示全部房源</text>
+      <text wx:else>房源已加载完，若不满意你试试添加监控</text>
+    </view>
+    <mp-loading type="dot-red" tips="加载中" show="{{loadingShow}}"></mp-loading>
+  </view>
+  <view class="house_monitor" wx:if="{{loadingDisplay == 'none'}}">
+    <button wx:if="{{countFlag ===1 &&allCount>50}}" class="monitor_btn" bindtap='startMonitor'>
+      查看更多
+    </button>
+    <button wx:if="{{(countFlag ===1 &&allCount<=50)||countFlag == 0}}" class="monitor_btn" bindtap='startMonitor'>
+      开启监控
+    </button>
+    <button wx:if="{{countFlag ===2}}" class="monitor_btn" bindtap='goRefresh'>立即刷新</button>
+  </view>
+  <view wx:if="{{countFlag === 1}}" class="house_shortcuts {{!scrollIng ? '' : 'hidden'}}">
+    <view>
+      <image bindtap="goTop" wx:if="{{scrollTop>500}}" class="top" src="../../assets/image/top.png"></image>
+    </view>
+    <view>
+      <image bindtap="goSort" class="sort" src="../../assets/image/sort.png"></image>
+    </view>
+  </view>
+  <view class="house_loading" style="display:{{loadingDisplay}}" catchtouchmove="preventTouchMove">
+    <view class="loading_image">
+      <image src="../../assets/image/loading.gif"></image>
+      <view class="text">正在获取全网低价房源，请稍后...</view>
+    </view>
+  </view>
+</view>
+<collectDialog bind:collectEvent="getcollectEventEvent" style="display:{{collectDisplay}}"></collectDialog>
+<monitorDialog type="{{2}}" title="{{monitorTitle}}" fee="{{fee}}" ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorDisplay}}"></monitorDialog>
+<publicDialog style="display:{{publicDisplay}}" bind:publicEvent="getPublicEvent" bind:publicConfrimEvent="getPublicConfrimEvent"></publicDialog>
+<monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}" style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent"></monitorEnoughDialog>

@@ -1,0 +1,37 @@
+<view class='section'>
+    <view class="header">
+        <view class="search-bar-wrapper flex-box-center" bindtap="gotoSearch">
+            <text class="icon-font uniE908" />
+            <text class="placeholder">请输入小区/商圈/地铁站</text>
+        </view>
+    </view>
+    <view class='position-box' wx:if='{{history.length>0}}'>
+        <view class='position-box-title history'>搜索历史</view>
+        <view class='positon-box-clear' bindtap='clearHistory' wx:if='{{history.length>0}}'>
+            清除历史
+            <text class="icon-font uniE939"></text>
+        </view>
+        <view class='position-list history'>
+            <view class='item history' wx:for='{{history}}' wx:key='{{index}}' bindtap='handleSelectHistory' data-item='{{item}}'>
+                {{item.area}}
+            </view>
+        </view>
+    </view>
+    <view class='position-box' wx:if="{{nearby}}">
+        <view class='position-box-title nearby'>附近</view>
+        <view class='position-list'>
+            <view class='item' bindtap="handleSelectNearBy" data-index="1">
+              <view class="text">1km</view>
+            </view>
+            <view class='item' bindtap="handleSelectNearBy" data-index="2">
+              <view class="text">2km</view>
+            </view>
+            <view class='item' bindtap="handleSelectNearBy" data-index="3">
+              <view class="text">3km</view>
+            </view>
+        </view>
+    </view>
+    <block wx:for='{{list}}' wx:for-index='key' wx:key='{{item.type}}'>
+        <positionLongSelectItem  data='{{item}}' key='{{key}}' type='{{item.type}}' wx:if='{{item.data.length > 0}}'></positionLongSelectItem>
+    </block>
+</view>

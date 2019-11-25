@@ -1,7 +1,10 @@
 {
   "usingComponents": {
     "priceblock": "/components/PriceBlock/index",
-    "authDialog": "/components/AuthDialog/AuthDialog"
+    "authDialog": "/components/AuthDialog/AuthDialog",
+    "Range": "/components/Range/index",
+    "CouponDialog": "/components/CouponDialog/index"
   },
-  "navigationBarTitleText": "房盯盯"
+  "navigationBarTitleText": "房盯盯",
+  "disableScroll": true
 }

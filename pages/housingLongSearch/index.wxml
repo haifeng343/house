@@ -1,0 +1,25 @@
+<!--pages/housingSearch/housingSearch.wxml-->
+<view class="page">
+  <view class="header">
+    <view class="search-bar-wrapper flex-box-center">
+      <text class="icon-font uniE908" />
+      <input class="input" type="text" placeholder="{{value?'':'请输入小区/商圈/地铁站'}}" placeholder-style="color:#bebebe" bindconfirm="handleSearch" value="{{value}}" bindinput="inputSearch" auto-focus="true" focus="{{isfocus}}" confirm-type="search" />
+      <view class="tap-clear" bindtap="clearInput" wx:if='{{value}}'><icon type="clear" size="16" style="color:#C3C3C3"/></view>
+    </view>
+    <view class="go-back" bindtap="goBack">取消</view>
+  </view>
+  <scroll-view scroll-y class="city-list flex-column">
+    <block wx:for="{{item}}" wx:for="{{result}}" wx:key='{{index}}'>
+      <view class="child-item" data-item='{{item}}' bindtap="handleSelect">
+        <view class="child-item-type" wx:if="{{item.type==10}}">行政</view>
+        <view class="child-item-type" wx:if="{{item.type==20}}">商圈</view>
+        <view class="child-item-type" wx:if="{{item.type==30}}">小区</view>
+        <view class="child-item-type" wx:if="{{item.type==40}}">线路</view>
+        <view class="child-item-type" wx:if="{{item.type==50}}">地铁</view>
+        <view class="child-item-name">{{item.name}}</view>
+      </view>
+    </block>
+    <view wx:if="{{hasAsked && resultLength == 0}}" class="city-no-data">未找到相关结果~</view>
+    <view wx:if="{{hasAsked && resultLength == -1}}" class="city-no-data">输入内容过少，无法定位</view>
+  </scroll-view>
+</view>

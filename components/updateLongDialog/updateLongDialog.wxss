@@ -1,0 +1,131 @@
+@import "/app.wxss";
+.mask{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 120
+}
+.mask_content{
+  height: 844rpx;
+  z-index: 120
+}
+
+.mask_content .content{
+  width: 624rpx;
+  height: 614rpx;
+  background: #FFFFFF;
+  border-radius:  0 0 16rpx 16rpx;
+}
+.mask_content .content .text{
+  padding-top: 42rpx;
+  margin: 0 62rpx;
+  color: #E75D28;
+  position: relative;
+}
+.mask_content .content .btn{
+  width: 272rpx;
+  height: 92rpx;
+  background: #E75D28;
+  color: #FFFFFF;
+  margin: 58rpx auto 0;
+  border-radius: 46rpx;
+  text-align: center;
+  line-height: 92rpx;
+}
+
+
+.content .text .warn_image{
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 8rpx;
+  vertical-align: middle;
+  margin-bottom: 4rpx;
+}
+
+.content .mask_task{
+   margin: 0 62rpx;
+   font-size: 32rpx;
+}
+.mask_task .task{
+  padding: 18rpx 0;
+  border-bottom: 1rpx dashed #1D1D1D;
+  display: flex
+}
+.mask_task .task text{
+  display: inline-block;
+}
+.mask_task .task view{
+  flex: 5;
+  display: flex;
+  align-items: center
+}
+.mask_task .task .task_right{
+  flex: 6;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  text-align: right
+}
+.task .task_right .task_select{
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.task .task_select:nth-child(2){
+  justify-content: flex-end;
+}
+.task .task_right .select_image{
+  margin-right: 8rpx;
+}
+.mask_task .task .update{
+  background: #FFD1C2;
+  font-size: 24rpx;
+  color: #E75D28;
+  width: 62rpx;
+  height: 36rpx;
+  text-align: center;
+  line-height: 36rpx;
+  margin-left: 8rpx;
+}
+.mask_task .task .select_image{
+  width: 32rpx;
+  height: 32rpx;
+}
+.mask_task .ding{
+  font-size: 24rpx;
+  color: #1D1D1D;
+  margin: 12rpx 0 50rpx;
+}
+.mask_content .mask-btn{
+  margin: 58rpx 20rpx 0;
+}
+.mask-btn .cancel{
+  display: inline-block;
+  width: 272rpx;
+  height: 92rpx;
+  color: #F1612A;
+  border: 1rpx solid #F1612A;
+  border-radius: 46rpx;
+  text-align: center;
+  line-height: 92rpx;
+  margin-right: 32rpx;
+}
+.mask-btn .confirm{
+  display: inline-block;
+  width: 272rpx;
+  height: 92rpx;
+  background: -webkit-linear-gradient(top,#E75D28,#E94444);
+  box-shadow: 4rpx 4rpx 8rpx 0px rgba(198, 55, 35, 0.48);
+  border: 1rpx solid #E75D28;
+  color: #FFFFFF;
+  border-radius: 46rpx;
+  text-align: center;
+  line-height: 92rpx;
+}

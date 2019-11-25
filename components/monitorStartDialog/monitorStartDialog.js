@@ -23,8 +23,7 @@ Component({
     bindConfirm() {
       this.triggerEvent('monitorStartConfirmEvent', 'none')
     },
-    stopEvent() {
-      console.log(".....")
-    }
+    stopEvent() {},
+    preventTouchMove() { }
   }
 })

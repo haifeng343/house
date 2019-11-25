@@ -1,0 +1,36 @@
+<wxs module="calc">
+  var calcMaxHeight = function(spread, singleItemHeight,page,totalPage,lastPage,showAll) {
+      var maxHeight =0;
+      if(showAll){
+          maxHeight = "1111111"
+      }else if(spread){
+          if(page+1 == totalPage && lastPage!=0){
+              maxHeight = lastPage*singleItemHeight
+          }else{
+                maxHeight = 5*singleItemHeight
+          }
+      }else{
+          maxHeight = 3*singleItemHeight;
+      }
+      return maxHeight
+  };
+
+  module.exports.calcMaxHeight = calcMaxHeight;
+</wxs>
+<view class='position-box'>
+    <view class='position-box-title {{key}} spread{{totalPage}}'>{{data.name}}</view>
+    <view class='positon-box-spread ' bindtap='spreadItem' wx:if='{{lines>3}}'>
+        {{spread?'收起':'展开'}}
+        <text class='icon-font uniE90C'></text>
+    </view>
+    <scroll-view style='max-height:{{calc.calcMaxHeight(spread,singleItemHeight,page,totalPage,lastPage,showAll)}}px;' scroll-y='{{isScroll}}' class='position-list' scroll-top='{{scrollTop}}' bindscroll="scrollItem" bindscrolltolower='scrollToLower'>
+        <view class='flex-box' id='{{key}}Box'>
+            <view class='item' wx:for='{{data.data}}' wx:key="{{index}}" bindtap='chooseArea' data-type='{{item.type}}' data-fullname='{{item.fullname}}' data-name='{{item.name}}'>
+                {{item.name}}
+            </view>
+        </view>
+    </scroll-view>
+    <view wx:if='{{spread &&totalPage>1 && data.data.length>20}}' class='changeTab' bindtap='changeTab'>
+        换一批
+    </view>
+</view>
