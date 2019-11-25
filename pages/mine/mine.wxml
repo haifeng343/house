@@ -43,7 +43,7 @@
       <menuItem label="历史账单" icon="uniE966" />
     </view>
     <view class="menu-item" bindtap="handleGotoCoupon">
-      <menuItem label="我的卡券" icon="uniE965" />
+      <menuItem label="我的卡券" icon="uniE965" desc="{{couponDesc}}" />
     </view>
     <view class="menu-item" bindtap="handleGotoHistory">
       <menuItem label="历史监控" icon="uniE964" />
