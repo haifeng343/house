@@ -294,7 +294,7 @@ Page({
     this.setData({ showShareCard: false });
 
     return {
-      title: "房盯盯-实时监控全网低价折扣房源",
+      title: "找房快人一步，低价房源一网打尽",
       path: "pages/search/search",
       imageUrl:
         "https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/share.png"

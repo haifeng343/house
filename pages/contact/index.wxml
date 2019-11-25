@@ -7,7 +7,7 @@
   <view class="content">
     <view class="h1">
       <text>监控</text>
-      <text class="highlight">低价机票/房源</text>
+      <text class="highlight">低价房源</text>
     </view>
     <view class="h2">公众号或客服联系我们</view>
     <view class="qr">

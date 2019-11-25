@@ -49,7 +49,7 @@
       <menuItem label="历史监控" icon="uniE964" />
     </view>
     <view class="menu-item" bindtap="handleShare">
-      <menuItem label="每日分享" icon="uniE911" desc="{{shareDesc}}" />
+      <menuItem label="分享给好友" icon="uniE911" desc="{{shareDesc}}" />
     </view>
     <view class="menu-item" bindtap="handleGotoContact">
       <menuItem label="联系客服" icon="uniE91C" />
