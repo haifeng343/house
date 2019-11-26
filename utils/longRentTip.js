@@ -1,3 +1,4 @@
+import { compareTwoStrings } from "./compareTwoStrings";
 const longrent = require("../api/longrent");
 
 const EARTH_RADIUS = 6378137.0; //单位M
@@ -237,12 +238,9 @@ function returnData(wiwjData, lianjiaData, keywords) {
     .concat(requestData.xiaoqu)
     .concat(requestData.line)
     .concat(requestData.subway);
-  var keywordSet = minWordsSet(keywords || "");
   requsetTotal = requsetTotal.sort((item1, item2) => {
-    var st1 = minWordsSet(item1.name || "");
-    var st2 = minWordsSet(item2.name || "");
-    var sameWords1 = sameWordsCount(st1, keywordSet);
-    var sameWords2 = sameWordsCount(st2, keywordSet);
+    var sameWords1 = compareTwoStrings(item1.name, keywords);
+    var sameWords2 = compareTwoStrings(item2.name, keywords);
     return sameWords2 - sameWords1;
   });
   return requsetTotal;
@@ -322,8 +320,7 @@ const getIntermediaryData = (data, keywords, promiseVersion) => {
   });
 };
 
-function returnData2(ftxData, wbtcData) {
-  console.log(ftxData, wbtcData);
+function returnData2(ftxData, wbtcData, keywords) {
   var requestData = { area: [], buiness: [], xiaoqu: [], line: [], subway: [] }; //地点、商圈、小区、线路、地铁站
   if (
     !!ftxData &&
@@ -452,6 +449,11 @@ function returnData2(ftxData, wbtcData) {
     .concat(dataArray)
     .concat(requestData.line)
     .concat(requestData.subway);
+  requsetTotal = requsetTotal.sort((item1, item2) => {
+    var sameWords1 = compareTwoStrings(item1.name, keywords);
+    var sameWords2 = compareTwoStrings(item2.name, keywords);
+    return sameWords2 - sameWords1;
+  });
   return requsetTotal;
 }
 
@@ -486,14 +488,20 @@ const getPersonalData = (data, keywords, promiseVersion) => {
         results1 = results;
         count++;
         if (count === 2) {
-          resolve({ promiseVersion, result: returnData2(results1, results2) });
+          resolve({
+            promiseVersion,
+            result: returnData2(results1, results2, keywords)
+          });
         }
       })
       .catch(error => {
         console.error(error);
         count++;
         if (count === 2) {
-          resolve({ promiseVersion, result: returnData2(results1, results2) });
+          resolve({
+            promiseVersion,
+            result: returnData2(results1, results2, keywords)
+          });
         }
       });
     longrent.wbtc
@@ -527,14 +535,20 @@ const getPersonalData = (data, keywords, promiseVersion) => {
         results2 = results;
         count++;
         if (count === 2) {
-          resolve({ promiseVersion, result: returnData2(results1, results2) });
+          resolve({
+            promiseVersion,
+            result: returnData2(results1, results2, keywords)
+          });
         }
       })
       .catch(error => {
         console.error(error);
         count++;
         if (count === 2) {
-          resolve({ promiseVersion, result: returnData2(results1, results2) });
+          resolve({
+            promiseVersion,
+            result: returnData2(results1, results2, keywords)
+          });
         }
       });
   });
