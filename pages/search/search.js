@@ -143,7 +143,7 @@ Page({
     });
   },
   selectLeaseType(event) {
-    let index = event.currentTarget.dataset.index;
+    let index = +event.currentTarget.dataset.index;
     let searchData = this.data.searchData;
     if (searchData.leaseType === index) {
       searchData.leaseType = "";
@@ -852,7 +852,7 @@ Page({
   },
   // 更换房源类型
   selectRentTypes(event) {
-    let index = event.currentTarget.dataset.index;
+    let index = +event.currentTarget.dataset.index;
     let searchLongData = this.data.searchLongData;
     const app = getApp();
     let data = app.globalData.searchLongData;
@@ -869,7 +869,7 @@ Page({
   },
   // 更换房源类型
   selectSortTypes(event) {
-    let index = event.currentTarget.dataset.index;
+    let index = +event.currentTarget.dataset.index;
     let searchLongData = this.data.searchLongData;
     const app = getApp();
     let data = app.globalData.searchLongData;
