@@ -412,4 +412,17 @@
   font-size: 28rpx;
   color: #1d1d1d;
   font-weight: 400;
+  width: calc(100% - 80rpx);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-result-text text {
+  min-width: 0;
+}
+
+.search-result-text .hightlight {
+  color: #f1612a;
+  font-weight: 500;
 }

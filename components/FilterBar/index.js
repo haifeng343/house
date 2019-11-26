@@ -5,6 +5,7 @@ import {
   longSetSearchData,
   chooseSlectData
 } from "../../utils/longSetSearchData";
+import getHeightStrArray from "../../utils/getHeightStrArray";
 import { isShowNearby } from "../../utils/longSetSearchData.js";
 
 const areaKey = ["area", "areaId", "areaJson", "areaType"];
@@ -213,7 +214,7 @@ Component({
                   searchResultList: result.map(item =>
                     Object.assign(
                       {
-                        label: item.name,
+                        label: getHeightStrArray(item.name, searchKey),
                         tag: areaTagMap[item.type]
                       },
                       item
