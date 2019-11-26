@@ -751,6 +751,7 @@ Page({
       },
       () => {
         if (this.data.tabIndex !== 1) {
+          this.getHotCityLong();
           return;
         }
         this.getHotCity();
@@ -939,7 +940,7 @@ Page({
     }
   },
   onLoad(params) {
-    const { tab } = params;
+    const tab = +params.tab;
     this.init();
     this.searchDataSubscription = SearchDataSubject.subscribe(() => {
       this.setData({ showPriceBlock: false, tabIndex: tab || 1 });
