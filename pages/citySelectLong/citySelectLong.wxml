@@ -15,7 +15,11 @@
   </view>
   <scroll-view scroll-y='true' throttle="{{false}}" class="city-list" scroll-into-view="{{viewIndex}}">
     <block wx:for="{{data}}" wx:for-item="item" wx:key="name">
-      <view class="city" data-item='{{item}}' bindtap="handleSelectCity"><text class="name-icon">●</text>{{item.name}}</view>
+      <view class="city" data-item='{{item}}' bindtap="handleSelectCity">
+        <text class="name-icon">●</text>
+        <text class="name-text">{{item.name}}</text>
+        <text class="icon-font uniE90C"></text>
+      </view>
     </block>
   </scroll-view>
 </view>
