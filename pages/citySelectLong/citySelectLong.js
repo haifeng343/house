@@ -73,6 +73,14 @@ Page({
     searchLongData.areaId = {}
     searchLongData.areaType = 0
     searchLongData.areaJson = ''
+
+    //搜索城市历史(长租)
+    let searchLongCityHistory = {}
+    searchLongCityHistory.city = app.globalData.searchLongData.city
+    searchLongCityHistory.cityId = app.globalData.searchLongData.cityId
+    searchLongCityHistory.cityJson = app.globalData.searchLongData.cityJson
+    wx.setStorageSync('searchLongCityHistory', searchLongCityHistory)
+
     wx.navigateBack({
       delta: 1
     });

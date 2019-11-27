@@ -11,12 +11,11 @@
   <scroll-view scroll-y class="city-list flex-column">
     <block wx:for="{{item}}" wx:for="{{result}}" wx:key='{{index}}'>
       <view class="child-item" data-item='{{item}}' bindtap="handleSelect">
-        <view class="child-item-type" wx:if="{{item.type==10}}">行政</view>
-        <view class="child-item-type" wx:if="{{item.type==20}}">商圈</view>
-        <view class="child-item-type" wx:if="{{item.type==30}}">小区</view>
-        <view class="child-item-type" wx:if="{{item.type==40}}">线路</view>
-        <view class="child-item-type" wx:if="{{item.type==50}}">地铁</view>
-        <view class="child-item-name">{{item.name}}</view>
+        <view class="child-item-type">{{item.tag}}</view>
+        <view class="child-item-name">
+          <text wx:for="{{item.label}}" wx:key="*this" class="{{item === value ? 'hightlight':''}}">{{item}}</text>
+          <text class="icon-font uniE90C"></text>
+        </view>
       </view>
     </block>
     <view wx:if="{{hasAsked && resultLength == 0}}" class="city-no-data">未找到相关结果~</view>

@@ -164,6 +164,14 @@ Page({
         } else {
           wx.setStorageSync('positionSearchHistory', history);
         }
+
+        //搜索城市历史
+        let searchCityHistory = {}
+        searchCityHistory.city = app.globalData.searchData.city
+        searchCityHistory.cityId = app.globalData.searchData.cityId
+        searchCityHistory.cityType = app.globalData.searchData.cityType
+        wx.setStorageSync('searchCityHistory', searchCityHistory)
+        
         var pages = getCurrentPages();
         var currPage = pages[pages.length - 1]; //当前页面
         var prevPage = pages[pages.length - 3]; //上一个页面
@@ -304,6 +312,14 @@ Page({
             app.globalData.monitorSearchData.cityId[key] = cityJson[key].id
           }
         }
+
+        //搜索城市历史
+        let searchCityHistory = {}
+        searchCityHistory.city = app.globalData.searchData.city
+        searchCityHistory.cityId = app.globalData.searchData.cityId
+        searchCityHistory.cityType = app.globalData.searchData.cityType
+        wx.setStorageSync('searchCityHistory', searchCityHistory)
+
         var pages = getCurrentPages();
         var currPage = pages[pages.length - 1]; //当前页面
         var prevPage = pages[pages.length - 3]; //上一个页面
