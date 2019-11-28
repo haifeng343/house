@@ -1,35 +1,65 @@
-<view class="container {{items.platformType === 2 ? 'fdd' : 'pdd'}}">
-    <view class='icon'>
-      <!--充值：1 ; 兑换：7,2 ; 消耗：6,3 ; 注册赠送: 4 ; 退款：8，？-->
-      <text class="icon-font {{items.icon}}"></text>
+<view class="{{'container ' + (isLoaded ? '' : 'hidden') + ' ' + (data.platformType === 2 ? 'fdd' : 'pdd')}}">
+  <view class="wrapper">
+    <view class="icon flex-box-center-center">
+      <text class="icon-font {{data.icon}}" />
     </view>
-    <view class='info'>
-        <view class="box-wrapper">
-            <view class='box box-left'>
-                <view class='name'>{{items.remark}}</view>
-                <view class='platform'>
-                    {{items.platform}}
-                    <text class='number'>({{items.number}})</text>
-                </view>
-            </view>
-            <view class='box box-right'>
-                <view class="money {{items.direction > 0 ? 'zheng' : 'fu'}}">
-                    {{items.money}}{{type === 2 ? '币' : ''}}
-                </view>
-                <view class='date'>{{items.date}}</view>
-            </view>
+    <view class="content">
+      <view class="top">
+        <view class="title">{{data.logName}}</view>
+        <view class="money {{data.direction > 0 ? 'up' : 'down'}}">
+          {{data.direction > 0 ? '+' : '-'}}{{data.money}}
         </view>
-        <view wx:if="{{items.payList.length > 0 && showDetail !== true}}" class='check'>
-            <text bindtap='handleShowDetail'>查看明细 >></text>
+      </view>
+      <block wx:if="{{data.desc}}">
+        <view class="remark">{{data.desc}}</view>
+      </block>
+      <block wx:if="{{data.type === 33}}">
+        <view class="bottom">
+          <view class="withdraw-time">发起时间:{{data.createTime}}</view>
+          <view class="withdraw-status">{{data.remark}}</view>
         </view>
-        <view wx:if="{{showDetail === true}}" wx:for="{{items.payList}}" wx:key="date" class='pay-list' wx:for-item="item">
-            <view class='item'>
-                <view class='date'>
-                    <text class='type'>任务结算</text>
-                    {{item.date}}
-                </view>
-                <view class='money'>{{item.money}}币</view>
-            </view>
+      </block>
+      <block wx:else>
+        <view class="bottom">
+          <view class="platform-name">
+            <block wx:if="{{data.platformType === 1}}">票盯盯</block>
+            <block wx:else>房盯盯</block>
+          </view>
+          <view class="time">{{data.createTime}}</view>
         </view>
+      </block>
+      <view class="detail" bindtap="handleShowDetail" wx:if="{{data.payList && data.payList.length > 0 && showDetail !== true}}">
+        <text>查看明细 >></text>
+      </view>
+      <block wx:if="{{data.logList && data.logList.length > 0 }}">
+        <view class="withdraw-wrapper">
+          <view class="withdraw-list {{isListInit === true ? '' : 'init'}}" style="height: {{height}}">
+            <block wx:for="{{data.logList}}" wx:for-item="item" wx:key="{{item.createTime}}">
+              <view class="withdraw-item">
+                <text class="withdraw-time">{{item.createTime}}</text>
+                <text class="withdraw-desc">{{item.remark}}</text>
+              </view>
+            </block>
+          </view>
+          <view class="withdraw-platform-name">
+            <block wx:if="{{data.platformType === 1}}">票盯盯</block>
+            <block wx:else>房盯盯</block>
+          </view>
+          <view class="withdraw-expand" bindtap="handleExpandClick">
+            <text>{{expand === true ? '收起' : '展开更多'}}</text>
+            <text class="icon-font uniE926 {{expand === true ? 'expand' : ''}}"></text>
+          </view>
+        </view>
+      </block>
+      <view wx:if="{{data.payList && data.payList.length > 0 && showDetail === true}}" wx:for="{{data.payList}}" wx:key="date" class="pay-list">
+        <view class="item">
+          <view class="date">
+            <text class="type">任务结算</text>
+            {{item.date}}
+          </view>
+          <view class="money">{{item.money}}币</view>
+        </view>
+      </view>
     </view>
+  </view>
 </view>
