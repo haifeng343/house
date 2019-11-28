@@ -37,7 +37,7 @@
       <view class="search_view search_tip">立即添加监控，第一时间推送房源信息，再也不怕心仪的房源擦肩而过</view>
     </view>
     <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
-      <houseListCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{2}}" idx="{{idx}}" isFirst="{{isFirst}}" dayCount="{{dayCount}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect"></houseListCard>
+      <houseListCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{2}}" idx="{{idx}}"  dayCount="{{dayCount}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect"></houseListCard>
     </block>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length}}">已展示全部房源</view>
     <mp-loading type="dot-red" tips="加载中" show="{{loadingShow}}"></mp-loading>

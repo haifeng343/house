@@ -162,6 +162,7 @@ Page({
       if (this.data.bottomType === 2) {
         if (this.data.allCount >= 50){
           if (!this.data.enoughBottom) {
+            if (this.data.editFlag) { return }
             this.setData({
               monitorenoughDisplay: 'block',
               dialogTitle: '哎呀，到底了',
@@ -373,19 +374,7 @@ Page({
       if (monitorCount.xzTotal > -1) { enoughList.push({ key: 'xz', name: '小猪', value: monitorCount.xzTotal }) }
       if (monitorCount.mnTotal > -1) { enoughList.push({ key: 'mn', name: '木鸟', value: monitorCount.mnTotal }) }
       if (monitorCount.zgTotal > -1) { enoughList.push({ key: 'zg', name: '榛果', value: monitorCount.zgTotal }) }
-
       enoughList.sort(util.compareSort('value', 'desc'));
-      let num = wx.getStorageSync('monitorLeftNum');
-      if (!num && houseList && houseList.length > 1) {
-        wx.setStorageSync('monitorLeftNum', 1);
-        this.setData({
-          isFirst: true
-        })
-      } else {
-        this.setData({
-          isFirst: false
-        })
-      }
       this.setData({
         allOriginalData: monitorHouseData.allData,
         allData: monitorHouseData.allData.slice(0, 5),
