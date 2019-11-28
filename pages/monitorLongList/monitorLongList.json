@@ -6,10 +6,13 @@
     "houseLongCard": "../../components/houseLongCard/houseLongCard",
     "mp-loading": "../../components/loading/loading",
     "monitorEnoughDialog": "../../components/monitorEnoughDialog/monitorEnoughDialog",
-    "collectDialog": "../../components/collectDialog/collectDialog",
     "stopDialog": "../../components/stopDialog/stopDialog",
     "monitorEndDialog": "../../components/monitorEndDialog/monitorEndDialog",
-    "updateLongDialog":"../../components/updateLongDialog/updateLongDialog"
+    "updateLongDialog":"../../components/updateLongDialog/updateLongDialog",
+    "followDialog": "../../components/followDialog/followDialog",
+    "followBottom": "../../components/followBottom/followBottom",
+    "followEdit": "../../components/followEdit/followEdit",
+    "houseLoading": "../../components/houseLoading/houseLoading"
   },
   "navigationBarTitleText": "长租-房源列表"
 }

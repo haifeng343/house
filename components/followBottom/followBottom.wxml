@@ -1,0 +1,8 @@
+<view class="monit_select" wx:if="{{editFlag}}">
+  <view class="select">
+    <view class="icon-font uniE930 {{selectAllFlag?'active':''}}" catchtap="goToSelectAll"></view>
+    <text>全选</text>
+    <button wx:if="{{selectNum}}" class="monit_cancel" catchtap="deleteBatchItem">取消关注({{selectNum}})</button>
+    <button wx:else class="monit_cancel" catchtap="deleteBatchItem">取消关注</button>
+  </view>
+</view>

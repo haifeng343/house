@@ -21,7 +21,6 @@ Component({
     index: 1,//当前的索引
     collectDisplay:'none',
     finishLoadFlag:false,
-    isMonitorHouse: 0,//1;不可收藏；0；可收藏
   },
 
   /**

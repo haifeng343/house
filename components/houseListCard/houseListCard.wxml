@@ -1,17 +1,13 @@
 <wxs src="../../utils/filter.wxs" module="filter" />
 <view class="house_card" data-productId="{{item.productId}}" data-platform="{{item.platformId}}" data-index="{{idx}}" catchtap="goToPlatformDetail">
-  <view wx:if="{{isMonitorHouse ===1}}">
+  <view class="house_area">
     <movable-area class="area">
-      <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{(idx==0&&isFirst)?-67:x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
+      <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{(idx==0&&isFirst)?-67:x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend" disabled="{{editFlag}}">
         <view class="swiper">
           <block wx:for="{{item.pictureList}}" wx:key="{{index}}" wx:for-item="items">
             <imageExtend wx:if="{{item.platformId == 'xz'}}" src="{{filter.xzCoverImage(items)}}" data-index="{{index}}" data-idx="{{idx}}"></imageExtend>
             <imageExtend wx:else src="{{filter.xzCoverImage(items)}}" data-index="{{index}}" data-idx="{{idx}}"></imageExtend>
           </block>
-        </view>
-        <view class="card_star" catchtap="goToCollection" data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.productId}}">
-          <image class="star star_select" wx:if="{{item.collection&&isMonitorHouse ===0}}"  src="../../assets/image/star_select.png"></image>
-          <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0}}"  src="../../assets/image/star.png"></image>
         </view>
         <view class="house_classify" wx:if="{{item.platformId == 'tj'}}">途家</view>
         <view class="house_classify" wx:elif="{{item.platformId == 'xz'}}">小猪</view>
@@ -21,59 +17,43 @@
           <text>¥{{item.finalPrice}}/晚{{dayCount==1?'':'(均价)'}}</text>
           <view class="triangle"></view>
         </view>
+
+        <view class="house_bottom">
+          <view class="house_message">
+            <view class="house_name">
+              <image class="hotel" src="../../assets/image/hotel.png"></image>
+              <text>{{item.unitName}}</text>
+            </view>
+            <view class="house_type">
+              <text>{{item.preloadDetail}}</text>
+            </view>
+            <view class="house_tag {{item.priceTag&&item.priceTag.length>0?'':'house_tag_none'}}">
+              <block wx:for="{{item.priceTag}}" wx:for-index="i" wx:for-item="pitem" wx:key="{{i}}">
+                <text wx:if="{{item.platformId == 'tj'}}">{{pitem.text}}</text>
+                <text wx:if="{{item.platformId == 'xz'}}">{{pitem.title}}</text>
+                <text wx:if="{{item.platformId == 'zg'}}">{{pitem.tagName}}</text>
+              </block>
+              <text class="discount" wx:if="{{item.discount}}">{{item.discount}}</text>
+            </view>
+          </view>
+          <view class="house_photo">
+            <image class="photo" src="{{item.logoUrl}}"></image>
+          </view>
+        </view>
+
       </movable-view>
     </movable-area>
-    <view class="remove" wx:if="{{isMonitorHouse ===1}}" data-index="{{idx}}" catchtap="delItem">
+    <view class="remove"  data-index="{{idx}}" catchtap="delItem">
       <view>
         <image src="../../assets/image/no_attention.png"></image>
-        <view>不</view>
-        <view>再</view>
+        <view>取</view>
+        <view>消</view>
         <view>关</view>
         <view>注</view>
       </view>
     </view>
-  </view>
-  <view wx:else>
-    <view class="swiper">
-      <block wx:for="{{item.pictureList}}" wx:key="{{index}}" wx:for-item="items">
-        <imageExtend wx:if="{{item.platformId == 'xz'}}" src="{{filter.xzCoverImage(items)}}" data-index="{{index}}" data-idx="{{idx}}"></imageExtend>
-        <imageExtend wx:else src="{{filter.xzCoverImage(items)}}" data-index="{{index}}" data-idx="{{idx}}"></imageExtend>
-      </block>
-    </view>
-    <view class="card_star" catchtap="goToCollection"  data-collection="{{item.collection}}" data-index="{{idx}}" data-productId="{{item.productId}}">
-      <image class="star star_select" wx:if="{{item.collection&&isMonitorHouse ===0}}"  src="../../assets/image/star_select.png"></image>
-      <image class="star" wx:if="{{!item.collection&&isMonitorHouse ===0}}"   src="../../assets/image/star.png"></image>
-    </view>
-    
-    <view class="house_classify" wx:if="{{item.platformId == 'tj'}}">途家</view>
-    <view class="house_classify" wx:elif="{{item.platformId == 'xz'}}">小猪</view>
-    <view class="house_classify" wx:elif="{{item.platformId == 'mn'}}">木鸟</view>
-    <view class="house_classify" wx:else="{{item.platformId == 'zg'}}">榛果</view>
-    <view class="house_price">
-      <text>¥{{item.finalPrice}}/晚{{dayCount==1?'':'(均价)'}}</text>
-      <view class="triangle"></view>
-    </view>
-  </view>
-  <view class="house_bottom">
-    <view class="house_message">
-      <view class="house_name">
-        <image class="hotel" src="../../assets/image/hotel.png"></image>
-        <text>{{item.unitName}}</text>
-      </view>
-      <view class="house_type">
-        <text>{{item.preloadDetail}}</text>
-      </view>
-      <view class="house_tag {{item.priceTag&&item.priceTag.length>0?'':'house_tag_none'}}">
-        <block wx:for="{{item.priceTag}}" wx:for-index="i" wx:for-item="pitem" wx:key="{{i}}">
-          <text wx:if="{{item.platformId == 'tj'}}">{{pitem.text}}</text>
-          <text wx:if="{{item.platformId == 'xz'}}">{{pitem.title}}</text>
-          <text wx:if="{{item.platformId == 'zg'}}">{{pitem.tagName}}</text>
-        </block>
-        <text class="discount" wx:if="{{item.discount}}">{{item.discount}}</text>
-      </view>
-    </view>
-    <view class="house_photo">
-      <image class="photo" src="{{item.logoUrl}}"></image>
+    <view class="select" wx:if="{{editFlag}}"  data-index="{{idx}}" catchtap="selectItem">
+      <view class="icon-font uniE930 {{item.collection?'active':''}}"></view>
     </view>
   </view>
 </view>

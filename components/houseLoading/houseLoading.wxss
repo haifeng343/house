@@ -1,0 +1,15 @@
+.house_loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+.house_loading image {
+  margin-top: 380rpx;
+  width: 750rpx;
+  height: 406rpx;
+}
+.house_loading .text{position: absolute;top:672rpx;left: 24%;font-size: 28rpx;}

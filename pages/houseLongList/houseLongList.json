@@ -6,8 +6,11 @@
     "mp-loading": "../../components/loading/loading",
     "publicDialog": "../../components/publicDialog/publicDialog",
     "monitorEnoughDialog": "../../components/monitorEnoughDialog/monitorEnoughDialog",
-    "collectDialog": "../../components/collectDialog/collectDialog",
-    "monitorDialog": "../../components/monitorDialog/monitorDialog"
+    "monitorDialog": "../../components/monitorDialog/monitorDialog",
+    "followDialog": "../../components/followDialog/followDialog",
+    "followBottom": "../../components/followBottom/followBottom",
+    "followEdit": "../../components/followEdit/followEdit",
+    "houseLoading": "../../components/houseLoading/houseLoading"
   },
   "navigationBarTitleText": "长租-房源列表"
 }

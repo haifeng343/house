@@ -79,6 +79,43 @@ const getApi = (data, url) => {
   })
 }
 
+const postApiUrl = (data, url) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: url,
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: data,
+      success: res => {
+        resolve(res)
+      },
+      fail: res => {
+        reject(res)
+        throwErrorResponse()
+      }
+    })
+  })
+}
+
+const getApiUrl = (data, url, headers ={}) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: url,
+      header: headers,
+      data: data,
+      success: res => {
+        resolve(res)
+      },
+      fail: res => {
+        reject(res)
+        throwErrorResponse()
+      }
+    })
+  })
+}
+
 const throwErrorResponse = (data) => {
   wx.showToast({
     title: '网络连接异常，请检查网络状态！',
@@ -91,5 +128,7 @@ module.exports = {
   postApiMonitor: postApiMonitor,
   getApi: getApi,
   getApiMonitor: getApiMonitor,
-  postApiMonitorForm: postApiMonitorForm
+  postApiMonitorForm: postApiMonitorForm,
+  postApiUrl,
+  getApiUrl
 }
