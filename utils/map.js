@@ -1,8 +1,8 @@
 import MD5 from './md5';
 import Http from './http';
 
-const key = '73EBZ-AVOCX-IFT4W-T5N4X-A3MRE-JMBDB';
-const secret = 'r72JjfAky3sq3gTzdF7IsO0HBK54XHe8';
+const key = 'DR3BZ-H4SLR-EICWG-WGVGO-37IC6-5DBUA';
+const secret = 'yF1RvcDhPWJi63Zy3A1RfJPR4ClxbcXh';
 
 
 const getLocationInfo =  location => {

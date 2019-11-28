@@ -21,8 +21,9 @@ page{background-color: #F9F9F9;width: 100%;height: 100%;}
 .tab_btn .active{background: #F1612A;width:240rpx;color: #FFFFFF;}
 .card_list{padding: 12rpx 8rpx 0;}
 .section_empty{display: flex;height: 100%;padding: 0;flex-direction: column}
-.search_empty{flex: 1;background: #FFFFFF;}
-.bg_border{background: #F9F9F9;height: 12rpx;}
+.search_no-data{flex: 1;background: #FFFFFF;display: flex;flex-direction: column;justify-content: space-around;align-items: center;padding-bottom: 20rpx;box-sizing: border-box;}
+.search_no-data_img {width: 100%;height: 746rpx;}
+.search_no-data_text {font-size:28rpx;font-weight:400;color:rgba(231,93,40,1);line-height:20px;}
 .tip-wrapper {
   font-size: 24rpx;
   color: #bec3cd;

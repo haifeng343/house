@@ -2,12 +2,23 @@
 import SearchService from "./service";
 const service = new SearchService();
 const longRentTip = require("../../utils/longRentTip");
+import getHeightStrArray from "../../utils/getHeightStrArray";
 import {
   longSetSearchData,
   chooseSlectData
 } from "../../utils/longSetSearchData";
 
 const specialCity = [];
+
+const areaTagMap = {
+  "0": "未选择",
+  "10": "行政区",
+  "20": "商圈",
+  "30": "小区",
+  "40": "地铁线",
+  "50": "地铁站",
+  "60": "附近"
+};
 
 Page({
   /**
@@ -62,7 +73,15 @@ Page({
               this.setData({
                 hasAsked: true,
                 resultLength: length,
-                result
+                result: result.map(item =>
+                  Object.assign(
+                    {
+                      label: getHeightStrArray(item.name, this.data.value),
+                      tag: areaTagMap[item.type]
+                    },
+                    item
+                  )
+                )
               });
             }
           })

@@ -1,0 +1,97 @@
+/* pages/monitorRule/index.wxss */
+.web_view_back {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 84rpx 40rpx 40rpx;
+  box-sizing: border-box;
+  background: linear-gradient(#E75D28,#E94444);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.web_view_top {
+  position: relative;
+  z-index: 2;
+}
+.title {
+  margin-bottom: 44rpx;
+  display: flex;
+  align-items: center;
+}
+.title .icon {
+  width: 76rpx;
+  font-size: 50rpx;
+  font-weight:600;
+  line-height: 50rpx;
+  color:rgba(255,255,255,1);
+  display: block;
+  text-align: center;
+
+}
+.title .text {
+  font-size:36rpx;
+  font-weight:600;
+  color:rgba(255,255,255,1);
+  line-height:50rpx;
+  flex: 1;
+}
+.item {
+  margin-bottom: 30rpx;
+  display: flex;
+  align-items: flex-start;
+}
+.item .icon {
+  width: 76rpx;
+  font-size: 20rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  line-height:42rpx;
+  display: block;
+  text-align: center;
+}
+.item .text {
+  font-size:30rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  line-height:42rpx;
+  flex: 1;
+}
+.item .text .list {
+  margin-bottom: 20rpx 
+}
+.item .text .list .tag {
+  background: white;
+  color: #E95129;
+  margin: 0 6rpx;
+  padding: 0 6rpx;
+}
+.web_view_bottom {
+  width: 100%;
+  text-align: center;
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  line-height:34rpx;
+  position: relative;
+  z-index: 2;
+}
+.web_view_img_top {
+  width: 100%;
+  height: 750rpx;
+  position: absolute;
+  top: 150rpx;
+  left: 0;
+  z-index: 1;
+}
+.web_view_img_bottom {
+  width: 100%;
+  height: 490rpx;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}

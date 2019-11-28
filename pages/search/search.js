@@ -143,7 +143,7 @@ Page({
     });
   },
   selectLeaseType(event) {
-    let index = event.currentTarget.dataset.index;
+    let index = +event.currentTarget.dataset.index;
     let searchData = this.data.searchData;
     if (searchData.leaseType === index) {
       searchData.leaseType = "";
@@ -294,6 +294,14 @@ Page({
                 () => {
                   const app = getApp();
                   app.globalData.searchData = this.data.searchData;
+
+                  //搜索城市历史
+                  let searchCityHistory = {}
+                  searchCityHistory.city = app.globalData.searchData.city
+                  searchCityHistory.cityId = app.globalData.searchData.cityId
+                  searchCityHistory.cityType = app.globalData.searchData.cityType
+                  wx.setStorageSync('searchCityHistory', searchCityHistory)
+
                   this.getHotPosition(this.data.searchData.city);
                 }
               );
@@ -352,6 +360,14 @@ Page({
               app.globalData.searchLongData.areaId = {};
               app.globalData.searchLongData.areaType = 0;
               app.globalData.searchLongData.areaJson = "";
+
+              //搜索城市历史(长租)
+              let searchLongCityHistory = {}
+              searchLongCityHistory.city = app.globalData.searchLongData.city
+              searchLongCityHistory.cityId = app.globalData.searchLongData.cityId
+              searchLongCityHistory.cityJson = app.globalData.searchLongData.cityJson
+              wx.setStorageSync('searchLongCityHistory', searchLongCityHistory)
+
               this.setData({
                 searchLongData,
                 cityText2: "手动定位"
@@ -596,12 +612,23 @@ Page({
       let hotCity = resp.data.fddHotCity.split(",");
       let searchData = this.data.searchData;
       const app = getApp();
+      let searchCityHistory = wx.getStorageSync('searchCityHistory')
       let temp = false;
+      let isHistory = false
       if (
         app.globalData.searchData.city &&
         app.globalData.searchData.city !== ""
       ) {
         searchData.city = app.globalData.searchData.city;
+      } else if (searchCityHistory.city &&
+        searchCityHistory.city !== "") {
+        searchData.city = searchCityHistory.city
+        searchData.cityId = searchCityHistory.cityId
+        searchData.cityType = searchCityHistory.cityType
+        app.globalData.searchData.city = searchCityHistory.city
+        app.globalData.searchData.cityId = searchCityHistory.cityId
+        app.globalData.searchData.cityType = searchCityHistory.cityType
+        isHistory = true
       } else {
         searchData.city = hotCity[0];
         temp = true;
@@ -611,7 +638,7 @@ Page({
           searchData
         },
         () => {
-          this.getCityInfo(searchData.city);
+          !isHistory && this.getCityInfo(searchData.city);
           this.getHotPosition(searchData.city);
           // temp && this.getUserLocation();
         }
@@ -625,12 +652,21 @@ Page({
       let hotCity = data[0] || "";
       let searchLongData = this.data.searchLongData;
       const app = getApp();
+      let searchLongCityHistory = wx.getStorageSync('searchLongCityHistory')
       let temp = false;
       if (
         app.globalData.searchLongData.city &&
         app.globalData.searchLongData.city !== ""
       ) {
         searchLongData.city = app.globalData.searchLongData.city;
+      } else if (searchLongCityHistory.city &&
+        searchLongCityHistory.city !== ""){
+        searchLongData.city = searchLongCityHistory.city
+        searchLongData.cityId = searchLongCityHistory.cityId
+        searchLongData.cityJson = searchLongCityHistory.cityJson
+        app.globalData.searchLongData.city = searchLongCityHistory.city
+        app.globalData.searchLongData.cityId = searchLongCityHistory.cityId
+        app.globalData.searchLongData.cityJson = searchLongCityHistory.cityJson
       } else {
         let cityItem = hotCity;
         const app = getApp();
@@ -680,9 +716,13 @@ Page({
       let data = rslt.data;
       let hotarea = "";
       let hotareatype = "";
-      let index = Math.floor(Math.random() * data.length);
-      hotarea = data[index].name || cityname;
-      hotareatype = data[index].type || "";
+      if (data.length) {
+        let index = Math.floor(Math.random() * data.length);
+        hotarea = data[index].name || cityname;
+        hotareatype = data[index].type || "";
+      } else {
+        hotarea = cityname;
+      }
       if (searchData.area === "") {
         this.setData({
           hotarea,
@@ -751,6 +791,7 @@ Page({
       },
       () => {
         if (this.data.tabIndex !== 1) {
+          this.getHotCityLong();
           return;
         }
         this.getHotCity();
@@ -852,7 +893,7 @@ Page({
   },
   // 更换房源类型
   selectRentTypes(event) {
-    let index = event.currentTarget.dataset.index;
+    let index = +event.currentTarget.dataset.index;
     let searchLongData = this.data.searchLongData;
     const app = getApp();
     let data = app.globalData.searchLongData;
@@ -869,7 +910,7 @@ Page({
   },
   // 更换房源类型
   selectSortTypes(event) {
-    let index = event.currentTarget.dataset.index;
+    let index = +event.currentTarget.dataset.index;
     let searchLongData = this.data.searchLongData;
     const app = getApp();
     let data = app.globalData.searchLongData;
@@ -939,7 +980,7 @@ Page({
     }
   },
   onLoad(params) {
-    const { tab } = params;
+    const tab = +params.tab;
     this.init();
     this.searchDataSubscription = SearchDataSubject.subscribe(() => {
       this.setData({ showPriceBlock: false, tabIndex: tab || 1 });

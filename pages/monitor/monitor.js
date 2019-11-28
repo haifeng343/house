@@ -400,5 +400,11 @@ Page({
         url: '../monitorLongList/monitorLongList',
       })
     }
+  },
+  //跳转监控规则页面
+  handleGoToRule() {
+    wx.navigateTo({
+      url: '../monitorRule/index',
+    })
   }
 })

@@ -85,4 +85,10 @@ export default class UserService {
       // 注意: 不要把这代码段放在存储token之前
     });
   }
+
+  getCouponCount() {
+    return Http.get("/fdd/userCoupon/getUsable.json", { couponType: 3 })
+      .then(resp => Promise.resolve(resp.data || []))
+      .then(couponList => Promise.resolve(couponList.length));
+  }
 }

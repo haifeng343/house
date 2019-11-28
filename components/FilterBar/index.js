@@ -5,6 +5,7 @@ import {
   longSetSearchData,
   chooseSlectData
 } from "../../utils/longSetSearchData";
+import getHeightStrArray from "../../utils/getHeightStrArray";
 import { isShowNearby } from "../../utils/longSetSearchData.js";
 
 const areaKey = ["area", "areaId", "areaJson", "areaType"];
@@ -213,7 +214,7 @@ Component({
                   searchResultList: result.map(item =>
                     Object.assign(
                       {
-                        label: item.name,
+                        label: getHeightStrArray(item.name, searchKey),
                         tag: areaTagMap[item.type]
                       },
                       item
@@ -896,11 +897,10 @@ Component({
           currentAreaType = 0;
           currentArea = 0;
           currentStation = 0;
-          this.setData({ "areaList[2]": [] });
-        } else if (this.data.areaList[2].length === 0) {
+          this.setData({ "areaList[2].list": [] });
+        } else if (this.data.areaList[2].list.length === 0) {
           this.setData({
             "areaList[2].list": [
-              ,
               {
                 label: "不限"
               },
@@ -990,20 +990,7 @@ Component({
         },
         {
           title: "附近",
-          list: [
-            {
-              label: "不限"
-            },
-            {
-              label: "1km"
-            },
-            {
-              label: "2km"
-            },
-            {
-              label: "3km"
-            }
-          ]
+          list: []
         },
         {
           title: "搜索历史",
