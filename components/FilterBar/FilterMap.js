@@ -199,7 +199,33 @@ export default JSON.stringify({
           }
         ]
       }
-    ]
+    ],
+    sort: {
+      title: "排序",
+      field: "advSort",
+      list: [
+        {
+          label: "价格从低到高",
+          value: 1,
+          active: false
+        },
+        {
+          label: "价格从高到低",
+          value: 11,
+          active: false
+        },
+        {
+          label: "面积从大到小",
+          value: 2,
+          active: false
+        },
+        {
+          label: "面积从小到小",
+          value: 21,
+          active: false
+        }
+      ]
+    }
   },
   2: {
     title: "个人房源",
@@ -320,6 +346,32 @@ export default JSON.stringify({
           }
         ]
       }
-    ]
+    ],
+    sort: {
+      title: "排序",
+      field: "advSort",
+      list: [
+        {
+          label: "价格从低到高",
+          value: 1,
+          active: false
+        },
+        {
+          label: "价格从高到低",
+          value: 11,
+          active: false
+        },
+        {
+          label: "面积从大到小",
+          value: 2,
+          active: false
+        },
+        {
+          label: "面积从小到小",
+          value: 21,
+          active: false
+        }
+      ]
+    }
   }
 });

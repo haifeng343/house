@@ -51,9 +51,9 @@ Component({
         id: 3
       },
       {
-        title: "高级筛选",
+        title: "筛选",
         action: "advance",
-        class: "width80",
+        class: "",
         active: false,
         id: 4
       }
@@ -72,13 +72,15 @@ Component({
     longSortTypes: 0, // 1: 低价优先, 2: 空间优先, 3: 最新发布
     minPrice: 0, // 最低价
     maxPrice: 5500, // 最高价 不限99999
+    advSort: 0,
     rangeCustom: false,
     area: "",
     areaId: {},
     areaJson: "",
     areaType: 0,
     level2View: "",
-    level3View: ""
+    level3View: "",
+    sortPanelActive: false
   },
   properties: {
     data: {
@@ -110,6 +112,8 @@ Component({
 
           Object.keys(assginData).forEach(key => {
             const typeItem = map.type.find(item => item.field === key);
+            const filterItem = map.filter.find(item => item.field === key);
+            const isSort = map.sort.field === key;
 
             if (typeItem) {
               typeItem.list.forEach(item => {
@@ -122,8 +126,7 @@ Component({
                   item.active = true;
                 }
               });
-            } else {
-              const filterItem = map.filter.find(item => item.field === key);
+            } else if (filterItem) {
               if (filterItem) {
                 filterItem.list.forEach(item => {
                   if (
@@ -136,6 +139,15 @@ Component({
                   }
                 });
               }
+            } else if (isSort) {
+              const sortItem = map.sort;
+              sortItem.list.forEach(item => {
+                if (item.value === assginData[key]) {
+                  item.active = true;
+                } else {
+                  item.active = false;
+                }
+              });
             }
           });
 
@@ -275,19 +287,22 @@ Component({
         }
       }
     },
+    closeTopPanel() {
+      this.animationFlag = true;
+      const topPanel = this.selectComponent("#TopPanel");
+      if (topPanel) {
+        topPanel.handleClosePanel();
+      } else {
+        this.animationFlag = false;
+      }
+    },
     handleClickTabitem(event) {
       if (this.animationFlag === true) {
         return;
       }
       const tabItem = event.currentTarget.dataset.item;
       if (tabItem.active === true) {
-        this.animationFlag = true;
-        const topPanel = this.selectComponent("#TopPanel");
-        if (topPanel) {
-          topPanel.handleClosePanel();
-        } else {
-          this.animationFlag = false;
-        }
+        this.closeTopPanel();
       } else {
         this.setData({
           filterList: this.data.filterList.map(item => {
@@ -328,6 +343,22 @@ Component({
           break;
       }
     },
+    handleClickSortItem() {
+      const active = !this.data.sortPanelActive;
+      this.setData({
+        filterList: this.data.filterList.map(item => {
+          item.active = false;
+          return item;
+        }),
+        sortPanelActive: active
+      });
+
+      if (active) {
+        this.setData({ showTopPanel: true, currentPanel: "sort" });
+      } else {
+        this.closeTopPanel();
+      }
+    },
     handleHideRightPanel() {
       this.setData({
         showRightPanel: false,
@@ -350,6 +381,37 @@ Component({
       });
       this.checkReset();
     },
+
+    handleSelectSort(event) {
+      const { value } = event.currentTarget.dataset;
+
+      const { field } = this.data.map.sort;
+
+      const sortItem = this.data.map.sort.list.find(
+        item => item.value === value
+      );
+
+      if (sortItem.active === false) {
+        this.setData({
+          "map.sort.list": this.data.map.sort.list.map(item => {
+            if (item === sortItem) {
+              item.active = true;
+            } else {
+              item.active = false;
+            }
+            return item;
+          }),
+          filterList: this.data.filterList.map(item => {
+            item.active = false;
+            return item;
+          }),
+          sortPanelActive: false
+        });
+        this.changeList.add(field);
+        this.handleSubmit();
+      }
+    },
+
     handleSelectType(event) {
       const { value, field } = event.currentTarget.dataset;
 

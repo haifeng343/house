@@ -5,6 +5,9 @@
       <text class="tab-title">{{item.title}}</text>
       <text class="icon-font uniE951"></text>
     </view>
+    <view class="tab-item tab-sort-item  {{sortPanelActive ? 'active' : ''}}" bindtap="handleClickSortItem">
+      <text class="icon-font uniE90B" />
+    </view>
   </view>
 </view>
 <RightPanel wx:if="{{showRightPanel}}" filter="{{map.filter}}" type="{{longRentTypes}}" bind:onClose="handleHideRightPanel" bind:onSelect="handleSelectFilter" bind:onSubmit="handleSubmit" bind:onReset="handleResetFilter" />
@@ -59,7 +62,11 @@
         <scroll-view scroll-y class="search-result-list">
           <view wx:for="{{searchResultList}}" wx:key="{{item.label}}" class="search-result-item" bindtap="handleSelectSearchResult" data-item="{{item}}">
             <view class="search-result-tag">{{item.tag}}</view>
-            <view class="search-result-text"><text wx:for="{{item.label}}" wx:key="*this" class="{{item === searchKey ? 'hightlight':''}}">{{item}}</text></view>
+            <view class="search-result-text">
+              <text wx:for="{{item.label}}" wx:key="*this" class="{{item === searchKey ? 'hightlight' : ''}}">
+                {{item}}
+              </text>
+            </view>
             <text class="icon-font uniE90C"></text>
           </view>
         </scroll-view>
@@ -90,6 +97,14 @@
           <view class="button button-submit" bindtap="handleSubmit">查看房源</view>
         </view>
       </block>
+    </view>
+    <view class="sort-panel" wx:if="{{currentPanel === 'sort'}}">
+      <view class="sort-list">
+        <view class="sort-item {{item.active ? 'active' : ''}}" wx:for="{{map.sort.list}}" wx:key="{{item.label}}" bindtap="handleSelectSort" data-value="{{item.value}}">
+          <text>{{item.label}}</text>
+          <text class="icon-font uniE930" wx:if="{{item.active}}" />
+        </view>
+      </view>
     </view>
   </TopPanel>
 </view>

@@ -29,7 +29,7 @@
         <nodata message="暂无数据" />
       </view>
       <view wx:for="{{fundList}}" wx:key="number">
-        <fundcard items='{{item}}' bind:onGotoDetail="handleGotoFundDetail" />
+        <fundcard data="{{item}}" bind:onGotoDetail="handleGotoFundDetail" />
       </view>
     </scroll-view>
   </block>

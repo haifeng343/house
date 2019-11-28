@@ -1,5 +1,5 @@
-import * as rxjs from '../../utils/rx';
-import FundService from './service';
+import * as rxjs from "../../utils/rx";
+import FundService from "./service";
 // pages/statistics/statistics.js
 Page({
   /**
@@ -10,73 +10,77 @@ Page({
     fundTimeList: [
       {
         value: 1,
-        label: '近一周'
+        label: "近一周"
       },
       {
         value: 2,
-        label: '近一个月'
+        label: "近一个月"
       },
       {
         value: 3,
-        label: '近三个月'
+        label: "近三个月"
       }
     ],
     coinFundTimeList: [
       {
         value: 0,
-        label: '全部'
+        label: "全部"
       },
       {
         value: 1,
-        label: '近三天'
+        label: "近三天"
       },
       {
         value: 2,
-        label: '近一周'
+        label: "近一周"
       },
       {
         value: 3,
-        label: '近一个月'
+        label: "近一个月"
       }
     ],
     fundTypeList: [
       {
         value: 0,
-        label: '全部'
+        label: "全部"
       },
       {
         value: 1,
-        label: '充值'
+        label: "充值"
+      },
+      {
+        value: 33,
+        label: "提现"
       },
       {
         value: 6,
-        label: '支付'
+        label: "支付"
       },
       {
         value: 7,
-        label: '退款'
+        label: "退款"
       },
       {
         value: 8,
-        label: '兑换'
+        label: "兑换"
       }
     ],
     coinTypeList: [
       {
         value: 0,
-        label: '全部'
+        label: "全部"
       },
       {
         value: 1,
-        label: '充值'
+        label: "充值"
       },
       {
         value: 2,
-        label: '兑换'
+        label: "兑换"
       },
       {
         value: 3,
-        label: '消耗'
+        label: "消耗"
       }
     ],
     timeRange: 1,
@@ -84,14 +88,18 @@ Page({
     fundListType: 1,
     isLoaded: false
   },
+
   service: new FundService(),
+
   requestFlag: false,
+
   handleSelectExpand(expand) {
     this.setData({ canScroll: expand === false });
   },
+
   handletimeRangeChange(event) {
     wx.showLoading({
-      title: '获取账单数据...',
+      title: "获取账单数据...",
       mask: true
     });
     const timeRange = event.detail.value;
@@ -106,7 +114,7 @@ Page({
 
   handlebillTypeChange(event) {
     wx.showLoading({
-      title: '获取账单数据...',
+      title: "获取账单数据...",
       mask: true
     });
     const billType = event.detail.value;
@@ -123,7 +131,7 @@ Page({
     const fundListType = +event.currentTarget.dataset.value;
     if (this.data.fundListType !== fundListType) {
       wx.showLoading({
-        title: '获取账单数据...',
+        title: "获取账单数据...",
         mask: true
       });
       this.setData(
@@ -148,7 +156,7 @@ Page({
   handleGotoFundDetail(event) {
     const app = getApp();
     app.fundData = event.detail;
-    wx.navigateTo({ url: '/pages/funddetail/index' });
+    wx.navigateTo({ url: "/pages/funddetail/index" });
   },
 
   getFundList() {
@@ -162,8 +170,8 @@ Page({
         console.error(error);
         wx.hideLoading();
         wx.showToast({
-          title: '获取账单数据失败',
-          icon: 'none'
+          title: "获取账单数据失败",
+          icon: "none"
         });
       });
   },
@@ -182,8 +190,8 @@ Page({
           this.requestFlag = false;
           wx.hideLoading();
           wx.showToast({
-            title: '获取账单数据失败',
-            icon: 'none'
+            title: "获取账单数据失败",
+            icon: "none"
           });
         });
     }
@@ -194,45 +202,10 @@ Page({
    */
   onLoad: function(options) {
     wx.showLoading({
-      title: '获取账单数据...',
+      title: "获取账单数据...",
       mask: true
     });
 
     this.getFundList();
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {},
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {},
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {},
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {},
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {}
+  }
 });

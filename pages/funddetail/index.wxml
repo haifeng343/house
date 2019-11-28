@@ -1,5 +1,5 @@
 <view class="page" wx:if="{{isLoaded}}">
   <scroll-view scroll-y class="fund-list">
-    <fundcard items='{{fundData}}' showDetail="{{true}}" />
+    <fundcard data='{{fundData}}' showDetail="{{true}}" />
   </scroll-view>
 </view>

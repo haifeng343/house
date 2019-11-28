@@ -31,8 +31,15 @@
   position: relative;
 }
 
-.tab-item.width80 {
-  width: 160rpx;
+.tab-item.tab-sort-item {
+  width: 40rpx;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: 4rpx;
+  right: 16rpx;
 }
 
 .tab-item .tab-title {
@@ -43,7 +50,7 @@
   font-size: 28rpx;
 }
 
-.tab-item .icon-font {
+.tab-item .uniE951 {
   font-size: 16rpx;
   position: absolute;
   right: 0;
@@ -69,6 +76,14 @@
   height: 600rpx;
   display: flex;
   flex-direction: column;
+}
+
+.sort-panel {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20rpx;
 }
 
 .content-wrapper {
@@ -425,4 +440,28 @@
 .search-result-text .hightlight {
   color: #f1612a;
   font-weight: 500;
+}
+
+.sort-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.sort-list .sort-item {
+  height: 92rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  padding-left: 60rpx;
+  position: relative;
+}
+.sort-list .sort-item.active {
+  background-color: #f9f9f9;
+  color: #f1612a;
+}
+.sort-list .sort-item .uniE930 {
+  right: 40rpx;
 }
