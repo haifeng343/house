@@ -1,0 +1,32 @@
+<!--pages/monitorRule/index.wxml-->
+<view class="web_view_back">
+  <view class="web_view_top">
+    <view class="title">
+      <text class="icon">◆</text>
+      <view class="text">监控规则</view>
+    </view>
+    <view class="item">
+      <text class="icon">●</text>
+      <view class="text">先查询，再监控。了解房源当前趋势，更好地为制定监控策略提供参考</view>
+    </view>
+    <view class="item">
+      <text class="icon">●</text>
+      <view class="text">只有总数房源少于 50 套时才可监控</view>
+    </view>
+    <view class="item">
+      <text class="icon">●</text>
+      <view class="text">长租、短租各可添加 3 个监控</view>
+    </view>
+    <view class="item">
+      <text class="icon">●</text>
+      <view class="text">
+        <view class="list">每个任务单独收费</view>
+        <view class="list">短租收费标准<text class="tag">{{hourMoney}} 币/小时</text></view>
+        <view class="list">长租收费标准<text class="tag">{{hourLongMoney}} 币/小时</text></view>
+      </view>
+    </view>
+  </view>  
+  <view class="web_view_bottom"><text>房盯盯监控规则最终解释权归本公司所有</text></view>
+  <image class="web_view_img_top"  src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/rule_back_01.png"></image>
+  <image class="web_view_img_bottom" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/rule_back_02.png"></image>
+</view>
