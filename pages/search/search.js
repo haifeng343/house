@@ -886,6 +886,7 @@ Page({
       data.longLayouts = [];
       data.longRentTypes = 0;
       data.longSortTypes = 0;
+      data.advSort = 0;
       data.area = "";
       data.areaId = {};
       data.areaJson = "";
@@ -917,9 +918,11 @@ Page({
     if (searchLongData.longSortTypes === index) {
       searchLongData.longSortTypes = 0;
       data.longSortTypes = 0;
+      data.advSort = 0;
     } else {
       searchLongData.longSortTypes = parseInt(index);
       data.longSortTypes = parseInt(index);
+      data.advSort = parseInt(index)
     }
     console.log(app);
     this.setData({

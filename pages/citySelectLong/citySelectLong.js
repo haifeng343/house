@@ -13,16 +13,6 @@ Page({
     hot: [],
     searchList: [],
     currentTabValue: 0,
-    tabList: [
-      {
-        label: '国内',
-        value: 0
-      },
-      {
-        label: '海外',
-        value: 1
-      }
-    ],
     userCity: {
       name: '定位中...',
       item:{}
