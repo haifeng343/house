@@ -374,6 +374,7 @@ Component({
       this.animationFlag = false;
       this.setData({
         showTopPanel: false,
+        sortPanelActive: false,
         filterList: this.data.filterList.map(item => {
           item.active = false;
           return item;
