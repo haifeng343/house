@@ -14,9 +14,11 @@
     <text class="icon-font uniE915" />
     <text>左滑结束监控</text>
   </view>
-  <empty wx:if="{{show===0}}" title="暂未开启监控任务" imgsrc="../../assets/image/monitor_empty.png" class="search_empty">
-    <view class="bg_border"></view>
-  </empty>
+  <view wx:if="{{show===0}}" class="search_no-data">
+    <image class="search_no-data_img" wx:if="{{active ===1}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/short_no_data.png"></image>
+    <image class="search_no-data_img" wx:else src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/long_no_data.png"></image>
+    <view class="search_no-data_text"><text bindtap="handleGoToRule">查看详细监控规则 >></text></view>
+  </view>
 
   <monitorStopDialog deleteItem="{{deleteItem}}" bind:monitorStopEvent="getmonitorStopEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorStopDisplay}}"></monitorStopDialog>
 
