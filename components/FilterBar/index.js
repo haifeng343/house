@@ -402,11 +402,7 @@ Component({
             }
             return item;
           }),
-          filterList: this.data.filterList.map(item => {
-            item.active = false;
-            return item;
-          }),
-          sortPanelActive: false
+          advSort: value
         });
         this.changeList.add(field);
         this.handleSubmit();
@@ -861,6 +857,7 @@ Component({
       this.setData({
         showRightPanel: false,
         showTopPanel: false,
+        sortPanelActive: false,
         filterList: this.data.filterList.map(item => {
           item.active = false;
           return item;
