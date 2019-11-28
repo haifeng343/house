@@ -1,0 +1,12 @@
+<view wx:if="{{countFlag ===1}}" class="house_shortcuts {{!scrollIng ? '' : 'hidden'}}">
+  <view wx:if="{{!editFlag}}">
+    <image bindtap="goEdit" class="top" src="../../assets/image/edit.png"></image>
+  </view>
+  <view wx:else>
+    <image bindtap="goEdit" class="top" src="../../assets/image/edit_back.png"></image>
+  </view>
+
+  <view wx:if="{{listType == 1}}">
+    <image class="top" src="../../assets/image/batch.png"></image>
+  </view>
+</view>

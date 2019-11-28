@@ -1,0 +1,22 @@
+.house_shortcuts {
+  position: fixed;
+  right: 12rpx;
+  bottom: 140rpx;
+  z-index: 30;
+  transform: translateX(0);
+  transition: transform 1s;
+}
+
+.house_shortcuts .top,
+.house_shortcuts .sort {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.house_shortcuts .top {
+  margin-bottom: 20rpx;
+}
+
+.house_shortcuts.hidden {
+  transform: translateX(calc(100% + 12rpx));
+}

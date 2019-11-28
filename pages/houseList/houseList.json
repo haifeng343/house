@@ -1,14 +1,17 @@
 {
   "usingComponents": {
     "houseSelect": "../../components/houseSelect/houseSelect",
-    "collectDialog": "../../components/collectDialog/collectDialog",
     "monitorDialog": "../../components/monitorDialog/monitorDialog",
     "publicDialog": "../../components/publicDialog/publicDialog",
     "advanceFilter": "../../components/advanceFilter/advanceFilter",
     "noNetwork": "../../components/noNetwork/noNetwork",
     "mp-loading": "../../components/loading/loading",
     "houseListCard": "../../components/houseListCard/houseListCard",
-    "monitorEnoughDialog": "../../components/monitorEnoughDialog/monitorEnoughDialog"
+    "monitorEnoughDialog": "../../components/monitorEnoughDialog/monitorEnoughDialog",
+    "followDialog": "../../components/followDialog/followDialog",
+    "followBottom": "../../components/followBottom/followBottom",
+    "followEdit": "../../components/followEdit/followEdit",
+    "houseLoading": "../../components/houseLoading/houseLoading"
   },
   "navigationBarTitleText": "短租-房源列表"
 }

@@ -12,16 +12,16 @@ Page({
     mnfilter: {},
     zgfilter: {},
     tjCount: 0,
-    tjIdData: [],
     xzCount: 0,
-    xzIdData: [],
     mnCount: 0,
-    mnIdData: [],
     zgCount: 0,
-    zgIdData: [],
     allCount: 0,
     allData: [],
     allOriginalData: [],
+    tjFilterData: [],
+    xzFilterData: [],
+    mnFilterData: [],
+    zgFilterData: [],
     lowPrice: 0,
     averagePrice: 0,
     lowPriceData: '',
@@ -30,7 +30,7 @@ Page({
     mnLowPriceData: '',
     zgLowPriceData: '',
     stopDisplay: 'none',
-    collectDisplay: 'none',
+    followDisplay: 'none',
     monitorenoughDisplay: 'none',
     ddCoin: 0,
     loadingDisplay: 'block',
@@ -47,8 +47,10 @@ Page({
     hasDifference: false,
     isLoaded: false,
     listSortType: 1,//列表排序，1 低到高；2高到低
-    monitorEndDisplay:'none',
     enoughBottom: false,
+    editFlag: false,
+    selectAllFlag: false,
+    indexArr: []
   },
   clickSelectItem(e) {
     var type = e.detail.type;
@@ -94,6 +96,7 @@ Page({
         dayCount: app.globalData.monitorSearchData.dayCount,
         //cityName: app.globalData.monitorSearchData.city, //入住城市
         locationName: app.globalData.monitorSearchData.area || '全城', //地点
+        allData: []
       });
     }
     return flag;
@@ -216,48 +219,7 @@ Page({
       }
     }, 300)
   },
-  goTop() {
-    console.log('到顶部')
-    const version = wx.getSystemInfoSync().SDKVersion
-    if (util.compareVersion(version, '2.7.3') >= 0) {
-      wx.pageScrollTo({
-        selector: ".block",
-        duration: 1500
-      })
-    } else {
-      wx.pageScrollTo({
-        scrollTop: 0,
-        duration: 1500
-      })
-    }
-  },
-  goSort() {
-    let arr = [...this.data.allOriginalData]
-    let sort = house.sort(arr, this.data.listSortType)
-    if (this.data.listSortType == 2) {
-      this.setData({
-        allData: [],
-        loadingDisplay: 'block',
-        listSortType: 1,
-      })
-    } else {
-      this.setData({
-        allData: [],
-        loadingDisplay: 'block',
-        listSortType: 2,
-      })
-    }
-    this.setData({
-      allOriginalData: sort.arr,
-      allData: sort.arr.slice(0, 5),
-      loadingDisplay: 'none',
-      isFirst: false
-    })
-  },
-  
-  /**
-   * 监控详情信息
-   */
+  // 监控详情信息
   getMonitorData() {
     let data = {
       id: this.data.monitorId,
@@ -440,11 +402,10 @@ Page({
         xzCount: monitorCount.xzTotal,
         mnCount: monitorCount.mnTotal,
         zgCount: monitorCount.zgTotal,
-        tjIdData: monitorHouseData.tjId,
-        xzIdData: monitorHouseData.xzId,
-        mnIdData: monitorHouseData.mnId,
-        zgIdData: monitorHouseData.zgId,
-        isMonitorHouse: 1, //1;不可收藏；0；可收藏
+        tjFilterData: monitorHouseData.tjFilterData,
+        xzFilterData: monitorHouseData.xzFilterData,
+        mnFilterData: monitorHouseData.mnFilterData,
+        zgFilterData: monitorHouseData.zgFilterData,
         taskTime: monitor.taskTime(monitorDetail.monitorTime, monitorDetail.minutes),
         startTimeName: monitor.startTimeName(monitorDetail.startTime),
         fee: monitorDetail.fee,
@@ -458,10 +419,8 @@ Page({
       })
     })
   },
-  
-
   async getAllData() {
-    wx.removeStorageSync('collectionObj')
+    wx.removeStorageSync('fddShortRentBlock')
     let tjDataObj = await house.getTjData(2, this.data.tjfilter);
     let xzDataObj = await house.getXzData(2, this.data.xzfilter);
     let mnDataObj = await house.getMnData(2, this.data.mnfilter);
@@ -539,10 +498,11 @@ Page({
       xzLowPriceData: houseData.xzLowPriceData,
       mnLowPriceData: houseData.mnLowPriceData,
       zgLowPriceData: houseData.zgLowPriceData,
-      tjIdData: houseData.tjId,
-      xzIdData: houseData.xzId,
-      mnIdData: houseData.mnId,
-      zgIdData: houseData.zgId,
+      tjFilterData: houseData.tjFilterData,
+      xzFilterData: houseData.xzFilterData,
+      mnFilterData: houseData.mnFilterData,
+      zgFilterData: houseData.zgFilterData,
+      rowData: houseData.rowData,
       loadingDisplay: 'none',
       isBack: false,
       enoughBottom: false,
@@ -561,13 +521,15 @@ Page({
       budget
     })
   },
-  /**
-   * 跳转统计详情
-   */
+  // 跳转统计详情
   goToDetail() {
     const app = getApp()
     app.globalData.houseListData = {
       allCount: this.data.allCount,
+      tjCount: this.data.tjCount,
+      xzCount: this.data.xzCount,
+      mnCount: this.data.mnCount,
+      zgCount: this.data.zgCount,
       showCount: this.data.allOriginalData.length,
       averagePrice: this.data.averagePrice,
       lowPrice: this.data.lowPrice,
@@ -577,12 +539,13 @@ Page({
       mnLowPriceData: this.data.mnLowPriceData,
       zgLowPriceData: this.data.zgLowPriceData,
       enoughList: this.data.enoughList,
-      tjFilterCount: this.data.tjIdData,
-      xzFilterCount: this.data.xzIdData,
-      mnFilterCount: this.data.mnIdData,
-      zgFilterCount: this.data.zgIdData,
+      tjFilterData: this.data.tjFilterData,
+      xzFilterData: this.data.xzFilterData,
+      mnFilterData: this.data.mnFilterData,
+      zgFilterData: this.data.zgFilterData,
+      allOriginalData: this.data.allOriginalData,
+      rowData: this.data.rowData,
       bottomType: this.data.bottomType, //0:房源列表；1监控详情房源列表；2监控详情修改之后,
-      isMonitorHouse: this.data.isMonitorHouse, //1;不可收藏；0；可收藏
       taskTime: this.data.taskTime,
       startTimeName: this.data.startTimeName,
       fee: this.data.fee,
@@ -595,25 +558,267 @@ Page({
       url: '../statistics/statistics?rentType=1',
     })
   },
-  /**
-   * 结束监控
-   */
+  goEdit() {
+    this.setData({
+      editFlag: !this.data.editFlag
+    })
+  },
+  //不再关注
+  deleteItem(e) {
+    let num = wx.getStorageSync('followNum');
+    if (!num) {
+      this.setData({
+        followText: '取消关注后，该房源将不会在后续查询监控中出现！',
+        followType: 1,
+        followDisplay: 'block'
+      })
+    }
+    if (this.data.bottomType == 1){
+      let item = this.data.allData[e.detail.index]
+      let data = {
+        uniqueId: item.productId,
+        monitorId: this.data.monitorId,
+        platform: item.platformId
+      }
+      monitorApi.addFddShortRentBlock(data).then(res => {
+        if (res.data.success) {
+          this.setData({
+            followDisplay: 'none',
+            allData: []
+          })
+          this.getMonitorData()
+        }
+      })
+      return;
+    }
+    let index = e.detail.index
+    let proId = this.data.allOriginalData[index].productId
+    let plaId = this.data.allOriginalData[index].platformId
+    let allData = [...this.data.allOriginalData]
+    //allData 不再关注之后 遗留的房源数据,b不再关注的房源，添加黑名单
+    let b = allData.splice(index, 1)
+    let short = wx.getStorageSync('fddShortRentBlock') || [];
+    let shortBlock = short.concat(b)
+    wx.setStorageSync('fddShortRentBlock', shortBlock)
+
+    let houseData = house.houseShortFilter(allData)
+    this.setData({
+      allOriginalData: [],
+      allData: []
+    })
+    if (allData.length > 0) {
+      this.setData({
+        countFlag: 1
+      });
+    } else {
+      this.setData({
+        countFlag: 0,
+      });
+    }
+    this.setData({
+      allOriginalData: allData,
+      allData: allData.slice(0, 5),
+      averagePrice: houseData.averagePrice,
+      lowPrice: houseData.lowPrice,
+      lowPriceData: houseData.lowPriceData,
+      tjLowPriceData: houseData.tjLowPriceData,
+      xzLowPriceData: houseData.xzLowPriceData,
+      mnLowPriceData: houseData.mnLowPriceData,
+      zgLowPriceData: houseData.zgLowPriceData,
+      tjFilterData: houseData.tjFilterData,
+      xzFilterData: houseData.xzFilterData,
+      mnFilterData: houseData.mnFilterData,
+      zgFilterData: houseData.zgFilterData,
+    })
+  },
+  //批量不再关注
+  deleteBatchItem() {
+    let indexArr = this.data.indexArr
+    if (indexArr.length == 0) {
+      wx.showToast({
+        title: '请先选择取消关注的房源',
+        icon: 'none',
+        duration: 2000,
+        mask: true
+      });
+      return;
+    }
+    this.setData({
+      followText: '即将对' + this.data.selectNum + '套房源取消关注，取消后本次监控将不再获取该房源信息',
+      followType: 2,
+      followDisplay: 'block'
+    })
+  },
+  //不再关注弹窗隐藏
+  followKnowEvent(e) {
+    wx.setStorageSync('followNum', 1)
+    this.setData({
+      followDisplay: e.detail.show
+    })
+  },
+  followCancelEvent(e) {
+    if (e.detail.followType == 1) {
+      wx.setStorageSync('followNum', 1)
+    }
+    this.setData({
+      followDisplay: e.detail.show
+    })
+  },
+  //批量不再关注弹窗确认
+  followConfirmEvent(e) {
+    let indexArr = this.data.indexArr
+    let arr = [...this.data.allOriginalData]
+    //a 不再关注之后 遗留的房源数据
+    let a = arr.filter((item, index) => {
+      return indexArr.indexOf(index) == -1
+    })
+    //b 不再关注的房源，添加黑名单
+    let b = arr.filter((item, index) => {
+      return indexArr.indexOf(index) > -1
+    })
+    if (this.data.bottomType == 1) {
+      let tjId = [], xzId = [], mnId = [], zgId = []
+      for (let i = 0; i < b.length; i++) {
+        if (b[i].platformId == 'tj') {
+          tjId.push(b[i].productId)
+        }
+        if (b[i].platformId == 'xz') {
+          xzId.push(b[i].productId)
+        }
+        if (b[i].platformId == 'mn') {
+          mnId.push(b[i].productId)
+        }
+        if (b[i].platformId == 'zg') {
+          zgId.push(b[i].productId)
+        }
+      }
+      let data = {
+        monitorId: this.data.monitorId,
+      }
+      data.blockData = {
+        tj: tjId,
+        xz: xzId,
+        mn: mnId,
+        zg: zgId,
+      }
+      monitorApi.addShortBatchAddBlacklist(data).then(res => {
+        this.setData({
+          followDisplay: e.detail.show,
+          editFlag: false,
+          allData: []
+        })
+        this.getMonitorData()
+      });
+      return
+    }  
+    let short = wx.getStorageSync('fddShortRentBlock') || [];
+    let shortBlock = short.concat(b)
+    wx.setStorageSync('fddShortRentBlock', shortBlock)
+
+    let houseData = house.houseShortFilter(a)
+    this.setData({
+      allOriginalData: [],
+      allData: []
+    })
+    if (a.length > 0) {
+      this.setData({
+        countFlag: 1
+      });
+    } else {
+      this.setData({
+        countFlag: 0,
+      });
+    }
+    this.setData({
+      allOriginalData: a,
+      allData: a.slice(0, 5),
+      averagePrice: houseData.averagePrice,
+      lowPrice: houseData.lowPrice,
+      lowPriceData: houseData.lowPriceData,
+      tjLowPriceData: houseData.tjLowPriceData,
+      xzLowPriceData: houseData.xzLowPriceData,
+      mnLowPriceData: houseData.mnLowPriceData,
+      zgLowPriceData: houseData.zgLowPriceData,
+      tjFilterData: houseData.tjFilterData,
+      xzFilterData: houseData.xzFilterData,
+      mnFilterData: houseData.mnFilterData,
+      zgFilterData: houseData.zgFilterData,
+      editFlag: false,
+      selectNum: 0,
+      followDisplay: e.detail.show
+    })
+  },
+  goToSelect(e) {
+    let num = 0
+    let indexArr = []
+    let index = e.detail.index;
+    let item = 'allData[' + index + '].collection';
+    let items = 'allOriginalData[' + index + '].collection';
+    let a = [...this.data.allOriginalData]
+    this.setData({
+      [item]: !this.data.allData[index].collection,
+      [items]: !this.data.allOriginalData[index].collection
+    });
+    for (let i = 0; i < a.length; i++) {
+      if (a[i]['collection']) {
+        num++
+        indexArr.push(i)
+      }
+    }
+    if (num == this.data.allOriginalData.length) {
+      this.setData({
+        selectAllFlag: true,
+        selectNum: num,
+        indexArr
+      })
+    } else {
+      this.setData({
+        selectAllFlag: false,
+        selectNum: num,
+        indexArr
+      })
+    }
+  },
+  goToSelectAll() {
+    let num = 0
+    let indexArr = []
+    let d = [...this.data.allData]
+    let a = [...this.data.allOriginalData]
+    for (let i = 0; i < d.length; i++) {
+      d[i]['collection'] = !this.data.selectAllFlag
+    }
+    for (let i = 0; i < a.length; i++) {
+      a[i]['collection'] = !this.data.selectAllFlag
+      indexArr.push(i)
+    }
+    if (!this.data.selectAllFlag) {
+      num = this.data.allOriginalData.length
+      indexArr
+    } else {
+      num = 0
+      indexArr = []
+    }
+    this.setData({
+      allOriginalData: a,
+      allData: d,
+      selectAllFlag: !this.data.selectAllFlag,
+      selectNum: num,
+      indexArr
+    })
+  },
+  //结束监控
   stopMonitor() {
     this.setData({
       stopDisplay: 'block',
     })
   },
-  /**
-   * 继续监控
-   */
+  // 继续监控
   getstopEventEvent(e) {
     this.setData({
       stopDisplay: e.detail,
     })
   },
-  /**
-   * 结束监控确认
-   */
+  // 结束监控确认
   getstopConfirmEventEvent(e) {
     let data = {
       monitorId: this.data.monitorId,
@@ -632,43 +837,6 @@ Page({
           delta: 1
         })
       }
-    })
-  },
-
-  getmonitorEndEvent(e) {
-    this.setData({
-      monitorEndDisplay: e.detail,
-    })
-  },
-  getmonitorEndConfirmEvent(e) {
-    let data = {
-      uniqueId: this.data.deleteItem.productId,
-      monitorId: this.data.monitorId,
-      platform: this.data.deleteItem.platformId
-    }
-    monitorApi.addFddShortRentBlock(data).then(res => {
-      if (res.data.success) {
-        wx.showToast({
-          title: res.data.resultMsg,
-          icon: 'success',
-          duration: 2000
-        })
-        this.setData({
-          monitorEndDisplay: 'none',
-          allData:[]
-        })
-        this.getMonitorData()
-      }
-    })
-  },
-  /**
-   * 不再关注；添加黑名单
-   */
-  delItem(e) {
-    let item = this.data.allData[e.detail.index]
-    this.setData({
-      monitorEndDisplay:'block',
-      deleteItem: item
     })
   },
   //返回到监控列表页面
@@ -712,81 +880,23 @@ Page({
   },
 
   getUpdateMonitor() {
-    let app = getApp();
     let data = {
-      id: this.data.monitorId,
-      beginDate: app.globalData.monitorSearchData.beginDate, //入住日期
-      endDate: app.globalData.monitorSearchData.endDate,    //离开日期
-      cityType: 0, //城市类型，0-国内城市，1-国际城市
-      cityName: app.globalData.monitorSearchData.city,//城市名称
-      //locationName: '',//位置名称
-      //locationType: 11,//位置类型11景区，12高校，13机场，14医院，15商圈，16行政区，17地铁 ，18车站
-      peopleNum: app.globalData.monitorSearchData.gueseNumber,
-      rentType: app.globalData.monitorSearchData.leaseType, //出租类型,2单间出租，1整套出租 不选择 '' 
-      //layoutRoom 户型
-      //facilities 配套设备
-      minPrice: Number(app.globalData.monitorSearchData.minPrice),
-      maxPrice: Number(app.globalData.monitorSearchData.maxPrice),
-      sortType: app.globalData.monitorSearchData.sort,
-      //fddShortRentBlock 
+      monitorId: this.data.monitorId,
+      rowData: this.data.rowData,
+      allOriginalData: this.data.allOriginalData,
+      lowPrice: this.data.lowPrice,
+      allCount: this.data.allCount,
+      tjCount: this.data.tjCount,
+      xzCount: this.data.xzCount,
+      mnCount: this.data.mnCount,
+      zgCount: this.data.zgCount,
     }
-    if (app.globalData.monitorSearchData.area) {
-      data.locationName = app.globalData.monitorSearchData.area
-    }
-    if (app.globalData.monitorSearchData.areaType) {
-      data.locationType = app.globalData.monitorSearchData.areaType
-    }
-
-    //户型
-    let layoutRoom = [];
-    if (app.globalData.monitorSearchData.houseType && app.globalData.monitorSearchData.houseType.length) {
-      data.layoutRoom = app.globalData.monitorSearchData.houseType.join(',')
-    }
-    //配套设施
-    if (app.globalData.monitorSearchData.equipment && app.globalData.monitorSearchData.equipment.length) {
-      data.facilities = app.globalData.monitorSearchData.equipment.join(',')
-    }
-    let tjId = [...this.data.tjIdData]
-    let xzId = [...this.data.xzIdData]
-    let mnId = [...this.data.mnIdData]
-    let zgId = [...this.data.zgIdData]
-    let obj = wx.getStorageSync('collectionObj') || {};
-
-    if (obj && obj['tj'] && obj['tj'].length) {
-      for (let i = 0; i < obj['tj'].length; i++) {
-        let index = tjId.indexOf(obj['tj'][i])
-        tjId.splice(index, 1)
-      }
-    }
-    if (obj && obj['xz'] && obj['xz'].length) {
-      for (let i = 0; i < obj['xz'].length; i++) {
-        let index = xzId.indexOf(obj['xz'][i])
-        xzId.splice(index, 1)
-      }
-    }
-    if (obj && obj['mn'] && obj['mn'].length) {
-      for (let i = 0; i < obj['mn'].length; i++) {
-        let index = mnId.indexOf(obj['mn'][i])
-        mnId.splice(index, 1)
-      }
-    }
-    if (obj && obj['zg'] && obj['zg'].length) {
-      for (let i = 0; i < obj['zg'].length; i++) {
-        let index = zgId.indexOf(obj['zg'][i])
-        zgId.splice(index, 1)
-      }
-    }
-    let fddShortRentBlock = {}
-    fddShortRentBlock.tj = tjId
-    fddShortRentBlock.xz = xzId
-    fddShortRentBlock.mn = mnId
-    fddShortRentBlock.zg = zgId
-    data.fddShortRentBlock = fddShortRentBlock
+    let addData = house.updateShortMonitorData(data)
     wx.showLoading({
       title: '正在修改监控...',
       mask: true
     });
-    monitorApi.updateMonitor(data).then(res => {
+    monitorApi.updateMonitor(addData).then(res => {
       wx.hideLoading();
       wx.showToast({
         title: res.data.resultMsg,
@@ -796,38 +906,5 @@ Page({
         delta: 1
       })
     })
-  },
-  /**
-   * 房源收藏
-   */
-  goToCollection(e) {
-    let num = wx.getStorageSync('collectionNum');
-    let index = e.detail.index;
-    let pId = this.data.allData[index].platformId;
-    let proId = this.data.allData[index].productId;
-    house.houseCollection(pId, proId)
-    let item = 'allData[' + index + '].collection';
-    this.setData({
-      [item]: !this.data.allData[index].collection
-    });
-    if (!num) {
-      this.setData({
-        collectDisplay: 'block',
-      });
-    }
-  },
-  getcollectEventEvent(e) {
-    this.setData({
-      collectDisplay: e.detail,
-    })
-  },
-  preventTouchMove() { },
-  handleMovableChange(e) {
-    if (e.detail.source === 'touch') {
-      this.touchmoveStream.next(e.detail.x);
-    }
-  },
-  handleTouchend() {
-    this.touchendStream.next(true);
   },
 })

@@ -15,15 +15,30 @@ Component({
     idx:{
       type: Number
     },
-    isMonitorHouse:{
-      type: Number
-    },
     dayCount: {
       type: Number
     },
     isFirst: {
       type: Boolean,
       value: false
+    },
+    editFlag:{
+      type: Boolean,
+      observer: function (editFlag){
+        console.log(editFlag)
+        if (editFlag){
+          this.setData({
+            x:30
+          })
+        }else{
+          this.setData({
+            x: 0
+          })
+        }
+      }
+    },
+    allCount:{
+      type: Number
     }
   },
 
@@ -64,6 +79,11 @@ Component({
       if (this.xSubscription) {
         this.xSubscription.unsubscribe();
       }
+    },
+    ready(){
+      // this.setData({
+      //   x: -60
+      // })
     }
   },
   /**
@@ -71,18 +91,15 @@ Component({
    */
   methods: {
     handleMovableChange(e) {
+      if (this.properties.editFlag){return}
       if (e.detail.source === 'touch') {
+        if(e.detail.x>0){return}
         this.touchmoveStream.next(e.detail.x);
       }
     },
     handleTouchend() {
+      if (this.properties.editFlag) { return }
       this.touchendStream.next(true);
-    },
-    goToCollection(e){
-      let detail = {
-        index: e.currentTarget.dataset.index,
-      }
-      this.triggerEvent('collectionEvent', detail);
     },
     goToPlatformDetail(e) {
       let app = getApp()
@@ -90,6 +107,7 @@ Component({
       let productid = e.currentTarget.dataset.productid
       let beginDate = this.properties.type == 1 ? app.globalData.searchData.beginDate : app.globalData.monitorSearchData.beginDate
       let endDate = this.properties.type == 1 ? app.globalData.searchData.endDate : app.globalData.monitorSearchData.endDate
+      if (this.properties.editFlag) { return }
       monitor.navigateToMiniProgram(
         platform,
         productid,
@@ -102,6 +120,12 @@ Component({
         index: e.currentTarget.dataset.index,
       }
       this.triggerEvent('deleteEvent', detail);
+    },
+    selectItem(e){
+      let detail = {
+        index: e.currentTarget.dataset.index,
+      }
+      this.triggerEvent('collectionEvent', detail);
     }
   }
 })

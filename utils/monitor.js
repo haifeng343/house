@@ -1,3 +1,6 @@
+const api = require('../api/api.js');
+import MD5 from "../utils/md5.js";
+const encrySign = 'cd02613a5cfaf7ad91e565d668b6056c'
 const setDate = date => {
   let d = date.split(" ")[0];
   let dd = d.split("-");
@@ -93,29 +96,186 @@ const navigateToMiniProgram = (plateform, productid, beginDate, endDate) => {
 
 const navigateToLongMiniProgram = (plateform, productid,city) => {
   if (plateform == 'wiwj') {
-    wx.navigateToMiniProgram({
-      appId: 'wxaf705dee544e08d9',
-      path: productid?'pages/zufang_detail/zufang_detail?houseId=' + productid + '&cityId=' + city.wiwj:''
-    })
+    if (productid){
+      wiwjDetail(productid).then(res=>{
+        wx.navigateToMiniProgram({
+          appId: 'wxaf705dee544e08d9',
+          path: 'pages/zufang_detail/zufang_detail?houseId=' + productid + '&cityId=' + city.wiwj
+        })
+      }).catch(res=>{
+        wx.showToast({
+          title: '该房源仅可在app中查看，具体详情请前往对应平台app查询',
+          icon: 'none',
+          mask: true
+        })
+      })
+    }else{
+      wx.navigateToMiniProgram({
+        appId: 'wxaf705dee544e08d9',
+      })
+    }
   }
   if (plateform == 'lj') {
-    wx.navigateToMiniProgram({
-      appId: 'wxcfd8224218167d98',
-      path: productid ? 'subpackages/rent/pages/detail/index?city_id=' + city.lj + '&house_code=' + productid : ''
-    })
+    if (productid){
+      ljDetail(productid).then(res => {
+        wx.navigateToMiniProgram({
+          appId: 'wxcfd8224218167d98',
+          path: 'subpackages/rent/pages/detail/index?city_id=' + city.lj + '&house_code=' + productid
+        })
+      }).catch(res => {
+        wx.showToast({
+          title: '该房源仅可在app中查看，具体详情请前往对应平台app查询',
+          icon: 'none',
+          mask: true
+        })
+      })
+    }else{
+      wx.navigateToMiniProgram({
+        appId: 'wxcfd8224218167d98',
+      })
+    }
+    
   }
   if (plateform == 'ftx') {
-    wx.navigateToMiniProgram({
-      appId: 'wxffbb41ec9b99a969',
-      path: productid ? 'pages/zf/detail/grdetail?houseid=' + productid + '&cityname=' + city.ftx : ''
-    })
+    if (productid){
+      ftxDetail(productid, city.ftx).then(res=>{
+        wx.navigateToMiniProgram({
+          appId: 'wxffbb41ec9b99a969',
+          path: 'pages/zf/detail/grdetail?houseid=' + productid + '&cityname=' + city.ftx
+        })
+      }).catch(res=>{
+        wx.showToast({
+          title: '该房源仅可在app中查看，具体详情请前往对应平台app查询',
+          icon: 'none',
+          mask: true
+        })
+      })
+    }else{
+      wx.navigateToMiniProgram({
+        appId: 'wxffbb41ec9b99a969',
+      })
+    }
   }
   if (plateform == 'tc') {
-    wx.navigateToMiniProgram({
-      appId: 'wxc97b21c63d084d92',
-      path: productid ? 'pages/houseplugin/__plugin__/wxaea78830c7829f80/zufang/pages/rent-detail/index?infoId=' + productid : ''
-    })
+    if (productid){
+      tcDetail(productid).then(res=>{
+        wx.navigateToMiniProgram({
+          appId: 'wxc97b21c63d084d92',
+          path:  'pages/houseplugin/__plugin__/wxaea78830c7829f80/zufang/pages/rent-detail/index?infoId=' + productid
+        })
+      }).catch(res=>{
+        wx.showToast({
+          title: '该房源仅可在app中查看，具体详情请前往对应平台app查询',
+          icon:'none',
+          mask: true
+        })
+      })
+    }else{
+      wx.navigateToMiniProgram({
+        appId: 'wxc97b21c63d084d92',
+      })
+    }
   }
+}
+
+const wiwjDetail = function (id){
+  let data = { hid: id}
+  return new Promise((resolve, reject) => {
+    api.postApiUrl(data, 'https://appapi.5i5j.com/appapi/rent/1/v1/allinfo').then(res => {
+      console.log(res)
+      if (res && res.data && typeof (res.data.data) == 'object' && res.data.data.houseinfo) {
+        resolve(true)
+      } else {
+        reject(false)
+      }
+    }).catch(res => {
+      reject(false)
+    })
+  })
+}
+
+const ljDetail = function (id) {
+  let ts = new Date().valueOf() / 1000
+  let data = {
+    house_code:id,
+    ts: ts
+  }
+  let signStr = encrypt('v1/house/detail', { house_code: id, ts:ts });
+  let sign = MD5(signStr);
+  let headers={
+    'rent-sign': sign,
+    'rent-app-id': 'rent-xcx'
+  }
+  return new Promise((resolve, reject) => {
+    api.getApiUrl(data, 'https://wx-api.zu.ke.com/v1/house/detail', headers).then(res => {
+      console.log(res)
+      if (res && res.data && typeof (res.data.data) == 'object' && res.data.data.base_info) {
+        resolve(true)
+      } else {
+        reject(false)
+      }
+    }).catch(res => {
+      reject(false)
+    })
+  })
+}
+
+const ftxDetail = function (id,city) {
+  let data = { 
+    c:'wechat500Public',
+    a:'zfJxAGTDetail',
+    globalid:'bce6b8806e84433f',
+    appname:'fangx',
+    houseid: id,
+    cityname:city
+  }
+  return new Promise((resolve, reject) => {
+    api.getApiUrl(data, 'https://m.fang.com/public').then(res => {
+      console.log(res)
+      if (res && res.data && typeof (res.data) == 'object' && res.data.houseid){
+        resolve(true)
+      }else{
+        reject(false)
+      }
+    }).catch(res => {
+      reject(false)
+    })
+  })
+}
+
+const tcDetail = function (id) {
+  let data = {
+    infoId:id,
+    signature: MD5(id +'HOUSEWECHAT')
+  }
+  return new Promise((resolve, reject) => {
+    api.getApiUrl(data, 'https://housewechat.58.com/house/Api_get_zufang_detail').then(res => {
+      console.log(res)
+      if (res && res.data && typeof (res.data.data) == 'object' && res.data.data.houseInfo) {
+        resolve(true)
+      } else {
+        reject(false)
+      }
+    }).catch(res => {
+      reject(false)
+    })
+  })
+}
+function fixedEncodeURIComponent(e) {
+  return encodeURIComponent(e).replace(/[!'()*]/g,
+    function (e) {
+      return "%" + e.charCodeAt(0).toString(16).toUpperCase()
+    })
+}
+function encrypt(url, data = {}) {
+  let n = Object.keys(data).map(function (e) {
+    return e + "=" + fixedEncodeURIComponent(data[e])
+  }).join("&");
+  n = encrySign + (n = n.split("&").sort(function (e, n) {
+    return e.localeCompare(n);
+  }).join(""));
+  n += url;
+  return n;
 }
 module.exports = {
   setDate: setDate,

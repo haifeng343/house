@@ -155,6 +155,60 @@ const compareVersion = (v1,v2)=>{
 
   return 0
 }
+const compareArr = (array, array2, key1 ='platformId', key2='productId')=>{
+  let result = []
+  for(let key in array){
+    let stra = array[key];
+    let count = 0;
+    for (let j = 0; j < array2.length; j++) {
+      let strb = array2[j];
+      if (stra.platform == 'tj' && strb[key1] =='tj') {
+        if (stra.data.unitId == strb[key2]){
+          count++;
+        }
+      }
+      if (stra.platform == 'xz' && strb[key1] == 'xz') {
+        if (stra.data.luId == strb[key2]) {
+          count++;
+        }
+      }
+      if (stra.platform == 'mn' && strb[key1] == 'mn') {
+        if (stra.data.room_id == strb[key2]) {
+          count++;
+        }
+      }
+      if (stra.platform == 'zg' && strb[key1] == 'zg') {
+        if (stra.data.productId == strb[key2]) {
+          count++;
+        }
+      }
+      if (stra.platform == 'wiwj' && strb[key1] == 'wiwj') {
+        if (stra.data.housesid == strb[key2]) {
+          count++;
+        }
+      }
+      if (stra.platform == 'lj' && strb[key1] == 'lj') {
+        if (stra.data.house_code == strb[key2]) {
+          count++;
+        }
+      }
+      if (stra.platform == 'ftx' && strb[key1] == 'ftx') {
+        if (stra.data.houseid.text == strb[key2]) {
+          count++;
+        }
+      }
+      if (stra.platform == 'tc' && strb[key1] == 'tc') {
+        if (stra.data.infoID == strb[key2]) {
+          count++;
+        }
+      }
+    }
+    if(count>0){
+      result.push(stra);
+    }
+  }
+  return result
+}
 module.exports = {
   formatTime: formatTime,
   formatDate: formatDate,
@@ -165,5 +219,6 @@ module.exports = {
   compareSort: compareSort,
   getDays: getDays,
   arrFilter: arrFilter,
-  compareVersion
+  compareVersion,
+  compareArr
 }

@@ -15,10 +15,6 @@ Component({
     idx: {
       type: Number
     },
-    isMonitorHouse:{  //是否可以收藏按钮
-      type: Number,
-      value:0
-    },
     bottom:{ //是否最后底部，统计详情页
       type: Boolean,
       value: true
@@ -30,7 +26,22 @@ Component({
     isFirst:{
       type: Boolean,
       value: false
-    }
+    },
+    editFlag: {
+      type: Boolean,
+      observer: function (editFlag) {
+        console.log(editFlag)
+        if (editFlag) {
+          this.setData({
+            x: 30
+          })
+        } else {
+          this.setData({
+            x: 0
+          })
+        }
+      }
+    },
   },
 
   /**
@@ -57,7 +68,7 @@ Component({
       const xStream = this.touchendStream.pipe(
         rxjs.operators.withLatestFrom(moveDirectionStream),
         rxjs.operators.filter(([touchend]) => touchend === true),
-        rxjs.operators.map(([touchend, direction]) => (direction > 0 ? 0 : -67))
+        rxjs.operators.map(([touchend, direction]) => (direction > 0 ? 0 : -64))
       );
 
       this.xSubscription = xStream.subscribe(x => {
@@ -77,11 +88,13 @@ Component({
    */
   methods: {
     handleMovableChange(e) {
+      if (this.properties.editFlag) { return }
       if (e.detail.source === 'touch') {
         this.touchmoveStream.next(e.detail.x);
       }
     },
     handleTouchend() {
+      if (this.properties.editFlag) { return }
       this.touchendStream.next(true);
     },
     goToCollection(e) {
@@ -95,6 +108,7 @@ Component({
       let platform = e.currentTarget.dataset.platform
       let productid = e.currentTarget.dataset.productid
       let city = this.properties.type == 1 ? app.globalData.searchLongData.cityId : app.globalData.monitorSearchLongData.cityId
+      if (this.properties.editFlag) { return }
       monitor.navigateToLongMiniProgram(
         platform,
         productid,
@@ -106,6 +120,12 @@ Component({
         index: e.currentTarget.dataset.index,
       }
       this.triggerEvent('deleteEvent', detail);
+    },
+    selectItem(e) {
+      let detail = {
+        index: e.currentTarget.dataset.index,
+      }
+      this.triggerEvent('collectionEvent', detail);
     }
   }
 })

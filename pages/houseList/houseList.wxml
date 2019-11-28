@@ -27,7 +27,7 @@
       <noNetwork title="网络异常，请刷新重试"></noNetwork>
     </view>
     <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
-      <houseListCard item="{{item}}" type="{{1}}" idx="{{idx}}"  bind:collectionEvent="goToCollection" dayCount="{{dayCount}}"></houseListCard>
+      <houseListCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{1}}" idx="{{idx}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" dayCount="{{dayCount}}"></houseListCard>
     </block>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&!loadingShow}}">
       <text wx:if="{{allCount>50}}">已展示全部房源</text>
@@ -40,22 +40,13 @@
     <button wx:if="{{(countFlag ===1 &&allCount<=50)||countFlag == 0}}" class="monitor_btn" bindtap='startMonitor'>开启监控</button>
     <button wx:if="{{countFlag ===2}}"class="monitor_btn" bindtap='goRefresh'>立即刷新</button>
   </view>
-  <view wx:if="{{countFlag === 1}}" class="house_shortcuts {{!scrollIng ? '' : 'hidden'}}">
-    <view>
-      <image bindtap="goTop" wx:if="{{scrollTop>500}}" class="top" src="../../assets/image/top.png"></image>
-    </view>
-    <view>
-      <image bindtap="goSort" class="sort" src="../../assets/image/sort.png"></image>
-    </view>
-  </view>
-  <view class="house_loading" style="display:{{loadingDisplay}}" catchtouchmove="preventTouchMove">
-    <view class="loading_image">
-      <image src="../../assets/image/loading.gif"></image>
-      <view class="text">正在获取全网低价房源，请稍后...</view>
-    </view>
-  </view>
+
+  <followBottom editFlag="{{editFlag}}" selectAllFlag="{{selectAllFlag}}" selectNum="{{selectNum}}" bind:selectAllEvent="goToSelectAll" bind:deleteBatchEvent="deleteBatchItem"></followBottom>
   
-  <collectDialog bind:collectEvent="getcollectEventEvent" style="display:{{collectDisplay}}"></collectDialog>
+  <followEdit countFlag="{{countFlag}}"  scrollIng="{{scrollIng}}" editFlag="{{editFlag}}" bind:editEvent="goEdit"></followEdit>
+
+  <houseLoading loadingDisplay="{{loadingDisplay}}"></houseLoading>
+
   <monitorDialog title="{{monitorTitle}}" fee="{{fee}}" ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorDisplay}}"></monitorDialog>
 
   <advanceFilter class='{{showAdvance?"":"vhidden"}}' shownType='{{showAdvanceType}}' cityName='{{cityName}}' bind:submit='submitAdvance' />
@@ -63,4 +54,5 @@
 
 
   <monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}"  style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" ></monitorEnoughDialog>
+  <followDialog text="{{followText}}" followType="{{followType}}" style="display:{{followDisplay}}" bind:knowEvent="followKnowEvent" bind:confirmEvent="followConfirmEvent" bind:cancelEvent="followCancelEvent"></followDialog>
 </view>

@@ -1,7 +1,15 @@
-.move{position: relative}
+@import '../../assets/styles/font.wxss';
+.move{position: relative;width: calc(100%);height: 286rpx;}
 .card{display: flex;padding: 32rpx 0;margin:0 30rpx;border-bottom: 1px solid #E8E8E8;height: 220rpx;position: relative}
 .card_none{border-bottom: none}
-.area{width: calc(100% - 64px);height: 286rpx;}
+.area{
+  width: calc(100% - 114px);
+  height: 286rpx;
+  margin: 0 auto;
+  position: absolute;
+  left: 50px;
+  top: 0
+}
 .wrapper {
   width: calc(100vw);
   height: 286rpx;
@@ -9,6 +17,7 @@
   overflow: hidden;
   z-index: 2;
   background: #ffffff;
+  margin-left: -50px
 }
 .card .card_image{width: 252rpx;}
 .card_image image{width: 220rpx;height: 220rpx;}
@@ -123,4 +132,34 @@
   font-weight:400;
   color:rgba(241,97,42,1);
   line-height:36rpx;
+}
+.select{
+  width: 50px; 
+  height: 286rpx; 
+  position: absolute;  
+  top: 0;  
+  left: 0;  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;
+  z-index: 11
+}
+.select .uniE930 {
+  display: inline-block;
+  width: 40rpx;
+  height: 40rpx;
+  color: #fff;
+  line-height: 44rpx;
+  font-size: 20rpx;
+  text-align: center;
+  background-color: #fff;
+  border: 2rpx solid #e75d28;
+  border-radius: 42rpx;
+}
+.select .active{
+  color: #FFFFFF;
+  background-color: #E75D28;
+  border:none;
+  width: 42rpx;
+  height: 42rpx;
 }

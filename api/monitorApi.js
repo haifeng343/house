@@ -213,6 +213,36 @@ const addFddLongRentBlock = data => {
     })
   })
 }
+/**
+ * 批量不再关注，添加黑名单-短租
+*/
+const addShortBatchAddBlacklist = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.postApiMonitorForm(monitor.json2Form(data), '/fdd/shortMonitor/batchAddBlock.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
+/**
+ * 批量不再关注，添加黑名单-长租
+*/
+const addLongBatchAddBlacklist = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.postApiMonitorForm(monitor.json2Form(data), '/fdd/longRentMonitor/batchAddBlacklist.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
 const throwErrorResponse = (data)=>{
   wx.showToast({
     title: data.resultMsg,
@@ -234,5 +264,7 @@ module.exports = {
   endLongMonitor,
   getMonitorLongList,
   monitorLongDetail,
-  addFddLongRentBlock 
+  addFddLongRentBlock,
+  addShortBatchAddBlacklist,
+  addLongBatchAddBlacklist
 }
