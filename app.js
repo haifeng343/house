@@ -69,7 +69,8 @@ App({
       minPrice: 0, //最低价
       maxPrice: 99999, //最高价
       sort: 1, //搜索方式 1推荐 2低价有限
-      equipment: ["1", "2"]
+      equipment: ["1", "2"],
+      advSort:1,//2 从低到高 3高到底
     },
     monitorSearchData: {
       cityType: "",
@@ -89,7 +90,8 @@ App({
       minPrice: 0, //最低价
       maxPrice: 99999, //最高价
       sort: 2, //搜索方式 1推荐 2低价有限
-      equipment: []
+      equipment: [],
+      advSort: 1,//2 从低到高 3高到底
     },
     monitorDefaultData: {
       cityType: "",
@@ -110,7 +112,8 @@ App({
       minPrice: 0, //最低价
       maxPrice: 99999, //最高价
       sort: 2, //搜索方式 1推荐 2低价有限
-      equipment: []
+      equipment: [],
+      advSort: 1,//2 从低到高 3高到底
     },
     searchLongData: {
       chooseType: 1, //1品牌中介，2个人房源
@@ -129,7 +132,8 @@ App({
       longRentTypes: 0, //1: 整租, 2: 合租 3: 主卧, 4: 次卧
       longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
       minPrice: 0, //最低价
-      maxPrice: 5500 //最高价 不限99999
+      maxPrice: 5500, //最高价 不限99999,
+      advSort: 1,//1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
     },
     monitorSearchLongData: {
       chooseType: 1, //1品牌中介，2个人房源
@@ -148,7 +152,8 @@ App({
       longRentTypes: 0, //1: 整租, 2: 合租 3: 主卧, 4: 次卧
       longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
       minPrice: 0, //最低价
-      maxPrice: 5500 //最高价 不限99999
+      maxPrice: 5500, //最高价 不限99999
+      advSort: 1,//1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
     },
     monitorDefaultSearchLongData: {
       chooseType: 1, //1品牌中介，2个人房源
@@ -167,7 +172,8 @@ App({
       longRentTypes: 0, //1: 整租, 2: 合租 3: 主卧, 4: 次卧
       longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
       minPrice: 0, //最低价
-      maxPrice: 5500 //最高价 不限99999
+      maxPrice: 5500, //最高价 不限99999
+      advSort: 1,//1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
     },
     hotPosition: []
   }

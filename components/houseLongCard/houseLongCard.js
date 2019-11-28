@@ -23,10 +23,6 @@ Component({
       type: Boolean,
       value: true
     },
-    isFirst:{
-      type: Boolean,
-      value: false
-    },
     editFlag: {
       type: Boolean,
       observer: function (editFlag) {
@@ -80,6 +76,20 @@ Component({
       this.touchendStream.complete();
       if (this.xSubscription) {
         this.xSubscription.unsubscribe();
+      }
+    },
+    ready() {
+      let num = wx.getStorageSync('autoswiperNum');
+      if (this.properties.idx == 0 && !num) {
+        wx.setStorageSync('autoswiperNum', 1)
+        this.setData({
+          x: -64
+        })
+        setTimeout(() => {
+          this.setData({
+            x: 0
+          })
+        }, 2000)
       }
     }
   },

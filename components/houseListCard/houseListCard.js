@@ -81,9 +81,18 @@ Component({
       }
     },
     ready(){
-      // this.setData({
-      //   x: -60
-      // })
+      let num = wx.getStorageSync('autoswiperNum');
+      if (this.properties.idx == 0&&!num){
+        wx.setStorageSync('autoswiperNum', 1)
+        this.setData({
+          x: -67
+        })
+        setTimeout(()=>{
+          this.setData({
+            x: 0
+          })
+        },2000)
+      }
     }
   },
   /**
