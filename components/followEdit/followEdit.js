@@ -15,7 +15,10 @@ Component({
     },
     listType:{ 
       type: Number,
-    }
+    },
+    bottomType: {
+      type: Number,
+    },
   },
 
   /**
@@ -43,8 +46,8 @@ Component({
         show: false
       })
       let index = +event.currentTarget.dataset.index
-      console.log(index)
-      // this.triggerEvent('editEvent', '')
+      
+      this.triggerEvent('selectEvent', index)
     }
   }
 })

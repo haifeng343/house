@@ -19,8 +19,6 @@ Component({
   data: {
     cur: 0,//改变当前索引
     index: 1,//当前的索引
-    collectDisplay:'none',
-    finishLoadFlag:false,
   },
 
   /**
@@ -41,22 +39,5 @@ Component({
       let endDate = this.properties.bottomType == 0 ? app.globalData.searchData.endDate : app.globalData.monitorSearchData.endDate
       monitor.navigateToMiniProgram(platform, productid, beginDate, endDate)
     },
-    goToCollection(e) {
-      console.log(e.currentTarget.dataset.productid);
-      //开启收藏
-      this.setData({
-        collectDisplay: 'block'
-      })
-    },
-    getcollectEventEvent(e) {
-      this.setData({
-        collectDisplay: e.detail
-      })
-    },
-    finishLoad: function (e) {
-      this.setData({
-        finishLoadFlag: true
-      })
-    }
   }
 })

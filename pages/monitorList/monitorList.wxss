@@ -132,37 +132,7 @@ page {
   background: #F9F9F9;
   height: 12rpx;
 }
-.search_empty .search_view {
-  display: flex;
-  justify-content: center;
-}
-.search_empty .search_view:nth-child(1) {
-  margin-top: 160rpx;
-}
-.search_empty .search_view:nth-child(2) {
-  margin-top: 40rpx;
-}
-.search_empty .search_view:nth-child(3) {
-  margin-top: 30rpx;
-  text-align: center;
-  margin: 30rpx 108rpx 0;
-}
-.search_empty .search_title {
-  font-size: 32rpx;
-  color: #1d1d1d;
-}
-.search_empty .search_tip {
-  font-size: 28rpx;
-  color: #a6a6a6;
-}
-.search_empty .empty_image {
-  width: 320rpx;
-  height: 250rpx;
-}
-.search_empty .monitor_empty_image {
-  width: 320rpx;
-  height: 222rpx;
-}
+
 .house_monitor {
   position: fixed;
   left: 0;

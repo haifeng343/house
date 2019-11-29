@@ -133,7 +133,7 @@ App({
       longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
       minPrice: 0, //最低价
       maxPrice: 5500, //最高价 不限99999,
-      advSort: 1,//1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
+      advSort: 0,//1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
     },
     monitorSearchLongData: {
       chooseType: 1, //1品牌中介，2个人房源
@@ -153,7 +153,7 @@ App({
       longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
       minPrice: 0, //最低价
       maxPrice: 5500, //最高价 不限99999
-      advSort: 1,//1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
+      advSort: 0,//1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
     },
     monitorDefaultSearchLongData: {
       chooseType: 1, //1品牌中介，2个人房源
@@ -173,7 +173,7 @@ App({
       longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
       minPrice: 0, //最低价
       maxPrice: 5500, //最高价 不限99999
-      advSort: 1,//1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
+      advSort: 0,//1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
     },
     hotPosition: []
   }

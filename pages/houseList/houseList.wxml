@@ -16,13 +16,9 @@
   </view>
   <view class="block"></view>
   <view class="card-list {{countFlag === 0||countFlag === 2 ? 'section_empty' : ''}}">
-    <view class="search_empty" wx:if="{{countFlag === 0}}">
-      <view class="search_view">
-        <image class="empty_image" src="../../assets/image/search_empty.png"></image>
-      </view>
-      <view class="search_view search_title">未找到符合条件的房源</view>
-      <view class="search_view search_tip">立即添加监控，第一时间推送房源信息，再也不怕心仪的房源擦肩而过</view>
-    </view>
+  
+    <monitorEmpty wx:if="{{countFlag === 0}}" bottomType="{{2}}"></monitorEmpty>
+
     <view  class="search_empty" wx:if="{{countFlag === 2}}">
       <noNetwork title="网络异常，请刷新重试"></noNetwork>
     </view>

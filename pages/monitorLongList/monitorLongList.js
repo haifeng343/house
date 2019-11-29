@@ -24,6 +24,7 @@ Page({
     lianjiaFilterData: [],
     fangtianxiaFilterData: [],
     wbtcFilterData: [],
+    rowData: [],
     wiwjCount: 0,
     lianjiaCount: 0,
     fangtianxiaCount:0,
@@ -41,7 +42,8 @@ Page({
     tcfilter: {},
     editFlag: false,
     selectAllFlag: false,
-    indexArr: []
+    indexArr: [],
+    mSelect: 1 //1全部 2新上 3价格
   },
   onLoad: function (options) {
     let data = app.globalData.monitorLongData
@@ -77,19 +79,51 @@ Page({
   },
   submit(e) {
     //把改变的值重新
+    let allArr = [...this.data.allOriginalData]
     let arr = Object.keys(e.detail);
     if (arr.length) {
-      for (let key in e.detail) {
-        app.globalData.monitorSearchLongData[key] = e.detail[key]
-      }
-      SearchLongMonitorDataSubject.next()
-      this.setData({
-        loadingDisplay: 'block',
-        countFlag: '',
-        allData: [],
-        updateData:Object.assign({}, app.globalData.monitorSearchLongData),
-      });
-      this.onHouseShow()
+      if (arr.length == 1 && arr[0] == 'advSort') {
+        app.globalData.monitorSearchLongData['advSort'] = e.detail['advSort'];
+        this.setData({
+          loadingDisplay: "block",
+          allData: []
+        });
+        if (e.detail['advSort'] == 1) {
+          allArr.sort(util.compareSort("price", "asc"));
+        }
+        if (e.detail['advSort'] == 11) {
+          allArr.sort(util.compareSort("price", "desc"));
+        }
+        if (e.detail['advSort'] == 2) {
+          allArr.sort(util.compareSort("area", "desc"));
+        }
+        if (e.detail['advSort'] == 21) {
+          allArr.sort(util.compareSort("area", "asc"));
+        }
+        this.setData({
+          loadingDisplay: "none",
+          allOriginalData: allArr,
+          allData: allArr.slice(0, 5)
+        })
+      } else {
+        for (let key in e.detail) {
+          app.globalData.monitorSearchLongData[key] = e.detail[key]
+        }
+        SearchLongMonitorDataSubject.next()
+        this.setData({
+          loadingDisplay: 'block',
+          countFlag: '',
+          allData: [],
+          editFlag: false,
+          updateData: Object.assign({}, app.globalData.monitorSearchLongData),
+        });
+        if (util.objectDiff(app.globalData.monitorSearchLongData, app.globalData.monitorDefaultSearchLongData)){
+          this.onLoad()
+        }else{
+          this.onHouseShow()
+        }
+        
+      }  
     }
   },
   onReachBottom() {
@@ -218,6 +252,7 @@ Page({
         longSortTypes: monitorDetail.sortType || 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
         minPrice: monitorDetail.minPrice,//最低价
         maxPrice: monitorDetail.maxPrice == 99999 ? 10000 : monitorDetail.maxPrice,//最高价 不限99999
+        advSort: monitorDetail.sortType || 0
       }
       app.globalData.monitorDefaultSearchLongData = {
         chooseType: monitorDetail.houseSource, //1品牌中介，2个人房源
@@ -237,6 +272,7 @@ Page({
         longSortTypes: monitorDetail.sortType||0, //1: 低价优先, 2: 空间优先, 3: 最新发布
         minPrice: monitorDetail.minPrice,//最低价
         maxPrice: monitorDetail.maxPrice == 99999 ? 10000 : monitorDetail.maxPrice,//最高价 不限99999
+        advSort: monitorDetail.sortType || 0
       }
       let x = app.globalData.monitorSearchLongData
       new positionService().getSearchHoset(x.city, x.chooseType).then(resp => {
@@ -258,11 +294,31 @@ Page({
           allCount: 0,
           updateData: Object.assign({}, app.globalData.monitorSearchLongData),
           defalutData: Object.assign({}, app.globalData.monitorDefaultSearchLongData),
+          editFlag: false,
         })
         return;
       }
 
-      let monitorHouseData = house.getMonitorLongHouseData(houseList);//监控房源列表
+      let monitorHouseData = house.getMonitorLongHouseData(houseList,this.data.mSelect);//监控房源列表
+      if (monitorHouseData.allData.length == 0){
+        this.setData({
+          countFlag: 0,
+          loadingDisplay: 'none',
+          bottomType: 1, //0:房源列表；1监控详情房源列表；2监控详情修改之后
+          taskTime: monitor.taskTime(monitorDetail.monitorTime, monitorDetail.minutes),
+          startTimeName: monitor.startTimeName(monitorDetail.startTime),
+          fee: monitorDetail.fee,
+          monitorId: monitorDetail.id,
+          totalFee: monitorDetail.totalFee, //消耗盯盯币
+          allOriginalData: [],
+          allData: [],
+          allCount: 0,
+          updateData: Object.assign({}, app.globalData.monitorSearchLongData),
+          defalutData: Object.assign({}, app.globalData.monitorDefaultSearchLongData),
+          editFlag: false,
+        })
+        return;
+      }
       let enoughList = [];
       if (monitorDetail.houseSource == 1) {
         if (monitorCount.wiwjTotal > -1) { enoughList.push({ key: 'wiwj', name: '我爱我家', value: monitorCount.wiwjTotal }) }
@@ -345,7 +401,7 @@ Page({
       lianjiaCount: lianjiaDataObj.lianjiaCount,
       wiwjData,
       lianjiaData,
-      type: 1
+      type: 2
     })
     if (houseData.allCount > 0 && houseData.allData.length > 0) {
       this.setData({
@@ -405,7 +461,7 @@ Page({
       wbtcCount: wbtcDataObj.wbtcCount,
       fangtianxiaData,
       wbtcData,
-      type: 1
+      type: 2
     })
     if (houseData.allCount > 0 && houseData.allData.length > 0) {
       this.setData({
@@ -495,6 +551,18 @@ Page({
       url: '../statistics/statistics?rentType=2',
     })
   },
+  goToMAllSelect(e){
+    this.setData({
+      mSelect: e.detail.index
+    })
+    this.getMonitorData()
+  },
+  goMselect(e){
+    this.setData({
+      mSelect:e.detail
+    })
+    this.getMonitorData()
+  },
   goEdit() {
     this.setData({
       editFlag: !this.data.editFlag
@@ -519,11 +587,6 @@ Page({
       }
       monitorApi.addFddLongRentBlock(data).then(res => {
         if (res.data.success) {
-          wx.showToast({
-            title: res.data.resultMsg,
-            icon: 'success',
-            duration: 2000
-          })
           this.setData({
             followDisplay: 'none',
             allData: []
@@ -565,7 +628,7 @@ Page({
         lowPrice: houseData.lowPrice,
         lowPriceData: houseData.lowPriceData,
         highAreaData: houseData.highAreaData,
-        lianjiaLowPriceData: houseData.wiwjLowPriceData,
+        wiwjLowPriceData: houseData.wiwjLowPriceData,
         lianjiaLowPriceData: houseData.ljLowPriceData,
         wiwjFilterData: houseData.wiwjFilterData,
         lianjiaFilterData: houseData.ljFilterData,
@@ -663,11 +726,6 @@ Page({
         }
       }
       monitorApi.addLongBatchAddBlacklist(data).then(res => {
-        wx.showToast({
-          title: res.data.resultMsg,
-          icon: 'success',
-          duration: 2000
-        })
         this.setData({
           followDisplay: e.detail.show,
           editFlag: false,
@@ -703,7 +761,7 @@ Page({
         lowPrice: houseData.lowPrice,
         lowPriceData: houseData.lowPriceData,
         highAreaData: houseData.highAreaData,
-        lianjiaLowPriceData: houseData.wiwjLowPriceData,
+        wiwjLowPriceData: houseData.wiwjLowPriceData,
         lianjiaLowPriceData: houseData.ljLowPriceData,
         wiwjFilterData: houseData.wiwjFilterData,
         lianjiaFilterData: houseData.ljFilterData,

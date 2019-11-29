@@ -1189,12 +1189,16 @@ const getHouseData = data => {
   sortArr.sort(util.compareSort("finalPrice", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
 
-  let y =
-    data.type == 1
-      ? app.globalData.searchData
-      : app.globalData.monitorSearchData;
-  if (y.sort == 2) {
-    allData = sortArr;
+  let y =data.type == 1? app.globalData.searchData: app.globalData.monitorSearchData;
+  if (y.advSort == 2) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("finalPrice", "asc"));
+    allData = allArr
+  }
+  if (y.advSort == 3) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("finalPrice", "desc"));
+    allData = allArr
   }
   //途家最低价格数据
   tjSortArr.sort(util.compareSort("finalPrice", "asc"));
@@ -1227,12 +1231,14 @@ const getHouseData = data => {
   };
 };
 
-const getMonitorHouseData = houseList => {
+const getMonitorHouseData = (list, mSelect) => {
+  let app = getApp()
   let allData = []; //监控房源列表
   let tjFilterData = []; //监控途家房源
   let xzFilterData = []; //监控小猪房源
   let mnFilterData = []; //监控木鸟房源
   let zgFilterData = []; //监控榛果房源
+  let houseList = monitorFilter(list, mSelect)
   for (let i = 0; i < houseList.length; i++) {
     if (houseList[i].platform == "tj") {
       let tjObj = {
@@ -1381,7 +1387,17 @@ const getMonitorHouseData = houseList => {
   sortArr.sort(util.compareSort("finalPrice", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
 
-  //allData = sortArr;
+  let y = app.globalData.monitorSearchData;
+  if (y.advSort == 2) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("finalPrice", "asc"));
+    allData = allArr
+  }
+  if (y.advSort == 3) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("finalPrice", "desc"));
+    allData = allArr
+  }
   //途家最低价格数据
   tjSortArr.sort(util.compareSort("finalPrice", "asc"));
   let tjLowPriceData = tjSortArr.length > 0 ? tjSortArr[0] : "";
@@ -1573,12 +1589,26 @@ const getBrandHouseData = data => {
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("price", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
-  let y =
-    data.type == 1
-      ? app.globalData.searchLongData
-      : app.globalData.monitorSearchLongData;
-  if (y.longSortTypes == 1) {
-    allData = sortArr;
+  let y = data.type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData;
+  if (y.advSort == 1) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("price", "asc"));
+    allData = allArr
+  }
+  if (y.advSort == 11) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("price", "desc"));
+    allData = allArr
+  }
+  if (y.advSort == 2) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("area", "desc"));
+    allData = allArr
+  }
+  if (y.advSort == 21) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("area", "asc"));
+    allData = allArr
   }
   //所有房源面积最大
   areasortArr.sort(util.compareSort("area", "desc"));
@@ -1715,12 +1745,26 @@ const getPersonalHouseData = data => {
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("price", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
-  let y =
-    data.type == 1
-      ? app.globalData.searchLongData
-      : app.globalData.monitorSearchLongData;
-  if (y.longSortTypes == 1) {
-    allData = sortArr;
+  let y =data.type == 1? app.globalData.searchLongData: app.globalData.monitorSearchLongData;
+  if (y.advSort == 1) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("price", "asc"));
+    allData = allArr
+  }
+  if (y.advSort == 11) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("price", "desc"));
+    allData = allArr
+  }
+  if (y.advSort == 2) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("area", "desc"));
+    allData = allArr
+  }
+  if (y.advSort == 21) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("area", "asc"));
+    allData = allArr
   }
   //所有房源面积最大
   areasortArr.sort(util.compareSort("area", "desc"));
@@ -1820,12 +1864,15 @@ const houseLongFilter = (allData,xType)=>{
     })
   }
 }
-const getMonitorLongHouseData = houseList => {
+const getMonitorLongHouseData = (list, mSelect) => {
+  let app = getApp();
   let allData = []; //监控房源列表
   let wiwjFilterData = []; //监控我爱我家房源
   let ljFilterData = []; //监控链家房源
   let ftxFilterData = []; //监控房天下房源
   let wbtcFilterData = []; //监控58同城房源
+
+  let houseList = monitorFilter(list,mSelect)
   for (let i = 0; i < houseList.length; i++) {
     if (houseList[i].platform == "wiwj") {
       let wiwjObjs = {
@@ -1931,19 +1978,33 @@ const getMonitorLongHouseData = houseList => {
   let wbtcSortArr = [...wbtcFilterData];
 
   //所有最低价
-  let lowPrice =
-    allData.length > 0
-      ? Math.min.apply(
-          Math,
-          allData.map(function(o) {
-            return o.price;
-          })
-        )
-      : 0;
-
+  let lowPrice =allData.length > 0? Math.min.apply(Math,allData.map(function(o) {return o.price;})): 0;
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("price", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
+
+  let y = app.globalData.monitorSearchLongData;
+  if (y.advSort == 1) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("price", "asc"));
+    allData = allArr
+  }
+  if (y.advSort == 11) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("price", "desc"));
+    allData = allArr
+  }
+  if (y.advSort == 2) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("area", "desc"));
+    allData = allArr
+  }
+  if (y.advSort == 21) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("area", "asc"));
+    allData = allArr
+  }
+
   //所有房源面积最大
   areasortArr.sort(util.compareSort("area", "desc"));
   let highAreaData = areasortArr.length > 0 ? areasortArr[0] : "";
@@ -1974,30 +2035,6 @@ const getMonitorLongHouseData = houseList => {
     ljFilterData,
     ftxFilterData,
     wbtcFilterData
-  };
-};
-const sort = (arr, sortType, key = "finalPrice") => {
-  if (sortType == 2) {
-    arr.sort(util.compareSort(key, "asc"));
-    sortType = 1;
-    wx.showToast({
-      title: "已按最低价排序",
-      icon: "none",
-      duration: 2000
-    });
-  } else {
-    arr.sort(util.compareSort(key, "desc"));
-    sortType = 2;
-    wx.showToast({
-      title: "已按最高价排序",
-      icon: "none",
-      duration: 2000
-    });
-  }
-
-  return {
-    arr,
-    sortType
   };
 };
 const wiwjScreenParam = type => {
@@ -3146,6 +3183,26 @@ function wbtcFilter(arr){
   });
   return newArr;
 }
+
+function monitorFilter(arr,mSelect){
+  let newArr = [];
+  if (mSelect == 1){
+    newArr = arr
+  }
+  if (mSelect == 2){
+    newArr = arr.filter(item => {
+      return item.newLevel>0
+    });
+  }
+  if (mSelect == 3) {
+    newArr = arr.filter(item => {
+      return item.priceDownLevel > 0
+    });
+  }
+  return newArr
+}
+
+
 module.exports = {
   getTjData,
   getXzData,
@@ -3157,7 +3214,6 @@ module.exports = {
   zgScreenPara,
   getHouseData,
   getMonitorHouseData,
-  sort,
   getWiwjData,
   getLianjiaData,
   getFangtianxiaData,

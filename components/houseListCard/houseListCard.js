@@ -116,7 +116,10 @@ Component({
       let productid = e.currentTarget.dataset.productid
       let beginDate = this.properties.type == 1 ? app.globalData.searchData.beginDate : app.globalData.monitorSearchData.beginDate
       let endDate = this.properties.type == 1 ? app.globalData.searchData.endDate : app.globalData.monitorSearchData.endDate
-      if (this.properties.editFlag) { return }
+      if (this.properties.editFlag) { 
+        this.selectItem(e)
+        return
+      }
       monitor.navigateToMiniProgram(
         platform,
         productid,

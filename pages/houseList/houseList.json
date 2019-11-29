@@ -11,7 +11,8 @@
     "followDialog": "../../components/followDialog/followDialog",
     "followBottom": "../../components/followBottom/followBottom",
     "followEdit": "../../components/followEdit/followEdit",
-    "houseLoading": "../../components/houseLoading/houseLoading"
+    "houseLoading": "../../components/houseLoading/houseLoading",
+    "monitorEmpty": "../../components/monitorEmpty/monitorEmpty"
   },
   "navigationBarTitleText": "短租-房源列表"
 }
