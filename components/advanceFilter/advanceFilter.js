@@ -22,7 +22,7 @@ Component({
       type: Number
     },
     type: {
-      type: Number
+      type: String
     },
     cityName: {
       type: String
@@ -203,13 +203,13 @@ Component({
         type = event.currentTarget.dataset.type;
       } else {
         type = this.data.initSelect.initType;
-        if (type == "subway") {
+        if (type === "subway") {
           for (var keys in this.data.area[type].data[
             this.data.initSelect.initLine
           ]) {
             if (
               this.data.area[type].data[this.data.initSelect.initLine][keys]
-                .name == this.data.initSelect.initName
+                .name === this.data.initSelect.initName
             ) {
               key = keys;
             }
@@ -277,9 +277,9 @@ Component({
         },
         () => {
           if (
-            way == "subway" &&
-            data.type == this.data.initSelect.initLine &&
-            data.station == this.data.initSelect.initKey
+            way === "subway" &&
+            data.type === this.data.initSelect.initLine &&
+            data.station === this.data.initSelect.initKey
           ) {
             this.chooseLast({
               currentTarget: {
@@ -322,7 +322,7 @@ Component({
           searchData.area = data.name;
         }
 
-        if (data.type == 16) {
+        if (data.type === 16) {
           //行政区  只有areaid
           searchData.areaId = {
             mn: info.mn && info.mn.area_id,
@@ -346,7 +346,7 @@ Component({
         }
 
         const app = getApp();
-        if (this.properties.type == "monitor") {
+        if (this.data.type === "monitor") {
           app.globalData.monitorSearchData = Object.assign({}, searchData);
         } else {
           app.globalData.searchData = Object.assign({}, searchData);
@@ -365,7 +365,7 @@ Component({
     selectLeaseType(event) {
       let index = event.currentTarget.dataset.index;
       let searchData = this.data.searchData;
-      if (searchData.leaseType == index) {
+      if (searchData.leaseType === index) {
         searchData.leaseType = "";
       } else {
         searchData.leaseType = Number(index);
@@ -404,7 +404,7 @@ Component({
     changeSort() {
       let searchData = this.data.searchData;
       var sort = searchData.sort;
-      searchData.sort = sort == 1 ? 2 : 1;
+      searchData.sort = sort === 1 ? 2 : 1;
       this.setData({
         searchData
       });
@@ -417,7 +417,7 @@ Component({
         searchData.ltude = {};
         searchData.areaId = {};
         const app = getApp();
-        if (this.properties.type == "monitor") {
+        if (this.data.type === "monitor") {
           app.globalData.monitorSearchData = Object.assign({}, searchData);
         } else {
           app.globalData.searchData = Object.assign({}, searchData);
@@ -432,7 +432,7 @@ Component({
           }
         );
       } else if (Object.values(this.data.lastList).length <= 0) {
-        if (this.data.middleActive == 0) {
+        if (this.data.middleActive === 0) {
           let searchData = this.data.searchData;
 
           searchData.areaType = "";
@@ -441,7 +441,7 @@ Component({
           searchData.ltude = {};
 
           const app = getApp();
-          if (this.properties.type == "monitor") {
+          if (this.data.type === "monitor") {
             app.globalData.monitorSearchData = Object.assign({}, searchData);
           } else {
             app.globalData.searchData = Object.assign({}, searchData);
@@ -493,7 +493,7 @@ Component({
     searchSubmit() {
       const searchData = this.data.searchData;
       const app = getApp();
-      if (this.data.type == "monitor") {
+      if (this.data.type === "monitor") {
         app.globalData.monitorSearchData = searchData;
       } else {
         app.globalData.searchData = searchData;
@@ -588,7 +588,7 @@ Component({
         };
         let globalAreaName = "",
           globalAreaType = "";
-        if (this.properties.type == "monitor") {
+        if (this.data.type === "monitor") {
           globalAreaName = app.globalData.monitorSearchData.area;
           globalAreaType = app.globalData.monitorSearchData.areaType;
         } else {
@@ -607,7 +607,7 @@ Component({
           let areaName = position[1];
           let areaType = position[2];
           area[typeEnum[areaType]].length++;
-          if (areaName === globalAreaName && areaType == globalAreaType) {
+          if (areaName === globalAreaName && areaType === globalAreaType) {
             initSelect.initName = areaName;
             initSelect.initType = typeEnum[areaType];
             initSelect.initKey = index;
@@ -657,7 +657,7 @@ Component({
       });
     },
     goCity() {
-      if (this.properties.type == "monitor") {
+      if (this.data.type === "monitor") {
         return;
       }
       wx.navigateTo({
@@ -673,7 +673,7 @@ Component({
       let leaseType = wx.getStorageSync("leaseType");
       const app = getApp();
       let searchData = {};
-      if (this.properties.type == "monitor") {
+      if (this.data.type === "monitor") {
         searchData = Object.assign({}, app.globalData.monitorSearchData);
       } else {
         searchData = Object.assign({}, app.globalData.searchData);
@@ -686,9 +686,9 @@ Component({
         max = 0;
       for (const key in this.data.priceType) {
         const item = this.data.priceType[key];
-        if (item == searchData.minPrice) {
+        if (item === searchData.minPrice) {
           min = key;
-        } else if (item == searchData.maxPrice) {
+        } else if (item === searchData.maxPrice) {
           max = key;
         } else if (searchData.maxPrice === 99999) {
           max = 4;
@@ -720,12 +720,12 @@ Component({
   },
   observers: {
     cityName: function(city) {
-      if (!city || city == "--") {
+      if (!city || city === "--") {
         return;
       }
       let searchData = {};
       const app = getApp();
-      if (this.properties.type == "monitor") {
+      if (this.data.type === "monitor") {
         searchData = Object.assign({}, app.globalData.monitorSearchData);
       } else {
         searchData = Object.assign({}, app.globalData.searchData);
