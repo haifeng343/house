@@ -753,7 +753,8 @@ Page({
       sort,
       minPrice,
       maxPrice,
-      gueseNumber
+      gueseNumber,
+      advSort
     } = app.globalData.searchData;
     let searchData = this.data.searchData;
     searchData.gueseNumber = selectedNumber || -1;
@@ -775,6 +776,7 @@ Page({
     searchData.maxPrice = maxPrice || 99999;
     searchData.gueseNumber = gueseNumber || 1;
     searchData.equipment = app.globalData.searchData.equipment || [];
+    searchData.advSort = advSort;
     this.setData(
       {
         searchData,

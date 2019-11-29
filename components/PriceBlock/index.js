@@ -129,79 +129,81 @@ Component({
   },
   lifetimes: {
     ready() {
-      let long = 0;
-      const { priceType } = this.data;
-      let leftIndex = -1;
-      let rightIndex = -1;
-      Object.keys(priceType).forEach((key, index) => {
-        if (priceType[key] === this.data.min) {
-          leftIndex = index;
-        } else if (priceType[key] === this.data.max) {
-          rightIndex = index;
-        }
-
-        long += 1;
-      });
-      this.setData({ long });
-      this.createSelectorQuery()
-        .select(`.move-view`)
-        .boundingClientRect(rect => {
-          this.blockHalfWidth = rect.width / 2;
-        })
-        .exec();
-
-      this.createSelectorQuery()
-        .select(`.background-line`)
-        .boundingClientRect(rect => {
-          const containerWidth = rect.width;
-          const itemWidth = rect.width / (long - 1);
-          this.setData({
-            rightX: rightIndex > -1 ? rightIndex * itemWidth : containerWidth,
-            leftX: leftIndex > -1 ? leftIndex * itemWidth : 0,
-            containerWidth,
-            itemWidth,
-            isLoaded: true
-          });
-        })
-        .exec();
-
-      this.createSelectorQuery()
-        .select(`.container`)
-        .boundingClientRect(rect => {
-          this.containerLeft = rect.left;
-        })
-        .exec();
-
-      const xStream = touchendStream.pipe(
-        rxjs.operators.withLatestFrom(touchmoveStream, moveDirectionStream),
-        rxjs.operators.filter(
-          ([touchend]) => touchend === true && this.isMoved === true
-        ),
-        rxjs.operators.tap(() => (this.isMoved = false)),
-        rxjs.operators.map(([touchend, x, dir]) => [x, dir])
-      );
-
-      this.xSubscription = xStream.subscribe(([x, dir]) => {
-        const closestX =
-          Math.round(x / this.data.itemWidth) * this.data.itemWidth;
-        const min = Math.round(
-          (this.data.leftX / this.data.containerWidth) * (long - 1)
-        );
-        const max = Math.round(
-          (this.data.rightX / this.data.containerWidth) * (long - 1)
-        );
-        if (!isNaN(min) && !isNaN(max)) {
-          if (dir === "left") {
-            this.setData({
-              leftX: closestX
-            });
-          } else {
-            this.setData({
-              rightX: closestX
-            });
+      setTimeout(() => {
+        let long = 0;
+        const { priceType } = this.data;
+        let leftIndex = -1;
+        let rightIndex = -1;
+        Object.keys(priceType).forEach((key, index) => {
+          if (priceType[key] === this.data.min) {
+            leftIndex = index;
+          } else if (priceType[key] === this.data.max) {
+            rightIndex = index;
           }
-          this.triggerEvent("changePrice", { min, max });
-        }
+
+          long += 1;
+        });
+        this.setData({ long });
+        this.createSelectorQuery()
+          .select(`.move-view`)
+          .boundingClientRect(rect => {
+            this.blockHalfWidth = rect.width / 2;
+          })
+          .exec();
+
+        this.createSelectorQuery()
+          .select(`.background-line`)
+          .boundingClientRect(rect => {
+            const containerWidth = rect.width;
+            const itemWidth = rect.width / (long - 1);
+            this.setData({
+              rightX: rightIndex > -1 ? rightIndex * itemWidth : containerWidth,
+              leftX: leftIndex > -1 ? leftIndex * itemWidth : 0,
+              containerWidth,
+              itemWidth,
+              isLoaded: true
+            });
+          })
+          .exec();
+
+        this.createSelectorQuery()
+          .select(`.container`)
+          .boundingClientRect(rect => {
+            this.containerLeft = rect.left;
+          })
+          .exec();
+
+        const xStream = touchendStream.pipe(
+          rxjs.operators.withLatestFrom(touchmoveStream, moveDirectionStream),
+          rxjs.operators.filter(
+            ([touchend]) => touchend === true && this.isMoved === true
+          ),
+          rxjs.operators.tap(() => (this.isMoved = false)),
+          rxjs.operators.map(([touchend, x, dir]) => [x, dir])
+        );
+
+        this.xSubscription = xStream.subscribe(([x, dir]) => {
+          const closestX =
+            Math.round(x / this.data.itemWidth) * this.data.itemWidth;
+          const min = Math.round(
+            (this.data.leftX / this.data.containerWidth) * (long - 1)
+          );
+          const max = Math.round(
+            (this.data.rightX / this.data.containerWidth) * (long - 1)
+          );
+          if (!isNaN(min) && !isNaN(max)) {
+            if (dir === "left") {
+              this.setData({
+                leftX: closestX
+              });
+            } else {
+              this.setData({
+                rightX: closestX
+              });
+            }
+            this.triggerEvent("changePrice", { min, max });
+          }
+        });
       });
     },
     detached() {
