@@ -130,7 +130,7 @@ Component({
       maxPrice: 99999, //最高价
       sort: 0, //搜索方式 0推荐 1低价有限
       equipment: [],
-      advSort: 0
+      advSort: 1
     },
     area: {},
     positionList: [],
@@ -181,7 +181,6 @@ Component({
   methods: {
     handleSelectNumber(event) {
       const index = event.detail;
-      console.log(index);
       this.data.searchData.gueseNumber = index;
       // const optionList = this.data.optionList.map((item, itemIndex) => {
       //   if (index === itemIndex) {
@@ -494,7 +493,7 @@ Component({
     searchSubmit() {
       const searchData = this.data.searchData;
       const app = getApp();
-      if (this.properties.type == "monitor") {
+      if (this.data.type == "monitor") {
         app.globalData.monitorSearchData = searchData;
       } else {
         app.globalData.searchData = searchData;
@@ -721,7 +720,6 @@ Component({
   },
   observers: {
     cityName: function(city) {
-      console.log(city);
       if (!city || city == "--") {
         return;
       }

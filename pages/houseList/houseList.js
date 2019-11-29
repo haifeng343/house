@@ -69,7 +69,8 @@ Page({
     var houseSelect = this.selectComponent("#houseSelect");
     houseSelect.reSetData();
     this.setData({
-      showAdvance: false
+      showAdvance: false,
+      showAdvanceType: 0
     });
   },
   submitAdvance() {
