@@ -51,7 +51,8 @@ Page({
     editFlag: false,
     selectAllFlag: false,
     indexArr: [],
-    mSelect: 1 //1全部 2新上 3价格
+    mSelect: 1, //1全部 2新上 3价格
+    advSort:''
   },
   clickSelectItem(e) {
     var type = e.detail.type;
@@ -76,7 +77,8 @@ Page({
       allData: [],
       isBack:true,
       showUI: true,
-      editFlag: false
+      editFlag: false,
+      advSort: app.globalData.monitorSearchData.advSort
     })
     this.onShow();
   },
@@ -117,7 +119,7 @@ Page({
   },
   onShow: function () {
     //如果选择的结果与监控的条件不一样；就加载查询
-    this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true })
+    this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true, editFlag: false})
     if (this.data.isBack) { //isBack true表示是按确定按钮变化的
       // this.setData({
       //   loadingDisplay: 'block',
@@ -299,7 +301,7 @@ Page({
         maxPrice: monitorDetail.maxPrice,//最高价
         sort: monitorDetail.sortType,//搜索方式 1推荐 2低价有限
         equipment: monitorDetail.facilities && monitorDetail.facilities.split(',') || [],
-        advSort: monitorDetail.sortType 
+        advSort: this.data.advSort ? this.data.advSort:monitorDetail.sortType
       }
       //监控详情条件 ---监控默认条件
       app.globalData.monitorDefaultData = {
@@ -658,12 +660,9 @@ Page({
   deleteBatchItem() {
     let indexArr = this.data.indexArr
     if (indexArr.length == 0) {
-      wx.showToast({
-        title: '请先选择取消关注的房源',
-        icon: 'none',
-        duration: 2000,
-        mask: true
-      });
+      this.setData({
+        editFlag: false
+      })
       return;
     }
     this.setData({

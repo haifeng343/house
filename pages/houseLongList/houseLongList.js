@@ -81,6 +81,9 @@ Page({
   },
   onShow: function() {
     this.getUserInfo();
+    this.setData({
+      editFlag: false
+    })
   },
   submit(e) {
     //把改变的值重新
@@ -519,12 +522,9 @@ Page({
   deleteBatchItem() {
     let indexArr = this.data.indexArr
     if (indexArr.length == 0) {
-      wx.showToast({
-        title: '请先选择取消关注的房源',
-        icon: 'none',
-        duration: 2000,
-        mask: true
-      });
+      this.setData({
+        editFlag: false
+      })
       return;
     }
     this.setData({

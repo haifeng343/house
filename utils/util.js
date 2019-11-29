@@ -92,7 +92,7 @@ const objectDiff = (obj1, obj2)=>{
           }
         }
         //同为基础数据类型
-        if (typeof obj1[key] !== 'object' && typeof obj2[key] !== 'object' && obj1[key] !== obj2[key]) {
+        if (typeof obj1[key] !== 'object' && typeof obj2[key] !== 'object' && obj1[key] !== obj2[key] && key !='advSort') {
           return false;
         }
       }
