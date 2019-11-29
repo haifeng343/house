@@ -53,6 +53,9 @@ Page({
     this.getMonitorData();
   },
   onShow: function () {
+    this.setData({
+      editFlag: false
+    })
     this.getUserInfo();
   },
   onHouseShow(){
@@ -653,12 +656,9 @@ Page({
   deleteBatchItem() {
     let indexArr = this.data.indexArr
     if (indexArr.length == 0) {
-      wx.showToast({
-        title: '请先选择取消关注的房源',
-        icon: 'none',
-        duration: 2000,
-        mask: true
-      });
+      this.setData({
+        editFlag: false
+      })
       return;
     }
     this.setData({
