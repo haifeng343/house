@@ -2,8 +2,8 @@
   <view wx:if="{{!editFlag}}">
     <image bindtap="goEdit" class="top" src="../../assets/image/edit.png"></image>
   </view>
-  <view wx:else>
-    <image bindtap="goEdit" class="top" src="../../assets/image/edit_back.png"></image>
+  <view class="select_back" wx:else>
+    <view bindtap="goEdit" class="select_item active" style="margin-bottom:24rpx;margin-right:6rpx;">返回</view>
   </view>
 
   <view class="select_back" wx:if="{{listType}}">
