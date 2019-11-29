@@ -138,6 +138,7 @@ Page({
   changeSort() {
     var sort = this.data.searchData.sort;
     this.data.searchData.sort = sort === 1 ? 2 : 1;
+    this.data.searchData.advSort = sort === 1 ? 2 : 1;
     this.setData({
       searchData: this.data.searchData
     });
