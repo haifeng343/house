@@ -45,7 +45,7 @@
 
   <monitorDialog title="{{monitorTitle}}" fee="{{fee}}" ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorDisplay}}"></monitorDialog>
 
-  <advanceFilter class='{{showAdvance?"":"vhidden"}}' shownType='{{showAdvanceType}}' cityName='{{cityName}}' bind:submit='submitAdvance' />
+  <advanceFilter wx:if="{{showAdvance}}" shownType='{{showAdvanceType}}' cityName='{{cityName}}' bind:submit='submitAdvance' bind:onClose="handleCloseAdvance"/>
   <publicDialog style="display:{{publicDisplay}}" bind:publicEvent="getPublicEvent" bind:publicConfrimEvent="getPublicConfrimEvent"></publicDialog>
 
 

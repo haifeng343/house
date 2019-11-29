@@ -1,6 +1,6 @@
-import * as rxjs from '../../utils/rx.js';
+import * as rxjs from "../../utils/rx.js";
 const touchmoveStream = new rxjs.BehaviorSubject(0);
-const moveDirectionStream = new rxjs.BehaviorSubject('right');
+const moveDirectionStream = new rxjs.BehaviorSubject("right");
 const touchendStream = new rxjs.BehaviorSubject(false);
 
 Component({
@@ -9,7 +9,8 @@ Component({
     rightX: 0,
     containerWidth: 0,
     itemWidth: 0,
-    long: 0
+    long: 0,
+    isLoaded: false
   },
   properties: {
     priceType: {
@@ -31,7 +32,7 @@ Component({
   blockHalfWidth: 0,
   methods: {
     handleLeftTouchStart(event) {
-      moveDirectionStream.next('left');
+      moveDirectionStream.next("left");
       touchendStream.next(false);
       this.touchEnd = false;
     },
@@ -64,7 +65,7 @@ Component({
       this.touchEnd = true;
     },
     handleRightTouchStart(event) {
-      moveDirectionStream.next('right');
+      moveDirectionStream.next("right");
       touchendStream.next(false);
       this.touchEnd = false;
     },
@@ -90,13 +91,13 @@ Component({
         this.setData({
           leftX: pageX
         });
-        moveDirectionStream.next('left');
+        moveDirectionStream.next("left");
       } else {
         this.setData({
           rightX: pageX
         });
 
-        moveDirectionStream.next('right');
+        moveDirectionStream.next("right");
       }
 
       // in order to update data, must set isMoved to true
@@ -158,7 +159,8 @@ Component({
             rightX: rightIndex > -1 ? rightIndex * itemWidth : containerWidth,
             leftX: leftIndex > -1 ? leftIndex * itemWidth : 0,
             containerWidth,
-            itemWidth
+            itemWidth,
+            isLoaded: true
           });
         })
         .exec();
@@ -189,7 +191,7 @@ Component({
           (this.data.rightX / this.data.containerWidth) * (long - 1)
         );
         if (!isNaN(min) && !isNaN(max)) {
-          if (dir === 'left') {
+          if (dir === "left") {
             this.setData({
               leftX: closestX
             });
@@ -198,7 +200,7 @@ Component({
               rightX: closestX
             });
           }
-          this.triggerEvent('changePrice', { min, max });
+          this.triggerEvent("changePrice", { min, max });
         }
       });
     },

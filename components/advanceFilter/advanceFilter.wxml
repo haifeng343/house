@@ -6,7 +6,7 @@
   module.exports.checkHouseType = checkHouseType;
 </wxs>
 <view class="page" catchtouchmove="preventTouchMove">
-  <block wx:if='{{shownType == 1}}'>
+  <TopPanel wx:if='{{shownType === 1}}' bind:onClose="handleClosePanel">
     <scroll-view scroll-y class='search-content' enable-flex>
       <view class='search_item'>
         <view class='title icon_5'>人数</view>
@@ -14,19 +14,19 @@
       </view>
       <view class='search_item'>
         <view class='title icon_2'>户型</view>
-        <view class="houseType  {{checkHouseType.checkHouseType(searchData.houseType,index)?'active':''}}" wx:for-index="index" bindtap='selectHouseType' data-index='{{index}}' wx:key='{{item}}' wx:for='{{houseType}}'>
+        <view class="houseType  {{checkHouseType.checkHouseType(searchData.houseType,index) ? 'active':''}}" wx:for-index="index" bindtap='selectHouseType' data-index='{{index}}' wx:key='{{item}}' wx:for='{{houseType}}'>
           {{item}}
         </view>
       </view>
       <view class='search_item'>
         <view class='title icon_3'>出租类型</view>
-        <view class='leaseType {{searchData.leaseType==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectLeaseType' data-index='{{index}}' wx:for='{{leaseType}}'>
+        <view class='leaseType {{searchData.leaseType==index ? "active" : ""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectLeaseType' data-index='{{index}}' wx:for='{{leaseType}}'>
           {{item}}出租
         </view>
       </view>
       <view class='search_item'>
         <view class='title icon_4'>配套设施</view>
-        <view wx:for='{{equipments}}' bindtap='selectEquipments' data-index='{{key}}' class='equipments {{checkHouseType.checkHouseType(searchData.equipment,key)?"active":""}}' wx:for-index='key' wx:key='{{item}}'>
+        <view wx:for='{{equipments}}' bindtap='selectEquipments' data-index='{{key}}' class='equipments {{checkHouseType.checkHouseType(searchData.equipment,key) ? "active" : ""}}' wx:for-index='key' wx:key='{{item}}'>
           <view class="equipments-img icon-font uniE950" wx:if="{{key==1}}"></view>
           <view class="equipments-img icon-font uniE94F" wx:if="{{key==2}}"></view>
           <view class="equipments-img icon-font uniE94E" wx:if="{{key==3}}"></view>
@@ -38,48 +38,63 @@
         </view>
       </view>
     </scroll-view>
-    <view class="search-btn-back">
-      <view class='search-btn' bindtap='searchSubmit'>查询</view>
+    <view class='search-btn'>
+      <view class="button" bindtap='searchSubmit'>查看房源</view>
     </view>
-  </block>
-  <block wx:if='{{shownType == 2}}'>
-    <view class="postion-city">
-      <view class="position-cityname">当前城市：{{searchData.city}}  <text class="city-change {{type == 'monitor'?'gray':''}}" bindtap='goCity'>切换城市</text></view>
+  </TopPanel>
+  <TopPanel wx:if='{{shownType === 2}}' bind:onClose="handleClosePanel">
+    <view class="postion-content">
+      <view class="position-cityname">
+        当前城市：{{searchData.city}}
+        <text class="city-change {{type === 'monitor' ? 'gray':''}}" bindtap='goCity'>切换城市</text>
+      </view>
       <view class='position-content'>
         <scroll-view scroll-y class='position-type'>
-          <view class='item {{key==typeActive?"active":""}}' wx:if='{{item.length>0}}' wx:for='{{area}}' wx:for-index='key' wx:key='{{key}}' bindtap='chooseType' data-type='{{key}}'>
+          <view class='item {{key==typeActive ? "active" : ""}}' wx:if='{{item.length>0}}' wx:for='{{area}}' wx:for-index='key' wx:key='{{key}}' bindtap='chooseType' data-type='{{key}}'>
             {{item.name}}
           </view>
         </scroll-view>
         <scroll-view scroll-y class='position-middle'>
-          <view class='item {{key==middleActive?"active":""}}  {{lastList.length > 0?"":"last"}}' data-way='{{lastList.length > 0?"subway":""}}' wx:for='{{middleList}}' wx:key='{{key}}' wx:for-index='key' bindtap='chooseSecond' data-type='{{key}}'>
+          <view class='item {{key==middleActive ? "active" : ""}}  {{lastList.length > 0 ? "" : "last"}}' data-way='{{lastList.length > 0 ? "subway" : ""}}' wx:for='{{middleList}}' wx:key='{{key}}' wx:for-index='key' bindtap='chooseSecond' data-type='{{key}}'>
             {{item.name}}
           </view>
         </scroll-view>
         <scroll-view scroll-y class='position-last' wx:if='{{lastList.length > 0}}'>
-          <view class='item {{key === lastActive?"active":""}}' wx:for='{{lastList}}' wx:for-index='key' wx:key='{{key}}' bindtap='chooseLast' data-type='{{key}}'>
+          <view class='item {{key === lastActive ? "active" : ""}}' wx:for='{{lastList}}' wx:for-index='key' wx:key='{{key}}' bindtap='chooseLast' data-type='{{key}}'>
             {{item.name}}
           </view>
         </scroll-view>
-        <view class='search-btn position' bindtap='searchPositionSubmit'>查询</view>
+      </view>
+      <view class='search-btn'>
+        <view class="button" bindtap='searchPositionSubmit'>查看房源</view>
       </view>
     </view>
-  </block>
-  <block wx:if='{{shownType == 3}}'>
-    <view class='search-budget search-content'>
+  </TopPanel>
+  <TopPanel wx:if='{{shownType === 3}}' bind:onClose="handleClosePanel">
+    <view class='price-content'>
       <view class='search_item' style='margin-bottom:0;'>
-          <view class='title icon_1'>预算：{{priceText=="不限"?priceText:(priceText+'/晚')}}</view>
-          <view class='sort' bindtap='changeSort'>
-            <text class='icon-font uniE930 {{searchData.sort === 2?"active":""}}'></text>
-            低价优先
-          </view>
-          <view style="margin-top: 20rpx;">
-            <priceblock bind:changePrice='changePrices' priceType='{{priceType}}' min="{{searchData.minPrice}}" max="{{searchData.maxPrice}}" />
-          </view>
+        <view class='title icon_1'>预算：{{priceText=="不限" ? priceText:(priceText+'/晚')}}</view>
+        <view class='sort' bindtap='changeSort'>
+          <text class='icon-font uniE930 {{searchData.sort === 2 ? "active" : ""}}'></text>
+          低价优先
         </view>
+        <view style="margin-top: 20rpx;">
+          <priceblock bind:changePrice='changePrices' priceType='{{priceType}}' min="{{searchData.minPrice}}" max="{{searchData.maxPrice}}" />
+        </view>
+      </view>
     </view>
-    <view class="search-btn-back">
-      <view class='search-btn' bindtap='searchSubmit'>查询</view>
+    <view class='search-btn'>
+      <view class="button" bindtap='searchSubmit'>查看房源</view>
     </view>
-  </block>
+  </TopPanel>
+  <TopPanel wx:if='{{shownType === 4}}' bind:onClose="handleClosePanel">
+    <view class="sort-panel">
+      <view class="sort-list">
+        <view class="sort-item {{item.active ? 'active' : ''}}" wx:for="{{sortList}}" wx:key="{{item.label}}" bindtap="handleSelectSort" data-value="{{item.value}}">
+          <text>{{item.label}}</text>
+          <text class="icon-font uniE930" wx:if="{{item.active}}" />
+        </view>
+      </view>
+    </view>
+  </TopPanel>
 </view>

@@ -78,14 +78,6 @@
   flex-direction: column;
 }
 
-.sort-panel {
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 20rpx;
-}
-
 .content-wrapper {
   box-sizing: border-box;
   padding: 28rpx;
@@ -440,6 +432,14 @@
 .search-result-text .hightlight {
   color: #f1612a;
   font-weight: 500;
+}
+
+.sort-panel {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20rpx;
 }
 
 .sort-list {
