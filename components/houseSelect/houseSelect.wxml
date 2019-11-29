@@ -1,18 +1,21 @@
 <view class="house_select" catchtouchmove="preventTouchMove">
-    <view class="select_date" bindtap='goDate'>
-      <view>住:{{checkInDate}}</view>
-      <view>退:{{checkOutDate}}</view>
-    </view>
-    <view class="scenic_area {{showType==2?'active':''}}" bindtap='showLocationFilter'>
-      <view class="text">{{locationName}}</view>
-      <view class="triangle"></view>
-    </view>
-    <view class="budget {{showType==3?'active':''}}" bindtap='showBudgetFilter'>
-      <view class="text">{{budget}}</view>
-      <view class="triangle"></view>
-    </view>
-    <view class="filter {{showType==1?'active':''}}" bindtap='showAdvanceFilter'>
-      <view class="text">高级筛选</view>
-      <view class="triangle"></view>
-    </view>
+  <view class="select_date" bindtap='goDate'>
+    <view>住:{{checkInDate}}</view>
+    <view>退:{{checkOutDate}}</view>
   </view>
+  <view class="scenic_area {{showType === 2 ? 'active' : ''}}" bindtap='showLocationFilter'>
+    <view class="text">{{locationName}}</view>
+    <view class="triangle"></view>
+  </view>
+  <view class="budget {{showType === 3 ? 'active' : ''}}" bindtap='showBudgetFilter'>
+    <view class="text">{{budget}}</view>
+    <view class="triangle"></view>
+  </view>
+  <view class="filter {{showType === 1 ? 'active' : ''}}" bindtap='showAdvanceFilter'>
+    <view class="text">筛选</view>
+    <view class="triangle"></view>
+  </view>
+  <view class="sort {{showType === 4 ? 'active' : ''}}" bindtap='showSortFilter'>
+    <view class="icon-font uniE90B"></view>
+  </view>
+</view>

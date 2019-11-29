@@ -1,10 +1,10 @@
-const houseApi = require('../../api/houseApi.js');
-const userApi = require('../../api/userApi.js');
-const monitorApi = require('../../api/monitorApi.js');
-const util = require('../../utils/util.js');
-const monitor = require('../../utils/monitor.js');
-const house = require('../../utils/house.js');
-const regeneratorRuntime = require('../../lib/runtime.js');
+const houseApi = require("../../api/houseApi.js");
+const userApi = require("../../api/userApi.js");
+const monitorApi = require("../../api/monitorApi.js");
+const util = require("../../utils/util.js");
+const monitor = require("../../utils/monitor.js");
+const house = require("../../utils/house.js");
+const regeneratorRuntime = require("../../lib/runtime.js");
 import Http from "../../utils/http.js";
 const app = getApp();
 Page({
@@ -20,11 +20,11 @@ Page({
     allCount: 0,
     allData: [],
     allOriginalData: [],
-    tjFilterData:[],
+    tjFilterData: [],
     xzFilterData: [],
     mnFilterData: [],
     zgFilterData: [],
-    rowData:[],
+    rowData: [],
     lowPrice: 0,
     averagePrice: 0,
     lowPriceData: {},
@@ -32,223 +32,246 @@ Page({
     xzLowPriceData: {},
     mnLowPriceData: {},
     zgLowPriceData: {},
-    monitorenoughDisplay:'none',
-    monitorDisplay: 'none',
-    followDisplay: 'none',
+    monitorenoughDisplay: "none",
+    monitorDisplay: "none",
+    followDisplay: "none",
     ddCoin: 0,
-    loadingDisplay: 'block',
-    countFlag: '',
-    checkInDate: '--', //入住日期
-    checkOutDate: '--', //退日期
-    dayCount: 1,//入住天数
-    cityName: '--',
-    locationName: '全城',
-    publicDisplay: 'none',
+    loadingDisplay: "block",
+    countFlag: "",
+    checkInDate: "--", //入住日期
+    checkOutDate: "--", //退日期
+    dayCount: 1, //入住天数
+    cityName: "--",
+    locationName: "全城",
+    publicDisplay: "none",
     isBack: false,
-    enoughBottom:false,
+    enoughBottom: false,
     monitorBottom: false,
-    editFlag:false,
-    selectAllFlag:false,
-    indexArr:[]
+    editFlag: false,
+    selectAllFlag: false,
+    indexArr: []
   },
   clickSelectItem(e) {
     var type = e.detail.type;
     if (type) {
       this.setData({
         showAdvance: true,
-        showAdvanceType: type,
+        showAdvanceType: type
       });
     } else {
       this.setData({
         showAdvance: false,
-        showAdvanceType: 0,
+        showAdvanceType: 0
       });
     }
   },
-  submitAdvance() {
-    var houseSelect = this.selectComponent('#houseSelect');
+  handleCloseAdvance() {
+    var houseSelect = this.selectComponent("#houseSelect");
     houseSelect.reSetData();
-    console.log('查询完毕');
+    this.setData({
+      showAdvance: false
+    });
+  },
+  submitAdvance() {
+    var houseSelect = this.selectComponent("#houseSelect");
+    houseSelect.reSetData();
+    console.log("查询完毕");
     this.setData({
       showAdvance: false,
-      loadingDisplay: 'block',
-      countFlag: '',
+      loadingDisplay: "block",
+      countFlag: "",
       allData: [],
       showUI: true,
-      editFlag:false
+      editFlag: false
     });
     this.onLoad();
   },
   onLoad: function(options) {
-    let tjScreen = house.tjScreenParam(1)
-    let xzScreen = house.xzScreenParam(1)
-    let mnScreen = house.mnScreenPara(1)
-    let zgScreen = house.zgScreenPara(1)
-    let x = app.globalData.searchData
-    let budget = '';
-    if (x.minPrice == 0 && x.maxPrice == 99999){
-      budget = '不限'
+    let tjScreen = house.tjScreenParam(1);
+    let xzScreen = house.xzScreenParam(1);
+    let mnScreen = house.mnScreenPara(1);
+    let zgScreen = house.zgScreenPara(1);
+    let x = app.globalData.searchData;
+    let budget = "";
+    if (x.minPrice == 0 && x.maxPrice == 99999) {
+      budget = "不限";
     }
     if (x.minPrice == 0 && x.maxPrice < 99999) {
-      budget = '￥' + x.maxPrice+'以下'
+      budget = "￥" + x.maxPrice + "以下";
     }
     if (x.minPrice > 0 && x.maxPrice < 99999) {
-      budget = '￥' + x.minPrice+'-'+x.maxPrice 
+      budget = "￥" + x.minPrice + "-" + x.maxPrice;
     }
     if (x.minPrice > 0 && x.maxPrice == 99999) {
-      budget = '￥' + x.minPrice + '以上'
+      budget = "￥" + x.minPrice + "以上";
     }
     this.setData({
       tjfilter: tjScreen,
       xzfilter: xzScreen,
       mnfilter: mnScreen,
       zgfilter: zgScreen,
-      checkInDate: x.beginDate.split('-')[1] +'.' +x.beginDate.split('-')[2],
-      checkOutDate: x.endDate.split('-')[1] +'.' +x.endDate.split('-')[2],
+      checkInDate: x.beginDate.split("-")[1] + "." + x.beginDate.split("-")[2],
+      checkOutDate: x.endDate.split("-")[1] + "." + x.endDate.split("-")[2],
       dayCount: x.dayCount,
       cityName: x.city,
-      locationName: x.area || '全城',
+      locationName: x.area || "全城",
       budget: budget,
       sortType: x.sort
     });
-    this.getIndexHouseData()
+    this.getIndexHouseData();
     this.getAllData();
   },
   onShow: function() {
     this.getUserInfo();
     if (this.data.isBack) {
-      let x = app.globalData.searchData
+      let x = app.globalData.searchData;
       this.setData({
-        cityName: x.city,
-      })
+        cityName: x.city
+      });
     }
   },
-  goRefresh(){
+  goRefresh() {
     this.setData({
-      loadingDisplay: 'block',
-      countFlag: '',
-      allData: [],
+      loadingDisplay: "block",
+      countFlag: "",
+      allData: []
     });
-    this.onLoad()
+    this.onLoad();
   },
 
-  onReachBottom(){
-    console.log('到底了')
+  onReachBottom() {
+    console.log("到底了");
     this.setData({
-      loadingShow:true
-    })
-    if (this.data.allData < this.data.allOriginalData){
+      loadingShow: true
+    });
+    if (this.data.allData < this.data.allOriginalData) {
       let timers = setTimeout(() => {
-          this.addDataToArray()
-          clearTimeout(timers)
-      }, 500)
-    }else{
+        this.addDataToArray();
+        clearTimeout(timers);
+      }, 500);
+    } else {
       this.setData({
         loadingShow: false
-      })
-      if (this.data.allCount > 50){
+      });
+      if (this.data.allCount > 50) {
         if (!this.data.enoughBottom) {
-          if (this.data.editFlag) { return }
+          if (this.data.editFlag) {
+            return;
+          }
           this.setData({
-            monitorenoughDisplay:'block',
-            dialogTitle: '哎呀，到底了',
-            dialogText: '您已查看全部房源，更多房源可前往各平台查看。',
-            dialogBtn: '取消',
-            enoughBottom: true,
+            monitorenoughDisplay: "block",
+            dialogTitle: "哎呀，到底了",
+            dialogText: "您已查看全部房源，更多房源可前往各平台查看。",
+            dialogBtn: "取消",
+            enoughBottom: true
           });
         } else {
           wx.showToast({
-            title: '到底了',
-            icon: 'none',
+            title: "到底了",
+            icon: "none",
             duration: 2000
-          })
+          });
         }
       }
-      if (this.data.allCount <= 50 ){
+      if (this.data.allCount <= 50) {
         if (!this.data.monitorBottom) {
-          if(this.data.editFlag){return}
+          if (this.data.editFlag) {
+            return;
+          }
           this.setData({
-            monitorDisplay: 'block',
-            monitorTitle: '到底了!你可以开启监控',
-            monitorBottom: true,
+            monitorDisplay: "block",
+            monitorTitle: "到底了!你可以开启监控",
+            monitorBottom: true
           });
         } else {
           wx.showToast({
-            title: '到底了',
-            icon: 'none',
+            title: "到底了",
+            icon: "none",
             duration: 2000
-          })
+          });
         }
       }
     }
-    
   },
-  addDataToArray(){
-    if (this.data.allData.length < this.data.allOriginalData.length){
+  addDataToArray() {
+    if (this.data.allData.length < this.data.allOriginalData.length) {
       const index = this.data.allData.length;
-      const addArr = this.data.allOriginalData.slice(index,index+5);
+      const addArr = this.data.allOriginalData.slice(index, index + 5);
       const newArr = [].concat(this.data.allData).concat(addArr);
       this.setData({
         allData: newArr,
-        loadingShow:false
-      })
+        loadingShow: false
+      });
     }
   },
   onPageScroll(e) {
     this.setData({
       scrollTop: e.scrollTop,
       scrollIng: true
-    })
+    });
     let timer = setTimeout(() => {
       if (this.data.scrollTop === e.scrollTop) {
         this.setData({
           scrollTop: e.scrollTop,
           scrollIng: false
-        })
-        console.log('滚动结束')
-        clearTimeout(timer)
+        });
+        console.log("滚动结束");
+        clearTimeout(timer);
       }
-    }, 300)
+    }, 300);
   },
-  getIndexHouseData(){
-    Http.get('/indexHose.json').then(resp => {
-      const hourMoney = resp.data.hourMoney||1
-      wx.setStorageSync('hourMoney', hourMoney)
+  getIndexHouseData() {
+    Http.get("/indexHose.json").then(resp => {
+      const hourMoney = resp.data.hourMoney || 1;
+      wx.setStorageSync("hourMoney", hourMoney);
       this.setData({
         fee: hourMoney
-      })
-    })
+      });
+    });
   },
   async getAllData() {
-    wx.removeStorageSync('fddShortRentBlock');
+    wx.removeStorageSync("fddShortRentBlock");
     let tjDataObj = await house.getTjData(1, this.data.tjfilter);
     let xzDataObj = await house.getXzData(1, this.data.xzfilter);
     let mnDataObj = await house.getMnData(1, this.data.mnfilter);
     let zgDataObj = await house.getZgData(1, this.data.zgfilter);
-    if (tjDataObj.network && xzDataObj.network && mnDataObj.network && zgDataObj.network){
+    if (
+      tjDataObj.network &&
+      xzDataObj.network &&
+      mnDataObj.network &&
+      zgDataObj.network
+    ) {
       this.setData({
-        loadingDisplay: 'none',
-        countFlag: 2,
-      })
+        loadingDisplay: "none",
+        countFlag: 2
+      });
       return;
     }
-    let tjData = tjDataObj.arr||[];
+    let tjData = tjDataObj.arr || [];
     let xzData = xzDataObj.arr || [];
     let mnData = mnDataObj.arr || [];
-    let zgData = zgDataObj.arr||[];
+    let zgData = zgDataObj.arr || [];
     let enoughList = [];
-    if (tjDataObj.tjCount > -1) { enoughList.push({ key: 'tj',name:'途家', value: tjDataObj.tjCount})}
-    if (xzDataObj.xzCount > -1) { enoughList.push({ key: 'xz', name: '小猪',value: xzDataObj.xzCount }) }
-    if (mnDataObj.mnCount > -1) { enoughList.push({ key: 'mn', name: '木鸟', value: mnDataObj.mnCount }) }
-    if (zgDataObj.zgCount > -1) { enoughList.push({ key: 'zg', name: '榛果', value: zgDataObj.zgCount }) }
-    enoughList.sort(util.compareSort('value', 'desc'));
+    if (tjDataObj.tjCount > -1) {
+      enoughList.push({ key: "tj", name: "途家", value: tjDataObj.tjCount });
+    }
+    if (xzDataObj.xzCount > -1) {
+      enoughList.push({ key: "xz", name: "小猪", value: xzDataObj.xzCount });
+    }
+    if (mnDataObj.mnCount > -1) {
+      enoughList.push({ key: "mn", name: "木鸟", value: mnDataObj.mnCount });
+    }
+    if (zgDataObj.zgCount > -1) {
+      enoughList.push({ key: "zg", name: "榛果", value: zgDataObj.zgCount });
+    }
+    enoughList.sort(util.compareSort("value", "desc"));
     this.setData({
       tjCount: tjDataObj.tjCount,
       xzCount: xzDataObj.xzCount,
       mnCount: mnDataObj.mnCount,
       zgCount: zgDataObj.zgCount,
       enoughList
-    })
+    });
     let houseData = house.getHouseData({
       tjCount: tjDataObj.tjCount,
       xzCount: xzDataObj.xzCount,
@@ -258,16 +281,16 @@ Page({
       xzData,
       mnData,
       zgData,
-      type:1
-    })
+      type: 1
+    });
 
-    if (houseData.allCount > 0 && houseData.allData.length>0) {
+    if (houseData.allCount > 0 && houseData.allData.length > 0) {
       this.setData({
         countFlag: 1
       });
     } else {
       this.setData({
-        countFlag: 0,
+        countFlag: 0
       });
     }
 
@@ -287,12 +310,11 @@ Page({
       mnFilterData: houseData.mnFilterData,
       zgFilterData: houseData.zgFilterData,
       rowData: houseData.rowData,
-      loadingDisplay: 'none',
+      loadingDisplay: "none",
       isBack: false,
       enoughBottom: false,
-      monitorBottom: false,
-      },
-    );
+      monitorBottom: false
+    });
   },
   //跳转统计详情
   goToDetail() {
@@ -325,46 +347,46 @@ Page({
       sortType: this.data.sortType
     };
     wx.navigateTo({
-      url: '../statistics/statistics?rentType=1'
+      url: "../statistics/statistics?rentType=1"
     });
   },
   goEdit() {
     this.setData({
       editFlag: !this.data.editFlag
-    })
+    });
   },
   //不再关注
-  deleteItem(e){
-    let num = wx.getStorageSync('followNum');
-    if(!num){
+  deleteItem(e) {
+    let num = wx.getStorageSync("followNum");
+    if (!num) {
       this.setData({
-        followText: '取消关注后，该房源将不会在后续查询监控中出现！',
+        followText: "取消关注后，该房源将不会在后续查询监控中出现！",
         followType: 1,
-        followDisplay: 'block'
-      })
+        followDisplay: "block"
+      });
     }
-    let index = e.detail.index
-    let proId = this.data.allOriginalData[index].productId
-    let plaId = this.data.allOriginalData[index].platformId
-    let allData = [...this.data.allOriginalData]
+    let index = e.detail.index;
+    let proId = this.data.allOriginalData[index].productId;
+    let plaId = this.data.allOriginalData[index].platformId;
+    let allData = [...this.data.allOriginalData];
     //allData 不再关注之后 遗留的房源数据,b不再关注的房源，添加黑名单
-    let b = allData.splice(index,1)
-    let short = wx.getStorageSync('fddShortRentBlock') || [];
-    let shortBlock = short.concat(b)
-    wx.setStorageSync('fddShortRentBlock', shortBlock)
+    let b = allData.splice(index, 1);
+    let short = wx.getStorageSync("fddShortRentBlock") || [];
+    let shortBlock = short.concat(b);
+    wx.setStorageSync("fddShortRentBlock", shortBlock);
 
-    let houseData = house.houseShortFilter(allData)
+    let houseData = house.houseShortFilter(allData);
     this.setData({
-      allOriginalData:[],
-      allData:[]
-    })
+      allOriginalData: [],
+      allData: []
+    });
     if (allData.length > 0) {
       this.setData({
         countFlag: 1
       });
     } else {
       this.setData({
-        countFlag: 0,
+        countFlag: 0
       });
     }
     this.setData({
@@ -380,70 +402,73 @@ Page({
       tjFilterData: houseData.tjFilterData,
       xzFilterData: houseData.xzFilterData,
       mnFilterData: houseData.mnFilterData,
-      zgFilterData: houseData.zgFilterData,
-    })
+      zgFilterData: houseData.zgFilterData
+    });
   },
   //批量不再关注
-  deleteBatchItem(){
-    let indexArr = this.data.indexArr
-    if (indexArr.length == 0){
+  deleteBatchItem() {
+    let indexArr = this.data.indexArr;
+    if (indexArr.length == 0) {
       wx.showToast({
-        title: '请先选择取消关注的房源',
-        icon:'none',
+        title: "请先选择取消关注的房源",
+        icon: "none",
         duration: 2000,
-        mask:true
+        mask: true
       });
       return;
     }
     this.setData({
-      followText: '即将对'+this.data.selectNum+'套房源取消关注，取消后本次监控将不再获取该房源信息',
-      followType:2,
-      followDisplay: 'block'
-    })
+      followText:
+        "即将对" +
+        this.data.selectNum +
+        "套房源取消关注，取消后本次监控将不再获取该房源信息",
+      followType: 2,
+      followDisplay: "block"
+    });
   },
   //不再关注弹窗隐藏
-  followKnowEvent(e){
-    wx.setStorageSync('followNum', 1)
+  followKnowEvent(e) {
+    wx.setStorageSync("followNum", 1);
     this.setData({
       followDisplay: e.detail.show
-    })
+    });
   },
-  followCancelEvent(e){
-    if (e.detail.followType == 1){
-      wx.setStorageSync('followNum', 1)
+  followCancelEvent(e) {
+    if (e.detail.followType == 1) {
+      wx.setStorageSync("followNum", 1);
     }
     this.setData({
       followDisplay: e.detail.show
-    })
+    });
   },
   //批量不再关注弹窗确认
-  followConfirmEvent(e){
-    let indexArr = this.data.indexArr
-    let arr = [...this.data.allOriginalData]
+  followConfirmEvent(e) {
+    let indexArr = this.data.indexArr;
+    let arr = [...this.data.allOriginalData];
     //a 不再关注之后 遗留的房源数据
     let a = arr.filter((item, index) => {
-      return indexArr.indexOf(index) == -1
-    })
+      return indexArr.indexOf(index) == -1;
+    });
     //b 不再关注的房源，添加黑名单
     let b = arr.filter((item, index) => {
-      return indexArr.indexOf(index) > -1
-    })
-    let short = wx.getStorageSync('fddShortRentBlock') || [];
-    let shortBlock = short.concat(b)
-    wx.setStorageSync('fddShortRentBlock', shortBlock)
+      return indexArr.indexOf(index) > -1;
+    });
+    let short = wx.getStorageSync("fddShortRentBlock") || [];
+    let shortBlock = short.concat(b);
+    wx.setStorageSync("fddShortRentBlock", shortBlock);
 
-    let houseData = house.houseShortFilter(a)
+    let houseData = house.houseShortFilter(a);
     this.setData({
       allOriginalData: [],
       allData: []
-    })
+    });
     if (a.length > 0) {
       this.setData({
         countFlag: 1
       });
     } else {
       this.setData({
-        countFlag: 0,
+        countFlag: 0
       });
     }
     this.setData({
@@ -462,76 +487,76 @@ Page({
       zgFilterData: houseData.zgFilterData,
       editFlag: false,
       selectNum: 0,
-      followDisplay:e.detail.show
-    })
+      followDisplay: e.detail.show
+    });
   },
-  goToSelect(e){
-    let num =0
-    let indexArr = []
+  goToSelect(e) {
+    let num = 0;
+    let indexArr = [];
     let index = e.detail.index;
-    let item = 'allData[' + index + '].collection';
-    let items = 'allOriginalData[' + index + '].collection';
-    let a = [...this.data.allOriginalData]
+    let item = "allData[" + index + "].collection";
+    let items = "allOriginalData[" + index + "].collection";
+    let a = [...this.data.allOriginalData];
     this.setData({
       [item]: !this.data.allData[index].collection,
       [items]: !this.data.allOriginalData[index].collection
     });
     for (let i = 0; i < a.length; i++) {
-      if (a[i]['collection']){
-        num++
-        indexArr.push(i)
+      if (a[i]["collection"]) {
+        num++;
+        indexArr.push(i);
       }
     }
-    if (num == this.data.allOriginalData.length){
+    if (num == this.data.allOriginalData.length) {
       this.setData({
         selectAllFlag: true,
-        selectNum:num,
+        selectNum: num,
         indexArr
-      })
-    }else{
+      });
+    } else {
       this.setData({
         selectAllFlag: false,
         selectNum: num,
         indexArr
-      })
+      });
     }
   },
-  goToSelectAll(){
-    let num = 0
-    let indexArr = []
-    let d = [...this.data.allData]
-    let a = [...this.data.allOriginalData]
-    for(let i=0;i<d.length;i++){
-      d[i]['collection'] = !this.data.selectAllFlag
+  goToSelectAll() {
+    let num = 0;
+    let indexArr = [];
+    let d = [...this.data.allData];
+    let a = [...this.data.allOriginalData];
+    for (let i = 0; i < d.length; i++) {
+      d[i]["collection"] = !this.data.selectAllFlag;
     }
     for (let i = 0; i < a.length; i++) {
-      a[i]['collection'] = !this.data.selectAllFlag
-      indexArr.push(i)
+      a[i]["collection"] = !this.data.selectAllFlag;
+      indexArr.push(i);
     }
-    if (!this.data.selectAllFlag){
-      num = this.data.allOriginalData.length
-      indexArr
-    }else{
-      num = 0
-      indexArr = []
+    if (!this.data.selectAllFlag) {
+      num = this.data.allOriginalData.length;
+      indexArr;
+    } else {
+      num = 0;
+      indexArr = [];
     }
     this.setData({
-      allOriginalData:a,
-      allData:d,
+      allOriginalData: a,
+      allData: d,
       selectAllFlag: !this.data.selectAllFlag,
-      selectNum:num,
+      selectNum: num,
       indexArr
-    })
+    });
   },
   // 房源充足，到底和查看更多弹窗隐藏
   getEnoughEvent(e) {
     this.setData({
-      monitorenoughDisplay:e.detail
+      monitorenoughDisplay: e.detail
     });
   },
   getPublicEvent(e) {
     this.setData({
-      monitorDisplay: 'block',
+      monitorDisplay: "block",
       publicDisplay: e.detail
     });
   },
@@ -540,7 +565,7 @@ Page({
       publicDisplay: e.detail
     });
     wx.navigateTo({
-      url: '../public/public'
+      url: "../public/public"
     });
   },
   //获取用户信息，盯盯币，是否绑定微信公众号 和 手机绑定
@@ -557,25 +582,28 @@ Page({
   //开启监控
   startMonitor() {
     let count = this.data.allCount;
-    let app = getApp()
+    let app = getApp();
     if (count > 50) {
       this.setData({
-        monitorenoughDisplay:'block',
-        dialogTitle:'房源充足',
-        dialogText: '已帮您甄选' + this.data.allOriginalData.length + '套房源，若想查看更多房源，请点击前往各平台查看',
-        dialogBtn:'知道了'
+        monitorenoughDisplay: "block",
+        dialogTitle: "房源充足",
+        dialogText:
+          "已帮您甄选" +
+          this.data.allOriginalData.length +
+          "套房源，若想查看更多房源，请点击前往各平台查看",
+        dialogBtn: "知道了"
       });
     } else {
       if (!this.data.bindPhone && !app.globalData.isUserBindPhone) {
         // 数据绑定手机号，如果未绑定，跳转到手机号绑定页面
         wx.navigateTo({
-          url: '../bindPhone/bindPhone'
+          url: "../bindPhone/bindPhone"
         });
         return;
       }
       this.setData({
-        monitorDisplay: 'block',
-        monitorTitle: '房源监控确认',
+        monitorDisplay: "block",
+        monitorTitle: "房源监控确认"
       });
     }
   },
@@ -587,11 +615,11 @@ Page({
   },
   //开启监控确认
   getmonitorConfirmEvent(e) {
-    let app = getApp()
+    let app = getApp();
     if (!this.data.bindPhone && !app.globalData.isUserBindPhone) {
       // 数据绑定手机号，如果未绑定，跳转到手机号绑定页面
       wx.navigateTo({
-        url: '../bindPhone/bindPhone'
+        url: "../bindPhone/bindPhone"
       });
       return;
     }
@@ -603,13 +631,13 @@ Page({
   //开启监控--未关注公众号时
   getMonitorPublicEvent(e) {
     this.setData({
-      monitorDisplay: 'none',
-      publicDisplay: e.detail,
+      monitorDisplay: "none",
+      publicDisplay: e.detail
     });
   },
   // 添加监控，开启监控
   getStartMonitor(noteSelect, publicSelect) {
-    let data={
+    let data = {
       noteSelect,
       publicSelect,
       rowData: this.data.rowData,
@@ -619,11 +647,11 @@ Page({
       tjCount: this.data.tjCount,
       xzCount: this.data.xzCount,
       mnCount: this.data.mnCount,
-      zgCount: this.data.zgCount,
-    }
-    let addData = house.addMonitorData(data)
+      zgCount: this.data.zgCount
+    };
+    let addData = house.addMonitorData(data);
     wx.showLoading({
-      title: '正在添加监控...',
+      title: "正在添加监控...",
       mask: true
     });
     monitorApi.addMonitor(addData).then(res => {
@@ -634,8 +662,8 @@ Page({
       });
       app.switchRent = 1;
       wx.switchTab({
-        url: '../monitor/monitor'
+        url: "../monitor/monitor"
       });
     });
-  },
+  }
 });

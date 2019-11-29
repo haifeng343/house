@@ -1,4 +1,4 @@
-<view class="container">
+<view class="container {{isLoaded ? '' : 'hidden'}}">
   <view class="background-line">
     <view class='scale scale{{key}}  scale{{key === long-1 ? "last" : ""}}' wx:for='{{priceType}}' wx:key="{{item}}" wx:for-index='key' style='left:{{itemWidth * key}}px;' catchtap="handleGotoPrice" data-index="{{key}}">
       <view class='text'>{{key === '0' ? '￥' : ''}}{{item === 99999 ? '不限' : item}}</view>

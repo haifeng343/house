@@ -1,16 +1,16 @@
-import Http from '../../utils/http';
-import { SearchDataSubject } from '../../utils/searchDataStream';
+import Http from "../../utils/http";
+import { SearchDataSubject } from "../../utils/searchDataStream";
 
 const typeEnum = {
-  11: 'secnic',
-  12: 'highschool',
-  13: 'airport',
-  14: 'hospital',
-  15: 'buiness',
-  16: 'area',
-  17: 'subway',
-  18: 'airport',
-  10: 'all'
+  11: "secnic",
+  12: "highschool",
+  13: "airport",
+  14: "hospital",
+  15: "buiness",
+  16: "area",
+  17: "subway",
+  18: "airport",
+  10: "all"
 };
 
 Component({
@@ -19,146 +19,159 @@ Component({
    */
   properties: {
     shownType: {
-      type: String
+      type: Number
     },
     type: {
-      type: String
+      type: Number
     },
     cityName: {
       type: String
     }
   },
   data: {
-    priceText: '',
-    priceType: '',
+    priceText: "",
+    priceType: "",
     houseType: {},
     leaseType: {},
     isLoaded: false,
+    sortList: [
+      {
+        label: "价格从低到高",
+        value: 2,
+        active: false
+      },
+      {
+        label: "价格从高到低",
+        value: 3,
+        active: false
+      }
+    ],
     optionList: [
       {
         value: 1,
-        label: '1人',
+        label: "1人",
         active: false
       },
       {
         value: 2,
-        label: '2人',
+        label: "2人",
         active: false
       },
       {
         value: 3,
-        label: '3人',
+        label: "3人",
         active: false
       },
       {
         value: 4,
-        label: '4人',
+        label: "4人",
         active: false
       },
       {
         value: 5,
-        label: '5人',
+        label: "5人",
         active: false
       },
       {
         value: 6,
-        label: '6人',
+        label: "6人",
         active: false
       },
       {
         value: 7,
-        label: '7人',
+        label: "7人",
         active: false
       },
       {
         value: 8,
-        label: '8人',
+        label: "8人",
         active: false
       },
       {
         value: 9,
-        label: '9人',
+        label: "9人",
         active: false
       },
       {
         value: 10,
-        label: '10人+',
+        label: "10人+",
         active: false
       },
       {
         value: -1,
-        label: '不限',
+        label: "不限",
         active: false
       }
     ],
     priceType: {
-      '0': 0,
-      '1': 200,
-      '2': 300,
-      '3': 400,
-      '4': 500,
-      '5': 600,
-      '6': 99999
+      "0": 0,
+      "1": 200,
+      "2": 300,
+      "3": 400,
+      "4": 500,
+      "5": 600,
+      "6": 99999
     },
     equipments: {},
     searchData: {
-      cityType: '',
-      area: '',
+      cityType: "",
+      area: "",
       areaId: {},
-      areaType: '',
-      city: '', //城市名
+      areaType: "",
+      city: "", //城市名
       cityId: {}, //城市ID
-      beginDate: '', //开始日期
-      endDate: '', //离开日期
+      beginDate: "", //开始日期
+      endDate: "", //离开日期
       dayCount: 0,
       gueseNumber: 1, //入住人数
-      leaseType: '', //房间类型  0单间 1整租
+      leaseType: "", //房间类型  0单间 1整租
       houseType: [], //户型 0 一居室 1 二居室 2 三居室 3 4居以上
       minPrice: 0, //最低价
       maxPrice: 99999, //最高价
       sort: 0, //搜索方式 0推荐 1低价有限
-      equipment: []
+      equipment: [],
+      advSort: 0
     },
     area: {},
     positionList: [],
-    typeActive: '',
+    typeActive: "",
     middleList: [],
-    middleActive: '',
+    middleActive: "",
     lastList: [],
-    lastActive: '',
+    lastActive: "",
     initAreaData: {
       secnic: {
-        name: '景点',
+        name: "景点",
         data: {},
         length: 0
       },
       highschool: {
-        name: '高校',
+        name: "高校",
         data: {},
         length: 0
       },
       airport: {
-        name: '机场/车站',
+        name: "机场/车站",
         data: {},
         length: 0
       },
       hospital: {
-        name: '医院',
+        name: "医院",
         data: {},
         length: 0
       },
       buiness: {
-        name: '商圈',
+        name: "商圈",
         data: {},
         length: 0
       },
       area: {
-        name: '行政区',
+        name: "行政区",
         data: {},
         length: 0
       },
       subway: {
-        name: '地铁',
+        name: "地铁",
         data: {},
         length: 0
       }
@@ -168,7 +181,7 @@ Component({
   methods: {
     handleSelectNumber(event) {
       const index = event.detail;
-      console.log(index)
+      console.log(index);
       this.data.searchData.gueseNumber = index;
       // const optionList = this.data.optionList.map((item, itemIndex) => {
       //   if (index === itemIndex) {
@@ -185,33 +198,40 @@ Component({
       });
     },
     chooseType(event) {
-      let type = '';
+      let type = "";
       let key = this.data.middleActive;
       if (event) {
         type = event.currentTarget.dataset.type;
       } else {
         type = this.data.initSelect.initType;
-        if (type == 'subway') {
-          for (var keys in this.data.area[type].data[this.data.initSelect.initLine]) {
-            if (this.data.area[type].data[this.data.initSelect.initLine][keys].name == this.data.initSelect.initName) {
-              key = keys
+        if (type == "subway") {
+          for (var keys in this.data.area[type].data[
+            this.data.initSelect.initLine
+          ]) {
+            if (
+              this.data.area[type].data[this.data.initSelect.initLine][keys]
+                .name == this.data.initSelect.initName
+            ) {
+              key = keys;
             }
           }
         } else {
-
           for (var keys in this.data.area[type].data) {
-            if (this.data.area[type].data[keys].name == this.data.initSelect.initName) {
-              key = keys
+            if (
+              this.data.area[type].data[keys].name ==
+              this.data.initSelect.initName
+            ) {
+              key = keys;
             }
           }
         }
       }
-      if (type === 'subway') {
+      if (type === "subway") {
         let middleList = {};
-        let lineName = '';
+        let lineName = "";
         for (let item in this.data.area.subway.data) {
           if (!lineName) {
-            lineName = item
+            lineName = item;
           }
           middleList[item] = {
             name: item,
@@ -224,14 +244,19 @@ Component({
             typeActive: type
           },
           () => {
-            this.chooseSecond({
-              currentTarget: {
-                dataset: {
-                  type: event ? lineName : this.data.initSelect.initLine,
-                  station: event ? Object.keys(this.data.area.subway.data[lineName])[0] :key
+            this.chooseSecond(
+              {
+                currentTarget: {
+                  dataset: {
+                    type: event ? lineName : this.data.initSelect.initLine,
+                    station: event
+                      ? Object.keys(this.data.area.subway.data[lineName])[0]
+                      : key
+                  }
                 }
-              }
-            }, 'subway');
+              },
+              "subway"
+            );
           }
         );
       } else {
@@ -246,51 +271,57 @@ Component({
     chooseSecond(event, way) {
       var data = event.currentTarget.dataset;
       let type = data.type;
-      this.setData({
-        lastList: this.data.middleList[type].line || {},
-        middleActive: type
-      }, () => {
-        if (way == 'subway' && data.type == this.data.initSelect.initLine && data.station == this.data.initSelect.initKey) {
-          this.chooseLast({
-            currentTarget: {
-              dataset: {
-                type: data.station
+      this.setData(
+        {
+          lastList: this.data.middleList[type].line || {},
+          middleActive: type
+        },
+        () => {
+          if (
+            way == "subway" &&
+            data.type == this.data.initSelect.initLine &&
+            data.station == this.data.initSelect.initKey
+          ) {
+            this.chooseLast({
+              currentTarget: {
+                dataset: {
+                  type: data.station
+                }
               }
-            }
-          });
-        } else {
-          // this.chooseLast({
-          //   currentTarget: {
-          //     dataset: {
-          //       type: Object.keys(this.data.lastList)[0]
-          //     }
-          //   }
-          // });
+            });
+          } else {
+            // this.chooseLast({
+            //   currentTarget: {
+            //     dataset: {
+            //       type: Object.keys(this.data.lastList)[0]
+            //     }
+            //   }
+            // });
+          }
         }
-      });
+      );
     },
     chooseLast(event) {
-      let type = event.currentTarget.dataset.type||'';
+      let type = event.currentTarget.dataset.type || "";
       this.setData({
         lastActive: type
       });
     },
     checkPositionId(name) {
-      Http.post('/selectPlatDate.json', {
+      Http.post("/selectPlatDate.json", {
         param: name
       }).then(resp => {
         let data = resp.data;
         let info = JSON.parse(data.json);
         let searchData = this.data.searchData;
-        if (data.lineId) {//地铁
+        if (data.lineId) {
+          //地铁
           searchData.area = data.stations;
-          searchData.areaType = '17';
+          searchData.areaType = "17";
         } else {
-
           searchData.areaType = data.type.toString();
           searchData.area = data.name;
         }
-
 
         if (data.type == 16) {
           //行政区  只有areaid
@@ -302,10 +333,10 @@ Component({
           };
         } else {
           searchData.ltude = {
-            mn: info.mn && info.mn.lat + ',' + info.mn.lng,
-            tj: info.tj && info.tj.latitude + ',' + info.tj.longitude,
-            xz: info.xz && info.xz.latitude + ',' + info.xz.longitude,
-            zg: info.zg && info.zg.latitude + ',' + info.zg.longitude
+            mn: info.mn && info.mn.lat + "," + info.mn.lng,
+            tj: info.tj && info.tj.latitude + "," + info.tj.longitude,
+            xz: info.xz && info.xz.latitude + "," + info.xz.longitude,
+            zg: info.zg && info.zg.latitude + "," + info.zg.longitude
           };
           searchData.areaId = {
             mn: info.mn && info.mn.id,
@@ -316,7 +347,7 @@ Component({
         }
 
         const app = getApp();
-        if (this.properties.type == 'monitor') {
+        if (this.properties.type == "monitor") {
           app.globalData.monitorSearchData = Object.assign({}, searchData);
         } else {
           app.globalData.searchData = Object.assign({}, searchData);
@@ -327,7 +358,7 @@ Component({
             searchData
           },
           () => {
-            this.triggerEvent('submit');
+            this.triggerEvent("submit");
           }
         );
       });
@@ -336,7 +367,7 @@ Component({
       let index = event.currentTarget.dataset.index;
       let searchData = this.data.searchData;
       if (searchData.leaseType == index) {
-        searchData.leaseType = '';
+        searchData.leaseType = "";
       } else {
         searchData.leaseType = Number(index);
       }
@@ -382,12 +413,12 @@ Component({
     searchPositionSubmit() {
       if (Object.values(this.data.middleList).length <= 0) {
         let searchData = this.data.searchData;
-        searchData.areaType = '';
-        searchData.area = '';
+        searchData.areaType = "";
+        searchData.area = "";
         searchData.ltude = {};
         searchData.areaId = {};
         const app = getApp();
-        if (this.properties.type == 'monitor') {
+        if (this.properties.type == "monitor") {
           app.globalData.monitorSearchData = Object.assign({}, searchData);
         } else {
           app.globalData.searchData = Object.assign({}, searchData);
@@ -398,20 +429,20 @@ Component({
             searchData
           },
           () => {
-            this.triggerEvent('submit');
+            this.triggerEvent("submit");
           }
         );
       } else if (Object.values(this.data.lastList).length <= 0) {
         if (this.data.middleActive == 0) {
           let searchData = this.data.searchData;
 
-          searchData.areaType = '';
-          searchData.area = '';
+          searchData.areaType = "";
+          searchData.area = "";
           searchData.areaId = {};
           searchData.ltude = {};
 
           const app = getApp();
-          if (this.properties.type == 'monitor') {
+          if (this.properties.type == "monitor") {
             app.globalData.monitorSearchData = Object.assign({}, searchData);
           } else {
             app.globalData.searchData = Object.assign({}, searchData);
@@ -422,11 +453,13 @@ Component({
               searchData
             },
             () => {
-              this.triggerEvent('submit');
+              this.triggerEvent("submit");
             }
           );
         } else {
-          let fullname = this.data.positionList[this.data.middleActive] || this.data.positionList[this.data.lastActive];
+          let fullname =
+            this.data.positionList[this.data.middleActive] ||
+            this.data.positionList[this.data.lastActive];
           this.checkPositionId(fullname);
         }
       } else {
@@ -434,16 +467,40 @@ Component({
         this.checkPositionId(fullname);
       }
     },
+    handleSelectSort(event) {
+      const { value } = event.currentTarget.dataset;
+
+      const sortItem = this.data.sortList.find(item => item.value === value);
+
+      if (sortItem.active === false) {
+        this.setData({
+          sortList: this.data.sortList.map(item => {
+            if (item === sortItem) {
+              item.active = true;
+            } else {
+              item.active = false;
+            }
+            return item;
+          }),
+          "searchData.advSort": value
+        });
+
+        this.searchSubmit();
+      }
+    },
+    handleClosePanel() {
+      this.triggerEvent("onClose");
+    },
     searchSubmit() {
       const searchData = this.data.searchData;
       const app = getApp();
-      if (this.properties.type == 'monitor') {
+      if (this.properties.type == "monitor") {
         app.globalData.monitorSearchData = searchData;
       } else {
         app.globalData.searchData = searchData;
         SearchDataSubject.next();
       }
-      this.triggerEvent('submit');
+      this.triggerEvent("submit");
     },
     changePrices(price) {
       this.data.searchData.minPrice = parseInt(
@@ -456,19 +513,19 @@ Component({
       for (const key in this.data.priceType) {
         length++;
       }
-      let priceText = '';
+      let priceText = "";
       if (price.detail.min === 0 && price.detail.max >= length - 1) {
-        priceText = '不限';
+        priceText = "不限";
       } else if (price.detail.min !== 0 && price.detail.max === length - 1) {
-        priceText = '￥' + this.data.priceType[price.detail.min] + '以上';
+        priceText = "￥" + this.data.priceType[price.detail.min] + "以上";
       } else if (price.detail.min === 0 && price.detail.max !== length - 1) {
-        priceText = '￥' + this.data.priceType[price.detail.max] + '以下';
+        priceText = "￥" + this.data.priceType[price.detail.max] + "以下";
       } else if (price.detail.min !== 0 && price.detail.max !== length - 1) {
         priceText =
-          '￥' +
+          "￥" +
           this.data.priceType[price.detail.min] +
-          '-' +
-          '￥' +
+          "-" +
+          "￥" +
           this.data.priceType[price.detail.max];
       }
       this.setData({
@@ -478,14 +535,13 @@ Component({
     },
     getHotPosition() {
       const app = getApp();
-      console.log(this.properties.shownType)
-      if (this.properties.shownType === '2'){
+      if (this.data.shownType === 2) {
         wx.showLoading({
-          title: '加载中',
+          title: "加载中",
           mask: true
         });
       }
-      Http.get('/indexPosition.json', {
+      Http.get("/indexPosition.json", {
         cityName: this.data.city
       }).then(rslt => {
         wx.hideLoading();
@@ -496,44 +552,44 @@ Component({
         });
         let area = {
           secnic: {
-            name: '景点',
+            name: "景点",
             data: {},
             length: 0
           },
           highschool: {
-            name: '高校',
+            name: "高校",
             data: {},
             length: 0
           },
           airport: {
-            name: '机场/车站',
+            name: "机场/车站",
             data: {},
             length: 0
           },
           hospital: {
-            name: '医院',
+            name: "医院",
             data: {},
             length: 0
           },
           buiness: {
-            name: '商圈',
+            name: "商圈",
             data: {},
             length: 0
           },
           area: {
-            name: '行政区',
+            name: "行政区",
             data: {},
             length: 1
           },
           subway: {
-            name: '地铁',
+            name: "地铁",
             data: {},
             length: 0
           }
         };
-        let globalAreaName = '',
-          globalAreaType = '';
-        if (this.properties.type == 'monitor') {
+        let globalAreaName = "",
+          globalAreaType = "";
+        if (this.properties.type == "monitor") {
           globalAreaName = app.globalData.monitorSearchData.area;
           globalAreaType = app.globalData.monitorSearchData.areaType;
         } else {
@@ -541,13 +597,13 @@ Component({
           globalAreaType = app.globalData.searchData.areaType;
         }
         let initSelect = {
-          initName: '',
-          initType: '',
-          initKey: ''
+          initName: "",
+          initType: "",
+          initKey: ""
         };
-        let randomKey = '';
+        let randomKey = "";
         data.map((item, index) => {
-          let position = item.split('_');
+          let position = item.split("_");
           let cityName = position[0];
           let areaName = position[1];
           let areaType = position[2];
@@ -574,19 +630,19 @@ Component({
             area[typeEnum[areaType]].data[lineType][index] = {
               name: areaName
             };
-            area[typeEnum[areaType]].data[lineType].length++
+            area[typeEnum[areaType]].data[lineType].length++;
           }
         });
         if (!globalAreaName && !globalAreaType) {
-          initSelect.initType = area.area.length > 1 ? 'area' : randomKey;
-          initSelect.initName = area.area.length > 1 ? '全城' : '';
-          initSelect.initKey = area.area.length > 1 ? '0' : '';
+          initSelect.initType = area.area.length > 1 ? "area" : randomKey;
+          initSelect.initName = area.area.length > 1 ? "全城" : "";
+          initSelect.initKey = area.area.length > 1 ? "0" : "";
         }
-        if(area.subway.length){
+        if (area.subway.length) {
           let keysSorted = Object.keys(area.subway.data).sort();
           let newSubway = {};
-          for(let i=0;i<keysSorted.length;i++){
-            newSubway[keysSorted[i]]=area.subway.data[keysSorted[i]];
+          for (let i = 0; i < keysSorted.length; i++) {
+            newSubway[keysSorted[i]] = area.subway.data[keysSorted[i]];
           }
           area.subway.data = newSubway;
         }
@@ -602,21 +658,23 @@ Component({
       });
     },
     goCity() {
-      if (this.properties.type == 'monitor') { return }
+      if (this.properties.type == "monitor") {
+        return;
+      }
       wx.navigateTo({
-        url: '/pages/citySelect/citySelect'
+        url: "/pages/citySelect/citySelect"
       });
     },
-    preventTouchMove(){}
+    preventTouchMove() {}
   },
   lifetimes: {
     ready() {
-      let houseType = wx.getStorageSync('houseType');
-      let equipments = wx.getStorageSync('equipments');
-      let leaseType = wx.getStorageSync('leaseType');
+      let houseType = wx.getStorageSync("houseType");
+      let equipments = wx.getStorageSync("equipments");
+      let leaseType = wx.getStorageSync("leaseType");
       const app = getApp();
       let searchData = {};
-      if (this.properties.type == 'monitor') {
+      if (this.properties.type == "monitor") {
         searchData = Object.assign({}, app.globalData.monitorSearchData);
       } else {
         searchData = Object.assign({}, app.globalData.searchData);
@@ -643,7 +701,15 @@ Component({
         optionList,
         houseType,
         equipments,
-        leaseType
+        leaseType,
+        sortList: this.data.sortList.map(item => {
+          if (item.value === searchData.advSort) {
+            item.active = true;
+          } else {
+            item.active = false;
+          }
+          return item;
+        })
       });
       this.changePrices({
         detail: {
@@ -655,13 +721,13 @@ Component({
   },
   observers: {
     cityName: function(city) {
-      console.log(city)
-      if (!city || city == '--') {
+      console.log(city);
+      if (!city || city == "--") {
         return;
       }
       let searchData = {};
       const app = getApp();
-      if (this.properties.type == 'monitor') {
+      if (this.properties.type == "monitor") {
         searchData = Object.assign({}, app.globalData.monitorSearchData);
       } else {
         searchData = Object.assign({}, app.globalData.searchData);

@@ -1,7 +1,8 @@
 {
-    "component": true,
-    "usingComponents": {
-        "priceblock": "/components/PriceBlock/index",
-        "MovableSelect": "/components/MovableSelect/index"
-    }
+  "component": true,
+  "usingComponents": {
+    "priceblock": "/components/PriceBlock/index",
+    "MovableSelect": "/components/MovableSelect/index",
+    "TopPanel": "../TopPanel/index"
+  }
 }

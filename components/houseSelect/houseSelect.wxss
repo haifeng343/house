@@ -1,65 +1,98 @@
-.house_select{
+@import "../../assets/styles/font.wxss";
+
+.house_select {
   display: flex;
   align-items: center;
   height: 100rpx;
-  background: #FFFFFF;
+  background: #ffffff;
   color: #1d1d1d;
   font-weight: bold;
-  border-top:1rpx solid #E8E8E8;
+  border-top: 1rpx solid #e8e8e8;
   position: relative;
   z-index: 112;
 }
-.house_select .select_date{
-  width: 19%;
+.house_select .select_date {
+  width: 14 0rpx;
+  height: 100%;
   padding-left: 20rpx;
   box-sizing: border-box;
-}
-.house_select .budget{
-  width: 25%;
-  text-align: center;
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding-right: 16rpx;
-  box-sizing: border-box;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  flex: 0 0 140rpx;
 }
-.house_select .scenic_area{
-  width: 32%;
+.house_select .budget {
+  flex: 0 0 160rpx;
+  width: 160rpx;
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding-right: 16rpx;
-  box-sizing: border-box;
-}
-.house_select .filter{
-  width: 24%;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding-right: 20rpx;
-  text-align: center;
+  align-items: center;
+  height: 100%;
   white-space: nowrap;
   box-sizing: border-box;
+  position: relative;
+  padding: 0 20rpx;
 }
-.house_select .budget .triangle,.house_select .filter .triangle,.house_select .scenic_area .triangle{
+.house_select .scenic_area {
+  flex: 0 0 160rpx;
+  width: 160rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  box-sizing: border-box;
+  position: relative;
+  padding: 0 20rpx;
+}
+.house_select .filter {
+  flex: 0 0 160rpx;
+  width: 160rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+  white-space: nowrap;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.triangle {
+  position: absolute;
+  right: 0;
+  top: 50%;
   width: 0;
   height: 0;
   border: 12rpx solid;
   margin-left: 10rpx;
   border-right: 0;
-  border-color: transparent transparent #1D1D1D;
+  border-color: transparent transparent #1d1d1d;
 }
 .house_select .active {
-  color: #F1612A;
+  color: #f1612a;
 }
 .house_select .active .triangle {
-  border-color: transparent transparent #F1612A;
+  border-color: transparent transparent #f1612a;
 }
 
-.house_select .budget .text, .house_select .scenic_area .text {
+.house_select .text,
+.house_select .text {
   flex: 1;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   white-space: nowrap;
   text-align: center;
+}
+
+.uniE90B {
+  font-size: 32rpx;
+  position: relative;
+  top: 4rpx;
+}
+
+.house_select .sort {
+  width: 130rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
