@@ -22,7 +22,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    list: ['全部', '新上', '降价'],
+    show: false
   },
 
   /**
@@ -30,7 +31,20 @@ Component({
    */
   methods: {
     goEdit(){
-      this.triggerEvent('editEvent', '');
+      this.triggerEvent('editEvent', '')
+    },
+    showSelsect() {
+      this.setData({
+        show: !this.data.show
+      })
+    },
+    changeSelect(event) {
+      this.setData({
+        show: false
+      })
+      let index = +event.currentTarget.dataset.index
+      console.log(index)
+      // this.triggerEvent('editEvent', '')
     }
   }
 })
