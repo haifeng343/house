@@ -130,9 +130,6 @@ Page({
         cityName: x.city
       });
     }
-    this.setData({
-      editFlag: false
-    })
   },
   goRefresh() {
     this.setData({
@@ -350,14 +347,26 @@ Page({
       isBack: false,
       sortType: this.data.sortType
     };
+    this.setData({
+      editFlag: false,
+      selectAllFlag: true
+    })
+    this.goToSelectAll()
     wx.navigateTo({
       url: "../statistics/statistics?rentType=1"
     });
   },
   goEdit() {
     this.setData({
-      editFlag: !this.data.editFlag
+      editFlag: !this.data.editFlag,
     });
+    if (!this.data.editFlag){
+      this.setData({
+        selectAllFlag: true
+      })
+      this.goToSelectAll()
+    }
+    
   },
   //不再关注
   deleteItem(e) {

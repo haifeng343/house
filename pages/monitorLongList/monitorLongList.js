@@ -53,9 +53,6 @@ Page({
     this.getMonitorData();
   },
   onShow: function () {
-    this.setData({
-      editFlag: false
-    })
     this.getUserInfo();
   },
   onHouseShow(){
@@ -550,6 +547,11 @@ Page({
       app.globalData.houseListData['fangtianxiaFilterData'] = this.data.fangtianxiaFilterData
       app.globalData.houseListData['wbtcFilterData'] = this.data.wbtcFilterData
     }
+    this.setData({
+      editFlag: false,
+      selectAllFlag: true
+    })
+    this.goToSelectAll()
     wx.navigateTo({
       url: '../statistics/statistics?rentType=2',
     })
@@ -570,6 +572,12 @@ Page({
     this.setData({
       editFlag: !this.data.editFlag
     })
+    if (!this.data.editFlag) {
+      this.setData({
+        selectAllFlag: true
+      })
+      this.goToSelectAll()
+    }
   },
   //不再关注
   deleteItem(e) {

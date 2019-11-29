@@ -81,9 +81,6 @@ Page({
   },
   onShow: function() {
     this.getUserInfo();
-    this.setData({
-      editFlag: false
-    })
   },
   submit(e) {
     //把改变的值重新
@@ -446,6 +443,11 @@ Page({
       ] = this.data.fangtianxiaFilterData;
       app.globalData.houseListData["wbtcFilterData"] = this.data.wbtcFilterData;
     }
+    this.setData({
+      editFlag: false,
+      selectAllFlag: true
+    })
+    this.goToSelectAll()
     wx.navigateTo({
       url: "../statistics/statistics?rentType=2"
     });
@@ -454,6 +456,12 @@ Page({
     this.setData({
       editFlag: !this.data.editFlag
     })
+    if (!this.data.editFlag) {
+      this.setData({
+        selectAllFlag: true
+      })
+      this.goToSelectAll()
+    }
   },
   //不再关注
   deleteItem(e) {
