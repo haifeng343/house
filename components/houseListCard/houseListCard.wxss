@@ -23,7 +23,7 @@
   width: calc(100vw - 56rpx);
   height: 520rpx;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   z-index: 2;
   background: #ffffff;
   margin-left: -38px;
