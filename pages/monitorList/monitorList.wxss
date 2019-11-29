@@ -39,41 +39,6 @@ page {
 .block {
   height: 220rpx;
 }
-.house_detail {
-  display: flex;
-  align-items: center;
-  height: 88rpx;
-  background: #fff4f0;
-  padding: 0 20rpx;
-}
-
-.scroll_detail {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 20;
-  margin-top: 0;
-}
-
-.house_detail view {
-  flex: 1;
-  color: #1d1d1d;
-}
-
-.house_detail .check_detail {
-  color: #f1612a;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.house_detail .check_detail .check_more {
-  width: 14rpx;
-  height: 24rpx;
-  margin-left: 8rpx;
-}
-
 
 .monit_start{
   position: fixed;
