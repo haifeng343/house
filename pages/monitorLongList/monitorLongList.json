@@ -13,7 +13,8 @@
     "followBottom": "../../components/followBottom/followBottom",
     "followEdit": "../../components/followEdit/followEdit",
     "houseLoading": "../../components/houseLoading/houseLoading",
-    "monitorEmpty": "../../components/monitorEmpty/monitorEmpty"
+    "monitorEmpty": "../../components/monitorEmpty/monitorEmpty",
+    "checkDetail": "../../components/checkDetail/checkDetail"
   },
   "navigationBarTitleText": "长租-房源列表"
 }

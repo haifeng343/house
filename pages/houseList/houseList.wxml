@@ -5,14 +5,9 @@
       <houseSelect id="houseSelect" type='house' checkInDate="{{checkInDate}}" checkOutDate="{{checkOutDate}}" cityName="{{cityName}}" budget="{{budget}}" locationName="{{locationName}}" bind:clickSelectItem='clickSelectItem'></houseSelect>
       <view class="bg_border"></view>
     </view>
-    <view wx:if="{{countFlag === 1}}" class="house_detail" bindtap="goToDetail">
-      <view>总计:{{allCount}}套</view>
-      <view>{{sortType == 1?'推荐价':'最低价'}}:¥{{lowPrice}}</view>
-      <view class="check_detail">
-        <text>查看明细</text>
-        <image class="check_more" src="../../assets/image/more.png"></image>
-      </view>
-    </view>
+    
+    <checkDetail wx:if="{{countFlag === 1}}" houseType="{{1}}" allCount="{{allCount}}" lowPrice="{{lowPrice}}" sortType="{{sortType}}" bind:detailEvent="goToDetail"></checkDetail>
+
   </view>
   <view class="block"></view>
   <view class="card-list {{countFlag === 0||countFlag === 2 ? 'section_empty' : ''}}">
