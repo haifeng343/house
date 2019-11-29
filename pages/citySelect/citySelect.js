@@ -416,11 +416,21 @@ Page({
   },
 
   handleChangeTab(event) {
-    let tabItem = event.currentTarget.dataset.item;
+    let tabItem = +event.currentTarget.dataset.item
+    if (tabItem === this.data.handleChangeTab ) {
+      return;
+    }
+
+    //海外敬请期待
+    wx.showToast({
+      title: '海外城市敬请期待~',
+      icon: 'none'
+    })
+    return
 
     this.setData({ currentTabValue: tabItem.value }, () => {
-      this.getCityList();
-    });
+      this.getCityList()
+    })
   },
 
   getUserLocation() {
