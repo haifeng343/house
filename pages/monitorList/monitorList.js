@@ -119,7 +119,7 @@ Page({
   },
   onShow: function () {
     //如果选择的结果与监控的条件不一样；就加载查询
-    this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true, editFlag: false})
+    this.setData({ showAdvance: false, showAdvanceType: 0, cantScroll: true})
     if (this.data.isBack) { //isBack true表示是按确定按钮变化的
       // this.setData({
       //   loadingDisplay: 'block',
@@ -567,6 +567,11 @@ Page({
       isBack: false,
       sortType: this.data.sortType
     }
+    this.setData({
+      editFlag: false,
+      selectAllFlag: true
+    })
+    this.goToSelectAll()
     wx.navigateTo({
       url: '../statistics/statistics?rentType=1',
     })
@@ -587,6 +592,12 @@ Page({
     this.setData({
       editFlag: !this.data.editFlag
     })
+    if (!this.data.editFlag) {
+      this.setData({
+        selectAllFlag: true
+      })
+      this.goToSelectAll()
+    }
   },
   //不再关注
   deleteItem(e) {
