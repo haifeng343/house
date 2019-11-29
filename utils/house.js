@@ -1257,7 +1257,9 @@ const getMonitorHouseData = (list, mSelect) => {
           houseList[i].data.preloadDetail.baseBrief[2].title,
         finalPrice: Number(houseList[i].data.finalPrice),
         productId: houseList[i].data.unitId,
-        priceTag: util.arrFilter(houseList[i].data.priceTags, "type", 6)
+        priceTag: util.arrFilter(houseList[i].data.priceTags, "type", 6),
+        newLevel: houseList[i].newLevel,
+        priceDownLevel: houseList[i].priceDownLevel,
       };
       allData.push(tjObj);
       tjFilterData.push(tjObj);
@@ -1286,7 +1288,9 @@ const getMonitorHouseData = (list, mSelect) => {
           houseList[i].data.lodgeUnitNewTags,
           "title",
           "长租优惠"
-        )
+        ),
+        newLevel: houseList[i].newLevel,
+        priceDownLevel: houseList[i].priceDownLevel,
       };
       if (
         houseList[i].data.showPriceV2.showPrice &&
@@ -1320,7 +1324,9 @@ const getMonitorHouseData = (list, mSelect) => {
           "/宜住" +
           houseList[i].data.max_num,
         finalPrice: Number(houseList[i].data.sale_price),
-        productId: houseList[i].data.room_id
+        productId: houseList[i].data.room_id,
+        newLevel: houseList[i].newLevel,
+        priceDownLevel: houseList[i].priceDownLevel,
       };
       allData.push(mnObj);
       mnFilterData.push(mnObj);
@@ -1343,7 +1349,9 @@ const getMonitorHouseData = (list, mSelect) => {
           ? houseList[i].data.discountPrice / 100
           : houseList[i].data.price / 100,
         productId: houseList[i].data.productId,
-        priceTag: util.arrFilter(houseList[i].data.productTagList, "tagId", 30)
+        priceTag: util.arrFilter(houseList[i].data.productTagList, "tagId", 30),
+        newLevel: houseList[i].newLevel,
+        priceDownLevel: houseList[i].priceDownLevel,
       };
       if (
         houseList[i].data.discountPrice &&
@@ -1890,7 +1898,9 @@ const getMonitorLongHouseData = (list, mSelect) => {
           houseList[i].data.BaseDetail.heading,
         address: houseList[i].data.qyname + "." + houseList[i].data.sqname,
         tagwall: houseList[i].data.tagwall,
-        area: Number(houseList[i].data.BaseDetail.area)
+        area: Number(houseList[i].data.BaseDetail.area),
+        newLevel: houseList[i].newLevel,
+        priceDownLevel: houseList[i].priceDownLevel,
       };
       wiwjFilterData.push(wiwjObjs);
       allData.push(wiwjObjs);
@@ -1914,7 +1924,9 @@ const getMonitorLongHouseData = (list, mSelect) => {
           "." +
           houseList[i].data.bizcircle_name,
         tagwall: lianjiaTagwall(houseList[i].data.house_tags),
-        area: Number(houseList[i].data.rent_area)
+        area: Number(houseList[i].data.rent_area),
+        newLevel: houseList[i].newLevel,
+        priceDownLevel: houseList[i].priceDownLevel,
       };
       ljFilterData.push(lianjiaObjs);
       allData.push(lianjiaObjs);
@@ -1937,7 +1949,9 @@ const getMonitorLongHouseData = (list, mSelect) => {
         tagwall: houseList[i].data.tags
           ? houseList[i].data.tags.split(" ")
           : [],
-        area: Number(houseList[i].data.buildarea)
+        area: Number(houseList[i].data.buildarea),
+        newLevel: houseList[i].newLevel,
+        priceDownLevel: houseList[i].priceDownLevel,
       };
       ftxFilterData.push(fangtianxiaObjs);
       allData.push(fangtianxiaObjs);
@@ -1958,7 +1972,9 @@ const getMonitorLongHouseData = (list, mSelect) => {
         tagwall: houseList[i].data.usedTages
           ? houseList[i].data.usedTages.split(",")
           : [],
-        area: Number(houseList[i].data.area.split("㎡")[0])
+        area: Number(houseList[i].data.area.split("㎡")[0]),
+        newLevel: houseList[i].newLevel,
+        priceDownLevel: houseList[i].priceDownLevel,
       };
       wbtcFilterData.push(wbtcObjs);
       allData.push(wbtcObjs);

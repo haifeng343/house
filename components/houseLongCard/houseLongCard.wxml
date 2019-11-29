@@ -18,6 +18,10 @@
             <text class="p">{{item.price}}</text>
             <text class="m">元/月</text>
           </view>
+          <view class="card_newprice" wx:if="{{bottomType == 1}}">
+              <text class="newLevel" wx:if="{{item.newLevel >0 }}">新上</text>
+              <text class="newLevel pricedown" wx:if="{{item.priceDownLevel >0 }}">降价</text>
+            </view>
         </view>
         <view class="classify image" wx:if="{{item.platformId == 'wiwj'}}"><image src="../../assets/image/card_wiwj.png"></image></view>
         <view class="classify image" wx:if="{{item.platformId == 'lj'}}"><image src="../../assets/image/card_lj.png"></image></view>

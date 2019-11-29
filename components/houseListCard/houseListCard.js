@@ -18,10 +18,6 @@ Component({
     dayCount: {
       type: Number
     },
-    isFirst: {
-      type: Boolean,
-      value: false
-    },
     editFlag:{
       type: Boolean,
       observer: function (editFlag){
@@ -38,6 +34,9 @@ Component({
       }
     },
     allCount:{
+      type: Number
+    },
+    bottomType:{
       type: Number
     }
   },

@@ -27,7 +27,7 @@
 
     <view class="house_card">
       <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
-        <houseLongCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{2}}"  idx="{{idx}}" isFirst="{{isFirst}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect"></houseLongCard>
+        <houseLongCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}"  bottomType="{{bottomType}}" type="{{2}}"  idx="{{idx}}" isFirst="{{isFirst}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect"></houseLongCard>
       </block>
     </view>
     

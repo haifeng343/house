@@ -27,6 +27,10 @@
             <view class="house_type">
               <text>{{item.preloadDetail}}</text>
             </view>
+            <view class="house_newprice" wx:if="{{bottomType == 1}}">
+              <text class="newLevel" wx:if="{{item.newLevel >0 }}">新上</text>
+              <text class="newLevel pricedown" wx:if="{{item.priceDownLevel >0 }}">降价</text>
+            </view>
             <view class="house_tag {{item.priceTag&&item.priceTag.length>0?'':'house_tag_none'}}">
               <block wx:for="{{item.priceTag}}" wx:for-index="i" wx:for-item="pitem" wx:key="{{i}}">
                 <text wx:if="{{item.platformId == 'tj'}}">{{pitem.text}}</text>
