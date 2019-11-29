@@ -22,6 +22,7 @@ Page({
     xzFilterData: [],
     mnFilterData: [],
     zgFilterData: [],
+    rowData: [],
     lowPrice: 0,
     averagePrice: 0,
     lowPriceData: '',
@@ -46,11 +47,11 @@ Page({
     isBack: false,
     hasDifference: false,
     isLoaded: false,
-    listSortType: 1,//列表排序，1 低到高；2高到低
     enoughBottom: false,
     editFlag: false,
     selectAllFlag: false,
-    indexArr: []
+    indexArr: [],
+    mSelect: 1 //1全部 2新上 3价格
   },
   clickSelectItem(e) {
     var type = e.detail.type;
@@ -74,7 +75,8 @@ Page({
       locationName: app.globalData.monitorSearchData.area || '全城', //地点
       allData: [],
       isBack:true,
-      showUI: true
+      showUI: true,
+      editFlag: false
     })
     this.onShow();
   },
@@ -138,7 +140,6 @@ Page({
       xzfilter: xzScreen,
       mnfilter: mnScreen,
       zgfilter: zgScreen,
-      listSortType: 1
     })
     this.getAllData();
   },
@@ -297,7 +298,8 @@ Page({
         minPrice: monitorDetail.minPrice,//最低价
         maxPrice: monitorDetail.maxPrice,//最高价
         sort: monitorDetail.sortType,//搜索方式 1推荐 2低价有限
-        equipment: monitorDetail.facilities && monitorDetail.facilities.split(',') || []
+        equipment: monitorDetail.facilities && monitorDetail.facilities.split(',') || [],
+        advSort: monitorDetail.sortType 
       }
       //监控详情条件 ---监控默认条件
       app.globalData.monitorDefaultData = {
@@ -319,7 +321,8 @@ Page({
         minPrice: monitorDetail.minPrice,//最低价
         maxPrice: monitorDetail.maxPrice,//最高价
         sort: monitorDetail.sortType,//搜索方式 1推荐 2低价有限
-        equipment: monitorDetail.facilities && monitorDetail.facilities.split(',') || []
+        equipment: monitorDetail.facilities && monitorDetail.facilities.split(',') || [],
+        advSort: monitorDetail.sortType
       }
       let searchData = app.globalData.monitorSearchData;
       let defaultData = app.globalData.monitorDefaultData;
@@ -364,11 +367,30 @@ Page({
           totalFee: monitorDetail.totalFee, //消耗盯盯币
           allOriginalData:[],
           allData:[],
-          allCount:0
+          allCount:0,
+          editFlag: false,
         })
         return;
       }
-      let monitorHouseData = house.getMonitorHouseData(houseList);//监控房源列表
+      let monitorHouseData = house.getMonitorHouseData(houseList,this.data.mSelect);//监控房源列表
+      if (monitorHouseData.allData.length == 0){
+        this.setData({
+          countFlag: 0,
+          loadingDisplay: 'none',
+          bottomType: 1, //0:房源列表；1监控详情房源列表；2监控详情修改之后
+          taskTime: monitor.taskTime(monitorDetail.monitorTime, monitorDetail.minutes),
+          startTimeName: monitor.startTimeName(monitorDetail.startTime),
+          fee: monitorDetail.fee,
+          monitorId: monitorDetail.id,
+          totalFee: monitorDetail.totalFee, //消耗盯盯币
+          allOriginalData: [],
+          allData: [],
+          allCount: 0,
+          editFlag: false,
+        })
+        return;
+      }
+
       let enoughList = [];
       if (monitorCount.tjTotal > -1) { enoughList.push({ key: 'tj', name: '途家', value: monitorCount.tjTotal }) }
       if (monitorCount.xzTotal > -1) { enoughList.push({ key: 'xz', name: '小猪', value: monitorCount.xzTotal }) }
@@ -546,6 +568,18 @@ Page({
     wx.navigateTo({
       url: '../statistics/statistics?rentType=1',
     })
+  },
+  goToMAllSelect(e) {
+    this.setData({
+      mSelect: e.detail.index
+    })
+    this.getMonitorData()
+  },
+  goMselect(e) {
+    this.setData({
+      mSelect: e.detail
+    })
+    this.getMonitorData()
   },
   goEdit() {
     this.setData({

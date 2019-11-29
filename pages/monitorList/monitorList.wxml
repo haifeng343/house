@@ -16,12 +16,8 @@
   </view>
   <view class="block"></view>
   <view class="card-list {{countFlag === 0||countFlag === 2 ? 'section_empty' : ''}}">
-    <view class="search_empty" wx:if="{{countFlag===0&&bottomType === 1}}">
-      <view class="search_view">
-        <image class="monitor_empty_image" src="../../assets/image/monitor_empty.png"></image>
-      </view>
-      <view class="search_view search_title">暂时未监控符合条件的房源</view>
-    </view>
+
+    <monitorEmpty wx:if="{{countFlag === 0}}"  bottomType="{{bottomType}}" mSelect="{{mSelect}}" bind:selectEvent="goToMAllSelect"></monitorEmpty>
 
     <view class="search_empty" wx:if="{{countFlag === 2&&countBack}}">
       <noNetwork title="网络异常，请返回重试"></noNetwork>
@@ -29,13 +25,7 @@
     <view class="search_empty" wx:if="{{countFlag === 2&&!countBack}}">
       <noNetwork title="网络异常，请刷新重试"></noNetwork>
     </view>
-    <view class="search_empty" wx:if="{{countFlag === 0&&bottomType ===2}}">
-      <view class="search_view">
-        <image class="empty_image" src="../../assets/image/search_empty.png"></image>
-      </view>
-      <view class="search_view search_title">未找到符合条件的房源</view>
-      <view class="search_view search_tip">立即添加监控，第一时间推送房源信息，再也不怕心仪的房源擦肩而过</view>
-    </view>
+
     <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
       <houseListCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{2}}" idx="{{idx}}"  dayCount="{{dayCount}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect"></houseListCard>
     </block>
@@ -66,7 +56,7 @@
 
   <followBottom editFlag="{{editFlag}}" selectAllFlag="{{selectAllFlag}}" selectNum="{{selectNum}}" bind:selectAllEvent="goToSelectAll" bind:deleteBatchEvent="deleteBatchItem"></followBottom>
 
-  <followEdit countFlag="{{countFlag}}" listType="{{bottomType}}" scrollIng="{{scrollIng}}" editFlag="{{editFlag}}" bind:editEvent="goEdit"></followEdit>
+  <followEdit bottomType="{{bottomType}}" countFlag="{{countFlag}}" listType="{{mSelect}}" scrollIng="{{scrollIng}}" editFlag="{{editFlag}}" bind:editEvent="goEdit" bind:selectEvent="goMselect"></followEdit>
   
   <houseLoading loadingDisplay="{{loadingDisplay}}"></houseLoading>
 

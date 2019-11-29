@@ -118,7 +118,10 @@ Component({
       let platform = e.currentTarget.dataset.platform
       let productid = e.currentTarget.dataset.productid
       let city = this.properties.type == 1 ? app.globalData.searchLongData.cityId : app.globalData.monitorSearchLongData.cityId
-      if (this.properties.editFlag) { return }
+      if (this.properties.editFlag) {
+        this.selectItem(e)
+        return
+      }
       monitor.navigateToLongMiniProgram(
         platform,
         productid,

@@ -29,6 +29,7 @@ Page({
     lianjiaFilterData: [],
     fangtianxiaFilterData: [],
     wbtcFilterData: [],
+    rowData: [],
     loadingDisplay: "block",
     monitorenoughDisplay: "none",
     monitorDisplay: "none",
@@ -83,18 +84,45 @@ Page({
   },
   submit(e) {
     //把改变的值重新
+    let allArr = [...this.data.allOriginalData]
     let arr = Object.keys(e.detail);
     if (arr.length) {
-      for (let key in e.detail) {
-        app.globalData.searchLongData[key] = e.detail[key];
-      }
-      SearchLongDataSubject.next();
-      this.setData({
-        loadingDisplay: "block",
-        countFlag: "",
-        allData: []
-      });
-      this.onLoad();
+      if (arr.length == 1 && arr[0] == 'advSort'){
+        app.globalData.searchLongData['advSort'] = e.detail['advSort'];
+        this.setData({
+          loadingDisplay: "block",
+          allData: []
+        });
+        if (e.detail['advSort'] == 1) {
+          allArr.sort(util.compareSort("price", "asc"));
+        }
+        if (e.detail['advSort'] == 11) {
+          allArr.sort(util.compareSort("price", "desc"));
+        }
+        if (e.detail['advSort'] == 2) {
+          allArr.sort(util.compareSort("area", "desc"));
+        }
+        if (e.detail['advSort'] == 21) {
+          allArr.sort(util.compareSort("area", "asc"));
+        }
+        this.setData({
+          loadingDisplay: "none",
+          allOriginalData: allArr,
+          allData: allArr.slice(0, 5)
+        })
+      }else{
+        for (let key in e.detail) {
+          app.globalData.searchLongData[key] = e.detail[key];
+        }
+        SearchLongDataSubject.next();
+        this.setData({
+          loadingDisplay: "block",
+          countFlag: "",
+          allData: [],
+          editFlag: false
+        });
+        this.onLoad();
+      }  
     }
   },
   onReachBottom() {
@@ -466,7 +494,7 @@ Page({
         lowPrice: houseData.lowPrice,
         lowPriceData: houseData.lowPriceData,
         highAreaData: houseData.highAreaData,
-        lianjiaLowPriceData: houseData.wiwjLowPriceData,
+        wiwjLowPriceData: houseData.wiwjLowPriceData,
         lianjiaLowPriceData: houseData.ljLowPriceData,
         wiwjFilterData: houseData.wiwjFilterData,
         lianjiaFilterData: houseData.ljFilterData,
@@ -558,7 +586,7 @@ Page({
         lowPrice: houseData.lowPrice,
         lowPriceData: houseData.lowPriceData,
         highAreaData: houseData.highAreaData,
-        lianjiaLowPriceData: houseData.wiwjLowPriceData,
+        wiwjLowPriceData: houseData.wiwjLowPriceData,
         lianjiaLowPriceData: houseData.ljLowPriceData,
         wiwjFilterData: houseData.wiwjFilterData,
         lianjiaFilterData: houseData.ljFilterData,

@@ -14,7 +14,6 @@
       </swiper-item>
     </block>
   </swiper>
-  <!-- <image class="star" wx:if="{{isMonitorHouse === 0}}" data-productId="{{item.productId}}" bindtap="goToCollection" src="../../assets/image/star.png"></image> -->
   <view class="house_classify" wx:if="{{lowPriceData.platformId == 'tj'}}">途家</view>
   <view class="house_classify" wx:elif="{{lowPriceData.platformId == 'xz'}}">小猪</view>
   <view class="house_classify" wx:elif="{{lowPriceData.platformId == 'mn'}}">木鸟</view>
@@ -39,4 +38,3 @@
     </view>
   </view>
 </view>
-<collectDialog bind:collectEvent="getcollectEventEvent" style="display:{{collectDisplay}}"></collectDialog>

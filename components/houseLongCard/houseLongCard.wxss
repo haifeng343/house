@@ -29,9 +29,8 @@
   overflow:hidden;
   text-overflow:ellipsis; 
   white-space: nowrap;
-  padding-right: 60rpx;
   margin-bottom: 10rpx;
-  width: 380rpx;
+  width: 420rpx;
   height: 36rpx;
   line-height: 36rpx;
 }
