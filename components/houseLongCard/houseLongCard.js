@@ -38,6 +38,9 @@ Component({
         }
       }
     },
+    bottomType: {
+      type: Number
+    }
   },
 
   /**
