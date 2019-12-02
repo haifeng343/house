@@ -4,7 +4,7 @@ import {
   lianjia_address,
   fangtianxia_address1,
   fangtianxia_address2,
-  wbtc_address1,
+  wbtc_address2,
   wbtc_address
 } from "../utils/httpAddress.js";
 const DEFAULT_PAGE = { size: 15, num: 1 }; //默认分页参数
@@ -520,7 +520,7 @@ const wbtc = {
     };
     return new Promise((resolve, reject) => {
       wx.request({
-        url: wbtc_address1 + "/api/list/chuzu?" + buildParams(params, true),
+        url: wbtc_address2 + "/api/list/chuzu?" + buildParams(params, true),
         method: "GET",
         header: {
           imei: SOUFUN_IMEI,

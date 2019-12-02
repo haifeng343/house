@@ -100,13 +100,22 @@ Page({
             this.promiseVersion
           )
           .then(resp => {
+            console.log('resp',resp);
             const { result, promiseVersion } = resp;
             if (this.promiseVersion === promiseVersion) {
               let length = result.length;
               this.setData({
                 hasAsked: true,
                 resultLength: length,
-                result
+                result: result.map(item =>
+                  Object.assign(
+                    {
+                      label: getHeightStrArray(item.name, this.data.value),
+                      tag: areaTagMap[item.type]
+                    },
+                    item
+                  )
+                )
               });
             }
           })
