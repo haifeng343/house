@@ -469,7 +469,7 @@ Page({
     let num = wx.getStorageSync('followNum');
     if (!num) {
       this.setData({
-        followText: '取消关注后，该房源将不会在后续查询监控中出现！',
+        followText: '屏蔽房源后，该房源将不会在后续监控中出现！',
         followType: 1,
         followDisplay: 'block'
       })
@@ -537,7 +537,7 @@ Page({
       return;
     }
     this.setData({
-      followText: '即将对' + this.data.selectNum +'套房源取消关注，取消后本次监控将不再获取该房源信息',
+      followText: '即将屏蔽' + this.data.selectNum +'套房源，屏蔽后本次监控将不再获取该房源信息',
       followType: 2,
       followDisplay: 'block'
     })

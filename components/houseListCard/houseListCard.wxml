@@ -56,10 +56,10 @@
     <view class="remove"  data-index="{{idx}}" catchtap="delItem">
       <view>
         <image src="../../assets/image/no_attention.png"></image>
-        <view>取</view>
-        <view>消</view>
-        <view>关</view>
-        <view>注</view>
+        <view>屏</view>
+        <view>蔽</view>
+        <view>房</view>
+        <view>源</view>
       </view>
     </view>
     <view class="select" wx:if="{{editFlag}}"  data-index="{{idx}}" catchtap="selectItem">
