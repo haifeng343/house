@@ -51,7 +51,7 @@ Page({
     money: 500,
     moneyText: "5.00",
     coin: 500,
-    showType: false,
+    showType: 1,
     exchangeAmount: "",
     userMoney: "0.00",
     freezeMoney: "0.00",
@@ -64,10 +64,10 @@ Page({
       exchangeAmount: ~~this.data.userMoney
     });
   },
-  changeTab() {
-    let showType = this.data.showType;
+  changeTab(event) {
+    const type  = +event.currentTarget.dataset.type;
     this.setData({
-      showType: !showType
+      showType: type
     });
   },
   handleExchange() {
@@ -208,6 +208,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log(options);
+    const { type } = options;
     this.service.getUserInfo().then(userInfo => {
       const { useMoney, freezeMoney } = userInfo.userAccount;
       this.setData({
@@ -215,49 +217,9 @@ Page({
         freezeMoney: freezeMoney.toFixed(2)
       });
     });
-    const { type } = options;
-    this.setData(
-      {
-        showType: !!parseInt(type)
-      },
-      () => {
-        console.log(this.data.showType);
-      }
-    );
-  },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {},
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {},
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {},
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {},
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {}
+    this.setData({
+      showType: +type
+    });
+  }
 });
