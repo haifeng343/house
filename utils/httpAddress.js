@@ -1,6 +1,7 @@
 //房源本地地址 http://192.168.1.53:3001
+//房源开发地址 https://fytest.bangdingding.cn
 //房源测试地址 https://fytest.bangdingding.cn
-//房源正式地址 https://fytest.bangdingding.cn
+//房源正式地址 https://fy.bangdingding.cn
 export const api_address = 'https://fytest.bangdingding.cn';
 
 //接口本地地址：http://192.168.1.109:9001
