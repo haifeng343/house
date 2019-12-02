@@ -8,7 +8,10 @@
         <view class="card_words">
           <view class="title">{{item.housetitle}}</view>
           <view class="room">{{item.introduce}}</view>
-          <view class="address"><image src="../../assets/image/location_red.png"></image><text>{{item.address}}</text></view>
+          <view class="address">
+            <image src="../../assets/image/location_red.png"></image>
+            <text>{{item.address}}</text>
+          </view>
           <view class="label">
             <block wx:for="{{item.tagwall}}" wx:key="{{index}}" wx:for-item="itemTag">
               <text>{{itemTag}}</text>
@@ -19,14 +22,28 @@
             <text class="m">元/月</text>
           </view>
           <view class="card_newprice" wx:if="{{bottomType == 1}}">
-              <text class="newLevel" wx:if="{{item.newLevel >0 }}">新上</text>
-              <text class="newLevel pricedown" wx:if="{{item.priceDownLevel >0 }}">降价</text>
+            <view class="newLevel" wx:if="{{item.newLevel >0 }}">
+              <text class="icon-font uniE968"></text>
+              <text class="">新上</text>
             </view>
+            <view class="newLevel pricedown" wx:if="{{item.priceDownLevel >0 }}">
+              <text class="icon-font uniE967"></text>
+              <text class="">新上</text>
+            </view>
+          </view>
         </view>
-        <view class="classify image" wx:if="{{item.platformId == 'wiwj'}}"><image src="../../assets/image/card_wiwj.png"></image></view>
-        <view class="classify image" wx:if="{{item.platformId == 'lj'}}"><image src="../../assets/image/card_lj.png"></image></view>
-        <view class="classify image" wx:if="{{item.platformId == 'ftx'}}"><image src="../../assets/image/card_ftx.png"></image></view>
-        <view class="classify image" wx:if="{{item.platformId == 'tc'}}"><image src="../../assets/image/card_tc.png"></image></view>
+        <view class="classify image" wx:if="{{item.platformId == 'wiwj'}}">
+          <image src="../../assets/image/card_wiwj.png"></image>
+        </view>
+        <view class="classify image" wx:if="{{item.platformId == 'lj'}}">
+          <image src="../../assets/image/card_lj.png"></image>
+        </view>
+        <view class="classify image" wx:if="{{item.platformId == 'ftx'}}">
+          <image src="../../assets/image/card_ftx.png"></image>
+        </view>
+        <view class="classify image" wx:if="{{item.platformId == 'tc'}}">
+          <image src="../../assets/image/card_tc.png"></image>
+        </view>
       </view>
     </movable-view>
   </movable-area>
@@ -39,9 +56,9 @@
       <view>注</view>
     </view>
   </view>
-  <view class="select" wx:if="{{editFlag}}"  data-index="{{idx}}" catchtap="selectItem">
-      <view class="icon-font uniE930 {{item.collection?'active':''}}"></view>
-    </view>
+  <view class="select" wx:if="{{editFlag}}" data-index="{{idx}}" catchtap="selectItem">
+    <view class="icon-font uniE930 {{item.collection?'active':''}}"></view>
+  </view>
 </view>
 <view wx:else>
   <view class="card {{bottom?'':'card_none'}}" data-productId="{{item.housesid}}" data-platform="{{item.platformId}}" catchtap="goToPlatformDetail">
@@ -51,7 +68,10 @@
     <view class="card_words">
       <view class="title">{{item.housetitle}}</view>
       <view class="room">{{item.introduce}}</view>
-      <view class="address"><image src="../../assets/image/location_red.png"></image><text>{{item.address}}</text></view>
+      <view class="address">
+        <image src="../../assets/image/location_red.png"></image>
+        <text>{{item.address}}</text>
+      </view>
       <view class="label">
         <block wx:for="{{item.tagwall}}" wx:key="{{index}}" wx:for-item="itemTag">
           <text>{{itemTag}}</text>
@@ -62,9 +82,17 @@
         <text class="m">元/月</text>
       </view>
     </view>
-    <view class="classify image" wx:if="{{item.platformId == 'wiwj'}}"><image src="../../assets/image/card_wiwj.png"></image></view>
-    <view class="classify image" wx:if="{{item.platformId == 'lj'}}"><image src="../../assets/image/card_lj.png"></image></view>
-    <view class="classify image" wx:if="{{item.platformId == 'ftx'}}"><image src="../../assets/image/card_ftx.png"></image></view>
-    <view class="classify image" wx:if="{{item.platformId == 'tc'}}"><image src="../../assets/image/card_tc.png"></image></view>
+    <view class="classify image" wx:if="{{item.platformId == 'wiwj'}}">
+      <image src="../../assets/image/card_wiwj.png"></image>
+    </view>
+    <view class="classify image" wx:if="{{item.platformId == 'lj'}}">
+      <image src="../../assets/image/card_lj.png"></image>
+    </view>
+    <view class="classify image" wx:if="{{item.platformId == 'ftx'}}">
+      <image src="../../assets/image/card_ftx.png"></image>
+    </view>
+    <view class="classify image" wx:if="{{item.platformId == 'tc'}}">
+      <image src="../../assets/image/card_tc.png"></image>
+    </view>
   </view>
 </view>
