@@ -52,6 +52,18 @@
 .card_words .card_price .p{font-size: 40rpx;}
 .card_words .card_price .m{font-size: 24rpx;}
 .card_words .card_newprice{display: inline-block}
+.card_words .card_newprice .uniE968{
+  font-size:14rpx;
+  width: 12rpx;
+  height: 10rpx;
+  margin: 0 4rpx 0 10rpx;
+}
+.card_words .card_newprice .uniE967{
+  font-size:14rpx;
+  width: 10rpx;
+  height: 14rpx;
+  margin: 0 4rpx 0 10rpx;
+}
 .card_words .card_newprice .newLevel{
   display: inline-block;
   width:78rpx;
@@ -61,7 +73,6 @@
   font-size:20rpx;
   line-height:32rpx;
   color: #FFFFFF;
-  text-align: center;
   margin-right: 6rpx
 }
 .card .card_star{
