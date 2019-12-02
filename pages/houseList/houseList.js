@@ -105,7 +105,8 @@ Page({
       countFlag: "",
       allData: [],
       showUI: true,
-      editFlag: false
+      editFlag: false,
+      selectAllFlag:false
     });
     this.onLoad();
   },
