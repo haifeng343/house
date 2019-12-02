@@ -115,6 +115,7 @@ Page({
           countFlag: '',
           allData: [],
           editFlag: false,
+          selectAllFlag: false,
           updateData: Object.assign({}, app.globalData.monitorSearchLongData),
         });
         if (util.objectDiff(app.globalData.monitorSearchLongData, app.globalData.monitorDefaultSearchLongData)){

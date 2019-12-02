@@ -99,6 +99,7 @@ Page({
       isBack:true,
       showUI: true,
       editFlag: false,
+      selectAllFlag: false,
       advSort: app.globalData.monitorSearchData.advSort
     })
     this.onShow();

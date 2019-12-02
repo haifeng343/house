@@ -119,7 +119,8 @@ Page({
           loadingDisplay: "block",
           countFlag: "",
           allData: [],
-          editFlag: false
+          editFlag: false,
+          selectAllFlag: false
         });
         this.onLoad();
       }  
