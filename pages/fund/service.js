@@ -14,7 +14,8 @@ const fundIcon = {
   "1": "uniE905",
   "6": "uniE906",
   "7": "uniE95F",
-  "8": "uniE93C"
+  "8": "uniE93C",
+  "33": "uniE93B"
 };
 
 const coinFundIcon = {
@@ -22,7 +23,8 @@ const coinFundIcon = {
   "2": "uniE93C",
   "3": "uniE962",
   "4": "uniE960",
-  "5": "uniE963"
+  "5": "uniE963",
+  "6": "uniE93C"
 };
 
 export default class FundService {
@@ -33,25 +35,7 @@ export default class FundService {
         resp.out.forEach(item => {
           item.date = item.createTime.substr(5, 11);
           item.money = item.money.toFixed(2);
-          switch (item.type) {
-            case 1:
-              item.icon = "uniE905";
-              break;
-            case 6:
-              item.desc = item.remark;
-              item.icon = "uniE906";
-              break;
-            case 7:
-              item.desc = item.remark;
-              item.icon = "uniE95F";
-              break;
-            case 8:
-              item.icon = "uniE93C";
-              break;
-            case 33:
-              item.icon = "uniE93B";
-              break;
-          }
+          item.icon = fundIcon[item.type];
 
           const orderNo = item.orderNo;
 
