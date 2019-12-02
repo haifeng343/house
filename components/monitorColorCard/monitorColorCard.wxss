@@ -74,7 +74,7 @@
   font-size: 28rpx;
 }
 .monitor_card .card_address{
-  width: 300rpx;
+  width: 280rpx;
   font-size: 56rpx;
   display: flex;
   justify-content: flex-start;

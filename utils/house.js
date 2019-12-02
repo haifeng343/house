@@ -1437,7 +1437,27 @@ const getMonitorHouseData = (list, mSelect) => {
     zgFilterData
   };
 };
-
+const getMonitorHouseType = list =>{
+  let newLevelNum = 0
+  let priceDownLevelNum = 0
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].newLevel>0){
+      newLevelNum++
+    }
+    if (list[i].priceDownLevel > 0) {
+      priceDownLevelNum++
+    }
+  }
+  if (newLevelNum>0){
+    return 2
+  }
+  if (newLevelNum == 0 && priceDownLevelNum>0) {
+    return 3
+  }
+  if (newLevelNum == 0 && priceDownLevelNum == 0) {
+    return 1
+  }
+}
 const houseShortFilter = allData=>{
   let tjFilterData = [],
     xzFilterData = [],
@@ -3250,5 +3270,6 @@ module.exports = {
   addMonitorData,
   addLongMonitorData,
   updateShortMonitorData,
-  updateLongMonitorData
+  updateLongMonitorData,
+  getMonitorHouseType
 };
