@@ -33,7 +33,7 @@
             <text class="icon-font uniE92D"></text>
           </view>
           <view class="number">{{useCoin}}</view>
-          <view class="btn" bindtap="handleGotoDeposit" data-type="0">兑换</view>
+          <view class="btn" bindtap="handleGotoDeposit" data-type="2">兑换</view>
         </view>
       </view>
     </view>

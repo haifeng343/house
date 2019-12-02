@@ -1,15 +1,15 @@
 <view class="page flex-column">
     <view class='nav'>
-        <view class='nav-item {{showType?"active":""}}' bindtap='changeTab'>
+        <view class='nav-item {{showType === 1 ? "active" : ""}}' bindtap='changeTab' data-type="1">
             <view class='text'>充盯盯币</view>
             <view class='border'></view>
         </view>
-        <view class='nav-item {{showType?"":"active"}}' bindtap='changeTab'>
+        <view class='nav-item {{showType === 2 ? "active" : ""}}' bindtap='changeTab' data-type="2">
             <view class='text'>兑盯盯币</view>
             <view class='border'></view>
         </view>
     </view>
-    <view class="content" wx:if='{{showType}}'>
+    <view class="content" wx:if='{{showType === 1}}'>
         <view class="top flex-column">
             <view class="title">选择充值金额</view>
             <view class="cell-list flex-box-center-around">

@@ -311,38 +311,45 @@ Component({
         param: name
       }).then(resp => {
         let data = resp.data;
-        let info = JSON.parse(data.json);
         let searchData = this.data.searchData;
-        if (data.lineId) {
-          //地铁
-          searchData.area = data.stations;
-          searchData.areaType = "17";
-        } else {
-          searchData.areaType = data.type.toString();
-          searchData.area = data.name;
-        }
+        if (data) {
+          let info = JSON.parse(data.json);
+          if (data.lineId) {
+            //地铁
+            searchData.area = data.stations;
+            searchData.areaType = "17";
+          } else {
+            searchData.area = data.name;
+            searchData.areaType = data.type.toString();
+          }
 
-        if (data.type === 16) {
-          //行政区  只有areaid
-          searchData.areaId = {
-            mn: info.mn && info.mn.area_id,
-            tj: info.tj && info.tj.value,
-            xz: info.xz && info.xz.id,
-            zg: info.zg && info.zg.id
-          };
+          if (data.type === 16) {
+            //行政区  只有areaid
+            searchData.areaId = {
+              mn: info.mn && info.mn.area_id,
+              tj: info.tj && info.tj.value,
+              xz: info.xz && info.xz.id,
+              zg: info.zg && info.zg.id
+            };
+          } else {
+            searchData.ltude = {
+              mn: info.mn && info.mn.lat + "," + info.mn.lng,
+              tj: info.tj && info.tj.latitude + "," + info.tj.longitude,
+              xz: info.xz && info.xz.latitude + "," + info.xz.longitude,
+              zg: info.zg && info.zg.latitude + "," + info.zg.longitude
+            };
+            searchData.areaId = {
+              mn: info.mn && info.mn.id,
+              tj: info.tj && info.tj.value,
+              xz: info.xz && info.xz.id,
+              zg: info.zg && info.zg.id
+            };
+          }
         } else {
-          searchData.ltude = {
-            mn: info.mn && info.mn.lat + "," + info.mn.lng,
-            tj: info.tj && info.tj.latitude + "," + info.tj.longitude,
-            xz: info.xz && info.xz.latitude + "," + info.xz.longitude,
-            zg: info.zg && info.zg.latitude + "," + info.zg.longitude
-          };
-          searchData.areaId = {
-            mn: info.mn && info.mn.id,
-            tj: info.tj && info.tj.value,
-            xz: info.xz && info.xz.id,
-            zg: info.zg && info.zg.id
-          };
+          searchData.area = "";
+          searchData.areaType = "";
+          searchData.ltude = {};
+          searchData.areaId = {};
         }
 
         const app = getApp();
@@ -352,6 +359,7 @@ Component({
           app.globalData.searchData = Object.assign({}, searchData);
           SearchDataSubject.next();
         }
+
         this.setData(
           {
             searchData
