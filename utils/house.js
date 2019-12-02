@@ -429,7 +429,7 @@ const getFangtianxiaData = (type, fangtianxiafilter = {}) => {
       })
       .then(res => {
         if (res) {
-          fangtianxiaCount = Number(res.houses.housecount.text);
+          fangtianxiaCount = Number(res.houses.housecount);
           resolve({
             arr:
               res.houses.houseinfo && Array.isArray(res.houses.houseinfo)
@@ -1625,25 +1625,25 @@ const getPersonalHouseData = data => {
         let fangtianxiaObjs = {
           platformId: "ftx",
           collection: false,
-          housesid: fangtianxiaData[i].houseid.text,
-          imgurl: fangtianxiaData[i].titleimage.text,
-          price: Number(fangtianxiaData[i].price.text),
-          housetitle: fangtianxiaData[i].title.text,
+          housesid: fangtianxiaData[i].houseid,
+          imgurl: fangtianxiaData[i].titleimage,
+          price: Number(fangtianxiaData[i].price),
+          housetitle: fangtianxiaData[i].title,
           introduce:
-            fangtianxiaData[i].buildarea.text +
+            fangtianxiaData[i].buildarea +
             "㎡/" +
-            fangtianxiaData[i].rentway.text +
+            fangtianxiaData[i].rentway +
             " " +
-            fangtianxiaData[i].room.text +
+            fangtianxiaData[i].room +
             "室",
           address:
-            fangtianxiaData[i].district.text +
+            fangtianxiaData[i].district +
             "." +
-            fangtianxiaData[i].comarea.text,
-          tagwall: fangtianxiaData[i].tags.text
-            ? fangtianxiaData[i].tags.text.split(" ")
+            fangtianxiaData[i].comarea,
+          tagwall: fangtianxiaData[i].tags
+            ? fangtianxiaData[i].tags.split(" ")
             : [],
-          area: Number(fangtianxiaData[i].buildarea.text)
+          area: Number(fangtianxiaData[i].buildarea)
         };
         fangtianxiaFilterData.push(fangtianxiaObjs);
         allData.push(fangtianxiaObjs);
@@ -1897,20 +1897,20 @@ const getMonitorLongHouseData = (list, mSelect) => {
     if (houseList[i].platform == "ftx") {
       let fangtianxiaObjs = {
         platformId: "ftx",
-        housesid: houseList[i].data.houseid.text,
-        imgurl: houseList[i].data.titleimage.text,
-        price: Number(houseList[i].data.price.text),
-        housetitle: houseList[i].data.title.text,
+        housesid: houseList[i].data.houseid,
+        imgurl: houseList[i].data.titleimage,
+        price: Number(houseList[i].data.price),
+        housetitle: houseList[i].data.title,
         introduce:
-          houseList[i].data.buildarea.text +
+          houseList[i].data.buildarea +
           "㎡/" +
-          houseList[i].data.rentway.text +
+          houseList[i].data.rentway +
           " " +
-          houseList[i].data.room.text +
+          houseList[i].data.room +
           "室",
-        address: houseList[i].data.district.text + "." + houseList[i].data.comarea.text,
-        tagwall: houseList[i].data.tags.text
-          ? houseList[i].data.tags.text.split(" ")
+        address: houseList[i].data.district + "." + houseList[i].data.comarea,
+        tagwall: houseList[i].data.tags
+          ? houseList[i].data.tags.split(" ")
           : [],
         area: Number(houseList[i].data.buildarea.text),
         newLevel: houseList[i].newLevel,
