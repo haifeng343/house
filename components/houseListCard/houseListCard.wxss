@@ -95,7 +95,10 @@
   opacity:0.95;
   z-index: 7
 }
-
+.house_card .house_price .o_price{
+  font-size: 24rpx;
+  text-decoration:line-through
+}
 .house_card .house_price .triangle {
   position: absolute;
   left: -4rpx;
@@ -192,9 +195,9 @@
   display: inline-block;
   margin-right: 20rpx;
 }
-.house_card .house_tag .discount{
+/* .house_card .house_tag .discount{
   width: 140rpx;
-}
+} */
 .house_card .distance {
   width: 26rpx;
   height: 26rpx;

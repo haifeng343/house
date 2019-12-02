@@ -1055,16 +1055,7 @@ const getHouseData = data => {
           "title",
           "长租优惠"
         );
-        if (
-          xzObj.showPriceV2.showPrice &&
-          xzObj.luPrice &&
-          Number(xzObj.showPriceV2.showPrice) < Number(xzObj.luPrice)
-        ) {
-          xzObjs.discount =
-            "已优惠" +
-            (Number(xzObj.luPrice) - Number(xzObj.showPriceV2.showPrice)) +
-            "元";
-        }
+        xzObjs.oriPrice = xzObj.luPrice
         xzFilterData.push(xzObjs);
         allData.push(xzObjs);
         rowData.push({
@@ -1128,14 +1119,7 @@ const getHouseData = data => {
           : zgObj.price / 100;
         zgObjs.productId = zgObj.productId;
         zgObjs.priceTag = util.arrFilter(zgObj.productTagList, "tagId", 30);
-        if (
-          zgObj.price &&
-          zgObj.discountPrice &&
-          Number(zgObj.discountPrice) < Number(zgObj.price)
-        ) {
-          zgObjs.discount =
-            "已优惠" + (zgObj.price / 100 - zgObj.discountPrice / 100) + "元";
-        }
+        zgObjs.oriPrice = zgObj.price / 100
         zgFilterData.push(zgObjs);
         allData.push(zgObjs);
         rowData.push({
@@ -1289,21 +1273,10 @@ const getMonitorHouseData = (list, mSelect) => {
           "title",
           "长租优惠"
         ),
+        oriPrice : houseList[i].data.luPrice,
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
       };
-      if (
-        houseList[i].data.showPriceV2.showPrice &&
-        houseList[i].data.luPrice &&
-        Number(houseList[i].data.showPriceV2.showPrice) <
-          Number(houseList[i].data.luPrice)
-      ) {
-        xzObj.discount =
-          "已优惠" +
-          (Number(houseList[i].data.luPrice) -
-            Number(houseList[i].data.showPriceV2.showPrice)) +
-          "元";
-      }
       allData.push(xzObj);
       xzFilterData.push(xzObj);
     }
@@ -1350,20 +1323,10 @@ const getMonitorHouseData = (list, mSelect) => {
           : houseList[i].data.price / 100,
         productId: houseList[i].data.productId,
         priceTag: util.arrFilter(houseList[i].data.productTagList, "tagId", 30),
+        oriPrice: houseList[i].data.price / 100,
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
       };
-      if (
-        houseList[i].data.discountPrice &&
-        houseList[i].data.price &&
-        houseList[i].data.discountPrice < houseList[i].data.price
-      ) {
-        zgObj.discount =
-          "已优惠" +
-          (houseList[i].data.price / 100 -
-            houseList[i].data.discountPrice / 100) +
-          "元";
-      }
       allData.push(zgObj);
       zgFilterData.push(zgObj);
     }
@@ -1934,22 +1897,22 @@ const getMonitorLongHouseData = (list, mSelect) => {
     if (houseList[i].platform == "ftx") {
       let fangtianxiaObjs = {
         platformId: "ftx",
-        housesid: houseList[i].data.houseid,
-        imgurl: houseList[i].data.titleimage,
-        price: Number(houseList[i].data.price),
-        housetitle: houseList[i].data.title,
+        housesid: houseList[i].data.houseid.text,
+        imgurl: houseList[i].data.titleimage.text,
+        price: Number(houseList[i].data.price.text),
+        housetitle: houseList[i].data.title.text,
         introduce:
-          houseList[i].data.buildarea +
+          houseList[i].data.buildarea.text +
           "㎡/" +
-          houseList[i].data.rentway +
+          houseList[i].data.rentway.text +
           " " +
-          houseList[i].data.room +
+          houseList[i].data.room.text +
           "室",
-        address: houseList[i].data.district + "." + houseList[i].data.comarea,
-        tagwall: houseList[i].data.tags
-          ? houseList[i].data.tags.split(" ")
+        address: houseList[i].data.district.text + "." + houseList[i].data.comarea.text,
+        tagwall: houseList[i].data.tags.text
+          ? houseList[i].data.tags.text.split(" ")
           : [],
-        area: Number(houseList[i].data.buildarea),
+        area: Number(houseList[i].data.buildarea.text),
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
       };
