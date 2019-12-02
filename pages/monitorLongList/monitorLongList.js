@@ -329,17 +329,6 @@ Page({
         if (monitorCount.tcTotal > -1) { enoughList.push({ key: 'tc', name: '58同城', value: monitorCount.tcTotal }) }
       }
       enoughList.sort(util.compareSort('value', 'desc'));
-      let num = wx.getStorageSync('monitorLeftNum');
-      if (!num && houseList && houseList.length>1) {
-        wx.setStorageSync('monitorLeftNum', 1);
-        this.setData({
-          isFirst:true
-        })
-      }else{
-        this.setData({
-          isFirst: false
-        })
-      }
       this.setData({
         allOriginalData: monitorHouseData.allData,
         allData: monitorHouseData.allData.slice(0, 5),
