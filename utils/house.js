@@ -1972,7 +1972,7 @@ const getMonitorLongHouseData = (list, mSelect) => {
           houseList[i].data.area.split("㎡")[0] +
           "㎡/" +
           houseList[i].data.huxing,
-        address: houseList[i].data.lastLocal || wbtcData[i].rightLabel,
+        address: houseList[i].data.lastLocal || houseList[i].rightLabel,
         tagwall: houseList[i].data.usedTages
           ? houseList[i].data.usedTages.split(",")
           : [],
