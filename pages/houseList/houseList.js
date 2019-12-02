@@ -49,7 +49,8 @@ Page({
     monitorBottom: false,
     editFlag: false,
     selectAllFlag: false,
-    indexArr: []
+    indexArr: [],
+    searchData:{}
   },
   clickSelectItem(e) {
     var type = e.detail.type;
@@ -76,6 +77,27 @@ Page({
   submitAdvance() {
     var houseSelect = this.selectComponent("#houseSelect");
     houseSelect.reSetData();
+
+    if (util.objectDiff(app.globalData.searchData, this.data.searchData)){
+      let allArr = [...this.data.allOriginalData]
+      this.setData({
+        showAdvance: false,
+        loadingDisplay: "block",
+        allData: []
+      });
+      if (app.globalData.searchData.advSort == 2){
+        allArr.sort(util.compareSort("finalPrice", "asc"));
+      }
+      if (app.globalData.searchData.advSort == 3) {
+        allArr.sort(util.compareSort("finalPrice", "desc"));
+      }
+      this.setData({
+        loadingDisplay: "none",
+        allOriginalData: allArr,
+        allData: allArr.slice(0, 5)
+      })
+      return
+    }
     console.log("查询完毕");
     this.setData({
       showAdvance: false,
@@ -117,7 +139,8 @@ Page({
       cityName: x.city,
       locationName: x.area || "全城",
       budget: budget,
-      sortType: x.sort
+      sortType: x.sort,
+      searchData:x
     });
     this.getIndexHouseData();
     this.getAllData();

@@ -52,7 +52,8 @@ Page({
     selectAllFlag: false,
     indexArr: [],
     mSelect: 1, //1全部 2新上 3价格
-    advSort:''
+    advSort:'',
+    searchData:{}
   },
   clickSelectItem(e) {
     var type = e.detail.type;
@@ -65,6 +66,26 @@ Page({
   submitAdvance() {
     var houseSelect = this.selectComponent("#houseSelect")
     houseSelect.reSetData()
+    if (util.objectDiff(app.globalData.monitorSearchData, this.data.searchData)) {
+      let allArr = [...this.data.allOriginalData]
+      this.setData({
+        showAdvance: false,
+        loadingDisplay: "block",
+        allData: []
+      });
+      if (app.globalData.monitorSearchData.advSort == 2) {
+        allArr.sort(util.compareSort("finalPrice", "asc"));
+      }
+      if (app.globalData.monitorSearchData.advSort == 3) {
+        allArr.sort(util.compareSort("finalPrice", "desc"));
+      }
+      this.setData({
+        loadingDisplay: "none",
+        allOriginalData: allArr,
+        allData: allArr.slice(0, 5)
+      })
+      return
+    }
     this.setData({
       showAdvance: false,
       loadingDisplay: 'block',
@@ -114,6 +135,7 @@ Page({
       monitorItem: data.item,
       startTimeName: monitor.startTimeName(data.item.startTime),
       taskTime: monitor.taskTime(data.item.monitorTime, data.item.minutes),
+      searchData: app.globalData.monitorSearchData
     })
     this.getMonitorData();
   },
@@ -142,6 +164,7 @@ Page({
       xzfilter: xzScreen,
       mnfilter: mnScreen,
       zgfilter: zgScreen,
+      searchData: app.globalData.monitorSearchData
     })
     this.getAllData();
   },
