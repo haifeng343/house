@@ -1,3 +1,4 @@
+@import "../../assets/styles/font.wxss";
 .house_shortcuts {
   position: fixed;
   right: 12rpx;
@@ -7,22 +8,13 @@
   transition: transform 1s;
 }
 
-.house_shortcuts .top,
-.house_shortcuts .sort {
-  width: 100rpx;
-  height: 100rpx;
-}
-
-.house_shortcuts .top {
-  margin-bottom: 8rpx;
-}
-
 .house_shortcuts.hidden {
   transform: translateX(calc(100% + 12rpx));
 }
 
 .select_back {
   position: relative;
+  margin-bottom: 18rpx;
 }
 .select_back .select_item {
   margin: 0 auto;
@@ -39,6 +31,9 @@
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+}
+.select_back .select_item.top {
+  font-size: 34rpx;
 }
 .select_back .select_item.active {
   width:90rpx;
@@ -57,10 +52,10 @@
   transition: transform .5s;
 }
 .select_back .show.list:nth-last-child(2) {
-  transform: translateX(-188rpx);
+  transform: translateX(-190rpx);
   transition: transform .8s;
 }
 .select_back .show.list:last-child {
-  transform: translateX(-98rpx);
+  transform: translateX(-102rpx);
   transition: transform .8s;
 }
