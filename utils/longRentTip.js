@@ -402,7 +402,7 @@ function returnData2(ftxData, wbtcData, keywords) {
       if (data2[index].type === 3) {
         var isMatch = false;
         for (var temp = 0; temp < requestData.xiaoqu.length; temp++) {
-          var name = data2[index].name.replace(/\[.*\]/gi, "");
+          var name = data2[index].name.replace(/\[.*\]/gi, "").replace(/\(.*\)/gi, "");
           if (name === requestData.xiaoqu[temp].name) {
             isMatch = true;
           } else if (matchXiaoqu(requestData.xiaoqu[temp].name, name)) {
