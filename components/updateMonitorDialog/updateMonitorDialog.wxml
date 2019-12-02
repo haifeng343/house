@@ -4,10 +4,6 @@
         <view class="house_title">确认变更监控条件</view>
       </view>
       <view class="content">
-        <view class="text">
-          <image class="warn_image" src="../../assets/image/warn.png"></image>
-          <text>开启监控后，除已收藏的房源外，当 前所查询的房源都将不再监控内展示。</text>
-        </view>
         <view class="mask_task">
           <view class="task">
             <view><text>城市:</text><text class="update" wx:if="{{cityName!=defaultCityName}}">已改</text></view>

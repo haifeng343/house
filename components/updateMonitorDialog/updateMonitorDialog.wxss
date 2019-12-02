@@ -19,16 +19,11 @@
 
 .mask_content .content{
   width: 624rpx;
-  height: 714rpx;
+  height: 630rpx;
   background: #FFFFFF;
   border-radius:  0 0 16rpx 16rpx;
 }
-.mask_content .content .text{
-  padding-top: 42rpx;
-  margin: 0 62rpx;
-  color: #E75D28;
-  position: relative;
-}
+
 .mask_content .content .btn{
   width: 272rpx;
   height: 92rpx;
@@ -50,6 +45,7 @@
 }
 
 .content .mask_task{
+   padding-top: 42rpx;
    margin: 0 62rpx;
    font-size: 32rpx;
 }
