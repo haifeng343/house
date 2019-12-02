@@ -328,6 +328,7 @@ function returnData2(ftxData, wbtcData, keywords) {
     ftxData.hits.hit &&
     ftxData.hits.hit instanceof Array
   ) {
+    console.log('ftx')
     var data = ftxData.hits.hit;
     if (!data instanceof Array) {
       data = [];
@@ -335,25 +336,25 @@ function returnData2(ftxData, wbtcData, keywords) {
     }
     var length1 = data.length < 15 ? data.length : 15;
     for (var index = 0; index < length1; index++) {
-      if (data[index].wordtype.text === "商圈") {
+      if (data[index].wordtype === "商圈") {
         requestData.buiness.push({
-          name: data[index].word.text,
+          name: data[index].word,
           ftx: data[index],
           type: 20
         });
       }
       if (
-        data[index].wordtype.text === "楼盘" &&
-        data[index].ywtype.text === "出租"
+        data[index].wordtype === "楼盘" &&
+        data[index].ywtype === "出租"
       ) {
-        data[index].coord_x.text = parseFloat(
-          parseFloat(data[index].coord_x.text).toFixed(6)
+        data[index].coord_x = parseFloat(
+          parseFloat(data[index].coord_x).toFixed(6)
         );
-        data[index].coord_y.text = parseFloat(
-          parseFloat(data[index].coord_y.text).toFixed(6)
+        data[index].coord_y = parseFloat(
+          parseFloat(data[index].coord_y).toFixed(6)
         );
         requestData.xiaoqu.push({
-          name: data[index].projmainname.text,
+          name: data[index].projmainname,
           ftx: data[index],
           type: 30
         });
@@ -366,6 +367,7 @@ function returnData2(ftxData, wbtcData, keywords) {
     wbtcData.result.getHouseOnMapSuggestion &&
     wbtcData.result.getHouseOnMapSuggestion.dataList instanceof Array
   ) {
+    console.log('wbtc')
     var data2 = wbtcData.result.getHouseOnMapSuggestion.dataList;
     var length2 = data2.length < 15 ? data2.length : 15;
     for (var index = 0; index < length2; index++) {
@@ -406,8 +408,8 @@ function returnData2(ftxData, wbtcData, keywords) {
           } else if (matchXiaoqu(requestData.xiaoqu[temp].name, name)) {
             if (requestData.xiaoqu[temp].ftx) {
               var distance = getFlatternDistance(
-                requestData.xiaoqu[temp].ftx.coord_y.text,
-                requestData.xiaoqu[temp].ftx.coord_x.text,
+                requestData.xiaoqu[temp].ftx.coord_y,
+                requestData.xiaoqu[temp].ftx.coord_x,
                 data2[index].lat,
                 data2[index].lon
               );
@@ -465,15 +467,16 @@ const getPersonalData = (data, keywords, promiseVersion) => {
     longrent.fangtianxia
       .rentTip({ city: data.ftx, keywords: keywords })
       .then(resp => {
+
         if (!!resp.hits && !!resp.hits.hit) {
           const results = [];
           const resultMap = [];
           for (const r of resp.hits.hit) {
-            if (resultMap.includes(`%%${r.wordtype.text}%%__${r.word.text}`)) {
+            if (resultMap.includes(`%%${r.wordtype}%%__${r.word}`)) {
               continue;
             }
             results.push(r);
-            resultMap.push(`%%${r.wordtype.text}%%__${r.word.text}`);
+            resultMap.push(`%%${r.wordtype}%%__${r.word}`);
           }
           return Promise.resolve({
             hits: {
@@ -514,7 +517,13 @@ const getPersonalData = (data, keywords, promiseVersion) => {
         ) {
           const results = [];
           const resultMap = [];
-          for (const r of resp.result.getHouseOnMapSuggestion.dataList) {
+          let dataList = [];
+          for(let item of resp.result.getHouseOnMapSuggestion.dataList) {
+            for (let temp of item.detail) {
+              dataList.push(temp)
+            }
+          }
+          for (const r of dataList) {
             if (resultMap.includes(`%%${r.type}%%__${r.name}`)) {
               continue;
             }

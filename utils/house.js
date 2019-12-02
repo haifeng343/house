@@ -1912,7 +1912,7 @@ const getMonitorLongHouseData = (list, mSelect) => {
         tagwall: houseList[i].data.tags
           ? houseList[i].data.tags.split(" ")
           : [],
-        area: Number(houseList[i].data.buildarea.text),
+        area: Number(houseList[i].data.buildarea),
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
       };
