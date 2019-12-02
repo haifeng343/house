@@ -161,12 +161,12 @@ const chooseSlectData = data => {
     }
     if (data.ftx) {
       result.areaId.ftx = {
-        district: data.ftx.district.text,
-        comarea: data.ftx.word.text
+        district: data.ftx.district,
+        comarea: data.ftx.word
       };
       areaJson.ftx = {
-        district: data.ftx.district.text,
-        comarea: data.ftx.word.text
+        district: data.ftx.district,
+        comarea: data.ftx.word
       };
     }
   }
