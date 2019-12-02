@@ -79,6 +79,14 @@ export default JSON.stringify({
           {
             label: "低价优先",
             value: 1
+          },
+          {
+            label: "空间优先",
+            value: 2
+          },
+          {
+            label: "最新发布",
+            value: 3
           }
         ]
       },
@@ -291,6 +299,14 @@ export default JSON.stringify({
           {
             label: "低价优先",
             value: 1
+          },
+          {
+            label: "空间优先",
+            value: 2
+          },
+          {
+            label: "最新发布",
+            value: 3
           }
         ]
       },
