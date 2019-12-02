@@ -28,7 +28,7 @@
             </view>
             <view class="newLevel pricedown" wx:if="{{item.priceDownLevel >0 }}">
               <text class="icon-font uniE967"></text>
-              <text class="">新上</text>
+              <text class="">降价</text>
             </view>
           </view>
         </view>
