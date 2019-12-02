@@ -28,10 +28,10 @@
     <mp-loading type="dot-red" tips="加载中" show="{{loadingShow}}"></mp-loading>
   </view>
   <view class="house_monitor" wx:if="{{loadingDisplay == 'none'}}">
-    <button wx:if="{{countFlag ===1 &&allCount>50}}" class="monitor_btn" bindtap='startMonitor'>
+    <button wx:if="{{countFlag !==2 &&allCount>50}}" class="monitor_btn" bindtap='startMonitor'>
       查看更多
     </button>
-    <button wx:if="{{(countFlag ===1 &&allCount<=50)||countFlag == 0}}" class="monitor_btn" bindtap='startMonitor'>
+    <button wx:if="{{(countFlag !==2 &&allCount<=50)}}" class="monitor_btn" bindtap='startMonitor'>
       开启监控
     </button>
     <button wx:if="{{countFlag ===2}}" class="monitor_btn" bindtap='goRefresh'>立即刷新</button>

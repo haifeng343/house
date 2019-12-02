@@ -13,8 +13,11 @@ export const default_address = 'https://fangtest.bangdingding.cn';
 //三方平台数据api
 export const wiwj_address         = "https://appapi.5i5j.com"
 export const lianjia_address      = "https://app.api.lianjia.com"
+export const lianjia_address1     = "https://wx-api.zu.ke.com"
 export const fangtianxia_address1 = "https://soufunapp.3g.fang.com"
 export const fangtianxia_address2 = "https://soufunappesf.3g.fang.com"
+export const fangtianxia_address3 = "https://m.fang.com"
+export const wbtc_address4        = "https://housewechat.58.com"
 export const wbtc_address1        = "https://app.58.com"
 export const wbtc_address2        = "https://ditu.58.com"
 export const wbtc_address         = "https://apphouse.58.com"

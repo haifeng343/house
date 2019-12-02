@@ -1,5 +1,6 @@
 const api = require('../api/api.js');
 import MD5 from "../utils/md5.js";
+import { wiwj_address, lianjia_address1, fangtianxia_address3, wbtc_address4} from "./httpAddress.js"
 const encrySign = 'cd02613a5cfaf7ad91e565d668b6056c'
 const setDate = date => {
   let d = date.split(" ")[0];
@@ -181,7 +182,7 @@ const navigateToLongMiniProgram = (plateform, productid,city) => {
 const wiwjDetail = function (id){
   let data = { hid: id}
   return new Promise((resolve, reject) => {
-    api.postApiUrl(data, 'https://appapi.5i5j.com/appapi/rent/1/v1/allinfo').then(res => {
+    api.postApiUrl(data, wiwj_address+'/appapi/rent/1/v1/allinfo').then(res => {
       console.log(res)
       if (res && res.data && typeof (res.data.data) == 'object' && res.data.data.houseinfo) {
         resolve(true)
@@ -207,7 +208,7 @@ const ljDetail = function (id) {
     'rent-app-id': 'rent-xcx'
   }
   return new Promise((resolve, reject) => {
-    api.getApiUrl(data, 'https://wx-api.zu.ke.com/v1/house/detail', headers).then(res => {
+    api.getApiUrl(data, lianjia_address1+'/v1/house/detail', headers).then(res => {
       console.log(res)
       if (res && res.data && typeof (res.data.data) == 'object' && res.data.data.base_info) {
         resolve(true)
@@ -230,7 +231,7 @@ const ftxDetail = function (id,city) {
     cityname:city
   }
   return new Promise((resolve, reject) => {
-    api.getApiUrl(data, 'https://m.fang.com/public').then(res => {
+    api.getApiUrl(data, fangtianxia_address3+'/public').then(res => {
       console.log(res)
       if (res && res.data && typeof (res.data) == 'object' && res.data.houseid){
         resolve(true)
@@ -249,7 +250,7 @@ const tcDetail = function (id) {
     signature: MD5(id +'HOUSEWECHAT')
   }
   return new Promise((resolve, reject) => {
-    api.getApiUrl(data, 'https://housewechat.58.com/house/Api_get_zufang_detail').then(res => {
+    api.getApiUrl(data, wbtc_address4+'/house/Api_get_zufang_detail').then(res => {
       console.log(res)
       if (res && res.data && typeof (res.data.data) == 'object' && res.data.data.houseInfo) {
         resolve(true)
