@@ -97,7 +97,8 @@
 }
 .house_card .house_price .o_price{
   font-size: 24rpx;
-  text-decoration:line-through
+  text-decoration:line-through;
+  margin-right: 4rpx
 }
 .house_card .house_price .triangle {
   position: absolute;
@@ -195,9 +196,9 @@
   display: inline-block;
   margin-right: 20rpx;
 }
-/* .house_card .house_tag .discount{
+.house_card .house_tag .discount{
   width: 140rpx;
-} */
+}
 .house_card .distance {
   width: 26rpx;
   height: 26rpx;

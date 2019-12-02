@@ -43,7 +43,7 @@
                 <text wx:if="{{item.platformId == 'xz'}}">{{pitem.title}}</text>
                 <text wx:if="{{item.platformId == 'zg'}}">{{pitem.tagName}}</text>
               </block>
-              <!-- <text class="discount" wx:if="{{item.discount}}">{{item.discount}}</text> -->
+              <text class="discount" wx:if="{{item.discount}}">{{item.discount}}</text>
             </view>
           </view>
           <view class="house_photo">

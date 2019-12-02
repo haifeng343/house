@@ -1056,6 +1056,16 @@ const getHouseData = data => {
           "长租优惠"
         );
         xzObjs.oriPrice = xzObj.luPrice
+        if (
+          xzObj.showPriceV2.showPrice &&
+          xzObj.luPrice &&
+          Number(xzObj.showPriceV2.showPrice) < Number(xzObj.luPrice)
+        ) {
+          xzObjs.discount =
+            "已优惠" +
+            (Number(xzObj.luPrice) - Number(xzObj.showPriceV2.showPrice)) +
+            "元";
+        }
         xzFilterData.push(xzObjs);
         allData.push(xzObjs);
         rowData.push({
@@ -1120,6 +1130,14 @@ const getHouseData = data => {
         zgObjs.productId = zgObj.productId;
         zgObjs.priceTag = util.arrFilter(zgObj.productTagList, "tagId", 30);
         zgObjs.oriPrice = zgObj.price / 100
+        if (
+          zgObj.price &&
+          zgObj.discountPrice &&
+          Number(zgObj.discountPrice) < Number(zgObj.price)
+        ) {
+          zgObjs.discount =
+            "已优惠" + (zgObj.price / 100 - zgObj.discountPrice / 100) + "元";
+        }
         zgFilterData.push(zgObjs);
         allData.push(zgObjs);
         rowData.push({
@@ -1277,6 +1295,18 @@ const getMonitorHouseData = (list, mSelect) => {
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
       };
+      if (
+        houseList[i].data.showPriceV2.showPrice &&
+        houseList[i].data.luPrice &&
+        Number(houseList[i].data.showPriceV2.showPrice) <
+        Number(houseList[i].data.luPrice)
+      ) {
+        xzObj.discount =
+          "已优惠" +
+          (Number(houseList[i].data.luPrice) -
+            Number(houseList[i].data.showPriceV2.showPrice)) +
+          "元";
+      }
       allData.push(xzObj);
       xzFilterData.push(xzObj);
     }
@@ -1327,6 +1357,17 @@ const getMonitorHouseData = (list, mSelect) => {
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
       };
+      if (
+        houseList[i].data.discountPrice &&
+        houseList[i].data.price &&
+        houseList[i].data.discountPrice < houseList[i].data.price
+      ) {
+        zgObj.discount =
+          "已优惠" +
+          (houseList[i].data.price / 100 -
+            houseList[i].data.discountPrice / 100) +
+          "元";
+      }
       allData.push(zgObj);
       zgFilterData.push(zgObj);
     }
