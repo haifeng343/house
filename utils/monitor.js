@@ -118,11 +118,11 @@ const navigateToLongMiniProgram = (plateform, productid,city) => {
   }
   if (plateform == 'lj') {
     if (productid){
-      ljDetail(productid).then(res => {
+      // ljDetail(productid).then(res => {
         if (/^\d+$/.test(productid)){
           wx.navigateToMiniProgram({
             appId: 'wxcfd8224218167d98',
-            path: 'subpackages/rent/pages/apartment/layout/index.html?share=1&layout_id=' + productid
+            path: 'subpackages/rent/pages/apartment/layout/index?share=1&layout_id=' + productid
           })
         }else{
           wx.navigateToMiniProgram({
@@ -130,13 +130,13 @@ const navigateToLongMiniProgram = (plateform, productid,city) => {
             path: 'subpackages/rent/pages/detail/index?city_id=' + city.lj + '&house_code=' + productid
           })
         }
-      }).catch(res => {
-        wx.showToast({
-          title: '该房源仅可在app中查看，具体详情请前往对应平台app查询',
-          icon: 'none',
-          mask: true
-        })
-      })
+      // }).catch(res => {
+      //   wx.showToast({
+      //     title: '该房源仅可在app中查看，具体详情请前往对应平台app查询',
+      //     icon: 'none',
+      //     mask: true
+      //   })
+      // })
     }else{
       wx.navigateToMiniProgram({
         appId: 'wxcfd8224218167d98',
