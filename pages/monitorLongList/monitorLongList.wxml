@@ -26,8 +26,9 @@
       </block>
     </view>
     
-    
-    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length}}">已展示全部房源</view>
+    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&mSelect ==1}}">已展示全部房源</view>
+    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&mSelect ==2}}">以上为新上房源，点击<text class="no_text" data-index="1" bindtap="goTocheckAll">查看全部</text>房源</view>
+    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&mSelect ==3}}">以上为降价房源，点击<text class="no_text" data-index="1" bindtap="goTocheckAll">查看全部</text>房源</view>
     <mp-loading type="dot-red" tips="加载中" show="{{loadingShow}}"></mp-loading>
   </view>
 
