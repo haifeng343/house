@@ -49,8 +49,10 @@ Component({
           this.createSelectorQuery()
             .select(".withdraw-list.init")
             .boundingClientRect(rect => {
-              this.listHeight = rect.height;
-              this.setData({ isListInit: true, height: "0PX" });
+              if (rect) {
+                this.listHeight = rect.height;
+                this.setData({ isListInit: true, height: "0PX" });
+              }
             })
             .exec();
         }

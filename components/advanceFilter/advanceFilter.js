@@ -33,6 +33,9 @@ Component({
     priceType: "",
     houseType: {},
     leaseType: {},
+    level1View: "activelevel1",
+    level2View: "activelevel2",
+    level3View: "activelevel3",
     isLoaded: false,
     sortList: [
       {
@@ -182,17 +185,7 @@ Component({
     handleSelectNumber(event) {
       const index = event.detail;
       this.data.searchData.gueseNumber = index;
-      // const optionList = this.data.optionList.map((item, itemIndex) => {
-      //   if (index === itemIndex) {
-      //     this.data.searchData.gueseNumber = item.value;
-      //     item.active = true;
-      //   } else {
-      //     item.active = false;
-      //   }
-      //   return item;
-      // });
       this.setData({
-        // optionList,
         searchData: this.data.searchData
       });
     },
@@ -263,13 +256,22 @@ Component({
           middleList: this.data.area[type].data,
           lastList: [],
           typeActive: type,
-          middleActive: key
+          middleActive: Object.keys(this.data.area[type].data)[0]
         });
       }
+
+      wx.nextTick(() => {
+        this.setData({
+          level1View: "activelevel1",
+          level2View: "activelevel2",
+          level3View: "activelevel3"
+        });
+      });
     },
     chooseSecond(event, way) {
       var data = event.currentTarget.dataset;
       let type = data.type;
+
       this.setData(
         {
           lastList: this.data.middleList[type].line || {},
@@ -279,7 +281,7 @@ Component({
           if (
             way === "subway" &&
             data.type === this.data.initSelect.initLine &&
-            data.station === this.data.initSelect.initKey
+            +data.station === +this.data.initSelect.initKey
           ) {
             this.chooseLast({
               currentTarget: {
@@ -289,21 +291,37 @@ Component({
               }
             });
           } else {
-            // this.chooseLast({
-            //   currentTarget: {
-            //     dataset: {
-            //       type: Object.keys(this.data.lastList)[0]
-            //     }
-            //   }
-            // });
+            this.chooseLast({
+              currentTarget: {
+                dataset: {
+                  type: Object.keys(this.data.lastList)[0]
+                }
+              }
+            });
           }
         }
       );
+
+      wx.nextTick(() => {
+        this.setData({
+          level1View: "activelevel1",
+          level2View: "activelevel2",
+          level3View: "activelevel3"
+        });
+      });
     },
     chooseLast(event) {
       let type = event.currentTarget.dataset.type || "";
       this.setData({
         lastActive: type
+      });
+
+      wx.nextTick(() => {
+        this.setData({
+          level1View: "activelevel1",
+          level2View: "activelevel2",
+          level3View: "activelevel3"
+        });
       });
     },
     checkPositionId(name) {
@@ -372,15 +390,15 @@ Component({
     },
     selectLeaseType(event) {
       let index = event.currentTarget.dataset.index;
-      let searchData = this.data.searchData;
-      if (searchData.leaseType === index) {
-        searchData.leaseType = "";
+      let { leaseType } = this.data.searchData;
+      if (leaseType === index) {
+        leaseType = "";
       } else {
-        searchData.leaseType = Number(index);
+        leaseType = index;
       }
 
       this.setData({
-        searchData
+        "searchData.leaseType": leaseType
       });
     },
     selectHouseType(event) {

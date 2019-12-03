@@ -189,10 +189,12 @@ Component({
         this.createSelectorQuery()
           .select(`.move-view`)
           .boundingClientRect(rect => {
-            const blockWidth = rect.width;
-            this.blockWidth = blockWidth;
-            this.blockHalfWidth = blockWidth / 2;
-            this.blockWidthStream.next(blockWidth);
+            if (rect) {
+              const blockWidth = rect.width;
+              this.blockWidth = blockWidth;
+              this.blockHalfWidth = blockWidth / 2;
+              this.blockWidthStream.next(blockWidth);
+            }
           })
           .exec();
 
@@ -242,21 +244,25 @@ Component({
         this.createSelectorQuery()
           .select(`.background-line`)
           .boundingClientRect(rect => {
-            const containerWidth = rect.width;
-            this.setData({
-              rightX: containerWidth,
-              leftX: 0,
-              containerWidth
-            });
+            if (rect) {
+              const containerWidth = rect.width;
+              this.setData({
+                rightX: containerWidth,
+                leftX: 0,
+                containerWidth
+              });
 
-            this.containerWidthStream.next(containerWidth);
+              this.containerWidthStream.next(containerWidth);
+            }
           })
           .exec();
 
         this.createSelectorQuery()
           .select(`.container`)
           .boundingClientRect(rect => {
-            this.containerLeft = rect.left;
+            if (rect) {
+              this.containerLeft = rect.left;
+            }
           })
           .exec();
 

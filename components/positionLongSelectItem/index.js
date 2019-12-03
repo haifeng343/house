@@ -1,9 +1,9 @@
-import positionService from './service';
+import positionService from "./service";
 const service = new positionService();
-import { chooseArea } from '../../utils/longSetSearchData.js'
+import { chooseArea } from "../../utils/longSetSearchData.js";
 const typeNameEnum = {
-  "area": '行政',
-  "subway": '地铁'
+  area: "行政",
+  subway: "地铁"
 };
 Component({
   /**
@@ -42,7 +42,7 @@ Component({
     changeTab() {
       let page = this.data.page;
       if (page == this.data.totalPage) {
-        page = -1
+        page = -1;
       }
       page++;
       this.setData({ isScroll: true, page }, () => {
@@ -50,8 +50,8 @@ Component({
         this.setData({
           scrollTop,
           isScroll: false
-        })
-      })
+        });
+      });
     },
     spreadItem() {
       if (this.properties.data.data.length <= 20) {
@@ -70,28 +70,36 @@ Component({
       wx.createSelectorQuery()
         .in(this)
         .select(selectName)
-        .boundingClientRect().exec(rect => {
-          let height = rect[0].height;
-          let lines = height / this.data.singleItemHeight;
-          let totalPage = Math.ceil(lines / 4);
-          let lastPage = lines % 4;
-          this.setData({
-            lines,
-            totalPage,
-            lastPage
-          })
+        .boundingClientRect()
+        .exec(rect => {
+          if (rect) {
+            let height = rect[0].height;
+            let lines = height / this.data.singleItemHeight;
+            let totalPage = Math.ceil(lines / 4);
+            let lastPage = lines % 4;
+            this.setData({
+              lines,
+              totalPage,
+              lastPage
+            });
+          }
         });
     },
     chooseArea(event) {
-      let name = event.currentTarget.dataset.name
-      let fullname = event.currentTarget.dataset.fullname
+      let name = event.currentTarget.dataset.name;
+      let fullname = event.currentTarget.dataset.fullname;
       const app = getApp();
-      let searchLongData = app.globalData.searchLongData
-      chooseArea(fullname, searchLongData.city, searchLongData.chooseType).then(resp=>{
-        app.globalData.searchLongData = Object.assign(app.globalData.searchLongData,resp)
-        wx.navigateBack({ delta: 1 });
-      })
-    },
+      let searchLongData = app.globalData.searchLongData;
+      chooseArea(fullname, searchLongData.city, searchLongData.chooseType).then(
+        resp => {
+          app.globalData.searchLongData = Object.assign(
+            app.globalData.searchLongData,
+            resp
+          );
+          wx.navigateBack({ delta: 1 });
+        }
+      );
+    }
   },
   lifetimes: {
     attached() {
@@ -99,21 +107,27 @@ Component({
       setTimeout(() => {
         wx.createSelectorQuery()
           .in(this)
-          .select('.item')
-          .boundingClientRect().exec(rect => {
-            singleItemHeight = rect[0].height + 10;
-            this.setData({
-              singleItemHeight
-            }, () => {
-              this.calcPage();
-            })
+          .select(".item")
+          .boundingClientRect()
+          .exec(rect => {
+            if (rect) {
+              singleItemHeight = rect[0].height + 10;
+              this.setData(
+                {
+                  singleItemHeight
+                },
+                () => {
+                  this.calcPage();
+                }
+              );
+            }
           });
       }, 500);
     }
   },
   observers: {
-    data: function (data) {
+    data: function(data) {
       console.log(data);
     }
   }
-})
+});
