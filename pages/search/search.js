@@ -143,12 +143,12 @@ Page({
     });
   },
   selectLeaseType(event) {
-    let index = +event.currentTarget.dataset.index;
+    let index = event.currentTarget.dataset.index;
     let searchData = this.data.searchData;
     if (searchData.leaseType === index) {
       searchData.leaseType = "";
     } else {
-      searchData.leaseType = Number(index);
+      searchData.leaseType = index;
     }
 
     this.setData({
