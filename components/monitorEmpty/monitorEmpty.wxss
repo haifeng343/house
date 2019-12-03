@@ -7,4 +7,4 @@
 .search_empty .search_tip {font-size: 28rpx;color: #a6a6a6;}
 .search_empty .empty_image {width: 320rpx;height: 250rpx;}
 .search_empty .monitor_empty_image {width: 320rpx;height: 222rpx;}
-.search_empty .search_select{text-decoration: underline}
+.search_empty .search_select{color: #F1612A}
