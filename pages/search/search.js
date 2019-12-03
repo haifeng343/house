@@ -949,12 +949,14 @@ Page({
   },
   onShow() {
     const app = getApp();
+    app.globalData.searchData.advSort = 1; 
     let searchLongData = app.globalData.searchLongData;
     searchLongData.longBuildAreas = -1;
     searchLongData.longFloorTypes = [];
     searchLongData.longHeadings = [];
     searchLongData.longHouseTags = [];
     searchLongData.longLayouts = [];
+    searchLongData.advSort = 0;
     this.searchDataStorage = searchDataStorage.subscribe(hasSearchData => {
       console.log("hasSearchData=" + hasSearchData);
       if (!hasSearchData) {
