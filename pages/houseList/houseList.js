@@ -6,6 +6,7 @@ const monitor = require("../../utils/monitor.js");
 const house = require("../../utils/house.js");
 const regeneratorRuntime = require("../../lib/runtime.js");
 import Http from "../../utils/http.js";
+import { SearchDataSubject } from "../../utils/searchDataStream";
 const app = getApp();
 Page({
   data: {
@@ -50,7 +51,7 @@ Page({
     editFlag: false,
     selectAllFlag: false,
     indexArr: [],
-    updateData:{}
+    updateData: {}
   },
   clickSelectItem(e) {
     var type = e.detail.type;
@@ -98,19 +99,20 @@ Page({
         allOriginalData: allArr,
         allData: allArr.slice(0, 5)
       });
-      return;
+    } else {
+      console.log("查询完毕");
+      this.setData({
+        showAdvance: false,
+        loadingDisplay: "block",
+        countFlag: "",
+        allData: [],
+        showUI: true,
+        editFlag: false,
+        selectAllFlag: false
+      });
+      SearchDataSubject.next();
+      this.onLoad();
     }
-    console.log("查询完毕");
-    this.setData({
-      showAdvance: false,
-      loadingDisplay: "block",
-      countFlag: "",
-      allData: [],
-      showUI: true,
-      editFlag: false,
-      selectAllFlag: false
-    });
-    this.onLoad();
   },
   onLoad: function(options) {
     let tjScreen = house.tjScreenParam(1);
