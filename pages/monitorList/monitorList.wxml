@@ -60,7 +60,7 @@
     updateMaxPrice="{{updateMaxPrice}}" defaultBeginDate="{{defaultBeginDate}}" defaultEndDate="{{defaultEndDate}}" defaultCityName="{{defaultCityName}}" defaultLocationName="{{defaultLocationName}}" defaultMInPrice="{{defaultMInPrice}}" defaultMaxPrice="{{defaultMaxPrice}}"
     style="display:{{updateMonitorDisplay}}"></updateMonitorDialog>
   <block wx:if='{{isLoaded}}'>
-    <advanceFilter class='{{showAdvance?"":"vhidden"}}' type='monitor' shownType='{{showAdvanceType}}' cityName='{{cityName}}' bind:submit='submitAdvance' />
+    <advanceFilter class='{{showAdvance?"":"vhidden"}}' type='monitor' shownType='{{showAdvanceType}}' cityName='{{cityName}}' bind:submit='submitAdvance' bind:onClose="handleCloseAdvance"/>
   </block>
 
   <monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}" paddingBottom="1" style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent"></monitorEnoughDialog>
