@@ -3,7 +3,7 @@
     <view bindtap="goEdit" class="top select_item active" src="../../assets/image/edit.png"><text class="icon-font uniE92E"></text></view>
   </view>
   <view class="select_back" wx:else>
-    <view bindtap="goEdit" class="select_item active">返回</view>
+    <view bindtap="goEdit" class="select_item active">取消</view>
   </view>
 
   <view class="select_back" wx:if="{{listType&&bottomType==1}}">
