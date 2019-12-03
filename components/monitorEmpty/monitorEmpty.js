@@ -25,10 +25,8 @@ Component({
    */
   methods: {
     goSelect(e){
-      let detail = {
-        index: e.currentTarget.dataset.index,
-      }
-      this.triggerEvent('selectEvent', detail);
+      let index = e.currentTarget.dataset.index
+      this.triggerEvent('selectEvent', index);
     }
   }
 })

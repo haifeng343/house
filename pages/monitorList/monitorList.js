@@ -53,7 +53,7 @@ Page({
     indexArr: [],
     mSelect: 1, //1全部 2新上 3价格
     advSort:'',
-    searchData:{},
+    updateData:{},
     isMtype:false
   },
   clickSelectItem(e) {
@@ -67,7 +67,8 @@ Page({
   submitAdvance() {
     var houseSelect = this.selectComponent("#houseSelect")
     houseSelect.reSetData()
-    if (util.objectDiff(app.globalData.monitorSearchData, this.data.searchData)) {
+    let updateData = { ...JSON.parse(this.data.updateData) }
+    if (util.objectDiff(app.globalData.monitorSearchData, updateData)) {
       let allArr = [...this.data.allOriginalData]
       this.setData({
         showAdvance: false,
@@ -137,7 +138,7 @@ Page({
       monitorItem: data.item,
       startTimeName: monitor.startTimeName(data.item.startTime),
       taskTime: monitor.taskTime(data.item.monitorTime, data.item.minutes),
-      searchData: app.globalData.monitorSearchData
+      updateData: JSON.stringify(app.globalData.monitorSearchData)
     })
     this.getMonitorData();
   },
@@ -166,7 +167,7 @@ Page({
       xzfilter: xzScreen,
       mnfilter: mnScreen,
       zgfilter: zgScreen,
-      searchData: app.globalData.monitorSearchData
+      updateData: JSON.stringify(app.globalData.monitorSearchData)
     })
     this.getAllData();
   },
@@ -249,7 +250,7 @@ Page({
     }, 300)
   },
   // 监控详情信息
-  getMonitorData() {
+  getMonitorData(e) {
     let data = {
       id: this.data.monitorId,
     };
@@ -396,6 +397,7 @@ Page({
           allData:[],
           allCount:0,
           editFlag: false,
+          mSelect: e ? e.detail : this.data.mSelect
         })
         return;
       }
@@ -406,7 +408,8 @@ Page({
           isMtype: true
         })
       }
-      let monitorHouseData = house.getMonitorHouseData(houseList,this.data.mSelect);//监控房源列表
+      wx.hideLoading()
+      let monitorHouseData = house.getMonitorHouseData(houseList, e?e.detail:this.data.mSelect);//监控房源列表
       if (monitorHouseData.allData.length == 0){
         this.setData({
           countFlag: 0,
@@ -421,6 +424,7 @@ Page({
           allData: [],
           allCount: 0,
           editFlag: false,
+          mSelect:e?e.detail: this.data.mSelect
         })
         return;
       }
@@ -460,7 +464,8 @@ Page({
         loadingDisplay: 'none',
         countFlag: 1,
         isBack: false,
-        sortType:monitorDetail.sortType
+        sortType:monitorDetail.sortType,
+        mSelect: e ? e.detail : this.data.mSelect
       })
     })
   },
@@ -609,16 +614,18 @@ Page({
     })
   },
   goToMAllSelect(e) {
-    this.setData({
-      mSelect: e.detail.index
-    })
-    this.getMonitorData()
+    wx.showLoading({
+      title: "加载中...",
+      mask: true
+    });
+    this.getMonitorData(e)
   },
   goMselect(e) {
-    this.setData({
-      mSelect: e.detail
-    })
-    this.getMonitorData()
+    wx.showLoading({
+      title: "加载中...",
+      mask: true
+    });
+    this.getMonitorData(e)
   },
   goEdit() {
     this.setData({
