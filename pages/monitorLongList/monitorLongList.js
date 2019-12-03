@@ -593,15 +593,44 @@ Page({
   //不再关注
   deleteItem(e) {
     let num = wx.getStorageSync('followNum');
+    let index = e.detail.index;
     if (!num) {
       this.setData({
         followText: '屏蔽房源后，该房源将不会在后续监控中出现！',
         followType: 1,
-        followDisplay: 'block'
+        followDisplay: 'block',
+        followIndex: index
       })
+    }else{
+      this.setData({
+        followText: "是否确认屏蔽此房源！",
+        followType: 1,
+        followDisplay: "block",
+        followIndex: index
+      });
     }
+  },
+  //批量不再关注
+  deleteBatchItem() {
+    let indexArr = this.data.indexArr
+    if (indexArr.length == 0) {
+      this.setData({
+        editFlag: false
+      })
+      return;
+    }
+    this.setData({
+      followText: '即将屏蔽' + this.data.selectNum + '套房源，屏蔽后本次监控将不再获取该房源信息',
+      followType: 2,
+      followDisplay: 'block'
+    })
+  },
+  //不再关注弹窗隐藏
+  followKnowEvent(e) {
+    wx.setStorageSync('followNum', 1)
+    let index = this.data.followIndex
     if (this.data.bottomType == 1) {
-      let item = this.data.allData[e.detail.index]
+      let item = this.data.allData[index]
       let data = {
         uniqueId: item.housesid,
         monitorId: this.data.monitorId,
@@ -618,7 +647,6 @@ Page({
       })
       return;
     }
-    let index = e.detail.index
     let proId = this.data.allOriginalData[index].productId
     let plaId = this.data.allOriginalData[index].platformId
     let allData = [...this.data.allOriginalData]
@@ -654,6 +682,7 @@ Page({
         lianjiaLowPriceData: houseData.ljLowPriceData,
         wiwjFilterData: houseData.wiwjFilterData,
         lianjiaFilterData: houseData.ljFilterData,
+        followDisplay: e.detail.show
       })
     }
     if (this.data.chooseType == 2) {
@@ -668,30 +697,9 @@ Page({
         wbtcLowPriceData: houseData.tcLowPriceData,
         fangtianxiaFilterData: houseData.ftxFilterData,
         wbtcFilterData: houseData.tcFilterData,
+        followDisplay: e.detail.show
       })
     }
-  },
-  //批量不再关注
-  deleteBatchItem() {
-    let indexArr = this.data.indexArr
-    if (indexArr.length == 0) {
-      this.setData({
-        editFlag: false
-      })
-      return;
-    }
-    this.setData({
-      followText: '即将屏蔽' + this.data.selectNum + '套房源，屏蔽后本次监控将不再获取该房源信息',
-      followType: 2,
-      followDisplay: 'block'
-    })
-  },
-  //不再关注弹窗隐藏
-  followKnowEvent(e) {
-    wx.setStorageSync('followNum', 1)
-    this.setData({
-      followDisplay: e.detail.show
-    })
   },
   followCancelEvent(e) {
     if (e.detail.followType == 1) {

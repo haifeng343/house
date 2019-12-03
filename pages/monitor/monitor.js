@@ -52,7 +52,12 @@ Page({
   },
   getLongMonitorData(){
     let data = {}
+    wx.showLoading({
+      title: "加载中...",
+      mask: true
+    });
     monitorApi.getMonitorLongList(data).then(res => {
+      wx.hideLoading();
       if (res.data.data.length) {
         for (let i = 0; i < res.data.data.length; i++) {
           res.data.data[i].dayNum = monitor.setDay(res.data.data[i].monitorTime)
@@ -74,7 +79,12 @@ Page({
   },
   getMonitorData(){
     let data={}
+    wx.showLoading({
+      title: "加载中...",
+      mask: true
+    });
     monitorApi.getMonitorList(data).then(res => {
+      wx.hideLoading();
       if (res.data.data.length) {
         for (let i = 0; i < res.data.data.length; i++) {
           res.data.data[i].beginDay = monitor.setDate(res.data.data[i].beginDate)
