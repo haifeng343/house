@@ -138,7 +138,6 @@ Page({
   changeSort() {
     var sort = this.data.searchData.sort;
     this.data.searchData.sort = sort === 1 ? 2 : 1;
-    this.data.searchData.advSort = sort === 1 ? 2 : 1;
     this.setData({
       searchData: this.data.searchData
     });
@@ -925,7 +924,6 @@ Page({
     } else {
       searchLongData.longSortTypes = parseInt(index);
       data.longSortTypes = parseInt(index);
-      data.advSort = parseInt(index)
     }
     console.log(app);
     this.setData({

@@ -34,6 +34,9 @@ Component({
    */
   methods: {
     goEdit(){
+      this.setData({
+        show: false
+      })
       this.triggerEvent('editEvent', '')
     },
     showSelsect() {
