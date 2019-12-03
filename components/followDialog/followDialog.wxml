@@ -3,9 +3,12 @@
     <view class="house_image">
       <image class="image" src="../../assets/image/monitor_warn.png"></image>
     </view>
-    <view class="content {{followType == 2?'contents':''}}">
+    <view class="content">
       <view class="text">{{text}}</view>
-      <view class="btns" wx:if="{{followType == 1}}" catchtap="knowConfirm">知道了</view>
+      <view class="btn" wx:if="{{followType == 1}}">
+        <text catchtap="bindCancel">取消</text>
+        <text catchtap="knowConfirm" class="right">确认</text>
+      </view>
       <view class="btn" wx:else>
         <text catchtap="bindCancel">取消</text>
         <text catchtap="bindConfirm" class="right">确认</text>
