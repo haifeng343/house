@@ -1522,7 +1522,8 @@ const getBrandHouseData = data => {
   let allData = [];
   let rowData = [];
   let wiwjData = data.wiwjData;
-  let lianjiaData = lianjianFilter(data.lianjiaData);
+  // let lianjiaData = lianjianFilter(data.lianjiaData);
+  let lianjiaData = data.lianjiaData;
   for (let i = 0; i < maxTotal; i++) {
     if (data.wiwjCount > 0) {
       let wiwj = addPlatfromData(allData, wiwjData, i);
