@@ -1,6 +1,6 @@
 @import '../../assets/styles/font.wxss';
 .house_card {
-  margin: 0 28rpx 20px;
+  margin: 0 28rpx 20px 20rpx;
   position: relative;
   border-bottom: 1rpx solid #e8e8e8;
   padding-bottom: 20rpx;
@@ -15,18 +15,20 @@
   width: calc(100% - 105px);
   height: 520rpx;
   position: absolute;
-  left: 38px;
+  left: 30px;
   top: 0
   /* margin-left: 38px */
 }
 .wrapper {
-  width: calc(100vw - 56rpx);
+  width: calc(100vw - 48rpx);
   height: 520rpx;
   position: relative;
-  /* overflow: hidden; */
+  overflow: hidden;
   z-index: 2;
   background: #ffffff;
-  margin-left: -38px;
+  margin-left: -30px;
+  padding-left: 8rpx;
+  box-sizing: border-box;
 }
 .house_card .swiper {
   height: 360rpx;
@@ -54,7 +56,7 @@
 .house_card .house_classify {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 8rpx;
   width: 92rpx;
   height: 48rpx;
   background-color: rgba(0, 0, 0, 0.3);
@@ -81,7 +83,7 @@
 
 .house_card .house_price {
   position: absolute;
-  left: -8rpx;
+  left: 0;
   top: 290rpx;
   width: auto;
   height: 58rpx;
