@@ -80,7 +80,7 @@ Page({
     var houseSelect = this.selectComponent("#houseSelect");
     houseSelect.reSetData();
     let updateData = {...JSON.parse(this.data.updateData)}
-    if (util.objectDiff(app.globalData.searchData, updateData)){
+    if (util.objectDiff(JSON.parse(JSON.stringify(app.globalData.searchData)), JSON.parse(JSON.stringify(updateData)))){
       let allArr = [...this.data.allOriginalData]
       this.setData({
         showAdvance: false,
