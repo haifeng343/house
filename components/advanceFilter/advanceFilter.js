@@ -1,5 +1,4 @@
 import Http from "../../utils/http";
-import { SearchDataSubject } from "../../utils/searchDataStream";
 
 const typeEnum = {
   11: "secnic",
@@ -375,7 +374,6 @@ Component({
           app.globalData.monitorSearchData = Object.assign({}, searchData);
         } else {
           app.globalData.searchData = Object.assign({}, searchData);
-          SearchDataSubject.next();
         }
 
         this.setData(
@@ -447,7 +445,6 @@ Component({
           app.globalData.monitorSearchData = Object.assign({}, searchData);
         } else {
           app.globalData.searchData = Object.assign({}, searchData);
-          SearchDataSubject.next();
         }
         this.setData(
           {
@@ -471,7 +468,6 @@ Component({
             app.globalData.monitorSearchData = Object.assign({}, searchData);
           } else {
             app.globalData.searchData = Object.assign({}, searchData);
-            SearchDataSubject.next();
           }
           this.setData(
             {
@@ -523,7 +519,6 @@ Component({
         app.globalData.monitorSearchData = searchData;
       } else {
         app.globalData.searchData = searchData;
-        SearchDataSubject.next();
       }
       this.triggerEvent("submit");
     },

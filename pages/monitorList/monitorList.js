@@ -52,9 +52,9 @@ Page({
     selectAllFlag: false,
     indexArr: [],
     mSelect: 1, //1全部 2新上 3价格
-    advSort:'',
-    updateData:{},
-    isMtype:false
+    advSort: "",
+    updateData: {},
+    isMtype: false
   },
   clickSelectItem(e) {
     var type = e.detail.type;
@@ -94,27 +94,30 @@ Page({
         allOriginalData: allArr,
         allData: allArr.slice(0, 5)
       });
-      return;
+    } else {
+      this.setData({
+        showAdvance: false,
+        loadingDisplay: "block",
+        countFlag: "",
+        checkInDate: monitor.checkDate(
+          app.globalData.monitorSearchData.beginDate
+        ), //入住日期
+        checkOutDate: monitor.checkDate(
+          app.globalData.monitorSearchData.endDate
+        ), //离开日期
+        dayCount: app.globalData.monitorSearchData.dayCount,
+        //cityName: app.globalData.monitorSearchData.city, //入住城市
+        locationName: app.globalData.monitorSearchData.area || "全城", //地点
+        allData: [],
+        isBack: true,
+        showUI: true,
+        editFlag: false,
+        selectAllFlag: false,
+        advSort: app.globalData.monitorSearchData.advSort
+      });
+      SearchDataSubject.next();
+      this.onShow();
     }
-    this.setData({
-      showAdvance: false,
-      loadingDisplay: "block",
-      countFlag: "",
-      checkInDate: monitor.checkDate(
-        app.globalData.monitorSearchData.beginDate
-      ), //入住日期
-      checkOutDate: monitor.checkDate(app.globalData.monitorSearchData.endDate), //离开日期
-      dayCount: app.globalData.monitorSearchData.dayCount,
-      //cityName: app.globalData.monitorSearchData.city, //入住城市
-      locationName: app.globalData.monitorSearchData.area || "全城", //地点
-      allData: [],
-      isBack: true,
-      showUI: true,
-      editFlag: false,
-      selectAllFlag: false,
-      advSort: app.globalData.monitorSearchData.advSort
-    });
-    this.onShow();
   },
   compareData() {
     const app = getApp();
@@ -189,7 +192,7 @@ Page({
       mnfilter: mnScreen,
       zgfilter: zgScreen,
       updateData: JSON.stringify(app.globalData.monitorSearchData)
-    })
+    });
     this.getAllData();
   },
   goRefresh() {
@@ -441,21 +444,21 @@ Page({
           fee: monitorDetail.fee,
           monitorId: monitorDetail.id,
           totalFee: monitorDetail.totalFee, //消耗盯盯币
-          allOriginalData:[],
-          allData:[],
-          allCount:0,
+          allOriginalData: [],
+          allData: [],
+          allCount: 0,
           editFlag: false,
           mSelect: detail ? detail : this.data.mSelect,
           updateData: JSON.stringify(app.globalData.monitorSearchData)
         })
         return;
       }
-      if (!this.data.isMtype){
+      if (!this.data.isMtype) {
         let mType = house.getMonitorHouseType(houseList);
         this.setData({
           mSelect: mType,
           isMtype: true
-        })
+        });
       }
       wx.hideLoading()
       let monitorHouseData = house.getMonitorHouseData(houseList, detail?detail:this.data.mSelect);//监控房源列表
@@ -755,7 +758,7 @@ Page({
     let num = wx.getStorageSync("followNum");
     if (!num) {
       this.setData({
-        followText: '屏蔽房源后，该房源将不会在后续监控中出现！',
+        followText: "屏蔽房源后，该房源将不会在后续监控中出现！",
         followType: 1,
         followDisplay: "block"
       });
@@ -828,7 +831,10 @@ Page({
       return;
     }
     this.setData({
-      followText: '即将屏蔽' + this.data.selectNum + '套房源，屏蔽后本次监控将不再获取该房源信息',
+      followText:
+        "即将屏蔽" +
+        this.data.selectNum +
+        "套房源，屏蔽后本次监控将不再获取该房源信息",
       followType: 2,
       followDisplay: "block"
     });
