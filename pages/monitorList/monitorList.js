@@ -250,7 +250,7 @@ Page({
     }, 300)
   },
   // 监控详情信息
-  getMonitorData(e) {
+  getMonitorData(detail) {
     let data = {
       id: this.data.monitorId,
     };
@@ -397,7 +397,7 @@ Page({
           allData:[],
           allCount:0,
           editFlag: false,
-          mSelect: e ? e.detail : this.data.mSelect
+          mSelect: detail ? detail : this.data.mSelect
         })
         return;
       }
@@ -409,7 +409,7 @@ Page({
         })
       }
       wx.hideLoading()
-      let monitorHouseData = house.getMonitorHouseData(houseList, e?e.detail:this.data.mSelect);//监控房源列表
+      let monitorHouseData = house.getMonitorHouseData(houseList, detail?detail:this.data.mSelect);//监控房源列表
       if (monitorHouseData.allData.length == 0){
         this.setData({
           countFlag: 0,
@@ -424,7 +424,7 @@ Page({
           allData: [],
           allCount: 0,
           editFlag: false,
-          mSelect:e?e.detail: this.data.mSelect
+          mSelect: detail ? detail : this.data.mSelect
         })
         return;
       }
@@ -465,7 +465,7 @@ Page({
         countFlag: 1,
         isBack: false,
         sortType:monitorDetail.sortType,
-        mSelect: e ? e.detail : this.data.mSelect
+        mSelect: detail ? detail : this.data.mSelect
       })
     })
   },
@@ -618,14 +618,22 @@ Page({
       title: "加载中...",
       mask: true
     });
-    this.getMonitorData(e)
+    this.getMonitorData(e.detail)
   },
   goMselect(e) {
     wx.showLoading({
       title: "加载中...",
       mask: true
     });
-    this.getMonitorData(e)
+    this.getMonitorData(e.detail)
+  },
+  goTocheckAll(e){
+    let index = e.currentTarget.dataset.index
+    wx.showLoading({
+      title: "加载中...",
+      mask: true
+    });
+    this.getMonitorData(index)
   },
   goEdit() {
     this.setData({

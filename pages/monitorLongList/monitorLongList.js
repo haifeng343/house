@@ -204,7 +204,7 @@ Page({
       }
     }, 300)
   },
-  getMonitorData(e){
+  getMonitorData(detail){
     let data = {
       monitorId: this.data.monitorId,
     };
@@ -297,7 +297,7 @@ Page({
           updateData: Object.assign({}, app.globalData.monitorSearchLongData),
           defalutData: Object.assign({}, app.globalData.monitorDefaultSearchLongData),
           editFlag: false,
-          mSelect: e ? e.detail : this.data.mSelect
+          mSelect: detail ? detail : this.data.mSelect
         })
         return;
       }
@@ -309,7 +309,7 @@ Page({
         })
       }
       wx.hideLoading()
-      let monitorHouseData = house.getMonitorLongHouseData(houseList, e ? e.detail : this.data.mSelect);//监控房源列表
+      let monitorHouseData = house.getMonitorLongHouseData(houseList, detail ? detail : this.data.mSelect);//监控房源列表
       if (monitorHouseData.allData.length == 0){
         this.setData({
           countFlag: 0,
@@ -326,7 +326,7 @@ Page({
           updateData: Object.assign({}, app.globalData.monitorSearchLongData),
           defalutData: Object.assign({}, app.globalData.monitorDefaultSearchLongData),
           editFlag: false,
-          mSelect: e ? e.detail : this.data.mSelect
+          mSelect: detail ? detail : this.data.mSelect
         })
         return;
       }
@@ -374,7 +374,7 @@ Page({
         chooseType: monitorDetail.houseSource,
         updateData: Object.assign({}, app.globalData.monitorSearchLongData),
         defalutData: Object.assign({}, app.globalData.monitorDefaultSearchLongData),
-        mSelect: e ? e.detail : this.data.mSelect
+        mSelect: detail ? detail : this.data.mSelect
       })
     })
   },
@@ -562,14 +562,22 @@ Page({
       title: "加载中...",
       mask: true
     });
-    this.getMonitorData(e)
+    this.getMonitorData(e.detail)
   },
   goMselect(e){
     wx.showLoading({
       title: "加载中...",
       mask: true
     });
-    this.getMonitorData(e)
+    this.getMonitorData(e.detail)
+  },
+  goTocheckAll(e) {
+    let index = e.currentTarget.dataset.index
+    wx.showLoading({
+      title: "加载中...",
+      mask: true
+    });
+    this.getMonitorData(index)
   },
   goEdit() {
     this.setData({

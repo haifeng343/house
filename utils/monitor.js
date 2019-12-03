@@ -98,7 +98,7 @@ const navigateToMiniProgram = (plateform, productid, beginDate, endDate) => {
 const navigateToLongMiniProgram = (plateform, productid,city) => {
   if (plateform == 'wiwj') {
     if (productid){
-      wiwjDetail(productid).then(res=>{
+      wiwjDetail(productid, city.wiwj).then(res=>{
         wx.navigateToMiniProgram({
           appId: 'wxaf705dee544e08d9',
           path: 'pages/zufang_detail/zufang_detail?houseId=' + productid + '&cityId=' + city.wiwj
@@ -179,10 +179,10 @@ const navigateToLongMiniProgram = (plateform, productid,city) => {
   }
 }
 
-const wiwjDetail = function (id){
+const wiwjDetail = function (id,cityId){
   let data = { hid: id}
   return new Promise((resolve, reject) => {
-    api.postApiUrl(data, wiwj_address+'/appapi/rent/1/v1/allinfo').then(res => {
+    api.postApiUrl(data, wiwj_address + '/appapi/rent/' + cityId+'/v1/allinfo').then(res => {
       console.log(res)
       if (res && res.data && typeof (res.data.data) == 'object' && res.data.data.houseinfo) {
         resolve(true)

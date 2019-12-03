@@ -124,3 +124,6 @@ page {
   font-size: 24rpx;
   margin-top: -10px
 }
+.no-more-data .no_text{
+  color: #F1612A
+}
