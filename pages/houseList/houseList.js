@@ -84,7 +84,7 @@ Page({
       let allArr = [...this.data.allOriginalData]
       this.setData({
         showAdvance: false,
-        loadingDisplay: "block",
+        // loadingDisplay: "block",
         allData: []
       });
       if (app.globalData.searchData.advSort == 2) {

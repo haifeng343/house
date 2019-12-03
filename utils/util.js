@@ -193,7 +193,7 @@ const compareArr = (array, array2, key1 ='platformId', key2='productId')=>{
         }
       }
       if (stra.platform == 'ftx' && strb[key1] == 'ftx') {
-        if (stra.data.houseid.text == strb[key2]) {
+        if (stra.data.houseid == strb[key2]) {
           count++;
         }
       }
