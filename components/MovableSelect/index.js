@@ -236,11 +236,13 @@ Component({
         this.createSelectorQuery()
           .select(`.option-item`)
           .boundingClientRect(rect => {
-            this.itemWidth = rect.width;
-            this.itemWidthStream.next(rect.width);
-            this.setData({
-              activeLeft: rect.width * 3
-            });
+            if (rect) {
+              this.itemWidth = rect.width;
+              this.itemWidthStream.next(rect.width);
+              this.setData({
+                activeLeft: rect.width * 3
+              });
+            }
           })
           .exec();
 

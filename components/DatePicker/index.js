@@ -1,16 +1,17 @@
-import fecha from '../../utils/fecha.js';
+import fecha from "../../utils/fecha.js";
 import * as rxjs from "../../utils/rx.js";
 import {
   getPickerStream,
   destoryPickerStream
 } from "../../utils/pickerStream.js";
 
-
 Component({
   data: {
-    pickerList: [{
-      index: -1
-    }],
+    pickerList: [
+      {
+        index: -1
+      }
+    ],
     dayCount: 0
   },
   properties: {
@@ -21,7 +22,7 @@ Component({
       type: String
     },
     onChange: {
-      type: Function,
+      type: Function
     },
     type: {
       type: String
@@ -38,17 +39,15 @@ Component({
       this.createSelectorQuery()
         .select(`.picker-item`)
         .boundingClientRect(rect => {
-          this.stream.itemHeightStream.next(rect.height);
+          if (rect) {
+            this.stream.itemHeightStream.next(rect.height);
+          }
         })
         .exec();
 
       this.dateData = [];
 
-      const {
-        startDate,
-        endDate,
-        onChange,
-      } = this.properties;
+      const { startDate, endDate, onChange } = this.properties;
       if (startDate) {
         this.dateData.push(startDate);
 
@@ -64,9 +63,7 @@ Component({
       this.stream.selectStream
         .pipe(rxjs.operators.filter(item => !!item))
         .subscribe(item => {
-          const {
-            date
-          } = item;
+          const { date } = item;
           const index = this.dateData.indexOf(date);
           if (index > -1) {
             this.dateData.splice(index, 1);
@@ -75,8 +72,8 @@ Component({
           } else if (this.dateData.length === 0) {
             this.dateData.push(date);
           } else if (this.dateData.length === 1) {
-            const selectedDate = fecha.parse(this.dateData[0], 'YYYY-MM-DD');
-            const currentDate = fecha.parse(date, 'YYYY-MM-DD');
+            const selectedDate = fecha.parse(this.dateData[0], "YYYY-MM-DD");
+            const currentDate = fecha.parse(date, "YYYY-MM-DD");
             if (selectedDate > currentDate) {
               this.dateData.unshift(date);
             } else {
@@ -91,21 +88,20 @@ Component({
           if (this.dateData.length === 1) {
             dayCount = 0;
           } else if (this.dateData.length === 2) {
-            const startDate = fecha.parse(this.dateData[0], 'YYYY-MM-DD');
-            const endDate = fecha.parse(this.dateData[1], 'YYYY-MM-DD');
+            const startDate = fecha.parse(this.dateData[0], "YYYY-MM-DD");
+            const endDate = fecha.parse(this.dateData[1], "YYYY-MM-DD");
             const timeSpan = endDate.getTime() - startDate.getTime();
             dayCount = timeSpan / 1000 / 60 / 60 / 24;
           }
 
           this.stream.dateStream.next(this.dateData);
-          this.setData({ dayCount })
+          this.setData({ dayCount });
 
-
-          this.triggerEvent('onChange', {
+          this.triggerEvent("onChange", {
             startDate: this.dateData[0],
             endDate: this.dateData[1],
             dayCount
-          })
+          });
         });
 
       const scrollDirection = this.stream.scrollStream.pipe(
@@ -125,7 +121,9 @@ Component({
         );
 
       const shouldUpdate = indexes.pipe(
-        rxjs.operators.filter(([startIndex]) => startIndex !== this.currentIndex),
+        rxjs.operators.filter(
+          ([startIndex]) => startIndex !== this.currentIndex
+        ),
         rxjs.operators.tap(([startIndex]) => {
           this.currentIndex = startIndex;
         })
@@ -134,10 +132,11 @@ Component({
       let dataSlice = [];
 
       const dataInView = shouldUpdate.pipe(
-        rxjs.operators.withLatestFrom(this.stream.itemHeightStream, scrollDirection),
-        rxjs.operators.map(([
-          [startIndex, endIndex], ih, dir
-        ]) => {
+        rxjs.operators.withLatestFrom(
+          this.stream.itemHeightStream,
+          scrollDirection
+        ),
+        rxjs.operators.map(([[startIndex, endIndex], ih, dir]) => {
           if (dataSlice.length === 0) {
             const date = new Date();
 
@@ -197,8 +196,8 @@ Component({
       if (startDate === endDate) {
         dayCount = 0;
       } else {
-        startDate = fecha.parse(startDate, 'YYYY-MM-DD');
-        endDate = fecha.parse(endDate, 'YYYY-MM-DD');
+        startDate = fecha.parse(startDate, "YYYY-MM-DD");
+        endDate = fecha.parse(endDate, "YYYY-MM-DD");
         const timeSpan = endDate.getTime() - startDate.getTime();
         dayCount = timeSpan / 1000 / 60 / 60 / 24;
       }
@@ -209,7 +208,9 @@ Component({
       count = count += this.baseMonth;
       const month = count % 12;
       const year = Math.floor((count - 1) / 12);
-      const result = `${this.baseYear + year}-${(month || 12).toString().padStart(2, 0)}`;
+      const result = `${this.baseYear + year}-${(month || 12)
+        .toString()
+        .padStart(2, 0)}`;
       return result;
     },
     handleScroll(event) {
@@ -218,32 +219,37 @@ Component({
     handleSelectDate() {
       if (this.dateData && this.dateData.length > 1) {
         const app = getApp();
-        if (this.properties.type == 'monitor') {
+        if (this.properties.type == "monitor") {
           app.globalData.monitorSearchData.beginDate = this.dateData[0];
-          app.globalData.monitorSearchData.endDate = this.dateData[1] || this.dateData[0];
+          app.globalData.monitorSearchData.endDate =
+            this.dateData[1] || this.dateData[0];
           app.globalData.monitorSearchData.dayCount = this.data.dayCount;
         } else {
           app.globalData.searchData.beginDate = this.dateData[0];
-          app.globalData.searchData.endDate = this.dateData[1] || this.dateData[0];
+          app.globalData.searchData.endDate =
+            this.dateData[1] || this.dateData[0];
           app.globalData.searchData.dayCount = this.data.dayCount;
         }
         var pages = getCurrentPages();
-        var currPage = pages[pages.length - 1];   //当前页面
-        var prevPage = pages[pages.length - 2];  //上一个页面
+        var currPage = pages[pages.length - 1]; //当前页面
+        var prevPage = pages[pages.length - 2]; //上一个页面
 
         //直接调用上一个页面对象的setData()方法，把数据存到上一个页面中去
-        prevPage.setData({
-          isBack: true
-        }, () => {
-          wx.navigateBack({
-            delta: 1,
-            success:function(){
-              if (prevPage.hasOwnProperty('submitAdvance')){
-                prevPage.submitAdvance()
+        prevPage.setData(
+          {
+            isBack: true
+          },
+          () => {
+            wx.navigateBack({
+              delta: 1,
+              success: function() {
+                if (prevPage.hasOwnProperty("submitAdvance")) {
+                  prevPage.submitAdvance();
+                }
               }
-            }
-          });
-        });
+            });
+          }
+        );
       }
     }
   },
@@ -261,4 +267,4 @@ Component({
       }
     }
   }
-})
+});

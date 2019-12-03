@@ -68,11 +68,13 @@ Page({
   },
   handleCloseAdvance() {
     var houseSelect = this.selectComponent("#houseSelect");
-    houseSelect.reSetData();
-    this.setData({
-      showAdvance: false,
-      showAdvanceType: 0
-    });
+    if (houseSelect) {
+      houseSelect.reSetData();
+      this.setData({
+        showAdvance: false,
+        showAdvanceType: 0
+      });
+    }
   },
   submitAdvance() {
     var houseSelect = this.selectComponent("#houseSelect");
@@ -85,7 +87,7 @@ Page({
         loadingDisplay: "block",
         allData: []
       });
-      if (app.globalData.searchData.advSort == 2){
+      if (app.globalData.searchData.advSort == 2) {
         allArr.sort(util.compareSort("finalPrice", "asc"));
       }
       if (app.globalData.searchData.advSort == 3) {
@@ -95,8 +97,8 @@ Page({
         loadingDisplay: "none",
         allOriginalData: allArr,
         allData: allArr.slice(0, 5)
-      })
-      return
+      });
+      return;
     }
     console.log("查询完毕");
     this.setData({
@@ -106,7 +108,7 @@ Page({
       allData: [],
       showUI: true,
       editFlag: false,
-      selectAllFlag:false
+      selectAllFlag: false
     });
     this.onLoad();
   },
@@ -374,23 +376,22 @@ Page({
     this.setData({
       editFlag: false,
       selectAllFlag: true
-    })
-    this.goToSelectAll()
+    });
+    this.goToSelectAll();
     wx.navigateTo({
       url: "../statistics/statistics?rentType=1"
     });
   },
   goEdit() {
     this.setData({
-      editFlag: !this.data.editFlag,
+      editFlag: !this.data.editFlag
     });
-    if (!this.data.editFlag){
+    if (!this.data.editFlag) {
       this.setData({
         selectAllFlag: true
-      })
-      this.goToSelectAll()
+      });
+      this.goToSelectAll();
     }
-    
   },
   //不再关注
   deleteItem(e) {
@@ -448,7 +449,7 @@ Page({
     if (indexArr.length == 0) {
       this.setData({
         editFlag: false
-      })
+      });
       return;
     }
     this.setData({

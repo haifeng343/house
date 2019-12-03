@@ -147,29 +147,36 @@ Component({
         this.createSelectorQuery()
           .select(`.move-view`)
           .boundingClientRect(rect => {
-            this.blockHalfWidth = rect.width / 2;
+            if (rect) {
+              this.blockHalfWidth = rect.width / 2;
+            }
           })
           .exec();
 
         this.createSelectorQuery()
           .select(`.background-line`)
           .boundingClientRect(rect => {
-            const containerWidth = rect.width;
-            const itemWidth = rect.width / (long - 1);
-            this.setData({
-              rightX: rightIndex > -1 ? rightIndex * itemWidth : containerWidth,
-              leftX: leftIndex > -1 ? leftIndex * itemWidth : 0,
-              containerWidth,
-              itemWidth,
-              isLoaded: true
-            });
+            if (rect) {
+              const containerWidth = rect.width;
+              const itemWidth = rect.width / (long - 1);
+              this.setData({
+                rightX:
+                  rightIndex > -1 ? rightIndex * itemWidth : containerWidth,
+                leftX: leftIndex > -1 ? leftIndex * itemWidth : 0,
+                containerWidth,
+                itemWidth,
+                isLoaded: true
+              });
+            }
           })
           .exec();
 
         this.createSelectorQuery()
           .select(`.container`)
           .boundingClientRect(rect => {
-            this.containerLeft = rect.left;
+            if (rect) {
+              this.containerLeft = rect.left;
+            }
           })
           .exec();
 
