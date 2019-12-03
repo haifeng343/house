@@ -76,11 +76,11 @@ Page({
     var houseSelect = this.selectComponent("#houseSelect")
     houseSelect.reSetData()
     let updateData = { ...JSON.parse(this.data.updateData) }
-    if (util.objectDiff(app.globalData.monitorSearchData, updateData)) {
+    if (util.objectDiff(JSON.parse(JSON.stringify(app.globalData.monitorSearchData)), JSON.parse(JSON.stringify(updateData)))) {
       let allArr = [...this.data.allOriginalData]
       this.setData({
         showAdvance: false,
-        loadingDisplay: "block",
+        //loadingDisplay: "block",
         allData: []
       });
       if (app.globalData.monitorSearchData.advSort == 2) {
@@ -157,7 +157,6 @@ Page({
       monitorItem: data.item,
       startTimeName: monitor.startTimeName(data.item.startTime),
       taskTime: monitor.taskTime(data.item.monitorTime, data.item.minutes),
-      updateData: JSON.stringify(app.globalData.monitorSearchData)
     })
     this.getMonitorData();
   },
@@ -446,7 +445,8 @@ Page({
           allData:[],
           allCount:0,
           editFlag: false,
-          mSelect: detail ? detail : this.data.mSelect
+          mSelect: detail ? detail : this.data.mSelect,
+          updateData: JSON.stringify(app.globalData.monitorSearchData)
         })
         return;
       }
@@ -476,7 +476,8 @@ Page({
           allData: [],
           allCount: 0,
           editFlag: false,
-          mSelect: detail ? detail : this.data.mSelect
+          mSelect: detail ? detail : this.data.mSelect,
+          updateData: JSON.stringify(app.globalData.monitorSearchData)
         })
         return;
       }
@@ -544,7 +545,8 @@ Page({
         countFlag: 1,
         isBack: false,
         sortType:monitorDetail.sortType,
-        mSelect: detail ? detail : this.data.mSelect
+        mSelect: detail ? detail : this.data.mSelect,
+        updateData: JSON.stringify(app.globalData.monitorSearchData)
       })
     })
   },
