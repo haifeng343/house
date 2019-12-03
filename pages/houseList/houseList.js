@@ -50,7 +50,7 @@ Page({
     editFlag: false,
     selectAllFlag: false,
     indexArr: [],
-    searchData:{}
+    updateData:{}
   },
   clickSelectItem(e) {
     var type = e.detail.type;
@@ -77,8 +77,8 @@ Page({
   submitAdvance() {
     var houseSelect = this.selectComponent("#houseSelect");
     houseSelect.reSetData();
-
-    if (util.objectDiff(app.globalData.searchData, this.data.searchData)){
+    let updateData = {...JSON.parse(this.data.updateData)}
+    if (util.objectDiff(app.globalData.searchData, updateData)){
       let allArr = [...this.data.allOriginalData]
       this.setData({
         showAdvance: false,
@@ -141,7 +141,7 @@ Page({
       locationName: x.area || "全城",
       budget: budget,
       sortType: x.sort,
-      searchData:x
+      updateData: JSON.stringify(x)
     });
     this.getIndexHouseData();
     this.getAllData();
