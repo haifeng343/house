@@ -126,12 +126,12 @@ export default class CouponService {
   getData(tabValue) {
     if (typeof tabValue !== "number") {
       const tabList = [
-        { label: "抵扣券", value: 1 },
+        { label: "券包", value: 1 },
         { label: "历史卡券", value: 2 }
       ];
       return this.getUseableFreeCouponList().then(freeCouponList => {
         if (freeCouponList.length > 0) {
-          tabList.unshift({ label: "体验卡", value: 0 });
+          tabList.unshift({ label: "卡包", value: 0 });
         }
         return this.getCouponList().then(couponList =>
           Promise.resolve({ couponList, tabList })
