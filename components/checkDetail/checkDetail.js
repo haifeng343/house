@@ -18,6 +18,9 @@ Component({
     },
     lowPrice: {
       type: Number
+    },
+    showCount: {
+      type: Number
     }
   },
 

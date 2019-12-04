@@ -6,7 +6,7 @@
       <view class="bg_border"></view>
     </view>
 
-    <checkDetail wx:if="{{countFlag === 1}}" houseType="{{1}}" allCount="{{allCount}}" lowPrice="{{lowPrice}}" sortType="{{sortType}}" bind:detailEvent="goToDetail"></checkDetail>
+    <checkDetail wx:if="{{countFlag === 1}}" houseType="{{1}}" showCount="{{allOriginalData.length}}" allCount="{{allCount}}" lowPrice="{{lowPrice}}" sortType="{{sortType}}" bind:detailEvent="goToDetail"></checkDetail>
     
   </view>
   <view class="block"></view>
