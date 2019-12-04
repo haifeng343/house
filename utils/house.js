@@ -1262,6 +1262,7 @@ const getMonitorHouseData = (list, mSelect) => {
         priceTag: util.arrFilter(houseList[i].data.priceTags, "type", 6),
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
+        priceMargin: houseList[i].priceMargin || "",
       };
       allData.push(tjObj);
       tjFilterData.push(tjObj);
@@ -1294,6 +1295,7 @@ const getMonitorHouseData = (list, mSelect) => {
         oriPrice : houseList[i].data.luPrice,
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
+        priceMargin: houseList[i].priceMargin || "",
       };
       if (
         houseList[i].data.showPriceV2.showPrice &&
@@ -1330,6 +1332,7 @@ const getMonitorHouseData = (list, mSelect) => {
         productId: houseList[i].data.room_id,
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
+        priceMargin: houseList[i].priceMargin || "",
       };
       allData.push(mnObj);
       mnFilterData.push(mnObj);
@@ -1356,6 +1359,7 @@ const getMonitorHouseData = (list, mSelect) => {
         oriPrice: houseList[i].data.price / 100,
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
+        priceMargin: houseList[i].priceMargin || "",
       };
       if (
         houseList[i].data.discountPrice &&
@@ -1926,6 +1930,7 @@ const getMonitorLongHouseData = (list, mSelect) => {
         area: Number(houseList[i].data.BaseDetail.area),
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
+        priceMargin: houseList[i].priceMargin || "",
       };
       wiwjFilterData.push(wiwjObjs);
       allData.push(wiwjObjs);
@@ -1952,6 +1957,7 @@ const getMonitorLongHouseData = (list, mSelect) => {
         area: Number(houseList[i].data.rent_area),
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
+        priceMargin: houseList[i].priceMargin || "",
       };
       ljFilterData.push(lianjiaObjs);
       allData.push(lianjiaObjs);
@@ -1977,6 +1983,7 @@ const getMonitorLongHouseData = (list, mSelect) => {
         area: Number(houseList[i].data.buildarea),
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
+        priceMargin: houseList[i].priceMargin || "",
       };
       ftxFilterData.push(fangtianxiaObjs);
       allData.push(fangtianxiaObjs);
@@ -2000,6 +2007,7 @@ const getMonitorLongHouseData = (list, mSelect) => {
         area: Number(houseList[i].data.area.split("㎡")[0]),
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
+        priceMargin: houseList[i].priceMargin || "",
       };
       wbtcFilterData.push(wbtcObjs);
       allData.push(wbtcObjs);
