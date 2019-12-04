@@ -66,8 +66,8 @@
 }
 .card_words .card_newprice .newLevel{
   display: inline-block;
-  width:78rpx;
   height:32rpx;
+  padding: 0 8rpx 0 0;
   background:linear-gradient(180deg,rgba(253,185,138,1) 0%,rgba(247,107,28,1) 100%);
   border-radius:82rpx 82rpx 82rpx 0;
   font-size:20rpx;
