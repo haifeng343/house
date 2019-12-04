@@ -38,7 +38,11 @@ Component({
     },
     bottomType:{
       type: Number
-    }
+    },
+    isStatist: { //是否不是统计详情页  false：统计详情
+      type: Boolean,
+      value: true
+    },
   },
 
   /**
@@ -115,7 +119,7 @@ Component({
       let productid = e.currentTarget.dataset.productid
       let beginDate = this.properties.type == 1 ? app.globalData.searchData.beginDate : app.globalData.monitorSearchData.beginDate
       let endDate = this.properties.type == 1 ? app.globalData.searchData.endDate : app.globalData.monitorSearchData.endDate
-      if (this.properties.editFlag) { 
+      if (this.properties.editFlag && this.data.isStatist) { 
         this.selectItem(e)
         return
       }

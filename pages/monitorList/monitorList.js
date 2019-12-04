@@ -701,7 +701,8 @@ Page({
       monitorId: this.data.monitorId,
       totalFee: this.data.totalFee, //消耗盯盯币
       isBack: false,
-      sortType: this.data.sortType
+      sortType: this.data.sortType,
+      dayCount: this.data.dayCount
     };
     this.setData({
       editFlag: false,
