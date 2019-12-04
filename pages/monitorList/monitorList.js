@@ -114,7 +114,8 @@ Page({
         showUI: true,
         editFlag: false,
         selectAllFlag: false,
-        advSort: app.globalData.monitorSearchData.advSort
+        advSort: app.globalData.monitorSearchData.advSort,
+        mSelect:1
       });
       SearchDataSubject.next();
       this.onShow();
@@ -357,7 +358,7 @@ Page({
         endDate: monitorDetail.endDate.split(" ")[0], //离开日期
         dayCount: util.getDays(monitorDetail.beginDate, monitorDetail.endDate),
         gueseNumber: monitorDetail.peopleNum, //入住人数
-        leaseType: monitorDetail.rentType ? monitorDetail.rentType : "", //出租类型,2单间出租，1整套出租 不选择 ''
+        leaseType: monitorDetail.rentType ? monitorDetail.rentType.toString() : "", //出租类型,2单间出租，1整套出租 不选择 ''
         houseType:
           (monitorDetail.layoutRoom && monitorDetail.layoutRoom.split(",")) ||
           [], //户型 0 一居室 1 二居室 2 三居室 3 4居以上
@@ -384,7 +385,7 @@ Page({
         endDate: monitorDetail.endDate.split(" ")[0], //离开日期
         dayCount: util.getDays(monitorDetail.beginDate, monitorDetail.endDate),
         gueseNumber: monitorDetail.peopleNum, //入住人数
-        leaseType: monitorDetail.rentType ? monitorDetail.rentType : "", //出租类型,2单间出租，1整套出租 不选择 ''
+        leaseType: monitorDetail.rentType ? monitorDetail.rentType.toString() : "", //出租类型,2单间出租，1整套出租 不选择 ''
         houseType:
           (monitorDetail.layoutRoom && monitorDetail.layoutRoom.split(",")) ||
           [], //户型 0 一居室 1 二居室 2 三居室 3 4居以上

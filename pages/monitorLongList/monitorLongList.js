@@ -69,7 +69,8 @@ Page({
       ftxfilter,
       tcfilter,
       chooseType: x.chooseType,//1品牌中介，2个人房源
-      longSortTypes: x.longSortTypes //1: 低价优先, 2: 空间优先, 3: 最新发布
+      longSortTypes: x.longSortTypes, //1: 低价优先, 2: 空间优先, 3: 最新发布
+      mSelect: 1
     }, () => {
       if (x.chooseType == 1) {
         this.getAllBrandData();
