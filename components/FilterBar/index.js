@@ -780,22 +780,20 @@ Component({
         this.changeList.add("areaJson");
         this.changeList.add("areaType");
         this.changeList.add("areaId");
-        if (targetItem.label !== "不限") {
-          this.setData({
-            area: `附近 ${targetItem.label}`,
-            areaJson: "",
-            areaType: 60,
-            areaId: Object.assign(
-              { nearby: +targetItem.label.replace("km", "") },
-              this.location
-            )
-          });
-        } else {
+        if (targetItem.value === -1) {
+          // -1 = 不限
           this.setData({
             area: "",
             areaJson: "",
             areaType: 0,
             areaId: {}
+          });
+        } else {
+          this.setData({
+            area: `附近 ${targetItem.label}`,
+            areaJson: "",
+            areaType: 60,
+            areaId: Object.assign({ nearby: targetItem.value }, this.location)
           });
         }
       } else if (currentAreaType === 3) {
@@ -942,10 +940,11 @@ Component({
         });
       } else if (outsideData.areaType === 60) {
         // 附近
-        const area = outsideData.area.replace("附近 ", "");
+        const baseNearbyList = JSON.parse(this.baseNearbyList);
+        const nearby = outsideData.areaId.nearby;
         currentAreaType = 2;
-        for (let i = 0; i < areaList[currentAreaType].list.length; i++) {
-          if (areaList[currentAreaType].list[i].label === area) {
+        for (let i = 0; i < baseNearbyList.length; i++) {
+          if (baseNearbyList[i].value === nearby) {
             currentArea = i;
             break;
           }
@@ -960,20 +959,7 @@ Component({
           this.setData({ "areaList[2].list": [] });
         } else if (this.data.areaList[2].list.length === 0) {
           this.setData({
-            "areaList[2].list": [
-              {
-                label: "不限"
-              },
-              {
-                label: "1km"
-              },
-              {
-                label: "2km"
-              },
-              {
-                label: "3km"
-              }
-            ]
+            "areaList[2].list": JSON.parse(this.baseNearbyList)
           });
         }
         this.location = resp;
@@ -1026,6 +1012,25 @@ Component({
       this.rangeCustom = false;
 
       this.promiseVersion = 0;
+
+      this.baseNearbyList = JSON.stringify([
+        {
+          label: "不限",
+          value: -1
+        },
+        {
+          label: "1km",
+          value: 1
+        },
+        {
+          label: "2km",
+          value: 2
+        },
+        {
+          label: "3km",
+          value: 3
+        }
+      ]);
 
       this.baseAreaList = JSON.stringify([
         {
