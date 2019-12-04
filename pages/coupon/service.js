@@ -1,17 +1,17 @@
-import Http from '../../utils/http';
-import fetch from '../../utils/fecha';
+import Http from "../../utils/http";
+import fetch from "../../utils/fecha";
 
 const daysZH = {
-  1: '一天',
-  2: '两天',
-  3: '三天',
-  4: '四天',
-  5: '五天'
+  1: "一天",
+  2: "两天",
+  3: "三天",
+  4: "四天",
+  5: "五天"
 };
 
 export default class CouponService {
   getUseableCouponList() {
-    return Http.get('/fdd/userCoupon/getUsable.json', { couponType: 1 })
+    return Http.get("/fdd/userCoupon/getUsable.json", { couponType: 1 })
       .then(resp => Promise.resolve(resp.data || []))
       .then(resp => {
         return resp.map(item => {
@@ -32,7 +32,7 @@ export default class CouponService {
   }
 
   getUseableFreeCouponList() {
-    return Http.get('/fdd/userCoupon/getUsable.json', { couponType: 2 })
+    return Http.get("/fdd/userCoupon/getUsable.json", { couponType: 2 })
       .then(resp => Promise.resolve(resp.data || []))
       .then(resp => {
         return resp.map(item => {
@@ -53,7 +53,7 @@ export default class CouponService {
   }
 
   getUseableFDDCouponList() {
-    return Http.get('/fdd/userCoupon/getUsable.json', { couponType: 3 })
+    return Http.get("/fdd/userCoupon/getUsable.json", { couponType: 3 })
       .then(resp => Promise.resolve(resp.data || []))
       .then(resp => {
         return resp.map(item => {
@@ -74,7 +74,7 @@ export default class CouponService {
   }
 
   getUnuseableCouponList() {
-    return Http.get('/fdd/userCoupon/getExpired.json')
+    return Http.get("/fdd/userCoupon/getExpired.json")
       .then(resp => Promise.resolve(resp.data || []))
       .then(resp => {
         return resp.map(item => {
@@ -115,8 +115,8 @@ export default class CouponService {
           .concat(fddList)
           .sort(
             (a, b) =>
-              fetch.parse(a.expire, 'YYYY-MM-DD HH:mm:ss').getTime() -
-              fetch.parse(b.expire, 'YYYY-MM-DD HH:mm:ss').getTime()
+              fetch.parse(a.expire, "YYYY-MM-DD HH:mm:ss").getTime() -
+              fetch.parse(b.expire, "YYYY-MM-DD HH:mm:ss").getTime()
           );
 
         return Promise.resolve(couponList);
@@ -124,15 +124,14 @@ export default class CouponService {
   }
 
   getData(tabValue) {
-    if (typeof tabValue !== 'number') {
+    if (typeof tabValue !== "number") {
       const tabList = [
-        { label: '抵扣券', value: 1 },
-        { label: '历史卡券', value: 2 }
+        { label: "抵扣券", value: 1 },
+        { label: "历史卡券", value: 2 }
       ];
       return this.getUseableFreeCouponList().then(freeCouponList => {
         if (freeCouponList.length > 0) {
-          tabList.unshift({ label: '体验卡', value: 0 });
-          return Promise.resolve({ couponList: freeCouponList, tabList });
+          tabList.unshift({ label: "体验卡", value: 0 });
         }
         return this.getCouponList().then(couponList =>
           Promise.resolve({ couponList, tabList })
@@ -155,6 +154,6 @@ export default class CouponService {
   }
 
   exchangeCoupon(userCouponId) {
-    return Http.post('/fdd/user/fddUseCoupon.json', { userCouponId });
+    return Http.post("/fdd/user/fddUseCoupon.json", { userCouponId });
   }
 }
