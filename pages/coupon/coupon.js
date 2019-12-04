@@ -38,7 +38,7 @@ Page({
         const { couponList, tabList } = resp;
         this.setData({ isLoaded: true, couponList });
         if (tabList) {
-          this.setData({ tabList, currentTabValue: tabList[0].value });
+          this.setData({ tabList, currentTabValue: 1 });
         }
       })
       .catch(error => {
