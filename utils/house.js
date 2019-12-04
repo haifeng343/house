@@ -563,14 +563,14 @@ const tjScreenParam = type => {
     }
   }
   // 出租类型 2单间 1整租 不选择''
-  if (y.leaseType === 2) {
+  if (y.leaseType == 2) {
     tjconditions.push({
       gType: 1,
       type: 6,
       value: 902
     });
   }
-  if (y.leaseType === 1) {
+  if (y.leaseType == 1) {
     tjconditions.push({
       gType: 1,
       type: 6,
@@ -667,10 +667,10 @@ const xzScreenParam = type => {
 
   //出租类型（whole：整租，room：单间）
   let xzLeaseType = "whole";
-  if (y.leaseType === 2) {
+  if (y.leaseType == 2) {
     xzLeaseType = "room";
   }
-  if (y.leaseType === 1) {
+  if (y.leaseType == 1) {
     xzLeaseType = "whole";
   }
   //配套设施
@@ -760,10 +760,10 @@ const mnScreenPara = type => {
   }
   //出租类型
   let mnrentType = [];
-  if (y.leaseType === 2) {
+  if (y.leaseType == 2) {
     mnrentType = [2];
   }
-  if (y.leaseType === 1) {
+  if (y.leaseType == 1) {
     mnrentType = [1];
   }
   //配套设施
@@ -861,10 +861,10 @@ const zgScreenPara = type => {
   }
   //出租类型
   let zgrentTypeList = [];
-  if (y.leaseType === 2) {
+  if (y.leaseType == 2) {
     zgrentTypeList = [1];
   }
-  if (y.leaseType === 1) {
+  if (y.leaseType == 1) {
     zgrentTypeList = [0];
   }
   //配套设施
