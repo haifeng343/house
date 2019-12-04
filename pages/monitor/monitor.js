@@ -33,13 +33,21 @@ Page({
   },
   monitorChange(e){
     var index = e.currentTarget.dataset.index;
+    let token = wx.getStorageSync('token');
     if(this.data.active == 1&&this.data.active!=index){
       app.switchRent = 2
       this.setData({
         show:'',
         active: 2
       })
-      this.getLongMonitorData()
+      if (token){
+        this.getLongMonitorData()
+      }else{
+        this.setData({
+          show: 0
+        })
+      }
+      
     }
     if (this.data.active == 2 && this.data.active != index) {
       app.switchRent = 1
@@ -47,7 +55,13 @@ Page({
         show: '',
         active: 1
       })
-      this.getMonitorData()
+      if (token) {
+        this.getMonitorData()
+      } else {
+        this.setData({
+          show: 0
+        })
+      }
     }
   },
   getLongMonitorData(){
