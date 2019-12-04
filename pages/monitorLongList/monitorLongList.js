@@ -562,6 +562,9 @@ Page({
       title: "加载中...",
       mask: true
     });
+    this.setData({
+      allData: []
+    })
     this.getMonitorData(e.detail)
   },
   goMselect(e){
@@ -569,6 +572,9 @@ Page({
       title: "加载中...",
       mask: true
     });
+    this.setData({
+      allData: []
+    })
     this.getMonitorData(e.detail)
   },
   goTocheckAll(e) {
@@ -577,6 +583,9 @@ Page({
       title: "加载中...",
       mask: true
     });
+    this.setData({
+      allData: []
+    })
     this.getMonitorData(index)
   },
   goEdit() {
