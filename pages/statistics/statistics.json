@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "houseCard":"../../components/houseCard/houseCard",
+    "houseListCard":"../../components/houseListCard/houseListCard",
     "houseData": "../../components/houseData/houseData",
     "houseStat": "../../components/houseStat/houseStat",
     "stopDialog": "../../components/stopDialog/stopDialog",

@@ -90,7 +90,9 @@ Page({
         updateMaxPrice: app.globalData.monitorSearchData.maxPrice,
         sort: data.sortType == 2 ? false : true,
         fee,
-        rentType:1 //1：短租 2：长租
+        type: (data.bottomType == 1 || data.bottomType == 2) ? 2 : 1,
+        rentType:1, //1：短租 2：长租
+        dayCount: data.dayCount
       })
     }
     if (options.rentType == 2){
