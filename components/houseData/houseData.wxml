@@ -6,7 +6,7 @@
 <view class="house_data" wx:if="{{rentType == 1}}">
   <view class="data_first">
     <view class="data_layout data_real">
-      <view>实际数量/套</view>
+      <view>全网总计/套</view>
       <view class="real_num">{{allCount}}</view>
     </view>
     <view class="data_layout data_average">
