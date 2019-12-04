@@ -58,7 +58,9 @@ const tujiaReq = {
         },
         data: JSON.stringify(params),
         success: res => {
-          // console.log(res.data)
+          if (typeof res.data ==='string'){
+            res.data = JSON.parse(res.data.replace(/\r?\n/g, ''))
+          }
           resolve(res.data)
         },
         fail: res => {
