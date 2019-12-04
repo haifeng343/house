@@ -52,7 +52,7 @@
         <view class='form-title'>兑换金额</view>
         <view class='form-box'>
             <text class="yen">￥</text>
-            <input class='form-input' value='{{exchangeAmount}}' bindinput="handleExchangeAmountChange" maxlength="6" />
+            <input class='form-input' value='{{exchangeAmount}}' bindinput="handleExchangeAmountChange" maxlength="6" bindblur="handleInputBlur" bindfocus="handleInputFocus"/>
         </view>
         <view class='form-remain'>
             可用余额：￥{{userMoney}}

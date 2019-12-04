@@ -59,13 +59,15 @@ Page({
   },
   service: new DepositService(),
   submitFlag: false,
+  inputFlag: false,
   exchangeAll() {
+    this.inputFlag = true;
     this.setData({
       exchangeAmount: ~~this.data.userMoney
     });
   },
   changeTab(event) {
-    const type  = +event.currentTarget.dataset.type;
+    const type = +event.currentTarget.dataset.type;
     this.setData({
       showType: type
     });
@@ -111,7 +113,21 @@ Page({
     const { money, coin } = event.currentTarget.dataset;
     this.setData({ money, coin, moneyText: (money / 100).toFixed(2) });
   },
+  handleInputBlur() {
+    if (this.inputFlag === true) {
+      this.inputFlag = false;
+    }
+  },
+  handleInputFocus() {
+    if (this.inputFlag === true) {
+      this.inputFlag = false;
+    }
+  },
   handleExchangeAmountChange(event) {
+    if (this.inputFlag === true) {
+      this.inputFlag = false;
+      return;
+    }
     const value = +event.detail.value;
     if (value) {
       if (value > +this.data.userMoney) {
