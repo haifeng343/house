@@ -540,11 +540,15 @@ Component({
       (update || !this.positionData
         ? Http.get("/indexPosition.json", {
             cityName: this.data.city
-          }).then(resp => Promise.resolve(resp.data))
+          })
+            .then(resp => Promise.resolve(resp.data))
+            .then(data => {
+              data.unshift(`${this.data.city}_全城_16`);
+              return Promise.resolve(data);
+            })
         : Promise.resolve(this.positionData)
       ).then(data => {
         this.positionData = data;
-        data.unshift(`${this.data.city}_全城_16`);
         this.setData({
           positionList: data
         });
