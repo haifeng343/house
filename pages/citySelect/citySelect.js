@@ -140,7 +140,7 @@ Page({
       app.globalData.searchData.cityType = type;
       app.globalData.searchData.area = "";
       app.globalData.searchData.areaId = {};
-      app.globalData.searchData.areaType = type;
+      app.globalData.searchData.areaType = "";
       app.globalData.monitorSearchData.city = cityJson.name;
       app.globalData.monitorSearchData.cityId = {};
       app.globalData.monitorSearchData.cityType = type;
