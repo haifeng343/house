@@ -255,17 +255,9 @@ Component({
           middleList: this.data.area[type].data,
           lastList: [],
           typeActive: type,
-          middleActive: Object.keys(this.data.area[type].data)[0]
+          middleActive: key || Object.keys(this.data.area[type].data)[0]
         });
       }
-
-      wx.nextTick(() => {
-        this.setData({
-          level1View: "activelevel1",
-          level2View: "activelevel2",
-          level3View: "activelevel3"
-        });
-      });
     },
     chooseSecond(event, way) {
       var data = event.currentTarget.dataset;
@@ -300,27 +292,11 @@ Component({
           }
         }
       );
-
-      wx.nextTick(() => {
-        this.setData({
-          level1View: "activelevel1",
-          level2View: "activelevel2",
-          level3View: "activelevel3"
-        });
-      });
     },
     chooseLast(event) {
       let type = event.currentTarget.dataset.type || "";
       this.setData({
         lastActive: type
-      });
-
-      wx.nextTick(() => {
-        this.setData({
-          level1View: "activelevel1",
-          level2View: "activelevel2",
-          level3View: "activelevel3"
-        });
       });
     },
     checkPositionId(name) {
@@ -611,10 +587,10 @@ Component({
           globalAreaType = "";
         if (this.data.type === "monitor") {
           globalAreaName = app.globalData.monitorSearchData.area;
-          globalAreaType = app.globalData.monitorSearchData.areaType;
+          globalAreaType = app.globalData.monitorSearchData.areaType.toString();
         } else {
           globalAreaName = app.globalData.searchData.area;
-          globalAreaType = app.globalData.searchData.areaType;
+          globalAreaType = app.globalData.searchData.areaType.toString();
         }
         let initSelect = {
           initName: "",
@@ -622,6 +598,7 @@ Component({
           initKey: ""
         };
         let randomKey = "";
+        console.log(1);
         data.map((item, index) => {
           let position = item.split("_");
           let cityName = position[0];
@@ -673,6 +650,14 @@ Component({
           },
           () => {
             this.chooseType();
+
+            wx.nextTick(() => {
+              this.setData({
+                level1View: "activelevel1",
+                level2View: "activelevel2",
+                level3View: "activelevel3"
+              });
+            });
           }
         );
       });
