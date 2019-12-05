@@ -114,7 +114,7 @@ Page({
       searchData.cityType = type;
       searchData.area = '';
       searchData.areaId = {};
-      searchData.areaType = type;
+      searchData.areaType = '';
       monitorSearchData.city = cityJson.name;
       monitorSearchData.cityId = {};
       monitorSearchData.cityType = type;
