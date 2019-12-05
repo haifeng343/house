@@ -349,16 +349,16 @@ Page({
       var cityItem = resp.data[0];
       let cityJson = JSON.parse(cityItem.json);
       if (app.globalData.searchData.city !== cityItem.name) {
-        app.globalData.searchData.areaId = undefined;
-        app.globalData.searchData.ltude = undefined;
-        app.globalData.searchData.area = undefined;
-        app.globalData.searchData.areaType = undefined;
+        app.globalData.searchData.area = "";
+        app.globalData.searchData.areaId = {};
+        app.globalData.searchData.areaType = "";
+        app.globalData.searchData.ltude = "";
       }
       if (app.globalData.monitorSearchData.city !== cityItem.name) {
-        app.globalData.monitorSearchData.areaId = undefined;
-        app.globalData.monitorSearchData.ltude = undefined;
-        app.globalData.monitorSearchData.area = undefined;
-        app.globalData.monitorSearchData.areaType = undefined;
+        app.globalData.monitorSearchData.areaId = {};
+        app.globalData.monitorSearchData.ltude = "";
+        app.globalData.monitorSearchData.area = "";
+        app.globalData.monitorSearchData.areaType = "";
       }
       app.globalData.searchData.city = cityItem.name;
       app.globalData.searchData.cityId = {};
