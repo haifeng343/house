@@ -60,7 +60,7 @@
           </view>
         </scroll-view>
         <scroll-view scroll-into-view="{{level3View}}" scroll-y class='position-last' wx:if='{{lastList.length > 0}}'>
-          <view class='item {{key === lastActive ? "active" : ""}}' id="{{key === lastActive ? 'activelevel3' : ''}}" wx:for='{{lastList}}' wx:for-index='key' wx:key='{{key}}' bindtap='chooseLast' data-type='{{key}}'>
+          <view class='item {{key === lastActive ? "active" : ""}}' id="{{key === lastActive ? 'activelevel3' : ''}}" wx:for='{{lastList}}' wx:for-index='key' wx:key='{{key}}' bindtap='chooseLast' data-type='{{key}}' wx:if="{{key !== 'length'}}">
             {{item.name}}
           </view>
         </scroll-view>

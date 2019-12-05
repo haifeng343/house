@@ -235,19 +235,17 @@ Component({
             typeActive: type
           },
           () => {
-            this.chooseSecond(
-              {
-                currentTarget: {
-                  dataset: {
-                    type: event ? lineName : this.data.initSelect.initLine,
-                    station: event
-                      ? Object.keys(this.data.area.subway.data[lineName])[0]
-                      : key
-                  }
+            this.chooseSecond({
+              currentTarget: {
+                dataset: {
+                  way: "subway",
+                  type: event ? lineName : this.data.initSelect.initLine,
+                  station: event
+                    ? Object.keys(this.data.area.subway.data[lineName])[0]
+                    : key
                 }
-              },
-              "subway"
-            );
+              }
+            });
           }
         );
       } else {
@@ -257,14 +255,18 @@ Component({
           typeActive: type,
           middleActive: key || Object.keys(this.data.area[type].data)[0]
         });
-        wx.nextTick(() => {
-          this.setData({ level2View: "activelevel2" });
-        });
       }
+
+      wx.nextTick(() => {
+        this.setData({ level2View: "activelevel2" });
+      });
     },
-    chooseSecond(event, way) {
+    chooseSecond(event) {
       var data = event.currentTarget.dataset;
-      let type = data.type;
+      const { type, way } = data;
+      const station = +data.station;
+
+      console.log(this.data.middleList[type].line);
 
       this.setData(
         {
@@ -275,27 +277,20 @@ Component({
           if (
             way === "subway" &&
             data.type === this.data.initSelect.initLine &&
-            +data.station === +this.data.initSelect.initKey
+            station === +this.data.initSelect.initKey
           ) {
-            this.setData(
-              {
-                lastActive: data.station
-              },
-              () => {
-                setTimeout(() => {
-                  this.setData({ level3View: "activelevel3" });
-                }, 200);
-              }
-            );
+            this.setData({
+              lastActive: station
+            });
           } else {
-            this.chooseLast({
-              currentTarget: {
-                dataset: {
-                  type: Object.keys(this.data.lastList)[0]
-                }
-              }
+            this.setData({
+              lastActive: Object.keys(this.data.lastList)[0]
             });
           }
+
+          wx.nextTick(() => {
+            this.setData({ level3View: "activelevel3" });
+          });
         }
       );
     },
