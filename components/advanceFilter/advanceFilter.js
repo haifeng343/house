@@ -190,7 +190,7 @@ Component({
     },
     chooseType(event) {
       let type = "";
-      let key = this.data.middleActive;
+      let key = "";
       if (event) {
         type = event.currentTarget.dataset.type;
       } else {
@@ -257,6 +257,9 @@ Component({
           typeActive: type,
           middleActive: key || Object.keys(this.data.area[type].data)[0]
         });
+        wx.nextTick(() => {
+          this.setData({ level2View: "activelevel2" });
+        });
       }
     },
     chooseSecond(event, way) {
@@ -274,13 +277,16 @@ Component({
             data.type === this.data.initSelect.initLine &&
             +data.station === +this.data.initSelect.initKey
           ) {
-            this.chooseLast({
-              currentTarget: {
-                dataset: {
-                  type: data.station
-                }
+            this.setData(
+              {
+                lastActive: data.station
+              },
+              () => {
+                setTimeout(() => {
+                  this.setData({ level3View: "activelevel3" });
+                }, 200);
               }
-            });
+            );
           } else {
             this.chooseLast({
               currentTarget: {
@@ -529,19 +535,15 @@ Component({
         priceText: priceText
       });
     },
-    getHotPosition() {
+    getHotPosition(update) {
       const app = getApp();
-      if (this.data.shownType === 2) {
-        wx.showLoading({
-          title: "加载中",
-          mask: true
-        });
-      }
-      Http.get("/indexPosition.json", {
-        cityName: this.data.city
-      }).then(rslt => {
-        wx.hideLoading();
-        let data = rslt.data;
+      (update || !this.positionData
+        ? Http.get("/indexPosition.json", {
+            cityName: this.data.city
+          }).then(resp => Promise.resolve(resp.data))
+        : Promise.resolve(this.positionData)
+      ).then(data => {
+        this.positionData = data;
         data.unshift(`${this.data.city}_全城_16`);
         this.setData({
           positionList: data
@@ -725,6 +727,25 @@ Component({
     }
   },
   observers: {
+    shownType: function(shownType) {
+      if (shownType === 2) {
+        let searchData = {};
+        const app = getApp();
+        if (this.data.type === "monitor") {
+          searchData = Object.assign({}, app.globalData.monitorSearchData);
+        } else {
+          searchData = Object.assign({}, app.globalData.searchData);
+        }
+        this.setData(
+          {
+            searchData
+          },
+          () => {
+            this.getHotPosition(false);
+          }
+        );
+      }
+    },
     cityName: function(city) {
       if (!city || city === "--") {
         return;
@@ -742,7 +763,7 @@ Component({
           searchData
         },
         () => {
-          this.getHotPosition();
+          this.getHotPosition(true);
         }
       );
     }
