@@ -720,6 +720,11 @@ Component({
         }
       };
       this.handleSelectArea(e);
+      wx.nextTick(() => {
+        this.setData({
+          level2View: "activelevel2"
+        });
+      });
     },
 
     handleSelectArea(event) {
@@ -772,6 +777,11 @@ Component({
           };
           wx.nextTick(() => {
             this.handleSelectStation(e);
+          });
+          wx.nextTick(() => {
+            this.setData({
+              level3View: "activelevel3"
+            });
           });
         }
       } else if (currentAreaType === 2) {
