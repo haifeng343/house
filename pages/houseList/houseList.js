@@ -373,7 +373,8 @@ Page({
       bindPhone: this.data.bindPhone,
       bindPublic: this.data.bindPublic,
       isBack: false,
-      sortType: this.data.sortType
+      sortType: this.data.sortType,
+      dayCount:this.data.dayCount
     };
     this.setData({
       editFlag: false,

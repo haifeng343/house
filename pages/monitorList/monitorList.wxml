@@ -22,7 +22,7 @@
     </view>
 
     <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
-      <houseListCard item="{{item}}" editFlag="{{editFlag}}" bottomType="{{bottomType}}" allCount="{{allCount}}" type="{{2}}" idx="{{idx}}"  dayCount="{{dayCount}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect"></houseListCard>
+      <houseListCard item="{{item}}" editFlag="{{editFlag}}" bottomType="{{bottomType}}" allCount="{{allCount}}" type="{{2}}" idx="{{idx}}"  dayCount="{{dayCount}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" isStatist="{{bottomType ===1?true:false}}"></houseListCard>
     </block>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&mSelect ==1}}">已展示全部房源</view>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&mSelect ==2}}">以上为新上房源，点击<text class="no_text" data-index="1" bindtap="goTocheckAll">查看全部</text>房源</view>
@@ -53,7 +53,7 @@
 
   <followBottom editFlag="{{editFlag}}" selectAllFlag="{{selectAllFlag}}" selectNum="{{selectNum}}" bind:selectAllEvent="goToSelectAll" bind:deleteBatchEvent="deleteBatchItem"></followBottom>
 
-  <followEdit bottomType="{{bottomType}}" countFlag="{{countFlag}}" listType="{{mSelect}}" scrollIng="{{scrollIng}}" editFlag="{{editFlag}}" bind:editEvent="goEdit" bind:selectEvent="goMselect"></followEdit>
+  <followEdit bottomType="{{bottomType}}" countFlag="{{bottomType ===1?countFlag:3}}" listType="{{mSelect}}" scrollIng="{{scrollIng}}" editFlag="{{editFlag}}" bind:editEvent="goEdit" bind:selectEvent="goMselect"></followEdit>
   
   <houseLoading loadingDisplay="{{loadingDisplay}}"></houseLoading>
 

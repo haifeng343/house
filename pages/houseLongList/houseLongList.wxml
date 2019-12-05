@@ -18,7 +18,7 @@
     </view>
     <view class="house_card">
       <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
-        <houseLongCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{1}}" idx="{{idx}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect"></houseLongCard>
+        <houseLongCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{1}}" idx="{{idx}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" singleEditFlag="{{singleEditFlag}}" followIndex="{{followIndex}}" isStatist="{{false}}"></houseLongCard>
       </block>
     </view>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&!loadingShow}}">
@@ -39,7 +39,7 @@
   
   <followBottom editFlag="{{editFlag}}" selectAllFlag="{{selectAllFlag}}" selectNum="{{selectNum}}" bind:selectAllEvent="goToSelectAll" bind:deleteBatchEvent="deleteBatchItem"></followBottom>
 
-  <followEdit countFlag="{{countFlag}}" scrollIng="{{scrollIng}}" editFlag="{{editFlag}}" bind:editEvent="goEdit"></followEdit>
+  <followEdit countFlag="{{3}}" scrollIng="{{scrollIng}}" editFlag="{{editFlag}}" bind:editEvent="goEdit"></followEdit>
   
   <houseLoading loadingDisplay="{{loadingDisplay}}"></houseLoading>
   
