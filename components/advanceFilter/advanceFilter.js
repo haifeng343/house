@@ -264,7 +264,7 @@ Component({
     chooseSecond(event) {
       var data = event.currentTarget.dataset;
       const { type, way } = data;
-      const station = +data.station;
+      const station = data.station;
 
       console.log(this.data.middleList[type].line);
 
@@ -277,7 +277,7 @@ Component({
           if (
             way === "subway" &&
             data.type === this.data.initSelect.initLine &&
-            station === +this.data.initSelect.initKey
+            +station === +this.data.initSelect.initKey
           ) {
             this.setData({
               lastActive: station
