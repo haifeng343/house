@@ -255,7 +255,8 @@ Page({
         longSortTypes: monitorDetail.sortType || 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
         minPrice: monitorDetail.minPrice,//最低价
         maxPrice: monitorDetail.maxPrice == 99999 ? 10000 : monitorDetail.maxPrice,//最高价 不限99999
-        advSort: monitorDetail.sortType || 0
+        //advSort: monitorDetail.sortType || 0
+        advSort:-1
       }
       app.globalData.monitorDefaultSearchLongData = {
         chooseType: monitorDetail.houseSource, //1品牌中介，2个人房源
@@ -275,7 +276,8 @@ Page({
         longSortTypes: monitorDetail.sortType||0, //1: 低价优先, 2: 空间优先, 3: 最新发布
         minPrice: monitorDetail.minPrice,//最低价
         maxPrice: monitorDetail.maxPrice == 99999 ? 10000 : monitorDetail.maxPrice,//最高价 不限99999
-        advSort: monitorDetail.sortType || 0
+        // advSort: monitorDetail.sortType || 0
+        advSort: -1
       }
       let x = app.globalData.monitorSearchLongData
       new positionService().getSearchHoset(x.city, x.chooseType).then(resp => {

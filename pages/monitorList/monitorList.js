@@ -368,7 +368,8 @@ Page({
         equipment:
           (monitorDetail.facilities && monitorDetail.facilities.split(",")) ||
           [],
-        advSort: this.data.advSort ? this.data.advSort : monitorDetail.sortType
+        // advSort: this.data.advSort ? this.data.advSort : monitorDetail.sortType
+        advSort:-1
       };
       //监控详情条件 ---监控默认条件
       app.globalData.monitorDefaultData = {
@@ -395,7 +396,8 @@ Page({
         equipment:
           (monitorDetail.facilities && monitorDetail.facilities.split(",")) ||
           [],
-        advSort: monitorDetail.sortType
+        //advSort: monitorDetail.sortType
+        advSort: -1
       };
       let searchData = app.globalData.monitorSearchData;
       let defaultData = app.globalData.monitorDefaultData;
