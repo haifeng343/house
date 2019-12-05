@@ -16,7 +16,7 @@
       <noNetwork title="网络异常，请刷新重试"></noNetwork>
     </view>
     <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
-      <houseListCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{1}}" idx="{{idx}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" dayCount="{{dayCount}}"></houseListCard>
+      <houseListCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{1}}" idx="{{idx}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" dayCount="{{dayCount}}" isStatist="{{false}}"></houseListCard>
     </block>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&!loadingShow}}">
       <text wx:if="{{allCount>50}}">已展示全部房源</text>
@@ -34,7 +34,7 @@
     <button wx:if="{{countFlag ===2}}" class="monitor_btn" bindtap='goRefresh'>立即刷新</button>
   </view>
   <followBottom editFlag="{{editFlag}}" selectAllFlag="{{selectAllFlag}}" selectNum="{{selectNum}}" bind:selectAllEvent="goToSelectAll" bind:deleteBatchEvent="deleteBatchItem"></followBottom>
-  <followEdit countFlag="{{countFlag}}" scrollIng="{{scrollIng}}" editFlag="{{editFlag}}" bind:editEvent="goEdit"></followEdit>
+  <followEdit countFlag="{{3}}" scrollIng="{{scrollIng}}" editFlag="{{editFlag}}" bind:editEvent="goEdit"></followEdit>
   <houseLoading loadingDisplay="{{loadingDisplay}}"></houseLoading>
   <monitorDialog title="{{monitorTitle}}" fee="{{fee}}" ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorDisplay}}"></monitorDialog>
   <advanceFilter class="{{showAdvance ? '' : 'vhidden'}}" shownType='{{showAdvanceType}}' cityName='{{cityName}}' bind:submit='submitAdvance' bind:onClose="handleCloseAdvance" />

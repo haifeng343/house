@@ -473,14 +473,16 @@ Page({
         followText: '屏蔽房源后，该房源将不会在后续监控中出现！',
         followType: 1,
         followDisplay: 'block',
-        followIndex: index
+        followIndex: index,
+        singleEditFlag:false
       })
     }else{
       this.setData({
         followText: "是否确认屏蔽此房源！",
         followType: 1,
         followDisplay: "block",
-        followIndex: index
+        followIndex: index,
+        singleEditFlag: false
       });
     }
 
@@ -507,16 +509,19 @@ Page({
     let proId = this.data.allOriginalData[index].productId
     let plaId = this.data.allOriginalData[index].platformId
     let allData = [...this.data.allOriginalData]
+    let allData2 = [...this.data.allData]
     //allData 不再关注之后 遗留的房源数据,b不再关注的房源，添加黑名单
     let b = allData.splice(index, 1)
+    let b2 = allData2.splice(index, 1)
     let short = wx.getStorageSync('fddShortRentBlock') || [];
     let shortBlock = short.concat(b)
     wx.setStorageSync('fddShortRentBlock', shortBlock)
 
     let houseData = house.houseLongFilter(allData, this.data.chooseType)
     this.setData({
-      allOriginalData: [],
-      allData: []
+      // allOriginalData: [],
+      // allData: []
+      singleEditFlag: true
     })
     if (allData.length > 0) {
       this.setData({
@@ -530,7 +535,7 @@ Page({
     if (this.data.chooseType == 1) {
       this.setData({
         allOriginalData: allData,
-        allData: allData.slice(0, 5),
+        allData: allData2,
         averagePrice: houseData.averagePrice,
         lowPrice: houseData.lowPrice,
         lowPriceData: houseData.lowPriceData,
@@ -545,7 +550,7 @@ Page({
     if (this.data.chooseType == 2) {
       this.setData({
         allOriginalData: allData,
-        allData: allData.slice(0, 5),
+        allData: allData2,
         averagePrice: houseData.averagePrice,
         lowPrice: houseData.lowPrice,
         lowPriceData: houseData.lowPriceData,
@@ -555,6 +560,13 @@ Page({
         fangtianxiaFilterData: houseData.ftxFilterData,
         wbtcFilterData: houseData.tcFilterData,
         followDisplay: e.detail.show
+      })
+    }
+
+    if (this.data.scrollTop){
+      console.log(this.data.scrollTop)
+      wx.pageScrollTo({
+        scrollTop: this.data.scrollTop-200,
       })
     }
   },

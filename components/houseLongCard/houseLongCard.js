@@ -40,6 +40,19 @@ Component({
     },
     bottomType: {
       type: Number
+    },
+    singleEditFlag:{
+      type: Boolean,
+      observer: function (singleEditFlag) {
+        if (singleEditFlag && this.properties.followIndex === this.properties.idx){
+          this.setData({
+            x: 0
+          })
+        }
+      }
+    },
+    followIndex:{
+      type: Number
     }
   },
 
