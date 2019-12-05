@@ -2726,7 +2726,7 @@ const tcScreenParam = type => {
     if (searchData.areaId.nearby) {
       obj.circleLon = searchData.areaId.longitude;
       obj.circleLat = searchData.areaId.latitude;
-      obj.filterParams.distance = parseInt(searchData.areaId.nearby) * 1000;
+      obj.filterParams.distance = parseInt(searchData.areaId.nearby) * 1000 + '';
     }
   }
 
