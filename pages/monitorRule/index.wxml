@@ -11,6 +11,18 @@
     </view>
     <view class="item">
       <text class="icon">●</text>
+      <view class="text">新上通知：添加监控后，若有新的符合条件的房源上架时，我们会第一时间通知您</view>
+    </view>
+    <view class="item">
+      <text class="icon">●</text>
+      <view class="text">降价通知：当前符合条件的房源，当它降价时，我们也会第一时间通知您</view>
+    </view>
+    <view class="item">
+      <text class="icon">●</text>
+      <view class="text">房源屏蔽：若您对某套房源不满意，也可以屏蔽此房源，此后将不再接收此房源信息</view>
+    </view>
+    <view class="item">
+      <text class="icon">●</text>
       <view class="text">只有总数房源少于 50 套时才可监控</view>
     </view>
     <view class="item">

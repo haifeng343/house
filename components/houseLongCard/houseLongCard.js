@@ -96,7 +96,7 @@ Component({
     },
     ready() {
       let num = wx.getStorageSync('autoswiperNum');
-      if (this.properties.idx == 0 && !num) {
+      if (this.properties.idx == 0 && !num && this.properties.isStatist) {
         wx.setStorageSync('autoswiperNum', 1)
         this.setData({
           x: -64
