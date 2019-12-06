@@ -150,14 +150,175 @@ const getXzData = (type, xzfilter) => {
  * 获取木鸟平台数据
  * type 1 房源列表；2监控详情
  */
-const getMnData = (type, mnfilter) => {
-  let app = getApp();
+// const getMnData = (type, mnfilter) => {
+//   let app = getApp();
+//   let arr2 = [];
+//   let mnCount = 0;
+//   let y =
+//     type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
+//   let s = app.globalData.mnSwitch;
+//   let data = {
+//     platform: "mn",
+//     cityId: y.cityId.mn,
+//     page: {
+//       size: 15,
+//       num: 1
+//     },
+//     filter: mnfilter
+//   };
+//   let data2 = {
+//     platform: "mn",
+//     cityId: y.cityId.mn,
+//     page: {
+//       size: 15,
+//       num: 2
+//     },
+//     filter: mnfilter
+//   };
+//   let data3 = {
+//     platform: "mn",
+//     cityId: y.cityId.mn,
+//     page: {
+//       size: 15,
+//       num: 3
+//     },
+//     filter: mnfilter
+//   };
+//   let data4 = {
+//     platform: "mn",
+//     cityId: y.cityId.mn,
+//     page: {
+//       size: 15,
+//       num: 4
+//     },
+//     filter: mnfilter
+//   };
+//   return new Promise((resolve, reject) => {
+//     if (!s) {
+//       resolve({
+//         arr: [],
+//         mnCount: -1 // -1 表示不查询该平台数据
+//       });
+//       return;
+//     }
+//     if (y.areaType && y.area) {
+//       if (y.areaId.hasOwnProperty("mn") && !y.areaId.mn) {
+//         mnCount = 0;
+//         resolve({
+//           arr: [],
+//           mnCount
+//         });
+//         return;
+//       }
+//     }
+//     houseApi
+//       .getMnList(data)
+//       .then(res => {
+//         if (res) {
+//           arr2 = res.data.rooms.list;
+//           mnCount = Number(res.data.rooms.page.record_count);
+//         }
+//         if (res) {
+//           return houseApi.getMnList(data2);
+//         }
+//         if (!res) {
+//           resolve({
+//             network: true
+//           });
+//         }
+//       })
+//       .then(res => {
+//         if (res) {
+//           arr2.push.apply(arr2, res.data.rooms.list);
+//         }
+//         if (res && arr2.length == 0) {
+//           mnCount = Number(res.data.rooms.page.record_count);
+//         }
+//         if (res) {
+//           return houseApi.getMnList(data3);
+//         }
+//         if (!res) {
+//           let arr = arr2.slice(0, 50);
+//           resolve({
+//             arr,
+//             mnCount
+//           });
+//         }
+//       })
+//       .then(res => {
+//         if (res) {
+//           arr2.push.apply(arr2, res.data.rooms.list);
+//         }
+//         if (res && arr2.length == 0) {
+//           mnCount = Number(res.data.rooms.page.record_count);
+//         }
+//         if (res) {
+//           return houseApi.getMnList(data4);
+//         }
+//         if (!res) {
+//           let arr = arr2.slice(0, 50);
+//           resolve({
+//             arr,
+//             mnCount
+//           });
+//         }
+//       })
+//       .then(res => {
+//         if (res) {
+//           arr2.push.apply(arr2, res.data.rooms.list);
+//         }
+//         if (res && arr2.length == 0) {
+//           mnCount = Number(res.data.rooms.page.record_count);
+//         }
+//         let arr = arr2.slice(0, 50);
+//         resolve({
+//           arr,
+//           mnCount
+//         });
+//       });
+//   });
+// };
+const getMnData = (type, mnfilter)=>{
   let arr2 = [];
+  let mnCount = 0; 
+  return new Promise((resolve, reject) => {
+  Promise.all([getMnData1(type, mnfilter), getMnData2(type, mnfilter), getMnData3(type, mnfilter), getMnData4(type, mnfilter)])
+    .then(res => {
+      if (!res[0] && !res[1] && !res[2] && !res[3]){
+        resolve({
+          network: true
+        });
+      }
+      if (res[0]){
+        arr2.push.apply(arr2, res[0].arr);
+        mnCount = res[0].mnCount
+      }
+      if (res[1]) {
+        arr2.push.apply(arr2, res[1].arr);
+        mnCount = res[1].mnCount
+      }
+      if (res[2]) {
+        arr2.push.apply(arr2, res[2].arr);
+        mnCount = res[2].mnCount
+      }
+      if (res[3]) {
+        arr2.push.apply(arr2, res[3].arr);
+        mnCount = res[3].mnCount
+      }
+      resolve({
+        arr: arr2.slice(0, 50),
+        mnCount
+      });
+    })
+  })
+}
+const getMnData1 = (type, mnfilter)=>{
+  let app = getApp();
   let mnCount = 0;
   let y =
     type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
   let s = app.globalData.mnSwitch;
-  let data = {
+  let data1 = {
     platform: "mn",
     cityId: y.cityId.mn,
     page: {
@@ -166,6 +327,45 @@ const getMnData = (type, mnfilter) => {
     },
     filter: mnfilter
   };
+  return new Promise((resolve, reject) => {
+    if (!s) {
+      resolve({
+        arr: [],
+        mnCount: -1 // -1 表示不查询该平台数据
+      });
+      return;
+    }
+    if (y.areaType && y.area) {
+      if (y.areaId.hasOwnProperty("mn") && !y.areaId.mn) {
+        mnCount = 0;
+        resolve({
+          arr: [],
+          mnCount
+        });
+        return;
+      }
+    }
+    houseApi
+      .getMnList(data1)
+      .then(res => {
+        if (res) {
+          resolve({
+            arr: res.data.rooms.list,
+            mnCount: Number(res.data.rooms.page.record_count)
+          });
+        }
+        if (!res) {
+          resolve(false);
+        }
+      })
+  })
+}
+const getMnData2 = (type, mnfilter) => {
+  let app = getApp();
+  let mnCount = 0;
+  let y =
+    type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
+  let s = app.globalData.mnSwitch;
   let data2 = {
     platform: "mn",
     cityId: y.cityId.mn,
@@ -175,6 +375,45 @@ const getMnData = (type, mnfilter) => {
     },
     filter: mnfilter
   };
+  return new Promise((resolve, reject) => {
+    if (!s) {
+      resolve({
+        arr: [],
+        mnCount: -1 // -1 表示不查询该平台数据
+      });
+      return;
+    }
+    if (y.areaType && y.area) {
+      if (y.areaId.hasOwnProperty("mn") && !y.areaId.mn) {
+        mnCount = 0;
+        resolve({
+          arr: [],
+          mnCount
+        });
+        return;
+      }
+    }
+    houseApi
+      .getMnList(data2)
+      .then(res => {
+        if (res) {
+          resolve({
+            arr: res.data.rooms.list,
+            mnCount: Number(res.data.rooms.page.record_count)
+          });
+        }
+        if (!res) {
+          resolve(false);
+        }
+      })
+  })
+}
+const getMnData3 = (type, mnfilter) => {
+  let app = getApp();
+  let mnCount = 0;
+  let y =
+    type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
+  let s = app.globalData.mnSwitch;
   let data3 = {
     platform: "mn",
     cityId: y.cityId.mn,
@@ -184,6 +423,45 @@ const getMnData = (type, mnfilter) => {
     },
     filter: mnfilter
   };
+  return new Promise((resolve, reject) => {
+    if (!s) {
+      resolve({
+        arr: [],
+        mnCount: -1 // -1 表示不查询该平台数据
+      });
+      return;
+    }
+    if (y.areaType && y.area) {
+      if (y.areaId.hasOwnProperty("mn") && !y.areaId.mn) {
+        mnCount = 0;
+        resolve({
+          arr: [],
+          mnCount
+        });
+        return;
+      }
+    }
+    houseApi
+      .getMnList(data3)
+      .then(res => {
+        if (res) {
+          resolve({
+            arr: res.data.rooms.list,
+            mnCount: Number(res.data.rooms.page.record_count)
+          });
+        }
+        if (!res) {
+          resolve(false);
+        }
+      })
+  })
+}
+const getMnData4 = (type, mnfilter) => {
+  let app = getApp();
+  let mnCount = 0;
+  let y =
+    type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
+  let s = app.globalData.mnSwitch;
   let data4 = {
     platform: "mn",
     cityId: y.cityId.mn,
@@ -212,72 +490,20 @@ const getMnData = (type, mnfilter) => {
       }
     }
     houseApi
-      .getMnList(data)
+      .getMnList(data4)
       .then(res => {
         if (res) {
-          arr2 = res.data.rooms.list;
-          mnCount = Number(res.data.rooms.page.record_count);
-        }
-        if (res) {
-          return houseApi.getMnList(data2);
-        }
-        if (!res) {
           resolve({
-            network: true
+            arr: res.data.rooms.list,
+            mnCount: Number(res.data.rooms.page.record_count)
           });
         }
-      })
-      .then(res => {
-        if (res) {
-          arr2.push.apply(arr2, res.data.rooms.list);
-        }
-        if (res && arr2.length == 0) {
-          mnCount = Number(res.data.rooms.page.record_count);
-        }
-        if (res) {
-          return houseApi.getMnList(data3);
-        }
         if (!res) {
-          let arr = arr2.slice(0, 50);
-          resolve({
-            arr,
-            mnCount
-          });
+          resolve(false);
         }
       })
-      .then(res => {
-        if (res) {
-          arr2.push.apply(arr2, res.data.rooms.list);
-        }
-        if (res && arr2.length == 0) {
-          mnCount = Number(res.data.rooms.page.record_count);
-        }
-        if (res) {
-          return houseApi.getMnList(data4);
-        }
-        if (!res) {
-          let arr = arr2.slice(0, 50);
-          resolve({
-            arr,
-            mnCount
-          });
-        }
-      })
-      .then(res => {
-        if (res) {
-          arr2.push.apply(arr2, res.data.rooms.list);
-        }
-        if (res && arr2.length == 0) {
-          mnCount = Number(res.data.rooms.page.record_count);
-        }
-        let arr = arr2.slice(0, 50);
-        resolve({
-          arr,
-          mnCount
-        });
-      });
-  });
-};
+  })
+}
 /**
  * 获取榛果平台数据
  * type 1 房源列表；2监控详情
