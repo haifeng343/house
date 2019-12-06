@@ -4,6 +4,15 @@ var xzCoverImage = function (url) {
     return url.replace('imgsec', 'image').replace('imgshowsource/', '').replace('webp', 'jpg')
   }
 }
+
+// 榛果图片处理
+
+var zgCoverImage = function (url) {
+  if (url) {
+    return url + '@360w_1l_80Q'
+  }
+}
+
 var rentType = function (type) {
   if (type ==1) {
     return '整租'
@@ -31,6 +40,7 @@ var arrCompare=function(arr1,arr2){
 }
 module.exports = {
   xzCoverImage: xzCoverImage,
+  zgCoverImage: zgCoverImage,
   rentType: rentType,
   arrCompare: arrCompare
 }
