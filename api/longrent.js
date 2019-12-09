@@ -16,6 +16,21 @@ var base64_encode = require("../utils/base64.js").base64_encode;
 import { CryptoJS } from "../utils/sha1.js";
 import { xml2json } from "../utils/xml2json.js";
 import MD5 from "../utils/md5";
+const LIAN_APP_VER = "9.4.4";
+
+/**
+ * 链家通用http头
+ * @type {{Cookie: string, "Lianjia-Channel": string, Authorization, "Lianjia-Im-Version": string, extension: string, "Lianjia-Version": string, "User-Agent": string, "Accept-Encoding": string, "Lianjia-Device-Id": string, "Content-Type": string}}
+ */
+const lianjiaHeader = {
+  'Content-Type': 'application/x-www-form-urlencoded',
+  Cookie: 'lianjia_udid=8d908d6ae59594fa;lianjia_ssid=8f4b1b0c-d46d-4028-a357-904cd39b6feb;lianjia_uuid=01d65f7d-0ba1-456b-813b-69b74f8fb4c6',
+  extension: 'lj_duid=null&lj_android_id=8d908d6ae59594fa&lj_device_id_android=8d908d6ae59594fa&mac_id=50:8F:4C:5B:E5:0A',
+  // 'User-Agent': 'HomeLink' + LIAN_APP_VER + ';xiaomi Redmi+Note+4X; Android 7.0',
+  'Lianjia-Channel': 'Android_Xiaomi',
+  'Lianjia-Device-Id': '8d908d6ae59594fa',
+  'Lianjia-Version': LIAN_APP_VER
+};
 
 /**
  * 链家签名算法
@@ -193,6 +208,78 @@ const wiwj = {
         }
       });
     });
+  },
+  /**
+     * 二手房列表查询
+     * @param cityId 我爱我家城市代码
+     * @param page 分页参数{size: 单页数量, num: 页码}
+     * @param filter 筛选参数, 以下为所有支持的参数,注意凡是位置相关的参数彼此互斥只允许存在一个 另外关键词和位置信息彼此冲突
+     * {
+     * location: 经纬度（经度,纬度 例如120.140439,30.282982 配合附近距离计算）
+     * nearby:  附近距离,单位公里，参数范围（不传，1，2，5, 单选）
+     * districtid: 行政区编号
+     * sqid: 商圈编号，如果有商圈编号就不要传districtid了
+     * lineid: 地铁线路编号
+     * stationid: 地铁站点编号，如果有站点id就不要传lineid了
+     * price: 价格区间,单位万元(最低价,最高价 例如10,100)
+     * broom:卧室数量(1,2,3,4,5,9  9表示5室以上, 可以多选逗号分隔, 考虑链家只有四室以上, 将5室和5室以上合并为四室以上),
+     * buildarea: 建筑面积 单位米(最低,最高 例如10,180),
+     * heading: 朝向(10：南北，3：南，1：东，2：西，4：北, 可以多选逗号分隔),
+     * buildage: 楼龄(1：5年内，2：10年内，3：15年内，4：20年内，5：20年以上，单选),
+     * floortype: 楼层（-1：底层,1：低楼层,2：中楼层,3：高楼层,999：顶层, 可以多选逗号分隔, 考虑链家只有3个类型把底层和低楼层合并为低层, 高楼层和顶层合并为高层）,
+     * decoratetype:装修（1：毛坯，2：普通，3：精装，可以多选逗号分隔）
+     * housetype：用途（1：普通住宅，2：别墅，3：其它 可以多选逗号分隔）
+     * keywords: 搜索关键词 注意关键词和位置信息彼此冲突
+     * tag: 标签 可以多选 逗号分隔 （参见标签信息文档）
+     * psort: 排序（空字符串：默认，1：总低价，2：总高价, 3:单低价, 4: 单高价）
+     * }
+     * @returns {PromiseLike<T | never> | Promise<T | never>}
+     */
+  ershouSearch: function ({ city, page = DEFAULT_PAGE, filter = {}}) {
+    let params = Object.assign({ page: page.num, pcount: page.size }, filter)
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: wiwj_address + "/appapi/exchange/" + city + "/v1/prolist",
+        method: "POST",
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        data: buildParams(params, true),
+        success: res => {
+          if (res.data) {
+            resolve(res.data);
+          } else {
+            reject(false);
+          }
+        },
+        fail: res => {
+          reject(false);
+        }
+      });
+    })
+  },
+  // searchType: 1（行政区）， 2（商圈）， 3（小区）， 4（线路），5（站点）
+  ershouTip: function ({ city, keywords }) {
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: wiwj_address + "/appapi/search/" + city + "/v1/searchhome",
+        method: "POST",
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        data: { keywords: keywords, searchtype: 1 },
+        success: res => {
+          if (res.data) {
+            resolve(res.data);
+          } else {
+            reject(false);
+          }
+        },
+        fail: res => {
+          reject(false);
+        }
+      });
+    });
   }
 };
 
@@ -289,6 +376,87 @@ const lianjia = {
         },
         fail: res => {
           reject(false);
+        }
+      });
+    });
+  },
+  /**
+     * 二手房查询列表
+     * @param cityId 链家城市代码
+     * @param page 分页参数{size: 单页数量, num: 页码}
+     * @param filter 筛选参数, 以下为所有支持的参数
+     * {
+     * min_longitude: 最小经度（仅用于计算附近距离,需要根据距离和当前经纬度自己计算）
+     * min_latitude：最小纬度（仅用于计算附近距离,需要根据距离和当前经纬度自己计算）
+     * max_longitude：最大经度（仅用于计算附近距离,需要根据距离和当前经纬度自己计算）
+     * max_latitude：最大纬度（仅用于计算附近距离,需要根据距离和当前经纬度自己计算）
+     * condition: 合并条件 例如格式：xiacheng/bp0ep100ba100ea200l1f1gh1lc1de1rs,
+     * request_ts: 下拉刷新时间
+     * order：排序（不传：默认, co21: 总低价, co22: 总高价，co32:最新发布,co41:单低价，co12:面积大）
+     * }
+     * 以下为合并条件参数说明:
+     * d为行政区 如西湖区为d330106 取值参考数据库中district_id字段
+     * b为商圈 如b611100178 取值参考数据库中bizcircle_id字段
+     * li为地铁线路 如li1820035120370916 取值参考数据库中subway_line_id字段
+     * s为地铁站点  如li1820035120370916s100021572 取值参考数据库中subway_station_id字段
+     * 注意地点相关的字段(包括附近距离和关键词)同时只能存在一个选项
+     * bp为最低价  如bp10（单位万元）
+     * ep为最高价 如ep200（单位万元）
+     * l为卧室数量(1，2，3，4，5: 四室以上, 可多选如l1l2l3l4l5 )
+     * ba为最小面积
+     * ea为最大面积
+     * f为朝向(1:朝东,2:朝南,3:朝西,4:朝北,5:南北  可多选 如f5f2f1f4)
+     * y为楼龄（1：五年内，2：10年内，3：15年内，4：20年内，5：20年以上, 本身支持复选,考虑到我爱我家是单选,也做成单选）
+     * lc为楼层（1：低楼层，2：中楼层，3：高楼层  可多选 如lc1lc2）
+     * de为装修（1：精装，2：普通，3：毛坯  可多选 如de1de2）
+     * sf为用途 （1: 普通住宅，2：商业类，3：别墅，4：四合院，6：车位，5：其它 可多选如 sf1sf2）；
+     * rs为关键词 （注意关键词和地点相关字段彼此冲突只能选一个）
+     * 亮点信息查看 标签信息
+     * @returns {*}
+     */
+  ershouSearch: function ({ city, page = DEFAULT_PAGE, filter = {}}) {
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: api_address + "/house/search/ershou",
+        method: "POST",
+        header: {},
+        data: {
+          lj: { city, page, filter }
+        },
+        success: res => {
+          if (res.data.ftx) {
+            resolve(xml2json(res.data.ftx));
+          } else {
+            reject(false);
+          }
+        },
+        fail: res => {
+          reject(false);
+          throwErrorResponse();
+        }
+      });
+    });
+  },
+  // type: bizcircle（商圈）， station（地铁站）， resblock（小区）， district（行政区）
+  ershouTip: function ({ city, keywords }) {
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: api_address + "/house/tip/ershou",
+        method: "POST",
+        header: {},
+        data: {
+          lj: { city, keywords }
+        },
+        success: res => {
+          if (res.data.ftx) {
+            resolve(xml2json(res.data.ftx));
+          } else {
+            reject(false);
+          }
+        },
+        fail: res => {
+          reject(false);
+          throwErrorResponse();
         }
       });
     });
