@@ -13,7 +13,6 @@ import { searchLongDataStorage } from "../../utils/searchLongDataStorage";
 import getIndexHouseData from "../../utils/indexHouseData";
 import getIndexLongHouseData from "../../utils/indexLongHouseData";
 import { changeHistoryStorage } from "../../utils/longSetSearchData";
-import { wiwj, lianjia } from "../../api/longrent.js"
 Page({
   /**
    * 页面的初始数据
@@ -94,7 +93,10 @@ Page({
     },
     searchLongList: [],
     needOnShow: false,
-    tabIndex: 1 //1短租，2长租，2二手房
+    tabIndex: 3, //1短租，2长租，2二手房
+
+    numberMix:0,//预算最小值
+    numberMax:500,//预算最大值
   },
 
   service: new searchService(),
@@ -223,6 +225,12 @@ Page({
       this.setData({ cityText: "定位中..." });
       this.getUserLocation();
     } else if (this.data.tabIndex === 2) {
+      if (this.data.cityText2 !== "手动定位") {
+        return;
+      }
+      this.setData({ cityText2: "定位中..." });
+      this.getUserLocationLong();
+    } else if (this.data.tabIndex === 3) {
       if (this.data.cityText2 !== "手动定位") {
         return;
       }
@@ -415,10 +423,10 @@ Page({
     });
   },
   notOnLine() {
-    wx.showToast({
-      title: "暂未开启，敬请期待",
-      icon: "none"
-    });
+    // wx.showToast({
+    //   title: "暂未开启，敬请期待",
+    //   icon: "none"
+    // });
   },
 
   getUnReadCouponList() {
@@ -487,6 +495,10 @@ Page({
           mask: true
         });
       }
+    }else if(this.data.tabIndex === 3){
+      wx.showToast({
+        title: '二手房',
+      })
     }
   },
   getHouseTypeAndEqu() {
@@ -859,6 +871,9 @@ Page({
     if (tabIndex === 2) {
       this.getHotCityLong();
     }
+    if(tabIndex === 3){
+      this.getHotCityLong();
+    }
   },
   //长租切换房源
   changeLongTab(event) {
@@ -987,10 +1002,6 @@ Page({
     }
   },
   onLoad(params) {
-    wiwj.ershouSearch({ "city": 2, "page": { "size": 15, "num": 1 }, "filter": { "price": "100,200", "broom": "2", "buildarea": "0,50", "heading": "10", "keywords": "西湖" } }).then(res=>console.log(res))
-    wiwj.ershouTip({ "city": 2, "keywords": "西溪雅苑" }).then(res => console.log(res))
-    lianjia.ershouSearch({ "city": 330100, "page": { "size": 15, "num": 1 }, "filter": { "condition": "ep500bp400" } }).then(res => console.log(res))
-    lianjia.ershouTip({ "city": 330100, "keywords": "西溪" }).then(res => console.log(res))
     const tab = +params.tab;
     this.init();
     this.searchDataSubscription = SearchDataSubject.subscribe(() => {

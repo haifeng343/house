@@ -17,12 +17,16 @@ Page({
     let token = wx.getStorageSync('token');
     if (token) {
       if (app.switchRent == 1 || !app.switchRent) { 
-        this.setData({ active: 1, data:[]})
+        this.setData({active:1,data:[]})
         this.getMonitorData()
       }
       if (app.switchRent == 2) {
-        this.setData({ active: 2, data: [] })
+        this.setData({ active: 2,data: [] })
         this.getLongMonitorData()
+      }
+      if (app.switchRent == 3) {
+        this.setData({ active: 3, data: [] })
+        // this.getLongMonitorData()
       }
       this.getUserInfo()
     } else {
@@ -33,33 +37,34 @@ Page({
   },
   monitorChange(e){
     var index = e.currentTarget.dataset.index;
+    console.log(index)
+    this.setData({
+      active:index
+    })
     let token = wx.getStorageSync('token');
-    if(this.data.active == 1&&this.data.active!=index){
-      app.switchRent = 2
-      this.setData({
-        show:'',
-        active: 2
-      })
-      if (token){
-        this.getLongMonitorData()
-      }else{
+    if(token){
+      if (this.data.active == 1) {
+        // app.switchRent = 2
         this.setData({
-          show: 0
+          show: 0,
+          active: 1
         })
-      }
-      
-    }
-    if (this.data.active == 2 && this.data.active != index) {
-      app.switchRent = 1
-      this.setData({
-        show: '',
-        active: 1
-      })
-      if (token) {
         this.getMonitorData()
-      } else {
+      }
+      if (this.data.active == 2) {
+        // app.switchRent = 1
         this.setData({
-          show: 0
+          show: 0,
+          active: 2
+        })
+        this.getLongMonitorData()
+      }
+
+      if (this.data.active == 3) {
+        // app.switchRent = 1
+        this.setData({
+          show: 0,
+          active: 3
         })
       }
     }

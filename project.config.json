@@ -129,6 +129,14 @@
 					"id": -1,
 					"name": "卡券",
 					"pathName": "pages/coupon/coupon",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "二手房房源列表",
+					"pathName": "pages/secondHandHouse/secondHandHouse",
+					"query": "",
 					"scene": null
 				}
 			]

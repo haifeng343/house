@@ -1,164 +1,222 @@
 <!-- pages/search/search.wxml -->
 <wxs module="checkHouseType">
-  var checkHouseType = function (arr, item) {
+  var checkHouseType = function(arr, item) {
     return arr.indexOf(item) >= 0
   };
 
   module.exports.checkHouseType = checkHouseType;
 </wxs>
 <view class="section">
-    <swiper class='banner' indicator-dots="false" autoplay="false" circular='true' indicator-dots='true' interval='4000' duration='1000'>
-        <block wx:for="{{imgUrls}}" wx:for-item="item" wx:key='id'>
-            <swiper-item>
-                <image src='{{item.url}}' class='banner-image' />
-            </swiper-item>
-        </block>
-    </swiper>
-    <view class='content'>
-        <view class='search-box'>
-            <view class='nav'>
-                <view class="nav_item short {{tabIndex==1?'active':''}}" bindtap='changeTab' data-index='1' style="border-top-left-radius:{{tabIndex==1?'':'12rpx'}}">
-                    <text class='nav_item_text'>短租</text>
-                </view>
-                <view class="nav_item long {{tabIndex==2?'active':''}}" bindtap='changeTab' data-index='2'>
-                    <text class='nav_item_text'>长租</text>
-                </view>
-                <view class='nav_item' bindtap='notOnLine' style='border-top-right-radius:12rpx;'>
-                    <text class='nav_item_text'>二手房</text>
-                </view>
-            </view>
-            <view class="search-content">
-                <scroll-view scroll-y class="search-content-main {{tabIndex!=1?'hidden':''}}" bindtouchstart="bindtouchstartsort" bindtouchend="bindtouchendsort">
-                    <view class='search_item'>
-                        <view class='position' bindtap='goCitySelect'>{{searchData.city}}</view>
-                        <view class='positionByHand' bindtap='handleRepos'>{{cityText}}</view>
-                    </view>
-                    <view class='search_item'>
-                        <view class='inDate' bindtap='goDays'>
-                            <view class='text'>入住</view>
-                            <view class='date'>{{beginDate}}</view>
-                        </view>
-                        <view class='total'>共{{searchData.dayCount}}晚</view>
-                        <view class='outDate' bindtap='goDays'>
-                            <view class='text'>离开</view>
-                            <view class='date'>{{endDate}}</view>
-                        </view>
-                        <view class='split'></view>
-                        <view class='number' bindtap='goPeopleNumber'>
-                            <view class='text'>人数</view>
-                            <view class='num' wx:if="{{searchData.gueseNumber == -1}}">不限</view>
-                            <view class='num' wx:elif="{{searchData.gueseNumber == 10}}">
-                                10人及以上
-                            </view>
-                            <view class='num' wx:else>{{searchData.gueseNumber}}人</view>
-                        </view>
-                    </view>
-                    <view class='search_item'>
-                        <view class="scenic {{searchData.area === ''?'':'active'}}" bindtap='goPositionSelect'>
-                            <text class="scenic-text">{{searchData.area === ''?'试试搜索：'+hotarea:searchData.area}}</text>
-                            <text class="icon-font {{searchData.area === '' ? 'uniE90C' : 'uniE901'}}" catchtap="handleClearScenic" />
-                        </view>
-                    </view>
-                    <view class='search_item' style='height:auto;padding-top:20rpx;'>
-                        <view class='title icon_1'>
-                            预算：{{priceText=="不限"?priceText:(priceText+'/晚')}}
-                        </view>
-                        <view class='sort' bindtap='changeSort'>
-                            <text class='icon-font uniE930 {{searchData.sort == 2?"active":""}}'></text>
-                            低价优先
-                        </view>
-                        <view style="margin-top: 12rpx;">
-                            <priceblock wx:if="{{showPriceBlock}}" bind:changePrice='changePrice' priceType='{{priceType}}' min="{{searchData.minPrice}}" max="{{searchData.maxPrice}}" />
-                        </view>
-                    </view>
-                    <view wx:if="{{spread}}">
-                        <view class='search_item noBorder'>
-                            <view class='title icon_2'>户型</view>
-                            <view class="houseType  {{checkHouseType.checkHouseType(searchData.houseType,index)?'active':''}}" wx:for-index="index" bindtap='selectHouseType' data-index='{{index}}' wx:key='{{item}}' wx:for='{{houseType}}'>
-                                {{item}}
-                            </view>
-                        </view>
-                        <view class='search_item noBorder'>
-                            <view class='title icon_3'>出租类型</view>
-                            <view class='leaseType {{searchData.leaseType==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectLeaseType' data-index='{{index}}' wx:for='{{leaseType}}'>
-                                {{item}}出租
-                            </view>
-                        </view>
-                        <view class='search_item noBorder'>
-                            <view class='title icon_4'>配套设施</view>
-                            <view wx:for='{{equipments}}' bindtap='selectEquipments' data-index='{{key}}' class='equipments {{checkHouseType.checkHouseType(searchData.equipment,key)?"active":""}}' wx:for-index='key' wx:key='{{item}}'>
-                                <view class="equipments-img icon-font uniE950" wx:if="{{key==1}}"></view>
-                                <view class="equipments-img icon-font uniE94F" wx:if="{{key==2}}"></view>
-                                <view class="equipments-img icon-font uniE94E" wx:if="{{key==3}}"></view>
-                                <view class="equipments-img icon-font uniE94D" wx:if="{{key==4}}"></view>
-                                <view class="equipments-img icon-font uniE952" wx:if="{{key==5}}"></view>
-                                <view class="equipments-img icon-font uniE94C" wx:if="{{key==6}}"></view>
-                                <view class="equipments-img icon-font uniE94B" wx:if="{{key==7}}"></view>
-                                {{item}}
-                            </view>
-                        </view>
-                    </view>
-                    <view class='search_item--spread' bindtap='slideOption'>
-                        {{spread?"收起":"展开更多"}}
-                        <view class='icon-font uniE92{{spread?"5":"6"}}'></view>
-                    </view>
-                </scroll-view>
-                <scroll-view scroll-y class="search-content-main {{tabIndex!=2?'hidden':''}}" bindtouchstart="bindtouchstartsort" bindtouchend="bindtouchendsort">
-                    <view class='search_item'>
-                        <view class='position' bindtap='goCitySelectLong'>
-                            {{searchLongData.city}}
-                        </view>
-                        <view class='positionByHand' bindtap='handleRepos'>{{cityText2}}</view>
-                    </view>
-                    <view class='search_item'>
-                        <view class="scenic {{searchLongData.area === ''?'':'active'}}" bindtap='goPositionSelect'>
-                            <text class="scenic-text">{{searchLongData.area === ''?'请输入小区/商圈/地铁站':searchLongData.area}}</text>
-                            <text class="icon-font {{searchLongData.area === '' ? 'uniE90C' : 'uniE901'}}" catchtap="handleClearScenic" />
-                        </view>
-                    </view>
-                    <view class='search_item' style="height:auto;border: 0;">
-                        <view class="select-button {{searchLongData.chooseType==1?'active':''}}" bindtap="changeLongTab" data-index="1">
-                            <view class="select-button-title">品牌中介</view>
-                            <view class="select-button-info">房源可靠性比较高</view>
-                        </view>
-                        <view class="select-button {{searchLongData.chooseType==2?'active':''}}" bindtap="changeLongTab" data-index="2">
-                            <view class="select-button-title">个人房源</view>
-                            <view class="select-button-info">无中介费, 租金比较低</view>
-                        </view>
-                    </view>
-                    <view class='search_item' style='height:auto;padding-top:20rpx;'>
-                        <view class='title icon_1'>预算</view>
-                        <view style="margin-top: 12rpx;">
-                            <Range wx:if="{{showLongPriceBlock}}" min="{{searchLongData.minPrice}}" max="{{searchLongData.maxPrice}}" bind:onChange="handlePriceChange" />
-                        </view>
-                    </view>
-                    <view wx:if="{{spread}}">
-                        <view class='search_item noBorder'>
-                            <view class='title icon_2'>房源类型</view>
-                            <view class='houseType  {{searchLongData.longRentTypes==index?"active":""}}' wx:for-index="index" bindtap='selectRentTypes' data-index='{{index}}' wx:key='{{item}}' wx:for="{{allLongData.longRentTypes[searchLongData.chooseType-1]}}">
-                                {{item}}
-                            </view>
-                        </view>
-                        <view class='search_item noBorder'>
-                            <view class='title icon_3'>房源偏好</view>
-                            <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypes' data-index='{{index}}' wx:for='{{allLongData.longSortTypes[searchLongData.chooseType-1]}}'>
-                                {{item}}
-                            </view>
-                        </view>
-                    </view>
-                    <view class='search_item--spread' bindtap='slideOption'>
-                        {{spread?"收起":"展开更多"}}
-                        <view class='icon-font uniE92{{spread?"5":"6"}}'></view>
-                    </view>
-                </scroll-view>
-            </view>
-            <view class='search-btn-back'>
-                <view class='search-btn' bindtap='searchSubmit'>查询</view>
-            </view>
+  <swiper class='banner' indicator-dots="false" autoplay="false" circular='true' indicator-dots='true' interval='4000' duration='1000'>
+    <block wx:for="{{imgUrls}}" wx:for-item="item" wx:key='id'>
+      <swiper-item>
+        <image src='{{item.url}}' class='banner-image' />
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class='content'>
+    <view class='search-box'>
+      <view class='nav'>
+        <view class="nav_item short {{tabIndex==1?'active':''}}" bindtap='changeTab' data-index='1' style="border-top-left-radius:{{tabIndex==1?'':'12rpx'}}">
+          <text class='nav_item_text'>短租</text>
         </view>
+        <view class="nav_item long {{tabIndex==2?'active':''}}" bindtap='changeTab' data-index='2'>
+          <text class='nav_item_text'>长租</text>
+        </view>
+        <view class="nav_item long {{tabIndex==3?'active':''}}" bindtap='changeTab' data-index='3'>
+          <text class='nav_item_text'>二手房</text>
+        </view>
+      </view>
+      <view class="search-content">
+        <scroll-view scroll-y class="search-content-main {{tabIndex!=1?'hidden':''}}" bindtouchstart="bindtouchstartsort" bindtouchend="bindtouchendsort">
+          <view class='search_item'>
+            <view class='position' bindtap='goCitySelect'>{{searchData.city}}</view>
+            <view class='positionByHand' bindtap='handleRepos'>{{cityText}}</view>
+          </view>
+          <view class='search_item'>
+            <view class='inDate' bindtap='goDays'>
+              <view class='text'>入住</view>
+              <view class='date'>{{beginDate}}</view>
+            </view>
+            <view class='total'>共{{searchData.dayCount}}晚</view>
+            <view class='outDate' bindtap='goDays'>
+              <view class='text'>离开</view>
+              <view class='date'>{{endDate}}</view>
+            </view>
+            <view class='split'></view>
+            <view class='number' bindtap='goPeopleNumber'>
+              <view class='text'>人数</view>
+              <view class='num' wx:if="{{searchData.gueseNumber == -1}}">不限</view>
+              <view class='num' wx:elif="{{searchData.gueseNumber == 10}}">
+                10人及以上
+              </view>
+              <view class='num' wx:else>{{searchData.gueseNumber}}人</view>
+            </view>
+          </view>
+          <view class='search_item'>
+            <view class="scenic {{searchData.area === ''?'':'active'}}" bindtap='goPositionSelect'>
+              <text class="scenic-text">{{searchData.area === ''?'试试搜索：'+hotarea:searchData.area}}</text>
+              <text class="icon-font {{searchData.area === '' ? 'uniE90C' : 'uniE901'}}" catchtap="handleClearScenic" />
+            </view>
+          </view>
+          <view class='search_item' style='height:auto;padding-top:20rpx;'>
+            <view class='title icon_1'>
+              预算：{{priceText=="不限"?priceText:(priceText+'/晚')}}
+            </view>
+            <view class='sort' bindtap='changeSort'>
+              <text class='icon-font uniE930 {{searchData.sort == 2?"active":""}}'></text> 低价优先
+            </view>
+            <view style="margin-top: 12rpx;">
+              <priceblock wx:if="{{showPriceBlock}}" bind:changePrice='changePrice' priceType='{{priceType}}' min="{{searchData.minPrice}}" max="{{searchData.maxPrice}}" />
+            </view>
+          </view>
+          <view wx:if="{{spread}}">
+            <view class='search_item noBorder'>
+              <view class='title icon_2'>户型</view>
+              <view class="houseType  {{checkHouseType.checkHouseType(searchData.houseType,index)?'active':''}}" wx:for-index="index" bindtap='selectHouseType' data-index='{{index}}' wx:key='{{item}}' wx:for='{{houseType}}'>
+                {{item}}
+              </view>
+            </view>
+            <view class='search_item noBorder'>
+              <view class='title icon_3'>出租类型</view>
+              <view class='leaseType {{searchData.leaseType==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectLeaseType' data-index='{{index}}' wx:for='{{leaseType}}'>
+                {{item}}出租
+              </view>
+            </view>
+            <view class='search_item noBorder'>
+              <view class='title icon_4'>配套设施</view>
+              <view wx:for='{{equipments}}' bindtap='selectEquipments' data-index='{{key}}' class='equipments {{checkHouseType.checkHouseType(searchData.equipment,key)?"active":""}}' wx:for-index='key' wx:key='{{item}}'>
+                <view class="equipments-img icon-font uniE950" wx:if="{{key==1}}"></view>
+                <view class="equipments-img icon-font uniE94F" wx:if="{{key==2}}"></view>
+                <view class="equipments-img icon-font uniE94E" wx:if="{{key==3}}"></view>
+                <view class="equipments-img icon-font uniE94D" wx:if="{{key==4}}"></view>
+                <view class="equipments-img icon-font uniE952" wx:if="{{key==5}}"></view>
+                <view class="equipments-img icon-font uniE94C" wx:if="{{key==6}}"></view>
+                <view class="equipments-img icon-font uniE94B" wx:if="{{key==7}}"></view>
+                {{item}}
+              </view>
+            </view>
+          </view>
+          <view class='search_item--spread' bindtap='slideOption'>
+            {{spread?"收起":"展开更多"}}
+            <view class='icon-font uniE92{{spread?"5":"6"}}'></view>
+          </view>
+        </scroll-view>
+        <scroll-view scroll-y class="search-content-main {{tabIndex!=2?'hidden':''}}" bindtouchstart="bindtouchstartsort" bindtouchend="bindtouchendsort">
+          <view class='search_item'>
+            <view class='position' bindtap='goCitySelectLong'>
+              {{searchLongData.city}}
+            </view>
+            <view class='positionByHand' bindtap='handleRepos'>{{cityText2}}</view>
+          </view>
+          <view class='search_item'>
+            <view class="scenic {{searchLongData.area === ''?'':'active'}}" bindtap='goPositionSelect'>
+              <text class="scenic-text">{{searchLongData.area === ''?'请输入小区/商圈/地铁站':searchLongData.area}}</text>
+              <text class="icon-font {{searchLongData.area === '' ? 'uniE90C' : 'uniE901'}}" catchtap="handleClearScenic" />
+            </view>
+          </view>
+          <view class='search_item' style="height:auto;border: 0;">
+            <view class="select-button {{searchLongData.chooseType==1?'active':''}}" bindtap="changeLongTab" data-index="1">
+              <view class="select-button-title">品牌中介</view>
+              <view class="select-button-info">房源可靠性比较高</view>
+            </view>
+            <view class="select-button {{searchLongData.chooseType==2?'active':''}}" bindtap="changeLongTab" data-index="2">
+              <view class="select-button-title">个人房源</view>
+              <view class="select-button-info">无中介费, 租金比较低</view>
+            </view>
+          </view>
+          <view class='search_item' style='height:auto;padding-top:20rpx;'>
+            <view class='title icon_1'>预算</view>
+            <view style="margin-top: 12rpx;">
+              <Range wx:if="{{showLongPriceBlock}}" min="{{searchLongData.minPrice}}" max="{{searchLongData.maxPrice}}" bind:onChange="handlePriceChange" />
+            </view>
+          </view>
+          <view wx:if="{{spread}}">
+            <view class='search_item noBorder'>
+              <view class='title icon_2'>房源类型</view>
+              <view class='houseType  {{searchLongData.longRentTypes==index?"active":""}}' wx:for-index="index" bindtap='selectRentTypes' data-index='{{index}}' wx:key='{{item}}' wx:for="{{allLongData.longRentTypes[searchLongData.chooseType-1]}}">
+                {{item}}
+              </view>
+            </view>
+            <view class='search_item noBorder'>
+              <view class='title icon_3'>房源偏好</view>
+              <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypes' data-index='{{index}}' wx:for='{{allLongData.longSortTypes[searchLongData.chooseType-1]}}'>
+                {{item}}
+              </view>
+            </view>
+          </view>
+          <view class='search_item--spread' bindtap='slideOption'>
+            {{spread?"收起":"展开更多"}}
+            <view class='icon-font uniE92{{spread?"5":"6"}}'></view>
+          </view>
+        </scroll-view>
+        <scroll-view scroll-y class="search-content-main {{tabIndex!=3?'hidden':''}}" bindtouchstart="bindtouchstartsort" bindtouchend="bindtouchendsort">
+          <view class='search_item'>
+            <view class='position' bindtap='goCitySelectLong'>
+              {{searchLongData.city}}
+            </view>
+            <view class='positionByHand' bindtap='handleRepos'>{{cityText2}}</view>
+          </view>
+          <view class='search_item'>
+            <view class="scenic {{searchLongData.area === ''?'':'active'}}" bindtap='goPositionSelect'>
+              <text class="scenic-text">{{searchLongData.area === ''?'请输入小区/商圈/地铁站':searchLongData.area}}</text>
+              <text class="icon-font {{searchLongData.area === '' ? 'uniE90C' : 'uniE901'}}" catchtap="handleClearScenic" />
+            </view>
+          </view>
+          <view>
+            <view class='search_item' style='height:auto;padding:20rpx 0;border-bottom:none;'>
+              <view>
+                <view class='title icon_1'>预算(万元):</view>
+              </view>
+              <view class='sort' bindtap='changeSort1'>
+                <text class='icon-font uniE930 {{searchData.sort == 2?"active":""}}'></text> 普通住宅
+              </view>
+            </view>
+          </view>
+          <view class="search-item">
+            <view class="search_flex">
+              <input value="{{numberMix}}"></input>
+              <text>至</text>
+              <input value="{{numberMax}}"></input>
+            </view>
+          </view>
+          <view>
+            <view class='search_item' style='height:auto;padding-top:20rpx;'>
+              <view>
+                <view class='title icon_1'>面积(平米):</view>
+                <view style="margin-top: 12rpx;">
+                  <Range wx:if="{{showLongPriceBlock}}" min="{{searchLongData.minPrice}}" max="{{searchLongData.maxPrice}}" bind:onChange="handlePriceChange" />
+                </view>
+              </view>
+            </view>
+          </view>
+          <view wx:if="{{spread}}">
+            <view class='search_item noBorder'>
+              <view class='title icon_2'>房源类型</view>
+              <view class='houseType  {{searchLongData.longRentTypes==index?"active":""}}' wx:for-index="index" bindtap='selectRentTypes' data-index='{{index}}' wx:key='{{item}}' wx:for="{{allLongData.longRentTypes[searchLongData.chooseType-1]}}">
+                {{item}}
+              </view>
+            </view>
+            <view class='search_item noBorder'>
+              <view class='title icon_3'>房源偏好</view>
+              <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypes' data-index='{{index}}' wx:for='{{allLongData.longSortTypes[searchLongData.chooseType-1]}}'>
+                {{item}}
+              </view>
+            </view>
+          </view>
+          <view class='search_item--spread' bindtap='slideOption'>
+            {{spread?"收起":"展开更多"}}
+            <view class='icon-font uniE92{{spread?"5":"6"}}'></view>
+          </view>
+        </scroll-view>
+      </view>
+      <view class='search-btn-back'>
+        <view class='search-btn' bindtap='searchSubmit'>查询</view>
+      </view>
     </view>
-    <view wx:if="{{showAuthDialog}}">
-        <authDialog bind:onConfirm="handleGetUserInfo" bind:onCancel="handleCloseAuthDialog" />
-    </view>
-    <CouponDialog wx:if="{{showCouponDialog}}" couponList="{{couponList}}" title="被优惠券砸中啦" bind:onClose="handleCloseCouponDialog" />
+  </view>
+  <view wx:if="{{showAuthDialog}}">
+    <authDialog bind:onConfirm="handleGetUserInfo" bind:onCancel="handleCloseAuthDialog" />
+  </view>
+  <CouponDialog wx:if="{{showCouponDialog}}" couponList="{{couponList}}" title="被优惠券砸中啦" bind:onClose="handleCloseCouponDialog" />
 </view>

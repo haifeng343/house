@@ -144,3 +144,9 @@
   top: 60rpx;
   z-index: 9;
 }
+.top-item1-textTag{
+  font-size: 22rpx;
+  border: 1px solid #C0C7D0;
+  border-radius: 35rpx;
+  padding: 5rpx 20rpx;
+}

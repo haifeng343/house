@@ -28,7 +28,8 @@
     "pages/coupon/coupon",
     "pages/positionLongSelect/positionLongSelect",
     "pages/housingLongSearch/index",
-    "pages/monitorRule/index"
+    "pages/monitorRule/index",
+    "pages/secondHandHouse/secondHandHouse"
   ],
   "window": {
     "backgroundTextStyle": "light",

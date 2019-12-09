@@ -76,8 +76,12 @@ Page({
         () => {
           if (fundListType === 1) {
             this.getShortHistory();
-          } else {
+          } else if(fundListType === 2) {
             this.getLongHistory();
+          } else if (fundListType === 3) {
+            this.getLongHistory();
+          }else {
+            
           }
         }
       );
