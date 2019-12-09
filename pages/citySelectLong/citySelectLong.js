@@ -8,11 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    history: [],
     data: [],
-    hot: [],
-    searchList: [],
-    currentTabValue: 0,
     userCity: {
       name: '定位中...',
       item:{}
@@ -127,11 +123,8 @@ Page({
     });
     this.getUserLocation();
   },
-  onLoad: function() {
+  onLoad: function(options) {
+    console.log(options)
     this.getCityList();
-    let history = wx.getStorageSync('citySearchHistory') || [];
-    this.setData({
-      history: history.reverse()
-    });
   }
 });

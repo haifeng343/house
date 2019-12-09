@@ -199,7 +199,7 @@
 .search_item.noBorder {
   border: none;
   height: auto;
-  margin-bottom: 50rpx;
+  margin-bottom: 30rpx;
   justify-content: flex-start;
   padding-top: 20rpx;
 }
@@ -324,13 +324,14 @@
 }
 .search_item .houseType {
   flex: 0 0 auto;
-  width: 136rpx;
+  padding: 0 30rpx;
   height: 40rpx;
   border-radius: 40rpx;
   background: #f0f0f0;
   text-align: center;
   line-height: 40rpx;
   margin-right: 22rpx;
+  margin-bottom: 20rpx;
 }
 .search_item .houseType.active {
   background-color: #f1612a;

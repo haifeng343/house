@@ -185,21 +185,20 @@
                     <view wx:if="{{spread}}">
                         <view class='search_item noBorder'>
                             <view class='title icon_4'>户型</view>
-                            <view class='houseType  {{searchLongData.longRentTypes==index?"active":""}}' wx:for-index="index" bindtap='selectRentTypes' data-index='{{index}}' wx:key='{{item}}' wx:for="{{allLongData.longRentTypes[searchLongData.chooseType-1]}}">
+                            <view class='houseType  {{searchLongData.secondLayoutMap==index?"active":""}}' wx:for-index="index" bindtap='selectRentTypes' data-index='{{index}}' wx:key='{{item}}' wx:for="{{allSecondData.secondLayoutMap}}">
                                 {{item}}
                             </view>
                         </view>
                         <view class='search_item noBorder'>
                             <view class='title icon_3'>房源偏好</view>
-                            <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypes' data-index='{{index}}' wx:for='{{allLongData.longSortTypes[searchLongData.chooseType-1]}}'>
+                            <view class='leaseType {{searchLongData.secondSortTypeMap==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypes' data-index='{{index}}' wx:for='{{allSecondData.secondSortTypeMap}}'>
                                 {{item}}
                             </view>
                         </view>
                         <view class='search_item noBorder'>
                             <view class='title icon_2'>其他</view>
-                            <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypes' data-index='{{index}}' wx:for='{{allLongData.longSortTypes[searchLongData.chooseType-1]}}'>
-                                {{item}}
-                            </view>
+                            <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' bindtap='selectSortTypes'>满二</view>
+                            <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' bindtap='selectSortTypes'>精装修</view>
                         </view>
                     </view>
                     <view class='search_item--spread' bindtap='slideOption'>
