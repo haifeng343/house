@@ -424,15 +424,14 @@ const lianjia = {
           lj: { city, page, filter }
         },
         success: res => {
-          if (res.data.ftx) {
-            resolve(xml2json(res.data.ftx));
+          if (res.data.lj) {
+            resolve(res.data.lj);
           } else {
             reject(false);
           }
         },
         fail: res => {
           reject(false);
-          throwErrorResponse();
         }
       });
     });
@@ -448,8 +447,8 @@ const lianjia = {
           lj: { city, keywords }
         },
         success: res => {
-          if (res.data.ftx) {
-            resolve(xml2json(res.data.ftx));
+          if (res.data.lj) {
+            resolve(res.data.lj);
           } else {
             reject(false);
           }
