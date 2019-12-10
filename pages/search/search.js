@@ -13,6 +13,7 @@ import { searchLongDataStorage } from "../../utils/searchLongDataStorage";
 import { searchSecondDataStorage } from "../../utils/searchSecondDataStorage";
 import getIndexHouseData from "../../utils/indexHouseData";
 import getIndexLongHouseData from "../../utils/indexLongHouseData";
+import getIndexSecondHouseData from "../../utils/indexSecondHouseData";
 import { changeHistoryStorage } from "../../utils/longSetSearchData";
 Page({
   /**
@@ -88,6 +89,26 @@ Page({
       minPrice: 0, //最低价
       maxPrice: 5500 //最高价
     },
+    secondSearchData: {
+      city: "", //城市名
+      cityId: {}, //城市ID
+      cityJson: "",
+      area: "", // 地点
+      areaId: {}, //地点标识
+      areaType: 0, //地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
+      areaJson: "", //json
+      minPrice: "", //最低价
+      maxPrice: "", //最高价 不限"9999"
+      placeholderMinPrice: "100", //城市最低价格
+      placeholderMaxPrice: "200", //城市最高价格
+      minArea: 0, //最低面积
+      maxArea: 90, //最高面积 上限150
+      secondHouseDecorationMap: [], //装修  1: 毛坯房 2: 普通装修 3: 精装修
+      secondHouseTagMap: [], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
+      secondHouseUseMap: [], //用途 1: 普通住宅 2: 别墅 3: 其他
+      secondLayoutMap: [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 12: 四室以上
+      secondSortTypeMap: 0, //房源偏好 1: 低总价优先 2: 低单价优先
+    },
     allLongData: {
       longRentTypes: [],
       longSortTypes: []
@@ -140,6 +161,12 @@ Page({
           "../positionSelect/positionSelect?city=" + this.data.searchData.city
       });
     } else if (this.data.tabIndex === 2) {
+      wx.navigateTo({
+        url:
+          "../positionLongSelect/positionLongSelect?city=" +
+          this.data.searchLongData.city
+      });
+    } else if (this.data.tabIndex === 3) {
       wx.navigateTo({
         url:
           "../positionLongSelect/positionLongSelect?city=" +
@@ -233,7 +260,7 @@ Page({
       }
       this.setData({ cityText: "定位中..." });
       this.getUserLocation();
-    } else if (this.data.tabIndex === 2) {
+    } else {
       if (this.data.cityText2 !== "手动定位") {
         return;
       }
@@ -336,60 +363,19 @@ Page({
   calcCityByLocationLong(location) {
     if (location) {
       getLocationInfo(location).then(resp => {
-        const city = resp.result.address_component.city;
+        const city = resp.result.address_component.city
         if (city) {
-          for (const pl of this.data.searchLongList) {
-            const cityInfo = city.indexOf(pl.name);
-            if (cityInfo > -1) {
-              let cityItem = pl;
-              const app = getApp();
-              let searchLongData = this.data.searchLongData;
-              let name = cityItem.name;
-              let cityJson = JSON.parse(cityItem.json);
-              let cityId = {};
-              searchLongData.city = cityItem.name;
-              app.globalData.searchLongData.city = cityItem.name;
-              searchLongData.cityJson = cityItem.json;
-              app.globalData.searchLongData.cityJson = cityItem.json;
-              for (const key in cityJson) {
-                if (key === "wiwj") {
-                  cityId[key] = cityJson[key].id;
-                } else if (key === "tc") {
-                  cityId[key] = cityJson[key].dirname;
-                } else if (key === "lj") {
-                  cityId[key] = cityJson[key].city_id;
-                } else if (key === "ftx") {
-                  cityId[key] = cityJson[key];
-                }
-              }
-              searchLongData.cityId = cityId;
-              searchLongData.area = "";
-              searchLongData.areaId = {};
-              searchLongData.areaType = 0;
-              searchLongData.areaJson = "";
-              app.globalData.searchLongData.cityId = cityId;
-              app.globalData.searchLongData.area = "";
-              app.globalData.searchLongData.areaId = {};
-              app.globalData.searchLongData.areaType = 0;
-              app.globalData.searchLongData.areaJson = "";
-
-              //搜索城市历史(长租)
-              let searchLongCityHistory = {}
-              searchLongCityHistory.city = app.globalData.searchLongData.city
-              searchLongCityHistory.cityId = app.globalData.searchLongData.cityId
-              searchLongCityHistory.cityJson = app.globalData.searchLongData.cityJson
-              wx.setStorageSync('searchLongCityHistory', searchLongCityHistory)
-
+          if (this.data.searchLongList.length) {
+            this.locationSetData(city, this.data.searchLongList)
+          } else {
+            this.service.getLongCityList().then(resp => {
+              this.locationSetData(city, resp.data)
+            }).catch(msg=> {
               this.setData({
-                searchLongData,
-                cityText2: "手动定位"
+                cityText2: "定位失败"
               });
-              return;
-            }
+            });
           }
-          this.setData({
-            cityText2: "定位城市暂无服务"
-          });
         } else {
           this.setData({
             cityText2: "定位失败"
@@ -401,6 +387,65 @@ Page({
         cityText2: "手动定位"
       });
     }
+  },
+  //定位数据处理
+  locationSetData(city, searchLongList) {
+    for (const pl of searchLongList) {
+      const cityInfo = city.indexOf(pl.name)
+      if (cityInfo > -1) {
+        let cityItem = pl
+        const app = getApp()
+        let data = {}
+        let searchLongData = this.data.searchLongData
+        let secondSearchData = this.data.secondSearchData
+        let name = cityItem.name
+        let cityJson = JSON.parse(cityItem.json)
+        let cityId = {}
+        for (const key in cityJson) {
+          if (key === "wiwj") {
+            cityId[key] = cityJson[key].id
+          } else if (key === "tc") {
+            cityId[key] = cityJson[key].dirname
+          } else if (key === "lj") {
+            cityId[key] = cityJson[key].city_id
+          } else if (key === "ftx") {
+            cityId[key] = cityJson[key]
+          }
+        }
+        data.city = cityItem.name
+        data.cityJson = cityItem.json
+        data.cityId = cityId
+        data.area = ""
+        data.areaId = {}
+        data.areaJson = ""
+        searchLongData = { ...searchLongData, ...data }
+        secondSearchData = { ...secondSearchData, ...data }
+        app.globalData.searchLongData = { ...app.globalData.searchLongData, ...data }
+        app.globalData.secondSearchData = { ...app.globalData.secondSearchData, ...data }
+        this.setSecondPrice(data.city)
+
+        searchLongData.areaType = 0
+        app.globalData.searchLongData.areaType = 0
+
+        //搜索城市历史(长租)
+        let history = {}
+        history.city = data.city
+        history.cityId = data.cityId
+        history.cityJson = data.cityJson
+        wx.setStorageSync('searchLongCityHistory', history)
+
+        this.setData({
+          searchLongData,
+          secondSearchData,
+          searchLongList,
+          cityText2: "手动定位"
+        });
+        return;
+      }
+    }
+    this.setData({
+      cityText2: "定位城市暂无服务"
+    });
   },
   getCityInfo(city) {
     this.service.getCityList(city).then(rslt => {
@@ -583,6 +628,13 @@ Page({
         "searchLongData.areaType": "",
         "searchLongData.areaJson": {}
       });
+    } else if (this.data.tabIndex === 3 && !!this.data.secondSearchData.area) {
+      this.setData({
+        "secondSearchData.area": "",
+        "secondSearchData.areaId": {},
+        "secondSearchData.areaType": "",
+        "secondSearchData.areaJson": {}
+      });
     } else {
       this.goPositionSelect();
     }
@@ -687,64 +739,92 @@ Page({
     });
   },
   getHotCityLong() {
-    //长租
-    this.service.getLongCityList().then(resp => {
-      let data = resp.data;
-      let hotCity = data[0] || "";
-      let searchLongData = this.data.searchLongData;
-      const app = getApp();
-      let searchLongCityHistory = wx.getStorageSync('searchLongCityHistory')
-      let temp = false;
-      if (
-        app.globalData.searchLongData.city &&
-        app.globalData.searchLongData.city !== ""
-      ) {
-        searchLongData.city = app.globalData.searchLongData.city;
-      } else if (searchLongCityHistory.city &&
-        searchLongCityHistory.city !== ""){
-        searchLongData.city = searchLongCityHistory.city
-        searchLongData.cityId = searchLongCityHistory.cityId
-        searchLongData.cityJson = searchLongCityHistory.cityJson
-        app.globalData.searchLongData.city = searchLongCityHistory.city
-        app.globalData.searchLongData.cityId = searchLongCityHistory.cityId
-        app.globalData.searchLongData.cityJson = searchLongCityHistory.cityJson
-      } else {
-        let cityItem = hotCity;
-        const app = getApp();
-        let name = cityItem.name;
-        let cityJson = JSON.parse(cityItem.json);
-        let cityId = {};
-        searchLongData.city = cityItem.name;
-        app.globalData.searchLongData.city = cityItem.name;
-        searchLongData.cityJson = cityItem.json;
-        app.globalData.searchLongData.cityJson = cityItem.json;
+    //长租 二手房
+    console.log(111)
+    const app = getApp()
+    let searchLongCityHistory = wx.getStorageSync('searchLongCityHistory')
+    let searchLongData = this.data.searchLongData
+    let secondSearchData = this.data.secondSearchData
+    let data = {}
+    if (app.globalData.searchLongData.city && app.globalData.searchLongData.city !== "") {
+      data.city = app.globalData.searchLongData.city
+      data.cityId = searchLongCityHistory.cityId
+      data.cityJson = searchLongCityHistory.cityJson
+      searchLongData = { ...searchLongData, ...data }
+      secondSearchData = { ...secondSearchData, ...data }
+      this.setData({ searchLongData, secondSearchData})
+    } else if (searchLongCityHistory.city && searchLongCityHistory.city !== "") {
+      data.city = searchLongCityHistory.city
+      data.cityId = searchLongCityHistory.cityId
+      data.cityJson = searchLongCityHistory.cityJson
+      searchLongData = { ...searchLongData, ...data }
+      secondSearchData = { ...secondSearchData, ...data }
+      app.globalData.searchLongData = { ...app.globalData.searchLongData, ...data}
+      app.globalData.secondSearchData = { ...app.globalData.secondSearchData, ...data }
+      this.setData({ searchLongData, secondSearchData })
+      this.setSecondPrice(data.city)
+    } else {
+      if (this.data.searchLongList.length) {
+        let cityItem = this.data.searchLongList[0]
+        let name = cityItem.name
+        let cityJson = JSON.parse(cityItem.json)
+        let cityId = {}
+        data.city = cityItem.name
+        data.city = cityItem.name
         for (const key in cityJson) {
           if (key === "wiwj") {
-            cityId[key] = cityJson[key].id;
+            cityId[key] = cityJson[key].id
           } else if (key === "tc") {
-            cityId[key] = cityJson[key].dirname;
+            cityId[key] = cityJson[key].dirname
           } else if (key === "lj") {
-            cityId[key] = cityJson[key].city_id;
+            cityId[key] = cityJson[key].city_id
           } else if (key === "ftx") {
-            cityId[key] = cityJson[key];
+            cityId[key] = cityJson[key]
           }
         }
-        searchLongData.cityId = cityId;
-        app.globalData.searchLongData.cityId = cityId;
-        temp = true;
+        data.cityId = cityId
+        searchLongData = { ...searchLongData, ...data }
+        secondSearchData = { ...secondSearchData, ...data }
+        app.globalData.searchLongData = { ...app.globalData.searchLongData, ...data }
+        app.globalData.secondSearchData = { ...app.globalData.secondSearchData, ...data }
+        this.setData({ searchLongData, secondSearchData })
+        this.setSecondPrice(data.city)
+      } else {
+        this.service.getLongCityList().then(resp => {
+          let hotCity = resp.data[0] || ""
+          let cityItem = hotCity
+          let name = cityItem.name
+          let cityJson = JSON.parse(cityItem.json)
+          let cityId = {}
+          data.city = cityItem.name
+          data.cityJson = cityItem.json
+          for (const key in cityJson) {
+            if (key === "wiwj") {
+              cityId[key] = cityJson[key].id
+            } else if (key === "tc") {
+              cityId[key] = cityJson[key].dirname
+            } else if (key === "lj") {
+              cityId[key] = cityJson[key].city_id
+            } else if (key === "ftx") {
+              cityId[key] = cityJson[key]
+            }
+          }
+          data.cityId = cityId
+          searchLongData = { ...searchLongData, ...data }
+          secondSearchData = { ...secondSearchData, ...data }
+          app.globalData.searchLongData = { ...app.globalData.searchLongData, ...data }
+          app.globalData.secondSearchData = { ...app.globalData.secondSearchData, ...data }
+          this.setData({ searchLongData, secondSearchData, searchLongList: resp.data })
+          this.setSecondPrice(data.city)
+        });
       }
-      this.setData(
-        {
-          searchLongData,
-          searchLongList: data
-        },
-        () => {
-          // 获取试试搜索信息
-          // this.getHotPosition(searchData.city);
-          // temp && this.getUserLocationLong(false);
-        }
-      );
-    });
+    }   
+  },
+  //设置二手房预算
+  setSecondPrice(city) {
+    if(city) {
+      console.log('city',city)
+    }
   },
   handleCloseCouponDialog() {
     this.setData({ showCouponDialog: false });
@@ -776,7 +856,8 @@ Page({
   },
   getSearchDataFromGlobal() {
     const app = getApp();
-    const searchLongData = app.globalData.searchLongData;
+    const searchLongData = app.globalData.searchLongData
+    const secondSearchData = app.globalData.secondSearchData
     const {
       selectedNumber,
       beginDate,
@@ -821,6 +902,7 @@ Page({
       {
         searchData,
         searchLongData,
+        secondSearchData,
         showPriceBlock: true,
         showLongPriceBlock: true,
         beginDate: fecha.format(
@@ -833,11 +915,11 @@ Page({
         )
       },
       () => {
-        if (this.data.tabIndex !== 1) {
+        if (this.data.tabIndex === 1) {
+          this.getHotCity();
+        } else {
           this.getHotCityLong();
-          return;
         }
-        this.getHotCity();
         let min = 0,
           max = 0;
         for (const key in this.data.priceType) {
@@ -995,6 +1077,13 @@ Page({
     searchLongData.longHouseTags = [];
     searchLongData.longLayouts = [];
     searchLongData.advSort = 0;
+    let secondSearchData = app.globalData.secondSearchData
+    secondSearchData.secondHouseDecorationMap = []
+    secondSearchData.secondHouseTagMap = [1]
+    secondSearchData.secondHeadingMap = []
+    secondSearchData.secondFloorTypeMap = []
+    secondSearchData.secondHouseUseMap = [1]
+    secondSearchData.secondBuildingAgeMap = 0
     this.searchDataStorage = searchDataStorage.subscribe(hasSearchData => {
       console.log("hasSearchData=" + hasSearchData);
       if (!hasSearchData) {
@@ -1003,10 +1092,18 @@ Page({
       }
     });
     this.searchLongDataStorage = searchLongDataStorage.subscribe(
-      hasSearchData => {
-        console.log("hasSearchData=" + hasSearchData);
-        if (!hasSearchData) {
+      hasLongSearchData => {
+        console.log("hasLongSearchData=" + hasLongSearchData);
+        if (!hasLongSearchData) {
           getIndexLongHouseData();
+        }
+      }
+    );
+    this.searchSecondDataStorage = searchSecondDataStorage.subscribe(
+      hasSecondSearchData => {
+        console.log("hasSecondSearchData=" + hasSecondSearchData);
+        if (!hasSecondSearchData) {
+          getIndexSecondHouseData();
         }
       }
     );

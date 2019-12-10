@@ -141,25 +141,15 @@ Page({
       app.globalData.searchData.area = "";
       app.globalData.searchData.areaId = {};
       app.globalData.searchData.areaType = "";
-      app.globalData.monitorSearchData.city = cityJson.name;
-      app.globalData.monitorSearchData.cityId = {};
-      app.globalData.monitorSearchData.cityType = type;
-      app.globalData.monitorSearchData.area = "";
-      app.globalData.monitorSearchData.areaId = {};
-      app.globalData.monitorSearchData.areaType = "";
       for (const key in cityJson) {
         if (key === "mn") {
-          app.globalData.searchData.cityId[key] = cityJson[key].city_id;
-          app.globalData.monitorSearchData.cityId[key] = cityJson[key].city_id;
+          app.globalData.searchData.cityId[key] = cityJson[key].city_id
         } else if (key === "xz") {
-          app.globalData.searchData.cityId[key] = cityJson[key].cityId;
-          app.globalData.monitorSearchData.cityId[key] = cityJson[key].cityId;
+          app.globalData.searchData.cityId[key] = cityJson[key].cityId
         } else if (key === "tj") {
-          app.globalData.searchData.cityId[key] = cityJson[key].id;
-          app.globalData.monitorSearchData.cityId[key] = cityJson[key].id;
+          app.globalData.searchData.cityId[key] = cityJson[key].id
         } else if (key === "zg") {
-          app.globalData.searchData.cityId[key] = cityJson[key].id;
-          app.globalData.monitorSearchData.cityId[key] = cityJson[key].id;
+          app.globalData.searchData.cityId[key] = cityJson[key].id
         }
       }
 
@@ -213,43 +203,23 @@ Page({
             tj: info.tj && info.tj.value,
             xz: info.xz && info.xz.id,
             zg: info.zg && info.zg.id
-          };
-          app.globalData.monitorSearchData.areaId = {
-            mn: info.mn && info.mn.area_id,
-            tj: info.tj && info.tj.value,
-            xz: info.xz && info.xz.id,
-            zg: info.zg && info.zg.id
-          };
+          }
         } else {
           app.globalData.searchData.ltude = {
             mn: info.mn && info.mn.lat + "," + info.mn.lng,
             tj: info.tj && info.tj.latitude + "," + info.tj.longitude,
             xz: info.xz && info.xz.latitude + "," + info.xz.longitude,
             zg: info.zg && info.zg.latitude + "," + info.zg.longitude
-          };
+          }
           app.globalData.searchData.areaId = {
             mn: info.mn && info.mn.id,
             tj: info.tj && info.tj.value,
             xz: info.xz && info.xz.id,
             zg: info.zg && info.zg.id
-          };
-          app.globalData.monitorSearchData.ltude = {
-            mn: info.mn && info.mn.lat + "," + info.mn.lng,
-            tj: info.tj && info.tj.latitude + "," + info.tj.longitude,
-            xz: info.xz && info.xz.latitude + "," + info.xz.longitude,
-            zg: info.zg && info.zg.latitude + "," + info.zg.longitude
-          };
-          app.globalData.monitorSearchData.areaId = {
-            mn: info.mn && info.mn.id,
-            tj: info.tj && info.tj.value,
-            xz: info.xz && info.xz.id,
-            zg: info.zg && info.zg.id
-          };
+          }
         }
-        app.globalData.searchData.area = info.name;
-        app.globalData.searchData.areaType = type;
-        app.globalData.monitorSearchData.area = info.name;
-        app.globalData.monitorSearchData.areaType = type;
+        app.globalData.searchData.area = info.name
+        app.globalData.searchData.areaType = type
       })
       .then(msg => {
         if (msg) {
@@ -257,8 +227,8 @@ Page({
           var history = this.data.history;
           for (var index = 0; index < history.length; index++) {
             if (history[index].name == position) {
-              history.splice(index, 1);
-              break;
+              history.splice(index, 1)
+              break
             }
           }
           this.setData({ history });
@@ -267,16 +237,16 @@ Page({
           );
           for (var temp = 0; temp < positionSearchHistory.length; temp++) {
             if (positionSearchHistory[temp].name == position) {
-              positionSearchHistory.splice(temp, 1);
+              positionSearchHistory.splice(temp, 1)
               break;
             }
           }
-          wx.setStorageSync("positionSearchHistory", positionSearchHistory);
-          var citySearchHistory = wx.getStorageSync("citySearchHistory");
+          wx.setStorageSync("positionSearchHistory", positionSearchHistory)
+          var citySearchHistory = wx.getStorageSync("citySearchHistory")
           for (var temp2 = 0; temp2 < citySearchHistory.length; temp2++) {
             if (citySearchHistory[temp2].name == position) {
-              citySearchHistory.splice(temp2, 1);
-              break;
+              citySearchHistory.splice(temp2, 1)
+              break
             }
           }
           wx.setStorageSync("citySearchHistory", citySearchHistory);
@@ -287,31 +257,22 @@ Page({
           });
           return;
         }
-        const type = specialCity.includes(cityName) ? 1 : 0;
+        const type = specialCity.includes(cityName) ? 1 : 0
         this.service.getCityInfo(cityName, type).then(resp => {
-          var cityItem = resp.data[0];
-          let cityJson = JSON.parse(cityItem.json);
-          app.globalData.searchData.city = cityJson.name;
-          app.globalData.searchData.cityId = {};
-          app.globalData.searchData.cityType = type;
-          app.globalData.monitorSearchData.city = cityJson.name;
-          app.globalData.monitorSearchData.cityId = {};
-          app.globalData.monitorSearchData.cityType = type;
+          var cityItem = resp.data[0]
+          let cityJson = JSON.parse(cityItem.json)
+          app.globalData.searchData.city = cityJson.name
+          app.globalData.searchData.cityId = {}
+          app.globalData.searchData.cityType = type
           for (const key in cityJson) {
             if (key === "mn") {
-              app.globalData.searchData.cityId[key] = cityJson[key].city_id;
-              app.globalData.monitorSearchData.cityId[key] =
-                cityJson[key].city_id;
+              app.globalData.searchData.cityId[key] = cityJson[key].city_id
             } else if (key === "xz") {
-              app.globalData.searchData.cityId[key] = cityJson[key].cityId;
-              app.globalData.monitorSearchData.cityId[key] =
-                cityJson[key].cityId;
+              app.globalData.searchData.cityId[key] = cityJson[key].cityId
             } else if (key === "tj") {
-              app.globalData.searchData.cityId[key] = cityJson[key].id;
-              app.globalData.monitorSearchData.cityId[key] = cityJson[key].id;
+              app.globalData.searchData.cityId[key] = cityJson[key].id
             } else if (key === "zg") {
-              app.globalData.searchData.cityId[key] = cityJson[key].id;
-              app.globalData.monitorSearchData.cityId[key] = cityJson[key].id;
+              app.globalData.searchData.cityId[key] = cityJson[key].id
             }
           }
 
@@ -342,43 +303,30 @@ Page({
   },
 
   handleSelectCity(event) {
-    const cityName = event.currentTarget.dataset.name;
-    const app = getApp();
-    const type = specialCity.includes(cityName) ? 1 : this.data.currentTabValue;
+    const cityName = event.currentTarget.dataset.name
+    const app = getApp()
+    const type = specialCity.includes(cityName) ? 1 : this.data.currentTabValue
     this.service.getCityInfo(cityName, type).then(resp => {
-      var cityItem = resp.data[0];
-      let cityJson = JSON.parse(cityItem.json);
+      var cityItem = resp.data[0]
+      let cityJson = JSON.parse(cityItem.json)
       if (app.globalData.searchData.city !== cityItem.name) {
-        app.globalData.searchData.area = "";
-        app.globalData.searchData.areaId = {};
-        app.globalData.searchData.areaType = "";
-        app.globalData.searchData.ltude = "";
-      }
-      if (app.globalData.monitorSearchData.city !== cityItem.name) {
-        app.globalData.monitorSearchData.areaId = {};
-        app.globalData.monitorSearchData.ltude = "";
-        app.globalData.monitorSearchData.area = "";
-        app.globalData.monitorSearchData.areaType = "";
+        app.globalData.searchData.area = ""
+        app.globalData.searchData.areaId = {}
+        app.globalData.searchData.areaType = ""
+        app.globalData.searchData.ltude = ""
       }
       app.globalData.searchData.city = cityItem.name;
       app.globalData.searchData.cityId = {};
       app.globalData.searchData.citytype = type;
-      app.globalData.monitorSearchData.city = cityItem.name;
-      app.globalData.monitorSearchData.cityId = {};
-      app.globalData.monitorSearchData.citytype = type;
       for (const key in cityJson) {
         if (key === "mn") {
-          app.globalData.searchData.cityId[key] = cityJson[key].city_id;
-          app.globalData.monitorSearchData.cityId[key] = cityJson[key].city_id;
+          app.globalData.searchData.cityId[key] = cityJson[key].city_id
         } else if (key === "xz") {
-          app.globalData.searchData.cityId[key] = cityJson[key].cityId;
-          app.globalData.monitorSearchData.cityId[key] = cityJson[key].cityId;
+          app.globalData.searchData.cityId[key] = cityJson[key].cityId
         } else if (key === "tj") {
-          app.globalData.searchData.cityId[key] = cityJson[key].id;
-          app.globalData.monitorSearchData.cityId[key] = cityJson[key].id;
+          app.globalData.searchData.cityId[key] = cityJson[key].id
         } else if (key === "zg") {
-          app.globalData.searchData.cityId[key] = cityJson[key].id;
-          app.globalData.monitorSearchData.cityId[key] = cityJson[key].id;
+          app.globalData.searchData.cityId[key] = cityJson[key].id
         }
       }
 

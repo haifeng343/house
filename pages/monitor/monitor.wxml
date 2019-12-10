@@ -17,9 +17,7 @@
     <text>左滑结束监控</text>
   </view>
   <view wx:if="{{show===0}}" class="search_no-data">
-    <image class="search_no-data_img" wx:if="{{active ===1}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/short_no_data.png"></image>
-    <image class="search_no-data_img" wx:if="{{active ===2}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/long_no_data.png"></image>
-    <image class="search_no-data_img" wx:if="{{active ===3}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/long_no_data.png"></image>
+    <image class="search_no-data_img"src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/short_no_data.png?v=1"></image>
     <view class="search_no-data_text">
       <text bindtap="handleGoToRule">查看详细监控规则 >></text>
     </view>
