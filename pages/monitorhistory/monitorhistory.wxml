@@ -8,6 +8,10 @@
       <view class='text'>长租监控</view>
       <view class='border'></view>
     </view>
+     <view class='nav-item {{fundListType === 3 ? "active" : ""}}' data-value="3" bindtap='handleFundTypeChange'>
+      <view class='text'>二手房监控</view>
+      <view class='border'></view>
+    </view>
   </view>
   <view wx:if="{{isLoaded === true && monitorList.length === 0}}" class="no-data">
     <nodata message="暂无历史监控" />

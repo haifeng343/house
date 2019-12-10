@@ -10,10 +10,10 @@ import searchService from "./service";
 import fecha from "../../utils/fecha";
 import { searchDataStorage } from "../../utils/searchDataStorage";
 import { searchLongDataStorage } from "../../utils/searchLongDataStorage";
+import { searchSecondDataStorage } from "../../utils/searchSecondDataStorage";
 import getIndexHouseData from "../../utils/indexHouseData";
 import getIndexLongHouseData from "../../utils/indexLongHouseData";
 import { changeHistoryStorage } from "../../utils/longSetSearchData";
-import { wiwj, lianjia } from "../../api/longrent.js"
 Page({
   /**
    * 页面的初始数据
@@ -92,9 +92,13 @@ Page({
       longRentTypes: [],
       longSortTypes: []
     },
+    allSecondData: {
+      secondLayoutMap: [],
+      secondSortTypeMap: []
+    },
     searchLongList: [],
     needOnShow: false,
-    tabIndex: 1 //1短租，2长租，2二手房
+    tabIndex: 1 //1短租，2长租，3二手房
   },
 
   service: new searchService(),
@@ -108,9 +112,16 @@ Page({
     });
   },
   goCitySelectLong() {
-    wx.navigateTo({
-      url: "../citySelectLong/citySelectLong"
-    });
+    if (this.data.tabIndex === 2) {
+      wx.navigateTo({
+        url: "../citySelectLong/citySelectLong"
+      });
+    }
+    if (this.data.tabIndex === 3) {
+      wx.navigateTo({
+        url: "../citySelectLong/citySelectLong?isSecond=1"
+      });
+    }
   },
   goDays() {
     wx.navigateTo({
@@ -487,6 +498,24 @@ Page({
           mask: true
         });
       }
+    } else {
+      let searchLongData = this.data.searchLongData;
+      if (!searchLongData.city) {
+        wx.showToast({
+          title: "请先选择城市",
+          icon: "none"
+        });
+      } else if (this.data.isAuth) {
+        wx.navigateTo({
+          url: "../secondHandHouse/secondHandHouse"
+        });
+      } else {
+        this.showAuthDialog();
+        wx.showLoading({
+          title: "获取登录授权中",
+          mask: true
+        });
+      }
     }
   },
   getHouseTypeAndEqu() {
@@ -509,6 +538,17 @@ Page({
           allLongData.longRentTypes = wx.getStorageSync("longRentTypes");
           allLongData.longSortTypes = wx.getStorageSync("longSortTypes");
           this.setData({ allLongData });
+        }
+      }
+    );
+    this.searchSecondDataStorage = searchSecondDataStorage.subscribe(
+      hasSearchData => {
+        console.log("hasSearchData=" + hasSearchData);
+        if (hasSearchData) {
+          let allSecondData = this.data.allSecondData;
+          allSecondData.secondLayoutMap = wx.getStorageSync("secondLayoutMap");
+          allSecondData.secondSortTypeMap = wx.getStorageSync("secondSortTypeMap");
+          this.setData({ allSecondData });
         }
       }
     );
@@ -855,8 +895,7 @@ Page({
     this.setData({ tabIndex, spread: false });
     if (tabIndex === 1) {
       this.getHotCity();
-    }
-    if (tabIndex === 2) {
+    } else {
       this.getHotCityLong();
     }
   },
@@ -987,10 +1026,6 @@ Page({
     }
   },
   onLoad(params) {
-    wiwj.ershouSearch({ "city": 2, "page": { "size": 15, "num": 1 }, "filter": { "price": "100,200", "broom": "2", "buildarea": "0,50", "heading": "10", "keywords": "西湖" } }).then(res=>console.log(res))
-    wiwj.ershouTip({ "city": 2, "keywords": "西溪雅苑" }).then(res => console.log(res))
-    lianjia.ershouSearch({ "city": 330100, "page": { "size": 15, "num": 1 }, "filter": { "condition": "ep500bp400" } }).then(res => console.log(res))
-    lianjia.ershouTip({ "city": 330100, "keywords": "西溪" }).then(res => console.log(res))
     const tab = +params.tab;
     this.init();
     this.searchDataSubscription = SearchDataSubject.subscribe(() => {

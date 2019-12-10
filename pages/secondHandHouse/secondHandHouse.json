@@ -1,0 +1,18 @@
+{
+  "usingComponents": {
+    "FilterBar": "../../components/FilterBar1/index",
+    "noNetwork": "../../components/noNetwork/noNetwork",
+    "houseLongCard": "../../components/houseLongCard/houseLongCard",
+    "mp-loading": "../../components/loading/loading",
+    "publicDialog": "../../components/publicDialog/publicDialog",
+    "monitorEnoughDialog": "../../components/monitorEnoughDialog/monitorEnoughDialog",
+    "monitorDialog": "../../components/monitorDialog/monitorDialog",
+    "followDialog": "../../components/followDialog/followDialog",
+    "followBottom": "../../components/followBottom/followBottom",
+    "followEdit": "../../components/followEdit/followEdit",
+    "houseLoading": "../../components/houseLoading/houseLoading",
+    "monitorEmpty": "../../components/monitorEmpty/monitorEmpty",
+    "checkDetail": "../../components/checkDetail/checkDetail"
+  },
+  "navigationBarTitleText": "二手房-房源列表"
+}

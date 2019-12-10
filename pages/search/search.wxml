@@ -23,7 +23,7 @@
                 <view class="nav_item long {{tabIndex==2?'active':''}}" bindtap='changeTab' data-index='2'>
                     <text class='nav_item_text'>长租</text>
                 </view>
-                <view class='nav_item' bindtap='notOnLine' style='border-top-right-radius:12rpx;'>
+                <view class="nav_item long {{tabIndex==3?'active':''}}" bindtap='changeTab' data-index='3' style='border-top-right-radius:12rpx;'>
                     <text class='nav_item_text'>二手房</text>
                 </view>
             </view>
@@ -144,6 +144,61 @@
                             <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypes' data-index='{{index}}' wx:for='{{allLongData.longSortTypes[searchLongData.chooseType-1]}}'>
                                 {{item}}
                             </view>
+                        </view>
+                    </view>
+                    <view class='search_item--spread' bindtap='slideOption'>
+                        {{spread?"收起":"展开更多"}}
+                        <view class='icon-font uniE92{{spread?"5":"6"}}'></view>
+                    </view>
+                </scroll-view>
+                <scroll-view scroll-y class="search-content-main {{tabIndex!=3?'hidden':''}}" bindtouchstart="bindtouchstartsort" bindtouchend="bindtouchendsort">
+                    <view class='search_item'>
+                        <view class='position' bindtap='goCitySelectLong'>
+                            {{searchLongData.city}}
+                        </view>
+                        <view class='positionByHand' bindtap='handleRepos'>{{cityText2}}</view>
+                    </view>
+                    <view class='search_item'>
+                        <view class="scenic {{searchLongData.area === ''?'':'active'}}" bindtap='goPositionSelect'>
+                            <text class="scenic-text">{{searchLongData.area === ''?'请输入小区/商圈/地铁站':searchLongData.area}}</text>
+                            <text class="icon-font {{searchLongData.area === '' ? 'uniE90C' : 'uniE901'}}" catchtap="handleClearScenic" />
+                        </view>
+                    </view>
+                    <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
+                        <view class='title icon_1'>预算(万元)</view>
+                        <view class='sort' bindtap='changeSort'>
+                            <text class='icon-font uniE930 {{searchData.sort == 2?"active":""}}'></text>
+                            普通住宅
+                        </view>
+                        <view class="flex_item">
+                            <input class="item_input" placeholder-class="item_input_placeholder" placeholder="100"></input>
+                            <text>至</text>
+                            <input class="item_input" placeholder-class="item_input_placeholder" placeholder="100"></input>
+                        </view>
+                    </view>
+                    <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
+                        <view class='title icon_2'>面积(平米)</view>
+                        <view>
+                            <Range wx:if="{{showLongPriceBlock}}" min="{{searchLongData.minPrice}}" max="{{searchLongData.maxPrice}}" bind:onChange="handlePriceChange" />
+                        </view>
+                    </view>
+                    <view wx:if="{{spread}}">
+                        <view class='search_item noBorder'>
+                            <view class='title icon_4'>户型</view>
+                            <view class='houseType  {{searchLongData.secondLayoutMap==index?"active":""}}' wx:for-index="index" bindtap='selectRentTypes' data-index='{{index}}' wx:key='{{item}}' wx:for="{{allSecondData.secondLayoutMap}}">
+                                {{item}}
+                            </view>
+                        </view>
+                        <view class='search_item noBorder'>
+                            <view class='title icon_3'>房源偏好</view>
+                            <view class='leaseType {{searchLongData.secondSortTypeMap==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypes' data-index='{{index}}' wx:for='{{allSecondData.secondSortTypeMap}}'>
+                                {{item}}
+                            </view>
+                        </view>
+                        <view class='search_item noBorder'>
+                            <view class='title icon_2'>其他</view>
+                            <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' bindtap='selectSortTypes'>满二</view>
+                            <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' bindtap='selectSortTypes'>精装修</view>
                         </view>
                     </view>
                     <view class='search_item--spread' bindtap='slideOption'>

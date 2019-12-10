@@ -199,7 +199,7 @@
 .search_item.noBorder {
   border: none;
   height: auto;
-  margin-bottom: 50rpx;
+  margin-bottom: 30rpx;
   justify-content: flex-start;
   padding-top: 20rpx;
 }
@@ -324,13 +324,14 @@
 }
 .search_item .houseType {
   flex: 0 0 auto;
-  width: 136rpx;
+  padding: 0 30rpx;
   height: 40rpx;
   border-radius: 40rpx;
   background: #f0f0f0;
   text-align: center;
   line-height: 40rpx;
   margin-right: 22rpx;
+  margin-bottom: 20rpx;
 }
 .search_item .houseType.active {
   background-color: #f1612a;
@@ -393,6 +394,29 @@
   background: white;
   border-bottom-left-radius: 12rpx;
   border-bottom-right-radius: 12rpx;
+}
+.search_item .flex_item {
+  width: 100%;
+  padding-top:20rpx;
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(29,29,29,1);
+  line-height:40rpx;
+}
+.search_item .flex_item .item_input {
+  width: 280rpx;
+  font-size:32rpx;
+  font-weight:400;
+  color:rgba(29,29,29,1);
+  line-height:44rpx;
+  border: none;
+  border-bottom: solid 2rpx #e9e9e9;
+}
+.search_item .flex_item .item_input_placeholder {
+  color:rgba(190,195,205,1);
 }
 .search-btn {
   width: 480rpx;

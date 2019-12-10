@@ -8,15 +8,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    history: [],
     data: [],
-    hot: [],
-    searchList: [],
-    currentTabValue: 0,
     userCity: {
       name: '定位中...',
       item:{}
-    }
+    },
+    isSecond: false, //是否为二手房 ，true为是
   },
   service: new CitySelectService(),
   getCityList() {
@@ -41,12 +38,12 @@ Page({
       return
     }
     const app = getApp()
-    let searchLongData = app.globalData.searchLongData
+    let data = {}
     let name = cityItem.name
     let cityJson = JSON.parse(cityItem.json)
     let cityId = {}
-    searchLongData.city = cityItem.name
-    searchLongData.cityJson = cityItem.json
+    data.city = cityItem.name
+    data.cityJson = cityItem.json
     for (const key in cityJson) {
       if (key === 'wiwj') {
         cityId[key] = cityJson[key].id
@@ -58,18 +55,20 @@ Page({
         cityId[key] = cityJson[key]
       }
     }
-    searchLongData.cityId = cityId
-    searchLongData.area = ''
-    searchLongData.areaId = {}
-    searchLongData.areaType = 0
-    searchLongData.areaJson = ''
+    data.cityId = cityId
+    data.area = ''
+    data.areaId = {}
+    data.areaType = 0
+    data.areaJson = ''
+    app.globalData.searchLongData = {...data}
+    app.globalData.secondSearchData = {...data}
 
     //搜索城市历史(长租)
-    let searchLongCityHistory = {}
-    searchLongCityHistory.city = app.globalData.searchLongData.city
-    searchLongCityHistory.cityId = app.globalData.searchLongData.cityId
-    searchLongCityHistory.cityJson = app.globalData.searchLongData.cityJson
-    wx.setStorageSync('searchLongCityHistory', searchLongCityHistory)
+    let history = {}
+    history.city = data.city
+    history.cityId = data.cityId
+    history.cityJson = data.cityJson
+    wx.setStorageSync('searchLongCityHistory', history)
 
     wx.navigateBack({
       delta: 1
@@ -127,11 +126,15 @@ Page({
     });
     this.getUserLocation();
   },
-  onLoad: function() {
+  onLoad: function(options) {
     this.getCityList();
-    let history = wx.getStorageSync('citySearchHistory') || [];
-    this.setData({
-      history: history.reverse()
-    });
+    if (options.isSecond) {
+      this.setData({
+        isSecond: true
+      })
+      wx.setNavigationBarTitle({
+        title: '二手房-城市选择'
+      })
+    }
   }
 });
