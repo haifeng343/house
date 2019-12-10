@@ -174,7 +174,13 @@ const zhenguoReq = {
     })
   }
 }
-
+const throwErrorResponse = () => {
+  wx.showToast({
+    title: '接口请求失败',
+    icon: 'none',
+    duration: 2000
+  })
+}
 module.exports = { 
   tujiaReq,
   xzdzReq,

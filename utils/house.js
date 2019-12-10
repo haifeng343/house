@@ -150,134 +150,6 @@ const getXzData = (type, xzfilter) => {
  * 获取木鸟平台数据
  * type 1 房源列表；2监控详情
  */
-// const getMnData = (type, mnfilter) => {
-//   let app = getApp();
-//   let arr2 = [];
-//   let mnCount = 0;
-//   let y =
-//     type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
-//   let s = app.globalData.mnSwitch;
-//   let data = {
-//     platform: "mn",
-//     cityId: y.cityId.mn,
-//     page: {
-//       size: 15,
-//       num: 1
-//     },
-//     filter: mnfilter
-//   };
-//   let data2 = {
-//     platform: "mn",
-//     cityId: y.cityId.mn,
-//     page: {
-//       size: 15,
-//       num: 2
-//     },
-//     filter: mnfilter
-//   };
-//   let data3 = {
-//     platform: "mn",
-//     cityId: y.cityId.mn,
-//     page: {
-//       size: 15,
-//       num: 3
-//     },
-//     filter: mnfilter
-//   };
-//   let data4 = {
-//     platform: "mn",
-//     cityId: y.cityId.mn,
-//     page: {
-//       size: 15,
-//       num: 4
-//     },
-//     filter: mnfilter
-//   };
-//   return new Promise((resolve, reject) => {
-//     if (!s) {
-//       resolve({
-//         arr: [],
-//         mnCount: -1 // -1 表示不查询该平台数据
-//       });
-//       return;
-//     }
-//     if (y.areaType && y.area) {
-//       if (y.areaId.hasOwnProperty("mn") && !y.areaId.mn) {
-//         mnCount = 0;
-//         resolve({
-//           arr: [],
-//           mnCount
-//         });
-//         return;
-//       }
-//     }
-//     houseApi
-//       .getMnList(data)
-//       .then(res => {
-//         if (res) {
-//           arr2 = res.data.rooms.list;
-//           mnCount = Number(res.data.rooms.page.record_count);
-//         }
-//         if (res) {
-//           return houseApi.getMnList(data2);
-//         }
-//         if (!res) {
-//           resolve({
-//             network: true
-//           });
-//         }
-//       })
-//       .then(res => {
-//         if (res) {
-//           arr2.push.apply(arr2, res.data.rooms.list);
-//         }
-//         if (res && arr2.length == 0) {
-//           mnCount = Number(res.data.rooms.page.record_count);
-//         }
-//         if (res) {
-//           return houseApi.getMnList(data3);
-//         }
-//         if (!res) {
-//           let arr = arr2.slice(0, 50);
-//           resolve({
-//             arr,
-//             mnCount
-//           });
-//         }
-//       })
-//       .then(res => {
-//         if (res) {
-//           arr2.push.apply(arr2, res.data.rooms.list);
-//         }
-//         if (res && arr2.length == 0) {
-//           mnCount = Number(res.data.rooms.page.record_count);
-//         }
-//         if (res) {
-//           return houseApi.getMnList(data4);
-//         }
-//         if (!res) {
-//           let arr = arr2.slice(0, 50);
-//           resolve({
-//             arr,
-//             mnCount
-//           });
-//         }
-//       })
-//       .then(res => {
-//         if (res) {
-//           arr2.push.apply(arr2, res.data.rooms.list);
-//         }
-//         if (res && arr2.length == 0) {
-//           mnCount = Number(res.data.rooms.page.record_count);
-//         }
-//         let arr = arr2.slice(0, 50);
-//         resolve({
-//           arr,
-//           mnCount
-//         });
-//       });
-//   });
-// };
 const getMnData = (type, mnfilter)=>{
   let arr2 = [];
   let mnCount = 0; 
@@ -508,7 +380,99 @@ const getMnData4 = (type, mnfilter) => {
  * 获取榛果平台数据
  * type 1 房源列表；2监控详情
  */
-const getZgData = (type, zgfilter) => {
+const getZgData = (type,zgfilter)=>{
+  let zgarr = []
+  let arr1 = []
+  let arr2 = []
+  let zgCount = 0
+  let zgMinPrice = 100
+  let zgMaxPrice = 9999900
+  console.log(zgfilter)
+  if (zgfilter.minPrice === 100&&zgfilter.maxPrice === 9999900){
+    zgarr = [getZgData2(type, zgfilter)]
+  } else if (zgfilter.minPrice !== 100 && zgfilter.maxPrice === 9999900){
+    let zgfilter1 = JSON.parse(JSON.stringify(zgfilter))
+    let zgfilter2 = JSON.parse(JSON.stringify(zgfilter))
+    zgMinPrice = zgfilter1['minPrice']
+    zgMaxPrice = zgfilter1['minPrice'] + 10000
+    zgfilter1['tagIds'] = [30, 138, 31]
+    zgfilter1['minPrice'] = zgfilter1['minPrice'] + 100+10000
+    zgfilter1['maxPrice'] = 9999900
+    zgfilter2['minPrice'] = zgfilter2['minPrice']
+    zgfilter2['maxPrice'] = zgfilter2['minPrice'] + 10000
+    zgarr = [getZgData1(type, zgfilter1), getZgData2(type, zgfilter2)]
+  }else{
+    let zgfilter1 = JSON.parse(JSON.stringify(zgfilter))
+    zgMinPrice = zgfilter1['minPrice']
+    zgMaxPrice = zgfilter1['maxPrice']
+    zgfilter1['tagIds'] = [30, 138, 31]
+    zgfilter1['minPrice'] = zgfilter1['maxPrice'] + 100
+    zgfilter1['maxPrice'] = 9999900
+    zgarr = [getZgData1(type, zgfilter1), getZgData2(type, zgfilter)]
+  }
+  return new Promise((resolve, reject) => {
+    Promise.all(zgarr)
+      .then(res => {
+        if(res.length === 1){
+          if(!res[0]){
+            resolve({
+              network: true
+            });
+          }
+          if (res[0]) {
+            arr2.push.apply(arr2, res[0].arr);
+            zgCount = res[0].zgCount
+          }
+          resolve({
+            arr: arr2,
+            zgCount
+          });
+        }else{
+          if (!res[0]&&!res[1]) {
+            resolve({
+              network: true
+            });
+          }
+          let _arr1 = []
+          let _arr2 = []
+          //有特殊条件的 连住 早鸟 新房
+          res[0].arr.map((item, index) => {
+            _arr1.push(Object.assign({}, item, { _price: item.discountPrice ? item.discountPrice : item.price }))
+          })
+          //无特殊条件
+          res[1].arr.map((item, index) => {
+            _arr2.push(Object.assign({}, item, { _price: item.discountPrice ? item.discountPrice : item.price }))
+          })
+          //有特殊条件的 连住 早鸟 新房
+          let s_arr1 = _arr1.filter(item => {
+            return item._price >= zgMinPrice && item._price <= zgMaxPrice;
+          });
+          //无特殊条件
+          let s_arr2 = _arr2.filter(item => {
+            return item._price >= zgMinPrice && item._price <= zgMaxPrice;
+          });
+          if (res[1].zgCount >= 50) {
+            zgCount = res[1].zgCount
+          } else {
+            zgCount = s_arr1.length + s_arr2.length
+          }
+          arr2.push.apply(arr2, s_arr1);
+          arr2.push.apply(arr2, s_arr2);
+          if (zgfilter.sortType === 2) {
+            arr2.sort(util.compareSort("_price", "asc"));
+            arr1 = arr2.slice(0, 50)
+          }else{
+            arr1 = arr2.slice(0, 50)
+          }
+          resolve({
+            arr: arr1,
+            zgCount
+          });
+        }
+      })
+  })
+}
+const getZgData1 = (type, zgfilter) => {
   let app = getApp();
   let zgCount = 0;
   let y =
@@ -558,9 +522,62 @@ const getZgData = (type, zgfilter) => {
           zgCount
         });
       } else {
+        resolve(false);
+      }
+    });
+  });
+};
+const getZgData2 = (type, zgfilter) => {
+  let app = getApp();
+  let zgCount = 0;
+  let y =
+    type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
+  let s = app.globalData.zgSwitch;
+  return new Promise((resolve, reject) => {
+    let equipment = y.equipment;
+    if (!s) {
+      resolve({
+        arr: [],
+        xzCount: -1 // -1 表示不查询该平台数据
+      });
+      return;
+    }
+    if (equipment.indexOf("5") > -1 || equipment.indexOf("6") > -1) {
+      zgCount = 0;
+      resolve({
+        arr: [],
+        zgCount
+      });
+      return;
+    }
+    if (y.areaType && y.area) {
+      if (y.areaId.hasOwnProperty("zg") && !y.areaId.zg) {
+        zgCount = 0;
         resolve({
-          network: true
+          arr: [],
+          zgCount
         });
+        return;
+      }
+    }
+    let data = {
+      platform: "zg",
+      cityId: y.cityId.zg,
+      page: {
+        size: 50,
+        num: 1
+      },
+      filter: zgfilter
+    };
+    houseApi.getZgList(data).then(res => {
+      if (res) {
+        zgCount = Number(res.data.count);
+        resolve({
+          arr: res.data.list,
+          zgCount
+        });
+      } else {
+        resolve(false);
       }
     });
   });
@@ -2400,8 +2417,8 @@ const wiwjScreenParam = type => {
   let longLayouts = searchData.longLayouts.concat();
   if (longLayouts.length) {
     let length = longLayouts.length;
-    if (longLayouts[length - 1] == 11) {
-      longLayouts[length - 1] = "3,4,5,9";
+    if (longLayouts.indexOf(11)>-1) {
+      longLayouts[longLayouts.indexOf(11)] = "3,4,5,9";
     }
     let broom = "";
     for (let temp = 0; temp < length; temp++) {
@@ -2834,8 +2851,8 @@ const ftxScreenParam = type => {
   let longLayouts = searchData.longLayouts.concat();
   if (longLayouts.length) {
     let length = longLayouts.length;
-    if (longLayouts[length - 1] == 12) {
-      longLayouts[length - 1] = "4,5,99";
+    if (longLayouts.indexOf(12)>-1) {
+      longLayouts[longLayouts.indexOf(12)] = "4,5,99";
     }
     let room = "";
     for (let temp = 0; temp < length; temp++) {
@@ -2992,8 +3009,8 @@ const tcScreenParam = type => {
   let longLayouts = searchData.longLayouts.concat();
   if (longLayouts.length) {
     let length = longLayouts.length;
-    if (longLayouts[length - 1] == 12) {
-      longLayouts[length - 1] = "4|5|6|7";
+    if (longLayouts.indexOf(12) > -1) {
+      longLayouts[longLayouts.indexOf(12)] = "4|5|6|7";
     }
     let broom = "";
     for (let temp = 0; temp < length; temp++) {
@@ -3073,6 +3090,271 @@ const tcScreenParam = type => {
 
   return obj;
 };
+const wiwjSecondScreenParam = type=>{
+  const app = getApp();
+  let searchData =
+    type == 1
+      ? app.globalData.secondSearchData
+      : app.globalData.monitorSecondSearchData;
+  let obj = {};
+  //筛选
+  let areaType = searchData.areaType;
+  //判断是否为关键字搜索
+  let keysword = false;
+  //区域
+  if (areaType == 10) {
+    if (searchData.areaId.wiwj) {
+      obj.districtids = searchData.areaId.wiwj;
+    } else {
+      keysword = true;
+    }
+  }
+  if (areaType == 20) {
+    if (searchData.areaId.wiwj) {
+      obj.sqids = searchData.areaId.wiwj;
+    } else {
+      keysword = true;
+    }
+  }
+  if (areaType == 30) {
+    if (searchData.areaId.wiwj) {
+      obj.communityid = searchData.areaId.wiwj.id;
+      obj.zn = searchData.areaId.wiwj.name;
+    } else {
+      keysword = true;
+    }
+  }
+  if (areaType == 40) {
+    if (searchData.areaId.wiwj) {
+      obj.lineid = searchData.areaId.wiwj;
+    } else {
+      keysword = true;
+    }
+  }
+  if (areaType == 50) {
+    if (searchData.areaId.wiwj && searchData.areaId.wiwj.id) {
+      obj.lineid = searchData.areaId.wiwj.lineid;
+      obj.stationid = searchData.areaId.wiwj.id;
+    } else {
+      keysword = true;
+    }
+  }
+  if (areaType == 60) {
+    if (searchData.areaId.nearby) {
+      obj.lng = searchData.areaId.longitude;
+      obj.lat = searchData.areaId.latitude;
+      obj.nearby = searchData.areaId.nearby;
+    }
+  }
+  // 价钱
+  let minPrice = searchData.minPrice; //""取placeholderMinPrice
+  let maxPrice = searchData.maxPrice;//""取placeholdermaxPrice
+  if (minPrice === "") { minPrice = searchData.placeholderMinPrice}
+  if (maxPrice === "") { maxPrice = searchData.placeholderMaxPrice }
+  obj.price = minPrice + "," + maxPrice
+  // 户型 一室、两室、三室，四室，四室及以上
+  let longLayouts = searchData.secondLayoutMap.concat();
+  if (longLayouts.length) {
+    let length = longLayouts.length;
+    if (longLayouts.indexOf(5) > -1) {
+      longLayouts[longLayouts.indexOf(5)] = "5,9";
+    }
+    let broom = "";
+    for (let temp = 0; temp < length; temp++) {
+      if (temp) {
+        broom += ",";
+      }
+      broom += longLayouts[temp];
+    }
+    obj.broom = broom;
+  }
+  //建筑面积
+  let minArea = searchData.minArea;
+  let maxArea = searchData.maxArea;
+  obj.buildarea = minArea+','+ maxArea;
+  //朝向
+  let headingArr = searchData.secondHeadingMap.concat()
+  if (headingArr.length){
+    obj.heading = headingArr.join(",");
+  }
+  //楼龄
+  if (searchData.secondBuildingAgeMap){
+    obj.buildage = searchData.secondBuildingAgeMap;
+  }
+  //楼层
+  let floorTypeArr=searchData.secondFloorTypeMap.concat()
+  if (floorTypeArr.length){
+    let length = floorTypeArr.length;
+    if (floorTypeArr.indexOf(1) > -1) {
+      floorTypeArr[floorTypeArr.indexOf(1)] = "-1,1";
+    }
+    if (floorTypeArr.indexOf(3) > -1) {
+      floorTypeArr[floorTypeArr.indexOf(3)] = "3,999";
+    }
+    let floorType = "";
+    for (let temp = 0; temp < length; temp++) {
+      if (temp) {
+        floorType += ",";
+      }
+      floorType += floorTypeArr[temp];
+    }
+    obj.floortype = floorType;
+  }
+  //装修
+  let decoratetypeArr = searchData.secondHouseDecorationMap.concat()
+  if (decoratetypeArr.length){
+    obj.decoratetype = decoratetypeArr.join(',')
+  }
+  //用途
+  let housetypeArr = searchData.secondHouseUseMap.concat()
+  if (housetypeArr.length) {
+    obj.housetype = housetypeArr.join(',')
+  }
+  //标签
+  let secondHouseTagArr = searchData.secondHouseTagMap.concat()
+  if (secondHouseTagArr.length){
+    let length = secondHouseTagArr.length;
+    if (secondHouseTagArr.indexOf(1) > -1) {
+      secondHouseTagArr[secondHouseTagArr.indexOf(1)] = 8;
+    }
+    if (secondHouseTagArr.indexOf(2) > -1) {
+      secondHouseTagArr[secondHouseTagArr.indexOf(2)] = 16;
+    }
+    if (secondHouseTagArr.indexOf(3) > -1) {
+      secondHouseTagArr[secondHouseTagArr.indexOf(3)] = 1;
+    }
+    if (secondHouseTagArr.indexOf(5) > -1) {
+      secondHouseTagArr[secondHouseTagArr.indexOf(5)] = 4097;
+    }
+    if (secondHouseTagArr.indexOf(6) > -1) {
+      secondHouseTagArr[secondHouseTagArr.indexOf(6)] = 2;
+    }
+
+    let tags = "";
+    for (let temp = 0; temp < length; temp++) {
+      if (temp) {
+        tags += ",";
+      }
+      tags += secondHouseTagArr[temp];
+    }
+    obj.tag = tags;
+  }
+  //排序
+  if (searchData.secondSortTypeMap){
+    if (searchData.secondSortTypeMap ===1){
+      obj.psort = 1
+    }
+    if (searchData.secondSortTypeMap === 2) {
+      obj.psort = 3
+    }
+  }
+  if (keysword) {
+    obj.keywords = searchData.area;
+  }
+
+  return obj;
+}
+const ljSecondScreenParam = type => {
+  const app = getApp();
+  let searchData =
+    type == 1
+      ? app.globalData.secondSearchData
+      : app.globalData.monitorSecondSearchData;
+  let obj = [];
+  let condition = "";
+
+  // 价钱
+  let minPrice = searchData.minPrice;
+  let maxPrice = searchData.maxPrice;
+  if (minPrice === "") { minPrice = searchData.placeholderMinPrice }
+  if (maxPrice === "") { maxPrice = searchData.placeholderMaxPrice }
+  condition += "bp" + minPrice + "ep" + maxPrice;
+  // 户型 一室、两室、三室，四室，四室及以上
+  let longLayouts = searchData.secondLayoutMap.concat();
+  if (longLayouts.length) {
+    if (longLayouts.indexOf(1) > -1) {
+      condition += "l1";
+    }
+    if (longLayouts.indexOf(2) > -1) {
+      condition += "l2";
+    }
+    if (longLayouts.indexOf(3) > -1) {
+      condition += "l3";
+    }
+    if (longLayouts.indexOf(4) > -1) {
+      condition += "l4";
+    }
+    if (longLayouts.indexOf(5) > -1) {
+      condition += "l5";
+    }
+  }
+  //建筑面积
+  let minArea = searchData.minArea;
+  let maxArea = searchData.maxArea;
+  condition += "ba" + minArea + "ea" + maxArea;
+  //朝向
+  let headingArr = searchData.secondHeadingMap.concat()
+  if (headingArr.length) {
+    if (headingArr.indexOf(1) > -1) {
+      condition += "f1";
+    }
+    if (headingArr.indexOf(2) > -1) {
+      condition += "f3";
+    }
+    if (headingArr.indexOf(3) > -1) {
+      condition += "f2";
+    }
+    if (headingArr.indexOf(4) > -1) {
+      condition += "f4";
+    }
+    if (headingArr.indexOf(10) > -1) {
+      condition += "f5";
+    }
+  }
+  //楼龄
+  if (searchData.secondBuildingAgeMap) {
+    condition += "y" + searchData.secondBuildingAgeMap;
+  }
+  //楼层
+  let floorTypeArr = searchData.secondFloorTypeMap.concat()
+  if (floorTypeArr.length) {
+    if (floorTypeArr.indexOf(1)){
+      condition += "lc1";
+    }
+    if (floorTypeArr.indexOf(2)) {
+      condition += "lc2";
+    }
+    if (floorTypeArr.indexOf(3)) {
+      condition += "lc3";
+    }
+  }
+  //装修
+  let decoratetypeArr = searchData.secondHouseDecorationMap.concat()
+  if (decoratetypeArr.length) {
+    if (decoratetypeArr.indexOf(1)) {
+      condition += "de3";
+    }
+    if (decoratetypeArr.indexOf(2)) {
+      condition += "de2";
+    }
+    if (decoratetypeArr.indexOf(3)) {
+      condition += "de1";
+    }
+  }
+  //用途
+  let housetypeArr = searchData.secondHouseUseMap.concat()
+  if (housetypeArr.length) {
+    if (housetypeArr.indexOf(1)) {
+      condition += "sf1";
+    }
+    if (housetypeArr.indexOf(2)) {
+      condition += "sf3";
+    }
+    if (housetypeArr.indexOf(3)) {
+      condition += "sf2sf4sf6sf5";
+    }
+  }
+}
 //添加开启短租监控参数
 const addMonitorData = addData=>{
   const app = getApp()
