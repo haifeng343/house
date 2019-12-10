@@ -185,7 +185,7 @@ App({
       areaType: 0, //地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
       areaJson: "", //json
       minPrice: "", //最低价
-      maxPrice: "", //最高价 不限"9999"
+      maxPrice: "", //最高价 不限"99999"
       placeholderMinPrice: "100", //城市最低价格
       placeholderMaxPrice: "200", //城市最高价格
       minArea: 0, //最低面积

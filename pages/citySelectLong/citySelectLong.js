@@ -60,8 +60,8 @@ Page({
     data.areaId = {}
     data.areaType = 0
     data.areaJson = ''
-    app.globalData.searchLongData = {...data}
-    app.globalData.secondSearchData = {...data}
+    app.globalData.searchLongData = { ...app.globalData.searchLongData, ...data}
+    app.globalData.secondSearchData = { ...app.globalData.secondSearchData, ...data}
 
     //搜索城市历史(长租)
     let history = {}
