@@ -704,7 +704,7 @@ const getSecondLianjiaData = (type, lianjiafilter = []) => {
         "size": 50,
         "num": 1
       },
-      "filter": lianjiafilter
+      "filterList": lianjiafilter
     }).then(res => {
         if(res){
           console.log(res)

@@ -16,21 +16,6 @@ var base64_encode = require("../utils/base64.js").base64_encode;
 import { CryptoJS } from "../utils/sha1.js";
 import { xml2json } from "../utils/xml2json.js";
 import MD5 from "../utils/md5";
-const LIAN_APP_VER = "9.4.4";
-
-/**
- * 链家通用http头
- * @type {{Cookie: string, "Lianjia-Channel": string, Authorization, "Lianjia-Im-Version": string, extension: string, "Lianjia-Version": string, "User-Agent": string, "Accept-Encoding": string, "Lianjia-Device-Id": string, "Content-Type": string}}
- */
-const lianjiaHeader = {
-  'Content-Type': 'application/x-www-form-urlencoded',
-  Cookie: 'lianjia_udid=8d908d6ae59594fa;lianjia_ssid=8f4b1b0c-d46d-4028-a357-904cd39b6feb;lianjia_uuid=01d65f7d-0ba1-456b-813b-69b74f8fb4c6',
-  extension: 'lj_duid=null&lj_android_id=8d908d6ae59594fa&lj_device_id_android=8d908d6ae59594fa&mac_id=50:8F:4C:5B:E5:0A',
-  // 'User-Agent': 'HomeLink' + LIAN_APP_VER + ';xiaomi Redmi+Note+4X; Android 7.0',
-  'Lianjia-Channel': 'Android_Xiaomi',
-  'Lianjia-Device-Id': '8d908d6ae59594fa',
-  'Lianjia-Version': LIAN_APP_VER
-};
 
 /**
  * 链家签名算法
@@ -414,26 +399,42 @@ const lianjia = {
      * 亮点信息查看 标签信息
      * @returns {*}
      */
-  ershouSearch: function ({ city, page = DEFAULT_PAGE, filter = {}}) {
-    return new Promise((resolve, reject) => {
-      wx.request({
-        url: api_address + "/house/search/ershou",
-        method: "POST",
-        header: {},
-        data: {
-          lj: { city, page, filter }
-        },
-        success: res => {
-          if (res.data.lj) {
-            resolve(res.data.lj);
-          } else {
+  ershouSearch: function ({ city, page = DEFAULT_PAGE, filterList = []}) {
+    const promiseList = [];
+    for (const filter of filterList) {
+      promiseList.push(new Promise((resolve, reject) => {
+        wx.request({
+          url: api_address + "/house/search/ershou",
+          method: "POST",
+          header: {},
+          data: {
+            lj: { city, page, filter }
+          },
+          success: res => {
+            if (res.data.lj) {
+              resolve(res.data.lj);
+            } else {
+              reject(false);
+            }
+          },
+          fail: res => {
             reject(false);
           }
-        },
-        fail: res => {
-          reject(false);
+        });
+      }));
+    }
+
+    return Promise.all(promiseList).then(resp => {
+      let found = false;
+      for (const r of resp) {
+        if (r.data.list.length > 0) {
+          found = true;
+          return Promise.resolve(r);
         }
-      });
+      }
+      if (found === false) {
+        return Promise.resolve(resp[0]);
+      }
     });
   },
   // type: bizcircle（商圈）， station（地铁站）， resblock（小区）， district（行政区）
