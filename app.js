@@ -198,14 +198,6 @@ App({
       secondBuildingAgeMap: 0, //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
       secondLayoutMap: [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
       secondSortTypeMap: 0, //房源偏好 1: 低总价优先 2: 低单价优先
-      secondHouseDecorationMap: [], //装修  1: 精装修 2: 普通装修 3: 毛坯房
-      secondHouseTagMap:[], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
-      secondHeadingMap:[], //朝向 1: 朝东 2: 朝西 3: 朝南 4: 朝北 10: 南北通透
-      secondFloorTypeMap:[], //楼层 1: 低楼层 2: 中楼层 3: 高楼层
-      secondHouseUseMap:[], //用途 1: 普通住宅 2: 别墅 3: 其他
-      secondBuildingAgeMap:0, //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 10: 20年以上
-      secondLayoutMap:[], //户型 1: 一室 2: 二室 3: 三室 4: 四室 12: 四室以上
-      secondSortTypeMap: 0, //房源偏好 1: 低总价优先 2: 低单价优先  3.最新发布
     },
     hotPosition: []
   }
