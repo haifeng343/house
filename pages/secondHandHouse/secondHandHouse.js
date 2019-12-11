@@ -53,10 +53,8 @@ Page({
   onLoad: function(options) {
     //1品牌中介，2个人房源
     let x = app.globalData.searchLongData;
-    let wiwjfilter = house.wiwjScreenParam(1);
-    let ljfilter = house.ljScreenParam(1);
-    let ftxfilter = house.ftxScreenParam(1);
-    let tcfilter = house.tcScreenParam(1);
+    let wiwjfilter = house.wiwjSecondScreenParam(1);
+    let ljfilter = house.ljSecondScreenParam(1);
     new positionService().getSearchHoset(x.city, x.chooseType).then(resp => {
       const positionData = resp.data;
       this.setData({
@@ -67,18 +65,12 @@ Page({
         listSortType: 1,
         wiwjfilter,
         ljfilter,
-        ftxfilter,
-        tcfilter,
         searchLongData: Object.assign({}, x),
         chooseType: x.chooseType, //1品牌中介，2个人房源
         longSortTypes: x.longSortTypes //1: 低价优先, 2: 空间优先, 3: 最新发布
       },
       () => {
-        // if (x.chooseType === 1) {
-          this.getAllBrandData();
-        // } else {
-        //   this.getAllPersonalData();
-        // }
+        this.getAllBrandData();
         this.getIndexLongHouseData();
       }
     );
@@ -268,13 +260,13 @@ Page({
     let enoughList = [];
     let wiwjDataObj = await house.getSecondWiwjData(1, this.data.wiwjfilter);
     let lianjiaDataObj = await house.getSecondLianjiaData(1, this.data.ljfilter);
-    // if (wiwjDataObj && lianjiaDataObj) {
-    //   this.setData({
-    //     loadingDisplay: "none",
-    //     countFlag: 2
-    //   });
-    //   return;
-    // }
+    if (wiwjDataObj.network && lianjiaDataObj.network) {
+      this.setData({
+        loadingDisplay: "none",
+        countFlag: 2
+      });
+      return;
+    }
     console.log(wiwjDataObj);
     console.log(lianjiaDataObj);
     let wiwjData = wiwjDataObj.arr || [];
@@ -554,7 +546,7 @@ Page({
         title: res.data.resultMsg,
         duration: 2000
       });
-      app.switchRent = 2;
+      app.switchRent = 3;
       wx.switchTab({
         url: "../monitor/monitor"
       });

@@ -749,48 +749,20 @@ const getWiwjData = (type, wiwjfilter = {}) => {
   });
 };
 const getSecondWiwjData = (type, wiwjfilter = {}) => {
-  // let app = getApp();
+  let app = getApp();
   let wiwjCount = 0;
-  // let y =
-  //   type == 1
-  //     ? app.globalData.searchLongData
-  //     : app.globalData.monitorSearchLongData;
-  // return new Promise((resolve, reject) => {
-  //   longrent.wiwj
-  //     .rentSearch({
-  //       city: y.cityId.wiwj,
-  //       page: { num: 1, size: 50 },
-  //       filter: wiwjfilter
-  //     })
-  //     .then(res => {
-  //       if (res) {
-  //         wiwjCount = res.data.count;
-  //         resolve({
-  //           arr: res.data.list && res.data.list.slice(0, 50),
-  //           wiwjCount
-  //         });
-  //       }
-  //     })
-  //     .catch(e => {
-  //       resolve({
-  //         network: true
-  //       });
-  //     });
-  // });
+  let y =
+    type == 1
+      ? app.globalData.secondSearchData
+      : app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
     secondApi.wiwj.ershouSearch({
-      "city": 2,
+      "city": y.cityId.wiwj,
       "page": {
         "size": 50,
         "num": 1
       },
-      "filter": {
-        "price": "160,200",
-        "broom": "2",
-        "buildarea": "0,50",
-        "heading": "10",
-        "keywords": "西湖"
-      }
+      "filter": wiwjfilter
     }).then(res => {
       if (res) {
         wiwjCount = res.data.count;
