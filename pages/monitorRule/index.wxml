@@ -27,7 +27,7 @@
     </view>
     <view class="item">
       <text class="icon">●</text>
-      <view class="text">长租、短租各可添加 3 个监控</view>
+      <view class="text">长租、短租、二手房各可添加3个监控</view>
     </view>
     <view class="item">
       <text class="icon">●</text>
@@ -35,6 +35,7 @@
         <view class="list">每个任务单独收费</view>
         <view class="list">短租收费标准<text class="tag">{{hourMoney}} 币/小时</text></view>
         <view class="list">长租收费标准<text class="tag">{{hourLongMoney}} 币/小时</text></view>
+        <view class="list">二手房收费标准<text class="tag">{{hourSecondMoney}} 币/小时</text></view>
       </view>
     </view>
   </view>  

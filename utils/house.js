@@ -3262,7 +3262,47 @@ const ljSecondScreenParam = type => {
       : app.globalData.monitorSecondSearchData;
   let obj = [];
   let condition = "";
-
+  //筛选
+  let areaType = searchData.areaType;
+  //判断是否为关键字搜索
+  let keysword = false;
+  //区域
+  if (areaType == 10) {
+    if (searchData.areaId.lj) {
+      condition = searchData.areaId.lj + "/";
+    } else {
+      keysword = true;
+    }
+  }
+  if (areaType == 20 || areaType == 30) {
+    if (searchData.areaId.lj) {
+      condition = searchData.areaId.lj;
+    } else {
+      keysword = true;
+    }
+  }
+  if (areaType == 40) {
+    keysword = true;
+  }
+  if (areaType == 50) {
+    if (searchData.areaId.lj && searchData.areaId.lj.id) {
+      condition +=
+        "li" +
+        searchData.areaId.lj.lineid +
+        "s" +
+        searchData.areaId.lj.id +
+        "/";
+    } else {
+      keysword = true;
+    }
+  }
+  if (areaType == 60) {
+    // if (searchData.areaId.nearby) {
+    //   condition += "lon" + searchData.areaId.longitude;
+    //   condition += "lat" + searchData.areaId.latitude;
+    //   condition += "poi" + parseInt(searchData.areaId.nearby) * 1000;
+    // }
+  }
   // 价钱
   let minPrice = searchData.minPrice;
   let maxPrice = searchData.maxPrice;
@@ -3354,6 +3394,46 @@ const ljSecondScreenParam = type => {
       condition += "sf2sf4sf6sf5";
     }
   }
+
+  //标签
+  let secondHouseTagArr = searchData.secondHouseTagMap.concat();
+  if (secondHouseTagArr.length) {
+    if (secondHouseTagArr.indexOf(1) > -1) {
+      condition += "ty1";
+    }
+    if (secondHouseTagArr.indexOf(2) > -1) {
+      condition += "mw1";
+    }
+    if (secondHouseTagArr.indexOf(3) > -1) {
+      condition += "su1";
+    }
+    if (secondHouseTagArr.indexOf(4) > -1) {
+      condition += "tt4";
+    }
+    if (secondHouseTagArr.indexOf(5) > -1) {
+      condition += "tt8";
+    }
+    if (secondHouseTagArr.indexOf(6) > -1) {
+      condition += "tt2";
+    }
+  }
+
+  if (keysword) {
+    let area = searchData.area;
+    area = area.replace("（", "(", "ig").replace("）", ")", "ig");
+    if (area.includes("(")) {
+      const formatArea = area.replace(")", "", "ig");
+      const areaArr = formatArea.split("(");
+      for (const a of areaArr) {
+        obj.push(condition + "rs" + a);
+      }
+    } else {
+      obj.push(condition + "rs" + area);
+    }
+  } else {
+    obj.push(condition);
+  }
+  return obj
 }
 //添加开启短租监控参数
 const addMonitorData = addData=>{
@@ -3782,6 +3862,8 @@ module.exports = {
   ljScreenParam,
   ftxScreenParam,
   tcScreenParam,
+  wiwjSecondScreenParam,
+  ljSecondScreenParam,
   houseShortFilter,
   houseLongFilter,
   addMonitorData,
