@@ -3104,14 +3104,14 @@ const wiwjSecondScreenParam = type=>{
   //区域
   if (areaType == 10) {
     if (searchData.areaId.wiwj) {
-      obj.districtids = searchData.areaId.wiwj;
+      obj.districtid = searchData.areaId.wiwj;
     } else {
       keysword = true;
     }
   }
   if (areaType == 20) {
     if (searchData.areaId.wiwj) {
-      obj.sqids = searchData.areaId.wiwj;
+      obj.sqid = searchData.areaId.wiwj;
     } else {
       keysword = true;
     }
@@ -3141,8 +3141,7 @@ const wiwjSecondScreenParam = type=>{
   }
   if (areaType == 60) {
     if (searchData.areaId.nearby) {
-      obj.lng = searchData.areaId.longitude;
-      obj.lat = searchData.areaId.latitude;
+      obj.location = searchData.areaId.latitude+','+searchData.areaId.longitude;
       obj.nearby = searchData.areaId.nearby;
     }
   }
