@@ -1,5 +1,6 @@
 const houseApi = require("../api/houseApi.js");
 const util = require("../utils/util.js");
+const secondApi = require("../api/longrent.js"); //二手房
 const longrent = require("../api/longrent");
 /**
  * 获取途家平台数据
@@ -150,6 +151,134 @@ const getXzData = (type, xzfilter) => {
  * 获取木鸟平台数据
  * type 1 房源列表；2监控详情
  */
+// const getMnData = (type, mnfilter) => {
+//   let app = getApp();
+//   let arr2 = [];
+//   let mnCount = 0;
+//   let y =
+//     type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
+//   let s = app.globalData.mnSwitch;
+//   let data = {
+//     platform: "mn",
+//     cityId: y.cityId.mn,
+//     page: {
+//       size: 15,
+//       num: 1
+//     },
+//     filter: mnfilter
+//   };
+//   let data2 = {
+//     platform: "mn",
+//     cityId: y.cityId.mn,
+//     page: {
+//       size: 15,
+//       num: 2
+//     },
+//     filter: mnfilter
+//   };
+//   let data3 = {
+//     platform: "mn",
+//     cityId: y.cityId.mn,
+//     page: {
+//       size: 15,
+//       num: 3
+//     },
+//     filter: mnfilter
+//   };
+//   let data4 = {
+//     platform: "mn",
+//     cityId: y.cityId.mn,
+//     page: {
+//       size: 15,
+//       num: 4
+//     },
+//     filter: mnfilter
+//   };
+//   return new Promise((resolve, reject) => {
+//     if (!s) {
+//       resolve({
+//         arr: [],
+//         mnCount: -1 // -1 表示不查询该平台数据
+//       });
+//       return;
+//     }
+//     if (y.areaType && y.area) {
+//       if (y.areaId.hasOwnProperty("mn") && !y.areaId.mn) {
+//         mnCount = 0;
+//         resolve({
+//           arr: [],
+//           mnCount
+//         });
+//         return;
+//       }
+//     }
+//     houseApi
+//       .getMnList(data)
+//       .then(res => {
+//         if (res) {
+//           arr2 = res.data.rooms.list;
+//           mnCount = Number(res.data.rooms.page.record_count);
+//         }
+//         if (res) {
+//           return houseApi.getMnList(data2);
+//         }
+//         if (!res) {
+//           resolve({
+//             network: true
+//           });
+//         }
+//       })
+//       .then(res => {
+//         if (res) {
+//           arr2.push.apply(arr2, res.data.rooms.list);
+//         }
+//         if (res && arr2.length == 0) {
+//           mnCount = Number(res.data.rooms.page.record_count);
+//         }
+//         if (res) {
+//           return houseApi.getMnList(data3);
+//         }
+//         if (!res) {
+//           let arr = arr2.slice(0, 50);
+//           resolve({
+//             arr,
+//             mnCount
+//           });
+//         }
+//       })
+//       .then(res => {
+//         if (res) {
+//           arr2.push.apply(arr2, res.data.rooms.list);
+//         }
+//         if (res && arr2.length == 0) {
+//           mnCount = Number(res.data.rooms.page.record_count);
+//         }
+//         if (res) {
+//           return houseApi.getMnList(data4);
+//         }
+//         if (!res) {
+//           let arr = arr2.slice(0, 50);
+//           resolve({
+//             arr,
+//             mnCount
+//           });
+//         }
+//       })
+//       .then(res => {
+//         if (res) {
+//           arr2.push.apply(arr2, res.data.rooms.list);
+//         }
+//         if (res && arr2.length == 0) {
+//           mnCount = Number(res.data.rooms.page.record_count);
+//         }
+//         let arr = arr2.slice(0, 50);
+//         resolve({
+//           arr,
+//           mnCount
+//         });
+//       });
+//   });
+// };
 const getMnData = (type, mnfilter) => {
   let arr2 = [];
   let mnCount = 0;
@@ -590,14 +719,17 @@ const getWiwjData = (type, wiwjfilter = {}) => {
   let app = getApp();
   let wiwjCount = 0;
   let y =
-    type == 1
-      ? app.globalData.searchLongData
-      : app.globalData.monitorSearchLongData;
+    type == 1 ?
+    app.globalData.searchLongData :
+    app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
     longrent.wiwj
       .rentSearch({
         city: y.cityId.wiwj,
-        page: { num: 1, size: 50 },
+        page: {
+          num: 1,
+          size: 50
+        },
         filter: wiwjfilter
       })
       .then(res => {
@@ -616,7 +748,64 @@ const getWiwjData = (type, wiwjfilter = {}) => {
       });
   });
 };
-
+const getSecondWiwjData = (type, wiwjfilter = {}) => {
+  // let app = getApp();
+  let wiwjCount = 0;
+  // let y =
+  //   type == 1
+  //     ? app.globalData.searchLongData
+  //     : app.globalData.monitorSearchLongData;
+  // return new Promise((resolve, reject) => {
+  //   longrent.wiwj
+  //     .rentSearch({
+  //       city: y.cityId.wiwj,
+  //       page: { num: 1, size: 50 },
+  //       filter: wiwjfilter
+  //     })
+  //     .then(res => {
+  //       if (res) {
+  //         wiwjCount = res.data.count;
+  //         resolve({
+  //           arr: res.data.list && res.data.list.slice(0, 50),
+  //           wiwjCount
+  //         });
+  //       }
+  //     })
+  //     .catch(e => {
+  //       resolve({
+  //         network: true
+  //       });
+  //     });
+  // });
+  return new Promise((resolve, reject) => {
+    secondApi.wiwj.ershouSearch({
+      "city": 2,
+      "page": {
+        "size": 50,
+        "num": 1
+      },
+      "filter": {
+        "price": "160,200",
+        "broom": "2",
+        "buildarea": "0,50",
+        "heading": "10",
+        "keywords": "西湖"
+      }
+    }).then(res => {
+      if (res) {
+        wiwjCount = res.data.count;
+        resolve({
+          arr: res.data.list.slice(0, 50) || [],
+          wiwjCount
+        })
+      }
+    }).catch(e => {
+      resolve({
+        network: true
+      });
+    })
+  })
+};
 /**
  * 获取链家平台数据
  * type 1 房源列表；2监控详情
@@ -625,14 +814,17 @@ const getLianjiaData = (type, lianjiafilter = []) => {
   let app = getApp();
   let lianjiaCount = 0;
   let y =
-    type == 1
-      ? app.globalData.searchLongData
-      : app.globalData.monitorSearchLongData;
+    type == 1 ?
+    app.globalData.searchLongData :
+    app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
     longrent.lianjia
       .rentSearch({
         city: y.cityId.lj,
-        page: { num: 1, size: 50 },
+        page: {
+          num: 1,
+          size: 50
+        },
         filterList: lianjiafilter
       })
       .then(res => {
@@ -652,6 +844,63 @@ const getLianjiaData = (type, lianjiafilter = []) => {
   });
 };
 
+const getSecondLianjiaData = (type, lianjiafilter = []) => {
+  // let app = getApp();
+  let lianjiaCount = 0;
+  // let y =
+  //   type == 1
+  //     ? app.globalData.searchLongData
+  //     : app.globalData.monitorSearchLongData;
+  // return new Promise((resolve, reject) => {
+  //   longrent.lianjia
+  //     .rentSearch({
+  //       city: y.cityId.lj,
+  //       page: { num: 1, size: 50 },
+  //       filterList: lianjiafilter
+  //     })
+  //     .then(res => {
+  //       if (res) {
+  //         lianjiaCount = res.data.total;
+  //         resolve({
+  //           arr: res.data.list && res.data.list.slice(0, 50),
+  //           lianjiaCount
+  //         });
+  //       }
+  //     })
+  //     .catch(e => {
+  //       resolve({
+  //         network: true
+  //       });
+  //     });
+  // });
+  return new Promise((resolve, reject) => {
+    secondApi.lianjia.ershouSearch({
+      "city": 330101,
+      "page": {
+        "size": 15,
+        "num": 1
+      },
+      "filter": {
+        "condition": "ep500bp400"
+      }
+    }).then(res => {
+        if(res){
+          console.log(res)
+          lianjiaCount = res.total_count;
+          resolve({
+            arr: res.list.slice(0, 50),
+            lianjiaCount
+          });
+        }
+    })
+    .catch(e => {
+      resolve({
+        network: true
+      });
+    });
+  })
+};
+
 /**
  * 获取房天下平台数据
  * type 1 房源列表；2监控详情
@@ -660,24 +909,26 @@ const getFangtianxiaData = (type, fangtianxiafilter = {}) => {
   let app = getApp();
   let fangtianxiaCount = 0;
   let y =
-    type == 1
-      ? app.globalData.searchLongData
-      : app.globalData.monitorSearchLongData;
+    type == 1 ?
+    app.globalData.searchLongData :
+    app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
     longrent.fangtianxia
       .rentSearch({
         city: y.cityId.ftx,
-        page: { num: 1, size: 50 },
+        page: {
+          num: 1,
+          size: 50
+        },
         filter: fangtianxiafilter
       })
       .then(res => {
         if (res) {
           fangtianxiaCount = Number(res.houses.housecount);
           resolve({
-            arr:
-              res.houses.houseinfo && Array.isArray(res.houses.houseinfo)
-                ? res.houses.houseinfo.slice(0, 50)
-                : [res.houses.houseinfo],
+            arr: res.houses.houseinfo && Array.isArray(res.houses.houseinfo) ?
+              res.houses.houseinfo.slice(0, 50) :
+              [res.houses.houseinfo],
             fangtianxiaCount
           });
         }
@@ -699,14 +950,17 @@ const getWbtcData = (type, wbtcfilter = {}) => {
   let wbtcCount = 0;
   let arr = [];
   let y =
-    type == 1
-      ? app.globalData.searchLongData
-      : app.globalData.monitorSearchLongData;
+    type == 1 ?
+    app.globalData.searchLongData :
+    app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
     longrent.wbtc
       .rentSearch({
         city: y.cityId.tc,
-        page: { num: 1, size: 50 },
+        page: {
+          num: 1,
+          size: 50
+        },
         filter: wbtcfilter
       })
       .then(res => {
@@ -724,7 +978,10 @@ const getWbtcData = (type, wbtcfilter = {}) => {
         if (res && arr.length < 50 && arr.length < wbtcCount) {
           return longrent.wbtc.rentSearch2({
             city: y.cityId.tc,
-            page: { num: 2, size: 50 },
+            page: {
+              num: 2,
+              size: 50
+            },
             filter: wbtcfilter
           });
         } else {
@@ -1367,9 +1624,9 @@ const getHouseData = data => {
         zgObjs.pictureAllList = zgObj.productImages;
         zgObjs.preloadDetail =
           zgObj.rentLayoutDesc + "/" + zgObj.guestNumberDesc;
-        zgObjs.finalPrice = zgObj.discountPrice
-          ? zgObj.discountPrice / 100
-          : zgObj.price / 100;
+        zgObjs.finalPrice = zgObj.discountPrice ?
+          zgObj.discountPrice / 100 :
+          zgObj.price / 100;
         zgObjs.productId = zgObj.productId;
         zgObjs.priceTag = util.arrFilter(zgObj.productTagList, "tagId", 30);
         zgObjs.oriPrice = zgObj.price / 100
@@ -1408,11 +1665,16 @@ const getHouseData = data => {
   }
 
   //平均价
-  let average =
-    allData.length > 0
+  let average =allData.length > 0
       ? allData.reduce((sum, { finalPrice }) => sum + finalPrice, 0) /
       allData.length
       : 0;
+    allData.length > 0 ?
+    allData.reduce((sum, {
+      finalPrice
+    }) => sum + finalPrice, 0) /
+    allData.length :
+    0;
   let sortArr = [...allData];
   let tjSortArr = [...tjFilterData];
   let xzSortArr = [...xzFilterData];
@@ -1420,8 +1682,7 @@ const getHouseData = data => {
   let zgSortArr = [...zgFilterData];
 
   //所有最低价
-  let lowPrice =
-    allData.length > 0
+  let lowPrice = allData.length > 0
       ? Math.min.apply(
         Math,
         allData.map(function (o) {
@@ -1429,6 +1690,14 @@ const getHouseData = data => {
         })
       )
       : 0;
+    allData.length > 0 ?
+    Math.min.apply(
+      Math,
+      allData.map(function(o) {
+        return o.finalPrice;
+      })
+    ) :
+    0;
 
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("finalPrice", "asc"));
@@ -1494,8 +1763,7 @@ const getMonitorHouseData = (list, mSelect) => {
         logoUrl: houseList[i].data.logoUrl,
         pictureList: houseList[i].data.pictureList.slice(0, 1),
         pictureAllList: houseList[i].data.pictureList,
-        preloadDetail:
-          houseList[i].data.preloadDetail.baseBrief[0].title +
+        preloadDetail: houseList[i].data.preloadDetail.baseBrief[0].title +
           "/" +
           houseList[i].data.preloadDetail.baseBrief[1].title +
           "/" +
@@ -1520,8 +1788,7 @@ const getMonitorHouseData = (list, mSelect) => {
         logoUrl: houseList[i].data.landlordheadimgurl,
         pictureList: houseList[i].data.coverImages.slice(0, 1),
         pictureAllList: houseList[i].data.coverImages,
-        preloadDetail:
-          houseList[i].data.luLeaseType +
+        preloadDetail: houseList[i].data.luLeaseType +
           "/" +
           houseList[i].data.houseTypeInfo +
           "/" +
@@ -1565,8 +1832,7 @@ const getMonitorHouseData = (list, mSelect) => {
         logoUrl: houseList[i].data.image_host,
         pictureList: houseList[i].data.image_list.slice(0, 1),
         pictureAllList: houseList[i].data.image_list,
-        preloadDetail:
-          houseList[i].data.rent_type +
+        preloadDetail: houseList[i].data.rent_type +
           "/" +
           houseList[i].data.source_type +
           "/宜住" +
@@ -1590,13 +1856,12 @@ const getMonitorHouseData = (list, mSelect) => {
         logoUrl: houseList[i].data.hostAvatarUrl,
         pictureList: houseList[i].data.productImages.slice(0, 1),
         pictureAllList: houseList[i].data.productImages,
-        preloadDetail:
-          houseList[i].data.rentLayoutDesc +
+        preloadDetail: houseList[i].data.rentLayoutDesc +
           "/" +
           houseList[i].data.guestNumberDesc,
-        finalPrice: houseList[i].data.discountPrice
-          ? houseList[i].data.discountPrice / 100
-          : houseList[i].data.price / 100,
+        finalPrice: houseList[i].data.discountPrice ?
+          houseList[i].data.discountPrice / 100 :
+          houseList[i].data.price / 100,
         productId: houseList[i].data.productId,
         priceTag: util.arrFilter(houseList[i].data.productTagList, "tagId", 30),
         oriPrice: houseList[i].data.price / 100,
@@ -1620,11 +1885,16 @@ const getMonitorHouseData = (list, mSelect) => {
     }
   }
   //平均价
-  let average =
-    allData.length > 0
+  let average =allData.length > 0
       ? allData.reduce((sum, { finalPrice }) => sum + finalPrice, 0) /
       allData.length
       : 0;
+    allData.length > 0 ?
+    allData.reduce((sum, {
+      finalPrice
+    }) => sum + finalPrice, 0) /
+    allData.length :
+    0;
   let sortArr = [...allData];
   let tjSortArr = [...tjFilterData];
   let xzSortArr = [...xzFilterData];
@@ -1632,8 +1902,7 @@ const getMonitorHouseData = (list, mSelect) => {
   let zgSortArr = [...zgFilterData];
 
   //所有最低价
-  let lowPrice =
-    allData.length > 0
+  let lowPrice =allData.length > 0
       ? Math.min.apply(
         Math,
         allData.map(function (o) {
@@ -1641,6 +1910,14 @@ const getMonitorHouseData = (list, mSelect) => {
         })
       )
       : 0;
+    allData.length > 0 ?
+    Math.min.apply(
+      Math,
+      allData.map(function(o) {
+        return o.finalPrice;
+      })
+    ) :
+    0;
 
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("finalPrice", "asc"));
@@ -1785,13 +2062,12 @@ const getBrandHouseData = data => {
           imgurl: wiwjData[i].imgurl,
           price: Number(wiwjData[i].price),
           housetitle: wiwjData[i].housetitle,
-          introduce:
-            wiwjData[i].BaseDetail.area +
+          introduce: wiwjData[i].BaseDetail.area +
             "㎡/" +
             wiwjData[i].BaseDetail.floorStr +
             "/" +
             wiwjData[i].BaseDetail.heading,
-          address: wiwjData[i].qyname + "." + wiwjData[i].sqname,
+          address: wiwjData[i].qyname + "·" + wiwjData[i].sqname,
           tagwall: wiwjData[i].tagwall,
           area: Number(wiwjData[i].BaseDetail.area)
         };
@@ -1818,14 +2094,12 @@ const getBrandHouseData = data => {
           imgurl: lianjiaData[i].list_picture,
           price: Number(lianjiaData[i].rent_price_listing),
           housetitle: lianjiaData[i].house_title,
-          introduce:
-            lianjiaData[i].rent_area +
+          introduce: lianjiaData[i].rent_area +
             "㎡/" +
             lianjiaData[i].layout +
             "/" +
             lianjiaData[i].frame_orientation,
-          address:
-            lianjiaData[i].district_name + "." + lianjiaData[i].bizcircle_name,
+          address: lianjiaData[i].district_name + "." + lianjiaData[i].bizcircle_name,
           tagwall: lianjiaTagwall(lianjiaData[i].house_tags),
           area: Number(lianjiaData[i].rent_area)
         };
@@ -1848,16 +2122,17 @@ const getBrandHouseData = data => {
   }
   //平均价
   let average =
-    allData.length > 0
-      ? allData.reduce((sum, { price }) => sum + price, 0) / allData.length
-      : 0;
+    allData.length > 0 ?
+    allData.reduce((sum, {
+      price
+    }) => sum + price, 0) / allData.length :
+    0;
   let sortArr = [...allData];
   let areasortArr = [...allData];
   let wiwjSortArr = [...wiwjFilterData];
   let lianjiaSortArr = [...lianjiaFilterData];
   //所有最低价
-  let lowPrice =
-    allData.length > 0
+  let lowPrice =allData.length > 0
       ? Math.min.apply(
         Math,
         allData.map(function (o) {
@@ -1865,6 +2140,171 @@ const getBrandHouseData = data => {
         })
       )
       : 0;
+    allData.length > 0 ?
+    Math.min.apply(
+      Math,
+      allData.map(function(o) {
+        return o.price;
+      })
+    ) :
+    0;
+
+  //所有房源最低价格的数据
+  sortArr.sort(util.compareSort("price", "asc"));
+  let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
+  let y = data.type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData;
+  if (y.advSort == 1) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("price", "asc"));
+    allData = allArr
+  }
+  if (y.advSort == 11) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("price", "desc"));
+    allData = allArr
+  }
+  if (y.advSort == 2) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("area", "desc"));
+    allData = allArr
+  }
+  if (y.advSort == 21) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("area", "asc"));
+    allData = allArr
+  }
+  //所有房源面积最大
+  areasortArr.sort(util.compareSort("area", "desc"));
+  let highAreaData = areasortArr.length > 0 ? areasortArr[0] : "";
+  //我爱我家最低价格数据
+  wiwjSortArr.sort(util.compareSort("price", "asc"));
+  let wiwjLowPriceData = wiwjSortArr.length > 0 ? wiwjSortArr[0] : "";
+  //链家最低价格数据
+  lianjiaSortArr.sort(util.compareSort("price", "asc"));
+  let lianjiaLowPriceData = lianjiaSortArr.length > 0 ? lianjiaSortArr[0] : "";
+
+  return {
+    allData,
+    allCount,
+    averagePrice: parseInt(average),
+    lowPrice,
+    lowPriceData,
+    highAreaData,
+    wiwjLowPriceData,
+    lianjiaLowPriceData,
+    wiwjFilterData,
+    lianjiaFilterData,
+    rowData
+  };
+};
+//二手房数据格式转化
+const getBrandSecondHouseData = data => {
+  let app = getApp();
+  let allCount = 0;
+  let wiwjFilterData = [],
+    lianjiaFilterData = [];
+  let maxTotal = 50;
+  let allData = [];
+  let rowData = [];
+  let wiwjData = data.wiwjData;
+  // let lianjiaData = lianjianFilter(data.lianjiaData);
+  let lianjiaData = data.lianjiaData;
+  for (let i = 0; i < maxTotal; i++) {
+    if (data.wiwjCount > 0) {
+      let wiwj = addPlatfromData(allData, wiwjData, i);
+      if (wiwj == 0) {
+        break;
+      }
+      if (wiwj == 1) {
+        let wiwjObjs = {
+          platformId: "wiwj",
+          collection: false,
+          housesid: wiwjData[i].housesid,
+          imgurl: wiwjData[i].imgurl,
+          price: Number(wiwjData[i].price),
+          housetitle: wiwjData[i].BaseDetail.housetitle,
+          introduce: wiwjData[i].BaseDetail.bedroom+'室'+
+            wiwjData[i].BaseDetail.livingroom +
+            "/" +
+            wiwjData[i].BaseDetail.buildarea +
+            "㎡/" +
+
+            wiwjData[i].BaseDetail.heading,
+          address: wiwjData[i].qyname + "·" + wiwjData[i].sqname,
+          tagwall: wiwjData[i].tagwall,
+          area: Number(wiwjData[i].buildarea),
+          unit_price: wiwjData[i].unitprice,
+        };
+        wiwjFilterData.push(wiwjObjs);
+        allData.push(wiwjObjs);
+        rowData.push({
+          "data": wiwjData[i],
+          "newLevel": 0,
+          "platform": "wiwj",
+          "priceDownLevel": 0
+        })
+      }
+    }
+    if (data.lianjiaCount > 0) {
+      let lianjia = addPlatfromData(allData, lianjiaData, i);
+      if (lianjia == 0) {
+        break;
+      }
+      if (lianjia == 1) {
+        if (lianjiaData[i].house_code) {
+          let lianjiaObjs = {
+            platformId: "lj",
+            collection: false,
+            housesid: lianjiaData[i].house_code,
+            imgurl: lianjiaData[i].cover_pic,
+            price: Number(lianjiaData[i].price_str),
+            housetitle: lianjiaData[i].title,
+            introduce: lianjiaData[i].desc_abtest,
+            address: lianjiaData[i].community_name,
+            tagwall: lianjiaSecondTagwall(lianjiaData[i].color_tags),
+            area: Number(lianjiaData[i].area),
+            unit_price: lianjiaData[i].unit_price,
+          };
+
+          lianjiaFilterData.push(lianjiaObjs);
+          allData.push(lianjiaObjs);
+          rowData.push({
+            "data": lianjiaData[i],
+            "newLevel": 0,
+            "platform": "lj",
+            "priceDownLevel": 0
+          })
+        }
+      }
+    }
+  }
+  if (data.wiwjCount > -1) {
+    allCount += data.wiwjCount;
+  }
+  if (data.lianjiaCount > -1) {
+    allCount += data.lianjiaCount;
+  }
+  //平均价
+  let average =
+    allData.length > 0 ?
+    allData.reduce((sum, {
+      price
+    }) => sum + price, 0) / allData.length :
+    0;
+  let sortArr = [...allData];
+  let areasortArr = [...allData];
+  let wiwjSortArr = [...wiwjFilterData];
+  let lianjiaSortArr = [...lianjiaFilterData];
+  //所有最低价
+  let lowPrice =
+    allData.length > 0 ?
+    Math.min.apply(
+      Math,
+      allData.map(function(o) {
+        return o.price;
+      })
+    ) :
+    0;
 
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("price", "asc"));
@@ -1938,20 +2378,18 @@ const getPersonalHouseData = data => {
           imgurl: fangtianxiaData[i].titleimage,
           price: Number(fangtianxiaData[i].price),
           housetitle: fangtianxiaData[i].title,
-          introduce:
-            fangtianxiaData[i].buildarea +
+          introduce: fangtianxiaData[i].buildarea +
             "㎡/" +
             fangtianxiaData[i].rentway +
             " " +
             fangtianxiaData[i].room +
             "室",
-          address:
-            fangtianxiaData[i].district +
+          address: fangtianxiaData[i].district +
             "." +
             fangtianxiaData[i].comarea,
-          tagwall: fangtianxiaData[i].tags
-            ? fangtianxiaData[i].tags.split(" ")
-            : [],
+          tagwall: fangtianxiaData[i].tags ?
+            fangtianxiaData[i].tags.split(" ") :
+            [],
           area: Number(fangtianxiaData[i].buildarea)
         };
         fangtianxiaFilterData.push(fangtianxiaObjs);
@@ -1977,12 +2415,11 @@ const getPersonalHouseData = data => {
           imgurl: wbtcData[i].picUrl,
           price: Number(wbtcData[i].priceDict.p),
           housetitle: wbtcData[i].title,
-          introduce:
-            wbtcData[i].area.split("㎡")[0] + "㎡/" + wbtcData[i].huxing,
+          introduce: wbtcData[i].area.split("㎡")[0] + "㎡/" + wbtcData[i].huxing,
           address: wbtcData[i].lastLocal || wbtcData[i].rightLabel,
-          tagwall: wbtcData[i].usedTages
-            ? wbtcData[i].usedTages.split(",")
-            : [],
+          tagwall: wbtcData[i].usedTages ?
+            wbtcData[i].usedTages.split(",") :
+            [],
           area: Number(wbtcData[i].area.split("㎡")[0])
         };
         wbtcFilterData.push(wbtcObjs);
@@ -2004,16 +2441,17 @@ const getPersonalHouseData = data => {
   }
   //平均价
   let average =
-    allData.length > 0
-      ? allData.reduce((sum, { price }) => sum + price, 0) / allData.length
-      : 0;
+    allData.length > 0 ?
+    allData.reduce((sum, {
+      price
+    }) => sum + price, 0) / allData.length :
+    0;
   let sortArr = [...allData];
   let areasortArr = [...allData];
   let fangtianxiaSortArr = [...fangtianxiaFilterData];
   let wbtcSortArr = [...wbtcFilterData];
   //所有最低价
-  let lowPrice =
-    allData.length > 0
+  let lowPrice =allData.length > 0
       ? Math.min.apply(
         Math,
         allData.map(function (o) {
@@ -2021,6 +2459,14 @@ const getPersonalHouseData = data => {
         })
       )
       : 0;
+    allData.length > 0 ?
+    Math.min.apply(
+      Math,
+      allData.map(function(o) {
+        return o.price;
+      })
+    ) :
+    0;
 
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("price", "asc"));
@@ -2078,9 +2524,13 @@ const houseLongFilter = (allData, xType) => {
     ftxFilterData = [],
     tcFilterData = [];
   //平均价
-  let average = allData.length > 0 ? allData.reduce((sum, { price }) => sum + price, 0) / allData.length : 0;
+  let average = allData.length > 0 ? allData.reduce((sum, {
+    price
+  }) => sum + price, 0) / allData.length : 0;
   //所有最低价
-  let lowPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) { return o.price; })) : 0;
+  let lowPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function(o) {
+    return o.price;
+  })) : 0;
   //所有房源最低价格的数据
   let sortArr = [...allData];
   let areasortArr = [...allData];
@@ -2162,13 +2612,12 @@ const getMonitorLongHouseData = (list, mSelect) => {
         imgurl: houseList[i].data.imgurl,
         price: Number(houseList[i].data.price),
         housetitle: houseList[i].data.housetitle,
-        introduce:
-          houseList[i].data.BaseDetail.area +
+        introduce: houseList[i].data.BaseDetail.area +
           "㎡/" +
           houseList[i].data.BaseDetail.floorStr +
           "/" +
           houseList[i].data.BaseDetail.heading,
-        address: houseList[i].data.qyname + "." + houseList[i].data.sqname,
+        address: houseList[i].data.qyname + "·" + houseList[i].data.sqname,
         tagwall: houseList[i].data.tagwall,
         area: Number(houseList[i].data.BaseDetail.area),
         newLevel: houseList[i].newLevel,
@@ -2186,14 +2635,12 @@ const getMonitorLongHouseData = (list, mSelect) => {
         imgurl: houseList[i].data.list_picture,
         price: Number(houseList[i].data.rent_price_listing),
         housetitle: houseList[i].data.house_title,
-        introduce:
-          houseList[i].data.rent_area +
+        introduce: houseList[i].data.rent_area +
           "㎡/" +
           houseList[i].data.layout +
           "/" +
           houseList[i].data.frame_orientation,
-        address:
-          houseList[i].data.district_name +
+        address: houseList[i].data.district_name +
           "." +
           houseList[i].data.bizcircle_name,
         tagwall: lianjiaTagwall(houseList[i].data.house_tags),
@@ -2212,17 +2659,16 @@ const getMonitorLongHouseData = (list, mSelect) => {
         imgurl: houseList[i].data.titleimage,
         price: Number(houseList[i].data.price),
         housetitle: houseList[i].data.title,
-        introduce:
-          houseList[i].data.buildarea +
+        introduce: houseList[i].data.buildarea +
           "㎡/" +
           houseList[i].data.rentway +
           " " +
           houseList[i].data.room +
           "室",
         address: houseList[i].data.district + "." + houseList[i].data.comarea,
-        tagwall: houseList[i].data.tags
-          ? houseList[i].data.tags.split(" ")
-          : [],
+        tagwall: houseList[i].data.tags ?
+          houseList[i].data.tags.split(" ") :
+          [],
         area: Number(houseList[i].data.buildarea),
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
@@ -2239,14 +2685,13 @@ const getMonitorLongHouseData = (list, mSelect) => {
         imgurl: houseList[i].data.picUrl,
         price: Number(houseList[i].data.priceDict.p),
         housetitle: houseList[i].data.title,
-        introduce:
-          houseList[i].data.area.split("㎡")[0] +
+        introduce: houseList[i].data.area.split("㎡")[0] +
           "㎡/" +
           houseList[i].data.huxing,
         address: houseList[i].data.lastLocal || houseList[i].rightLabel,
-        tagwall: houseList[i].data.usedTages
-          ? houseList[i].data.usedTages.split(",")
-          : [],
+        tagwall: houseList[i].data.usedTages ?
+          houseList[i].data.usedTages.split(",") :
+          [],
         area: Number(houseList[i].data.area.split("㎡")[0]),
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
@@ -2259,9 +2704,11 @@ const getMonitorLongHouseData = (list, mSelect) => {
 
   //平均价
   let average =
-    allData.length > 0
-      ? allData.reduce((sum, { price }) => sum + price, 0) / allData.length
-      : 0;
+    allData.length > 0 ?
+    allData.reduce((sum, {
+      price
+    }) => sum + price, 0) / allData.length :
+    0;
   let sortArr = [...allData];
   let areasortArr = [...allData];
   let wiwjSortArr = [...wiwjFilterData];
@@ -2332,9 +2779,9 @@ const getMonitorLongHouseData = (list, mSelect) => {
 const wiwjScreenParam = type => {
   const app = getApp();
   let searchData =
-    type == 1
-      ? app.globalData.searchLongData
-      : app.globalData.monitorSearchLongData;
+    type == 1 ?
+    app.globalData.searchLongData :
+    app.globalData.monitorSearchLongData;
   let obj = {};
 
   //筛选
@@ -2553,9 +3000,9 @@ const wiwjScreenParam = type => {
 const ljScreenParam = type => {
   const app = getApp();
   let searchData =
-    type == 1
-      ? app.globalData.searchLongData
-      : app.globalData.monitorSearchLongData;
+    type == 1 ?
+    app.globalData.searchLongData :
+    app.globalData.monitorSearchLongData;
 
   let obj = [];
 
@@ -2772,9 +3219,9 @@ const ljScreenParam = type => {
 const ftxScreenParam = type => {
   const app = getApp();
   let searchData =
-    type == 1
-      ? app.globalData.searchLongData
-      : app.globalData.monitorSearchLongData;
+    type == 1 ?
+    app.globalData.searchLongData :
+    app.globalData.monitorSearchLongData;
   let obj = {};
 
   //筛选
@@ -2935,9 +3382,9 @@ const ftxScreenParam = type => {
 const tcScreenParam = type => {
   const app = getApp();
   let searchData =
-    type == 1
-      ? app.globalData.searchLongData
-      : app.globalData.monitorSearchLongData;
+    type == 1 ?
+    app.globalData.searchLongData :
+    app.globalData.monitorSearchLongData;
   let obj = {};
   obj.filterParams = {};
 
@@ -3439,9 +3886,9 @@ const addMonitorData = addData => {
   const app = getApp()
   let data = {
     beginDate: app.globalData.searchData.beginDate, //入住日期
-    endDate: app.globalData.searchData.endDate,    //离开日期
+    endDate: app.globalData.searchData.endDate, //离开日期
     cityType: 0, //城市类型，0-国内城市，1-国际城市
-    cityName: app.globalData.searchData.city,//城市名称
+    cityName: app.globalData.searchData.city, //城市名称
     //locationName: '',//位置名称
     //locationType: 11,//位置类型11景区，12高校，13机场，14医院，15商圈，16行政区，17地铁 ，18车站
     peopleNum: app.globalData.searchData.gueseNumber,
@@ -3479,7 +3926,10 @@ const addMonitorData = addData => {
     data.facilities = app.globalData.searchData.equipment.join(',')
   }
   //黑名单数据
-  let tjId = [], xzId = [], mnId = [], zgId = [];
+  let tjId = [],
+    xzId = [],
+    mnId = [],
+    zgId = [];
   let short = wx.getStorageSync('fddShortRentBlock') || [];
   if (short.length) {
     for (let i = 0; i < short.length; i++) {
@@ -3520,10 +3970,10 @@ const addLongMonitorData = addData => {
   let app = getApp();
   let y = app.globalData.searchLongData
   let data = {
-    houseSource: y.chooseType,//房来源:1品牌中介，2个人房源
-    cityName: y.city,//城市名称
-    searchJson: y.areaJson,//搜索参数拼接
-    buildArea: y.longBuildAreas,//面积
+    houseSource: y.chooseType, //房来源:1品牌中介，2个人房源
+    cityName: y.city, //城市名称
+    searchJson: y.areaJson, //搜索参数拼接
+    buildArea: y.longBuildAreas, //面积
     minPrice: y.minPrice,
     maxPrice: y.maxPrice == 10000 ? 99999 : y.maxPrice,
     areaJson: JSON.stringify(y.areaId)
@@ -3534,8 +3984,10 @@ const addLongMonitorData = addData => {
   if (y.areaType) { //位置ID
     data['locationType'] = y.areaType
   }
-  if (y.areaType == 50) {//地铁
-    if (y.areaId.subwaysLine) { data['parentName '] = y.areaId.subwaysLine }
+  if (y.areaType == 50) { //地铁
+    if (y.areaId.subwaysLine) {
+      data['parentName '] = y.areaId.subwaysLine
+    }
   }
   if (y.areaType == 60) { //附近
     data['longitude'] = y.areaId.longitude
@@ -3551,22 +4003,29 @@ const addLongMonitorData = addData => {
   if (y.longRentTypes) { //房源类型
     data['rentType'] = y.longRentTypes
   }
-  if (y.longHeadings.length) {//朝向
+  if (y.longHeadings.length) { //朝向
     data['heading'] = y.longHeadings.join(',');
   }
-  if (y.longHouseTags.length) {//房源亮点
+  if (y.longHouseTags.length) { //房源亮点
     data['houseTags'] = y.longHouseTags.join(',');
   }
-  if (y.longLayouts.length) {//户型
+  if (y.longLayouts.length) { //户型
     data['layoutRoom'] = y.longLayouts.join(',');
   }
   //通知方式
   let notice = [];
-  if (addData.noteSelect) { notice.push(2) }
-  if (addData.publicSelect) { notice.push(1) }
+  if (addData.noteSelect) {
+    notice.push(2)
+  }
+  if (addData.publicSelect) {
+    notice.push(1)
+  }
   data['notice'] = notice.join(',');
   //黑名单数据
-  let wiwjId = [], ljId = [], ftxId = [], tcId = [];
+  let wiwjId = [],
+    ljId = [],
+    ftxId = [],
+    tcId = [];
   let short = wx.getStorageSync('fddShortRentBlock') || [];
   if (short.length) {
     for (let i = 0; i < short.length; i++) {
@@ -3612,14 +4071,105 @@ const addLongMonitorData = addData => {
   return data
 }
 
+//添加二手房监控参数
+const addSecondMonitorData = addData => {
+  let app = getApp();
+  let y = app.globalData.secondSearchData
+  let data = {
+    cityName: y.city, //城市名称
+    searchJson: y.areaJson, //搜索参数拼接
+    minPrice: (y.minPrice === "") ? y.placeholderMinPrice:y.minPrice,
+    maxPrice: (y.maxPrice === "") ? y.placeholderMaxPrice : y.maxPrice,
+    areaJson: JSON.stringify(y.areaId),
+    minArea: y.minArea,
+    maxArea: y.maxArea,
+    towerAge: y.secondBuildingAgeMap,
+
+  }
+  if (y.longSortTypes) {
+    data['sortType'] = y.longSortTypes
+  }
+  if (y.areaType) { //位置ID
+    data['locationType'] = y.areaType
+  }
+  if (y.areaType == 50) { //地铁
+    if (y.areaId.subwaysLine) {
+      data['parentName '] = y.areaId.subwaysLine
+    }
+  }
+  if (y.areaType == 60) { //附近
+    data['longitude'] = y.areaId.longitude
+    data['latitude'] = y.areaId.latitude
+    data['nearby'] = y.areaId.nearby
+  }
+  if (y.area) { //位置名称
+    data['locationName'] = y.area
+  }
+  if (y.secondFloorTypeMap.length) { //楼层
+    data['floorType'] = y.secondFloorTypeMap.join(',');
+  }
+
+  if (y.secondHeadingMap.length) { //朝向
+    data['heading'] = y.secondHeadingMap.join(',');
+  }
+  if (y.secondHouseUseMap.length) { //用途
+    data['purpose'] = y.secondHouseUseMap.join(',');
+  }
+  if (y.secondHouseDecorationMap.length) { //装修
+    data['decorate'] = y.secondHouseDecorationMap.join(',');
+  }
+  if (y.secondHouseTagMap.length) { //房源亮点
+    data['houseTags'] = y.secondHouseTagMap.join(',');
+  }
+  if (y.secondLayoutMap.length) { //户型
+    data['layoutRoom'] = y.secondLayoutMap.join(',');
+  }
+  //通知方式
+  let notice = [];
+  if (addData.noteSelect) {
+    notice.push(2)
+  }
+  if (addData.publicSelect) {
+    notice.push(1)
+  }
+  data['notice'] = notice.join(',');
+  //黑名单数据
+  let wiwjId = [],
+    ljId = [];
+  let short = wx.getStorageSync('fddShortRentBlock') || [];
+  if (short.length) {
+    for (let i = 0; i < short.length; i++) {
+      if (short[i].platformId == 'wiwj') {
+        wiwjId.push(short[i].housesid)
+      }
+      if (short[i].platformId == 'lj') {
+        ljId.push(short[i].housesid)
+      }
+    }
+  }
+  let c = util.compareArr(addData.rowData, addData.allOriginalData, 'platformId', 'housesid')
+  data.fddLongRentUsable = c
+  data.actualPrice = addData.lowPrice
+  data.fddShortRentBlock = {
+    wiwj: wiwjId,
+    lj: ljId
+  };
+  data.fddSecondRentCount = {
+    allTotal: addData.allCount,
+    wiwjTotal: addData.wiwjCount,
+    ljTotal: addData.lianjiaCount,
+  }
+  return data
+}
+
 const updateShortMonitorData = addData => {
   let app = getApp();
   let data = {
     id: addData.monitorId,
     beginDate: app.globalData.monitorSearchData.beginDate, //入住日期
-    endDate: app.globalData.monitorSearchData.endDate,    //离开日期
+    endDate: app.globalData.monitorSearchData.endDate, //离开日期
     cityType: 0, //城市类型，0-国内城市，1-国际城市
-    cityName: app.globalData.monitorSearchData.city,//城市名称
+    cityName: app.globalData.monitorSearchData.city, //城市名称
     //locationName: '',//位置名称
     //locationType: 11,//位置类型11景区，12高校，13机场，14医院，15商圈，16行政区，17地铁 ，18车站
     peopleNum: app.globalData.monitorSearchData.gueseNumber,
@@ -3648,7 +4198,10 @@ const updateShortMonitorData = addData => {
     data.facilities = app.globalData.monitorSearchData.equipment.join(',')
   }
   //黑名单数据
-  let tjId = [], xzId = [], mnId = [], zgId = [];
+  let tjId = [],
+    xzId = [],
+    mnId = [],
+    zgId = [];
   let short = wx.getStorageSync('fddShortRentBlock') || [];
   if (short.length) {
     for (let i = 0; i < short.length; i++) {
@@ -3706,8 +4259,10 @@ const updateLongMonitorData = addData => {
     //位置ID
     data["locationType"] = y.areaType;
   }
-  if (y.areaType == 50) {//地铁
-    if (y.areaId.subwaysLine) { data['parentName '] = y.areaId.subwaysLine }
+  if (y.areaType == 50) { //地铁
+    if (y.areaId.subwaysLine) {
+      data['parentName '] = y.areaId.subwaysLine
+    }
   }
   if (y.areaType == 60) { //附近
     data['longitude'] = y.areaId.longitude
@@ -3740,7 +4295,10 @@ const updateLongMonitorData = addData => {
   }
 
   //黑名单数据
-  let wiwjId = [], ljId = [], ftxId = [], tcId = [];
+  let wiwjId = [],
+    ljId = [],
+    ftxId = [],
+    tcId = [];
   let short = wx.getStorageSync('fddShortRentBlock') || [];
   if (short.length) {
     for (let i = 0; i < short.length; i++) {
@@ -3785,6 +4343,7 @@ const updateLongMonitorData = addData => {
   }
   return data
 }
+
 function addPlatfromData(allData, PlatfromData, index) {
   if (index < PlatfromData.length) {
     //是否已满
@@ -3798,13 +4357,22 @@ function addPlatfromData(allData, PlatfromData, index) {
   }
 }
 
-function lianjiaTagwall(tags) {
+function lianjiaTagwall(tags=[]) {
   let t = [];
   for (let i = 0; i < tags.length; i++) {
     t.push(tags[i].name);
   }
   return t;
 }
+
+function lianjiaSecondTagwall(tags=[]) {
+  let b = [];
+  for (let i = 0; i < tags.length; i++) {
+    b.push(tags[i].desc);
+  }
+  return b;
+}
+
 
 function lianjianFilter(arr) {
   let newArr = arr.filter(item => {
@@ -3851,7 +4419,9 @@ module.exports = {
   getHouseData,
   getMonitorHouseData,
   getWiwjData,
+  getSecondWiwjData,
   getLianjiaData,
+  getSecondLianjiaData,
   getFangtianxiaData,
   getWbtcData,
   getBrandHouseData,
@@ -3867,7 +4437,10 @@ module.exports = {
   houseLongFilter,
   addMonitorData,
   addLongMonitorData,
+  addSecondMonitorData,
   updateShortMonitorData,
   updateLongMonitorData,
-  getMonitorHouseType
+  getMonitorHouseType,
+  getMonitorHouseType,
+  getBrandSecondHouseData
 };
