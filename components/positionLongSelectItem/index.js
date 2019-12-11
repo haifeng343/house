@@ -95,7 +95,11 @@ Component({
       const app = getApp();
       let searchLongData = app.globalData.searchLongData;
       let secondSearchData = app.globalData.secondSearchData;
-      chooseArea(fullname, searchLongData.city, searchLongData.chooseType).then(
+      let chooseType = 1
+      if (!isSecond) {
+        chooseType = searchLongData.chooseType || 1
+      }
+      chooseArea(fullname, searchLongData.city, chooseType).then(
         resp => {
           if (!isSecond) {
             app.globalData.searchLongData = Object.assign(
