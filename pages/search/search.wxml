@@ -1,6 +1,9 @@
 <!-- pages/search/search.wxml -->
 <wxs module="checkHouseType">
-  var checkHouseType = function (arr, item) {
+  var checkHouseType = function (arr, item, temp = false) {
+    if(temp) {
+      return arr.indexOf(parseInt(item)) >= 0
+    }
     return arr.indexOf(item) >= 0
   };
 
@@ -154,51 +157,51 @@
                 <scroll-view scroll-y class="search-content-main {{tabIndex!=3?'hidden':''}}" bindtouchstart="bindtouchstartsort" bindtouchend="bindtouchendsort">
                     <view class='search_item'>
                         <view class='position' bindtap='goCitySelectLong'>
-                            {{searchLongData.city}}
+                            {{secondSearchData.city}}
                         </view>
                         <view class='positionByHand' bindtap='handleRepos'>{{cityText2}}</view>
                     </view>
                     <view class='search_item'>
-                        <view class="scenic {{searchLongData.area === ''?'':'active'}}" bindtap='goPositionSelect'>
-                            <text class="scenic-text">{{searchLongData.area === ''?'请输入小区/商圈/地铁站':searchLongData.area}}</text>
-                            <text class="icon-font {{searchLongData.area === '' ? 'uniE90C' : 'uniE901'}}" catchtap="handleClearScenic" />
+                        <view class="scenic {{secondSearchData.area === ''?'':'active'}}" bindtap='goPositionSelect'>
+                            <text class="scenic-text">{{secondSearchData.area === ''?'请输入小区/商圈/地铁站':secondSearchData.area}}</text>
+                            <text class="icon-font {{secondSearchData.area === '' ? 'uniE90C' : 'uniE901'}}" catchtap="handleClearScenic" />
                         </view>
                     </view>
                     <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
                         <view class='title icon_1'>预算(万元)</view>
-                        <view class='sort' bindtap='changeSort'>
-                            <text class='icon-font uniE930 {{searchData.sort == 2?"active":""}}'></text>
+                        <view class='sort' data-index="{{1}}" bindtap='selectHouseUseMap'>
+                            <text class="icon-font uniE930 {{checkHouseType.checkHouseType(secondSearchData.secondHouseUseMap,1)?'active':''}}"></text>
                             普通住宅
                         </view>
                         <view class="flex_item">
-                            <input class="item_input" placeholder-class="item_input_placeholder" placeholder="100"></input>
+                            <input class="item_input" placeholder-class="item_input_placeholder" placeholder="{{secondSearchData.placeholderMinPrice}}"></input>
                             <text>至</text>
-                            <input class="item_input" placeholder-class="item_input_placeholder" placeholder="100"></input>
+                            <input class="item_input" placeholder-class="item_input_placeholder" placeholder="{{secondSearchData.placeholderMaxPrice}}"></input>
                         </view>
                     </view>
                     <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
                         <view class='title icon_2'>面积(平米)</view>
                         <view>
-                            <Range wx:if="{{showLongPriceBlock}}" min="{{searchLongData.minPrice}}" max="{{searchLongData.maxPrice}}" bind:onChange="handlePriceChange" />
+                            <Range wx:if="{{showLongPriceBlock}}" min="{{secondSearchData.minArea}}" max="{{secondSearchData.maxArea}}" bind:onChange="handlePriceChange" />
                         </view>
                     </view>
                     <view wx:if="{{spread}}">
                         <view class='search_item noBorder'>
                             <view class='title icon_4'>户型</view>
-                            <view class='houseType  {{searchLongData.secondLayoutMap==index?"active":""}}' wx:for-index="index" bindtap='selectRentTypes' data-index='{{index}}' wx:key='{{item}}' wx:for="{{allSecondData.secondLayoutMap}}">
+                            <view class="houseType {{checkHouseType.checkHouseType(secondSearchData.secondLayoutMap,index,true)?'active':''}}" wx:for-index="index" bindtap='selectLayoutMap' data-index='{{index}}' wx:key='{{item}}' wx:for="{{allSecondData.secondLayoutMap}}">
                                 {{item}}
                             </view>
                         </view>
                         <view class='search_item noBorder'>
                             <view class='title icon_3'>房源偏好</view>
-                            <view class='leaseType {{searchLongData.secondSortTypeMap==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypes' data-index='{{index}}' wx:for='{{allSecondData.secondSortTypeMap}}'>
+                            <view class="leaseType {{secondSearchData.secondSortTypeMap==index?'active':''}}" wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypeMap' data-index='{{index}}' wx:for='{{allSecondData.secondSortTypeMap}}'>
                                 {{item}}
                             </view>
                         </view>
                         <view class='search_item noBorder'>
                             <view class='title icon_2'>其他</view>
-                            <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' bindtap='selectSortTypes'>满二</view>
-                            <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' bindtap='selectSortTypes'>精装修</view>
+                            <view class="leaseType {{checkHouseType.checkHouseType(secondSearchData.secondHouseTagMap,1)?'active':''}}" data-index="{{1}}" bindtap='selectHouseTagMap'>满二</view>
+                            <view class="leaseType {{checkHouseType.checkHouseType(secondSearchData.secondHouseDecorationMap,3)?'active':''}}" data-index="{{3}}" bindtap='selectHouseDecorationMap'>精装修</view>
                         </view>
                     </view>
                     <view class='search_item--spread' bindtap='slideOption'>

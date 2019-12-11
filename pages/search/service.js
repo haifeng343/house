@@ -24,6 +24,9 @@ export default class index {
   getBanner() {
     return Http.get("/banner/index.json");
   }
+  getSecondCityPrice(cityName) {
+    return Http.get("/second/getPriceByCityName.json", { cityName });
+  }
   getUnReadCouponList() {
     return Http.get("/fdd/userCoupon/getUnRead.json")
       .then(resp => Promise.resolve(resp.data || []))

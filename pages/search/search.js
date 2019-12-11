@@ -740,11 +740,10 @@ Page({
   },
   getHotCityLong() {
     //长租 二手房
-    console.log(111)
     const app = getApp()
     let searchLongCityHistory = wx.getStorageSync('searchLongCityHistory')
-    let searchLongData = this.data.searchLongData
-    let secondSearchData = this.data.secondSearchData
+    let searchLongData = { ...this.data.searchLongData }
+    let secondSearchData = { ...this.data.secondSearchData }
     let data = {}
     if (app.globalData.searchLongData.city && app.globalData.searchLongData.city !== "") {
       data.city = app.globalData.searchLongData.city
@@ -753,6 +752,7 @@ Page({
       searchLongData = { ...searchLongData, ...data }
       secondSearchData = { ...secondSearchData, ...data }
       this.setData({ searchLongData, secondSearchData})
+      this.setSecondPrice(data.city)
     } else if (searchLongCityHistory.city && searchLongCityHistory.city !== "") {
       data.city = searchLongCityHistory.city
       data.cityId = searchLongCityHistory.cityId
@@ -761,7 +761,9 @@ Page({
       secondSearchData = { ...secondSearchData, ...data }
       app.globalData.searchLongData = { ...app.globalData.searchLongData, ...data}
       app.globalData.secondSearchData = { ...app.globalData.secondSearchData, ...data }
+      console.log('data1',this.data)
       this.setData({ searchLongData, secondSearchData })
+      console.log('data2', this.data)
       this.setSecondPrice(data.city)
     } else {
       if (this.data.searchLongList.length) {
@@ -823,7 +825,21 @@ Page({
   //设置二手房预算
   setSecondPrice(city) {
     if(city) {
-      console.log('city',city)
+      this.service.getSecondCityPrice(city).then(res => {
+        console.log(res)
+        if(res && res.data){
+          let newArray = res.data.split(',')
+          if(newArray.length === 2) {
+            let secondSearchData = this.data.secondSearchData
+            const app = getApp()
+            secondSearchData.placeholderMinPrice = newArray[0]
+            secondSearchData.placeholderMaxPrice = newArray[1]
+            app.globalData.secondSearchData.placeholderMinPrice = newArray[0]
+            app.globalData.secondSearchData.placeholderMaxPrice = newArray[1]
+            this.setData({ secondSearchData })
+          }
+        }
+      })
     }
   },
   handleCloseCouponDialog() {
@@ -1016,7 +1032,7 @@ Page({
       data.areaJson = "";
     }
   },
-  // 更换房源类型
+  // 长租更换房源类型
   selectRentTypes(event) {
     let index = +event.currentTarget.dataset.index;
     let searchLongData = this.data.searchLongData;
@@ -1033,7 +1049,7 @@ Page({
       searchLongData
     });
   },
-  // 更换房源类型
+  // 长租更换房源偏好
   selectSortTypes(event) {
     let index = +event.currentTarget.dataset.index;
     let searchLongData = this.data.searchLongData;
@@ -1054,7 +1070,6 @@ Page({
   },
   //长租价格条回调
   handlePriceChange(event) {
-    // console.log(event.detail)
     let searchLongData = this.data.searchLongData;
     searchLongData.minPrice = event.detail.min;
     searchLongData.maxPrice = event.detail.max;
@@ -1062,6 +1077,85 @@ Page({
     const app = getApp();
     app.globalData.searchLongData.minPrice = event.detail.min;
     app.globalData.searchLongData.maxPrice = event.detail.max;
+  },
+  //二手房更换用途
+  selectHouseUseMap(event) {
+    let index = +event.currentTarget.dataset.index
+    let secondSearchData = { ...this.data.secondSearchData }
+    let isIndexOf = secondSearchData.secondHouseUseMap.indexOf(index)
+
+    if (isIndexOf >= 0) {
+      secondSearchData.secondHouseUseMap.splice(isIndexOf, 1)
+    } else {
+      secondSearchData.secondHouseUseMap.push(index)
+      secondSearchData.secondHouseUseMap.sort()
+    }
+    const app = getApp()
+    app.globalData.secondSearchData.secondHouseUseMap = secondSearchData.secondHouseUseMap
+    this.setData({ secondSearchData });
+  },
+  //二手房更换户型
+  selectLayoutMap(event) {
+    let index = +event.currentTarget.dataset.index
+    let secondSearchData = { ...this.data.secondSearchData }
+    let isIndexOf = secondSearchData.secondLayoutMap.indexOf(index)
+
+    if (isIndexOf >= 0) {
+      secondSearchData.secondLayoutMap.splice(isIndexOf, 1)
+    } else {
+      secondSearchData.secondLayoutMap.push(index)
+      secondSearchData.secondLayoutMap.sort()
+    }
+    const app = getApp()
+    app.globalData.secondSearchData.secondLayoutMap = secondSearchData.secondLayoutMap
+    this.setData({ secondSearchData });
+  },
+  //二手房更换房源偏好
+  selectSortTypeMap(event) {
+    let index = +event.currentTarget.dataset.index
+    let secondSearchData = { ...this.data.secondSearchData }
+    const app = getApp()
+    let data = app.globalData.secondSearchData
+    if (secondSearchData.secondSortTypeMap === index) {
+      secondSearchData.secondSortTypeMap = 0
+      data.secondSortTypeMap = 0
+    } else {
+      secondSearchData.secondSortTypeMap = parseInt(index)
+      data.secondSortTypeMap = parseInt(index)
+    }
+    this.setData({ secondSearchData });
+  },
+  // 二手房更换房源特色
+  selectHouseTagMap(event) {
+    let index = +event.currentTarget.dataset.index
+    let secondSearchData = { ...this.data.secondSearchData }
+    let isIndexOf = secondSearchData.secondHouseTagMap.indexOf(index)
+    
+    if (isIndexOf >= 0) {
+      secondSearchData.secondHouseTagMap.splice(isIndexOf, 1)
+    } else {
+      secondSearchData.secondHouseTagMap.push(index)
+      secondSearchData.secondHouseTagMap.sort()
+    }
+    const app = getApp()
+    app.globalData.secondSearchData.secondHouseTagMap = secondSearchData.secondHouseTagMap
+    this.setData({ secondSearchData });
+  },
+  // 二手房更换装修
+  selectHouseDecorationMap(event) {
+    let index = +event.currentTarget.dataset.index
+    let secondSearchData = { ...this.data.secondSearchData }
+    let isIndexOf = secondSearchData.secondHouseDecorationMap.indexOf(index)
+
+    if (isIndexOf >= 0) {
+      secondSearchData.secondHouseDecorationMap.splice(isIndexOf, 1)
+    } else {
+      secondSearchData.secondHouseDecorationMap.push(index)
+      secondSearchData.secondHouseDecorationMap.sort()
+    }
+    const app = getApp()
+    app.globalData.secondSearchData.secondHouseDecorationMap = secondSearchData.secondHouseDecorationMap
+    this.setData({ secondSearchData });
   },
   init() {
     this.getHouseTypeAndEqu();
