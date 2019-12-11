@@ -421,7 +421,7 @@ const lianjia = {
         method: "POST",
         header: {},
         data: {
-          lj: { cityId: city , page, filter }
+          lj: { city, page, filter }
         },
         success: res => {
           if (res.data.lj) {
@@ -444,7 +444,7 @@ const lianjia = {
         method: "POST",
         header: {},
         data: {
-          lj: { cityId: city, keywords }
+          lj: { city, keywords }
         },
         success: res => {
           if (res.data.lj) {
