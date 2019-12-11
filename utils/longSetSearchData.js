@@ -11,14 +11,21 @@ const getPositionInfoByName = (positionKey, cityName, type) => {
 
 // 设置搜索历史
 // 数据，城市名，房源类型（品牌中介，个人房源）
-const longSetSearchData = (data, city, type) => {
+const longSetSearchData = (data, city, type, isSecond = false) => {
   console.log("设置搜索历史");
   console.log(data, city, type);
-  let item = chooseSlectData(data);
+  let item = chooseSlectData(data, isSecond);
   console.log(item);
-  let history = [].concat(
-    wx.getStorageSync("longSearchHistory_" + city + "_" + type) || []
-  );
+  let history = []
+  if (!isSecond) {
+    history = [].concat(
+      wx.getStorageSync("longSearchHistory_" + city + "_" + type) || []
+    );
+  } else {
+    history = [].concat(
+      wx.getStorageSync("searchSecondHistory_" + city) || []
+    );
+  }
   for (let index = 0; index < history.length; index++) {
     if (
       history[index].area == item.area &&
@@ -32,7 +39,11 @@ const longSetSearchData = (data, city, type) => {
   if (history.length > 10) {
     history = history.slice(0, 10);
   }
-  wx.setStorageSync("longSearchHistory_" + city + "_" + type, history);
+  if (!isSecond) {
+    wx.setStorageSync("longSearchHistory_" + city + "_" + type, history)
+  } else {
+    wx.setStorageSync("searchSecondHistory_" + city, history)
+  }
 };
 
 //选择长租地点列表数据处理
@@ -123,7 +134,7 @@ const chooseArea = (fullname, city, chooseType) => {
 };
 
 //搜索列表数据处理
-const chooseSlectData = data => {
+const chooseSlectData = (data, isSecond = false) => {
   let type = data.type;
   let result = { areaId: {} };
   result.areaType = type;
@@ -135,29 +146,53 @@ const chooseSlectData = data => {
   if (type == 10) {
     if (data.wiwj) {
       result.areaId.wiwj = data.wiwj.searchId;
-      areaJson.wiwj = {
-        districtids: data.wiwj.searchId
-      };
+      if (!isSecond) {
+        areaJson.wiwj = {
+          districtids: data.wiwj.searchId
+        }
+      } else {
+        areaJson.wiwj = {
+          districtid: data.wiwj.searchId
+        }
+      }
     }
     if (data.lianjia) {
       result.areaId.lj = data.lianjia.uri.replace(/\//gi, "");
-      areaJson.lj = {
-        bizcircle_quanpin: data.lianjia.uri.replace(/\//gi, "")
-      };
+      if (!isSecond) {
+        areaJson.lj = {
+          bizcircle_quanpin: data.lianjia.uri.replace(/\//gi, "")
+        }
+      } else {
+        areaJson.lj = {
+          district_id: data.lianjia.uri.replace(/\//gi, "")
+        }
+      }
     }
   }
   if (type == 20) {
     if (data.wiwj) {
       result.areaId.wiwj = data.wiwj.searchId;
-      areaJson.wiwj = {
-        sqids: data.wiwj.searchId
-      };
+      if (!isSecond) {
+        areaJson.wiwj = {
+          sqids: data.wiwj.searchId
+        }
+      } else {
+        areaJson.wiwj = {
+          sqid: data.wiwj.searchId
+        }
+      }
     }
     if (data.lianjia) {
       result.areaId.lj = data.lianjia.uri;
-      areaJson.lj = {
-        bizcircle_quanpin: data.lianjia.uri
-      };
+      if (!isSecond) {
+        areaJson.lj = {
+          bizcircle_quanpin: data.lianjia.uri
+        }
+      } else {
+        areaJson.lj = {
+          bizcircle_id: data.lianjia.uri
+        }
+      }
     }
     if (data.ftx) {
       result.areaId.ftx = {
@@ -181,12 +216,18 @@ const chooseSlectData = data => {
         zn: data.wiwj.searchName
       };
     }
-    // if (data.lianjia) {
-    //   result.areaId.lj = data.lianjia.uri
-    //   areaJson.lj = {
-    //     uri: data.lianjia.uri
-    //   }
-    // }
+    if (data.lianjia) {
+      result.areaId.lj = data.lianjia.uri
+      if(!isSecond) {
+        areaJson.lj = {
+          uri: data.lianjia.uri
+        }
+      } else {
+        areaJson.lj = {
+          community_id: data.lianjia.uri
+        }
+      }
+    }
   }
   if (type == 40) {
     if (data.wiwj) {
@@ -202,10 +243,17 @@ const chooseSlectData = data => {
         id: data.wiwj.searchId,
         lineid: data.wiwj.parentId
       };
-      areaJson.wiwj = {
-        id: data.wiwj.searchId,
-        lineid: data.wiwj.parentId
-      };
+      if (!isSecond) {
+        areaJson.wiwj = {
+          id: data.wiwj.searchId,
+          lineid: data.wiwj.parentId
+        };
+      } else {
+        areaJson.wiwj = {
+          stationid: data.wiwj.searchId,
+          lineid: data.wiwj.parentId
+        };
+      }
     }
     if (data.lianjia) {
       let list = data.lianjia.uri.split("s");
@@ -213,7 +261,7 @@ const chooseSlectData = data => {
         id: list[1].replace(/[^0-9]/gi, ""),
         lineid: list[0].replace(/[^0-9]/gi, "")
       };
-      areaJson.wiwj = {
+      areaJson.lianjia = {
         subway_station_id: list[1].replace(/[^0-9]/gi, ""),
         subway_line_id: list[0].replace(/[^0-9]/gi, "")
       };
@@ -293,19 +341,29 @@ const nearByData = (data, index) => {
   return result;
 };
 
-const changeHistoryStorage = data => {
-  console.log("changeHistoryStorage");
+const changeHistoryStorage = (data, isSecond = false) => {
+  // console.log("changeHistoryStorage");
   let city = data.city;
-  let type = data.chooseType;
+  let type = 1
+  if(!isSecond) {
+    type = data.chooseType;
+  }
   let item = data;
   if (!item.areaJson.includes('"isHistory":true')) {
     return;
   }
   let temp = "";
   let tempIndex = 0;
-  let history = [].concat(
-    wx.getStorageSync("longSearchHistory_" + city + "_" + type) || []
-  );
+  let history = []
+  if(!isSecond) {
+    history = [].concat(
+      wx.getStorageSync("longSearchHistory_" + city + "_" + type) || []
+    );
+  } else {
+    history = [].concat(
+      wx.getStorageSync("searchSecondHistory_" + city) || []
+    );
+  }
   for (let index = 0; index < history.length; index++) {
     if (
       history[index].area == item.area &&
@@ -326,7 +384,11 @@ const changeHistoryStorage = data => {
   if (history.length > 10) {
     history = history.slice(0, 10);
   }
-  wx.setStorageSync("longSearchHistory_" + city + "_" + type, history);
+  if(!isSecond) {
+    wx.setStorageSync("longSearchHistory_" + city + "_" + type, history);
+  } else {
+    wx.setStorageSync("searchSecondHistory_" + city, history);
+  }
 };
 
 export {
