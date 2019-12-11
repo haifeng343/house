@@ -32,6 +32,21 @@ const addLongMonitor = data => {
   })
 }
 /**
+ * 添加监控-二手房
+*/
+const addSecondMonitor = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.postApiMonitorForm(monitor.json2Form(data), '/user/used/addMonitor.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
+/**
  * 开启监控-短租
 */
 const startMonitor = data => {
@@ -53,6 +68,21 @@ const startLongMonitor = data => {
   return new Promise((resolve, reject) => {
     data.token = wx.getStorageSync('token')
     api.postApiMonitorForm(monitor.json2Form(data), '/fdd/longRentMonitor/startMonitor.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
+/**
+ * 开启监控-二手房
+*/
+const startSecondMonitor = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.postApiMonitorForm(monitor.json2Form(data), '/user/used/startMonitor.json').then(res => {
       if (res.statusCode == 200 && res.data.success) {
         resolve(res)
       } else {
@@ -92,6 +122,21 @@ const updateLongMonitor = data => {
   })
 }
 /**
+ * 修改监控-二手房
+*/
+const updateSecondMonitor = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.postApiMonitorForm(monitor.json2Form(data), '/user/used/updateMonitor.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
+/**
  * 结束监控-短租
 */
 const endMonitor = data => {
@@ -113,6 +158,21 @@ const endLongMonitor = data => {
   return new Promise((resolve, reject) => {
     data.token = wx.getStorageSync('token')
     api.getApiMonitor(data, '/fdd/longRentMonitor/endLongRentMonitor.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
+/**
+ * 结束监控-二手房
+*/
+const endSecondMonitor = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.getApiMonitor(data, '/user/used/endUsedMonitor.json').then(res => {
       if (res.statusCode == 200 && res.data.success) {
         resolve(res)
       } else {
@@ -152,6 +212,21 @@ const getMonitorLongList = data => {
   })
 }
 /**
+ * 监控列表-二手房
+*/
+const getMonitorSecondList = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.getApiMonitor(data, '/user/used/getUsedMonitorList.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
+/**
  * 监控详情-短租
 */
 const monitorDetail = data =>{
@@ -174,6 +249,22 @@ const monitorLongDetail = data => {
   return new Promise((resolve, reject) => {
     data.token = wx.getStorageSync('token')
     api.getApiMonitor(data, '/fdd/longRentMonitor/getLongRentDetailById.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        resolve(false)
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
+/**
+ * 监控详情-二手房
+*/
+const monitorSecondDetail = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.getApiMonitor(data, '/user/used/getUsedDetailById.json').then(res => {
       if (res.statusCode == 200 && res.data.success) {
         resolve(res)
       } else {
@@ -243,6 +334,21 @@ const addLongBatchAddBlacklist = data => {
     })
   })
 }
+/**
+ * 批量不再关注，添加黑名单-二手房
+*/
+const addSecondBatchAddBlacklist = data => {
+  return new Promise((resolve, reject) => {
+    data.token = wx.getStorageSync('token')
+    api.postApiMonitorForm(monitor.json2Form(data), '/fdd/longRentMonitor/batchAddBlacklist.json').then(res => {
+      if (res.statusCode == 200 && res.data.success) {
+        resolve(res)
+      } else {
+        throwErrorResponse(res.data)
+      }
+    })
+  })
+}
 const throwErrorResponse = (data)=>{
   wx.showToast({
     title: data.resultMsg,
@@ -255,16 +361,23 @@ module.exports = {
   startMonitor: startMonitor,
   updateMonitor: updateMonitor,
   endMonitor: endMonitor,
-  monitorDetail: monitorDetail,
   addFddShortRentBlock: addFddShortRentBlock,
   getMonitorList: getMonitorList,
   addLongMonitor,
+  addSecondMonitor,
   startLongMonitor,
+  startSecondMonitor,
   updateLongMonitor,
+  updateSecondMonitor,
   endLongMonitor,
+  endSecondMonitor,
   getMonitorLongList,
+  getMonitorSecondList,
+  monitorDetail: monitorDetail,
   monitorLongDetail,
+  monitorSecondDetail,
   addFddLongRentBlock,
   addShortBatchAddBlacklist,
-  addLongBatchAddBlacklist
+  addLongBatchAddBlacklist,
+  addSecondBatchAddBlacklist
 }

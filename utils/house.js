@@ -150,41 +150,41 @@ const getXzData = (type, xzfilter) => {
  * 获取木鸟平台数据
  * type 1 房源列表；2监控详情
  */
-const getMnData = (type, mnfilter)=>{
+const getMnData = (type, mnfilter) => {
   let arr2 = [];
-  let mnCount = 0; 
+  let mnCount = 0;
   return new Promise((resolve, reject) => {
-  Promise.all([getMnData1(type, mnfilter), getMnData2(type, mnfilter), getMnData3(type, mnfilter), getMnData4(type, mnfilter)])
-    .then(res => {
-      if (!res[0] && !res[1] && !res[2] && !res[3]){
+    Promise.all([getMnData1(type, mnfilter), getMnData2(type, mnfilter), getMnData3(type, mnfilter), getMnData4(type, mnfilter)])
+      .then(res => {
+        if (!res[0] && !res[1] && !res[2] && !res[3]) {
+          resolve({
+            network: true
+          });
+        }
+        if (res[0]) {
+          arr2.push.apply(arr2, res[0].arr);
+          mnCount = res[0].mnCount
+        }
+        if (res[1]) {
+          arr2.push.apply(arr2, res[1].arr);
+          mnCount = res[1].mnCount
+        }
+        if (res[2]) {
+          arr2.push.apply(arr2, res[2].arr);
+          mnCount = res[2].mnCount
+        }
+        if (res[3]) {
+          arr2.push.apply(arr2, res[3].arr);
+          mnCount = res[3].mnCount
+        }
         resolve({
-          network: true
+          arr: arr2.slice(0, 50),
+          mnCount
         });
-      }
-      if (res[0]){
-        arr2.push.apply(arr2, res[0].arr);
-        mnCount = res[0].mnCount
-      }
-      if (res[1]) {
-        arr2.push.apply(arr2, res[1].arr);
-        mnCount = res[1].mnCount
-      }
-      if (res[2]) {
-        arr2.push.apply(arr2, res[2].arr);
-        mnCount = res[2].mnCount
-      }
-      if (res[3]) {
-        arr2.push.apply(arr2, res[3].arr);
-        mnCount = res[3].mnCount
-      }
-      resolve({
-        arr: arr2.slice(0, 50),
-        mnCount
-      });
-    })
+      })
   })
 }
-const getMnData1 = (type, mnfilter)=>{
+const getMnData1 = (type, mnfilter) => {
   let app = getApp();
   let mnCount = 0;
   let y =
@@ -380,7 +380,7 @@ const getMnData4 = (type, mnfilter) => {
  * 获取榛果平台数据
  * type 1 房源列表；2监控详情
  */
-const getZgData = (type,zgfilter)=>{
+const getZgData = (type, zgfilter) => {
   let zgarr = []
   let arr1 = []
   let arr2 = []
@@ -388,20 +388,20 @@ const getZgData = (type,zgfilter)=>{
   let zgMinPrice = 100
   let zgMaxPrice = 9999900
   console.log(zgfilter)
-  if (zgfilter.minPrice === 100&&zgfilter.maxPrice === 9999900){
+  if (zgfilter.minPrice === 100 && zgfilter.maxPrice === 9999900) {
     zgarr = [getZgData2(type, zgfilter)]
-  } else if (zgfilter.minPrice !== 100 && zgfilter.maxPrice === 9999900){
+  } else if (zgfilter.minPrice !== 100 && zgfilter.maxPrice === 9999900) {
     let zgfilter1 = JSON.parse(JSON.stringify(zgfilter))
     let zgfilter2 = JSON.parse(JSON.stringify(zgfilter))
     zgMinPrice = zgfilter1['minPrice']
     zgMaxPrice = zgfilter1['minPrice'] + 10000
     zgfilter1['tagIds'] = [30, 138, 31]
-    zgfilter1['minPrice'] = zgfilter1['minPrice'] + 100+10000
+    zgfilter1['minPrice'] = zgfilter1['minPrice'] + 100 + 10000
     zgfilter1['maxPrice'] = 9999900
     zgfilter2['minPrice'] = zgfilter2['minPrice']
     zgfilter2['maxPrice'] = zgfilter2['minPrice'] + 10000
     zgarr = [getZgData1(type, zgfilter1), getZgData2(type, zgfilter2)]
-  }else{
+  } else {
     let zgfilter1 = JSON.parse(JSON.stringify(zgfilter))
     zgMinPrice = zgfilter1['minPrice']
     zgMaxPrice = zgfilter1['maxPrice']
@@ -413,8 +413,8 @@ const getZgData = (type,zgfilter)=>{
   return new Promise((resolve, reject) => {
     Promise.all(zgarr)
       .then(res => {
-        if(res.length === 1){
-          if(!res[0]){
+        if (res.length === 1) {
+          if (!res[0]) {
             resolve({
               network: true
             });
@@ -427,8 +427,8 @@ const getZgData = (type,zgfilter)=>{
             arr: arr2,
             zgCount
           });
-        }else{
-          if (!res[0]&&!res[1]) {
+        } else {
+          if (!res[0] && !res[1]) {
             resolve({
               network: true
             });
@@ -461,7 +461,7 @@ const getZgData = (type,zgfilter)=>{
           if (zgfilter.sortType === 2) {
             arr2.sort(util.compareSort("_price", "asc"));
             arr1 = arr2.slice(0, 50)
-          }else{
+          } else {
             arr1 = arr2.slice(0, 50)
           }
           resolve({
@@ -711,7 +711,7 @@ const getWbtcData = (type, wbtcfilter = {}) => {
       })
       .then(res => {
         if (
-          res.result.getListInfo.infolist && res.result.getListInfo.infolist.length>0&&
+          res.result.getListInfo.infolist && res.result.getListInfo.infolist.length > 0 &&
           res.result.getListInfo.infolist[0]["itemtype"] === "listTangram"
         ) {
           res.result.getListInfo.infolist.shift();
@@ -1411,7 +1411,7 @@ const getHouseData = data => {
   let average =
     allData.length > 0
       ? allData.reduce((sum, { finalPrice }) => sum + finalPrice, 0) /
-        allData.length
+      allData.length
       : 0;
   let sortArr = [...allData];
   let tjSortArr = [...tjFilterData];
@@ -1423,18 +1423,18 @@ const getHouseData = data => {
   let lowPrice =
     allData.length > 0
       ? Math.min.apply(
-          Math,
-          allData.map(function(o) {
-            return o.finalPrice;
-          })
-        )
+        Math,
+        allData.map(function (o) {
+          return o.finalPrice;
+        })
+      )
       : 0;
 
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("finalPrice", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
 
-  let y =data.type == 1? app.globalData.searchData: app.globalData.monitorSearchData;
+  let y = data.type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
   if (y.advSort == 2) {
     let allArr = [...allData];
     allArr.sort(util.compareSort("finalPrice", "asc"));
@@ -1535,7 +1535,7 @@ const getMonitorHouseData = (list, mSelect) => {
           "title",
           "长租优惠"
         ),
-        oriPrice : houseList[i].data.luPrice,
+        oriPrice: houseList[i].data.luPrice,
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
         priceMargin: houseList[i].priceMargin || "",
@@ -1623,7 +1623,7 @@ const getMonitorHouseData = (list, mSelect) => {
   let average =
     allData.length > 0
       ? allData.reduce((sum, { finalPrice }) => sum + finalPrice, 0) /
-        allData.length
+      allData.length
       : 0;
   let sortArr = [...allData];
   let tjSortArr = [...tjFilterData];
@@ -1635,11 +1635,11 @@ const getMonitorHouseData = (list, mSelect) => {
   let lowPrice =
     allData.length > 0
       ? Math.min.apply(
-          Math,
-          allData.map(function(o) {
-            return o.finalPrice;
-          })
-        )
+        Math,
+        allData.map(function (o) {
+          return o.finalPrice;
+        })
+      )
       : 0;
 
   //所有房源最低价格的数据
@@ -1684,43 +1684,43 @@ const getMonitorHouseData = (list, mSelect) => {
     zgFilterData
   };
 };
-const getMonitorHouseType = list =>{
+const getMonitorHouseType = list => {
   let newLevelNum = 0
   let priceDownLevelNum = 0
   for (let i = 0; i < list.length; i++) {
-    if (list[i].newLevel>0){
+    if (list[i].newLevel > 0) {
       newLevelNum++
     }
     if (list[i].priceDownLevel > 0) {
       priceDownLevelNum++
     }
   }
-  if (newLevelNum>0){
+  if (newLevelNum > 0) {
     return 2
   }
-  if (newLevelNum == 0 && priceDownLevelNum>0) {
+  if (newLevelNum == 0 && priceDownLevelNum > 0) {
     return 3
   }
   if (newLevelNum == 0 && priceDownLevelNum == 0) {
     return 1
   }
 }
-const houseShortFilter = allData=>{
+const houseShortFilter = allData => {
   let tjFilterData = [],
     xzFilterData = [],
     mnFilterData = [],
     zgFilterData = [];
   //平均价
-  let average =allData.length > 0? allData.reduce((sum, { finalPrice }) => sum + finalPrice, 0) /allData.length: 0;
+  let average = allData.length > 0 ? allData.reduce((sum, { finalPrice }) => sum + finalPrice, 0) / allData.length : 0;
   //所有最低价
-  let lowPrice =allData.length > 0? Math.min.apply(Math,allData.map(function (o) {return o.finalPrice;})): 0;
+  let lowPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) { return o.finalPrice; })) : 0;
   //所有房源最低价格的数据
   let sortArr = [...allData];
   sortArr.sort(util.compareSort("finalPrice", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
 
-  for (let i = 0; i < allData.length;i++){
-    if(allData[i].platformId == 'tj'){
+  for (let i = 0; i < allData.length; i++) {
+    if (allData[i].platformId == 'tj') {
       tjFilterData.push(allData[i])
     }
     if (allData[i].platformId == 'xz') {
@@ -1859,11 +1859,11 @@ const getBrandHouseData = data => {
   let lowPrice =
     allData.length > 0
       ? Math.min.apply(
-          Math,
-          allData.map(function(o) {
-            return o.price;
-          })
-        )
+        Math,
+        allData.map(function (o) {
+          return o.price;
+        })
+      )
       : 0;
 
   //所有房源最低价格的数据
@@ -2015,17 +2015,17 @@ const getPersonalHouseData = data => {
   let lowPrice =
     allData.length > 0
       ? Math.min.apply(
-          Math,
-          allData.map(function(o) {
-            return o.price;
-          })
-        )
+        Math,
+        allData.map(function (o) {
+          return o.price;
+        })
+      )
       : 0;
 
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("price", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
-  let y =data.type == 1? app.globalData.searchLongData: app.globalData.monitorSearchLongData;
+  let y = data.type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData;
   if (y.advSort == 1) {
     let allArr = [...allData];
     allArr.sort(util.compareSort("price", "asc"));
@@ -2072,7 +2072,7 @@ const getPersonalHouseData = data => {
   };
 };
 
-const houseLongFilter = (allData,xType)=>{
+const houseLongFilter = (allData, xType) => {
   let wiwjFilterData = [],
     ljFilterData = [],
     ftxFilterData = [],
@@ -2089,7 +2089,7 @@ const houseLongFilter = (allData,xType)=>{
   //所有房源面积最大
   areasortArr.sort(util.compareSort("area", "desc"));
   let highAreaData = areasortArr.length > 0 ? areasortArr[0] : "";
-  if (xType == 1){
+  if (xType == 1) {
     for (let i = 0; i < allData.length; i++) {
       if (allData[i].platformId == 'wiwj') {
         wiwjFilterData.push(allData[i])
@@ -2104,7 +2104,7 @@ const houseLongFilter = (allData,xType)=>{
     //链家最低价格数据
     ljFilterData.sort(util.compareSort("price", "asc"));
     let ljLowPriceData = ljFilterData.length > 0 ? ljFilterData[0] : "";
-    return({
+    return ({
       averagePrice: parseInt(average),
       lowPrice,
       lowPriceData,
@@ -2152,7 +2152,7 @@ const getMonitorLongHouseData = (list, mSelect) => {
   let ftxFilterData = []; //监控房天下房源
   let wbtcFilterData = []; //监控58同城房源
 
-  let houseList = monitorFilter(list,mSelect)
+  let houseList = monitorFilter(list, mSelect)
   for (let i = 0; i < houseList.length; i++) {
     if (houseList[i].platform == "wiwj") {
       let wiwjObjs = {
@@ -2270,7 +2270,7 @@ const getMonitorLongHouseData = (list, mSelect) => {
   let wbtcSortArr = [...wbtcFilterData];
 
   //所有最低价
-  let lowPrice =allData.length > 0? Math.min.apply(Math,allData.map(function(o) {return o.price;})): 0;
+  let lowPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) { return o.price; })) : 0;
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("price", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
@@ -2417,7 +2417,7 @@ const wiwjScreenParam = type => {
   let longLayouts = searchData.longLayouts.concat();
   if (longLayouts.length) {
     let length = longLayouts.length;
-    if (longLayouts.indexOf(11)>-1) {
+    if (longLayouts.indexOf(11) > -1) {
       longLayouts[longLayouts.indexOf(11)] = "3,4,5,9";
     }
     let broom = "";
@@ -2851,7 +2851,7 @@ const ftxScreenParam = type => {
   let longLayouts = searchData.longLayouts.concat();
   if (longLayouts.length) {
     let length = longLayouts.length;
-    if (longLayouts.indexOf(12)>-1) {
+    if (longLayouts.indexOf(12) > -1) {
       longLayouts[longLayouts.indexOf(12)] = "4,5,99";
     }
     let room = "";
@@ -3090,7 +3090,7 @@ const tcScreenParam = type => {
 
   return obj;
 };
-const wiwjSecondScreenParam = type=>{
+const wiwjSecondScreenParam = type => {
   const app = getApp();
   let searchData =
     type == 1
@@ -3149,7 +3149,7 @@ const wiwjSecondScreenParam = type=>{
   // 价钱
   let minPrice = searchData.minPrice; //""取placeholderMinPrice
   let maxPrice = searchData.maxPrice;//""取placeholdermaxPrice
-  if (minPrice === "") { minPrice = searchData.placeholderMinPrice}
+  if (minPrice === "") { minPrice = searchData.placeholderMinPrice }
   if (maxPrice === "") { maxPrice = searchData.placeholderMaxPrice }
   obj.price = minPrice + "," + maxPrice
   // 户型 一室、两室、三室，四室，四室及以上
@@ -3171,19 +3171,19 @@ const wiwjSecondScreenParam = type=>{
   //建筑面积
   let minArea = searchData.minArea;
   let maxArea = searchData.maxArea;
-  obj.buildarea = minArea+','+ maxArea;
+  obj.buildarea = minArea + ',' + maxArea;
   //朝向
   let headingArr = searchData.secondHeadingMap.concat()
-  if (headingArr.length){
+  if (headingArr.length) {
     obj.heading = headingArr.join(",");
   }
   //楼龄
-  if (searchData.secondBuildingAgeMap){
+  if (searchData.secondBuildingAgeMap) {
     obj.buildage = searchData.secondBuildingAgeMap;
   }
   //楼层
-  let floorTypeArr=searchData.secondFloorTypeMap.concat()
-  if (floorTypeArr.length){
+  let floorTypeArr = searchData.secondFloorTypeMap.concat()
+  if (floorTypeArr.length) {
     let length = floorTypeArr.length;
     if (floorTypeArr.indexOf(1) > -1) {
       floorTypeArr[floorTypeArr.indexOf(1)] = "-1,1";
@@ -3202,7 +3202,7 @@ const wiwjSecondScreenParam = type=>{
   }
   //装修
   let decoratetypeArr = searchData.secondHouseDecorationMap.concat()
-  if (decoratetypeArr.length){
+  if (decoratetypeArr.length) {
     obj.decoratetype = decoratetypeArr.join(',')
   }
   //用途
@@ -3212,7 +3212,7 @@ const wiwjSecondScreenParam = type=>{
   }
   //标签
   let secondHouseTagArr = searchData.secondHouseTagMap.concat()
-  if (secondHouseTagArr.length){
+  if (secondHouseTagArr.length) {
     let length = secondHouseTagArr.length;
     if (secondHouseTagArr.indexOf(1) > -1) {
       secondHouseTagArr[secondHouseTagArr.indexOf(1)] = 8;
@@ -3240,8 +3240,8 @@ const wiwjSecondScreenParam = type=>{
     obj.tag = tags;
   }
   //排序
-  if (searchData.secondSortTypeMap){
-    if (searchData.secondSortTypeMap ===1){
+  if (searchData.secondSortTypeMap) {
+    if (searchData.secondSortTypeMap === 1) {
       obj.psort = 1
     }
     if (searchData.secondSortTypeMap === 2) {
@@ -3318,7 +3318,7 @@ const ljSecondScreenParam = type => {
   //楼层
   let floorTypeArr = searchData.secondFloorTypeMap.concat()
   if (floorTypeArr.length) {
-    if (floorTypeArr.indexOf(1)){
+    if (floorTypeArr.indexOf(1)) {
       condition += "lc1";
     }
     if (floorTypeArr.indexOf(2)) {
@@ -3356,7 +3356,7 @@ const ljSecondScreenParam = type => {
   }
 }
 //添加开启短租监控参数
-const addMonitorData = addData=>{
+const addMonitorData = addData => {
   const app = getApp()
   let data = {
     beginDate: app.globalData.searchData.beginDate, //入住日期
@@ -3437,7 +3437,7 @@ const addMonitorData = addData=>{
   return data
 }
 //添加开启长租监控参数
-const addLongMonitorData = addData=>{
+const addLongMonitorData = addData => {
   let app = getApp();
   let y = app.globalData.searchLongData
   let data = {
@@ -3533,7 +3533,7 @@ const addLongMonitorData = addData=>{
   return data
 }
 
-const updateShortMonitorData = addData=>{
+const updateShortMonitorData = addData => {
   let app = getApp();
   let data = {
     id: addData.monitorId,
@@ -3734,21 +3734,21 @@ function lianjianFilter(arr) {
   return newArr;
 }
 
-function wbtcFilter(arr){
+function wbtcFilter(arr) {
   let newArr = arr.filter(item => {
     return !item.isApartment
   });
   return newArr;
 }
 
-function monitorFilter(arr,mSelect){
+function monitorFilter(arr, mSelect) {
   let newArr = [];
-  if (mSelect == 1){
+  if (mSelect == 1) {
     newArr = arr
   }
-  if (mSelect == 2){
+  if (mSelect == 2) {
     newArr = arr.filter(item => {
-      return item.newLevel>0
+      return item.newLevel > 0
     });
   }
   if (mSelect == 3) {

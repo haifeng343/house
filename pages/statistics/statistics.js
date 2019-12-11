@@ -25,7 +25,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    const app = getApp(); //rentType  1短租 2长租
+    const app = getApp(); //rentType  1短租 2长租 3二手房
     if (options.rentType == 1){
       wx.setNavigationBarTitle({
         title: '短租-统计信息'
@@ -151,11 +151,74 @@ Page({
         monitorId: data.monitorId || '',
         totalFee: data.totalFee || '', //消耗盯盯币
         sort: data.sortType == 1 ? false : true,
-        rentType: 2, //1：短租 2：长租
+        rentType: 2, //1：短租 2：长租  3二手房
         fee,
         type: (data.bottomType == 1 || data.bottomType == 2)?2:1
       })
     }
+
+    if (options.rentType == 3){
+      wx.setNavigationBarTitle({
+        title: '二手房-统计信息'
+      })
+      let data = app.globalData.houseListData
+      let fee = 3;
+      if (data.fee) {
+        fee = data.fee
+      } else {
+        fee = wx.getStorageSync('hourLongMoney') || 3
+      }
+      for (let i = 0; i < data.enoughList.length; i++) {
+        if (data.chooseType == 3){
+          if (data.enoughList[i].key == 'wiwj') {
+            data.enoughList[i]['selectCount'] = data.wiwjFilterData.length
+            data.enoughList[i]['lowPriceData'] = data.wiwjLowPriceData
+          }
+          if (data.enoughList[i].key == 'lj') {
+            data.enoughList[i]['selectCount'] = data.lianjiaFilterData.length
+            data.enoughList[i]['lowPriceData'] = data.lianjiaLowPriceData
+          }
+        }
+        // if (data.chooseType == 2) {
+        //   if (data.enoughList[i].key == 'ftx') {
+        //     data.enoughList[i]['selectCount'] = data.fangtianxiaFilterData.length
+        //     data.enoughList[i]['lowPriceData'] = data.fangtianxiaLowPriceData
+        //   }
+        //   if (data.enoughList[i].key == 'tc') {
+        //     data.enoughList[i]['selectCount'] = data.wbtcFilterData.length
+        //     data.enoughList[i]['lowPriceData'] = data.wbtcLowPriceData
+        //   }
+        // }
+      }
+      this.setData({
+        allCount: data.allCount,
+        wiwjCount: data.wiwjCount,
+        lianjiaCount: data.lianjiaCount,
+        fangtianxiaCount: data.fangtianxiaCount,
+        wbtcCount: data.wbtcCount,
+        showCount: data.showCount,
+        averagePrice: data.averagePrice,
+        lowPrice: data.lowPrice,
+        lowPriceData: data.lowPriceData,
+        highAreaData: data.highAreaData,
+        enoughList: data.enoughList,
+        allOriginalData: data.allOriginalData,
+        rowData: data.rowData,
+        ddCoin: data.ddCoin || 0,
+        bindPhone: data.bindPhone || false,
+        bindPublic: data.bindPublic || false,
+        bottomType: data.bottomType || 0,
+        taskTime: data.taskTime || '',
+        startTimeName: data.startTimeName || '',
+        monitorId: data.monitorId || '',
+        totalFee: data.totalFee || '', //消耗盯盯币
+        sort: data.sortType == 1 ? false : ( 2 ? false : true ),
+        rentType: 3, //1：短租 2：长租  3二手房
+        fee,
+        type: 3
+      })
+    }
+
   },
 
 
@@ -223,7 +286,9 @@ Page({
     if (this.data.rentType == 2) {
       this.getStartLongMonitor(e.detail.noteSelect, e.detail.publicSelect)
     }
-    
+    if (this.data.rentType == 3) {
+      this.getStartLongMonitor(e.detail.noteSelect, e.detail.publicSelect)
+    }
   },
   /**
    * 立即开始----开启监控--未关注公众号时
@@ -312,6 +377,36 @@ Page({
       });
     });
   },
+  getStartSecondMonitor(noteSelect, publicSelect) {
+    let data = {
+      noteSelect,
+      publicSelect,
+      rowData: this.data.rowData,
+      allOriginalData: this.data.allOriginalData,
+      lowPrice: this.data.lowPrice,
+      allCount: this.data.allCount,
+      wiwjCount: this.data.wiwjCount,
+      lianjiaCount: this.data.lianjiaCount,
+      fangtianxiaCount: this.data.fangtianxiaCount,
+      wbtcCount: this.data.wbtcCount,
+    }
+    let addData = house.getStartSecondMonitor(data)
+    wx.showLoading({
+      title: '正在添加监控...',
+      mask: true
+    });
+    monitorApi.addSecondMonitor(addData).then(res => {
+      wx.hideLoading();
+      wx.showToast({
+        title: res.data.resultMsg,
+        duration: 2000
+      });
+      app.switchRent = 3;
+      wx.switchTab({
+        url: '../monitor/monitor'
+      });
+    });
+  },
   
   /**
    * 结束监控
@@ -371,6 +466,24 @@ Page({
         }
       })
     }
+
+    if (this.data.rentType == 3){
+      monitorApi.endLongMonitor(data).then(res => {
+        if (res.data.success) {
+          wx.showToast({
+            title: res.data.resultMsg,
+            icon: 'success',
+            duration: 2000
+          })
+          this.setData({
+            stopDisplay: e.detail,
+          })
+          wx.navigateBack({
+            delta: 2
+          })
+        }
+      })
+    }
     
   },
   goBack() {
@@ -397,6 +510,13 @@ Page({
         })
       }
       if (this.data.rentType == 2) {
+        this.setData({
+          updateLongDisplay: 'block',
+          updateData: app.globalData.monitorSearchLongData,
+          defalutData: app.globalData.monitorDefaultSearchLongData
+        })
+      }
+      if (this.data.rentType == 3) {
         this.setData({
           updateLongDisplay: 'block',
           updateData: app.globalData.monitorSearchLongData,

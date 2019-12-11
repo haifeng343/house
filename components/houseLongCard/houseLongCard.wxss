@@ -51,6 +51,7 @@
 .card_words .card_price{color: #F1612A;line-height:40rpx;display: inline-block;margin-right: 12rpx;}
 .card_words .card_price .p{font-size: 40rpx;}
 .card_words .card_price .m{font-size: 24rpx;}
+.card_words .card_price .u{font-size: 24rpx;color: #a6a6a6;margin-left: 10rpx;}
 .card_words .card_newprice{display: inline-block}
 .card_words .card_newprice .uniE968{
   font-size:14rpx;

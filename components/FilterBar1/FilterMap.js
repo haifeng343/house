@@ -42,7 +42,7 @@ export default JSON.stringify({
           },
           {
             label: "四室以上",
-            value: 12
+            value: 5
           }
         ]
       },
@@ -74,7 +74,7 @@ export default JSON.stringify({
           },
           {
             label: "四室及以上",
-            value: 12,
+            value: 5,
             showType: [2, 3, 4]
           }
         ]
@@ -110,7 +110,7 @@ export default JSON.stringify({
         icon: iconEnum["wheat"],
         list: [
           {
-            label: "精装修",
+            label: "毛胚房",
             value: 1
           },
           {
@@ -118,7 +118,7 @@ export default JSON.stringify({
             value: 2
           },
           {
-            label: "毛胚房",
+            label: "精装修",
             value: 3
           }
         ]
@@ -205,8 +205,8 @@ export default JSON.stringify({
       },
       {
         title: "楼龄",
-        multi: true,
-        field: "longHouseTags",
+        multi: false,
+        field: "longAgeTime",
         icon: iconEnum["thistle"],
         list: [
           {

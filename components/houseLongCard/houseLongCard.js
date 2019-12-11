@@ -9,8 +9,9 @@ Component({
       type:Object,
       value: {}
     },
-    type: { //1：查询房源列表  2：监控房源列表
-      type:Number
+    types: { //1：查询房源列表  2：监控房源列表 ,3:二手房房源列表
+      type:Number,
+      value: ''
     },
     idx: {
       type: Number
@@ -95,6 +96,7 @@ Component({
       }
     },
     ready() {
+      console.log(this.properties.types);
       let num = wx.getStorageSync('autoswiperNum');
       if (this.properties.idx == 0 && !num && this.properties.isStatist) {
         wx.setStorageSync('autoswiperNum', 1)
@@ -113,6 +115,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    
     handleMovableChange(e) {
       if (this.properties.editFlag) { return }
       if (e.detail.source === 'touch') {

@@ -561,6 +561,7 @@ Page({
           mask: true
         });
       }
+      
     }
   },
   getHouseTypeAndEqu() {
