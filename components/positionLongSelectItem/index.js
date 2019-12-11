@@ -18,6 +18,9 @@ Component({
     },
     type: {
       type: String
+    },
+    isSecond: {
+      type: Boolean
     }
   },
 
@@ -88,14 +91,23 @@ Component({
     chooseArea(event) {
       let name = event.currentTarget.dataset.name;
       let fullname = event.currentTarget.dataset.fullname;
+      let isSecond = this.data.isSecond || false
       const app = getApp();
       let searchLongData = app.globalData.searchLongData;
+      let secondSearchData = app.globalData.secondSearchData;
       chooseArea(fullname, searchLongData.city, searchLongData.chooseType).then(
         resp => {
-          app.globalData.searchLongData = Object.assign(
-            app.globalData.searchLongData,
-            resp
-          );
+          if (!isSecond) {
+            app.globalData.searchLongData = Object.assign(
+              app.globalData.searchLongData,
+              resp
+            );
+          } else {
+            app.globalData.secondSearchData = Object.assign(
+              app.globalData.secondSearchData,
+              resp
+            );
+          }
           wx.navigateBack({ delta: 1 });
         }
       );

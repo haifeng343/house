@@ -26,12 +26,12 @@ Page({
    */
   data: {
     result: [],
-    history: [],
     type: "",
     value: "",
     resultLength: 0,
     hasAsked: false,
-    isfocus: false
+    isfocus: false,
+    isSecond: false //是否为二手房
   },
   service: new SearchService(),
   inputSearch(event) {
@@ -51,18 +51,90 @@ Page({
       hasAsked: false
     });
 
-    let searchLongData = app.globalData.searchLongData;
-
     if (this.timer) {
       clearTimeout(this.timer);
     }
 
-    this.timer = setTimeout(() => {
-      this.promiseVersion += 1;
-      if (searchLongData.chooseType === 1) {
+    if(!this.data.isSecond) {
+      let searchLongData = app.globalData.searchLongData;
+      this.timer = setTimeout(() => {
+        this.promiseVersion += 1;
+        if (searchLongData.chooseType === 1) {
+          longRentTip
+            .getIntermediaryData(
+              searchLongData.cityId,
+              this.data.value,
+              this.promiseVersion
+            )
+            .then(resp => {
+              const { result, promiseVersion } = resp;
+              if (this.promiseVersion === promiseVersion) {
+                const length = result.length;
+                this.setData({
+                  hasAsked: true,
+                  resultLength: length,
+                  result: result.map(item =>
+                    Object.assign(
+                      {
+                        label: getHeightStrArray(item.name, this.data.value),
+                        tag: areaTagMap[item.type]
+                      },
+                      item
+                    )
+                  )
+                });
+              }
+            })
+            .catch(error => {
+              console.error(error);
+              wx.showToast({
+                title: "网络异常",
+                icon: "none"
+              });
+            });
+        } else {
+          longRentTip
+            .getPersonalData(
+              searchLongData.cityId,
+              this.data.value,
+              this.promiseVersion
+            )
+            .then(resp => {
+              console.log('resp',resp);
+              const { result, promiseVersion } = resp;
+              if (this.promiseVersion === promiseVersion) {
+                let length = result.length;
+                this.setData({
+                  hasAsked: true,
+                  resultLength: length,
+                  result: result.map(item =>
+                    Object.assign(
+                      {
+                        label: getHeightStrArray(item.name, this.data.value),
+                        tag: areaTagMap[item.type]
+                      },
+                      item
+                    )
+                  )
+                });
+              }
+            })
+            .catch(error => {
+              console.error(error);
+              wx.showToast({
+                title: "网络异常",
+                icon: "none"
+              });
+            });
+        }
+      }, 200);
+    } else {
+      let secondSearchData = app.globalData.secondSearchData;
+      this.timer = setTimeout(() => {
+        this.promiseVersion += 1;
         longRentTip
           .getIntermediaryData(
-            searchLongData.cityId,
+          secondSearchData.cityId,
             this.data.value,
             this.promiseVersion
           )
@@ -92,53 +164,27 @@ Page({
               icon: "none"
             });
           });
-      } else {
-        longRentTip
-          .getPersonalData(
-            searchLongData.cityId,
-            this.data.value,
-            this.promiseVersion
-          )
-          .then(resp => {
-            console.log('resp',resp);
-            const { result, promiseVersion } = resp;
-            if (this.promiseVersion === promiseVersion) {
-              let length = result.length;
-              this.setData({
-                hasAsked: true,
-                resultLength: length,
-                result: result.map(item =>
-                  Object.assign(
-                    {
-                      label: getHeightStrArray(item.name, this.data.value),
-                      tag: areaTagMap[item.type]
-                    },
-                    item
-                  )
-                )
-              });
-            }
-          })
-          .catch(error => {
-            console.error(error);
-            wx.showToast({
-              title: "网络异常",
-              icon: "none"
-            });
-          });
-      }
-    }, 200);
+      }, 200);
+    }
   },
   handleSelect(event) {
     let data = event.currentTarget.dataset.item;
     const app = getApp();
-    let searchLongData = app.globalData.searchLongData;
-    app.globalData.searchLongData = Object.assign(
-      app.globalData.searchLongData,
-      chooseSlectData(data)
-    );
-
-    longSetSearchData(data, searchLongData.city, searchLongData.chooseType);
+    if(!this.data.isSecond) {
+      let searchLongData = app.globalData.searchLongData;
+      app.globalData.searchLongData = Object.assign(
+        app.globalData.searchLongData,
+        chooseSlectData(data)
+      );
+      longSetSearchData(data, searchLongData.city, searchLongData.chooseType);
+    } else {
+      let secondSearchData = app.globalData.secondSearchData;
+      app.globalData.secondSearchData = Object.assign(
+        app.globalData.secondSearchData,
+        chooseSlectData(data,true)
+      );
+      longSetSearchData(data, secondSearchData.city, undefined, true);
+    }
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1]; //当前页面
     var prevPage = pages[pages.length - 3]; //上一个页面
@@ -173,26 +219,18 @@ Page({
     );
   },
 
-  onLoad: function() {},
+  onLoad: function (options) {
+    let isSecond = false
+    if (options.isSecond) {
+      isSecond = true
+      this.setData({ isSecond })
+      wx.setNavigationBarTitle({
+        title: '二手房-房源查询'
+      })
+    }
+  },
 
   onReady: function() {
     this.promiseVersion = 0;
-  },
-
-  onShow: function() {
-    let history = wx.getStorageSync("positionSearchHistory") || [];
-    this.setData({
-      history
-    });
-  },
-
-  onHide: function() {},
-
-  onUnload: function() {},
-
-  onPullDownRefresh: function() {},
-
-  onReachBottom: function() {},
-
-  onShareAppMessage: function() {}
+  }
 });

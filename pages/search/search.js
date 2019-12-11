@@ -170,7 +170,7 @@ Page({
       wx.navigateTo({
         url:
           "../positionLongSelect/positionLongSelect?city=" +
-          this.data.searchLongData.city
+          this.data.searchLongData.city + "&isSecond=1"
       });
     }
   },
@@ -990,47 +990,36 @@ Page({
   },
   //table切换
   changeTab(event) {
-    let tabIndex = +event.currentTarget.dataset.index || 1;
-    this.setData({ tabIndex, spread: false });
+    let tabIndex = +event.currentTarget.dataset.index || 1
+    this.setData({ tabIndex, spread: false })
     if (tabIndex === 1) {
-      this.getHotCity();
+      this.getHotCity()
     } else {
-      this.getHotCityLong();
+      this.getHotCityLong()
     }
   },
   //长租切换房源
   changeLongTab(event) {
-    let tabIndex = +event.currentTarget.dataset.index || 1;
-    let searchLongData = this.data.searchLongData;
-    // console.log(tabIndex, searchLongData, searchLongData.chooseType)
+    let tabIndex = +event.currentTarget.dataset.index || 1
+    let searchLongData = { ...this.data.searchLongData }
     if (tabIndex !== searchLongData.chooseType) {
-      searchLongData.chooseType = tabIndex;
-      searchLongData.longBuildAreas = -1;
-      searchLongData.longFloorTypes = [];
-      searchLongData.longHeadings = [];
-      searchLongData.longHouseTags = [];
-      searchLongData.longLayouts = [];
-      searchLongData.longRentTypes = 0;
-      searchLongData.longSortTypes = 0;
-      searchLongData.area = "";
-      searchLongData.areaId = {};
-      searchLongData.areaType = 0;
-      searchLongData.areaJson = "";
-      this.setData({ searchLongData });
-      const app = getApp();
-      let data = app.globalData.searchLongData;
-      data.cityType = tabIndex;
-      data.longBuildAreas = -1;
-      data.longFloorTypes = [];
-      data.longHeadings = [];
-      data.longHouseTags = [];
-      data.longLayouts = [];
-      data.longRentTypes = 0;
-      data.longSortTypes = 0;
-      data.advSort = 0;
-      data.area = "";
-      data.areaId = {};
-      data.areaJson = "";
+      let data = {}
+      data.chooseType = tabIndex
+      data.longBuildAreas = -1
+      data.longFloorTypes = []
+      data.longHeadings = []
+      data.longHouseTags = []
+      data.longLayouts = []
+      data.longRentTypes = 0
+      data.longSortTypes = 0
+      data.area = ""
+      data.areaId = {}
+      data.areaType = 0
+      data.areaJson = ""
+      const app = getApp()
+      searchLongData = { ...searchLongData, ...data }
+      app.globalData.searchLongData = { ...app.globalData.searchLongData, ...data }
+      this.setData({ searchLongData })
     }
   },
   // 长租更换房源类型

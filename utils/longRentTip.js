@@ -563,7 +563,82 @@ const getPersonalData = (data, keywords, promiseVersion) => {
   });
 };
 
+const getSecondIntermediaryData = (data, keywords, promiseVersion) => {
+  return new Promise(resolve => {
+    var count = 0;
+    var results1 = null;
+    var results2 = null;
+    longrent.wiwj
+      .ershouTip({ city: data.wiwj, keywords: keywords })
+      .then(resp => {
+        const results = [];
+        const resultMap = [];
+        for (const r of resp.data) {
+          if (resultMap.includes(`%%${r.searchType}%%__${r.searchName}`)) {
+            continue;
+          }
+          results.push(r);
+          resultMap.push(`%%${r.searchType}%%__${r.searchName}`);
+        }
+        return Promise.resolve({ data: results });
+      })
+      .then(results => {
+        results1 = results;
+        count++;
+        if (count === 2) {
+          resolve({
+            promiseVersion,
+            result: returnData(results1, results2, keywords)
+          });
+        }
+      })
+      .catch(() => {
+        count++;
+        if (count === 2) {
+          resolve({
+            promiseVersion,
+            result: returnData(results1, results2, keywords)
+          });
+        }
+      });
+    longrent.lianjia
+      .ershouTip({ city: data.lj, keywords: keywords })
+      .then(resp => {
+        const results = [];
+        const resultMap = [];
+        for (const r of resp.data) {
+          if (resultMap.includes(`%%${r.type}%%__${r.name}`)) {
+            continue;
+          }
+          results.push(r);
+          resultMap.push(`%%${r.type}%%__${r.name}`);
+        }
+        return Promise.resolve({ data: results });
+      })
+      .then(results => {
+        results2 = results;
+        count++;
+        if (count === 2) {
+          resolve({
+            promiseVersion,
+            result: returnData(results1, results2, keywords)
+          });
+        }
+      })
+      .catch(() => {
+        count++;
+        if (count === 2) {
+          resolve({
+            promiseVersion,
+            result: returnData(results1, results2, keywords)
+          });
+        }
+      });
+  });
+};
+
 module.exports = {
   getIntermediaryData,
-  getPersonalData
+  getPersonalData,
+  getSecondIntermediaryData //二手房数据
 };
