@@ -2,6 +2,7 @@ const houseApi = require("../api/houseApi.js");
 const util = require("../utils/util.js");
 const secondApi = require("../api/longrent.js"); //二手房
 const longrent = require("../api/longrent");
+const longSetSearchData = require("./indexSecondHouseData.js")
 /**
  * 获取途家平台数据
  * type 1 房源列表；2监控详情
@@ -3715,11 +3716,8 @@ const ljSecondScreenParam = type => {
     }
   }
   if (areaType == 60) {
-    // if (searchData.areaId.nearby) {
-    //   condition += "lon" + searchData.areaId.longitude;
-    //   condition += "lat" + searchData.areaId.latitude;
-    //   condition += "poi" + parseInt(searchData.areaId.nearby) * 1000;
-    // }
+    let d = longSetSearchData.getNearbyGCJ({ ...searchData.areaId})
+    obj = {...obj,...d}
   }
   // 价钱
   let minPrice = searchData.minPrice;

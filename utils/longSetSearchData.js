@@ -392,28 +392,28 @@ const changeHistoryStorage = (data, isSecond = false) => {
 };
 
 //定点的经纬度和特定距离取范围
-//传入{longitude:120.140594,latitude: 30.282918, distance:2 }
+//传入{longitude:120.140594,latitude: 30.282918, nearby:2 }
 //输出{minLongitude: 120.11978873062212, minlatitude: 30.26495169431761, maxLongitude: 120.16139926937787, maxLatitude: 30.30088430568239}
-const getNearbyGCJ = ({ longitude, latitude, distance})=> {
+const getNearbyGCJ = ({ longitude, latitude, nearby})=> {
   let EARTH_RADIUS = 6378.137
   // 求东西两侧的的范围边界。在haversin公式中令φ1 = φ2(维度相同),传入的距离为 米，转换为千米
-  let dlng = 2 * Math.asin(Math.sin((distance) / (2 * EARTH_RADIUS)) / Math.cos(latitude * Math.PI / 180));
+  let dlng = 2 * Math.asin(Math.sin((nearby) / (2 * EARTH_RADIUS)) / Math.cos(latitude * Math.PI / 180));
   // 弧度转换成角度
   dlng = dlng * 180.0 / Math.PI
 
-  let dlat = distance / EARTH_RADIUS;
+  let dlat = nearby / EARTH_RADIUS;
   // 弧度转换成角度
   dlat = dlat * 180.0 / Math.PI
 
-  let minLongitude = +((longitude - dlng).toFixed(14));
-  let minlatitude = +((latitude - dlat).toFixed(14));
-  let maxLongitude = +((longitude + dlng).toFixed(14));
-  let maxLatitude = +((latitude + dlat).toFixed(14));
+  let min_longitude = +((longitude - dlng).toFixed(14));
+  let min_latitude = +((latitude - dlat).toFixed(14));
+  let max_longitude = +((longitude + dlng).toFixed(14));
+  let max_latitude = +((latitude + dlat).toFixed(14));
   return {
-    minLongitude,
-    minlatitude,
-    maxLongitude,
-    maxLatitude
+    min_longitude,
+    min_latitude,
+    max_longitude,
+    max_latitude
   };
 };
 

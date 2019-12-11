@@ -26,7 +26,7 @@ Page({
       }
       if (app.switchRent == 3) {
         this.setData({ active: 3, data: [] })
-        // this.getLongMonitorData()
+        this.getSecondHandData()
       }
       this.getUserInfo()
     } else {
@@ -41,25 +41,23 @@ Page({
     let token = wx.getStorageSync('token');
     if(token){
       if (index === '1' && this.data.active != index) {
-        // app.switchRent = 2
         this.setData({
-          active: 1
+          active: 1, data: []
         })
         this.getMonitorData()
       }
       if (index === '2' && this.data.active != index) {
-        // app.switchRent = 1
         this.setData({
-          active: 2
+          active: 2, data: []
         })
         this.getLongMonitorData()
       }
 
       if (index === '3' && this.data.active != index) {
         this.setData({
-          show: 0,
-          active: 3
+          active: 3, data: []
         })
+        this.getSecondHandData()
       }
     }else{
       this.setData({
@@ -110,6 +108,33 @@ Page({
           res.data.data[i].hourNum = monitor.setHour(res.data.data[i].monitorTime)
           res.data.data[i].index = i
           res.data.data[i].longRentType = 1
+        }
+        this.setData({
+          data: res.data.data,
+          show: 1
+        })
+      } else {
+        this.setData({
+          show: 0
+        })
+      }
+    })
+  },
+  getSecondHandData() {
+    let data = {}
+    wx.showLoading({
+      title: "加载中...",
+      mask: true
+    });
+    monitorApi.getMonitorSecondList(data).then(res => {
+      wx.hideLoading();
+      if (res.data.data.length) {
+        for (let i = 0; i < res.data.data.length; i++) {
+          res.data.data[i].dayNum = monitor.setDay(res.data.data[i].monitorTime)
+          res.data.data[i].hourNum = monitor.setHour(res.data.data[i].monitorTime)
+          res.data.data[i].index = i
+          res.data.data[i].longRentType = 2
+          //res.data.data[i].status = 11
         }
         this.setData({
           data: res.data.data,
