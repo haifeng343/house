@@ -15,9 +15,11 @@ Page({
   onLoad: function (options) {
     let hourMoney = wx.getStorageSync('hourMoney') || 1 
     let hourLongMoney = wx.getStorageSync('hourLongMoney') || 1
+    let hourSecondMoney = wx.getStorageSync('hourSecondMoney') || 1
     this.setData({
       hourMoney,
-      hourLongMoney
+      hourLongMoney,
+      hourSecondMoney
     })
   },
 

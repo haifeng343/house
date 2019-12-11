@@ -38,35 +38,33 @@ Page({
   monitorChange(e){
     var index = e.currentTarget.dataset.index;
     console.log(index)
-    this.setData({
-      active:index
-    })
     let token = wx.getStorageSync('token');
     if(token){
-      if (this.data.active == 1) {
+      if (index === '1' && this.data.active != index) {
         // app.switchRent = 2
         this.setData({
-          show: 0,
           active: 1
         })
         this.getMonitorData()
       }
-      if (this.data.active == 2) {
+      if (index === '2' && this.data.active != index) {
         // app.switchRent = 1
         this.setData({
-          show: 0,
           active: 2
         })
         this.getLongMonitorData()
       }
 
-      if (this.data.active == 3) {
-        // app.switchRent = 1
+      if (index === '3' && this.data.active != index) {
         this.setData({
           show: 0,
           active: 3
         })
       }
+    }else{
+      this.setData({
+        show: 0,
+      })
     }
   },
   getLongMonitorData(){
@@ -344,6 +342,7 @@ Page({
    */
   checkDetail(e){
     var item = this.data.data[e.detail.index]
+    app.switchRent = this.data.active
     if(this.data.active == 1){
       app.globalData.monitorSearchData = {
         cityType: "",
@@ -447,6 +446,7 @@ Page({
   },
   //跳转监控规则页面
   handleGoToRule() {
+    app.switchRent = this.data.active
     wx.navigateTo({
       url: '../monitorRule/index',
     })
