@@ -8,14 +8,14 @@
       <view class="house_low_price" wx:if="{{rentType == 1}}">
         <houseListCard  item="{{lowPriceData}}" type="{{type}}"  editFlag="{{true}}" isStatist="{{false}}" dayCount="{{dayCount}}" idx="{{0}}" bottomType="{{bottomType}}"></houseListCard>
       </view>
-      <view class="house_low_price" wx:if="{{rentType == 2}}">
+      <view class="house_low_price" wx:if="{{rentType == 2||rentType == 3}}">
         <view class="house_low">
             <image class="price" src="../../assets/image/low_price.png"></image>
             <text>当前最低</text>
         </view>
         <houseLongCard item="{{lowPriceData}}" type="{{type}}" editFlag="{{true}}" isStatist="{{false}}"  idx="{{0}}" bottomType="{{bottomType}}"></houseLongCard>
       </view>
-      <view class="house_low_price" wx:if="{{rentType == 2}}">
+      <view class="house_low_price" wx:if="{{rentType == 2||rentType == 3}}">
         <view class="house_low">
             <image class="price" src="../../assets/image/low_price.png"></image>
             <text>面积最大</text>

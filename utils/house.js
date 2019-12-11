@@ -152,134 +152,7 @@ const getXzData = (type, xzfilter) => {
  * 获取木鸟平台数据
  * type 1 房源列表；2监控详情
  */
-// const getMnData = (type, mnfilter) => {
-//   let app = getApp();
-//   let arr2 = [];
-//   let mnCount = 0;
-//   let y =
-//     type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
-//   let s = app.globalData.mnSwitch;
-//   let data = {
-//     platform: "mn",
-//     cityId: y.cityId.mn,
-//     page: {
-//       size: 15,
-//       num: 1
-//     },
-//     filter: mnfilter
-//   };
-//   let data2 = {
-//     platform: "mn",
-//     cityId: y.cityId.mn,
-//     page: {
-//       size: 15,
-//       num: 2
-//     },
-//     filter: mnfilter
-//   };
-//   let data3 = {
-//     platform: "mn",
-//     cityId: y.cityId.mn,
-//     page: {
-//       size: 15,
-//       num: 3
-//     },
-//     filter: mnfilter
-//   };
-//   let data4 = {
-//     platform: "mn",
-//     cityId: y.cityId.mn,
-//     page: {
-//       size: 15,
-//       num: 4
-//     },
-//     filter: mnfilter
-//   };
-//   return new Promise((resolve, reject) => {
-//     if (!s) {
-//       resolve({
-//         arr: [],
-//         mnCount: -1 // -1 表示不查询该平台数据
-//       });
-//       return;
-//     }
-//     if (y.areaType && y.area) {
-//       if (y.areaId.hasOwnProperty("mn") && !y.areaId.mn) {
-//         mnCount = 0;
-//         resolve({
-//           arr: [],
-//           mnCount
-//         });
-//         return;
-//       }
-//     }
-//     houseApi
-//       .getMnList(data)
-//       .then(res => {
-//         if (res) {
-//           arr2 = res.data.rooms.list;
-//           mnCount = Number(res.data.rooms.page.record_count);
-//         }
-//         if (res) {
-//           return houseApi.getMnList(data2);
-//         }
-//         if (!res) {
-//           resolve({
-//             network: true
-//           });
-//         }
-//       })
-//       .then(res => {
-//         if (res) {
-//           arr2.push.apply(arr2, res.data.rooms.list);
-//         }
-//         if (res && arr2.length == 0) {
-//           mnCount = Number(res.data.rooms.page.record_count);
-//         }
-//         if (res) {
-//           return houseApi.getMnList(data3);
-//         }
-//         if (!res) {
-//           let arr = arr2.slice(0, 50);
-//           resolve({
-//             arr,
-//             mnCount
-//           });
-//         }
-//       })
-//       .then(res => {
-//         if (res) {
-//           arr2.push.apply(arr2, res.data.rooms.list);
-//         }
-//         if (res && arr2.length == 0) {
-//           mnCount = Number(res.data.rooms.page.record_count);
-//         }
-//         if (res) {
-//           return houseApi.getMnList(data4);
-//         }
-//         if (!res) {
-//           let arr = arr2.slice(0, 50);
-//           resolve({
-//             arr,
-//             mnCount
-//           });
-//         }
-//       })
-//       .then(res => {
-//         if (res) {
-//           arr2.push.apply(arr2, res.data.rooms.list);
-//         }
-//         if (res && arr2.length == 0) {
-//           mnCount = Number(res.data.rooms.page.record_count);
-//         }
-//         let arr = arr2.slice(0, 50);
-//         resolve({
-//           arr,
-//           mnCount
-//         });
-//       });
-//   });
-// };
+
 const getMnData = (type, mnfilter) => {
   let arr2 = [];
   let mnCount = 0;
@@ -818,44 +691,20 @@ const getLianjiaData = (type, lianjiafilter = []) => {
 };
 
 const getSecondLianjiaData = (type, lianjiafilter = []) => {
-  // let app = getApp();
+  let app = getApp();
   let lianjiaCount = 0;
-  // let y =
-  //   type == 1
-  //     ? app.globalData.searchLongData
-  //     : app.globalData.monitorSearchLongData;
-  // return new Promise((resolve, reject) => {
-  //   longrent.lianjia
-  //     .rentSearch({
-  //       city: y.cityId.lj,
-  //       page: { num: 1, size: 50 },
-  //       filterList: lianjiafilter
-  //     })
-  //     .then(res => {
-  //       if (res) {
-  //         lianjiaCount = res.data.total;
-  //         resolve({
-  //           arr: res.data.list && res.data.list.slice(0, 50),
-  //           lianjiaCount
-  //         });
-  //       }
-  //     })
-  //     .catch(e => {
-  //       resolve({
-  //         network: true
-  //       });
-  //     });
-  // });
+  let y =
+    type == 1
+      ? app.globalData.secondSearchData
+      : app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
     secondApi.lianjia.ershouSearch({
-      "city": 330101,
+      "city": y.cityId.lj,
       "page": {
-        "size": 15,
+        "size": 50,
         "num": 1
       },
-      "filter": {
-        "condition": "ep500bp400"
-      }
+      "filter": lianjiafilter
     }).then(res => {
         if(res){
           console.log(res)

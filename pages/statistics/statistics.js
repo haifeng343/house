@@ -161,41 +161,28 @@ Page({
       wx.setNavigationBarTitle({
         title: '二手房-统计信息'
       })
-      let data = app.globalData.houseListData
-      let fee = 3;
+      let data = app.globalData.houseListData;
+      console.log(data)
+      let fee = 1;
       if (data.fee) {
         fee = data.fee
       } else {
-        fee = wx.getStorageSync('hourLongMoney') || 3
+        fee = wx.getStorageSync('hourSecondMoney') || 1
       }
       for (let i = 0; i < data.enoughList.length; i++) {
-        if (data.chooseType == 3){
-          if (data.enoughList[i].key == 'wiwj') {
-            data.enoughList[i]['selectCount'] = data.wiwjFilterData.length
-            data.enoughList[i]['lowPriceData'] = data.wiwjLowPriceData
-          }
-          if (data.enoughList[i].key == 'lj') {
-            data.enoughList[i]['selectCount'] = data.lianjiaFilterData.length
-            data.enoughList[i]['lowPriceData'] = data.lianjiaLowPriceData
-          }
+        if (data.enoughList[i].key == 'wiwj') {
+          data.enoughList[i]['selectCount'] = data.wiwjFilterData.length
+          data.enoughList[i]['lowPriceData'] = data.wiwjLowPriceData
         }
-        // if (data.chooseType == 2) {
-        //   if (data.enoughList[i].key == 'ftx') {
-        //     data.enoughList[i]['selectCount'] = data.fangtianxiaFilterData.length
-        //     data.enoughList[i]['lowPriceData'] = data.fangtianxiaLowPriceData
-        //   }
-        //   if (data.enoughList[i].key == 'tc') {
-        //     data.enoughList[i]['selectCount'] = data.wbtcFilterData.length
-        //     data.enoughList[i]['lowPriceData'] = data.wbtcLowPriceData
-        //   }
-        // }
+        if (data.enoughList[i].key == 'lj') {
+          data.enoughList[i]['selectCount'] = data.lianjiaFilterData.length
+          data.enoughList[i]['lowPriceData'] = data.lianjiaLowPriceData
+        }
       }
       this.setData({
         allCount: data.allCount,
         wiwjCount: data.wiwjCount,
         lianjiaCount: data.lianjiaCount,
-        fangtianxiaCount: data.fangtianxiaCount,
-        wbtcCount: data.wbtcCount,
         showCount: data.showCount,
         averagePrice: data.averagePrice,
         lowPrice: data.lowPrice,

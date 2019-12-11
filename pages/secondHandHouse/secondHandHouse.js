@@ -22,16 +22,12 @@ Page({
     highAreaData: {},
     wiwjLowPriceData: {},
     lianjiaLowPriceData: {},
-    fangtianxiaLowPriceData: {},
-    wbtcLowPriceData: {},
     wiwjCount: 0,
     lianjiaCount: 0,
     fangtianxiaCount: 0,
     wbtcCount: 0,
     wiwjFilterData: [],
     lianjiaFilterData: [],
-    fangtianxiaFilterData: [],
-    wbtcFilterData: [],
     rowData: [],
     loadingDisplay: "block",
     monitorenoughDisplay: "none",
@@ -77,34 +73,6 @@ Page({
   },
   onShow: function() {
     this.getUserInfo();
-    // secondApi.wiwj.ershouSearch({
-    //   "city": 2,
-    //   "page": {
-    //     "size": 15,
-    //     "num": 1
-    //   },
-    //   "filter": {
-    //     "price": "100,200",
-    //     "broom": "2",
-    //     "buildarea": "0,50",
-    //     "heading": "10",
-    //     "keywords": "西湖"
-    //   }
-    // }).then(res => res.data.list.forEach(e => {
-
-    //   console.log(e.BaseDetail)
-    // }))
-
-    // secondApi.lianjia.ershouSearch({
-    //   "city": 330100,
-    //   "page": {
-    //     "size": 15,
-    //     "num": 1
-    //   },
-    //   "filter": {
-    //     "condition": "ep500bp400"
-    //   }
-    // }).then(res => console.log(res))
 
 
   },
@@ -373,12 +341,8 @@ Page({
         lowPrice: houseData.lowPrice,
         lowPriceData: houseData.lowPriceData,
         highAreaData: houseData.highAreaData,
-        fangtianxiaLowPriceData: houseData.fangtianxiaLowPriceData,
-        wbtcLowPriceData: houseData.wbtcLowPriceData,
         fangtianxiaCount: fangtianxiaDataObj.fangtianxiaCount,
         wbtcCount: wbtcDataObj.wbtcCount,
-        fangtianxiaFilterData: houseData.fangtianxiaFilterData,
-        wbtcFilterData: houseData.wbtcFilterData,
         enoughList,
         loadingDisplay: "none",
         rowData: houseData.rowData
@@ -433,6 +397,7 @@ Page({
   },
   // 跳转统计详情
   goToDetail() {
+    console.log(111)
     let app = getApp();
     app.globalData.houseListData = {
       allCount: this.data.allCount,
@@ -467,18 +432,6 @@ Page({
         "lianjiaFilterData"
       ] = this.data.lianjiaFilterData;
     }
-    if (this.data.chooseType === 2) {
-      app.globalData.houseListData[
-        "fangtianxiaLowPriceData"
-      ] = this.data.fangtianxiaLowPriceData;
-      app.globalData.houseListData[
-        "wbtcLowPriceData"
-      ] = this.data.wbtcLowPriceData;
-      app.globalData.houseListData[
-        "fangtianxiaFilterData"
-      ] = this.data.fangtianxiaFilterData;
-      app.globalData.houseListData["wbtcFilterData"] = this.data.wbtcFilterData;
-    }
     this.setData({
       editFlag: false,
       selectAllFlag: true
@@ -487,6 +440,33 @@ Page({
     wx.navigateTo({
       url: "../statistics/statistics?rentType=3"
     });
+  },
+  goToSelectAll() {
+    let num = 0
+    let indexArr = []
+    let d = [...this.data.allData]
+    let a = [...this.data.allOriginalData]
+    for (let i = 0; i < d.length; i++) {
+      d[i]['collection'] = !this.data.selectAllFlag
+    }
+    for (let i = 0; i < a.length; i++) {
+      a[i]['collection'] = !this.data.selectAllFlag
+      indexArr.push(i)
+    }
+    if (!this.data.selectAllFlag) {
+      num = this.data.allOriginalData.length
+      indexArr
+    } else {
+      num = 0
+      indexArr = []
+    }
+    this.setData({
+      allOriginalData: a,
+      allData: d,
+      selectAllFlag: !this.data.selectAllFlag,
+      selectNum: num,
+      indexArr
+    })
   },
   goEdit() {
     this.setData({
