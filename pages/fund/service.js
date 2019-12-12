@@ -24,7 +24,8 @@ const coinFundIcon = {
   "3": "uniE962",
   "4": "uniE960",
   "5": "uniE963",
-  "6": "uniE93C"
+  "6": "uniE93C",
+  "7": "uniE969"
 };
 
 export default class FundService {

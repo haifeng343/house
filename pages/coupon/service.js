@@ -16,7 +16,9 @@ export default class CouponService {
       .then(resp => {
         return resp.map(item => {
           return {
-            message: item.remark,
+            activity: activityCouponId.includes(item.couponId),
+            couponId: item.couponId,
+            message: `限大于${item.cvalue}天的监控`,
             name: item.cname,
             status: item.status,
             id: item.userCouponId,
@@ -37,6 +39,8 @@ export default class CouponService {
       .then(resp => {
         return resp.map(item => {
           return {
+            activity: activityCouponId.includes(item.couponId),
+            couponId: item.couponId,
             message: `免费体验${daysZH[item.cvalue]}收费抢票功能`,
             name: item.cname,
             status: item.status,
@@ -58,7 +62,9 @@ export default class CouponService {
       .then(resp => {
         return resp.map(item => {
           return {
-            message: `兑换后获得${item.cvalue}盯盯币`,
+            activity: activityCouponId.includes(item.couponId),
+            couponId: item.couponId,
+            message: `可兑换${item.cvalue}盯盯币`,
             name: `${item.cvalue}币`,
             status: item.status,
             id: item.userCouponId,
@@ -80,9 +86,15 @@ export default class CouponService {
         return resp.map(item => {
           const type = item.ctype;
           const message =
-            type === 3 ? `兑换后获得${item.cvalue}盯盯币` : item.remark;
+            type === 1
+              ? `限大于${item.cvalue}天的监控`
+              : type === 2
+              ? `免费体验${daysZH[item.cvalue]}收费抢票功能`
+              : `可兑换${item.cvalue}盯盯币`;
           const name = type === 3 ? `${item.cvalue}币` : item.cname;
           return {
+            activity: activityCouponId.includes(item.couponId),
+            couponId: item.couponId,
             message,
             name,
             status: item.status,
