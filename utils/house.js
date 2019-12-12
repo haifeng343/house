@@ -2593,6 +2593,143 @@ const getMonitorLongHouseData = (list, mSelect) => {
     wbtcFilterData
   };
 };
+
+const getMonitorSecondHouseData = (list, mSelect) => {
+  let app = getApp();
+  let allData = []; //监控房源列表
+  let wiwjFilterData = []; //监控我爱我家房源
+  let ljFilterData = []; //监控链家房源
+  let ftxFilterData = []; //监控房天下房源
+  let wbtcFilterData = []; //监控58同城房源
+
+  let houseList = monitorFilter(list, mSelect)
+  for (let i = 0; i < houseList.length; i++) {
+    if (houseList[i].platform == "wiwj") {
+      let wiwjObjs = {
+        platformId: "wiwj",
+        collection: false,
+        housesid: houseList[i].data.housesid,
+        imgurl: houseList[i].data.imgurl,
+        price: Number(houseList[i].data.price),
+        housetitle: houseList[i].data.housetitle,
+        introduce: houseList[i].data.BaseDetail.bedroom + '室' +
+          houseList[i].data.BaseDetail.livingroom +
+          "/" +
+          houseList[i].data.BaseDetail.buildarea +
+          "㎡/" +
+          houseList[i].data.BaseDetail.heading,
+        address: houseList[i].data.qyname + "·" + houseList[i].data.sqname,
+        tagwall: houseList[i].data.tagwall,
+        area: Number(houseList[i].data.BaseDetail.area),
+        newLevel: houseList[i].newLevel,
+        priceDownLevel: houseList[i].priceDownLevel,
+        priceMargin: houseList[i].priceMargin || "",
+        unit_price: houseList[i].data.unit_price,
+      };
+      wiwjFilterData.push(wiwjObjs);
+      allData.push(wiwjObjs);
+    }
+    if (houseList[i].platform == "lj") {
+      let lianjiaObjs = {
+        platformId: "lj",
+        collection: false,
+        housesid: houseList[i].data.house_code,
+        imgurl: houseList[i].data.cover_pic,
+        price: Number(houseList[i].data.price_str),
+        housetitle: houseList[i].data.title,
+        introduce: houseList[i].data.desc_abtest,
+        address: houseList[i].data.community_name,
+        tagwall: lianjiaTagwall1(houseList[i].data.color_tags),
+        area: Number(houseList[i].data.rent_area),
+        newLevel: houseList[i].newLevel,
+        priceDownLevel: houseList[i].priceDownLevel,
+        priceMargin: houseList[i].priceMargin || "",
+        unit_price: houseList[i].data.unit_price,
+      };
+      ljFilterData.push(lianjiaObjs);
+      allData.push(lianjiaObjs);
+    }
+  }
+
+  //平均价
+  let average =
+    allData.length > 0 ?
+    allData.reduce((sum, {
+      price
+    }) => sum + price, 0) / allData.length :
+    0;
+  let sortArr = [...allData];
+  let areasortArr = [...allData];
+  let wiwjSortArr = [...wiwjFilterData];
+  let ljSortArr = [...ljFilterData];
+  let ftxSortArr = [...ftxFilterData];
+  let wbtcSortArr = [...wbtcFilterData];
+
+  //所有最低价
+  let lowPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) { return o.price; })) : 0;
+  //所有房源最低价格的数据
+  sortArr.sort(util.compareSort("price", "asc"));
+  let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
+
+  let y = app.globalData.monitorSearchLongData;
+  if (y.advSort == 1) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("price", "asc"));
+    allData = allArr
+  }
+  if (y.advSort == 11) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("price", "desc"));
+    allData = allArr
+  }
+  if (y.advSort == 2) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("unit_price", "asc"));
+    allData = allArr
+  }
+  if (y.advSort == 21) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("unit_price", "desc"));
+    allData = allArr
+  }
+  if (y.advSort == 31) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("area", "desc"));
+    allData = allArr
+  }
+
+  //所有房源面积最大
+  areasortArr.sort(util.compareSort("area", "desc"));
+  let highAreaData = areasortArr.length > 0 ? areasortArr[0] : "";
+  //allData = sortArr;
+  //我爱我家最低价格数据
+  wiwjSortArr.sort(util.compareSort("price", "asc"));
+  let wiwjLowPriceData = wiwjSortArr.length > 0 ? wiwjSortArr[0] : "";
+  //链家最低价格数据
+  ljSortArr.sort(util.compareSort("price", "asc"));
+  let ljLowPriceData = ljSortArr.length > 0 ? ljSortArr[0] : "";
+  //房天下最低价格数据
+  ftxSortArr.sort(util.compareSort("price", "asc"));
+  let ftxLowPriceData = ftxSortArr.length > 0 ? ftxSortArr[0] : "";
+  //58同城最低价格数据
+  wbtcSortArr.sort(util.compareSort("price", "asc"));
+  let wbtcLowPriceData = wbtcSortArr.length > 0 ? wbtcSortArr[0] : "";
+  return {
+    allData,
+    averagePrice: parseInt(average),
+    lowPrice,
+    highAreaData,
+    lowPriceData,
+    wiwjLowPriceData,
+    ljLowPriceData,
+    ftxLowPriceData,
+    wbtcLowPriceData,
+    wiwjFilterData,
+    ljFilterData,
+    ftxFilterData,
+    wbtcFilterData
+  };
+};
 const wiwjScreenParam = type => {
   const app = getApp();
   let searchData =
@@ -4272,6 +4409,13 @@ function lianjiaTagwall(tags=[]) {
   }
   return t;
 }
+function lianjiaTagwall1(tags = []) {
+  let t = [];
+  for (let i = 0; i < tags.length; i++) {
+    t.push(tags[i].desc);
+  }
+  return t;
+}
 
 function lianjiaSecondTagwall(tags=[]) {
   let b = [];
@@ -4356,6 +4500,7 @@ module.exports = {
   updateShortMonitorData,
   updateLongMonitorData,
   updateSecondMonitorData,
+  getMonitorSecondHouseData,
   getMonitorHouseType,
   getBrandSecondHouseData
 };

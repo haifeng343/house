@@ -17,7 +17,6 @@ App({
         wx.setStorageSync("token", token);
         // 注意: 不要把这代码段放在存储token之前
         authSubject.next(true);
-        // 注意: 不要把这代码段放在存储token之前
         Http.get("/fdd/user/userInfo.json", { token }).then(resp => {
           this.globalData.isUserBindPhone = !!resp.data.userBase.mobile;
           this.globalData.isUserBindPublic = !!resp.data.publicOpenId;
