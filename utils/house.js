@@ -2028,8 +2028,7 @@ const getBrandSecondHouseData = data => {
   let allData = [];
   let rowData = [];
   let wiwjData = data.wiwjData;
-  // let lianjiaData = lianjianFilter(data.lianjiaData);
-  let lianjiaData = data.lianjiaData;
+  let lianjiaData = lianjianSecondFilter(data.lianjiaData);
   for (let i = 0; i < maxTotal; i++) {
     if (data.wiwjCount > 0) {
       let wiwj = addPlatfromData(allData, wiwjData, i);
@@ -2072,30 +2071,27 @@ const getBrandSecondHouseData = data => {
         break;
       }
       if (lianjia == 1) {
-        if (lianjiaData[i].house_code) {
-          let lianjiaObjs = {
-            platformId: "lj",
-            collection: false,
-            housesid: lianjiaData[i].house_code,
-            imgurl: lianjiaData[i].cover_pic,
-            price: Number(lianjiaData[i].price_str),
-            housetitle: lianjiaData[i].title,
-            introduce: lianjiaData[i].desc_abtest,
-            address: lianjiaData[i].community_name,
-            tagwall: lianjiaSecondTagwall(lianjiaData[i].color_tags),
-            area: Number(lianjiaData[i].area),
-            unit_price: lianjiaData[i].unit_price,
-          };
-
-          lianjiaFilterData.push(lianjiaObjs);
-          allData.push(lianjiaObjs);
-          rowData.push({
-            "data": lianjiaData[i],
-            "newLevel": 0,
-            "platform": "lj",
-            "priceDownLevel": 0
-          })
-        }
+        let lianjiaObjs = {
+          platformId: "lj",
+          collection: false,
+          housesid: lianjiaData[i].house_code,
+          imgurl: lianjiaData[i].cover_pic,
+          price: Number(lianjiaData[i].price_str),
+          housetitle: lianjiaData[i].title,
+          introduce: lianjiaData[i].desc_abtest,
+          address: lianjiaData[i].community_name,
+          tagwall: lianjiaSecondTagwall(lianjiaData[i].color_tags),
+          area: Number(lianjiaData[i].area),
+          unit_price: lianjiaData[i].unit_price,
+        };
+        lianjiaFilterData.push(lianjiaObjs);
+        allData.push(lianjiaObjs);
+        rowData.push({
+          "data": lianjiaData[i],
+          "newLevel": 0,
+          "platform": "lj",
+          "priceDownLevel": 0
+        })
       }
     }
   }
@@ -4300,6 +4296,13 @@ function lianjianFilter(arr) {
 function wbtcFilter(arr) {
   let newArr = arr.filter(item => {
     return !item.isApartment
+  });
+  return newArr;
+}
+
+function lianjianSecondFilter(arr){
+  let newArr = arr.filter(item => {
+    return item.house_code;
   });
   return newArr;
 }
