@@ -182,7 +182,7 @@
                     </view>
                     <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
                         <view class='title icon_2'>面积(平米): <text style="color:#F1612A">{{secondSearchData.minArea===0?(secondSearchData.maxArea===151?'不限':(secondSearchData.maxArea+' 以下')):(secondSearchData.maxArea===151?(secondSearchData.minArea+' 以上'):(secondSearchData.minArea + ' - ' + secondSearchData.maxArea))}}</text></view>
-                        <view>
+                        <view style="margin-top: -42rpx">
                             <Range wx:if="{{showSecondPriceBlock}}" min="{{secondSearchData.minArea}}" max="{{secondSearchData.maxArea}}" step="{{1}}" maxStep="{{151}}" bind:onChange="handleSecondPriceChange" showValueView="{{false}}"/>
                         </view>
                     </view>
