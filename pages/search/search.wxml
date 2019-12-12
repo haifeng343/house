@@ -182,7 +182,7 @@
                     <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
                         <view class='title icon_2'>面积(平米)</view>
                         <view>
-                            <Range wx:if="{{showLongPriceBlock}}" min="{{secondSearchData.minArea}}" max="{{secondSearchData.maxArea}}" bind:onChange="handlePriceChange" />
+                            <Range wx:if="{{showLongPriceBlock}}" min="{{secondSearchData.minArea}}" max="{{secondSearchData.maxArea}}" step="{{1}}" maxStep="{{151}}" bind:onChange="handlePriceChange" showValueView="{{false}}"/>
                         </view>
                     </view>
                     <view wx:if="{{spread}}">

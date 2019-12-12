@@ -27,6 +27,22 @@ Component({
       type: Boolean,
       value: false
     },
+    maxStep: {
+      type: Number,
+      value: 10000
+    },
+    minStep: {
+      type: Number,
+      value: 0
+    },
+    showValueView: {
+      type: Boolean,
+      value: true
+    },
+    step: {
+      type: Number,
+      value: 100
+    },
     custom: {
       type: Boolean,
       value: false,
@@ -78,7 +94,9 @@ Component({
       if (useCustom) {
         this.setData({
           maxInputValue:
-            this.data.maxValue === 10000 ? 9999 : this.data.maxValue,
+            this.data.maxValue >= this.data.maxStep
+              ? this.data.maxStep - 1
+              : this.data.maxValue,
           minInputValue: this.data.minValue
         });
       } else {
@@ -94,8 +112,8 @@ Component({
       let minValue = event.detail.value;
       if (minValue) {
         minValue = +minValue;
-        if (minValue > 9999) {
-          minValue = 9999;
+        if (minValue >= this.data.maxStep) {
+          minValue = this.data.maxStep - 1;
         }
 
         this.setData({
@@ -113,8 +131,8 @@ Component({
       let maxValue = event.detail.value;
       if (maxValue) {
         maxValue = +maxValue;
-        if (maxValue > 9999) {
-          maxValue = 9999;
+        if (maxValue >= this.data.maxStep) {
+          maxValue = this.data.maxStep - 1;
         }
 
         this.setData({
@@ -161,13 +179,18 @@ Component({
       }
     },
     calcLeftX() {
-      const leftX = ~~(((this.data.min / 100) * 100) / this.funX);
+      const leftX = ~~(
+        ((this.data.min / this.data.step) * this.data.step) /
+        this.funX
+      );
       this.setData({
         leftX
       });
     },
     calcRightX() {
-      const rightX = (~~(this.data.max / 100) * 100 - this.funY) / this.funX;
+      const rightX =
+        (~~(this.data.max / this.data.step) * this.data.step - this.funY) /
+        this.funX;
       this.setData({
         rightX
       });
@@ -203,9 +226,14 @@ Component({
           .subscribe(([containerWidth, blockWidth]) => {
             const deltaWidth = containerWidth - blockWidth;
 
-            const funX = +(9900 / deltaWidth).toFixed(2);
+            const funX = +(
+              (this.data.maxStep - this.data.step) /
+              deltaWidth
+            ).toFixed(2);
 
-            const funY = +(10000 - funX * containerWidth).toFixed(2);
+            const funY = +(this.data.maxStep - funX * containerWidth).toFixed(
+              2
+            );
 
             this.funX = funX;
 
@@ -215,7 +243,7 @@ Component({
               this.calcLeftX();
             }
 
-            if (this.data.max < 10000) {
+            if (this.data.max < this.data.maxStep) {
               this.calcRightX();
             }
 
@@ -307,18 +335,27 @@ Component({
              **/
 
             if (dir === "left") {
-              const min = Math.round((this.data.leftX * this.funX) / 100) * 100;
+              const min =
+                Math.round((this.data.leftX * this.funX) / this.data.step) *
+                this.data.step;
 
               this.setData({
-                minValue: this.data.max - min < 100 ? this.data.max - 100 : min
+                minValue:
+                  this.data.max - min < this.data.step
+                    ? this.data.max - this.data.step
+                    : min
               });
             } else if (dir === "right") {
               const max =
-                Math.round((this.data.rightX * this.funX + this.funY) / 100) *
-                100;
+                Math.round(
+                  (this.data.rightX * this.funX + this.funY) / this.data.step
+                ) * this.data.step;
 
               this.setData({
-                maxValue: max - this.data.min < 100 ? this.data.min + 100 : max
+                maxValue:
+                  max - this.data.min < this.data.step
+                    ? this.data.min + this.data.step
+                    : max
               });
             }
           });
