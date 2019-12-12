@@ -145,9 +145,9 @@ Page({
           res.data.data[i].hourNum = monitor.setHour(res.data.data[i].monitorTime)
           res.data.data[i].index = i
           res.data.data[i].rentType = 3
-          res.data.data[i].layoutRoom = res.data.data[i].layoutRoom.length > 3 ? (res.data.data[i].layoutRoom.replace(/,/ig, '/').replace(/5/ig, '4以上')).substring(0, 3) + '...' : (res.data.data[i].layoutRoom.replace(/,/ig, '/').replace(/5/ig, '4+'))//户型格式
-          res.data.data[i].houseTagsIndex = res.data.data[i].houseTags.indexOf('1') //满二标签
-          res.data.data[i].decorateIndex = res.data.data[i].decorate.indexOf('3') //精装修标签
+          res.data.data[i].layoutRoom = res.data.data[i].layoutRoom?(res.data.data[i].layoutRoom.length > 3 ? (res.data.data[i].layoutRoom.replace(/,/ig, '/').replace(/5/ig, '4以上')).substring(0, 3) + '...' : (res.data.data[i].layoutRoom.replace(/,/ig, '/').replace(/5/ig, '4+'))):""//户型格式
+          res.data.data[i].houseTagsIndex = res.data.data[i].houseTags?res.data.data[i].houseTags.indexOf('1'):-1 //满二标签
+          res.data.data[i].decorateIndex = res.data.data[i].decorate?res.data.data[i].decorate.indexOf('3'):-1 //精装修标签
         }
         this.setData({
           data: res.data.data,
