@@ -94,7 +94,7 @@ Component({
 
           const { chooseType } = outsideData;
 
-          const map = JSON.parse(FilterMap)[chooseType];
+          const map = JSON.parse(FilterMap);
 
           const assginData = {};
 

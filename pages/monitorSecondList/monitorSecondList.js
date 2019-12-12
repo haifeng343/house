@@ -55,7 +55,7 @@ Page({
     this.getUserInfo();
   },
   onHouseShow() {
-    let x = app.globalData.monitorSearchLongData
+    let x = app.globalData.monitorSecondSearchData
     let wiwjfilter = house.wiwjScreenParam(2);
     let ljfilter = house.ljScreenParam(2);
     let ftxfilter = house.ftxScreenParam(2);
@@ -70,11 +70,7 @@ Page({
       longSortTypes: x.longSortTypes, //1: 低价优先, 2: 空间优先, 3: 最新发布
       mSelect: 1
     }, () => {
-      if (x.chooseType == 1) {
         this.getAllBrandData();
-      } else {
-        this.getAllPersonalData();
-      }
     })
   },
   submit(e) {
@@ -83,7 +79,7 @@ Page({
     let arr = Object.keys(e.detail);
     if (arr.length) {
       if (arr.length == 1 && arr[0] == 'advSort') {
-        app.globalData.monitorSearchLongData['advSort'] = e.detail['advSort'];
+        app.globalData.monitorSecondSearchData['advSort'] = e.detail['advSort'];
         this.setData({
           loadingDisplay: "block",
           allData: []
@@ -107,7 +103,7 @@ Page({
         })
       } else {
         for (let key in e.detail) {
-          app.globalData.monitorSearchLongData[key] = e.detail[key]
+          app.globalData.monitorSecondSearchData[key] = e.detail[key]
         }
         SearchSecondMonitorDataSubject.next()
         this.setData({
@@ -116,9 +112,9 @@ Page({
           allData: [],
           editFlag: false,
           selectAllFlag: false,
-          updateData: Object.assign({}, app.globalData.monitorSearchLongData),
+          updateData: Object.assign({}, app.globalData.monitorSecondSearchData),
         });
-        if (util.objectDiff(app.globalData.monitorSearchLongData, app.globalData.monitorDefaultSearchLongData)) {
+        if (util.objectDiff(app.globalData.monitorSecondSearchData, app.globalData.monitorDefaultSearchSecondData)) {
           this.onLoad()
         } else {
           this.onHouseShow()
@@ -233,7 +229,7 @@ Page({
           monitorCityId.lj = cityList.lj.city_id
         }
       }
-      app.globalData.monitorSearchLongData = {
+      app.globalData.monitorSecondSearchData = {
         chooseType: monitorDetail.houseSource, //1品牌中介，2个人房源
         city: monitorDetail.cityName, //城市名
         cityId: monitorCityId, //城市ID
@@ -254,7 +250,7 @@ Page({
         //advSort: monitorDetail.sortType || 0
         advSort: -1
       }
-      app.globalData.monitorDefaultSearchLongData = {
+      app.globalData.monitorDefaultSearchSecondData = {
         chooseType: monitorDetail.houseSource, //1品牌中介，2个人房源
         city: monitorDetail.cityName, //城市名
         cityId: monitorCityId, //城市ID
@@ -275,7 +271,7 @@ Page({
         // advSort: monitorDetail.sortType || 0
         advSort: -1
       }
-      let x = app.globalData.monitorSearchLongData
+      let x = app.globalData.monitorSecondSearchData
       new positionService().getSearchHoset(x.city, x.chooseType).then(resp => {
         const positionData = resp.data;
         this.setData({
@@ -295,8 +291,8 @@ Page({
           allOriginalData: [],
           allData: [],
           allCount: 0,
-          updateData: Object.assign({}, app.globalData.monitorSearchLongData),
-          defalutData: Object.assign({}, app.globalData.monitorDefaultSearchLongData),
+          updateData: Object.assign({}, app.globalData.monitorSecondSearchData),
+          defalutData: Object.assign({}, app.globalData.monitorDefaultSearchSecondData),
           editFlag: false,
           mSelect: detail ? detail : this.data.mSelect
         })
@@ -324,8 +320,8 @@ Page({
           allOriginalData: [],
           allData: [],
           allCount: 0,
-          updateData: Object.assign({}, app.globalData.monitorSearchLongData),
-          defalutData: Object.assign({}, app.globalData.monitorDefaultSearchLongData),
+          updateData: Object.assign({}, app.globalData.monitorSecondSearchData),
+          defalutData: Object.assign({}, app.globalData.monitorDefaultSearchSecondData),
           editFlag: false,
           mSelect: detail ? detail : this.data.mSelect
         })
@@ -391,8 +387,8 @@ Page({
         countFlag: 1,
         longSortTypes: monitorDetail.sortType || '',
         chooseType: monitorDetail.houseSource,
-        updateData: Object.assign({}, app.globalData.monitorSearchLongData),
-        defalutData: Object.assign({}, app.globalData.monitorDefaultSearchLongData),
+        updateData: Object.assign({}, app.globalData.monitorSecondSearchData),
+        defalutData: Object.assign({}, app.globalData.monitorDefaultSearchSecondData),
         mSelect: detail ? detail : this.data.mSelect
       })
     })
@@ -469,59 +465,6 @@ Page({
       });
     }
   },
-  async getAllPersonalData() {
-    wx.removeStorageSync('fddShortRentBlock');
-    let enoughList = [];
-    let fangtianxiaDataObj = await house.getFangtianxiaData(2, this.data.ftxfilter)
-    let wbtcDataObj = await house.getWbtcData(2, this.data.tcfilter)
-    if (fangtianxiaDataObj.network && wbtcDataObj.network) {
-      this.setData({
-        loadingDisplay: 'none',
-        countFlag: 2,
-        countBack: false,
-        bottomType: ''
-      })
-      return;
-    }
-    let fangtianxiaData = fangtianxiaDataObj.arr || [];
-    let wbtcData = wbtcDataObj.arr || [];
-   
-    enoughList.sort(util.compareSort('value', 'desc'));
-    let houseData = house.getPersonalHouseData({
-      fangtianxiaCount: fangtianxiaDataObj.fangtianxiaCount,
-      wbtcCount: wbtcDataObj.wbtcCount,
-      fangtianxiaData,
-      wbtcData,
-      type: 2
-    })
-    if (houseData.allCount > 0 && houseData.allData.length > 0) {
-      this.setData({
-        countFlag: 1,
-        allOriginalData: houseData.allData,
-        allData: houseData.allData.slice(0, 5),
-        allCount: houseData.allCount,
-        averagePrice: houseData.averagePrice,
-        lowPrice: houseData.lowPrice,
-        lowPriceData: houseData.lowPriceData,
-        highAreaData: houseData.highAreaData,
-        enoughList,
-        loadingDisplay: 'none',
-        rowData: houseData.rowData,
-        enoughBottom: false,
-        bottomType: 2,
-        isMonitorHouse: 0,
-      });
-    } else {
-      this.setData({
-        countFlag: 0,
-        loadingDisplay: 'none',
-        bottomType: 2,
-        allOriginalData: houseData.allData,
-        allData: houseData.allData.slice(0, 5),
-        allCount: houseData.allCount,
-      });
-    }
-  },
   // 获取用户信息，盯盯币，是否绑定微信公众号 和 手机绑定
   getUserInfo() {
     let data = {};
@@ -540,8 +483,6 @@ Page({
       allCount: this.data.allCount,
       wiwjCount: this.data.wiwjCount,
       lianjiaCount: this.data.lianjiaCount,
-      fangtianxiaCount: this.data.fangtianxiaCount,
-      wbtcCount: this.data.wbtcCount,
       showCount: this.data.allOriginalData.length,
       averagePrice: this.data.averagePrice,
       lowPrice: this.data.lowPrice,

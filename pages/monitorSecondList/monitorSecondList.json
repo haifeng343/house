@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "FilterBar": "../../components/FilterBar/index",
+    "FilterBar": "../../components/FilterBar1/index",
     "houseLongSelect": "../../components/houseLongSelect/houseLongSelect",
     "noNetwork": "../../components/noNetwork/noNetwork",
     "houseLongCard": "../../components/houseLongCard/houseLongCard",
