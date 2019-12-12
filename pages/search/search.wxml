@@ -175,9 +175,9 @@
                             普通住宅
                         </view>
                         <view class="flex_item">
-                            <input class="item_input" type="number" maxlength="5" placeholder-class="item_input_placeholder" placeholder="{{secondSearchData.placeholderMinPrice}}" value="{{secondSearchData.minPrice}}" bindinput="changeMinPrice" bindblur="changeSecondPrice"></input>
+                            <input class="item_input" type="number" maxlength="5" placeholder-class="item_input_placeholder" placeholder="0" value="{{secondSearchData.minPrice}}" bindinput="changeMinPrice" bindblur="changeSecondPrice"></input>
                             <text>至</text>
-                            <input class="item_input" type="number" maxlength="5" placeholder-class="item_input_placeholder" placeholder="{{secondSearchData.placeholderMaxPrice}}" value="{{secondSearchData.maxPrice}}" bindinput="changeMaxPrice" bindblur="changeSecondPrice"></input>
+                            <input class="item_input" type="number" maxlength="5" placeholder-class="item_input_placeholder" placeholder="不限" value="{{secondSearchData.maxPrice}}" bindinput="changeMaxPrice" bindblur="changeSecondPrice"></input>
                         </view>
                     </view>
                     <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
