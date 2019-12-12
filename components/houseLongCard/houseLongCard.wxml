@@ -19,7 +19,7 @@
           </view>
           <view class="card_price">
             <text class="p">{{item.price}}
-            <text class="m" wx:if="{{types==3}}">万<text class="u">{{item.unit_price}}元/平</text></text></text>
+            <text class="m" wx:if="{{rentType==3}}">万<text class="u">{{item.unit_price}}元/平</text></text></text>
             <text class="m">元/月</text>
           </view>
           <view class="card_newprice" wx:if="{{bottomType == 1}}">
@@ -80,7 +80,7 @@
       </view>
       <view class="card_price">
         <text class="p">{{item.price}}</text>
-        <text class="m" wx:if="{{types==3}}">万<text class="u">{{item.unit_price}}元/平</text></text>
+        <text class="m" wx:if="{{rentType==3}}">万<text class="u">{{item.unit_price}}元/平</text></text>
         <text class="m" wx:else>元/月</text>
       </view>
       <view class="card_newprice" wx:if="{{bottomType == 1}}">

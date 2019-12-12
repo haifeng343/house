@@ -9,9 +9,12 @@ Component({
       type:Object,
       value: {}
     },
-    types: { //1：查询房源列表  2：监控房源列表 ,3:二手房房源列表
+    type: { //1：查询房源列表  2：监控房源列表
       type:Number,
       value: ''
+    },
+    rentType:{ //2长租，3：二手房
+      type: Number,
     },
     idx: {
       type: Number
@@ -136,16 +139,30 @@ Component({
       let app = getApp()
       let platform = e.currentTarget.dataset.platform
       let productid = e.currentTarget.dataset.productid
-      let city = this.properties.type == 1 ? app.globalData.searchLongData.cityId : app.globalData.monitorSearchLongData.cityId
-      if (this.properties.editFlag && this.data.isStatist) {
-        this.selectItem(e)
-        return
+      if (this.properties.rentType == 2){
+        let city = this.properties.type == 1 ? app.globalData.searchLongData.cityId : app.globalData.monitorSearchLongData.cityId
+        if (this.properties.editFlag && this.data.isStatist) {
+          this.selectItem(e)
+          return
+        }
+        monitor.navigateToLongMiniProgram(
+          platform,
+          productid,
+          city
+        )
       }
-      monitor.navigateToLongMiniProgram(
-        platform,
-        productid,
-        city
-      )
+      if (this.properties.rentType == 3) {
+        let city = this.properties.type == 1 ? app.globalData.secondSearchData.cityId : app.globalData.monitorSecondSearchData.cityId
+        if (this.properties.editFlag && this.data.isStatist) {
+          this.selectItem(e)
+          return
+        }
+        monitor.navigateToSecondMiniProgram(
+          platform,
+          productid,
+          city
+        )
+      }
     },
     delItem(e) {
       let detail = {

@@ -18,6 +18,9 @@ Component({
     },
     paddingBottom:{
       type:Number
+    },
+    rentType:{ //2长租 3二手房
+      type: Number
     }
   },
 
@@ -41,10 +44,12 @@ Component({
       if (p == 'xz') { this.navigateToXz() }
       if (p == 'mn') { this.navigateToMn() }
       if (p == 'zg') { this.navigateToZg() }
-      if (p == 'wiwj') { monitor.navigateToLongMiniProgram('wiwj') }
-      if (p == 'lj') { monitor.navigateToLongMiniProgram('lj') }
+      if (p == 'wiwj' && this.properties.rentType == 2) { monitor.navigateToLongMiniProgram('wiwj') }
+      if (p == 'lj' && this.properties.rentType == 2) { monitor.navigateToLongMiniProgram('lj') }
       if (p == 'ftx') { monitor.navigateToLongMiniProgram('ftx') }
       if (p == 'tc') { monitor.navigateToLongMiniProgram('tc') }
+      if (p == 'wiwj' && this.properties.rentType == 3) { monitor.navigateToSecondMiniProgram('wiwj') }
+      if (p == 'lj' && this.properties.rentType == 3) { monitor.navigateToSecondMiniProgram('lj') }
     },
     navigateToTj() {
       monitor.navigateToMiniProgram('tj');

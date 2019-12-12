@@ -14,14 +14,14 @@
             <text wx:if="{{rentType != 3}}">当前最低</text>
             <text wx:else>总价最低</text>
         </view>
-        <houseLongCard item="{{lowPriceData}}" type="{{type}}" editFlag="{{true}}" isStatist="{{false}}"  idx="{{0}}" types="{{types}}" bottomType="{{bottomType}}"></houseLongCard>
+        <houseLongCard item="{{lowPriceData}}" type="{{type}}" rentType="{{rentType}}" editFlag="{{true}}" isStatist="{{false}}"  idx="{{0}}"  bottomType="{{bottomType}}"></houseLongCard>
       </view>
       <view class="house_low_price" wx:if="{{rentType == 2}}">
         <view class="house_low">
             <image class="price" src="../../assets/image/low_price.png"></image>
             <text>面积最大</text>
         </view>
-        <houseLongCard item="{{highAreaData}}" type="{{type}}"  editFlag="{{true}}" isStatist="{{false}}" bottom="{{false}}"  idx="{{0}}" bottomType="{{bottomType}}"></houseLongCard>
+        <houseLongCard item="{{highAreaData}}" type="{{type}}" rentType="{{rentType}}"  editFlag="{{true}}" isStatist="{{false}}" bottom="{{false}}"  idx="{{0}}" bottomType="{{bottomType}}"></houseLongCard>
       </view>
       <view class="line"></view>
       <view class="statistics_detail">

@@ -186,6 +186,32 @@ const navigateToLongMiniProgram = (plateform, productid,city) => {
   }
 }
 
+const navigateToSecondMiniProgram = (plateform, productid, city) => {
+  if (plateform == 'wiwj') {
+    if (productid) {
+      wx.navigateToMiniProgram({
+        appId: 'wxaf705dee544e08d9',
+        path: 'pages/sale_detail/sale_detail?sharetype=1&houseId=' + productid + '&cityId=' + city.wiwj
+      })
+    } else {
+      wx.navigateToMiniProgram({
+        appId: 'wxaf705dee544e08d9',
+      })
+    }
+  }
+  if (plateform == 'lj'){
+    if (productid) {
+      wx.navigateToMiniProgram({
+        appId: 'wxcfd8224218167d98',
+        path: 'subpackages/ershoufang/pages/esfDetail/esfDetail?cityId=' + city.lj + '&houseCode=' + productid
+      })
+    }else{
+      wx.navigateToMiniProgram({
+        appId: 'wxcfd8224218167d98',
+      })
+    }
+  }
+}
 const wiwjDetail = function (id,cityId){
   let data = { hid: id}
   return new Promise((resolve, reject) => {
@@ -286,13 +312,14 @@ function encrypt(url, data = {}) {
   return n;
 }
 module.exports = {
-  setDate: setDate,
-  setDay: setDay,
-  setHour: setHour,
-  startTimeName: startTimeName,
-  taskTime: taskTime,
-  checkDate: checkDate,
-  json2Form: json2Form,
-  navigateToMiniProgram: navigateToMiniProgram,
-  navigateToLongMiniProgram
+  setDate,
+  setDay,
+  setHour,
+  startTimeName,
+  taskTime,
+  checkDate,
+  json2Form,
+  navigateToMiniProgram,
+  navigateToLongMiniProgram,
+  navigateToSecondMiniProgram 
 }

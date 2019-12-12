@@ -204,8 +204,7 @@ Page({
         sort: data.sortType == 1 ? false : ( 2 ? false : true ),
         rentType: 3, //1：短租 2：长租  3二手房
         fee,
-        type: 3,
-        types:3
+        type: (data.bottomType == 1 || data.bottomType == 2) ? 2 : 1
       })
     }
 

@@ -18,7 +18,7 @@
     </view>
     <view class="house_card">
       <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
-        <houseLongCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" types="{{3}}" idx="{{idx}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" singleEditFlag="{{singleEditFlag}}" followIndex="{{followIndex}}" isStatist="{{false}}"></houseLongCard>
+        <houseLongCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{1}}" rentType="{{3}}" idx="{{idx}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" singleEditFlag="{{singleEditFlag}}" followIndex="{{followIndex}}" isStatist="{{false}}"></houseLongCard>
       </block>
     </view>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&!loadingShow}}">
@@ -47,5 +47,5 @@
 
 <monitorDialog type="{{2}}" title="{{monitorTitle}}" fee="{{fee}}" ddCoin="{{ddCoin}}" bindPublic="{{bindPublic}}" bind:monitorPublicEvent="getMonitorPublicEvent" bind:monitorEvent="getMonitorEvent" bind:monitorConfirmEvent="getmonitorConfirmEvent" style="display:{{monitorDisplay}}"></monitorDialog>
 <publicDialog style="display:{{publicDisplay}}" bind:publicEvent="getPublicEvent" bind:publicConfrimEvent="getPublicConfrimEvent"></publicDialog>
-<monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}" style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent"></monitorEnoughDialog>
+<monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}" rentType="{{3}}" style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent"></monitorEnoughDialog>
 <followDialog text="{{followText}}" followType="{{followType}}" style="display:{{followDisplay}}" bind:knowEvent="followKnowEvent" bind:confirmEvent="followConfirmEvent" bind:cancelEvent="followCancelEvent"></followDialog>
