@@ -104,8 +104,6 @@ Page({
       areaJson: "", //json
       minPrice: "", //最低价
       maxPrice: "", //最高价 不限"9999"
-      placeholderMinPrice: "100", //城市最低价格
-      placeholderMaxPrice: "200", //城市最高价格
       minArea: 0, //最低面积
       maxArea: 90, //最高面积 上限150
       secondHouseDecorationMap: [], //装修  1: 毛坯房 2: 普通装修 3: 精装修
@@ -556,7 +554,6 @@ Page({
           icon: "none"
         });
       } else if (this.data.isAuth) {
-        this.checkSecondPrice()
         wx.navigateTo({
           url: "../secondHandHouse/secondHandHouse"
         });
@@ -836,10 +833,10 @@ Page({
           if(newArray.length === 2) {
             let secondSearchData = this.data.secondSearchData
             const app = getApp()
-            secondSearchData.placeholderMinPrice = newArray[0]
-            secondSearchData.placeholderMaxPrice = newArray[1]
-            app.globalData.secondSearchData.placeholderMinPrice = newArray[0]
-            app.globalData.secondSearchData.placeholderMaxPrice = newArray[1]
+            secondSearchData.minPrice = newArray[0]
+            secondSearchData.maxPrice = newArray[1]
+            app.globalData.secondSearchData.minPrice = newArray[0]
+            app.globalData.secondSearchData.maxPrice = newArray[1]
             this.setData({ secondSearchData })
           }
         }
@@ -1189,48 +1186,6 @@ Page({
       app.globalData.secondSearchData.minPrice = minPrice + ''
       app.globalData.secondSearchData.maxPrice = maxPrice + ''
       this.setData({ secondSearchData })
-    }
-  },
-  //二手房价格二次校验
-  checkSecondPrice() {
-    let secondSearchData = { ...this.data.secondSearchData }
-    const app = getApp()
-    let minPrice = +secondSearchData.minPrice
-    let maxPrice = +secondSearchData.maxPrice
-    let pMinPrice = +secondSearchData.placeholderMinPrice
-    let pMaxPrice = +secondSearchData.placeholderMaxPrice
-    if ((minPrice === 0 && maxPrice > 0) || (minPrice > 0 && maxPrice === 0)) {
-      if (minPrice > 0) {
-        if (minPrice > pMaxPrice) {
-          minPrice = minPrice + pMaxPrice
-          pMaxPrice = minPrice - pMaxPrice
-          minPrice = minPrice - pMaxPrice
-        }
-        if (minPrice === pMaxPrice) {
-          minPrice -= 1
-        }
-        secondSearchData.minPrice = minPrice + ''
-        secondSearchData.maxPrice = pMaxPrice + ''
-        const app = getApp()
-        app.globalData.secondSearchData.minPrice = minPrice + ''
-        app.globalData.secondSearchData.pMaxPrice = pMaxPrice + ''
-        this.setData({ secondSearchData })
-      } else {
-        if (pMinPrice > maxPrice) {
-          pMinPrice = pMinPrice + maxPrice
-          maxPrice = pMinPrice - maxPrice
-          pMinPrice = pMinPrice - maxPrice
-        }
-        if (pMinPrice === maxPrice) {
-          pMinPrice -= 1
-        }
-        secondSearchData.minPrice = pMinPrice + ''
-        secondSearchData.maxPrice = maxPrice + ''
-        const app = getApp()
-        app.globalData.secondSearchData.minPrice = pMinPrice + ''
-        app.globalData.secondSearchData.maxPrice = maxPrice + ''
-        this.setData({ secondSearchData })
-      }
     }
   },
   //二手房面积
