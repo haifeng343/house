@@ -3914,9 +3914,8 @@ const addSecondMonitorData = addData => {
     maxPrice: (y.maxPrice === "") ? y.placeholderMaxPrice : y.maxPrice,
     areaJson: JSON.stringify(y.areaId),
     minArea: y.minArea,
-    maxArea: y.maxArea,
+    maxArea: y.maxArea === 151 ? 99999 : y.maxArea,
     towerAge: y.secondBuildingAgeMap,
-
   }
   if (y.longSortTypes) {
     data['sortType'] = y.longSortTypes
@@ -4358,7 +4357,6 @@ module.exports = {
   updateShortMonitorData,
   updateLongMonitorData,
   updateSecondMonitorData,
-  getMonitorHouseType,
   getMonitorHouseType,
   getBrandSecondHouseData
 };

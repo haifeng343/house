@@ -89,6 +89,14 @@
   white-space: nowrap;
   margin-right: 16rpx;
 }
+.monitor_card .card_address .city_text{
+  width: 124rpx;
+}
+.monitor_card .card_address .city_type{
+  width: 304rpx;
+  height: 80rpx;
+  overflow: hidden;
+}
 .monitor_card .card_address .type{
   font-size:24rpx;
   border: 1px solid #FFFFFF;
@@ -96,6 +104,7 @@
   margin-right: 10rpx;
   border-radius: 22rpx;
   margin-top: 10rpx;
+  display: inline-block
 }
 .monitor_card .card_budget{
   flex: 1;

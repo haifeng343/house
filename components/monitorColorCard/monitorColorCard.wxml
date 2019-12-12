@@ -51,18 +51,24 @@
             <view class="card_address" wx:if="{{item.rentType == 2}}">
               <view class="text">{{item.cityName}}</view>
               <view class="type"><text>{{item.houseSource ==1?'品牌中介':'个人房源'}}</text></view>
-              <view class="type" wx:if="{{item.rentType}}"><text>{{item.rentType&&filter.rentType(item.rentType)}}</text></view>
+              <view class="type" wx:if="{{item.rentType}}"><text>{{filter.rentType(item.rentType)}}</text></view>
             </view>
             <view class="card_address" wx:if="{{item.rentType == 3}}">
-              <view class="text">{{item.cityName}}</view>
-              <view class="type"><text>{{item.houseSource ==1?'品牌中介':'个人房源'}}</text></view>
-              <view class="type" wx:if="{{item.rentType}}"><text>{{item.rentType&&filter.rentType(item.rentType)}}</text></view>
+              <view class="city_text">{{item.cityName}}</view>
+              <view class="city_type">
+                <view class="type" wx:if="{{item.maxArea == 99999}}"><text>面积不限</text></view>
+                <view class="type" wx:else><text>{{item.minArea}}-{{item.maxArea}}㎡</text></view>
+                <view class="type" wx:if="{{item.layoutRoom}}"><text>{{item.layoutRoom}}室</text></view>
+                <view class="type" wx:if="{{item.houseTagsIndex>-1}}"><text>满二</text></view>
+                <view class="type" wx:if="{{item.decorateIndex>-1}}"><text>精装修</text></view>
+              </view>
             </view>
             <view class="card_budget {{item.actualPrice?'':'card_search'}}">
               <view class="card_money" wx:if="{{item.actualPrice}}">
                 <text>¥</text>
                 <text class="money">{{item.actualPrice}}</text>
-                <text>起</text>
+                <text wx:if="{{item.rentType == 2}}">起</text>
+                <text wx:if="{{item.rentType == 3}}">万</text>
               </view>
               <view class="card_money" wx:else>
                 <text class="money">暂无房源</text>
@@ -74,7 +80,7 @@
               <image class="card_location" src="../../assets/image/location.png"></image>
               <view>{{item.locationName?item.locationName:'全城'}}</view>
             </view>
-            <view class="card_price">
+            <view class="card_price" wx:if="{{item.rentType == 2}}">
               <view class="card_down_money" wx:if="{{item.minPrice==0&&item.maxPrice==99999}}">
                 <text>预算:不限</text>
               </view>
@@ -86,6 +92,11 @@
               </view>
               <view class="card_down_money" wx:if="{{item.minPrice>0&&item.maxPrice<99999}}">
                 <text>预算:¥{{item.minPrice}}-¥{{item.maxPrice}}</text>
+              </view>
+            </view>
+            <view class="card_price" wx:if="{{item.rentType == 3}}">
+              <view class="card_down_money">
+                <text>预算:{{item.minPrice}}-{{item.maxPrice}}万</text>
               </view>
             </view>
           </view>

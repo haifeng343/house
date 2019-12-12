@@ -58,6 +58,14 @@
   white-space: nowrap;
   margin-right: 16rpx;
 }
+.monitor_card .card_address .city_text{
+  width: 124rpx;
+}
+.monitor_card .card_address .city_type{
+  width: 304rpx;
+  height: 80rpx;
+  overflow: hidden;
+}
 .monitor_card .card_address .type{
   font-size:24rpx;
   border: 1px solid #D6D6D6;
@@ -65,6 +73,7 @@
   margin-right: 10rpx;
   border-radius: 22rpx;
   margin-top: 10rpx;
+  display: inline-block
 }
 .monitor_card .card_budget{
   flex: 1;
@@ -86,7 +95,7 @@
 
 .monitor_card .card_total{font-size: 32rpx;padding-left: 44rpx;}
 .monitor_long_card .card_total{display: flex}
-.monitor_long_card .card_total .location{width: 300rpx;}
+.monitor_long_card .card_total .location{width: 320rpx;}
 .monitor_long_card .card_total .card_price{flex: 1;text-align: right;margin-right: 38rpx;}
 .monitor_card .card_line{padding: 0 44rpx;}
 .monitor_card .card_line .line{
