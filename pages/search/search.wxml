@@ -2,7 +2,7 @@
 <wxs module="checkHouseType">
   var checkHouseType = function (arr, item, temp = false) {
     if(temp) {
-      return arr.indexOf(parseInt(item)) >= 0
+      return arr.indexOf(parseInt(item, 10)) >= 0
     }
     return arr.indexOf(item) >= 0
   };
@@ -26,7 +26,7 @@
                 <view class="nav_item long {{tabIndex==2?'active':''}}" bindtap='changeTab' data-index='2'>
                     <text class='nav_item_text'>长租</text>
                 </view>
-                <view class="nav_item long {{tabIndex==3?'active':''}}" bindtap='changeTab' data-index='3' style='border-top-right-radius:12rpx;'>
+                <view class="nav_item second {{tabIndex==3?'active':''}}" bindtap='changeTab' data-index='3' style='border-top-right-radius:12rpx;'>
                     <text class='nav_item_text'>二手房</text>
                 </view>
             </view>
