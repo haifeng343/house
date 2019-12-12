@@ -4175,6 +4175,91 @@ const updateLongMonitorData = addData => {
   }
   return data
 }
+//二手房
+const updateSecondMonitorData = addData => {
+  let app = getApp();
+  let y = app.globalData.monitorSecondSearchData;
+  let data = {
+    cityName: y.city, //城市名称
+    searchJson: y.areaJson, //搜索参数拼接
+    minPrice: (y.minPrice === "") ? y.placeholderMinPrice : y.minPrice,
+    maxPrice: (y.maxPrice === "") ? y.placeholderMaxPrice : y.maxPrice,
+    areaJson: JSON.stringify(y.areaId),
+    minArea: y.minArea,
+    maxArea: y.maxArea,
+    towerAge: y.secondBuildingAgeMap,
+
+  }
+  if (y.longSortTypes) {
+    data['sortType'] = y.longSortTypes
+  }
+  if (y.areaType) { //位置ID
+    data['locationType'] = y.areaType
+  }
+  if (y.areaType == 50) { //地铁
+    if (y.areaId.subwaysLine) {
+      data['parentName '] = y.areaId.subwaysLine
+    }
+  }
+  if (y.areaType == 60) { //附近
+    data['longitude'] = y.areaId.longitude
+    data['latitude'] = y.areaId.latitude
+    data['nearby'] = y.areaId.nearby
+  }
+  if (y.area) { //位置名称
+    data['locationName'] = y.area
+  }
+  if (y.secondFloorTypeMap.length) { //楼层
+    data['floorType'] = y.secondFloorTypeMap.join(',');
+  }
+
+  if (y.secondHeadingMap.length) { //朝向
+    data['heading'] = y.secondHeadingMap.join(',');
+  }
+  if (y.secondHouseUseMap.length) { //用途
+    data['purpose'] = y.secondHouseUseMap.join(',');
+  }
+  if (y.secondHouseDecorationMap.length) { //装修
+    data['decorate'] = y.secondHouseDecorationMap.join(',');
+  }
+  if (y.secondHouseTagMap.length) { //房源亮点
+    data['houseTags'] = y.secondHouseTagMap.join(',');
+  }
+  if (y.secondLayoutMap.length) { //户型
+    data['layoutRoom'] = y.secondLayoutMap.join(',');
+  }
+  data['notice'] = notice.join(',');
+
+  //黑名单数据
+  let wiwjId = [],
+    ljId = [],
+    ftxId = [],
+    tcId = [];
+  let short = wx.getStorageSync('fddShortRentBlock') || [];
+  if (short.length) {
+    for (let i = 0; i < short.length; i++) {
+      if (short[i].platformId == 'wiwj') {
+        wiwjId.push(short[i].housesid)
+      }
+      if (short[i].platformId == 'lj') {
+        ljId.push(short[i].housesid)
+      }
+    }
+  }
+  let c = util.compareArr(addData.rowData, addData.allOriginalData, 'platformId', 'housesid')
+  data.fddLongRentUsable = c;
+  data.actualPrice = addData.lowPrice;
+  data.fddShortRentBlock = {
+    wiwj: wiwjId,
+    lj: ljId,
+  };
+  data.fddLongRentCount = {
+    allTotal: addData.allCount,
+    wiwjTotal: addData.wiwjCount,
+    ljTotal: addData.lianjiaCount,
+  }
+  return data
+}
 
 function addPlatfromData(allData, PlatfromData, index) {
   if (index < PlatfromData.length) {
@@ -4272,6 +4357,7 @@ module.exports = {
   addSecondMonitorData,
   updateShortMonitorData,
   updateLongMonitorData,
+  updateSecondMonitorData,
   getMonitorHouseType,
   getMonitorHouseType,
   getBrandSecondHouseData

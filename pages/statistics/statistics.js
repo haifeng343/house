@@ -16,9 +16,11 @@ Page({
     publicDisplay:'none',
     updateMonitorDisplay: 'none',
     updateLongDisplay: 'none',
+    updateSecondDisplay: 'none',
     fee: 0,
     sort: false,
     enoughList:[],
+    types:'',//3.二手房的展示
   },
 
   /**
@@ -202,7 +204,8 @@ Page({
         sort: data.sortType == 1 ? false : ( 2 ? false : true ),
         rentType: 3, //1：短租 2：长租  3二手房
         fee,
-        type: 3
+        type: 3,
+        types:3
       })
     }
 
@@ -274,7 +277,7 @@ Page({
       this.getStartLongMonitor(e.detail.noteSelect, e.detail.publicSelect)
     }
     if (this.data.rentType == 3) {
-      this.getStartLongMonitor(e.detail.noteSelect, e.detail.publicSelect)
+      this.getStartSecondMonitor(e.detail.noteSelect, e.detail.publicSelect)
     }
   },
   /**
@@ -377,7 +380,7 @@ Page({
       fangtianxiaCount: this.data.fangtianxiaCount,
       wbtcCount: this.data.wbtcCount,
     }
-    let addData = house.getStartSecondMonitor(data)
+    let addData = house.addSecondMonitorData(data)
     wx.showLoading({
       title: '正在添加监控...',
       mask: true
@@ -455,7 +458,7 @@ Page({
     }
 
     if (this.data.rentType == 3){
-      monitorApi.endLongMonitor(data).then(res => {
+      monitorApi.endSecondMonitor(data).then(res => {
         if (res.data.success) {
           wx.showToast({
             title: res.data.resultMsg,
@@ -506,8 +509,8 @@ Page({
       if (this.data.rentType == 3) {
         this.setData({
           updateLongDisplay: 'block',
-          updateData: app.globalData.monitorSearchLongData,
-          defalutData: app.globalData.monitorDefaultSearchLongData
+          updateData: app.globalData.monitorSecondSearchData,
+          defalutData: app.globalData.monitorDefaultSearchSecondData
         })
       }
     }
@@ -527,7 +530,7 @@ Page({
     })
     this.getUpdateMonitor()
   },
-  
+   //修改长租监控
   getUpdateMonitor() {
     let data = {
       monitorId: this.data.monitorId,
@@ -556,6 +559,7 @@ Page({
       })
     })
   },
+  //修改长租监控
   getLongUpdateCancelEvent(e){
     this.setData({
       updateLongDisplay: e.detail,
@@ -595,6 +599,45 @@ Page({
       })
     });
   },
+ //修改二手房监控
+  getSecondUpdateCancelEvent(e){
+    this.setData({
+      updateSecondDisplay: e.detail,
+    })
+  },
+  getLongUpdateConfrimEvent(e){
+    this.setData({
+      updateSecondDisplay: e.detail,
+    })
+    this.getUpdateSecondMonitor()
+  },
+  getUpdateSecondMonitor() {
+    let data = {
+      monitorId: this.data.monitorId,
+      rowData: this.data.rowData,
+      allOriginalData: this.data.allOriginalData,
+      lowPrice: this.data.lowPrice,
+      allCount: this.data.allCount,
+      wiwjCount: this.data.wiwjCount,
+      lianjiaCount: this.data.lianjiaCount,
+    }
+    let addData = house.updateSecondMonitorData(data)
+    wx.showLoading({
+      title: '正在修改监控...',
+      mask: true
+    });
+    monitorApi.updateSecondMonitor(addData).then(res => {
+      wx.hideLoading();
+      wx.showToast({
+        title: res.data.resultMsg,
+        duration: 2000
+      });
+      wx.navigateBack({
+        delta: 2
+      })
+    });
+  },
+
   getEnoughEvent(e) {
     this.setData({
       monitorenoughDisplay: e.detail,

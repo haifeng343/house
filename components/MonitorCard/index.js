@@ -20,6 +20,7 @@ Component({
 
   lifetimes: {
     created() {
+      let obj = this.properties;
       this.touchmoveStream = new rxjs.BehaviorSubject(0);
 
       this.touchendStream = new rxjs.BehaviorSubject(false);

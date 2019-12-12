@@ -4,28 +4,36 @@ const userApi = require('../../api/userApi.js')
 const app = getApp();
 Page({
   data: {
-    data:[],
-    monitorStopDisplay:'none',
-    monitorEndDisplay:'none',
-    monitorStartDisplay:'none',
-    ddCoin:0,
-    active:1
+    data: [],
+    monitorStopDisplay: 'none',
+    monitorEndDisplay: 'none',
+    monitorStartDisplay: 'none',
+    ddCoin: 0,
+    active: 1
   },
-  onLoad: function (options) {
-  },
-  onShow:function(){
+  onLoad: function(options) {},
+  onShow: function() {
     let token = wx.getStorageSync('token');
     if (token) {
-      if (app.switchRent == 1 || !app.switchRent) { 
-        this.setData({active:1,data:[]})
+      if (app.switchRent == 1 || !app.switchRent) {
+        this.setData({
+          active: 1,
+          data: []
+        })
         this.getMonitorData()
       }
       if (app.switchRent == 2) {
-        this.setData({ active: 2,data: [] })
+        this.setData({
+          active: 2,
+          data: []
+        })
         this.getLongMonitorData()
       }
       if (app.switchRent == 3) {
-        this.setData({ active: 3, data: [] })
+        this.setData({
+          active: 3,
+          data: []
+        })
         this.getSecondHandData()
       }
       this.getUserInfo()
@@ -35,37 +43,40 @@ Page({
       })
     }
   },
-  monitorChange(e){
+  monitorChange(e) {
     var index = e.currentTarget.dataset.index;
     console.log(index)
     let token = wx.getStorageSync('token');
-    if(token){
+    if (token) {
       if (index === '1' && this.data.active != index) {
         this.setData({
-          active: 1, data: []
+          active: 1,
+          data: []
         })
         this.getMonitorData()
       }
       if (index === '2' && this.data.active != index) {
         this.setData({
-          active: 2, data: []
+          active: 2,
+          data: []
         })
         this.getLongMonitorData()
       }
 
       if (index === '3' && this.data.active != index) {
         this.setData({
-          active: 3, data: []
+          active: 3,
+          data: []
         })
         this.getSecondHandData()
       }
-    }else{
+    } else {
       this.setData({
         show: 0,
       })
     }
   },
-  getLongMonitorData(){
+  getLongMonitorData() {
     let data = {}
     wx.showLoading({
       title: "加载中...",
@@ -92,8 +103,8 @@ Page({
       }
     })
   },
-  getMonitorData(){
-    let data={}
+  getMonitorData() {
+    let data = {}
     wx.showLoading({
       title: "加载中...",
       mask: true
@@ -161,31 +172,31 @@ Page({
   /**
    * 监控删除弹窗
    */
-  delItem(e){
+  delItem(e) {
     var item = this.data.data[e.detail.index]
-    let deleteItem={
-      startTimeName: item.startTime?monitor.startTimeName(item.startTime):'',
+    let deleteItem = {
+      startTimeName: item.startTime ? monitor.startTimeName(item.startTime) : '',
       createTime: monitor.startTimeName(item.createTime),
       taskTime: monitor.taskTime(item.monitorTime, item.minutes),
-      fee:item.fee,
-      totalFee: item.totalFee||0,
-      id:item.id
+      fee: item.fee,
+      totalFee: item.totalFee || 0,
+      id: item.id
     }
     //未开启-无监控开始时间，消费记录；已过期-无监控开始时间，消费记录
-    if (!item.startTime && (item.status == 12 || item.status == 0)){
+    if (!item.startTime && (item.status == 12 || item.status == 0)) {
       this.setData({
         monitorEndDisplay: 'block',
         deleteItem
       })
-    }else{
+    } else {
       this.setData({
         monitorStopDisplay: 'block',
         deleteItem
       })
     }
-    
+
   },
-  getmonitorStopEvent(e){
+  getmonitorStopEvent(e) {
     this.setData({
       monitorStopDisplay: e.detail,
     })
@@ -193,11 +204,11 @@ Page({
   /**
    * 监控删除确认--已开启有监控记录
    */
-  getmonitorConfirmEvent(e){
-    let data={
+  getmonitorConfirmEvent(e) {
+    let data = {
       monitorId: this.data.deleteItem.id
     }
-    if(this.data.active == 1){
+    if (this.data.active == 1) {
       monitorApi.endMonitor(data).then(res => {
         if (res.data.success) {
           wx.showToast({
@@ -246,7 +257,7 @@ Page({
       })
     }
   },
-  getmonitorEndEvent(e){
+  getmonitorEndEvent(e) {
     this.setData({
       monitorEndDisplay: e.detail,
     })
@@ -254,11 +265,11 @@ Page({
   /**
    * 监控删除确认--未开启无监控任务
    */
-  getmonitorEndConfirmEvent(e){
+  getmonitorEndConfirmEvent(e) {
     let data = {
       monitorId: this.data.deleteItem.id
     }
-    if(this.data.active == 1){
+    if (this.data.active == 1) {
       monitorApi.endMonitor(data).then(res => {
         if (res.data.success) {
           wx.showToast({
@@ -310,26 +321,26 @@ Page({
   /**
    * 立即充值，跳转到充值页面
    */
-  recharge(e){
+  recharge(e) {
     var type = e.detail.type
     wx.navigateTo({
       url: `/pages/deposit/deposit?type=${type}`
     });
   },
 
-  getmonitorStartEvent(e){
+  getmonitorStartEvent(e) {
     this.setData({
       monitorStartDisplay: e.detail,
     })
   },
-  getmonitorStartConfirmEvent(e){
+  getmonitorStartConfirmEvent(e) {
     this.setData({
       monitorStartDisplay: e.detail,
     })
     this.getMonitorStart()
   },
   //立即开启
-  getMonitorStart(){
+  getMonitorStart() {
     let data = {
       monitorId: this.data.startItem.id
     }
@@ -337,7 +348,7 @@ Page({
       title: '正在开启监控...',
       mask: true
     });
-    if(this.data.active == 1){
+    if (this.data.active == 1) {
       monitorApi.startMonitor(data).then(res => {
         wx.hideLoading();
         if (res.data.success) {
@@ -380,7 +391,7 @@ Page({
   /**
    * 立即开启弹窗
    */
-  openTask(e){
+  openTask(e) {
     var item = this.data.data[e.detail.index]
     this.setData({
       monitorStartDisplay: 'block',
@@ -390,13 +401,13 @@ Page({
   /**
    * 点击整个灰色卡片事件
    */
-  goToClick(e){
+  goToClick(e) {
     var type = e.detail.type
     var item = this.data.data[e.detail.index]
-    if (item.status == 12){
+    if (item.status == 12) {
       this.delItem(e)
     }
-    if ((item.status == 11 || item.status == 0) && this.data.ddCoin<item.fee) {
+    if ((item.status == 11 || item.status == 0) && this.data.ddCoin < item.fee) {
       wx.navigateTo({
         url: `/pages/deposit/deposit?type=${type}`
       });
@@ -408,10 +419,10 @@ Page({
   /**
    * 查看详情
    */
-  checkDetail(e){
+  checkDetail(e) {
     var item = this.data.data[e.detail.index]
     app.switchRent = this.data.active
-    if(this.data.active == 1){
+    if (this.data.active == 1) {
       app.globalData.monitorSearchData = {
         cityType: "",
         area: "",
@@ -431,7 +442,7 @@ Page({
         maxPrice: 99999, //最高价
         sort: 2, //搜索方式 1推荐 2低价有限
         equipment: [],
-        advSort: 1,//2 从低到高 3高到底
+        advSort: 1, //2 从低到高 3高到底
       }
       app.globalData.monitorDefaultData = {
         cityType: "",
@@ -453,7 +464,7 @@ Page({
         maxPrice: 99999, //最高价
         sort: 2, //搜索方式 1推荐 2低价有限
         equipment: [],
-        advSort: 1,//2 从低到高 3高到底
+        advSort: 1, //2 从低到高 3高到底
       }
       app.globalData.monitorData = {
         item: item
@@ -462,9 +473,9 @@ Page({
         url: '../monitorList/monitorList',
       })
     }
-    
-    if(this.data.active == 2){
-      app.globalData.monitorSearchLongData={
+
+    if (this.data.active == 2) {
+      app.globalData.monitorSearchLongData = {
         chooseType: 1, //1品牌中介，2个人房源
         city: "", //城市名
         cityId: {}, //城市ID
@@ -482,7 +493,7 @@ Page({
         longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
         minPrice: 0, //最低价
         maxPrice: 5500, //最高价 不限99999
-        advSort: 0,//1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
+        advSort: 0, //1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
       }
       app.globalData.monitorDefaultSearchLongData = {
         chooseType: 1, //1品牌中介，2个人房源
@@ -502,7 +513,7 @@ Page({
         longSortTypes: 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
         minPrice: 0, //最低价
         maxPrice: 5500, //最高价 不限99999
-        advSort: 0,//1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
+        advSort: 0, //1 价格从低到高 2面积高到底 11 价格从高到低 21 面积从低到高 
       }
       app.globalData.monitorLongData = {
         item: item
@@ -511,8 +522,8 @@ Page({
         url: '../monitorLongList/monitorLongList',
       })
     }
-    if (this.data.active == 3){
-      app.globalData.monitorSecondSearchData={
+    if (this.data.active == 3) {
+      app.globalData.monitorSecondSearchData = {
         city: "", //城市名
         cityId: {}, //城市ID
         cityJson: "",
@@ -562,7 +573,7 @@ Page({
         item: item
       }
       wx.navigateTo({
-        url: '../monitorLongList/monitorLongList',
+        url: '../monitorSecondList/monitorSecondList',
       })
     }
   },
