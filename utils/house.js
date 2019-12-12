@@ -1,8 +1,7 @@
 const houseApi = require("../api/houseApi.js");
 const util = require("../utils/util.js");
-const secondApi = require("../api/longrent.js"); //二手房
-const longrent = require("../api/longrent");
-const longSetSearchData = require("./indexSecondHouseData.js")
+const longrent = require("../api/longrent.js");
+import { getNearbyGCJ } from "./longSetSearchData.js";
 /**
  * 获取途家平台数据
  * type 1 房源列表；2监控详情
@@ -630,7 +629,7 @@ const getSecondWiwjData = (type, wiwjfilter = {}) => {
       ? app.globalData.secondSearchData
       : app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
-    secondApi.wiwj.ershouSearch({
+    longrent.wiwj.ershouSearch({
       "city": y.cityId.wiwj,
       "page": {
         "size": 50,
@@ -698,7 +697,7 @@ const getSecondLianjiaData = (type, lianjiafilter = []) => {
       ? app.globalData.secondSearchData
       : app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
-    secondApi.lianjia.ershouSearch({
+    longrent.lianjia.ershouSearch({
       "city": y.cityId.lj,
       "page": {
         "size": 50,
@@ -3438,7 +3437,7 @@ const wiwjSecondScreenParam = type => {
   }
   //建筑面积
   let minArea = searchData.minArea;
-  let maxArea = searchData.maxArea;
+  let maxArea = searchData.maxArea === 151 ? 99999 : searchData.maxArea;
   obj.buildarea = minArea + ',' + maxArea;
   //朝向
   let headingArr = searchData.secondHeadingMap.concat()
@@ -3528,7 +3527,8 @@ const ljSecondScreenParam = type => {
     type == 1
       ? app.globalData.secondSearchData
       : app.globalData.monitorSecondSearchData;
-  let obj = [];
+  let arr = [];
+  let obj = {}
   let condition = "";
   //筛选
   let areaType = searchData.areaType;
@@ -3565,8 +3565,8 @@ const ljSecondScreenParam = type => {
     }
   }
   if (areaType == 60) {
-    let d = longSetSearchData.getNearbyGCJ({ ...searchData.areaId})
-    obj = {...obj,...d}
+    let d = getNearbyGCJ({ ...searchData.areaId})
+    obj = { ...obj, ...d }
   }
   // 价钱
   let minPrice = searchData.minPrice;
@@ -3595,7 +3595,7 @@ const ljSecondScreenParam = type => {
   }
   //建筑面积
   let minArea = searchData.minArea;
-  let maxArea = searchData.maxArea;
+  let maxArea = searchData.maxArea === 151 ? 99999 : searchData.maxArea;
   condition += "ba" + minArea + "ea" + maxArea;
   //朝向
   let headingArr = searchData.secondHeadingMap.concat()
@@ -3690,15 +3690,28 @@ const ljSecondScreenParam = type => {
       const formatArea = area.replace(")", "", "ig");
       const areaArr = formatArea.split("(");
       for (const a of areaArr) {
-        obj.push(condition + "rs" + a);
+        arr.push(condition + "rs" + a);
       }
     } else {
-      obj.push(condition + "rs" + area);
+      arr.push(condition + "rs" + area);
     }
   } else {
-    obj.push(condition);
+    arr.push(condition);
   }
-  return obj
+  //排序
+  if (searchData.secondSortTypeMap){
+    if (searchData.secondSortTypeMap === 1){
+      obj = { ...obj, ...{ order:'co21'} }
+    }
+    if (searchData.secondSortTypeMap === 2) {
+      obj = { ...obj, ...{ order: 'co41' } }
+    }
+  }
+  let test = []
+  for (let index = 0; index < arr.length; index ++) {
+    test.push({ ...obj, ...{ condition:arr[index] } })
+  }
+  return test
 }
 //添加开启短租监控参数
 const addMonitorData = addData => {

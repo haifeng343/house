@@ -427,7 +427,7 @@ const lianjia = {
     return Promise.all(promiseList).then(resp => {
       let found = false;
       for (const r of resp) {
-        if (r.data.list.length > 0) {
+        if (r.list.length > 0) {
           found = true;
           return Promise.resolve(r);
         }
