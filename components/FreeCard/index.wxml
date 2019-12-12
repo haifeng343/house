@@ -1,4 +1,4 @@
-<view class="{{'container ' + (isLoaded ? '' : 'hidden') + ' ' + (data.canUse === false ? 'disabled' : '')}}" catchtap="handleClickContainer">
+<view class="{{'container ' + (isLoaded ? '' : 'hidden') + ' ' + (data.activity ? 'activity' : '') + ' ' + (data.canUse === false ? 'disabled' : '')}}" catchtap="handleClickContainer">
   <view class="top">
     <view class="name">
       <text class="day">{{data.day}}天</text>

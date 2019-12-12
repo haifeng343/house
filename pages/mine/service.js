@@ -8,6 +8,8 @@ const daysZH = {
   5: "五天"
 };
 
+const activityCouponId = [12, 13];
+
 export default class UserService {
   requestShare() {
     return Http.post("/fdd/user/fddDailyShareBack.json")
@@ -16,10 +18,10 @@ export default class UserService {
         const type = item.ctype;
         const message =
           type === 1
-            ? item.remark
+            ? `限大于${item.cvalue}天的监控`
             : type === 2
             ? `免费体验${daysZH[item.cvalue]}收费抢票功能`
-            : `兑换后获得${item.cvalue}盯盯币`;
+            : `可兑换${item.cvalue}盯盯币`;
         const name =
           type === 1
             ? item.cname
@@ -28,6 +30,8 @@ export default class UserService {
             : `${item.cvalue}币`;
         return Promise.resolve([
           {
+            activity: activityCouponId.includes(item.couponId),
+            couponId: item.couponId,
             type,
             message,
             name,
