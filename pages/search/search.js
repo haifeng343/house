@@ -5,6 +5,10 @@ import {
   SearchLongDataSubject,
   SearchLongMonitorDataSubject
 } from "../../utils/searchLongDataStream";
+import {
+  SearchSecondDataSubject,
+  SearchSecondMonitorDataSubject
+} from "../../utils/searchSecondDataStream";
 import { getLocationInfo } from "../../utils/map";
 import searchService from "./service";
 import fecha from "../../utils/fecha";
@@ -55,6 +59,7 @@ Page({
     endDate: "",
     showPriceBlock: false,
     showLongPriceBlock: false,
+    showSecondPriceBlock: false,
     searchData: {
       cityType: "",
       area: "",
@@ -923,6 +928,7 @@ Page({
         secondSearchData,
         showPriceBlock: true,
         showLongPriceBlock: true,
+        showSecondPriceBlock: true,
         beginDate: fecha.format(
           fecha.parse(searchData.beginDate, "YYYY-MM-DD"),
           "MM[月]DD[日]"
@@ -1321,6 +1327,19 @@ Page({
         const app = getApp();
         let monitorSearchLongData = app.globalData.monitorSearchLongData;
         changeHistoryStorage(monitorSearchLongData);
+      }
+    );
+    this.searchSecondDataSubscription = SearchSecondDataSubject.subscribe(() => {
+      const app = getApp();
+      let secondSearchData = app.globalData.secondSearchData;
+      changeHistoryStorage(secondSearchData, true);
+      this.setData({ showSecondPriceBlock: false });
+    });
+    this.searchsecondMonitorDataSubscription = SearchSecondMonitorDataSubject.subscribe(
+      () => {
+        const app = getApp();
+        let monitorSecondSearchData = app.globalData.monitorSecondSearchData;
+        changeHistoryStorage(monitorSecondSearchData,true);
       }
     );
   }

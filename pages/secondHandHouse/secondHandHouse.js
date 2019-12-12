@@ -7,8 +7,8 @@ const monitorApi = require("../../api/monitorApi.js");
 const app = getApp();
 import positionService from "../positionLongSelect/service";
 import {
-  SearchLongDataSubject
-} from "../../utils/searchLongDataStream";
+  SearchSecondDataSubject
+} from "../../utils/searchSecondDataStream";
 import Http from "../../utils/http.js";
 Page({
   data: {
@@ -111,7 +111,7 @@ Page({
         for (let key in e.detail) {
           app.globalData.searchLongData[key] = e.detail[key];
         }
-        SearchLongDataSubject.next();
+        SearchSecondDataSubject.next();
         this.setData({
           loadingDisplay: "block",
           countFlag: "",
