@@ -80,7 +80,7 @@ export default class FundService {
               direction,
               createTime,
               remark,
-              logName,
+              logName: remark,
               platformType: 2,
               icon: coinFundIcon[type],
               payList: !payList
