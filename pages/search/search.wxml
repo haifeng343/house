@@ -20,6 +20,7 @@
     <view class='content'>
         <view class='search-box'>
             <view class='nav'>
+              <view class="shadow"></view>
                 <view class="nav_item short {{tabIndex==1?'active':''}}" bindtap='changeTab' data-index='1' style="border-top-left-radius:{{tabIndex==1?'':'12rpx'}}">
                     <text class='nav_item_text'>短租</text>
                 </view>
