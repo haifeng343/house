@@ -2,7 +2,7 @@
   <view class="container">
     <view wx:if="{{useCustom}}" class="overlay"></view>
     <view class="background-line">
-      <view class="price">¥{{minValue}}-{{maxValue >= 10000 ? '不限' : '¥' + maxValue}}</view>
+      <view wx:if="{{showValueView}}" class="price">¥{{minValue}}-{{maxValue >= maxStep ? '不限' : '¥' + maxValue}}</view>
       <view class='distance' style='left:{{leftX}}px;width:{{rightX-leftX}}px;'></view>
       <text class="price-left">0</text>
       <text class="price-right">不限</text>
