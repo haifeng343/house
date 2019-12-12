@@ -51,11 +51,11 @@
 <view class="house_data" wx:if="{{rentType == 3}}">
   <view class="data_first">
     <view class="data_layout data_real">
-      <view>全网总计/套</view>
+      <view>实际数量/套</view>
       <view class="real_num">{{allCount}}</view>
     </view>
     <view class="data_layout data_average">
-      <view>平均价格/月</view>
+      <view>当前均价/平米</view>
       <view class="average_price">¥{{averagePrice}}</view>
     </view>
   </view>
@@ -65,7 +65,7 @@
       <view class="total_num">{{showCount}}</view>
     </view>
     <view class="data_layout data_low">
-      <view>{{sort?'推荐价格/月':'最低价格/月'}}</view>
+      <view>当前最低总价/万</view>
       <view class="low_price">¥{{lowPrice}}</view>
     </view>
   </view>

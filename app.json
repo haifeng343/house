@@ -29,7 +29,8 @@
     "pages/positionLongSelect/positionLongSelect",
     "pages/housingLongSearch/index",
     "pages/monitorRule/index",
-    "pages/secondHandHouse/secondHandHouse"
+    "pages/secondHandHouse/secondHandHouse",
+    "pages/monitorSecondList/monitorSecondList"
   ],
   "window": {
     "backgroundTextStyle": "light",

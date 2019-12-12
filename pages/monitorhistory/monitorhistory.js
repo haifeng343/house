@@ -55,6 +55,23 @@ Page({
         });
       });
   },
+  getSecondHistory(){
+    this.service
+      .getMonitorSecondList()
+      .then(monitorList => {
+        wx.hideLoading();
+        this.setData({ isLoaded: true, monitorList });
+      })
+      .catch(error => {
+        this.setData({ isLoaded: false, monitorList: [] });
+        console.error(error);
+        wx.hideLoading();
+        wx.showToast({
+          title: `获取历史监控数据失败!${error.message}`,
+          icon: 'none'
+        });
+      });
+  },
   getmonitorEndEvent(e) {
     this.setData({
       monitorEndDisplay: e.detail,
@@ -79,7 +96,7 @@ Page({
           } else if(fundListType === 2) {
             this.getLongHistory();
           } else if (fundListType === 3) {
-            this.getLongHistory();
+            this.getSecondHistory();
           }else {
             
           }
@@ -130,6 +147,24 @@ Page({
       if (this.data.fundListType == 2) {
         this.service
           .removeLongHistoryMonitor(this.targetMonitorId)
+          .then(monitorList => {
+            wx.hideLoading();
+            this.submitFlag = false;
+            this.setData({ monitorList, monitorEndDisplay: 'none' });
+            wx.showToast({ title: '操作成功!' });
+          })
+          .catch(error => {
+            wx.hideLoading();
+            this.submitFlag = false;
+            wx.showToast({
+              title: `结束监控失败!${error.message}`,
+              icon: 'none'
+            });
+          });
+      }
+      if (this.data.fundListType == 3) {
+        this.service
+          .removeSecondHistoryMonitor(this.targetMonitorId)
           .then(monitorList => {
             wx.hideLoading();
             this.submitFlag = false;

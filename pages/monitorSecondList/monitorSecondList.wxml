@@ -1,0 +1,72 @@
+<view>
+  <view class="header">
+    <view class="top-nav">
+      <FilterBar data="{{updateData}}" positionData="{{positionData}}" bind:onSubmit="submit" />
+      <view class="bg_border"></view>
+    </view>
+
+    <checkDetail wx:if="{{countFlag === 1}}" houseType="{{2}}" showCount="{{allOriginalData.length}}" allCount="{{allCount}}" lowPrice="{{lowPrice}}" longSortTypes="{{longSortTypes}}" bind:detailEvent="goToDetail"></checkDetail>
+    
+  </view>
+  <view class="block"></view>
+  <view class="card-list {{countFlag === 0||countFlag === 2 ? 'section_empty' : ''}}">
+
+    <monitorEmpty wx:if="{{countFlag === 0}}" bottomType="{{bottomType}}" mSelect="{{mSelect}}" bind:selectEvent="goToMAllSelect"></monitorEmpty>
+
+    <view  class="search_empty" wx:if="{{countFlag === 2&&countBack}}">
+      <noNetwork title="网络异常，请返回重试"></noNetwork>
+    </view>
+    <view  class="search_empty" wx:if="{{countFlag === 2&&!countBack}}">
+      <noNetwork title="网络异常，请刷新重试"></noNetwork>
+    </view>
+
+    <view class="house_card">
+      <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
+        <houseLongCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}"  bottomType="{{bottomType}}" type="{{2}}"  idx="{{idx}}" isFirst="{{isFirst}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" isStatist="{{bottomType ===1?true:false}}"></houseLongCard>
+      </block>
+    </view>
+    
+    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&mSelect ==1}}">已展示全部房源</view>
+    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&mSelect ==2}}">以上为新上房源，点击<text class="no_text" data-index="1" bindtap="goTocheckAll">查看全部</text>房源</view>
+    <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&mSelect ==3}}">以上为降价房源，点击<text class="no_text" data-index="1" bindtap="goTocheckAll">查看全部</text>房源</view>
+    <mp-loading type="dot-red" tips="加载中" show="{{loadingShow}}"></mp-loading>
+  </view>
+
+  <view class="house_monitor" wx:if="{{countFlag===2&&countBack}}">
+    <button class="monitor_btn" bindtap='goBack'>返回重试</button>
+  </view>
+  <view class="house_monitor" wx:if="{{countFlag===2&&!countBack}}">
+    <button class="monitor_btn" bindtap='goRefresh'>立即刷新</button>
+  </view>
+  <view class="monit_start {{bottomType === 1?'monit_stop':''}}" wx:if="{{bottomType === 1&&loadingDisplay === 'none'}}">
+    <view>
+      <text class="time_line">监控时长:</text>
+      <text class="price">{{taskTime}}</text>
+      <text class="time_line">消费:</text>
+      <text class="price">{{totalFee}}币</text>
+      <text class="monit_btn" bindtap="stopMonitor">结束监控</text>
+    </view>
+  </view>
+  <view class="monit_start {{bottomType === 2?'monit_save':''}}" wx:if="{{bottomType === 2&&loadingDisplay === 'none'}}">
+    <view>
+      <text class="monit_btn monit_back" bindtap="goBack">返回监控</text>
+      <text class="monit_btn monit_update" bindtap="goSave">保存修改</text>
+    </view>
+  </view>
+  
+  <followBottom editFlag="{{editFlag}}" selectAllFlag="{{selectAllFlag}}" selectNum="{{selectNum}}" bind:selectAllEvent="goToSelectAll" bind:deleteBatchEvent="deleteBatchItem"></followBottom>
+
+  <followEdit bottomType="{{bottomType}}" countFlag="{{bottomType ===1?countFlag:3}}" listType="{{mSelect}}" scrollIng="{{scrollIng}}" editFlag="{{editFlag}}" bind:editEvent="goEdit" bind:selectEvent="goMselect"></followEdit>
+
+  <houseLoading loadingDisplay="{{loadingDisplay}}"></houseLoading>
+
+</view>
+
+
+<stopDialog bind:stopEvent="getstopEventEvent" bind:stopConfrimEvent="getstopConfirmEventEvent" startTimeName="{{startTimeName}}" taskTime="{{taskTime}}" fee="{{fee}}" totalFee="{{totalFee}}" style="display:{{stopDisplay}}"></stopDialog>
+
+<updateLongDialog bind:updateCancelEvent="getUpdateCancelEvent" bind:updateConfrimEvent="getUpdateConfrimEvent" updateData="{{updateData}}" defalutData="{{defalutData}}" style="display:{{updateMonitorDisplay}}"></updateLongDialog>
+
+<monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}"  style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" paddingBottom="1"></monitorEnoughDialog>
+
+<followDialog text="{{followText}}" followType="{{followType}}" style="display:{{followDisplay}}" bind:knowEvent="followKnowEvent" bind:confirmEvent="followConfirmEvent" bind:cancelEvent="followCancelEvent"></followDialog>
