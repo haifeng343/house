@@ -768,9 +768,7 @@ Page({
       secondSearchData = { ...secondSearchData, ...data }
       app.globalData.searchLongData = { ...app.globalData.searchLongData, ...data}
       app.globalData.secondSearchData = { ...app.globalData.secondSearchData, ...data }
-      console.log('data1',this.data)
       this.setData({ searchLongData, secondSearchData })
-      console.log('data2', this.data)
       this.setSecondPrice(data.city)
     } else {
       if (this.data.searchLongList.length) {
@@ -833,7 +831,6 @@ Page({
   setSecondPrice(city) {
     if(city) {
       this.service.getSecondCityPrice(city).then(res => {
-        console.log(res)
         if(res && res.data){
           let newArray = res.data.split(',')
           if(newArray.length === 2) {
