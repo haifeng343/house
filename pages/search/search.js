@@ -552,7 +552,6 @@ Page({
         });
       } else if (this.data.isAuth) {
         this.checkSecondPrice()
-        return;
         wx.navigateTo({
           url: "../secondHandHouse/secondHandHouse"
         });
