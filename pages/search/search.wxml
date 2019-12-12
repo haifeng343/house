@@ -174,15 +174,15 @@
                             普通住宅
                         </view>
                         <view class="flex_item">
-                            <input class="item_input" placeholder-class="item_input_placeholder" placeholder="{{secondSearchData.placeholderMinPrice}}"></input>
+                            <input class="item_input" type="number" maxlength="5" placeholder-class="item_input_placeholder" placeholder="{{secondSearchData.placeholderMinPrice}}" value="{{secondSearchData.minPrice}}" bindinput="changeMinPrice" bindblur="changeSecondPrice"></input>
                             <text>至</text>
-                            <input class="item_input" placeholder-class="item_input_placeholder" placeholder="{{secondSearchData.placeholderMaxPrice}}"></input>
+                            <input class="item_input" type="number" maxlength="5" placeholder-class="item_input_placeholder" placeholder="{{secondSearchData.placeholderMaxPrice}}" value="{{secondSearchData.maxPrice}}" bindinput="changeMaxPrice" bindblur="changeSecondPrice"></input>
                         </view>
                     </view>
                     <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
-                        <view class='title icon_2'>面积(平米)</view>
+                        <view class='title icon_2'>面积(平米): <text style="color:#F1612A">{{secondSearchData.minArea===0?(secondSearchData.maxArea===151?'不限':(secondSearchData.maxArea+' 以下')):(secondSearchData.maxArea===151?(secondSearchData.minArea+' 以上'):(secondSearchData.minArea + ' - ' + secondSearchData.maxArea))}}</text></view>
                         <view>
-                            <Range wx:if="{{showLongPriceBlock}}" min="{{secondSearchData.minArea}}" max="{{secondSearchData.maxArea}}" step="{{1}}" maxStep="{{151}}" bind:onChange="handlePriceChange" showValueView="{{false}}"/>
+                            <Range wx:if="{{showLongPriceBlock}}" min="{{secondSearchData.minArea}}" max="{{secondSearchData.maxArea}}" step="{{1}}" maxStep="{{151}}" bind:onChange="handleSecondPriceChange" showValueView="{{false}}"/>
                         </view>
                     </view>
                     <view wx:if="{{spread}}">

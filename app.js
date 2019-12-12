@@ -184,12 +184,12 @@ App({
       areaId: {}, //地点标识
       areaType: 0, //地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
       areaJson: "", //json
-      minPrice: "100", //最低价
-      maxPrice: "120", //最高价 不限"99999"
+      minPrice: "", //最低价
+      maxPrice: "", //最高价 不限"99999"
       placeholderMinPrice: "100", //城市最低价格
       placeholderMaxPrice: "200", //城市最高价格
-      minArea: 40, //最低面积
-      maxArea: 41, //最高面积 上限150
+      minArea: 0, //最低面积
+      maxArea: 90, //最高面积 上限150
       secondHouseDecorationMap: [], //装修  1: 毛坯房 2: 普通装修 3: 精装修
       secondHouseTagMap: [1], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
       secondHeadingMap: [], //朝向 1: 朝东 2: 朝西 3: 朝南 4: 朝北 10: 南北通透
