@@ -3410,10 +3410,8 @@ const wiwjSecondScreenParam = type => {
     }
   }
   // 价钱
-  let minPrice = searchData.minPrice; //""取placeholderMinPrice
-  let maxPrice = searchData.maxPrice;//""取placeholdermaxPrice
-  if (minPrice === "") { minPrice = searchData.placeholderMinPrice }
-  if (maxPrice === "") { maxPrice = searchData.placeholderMaxPrice }
+  let minPrice = searchData.minPrice === "" ? 0 : searchData.minPrice; 
+  let maxPrice = searchData.maxPrice === "" ? 99999 : searchData.maxPrice;
   obj.price = minPrice + "," + maxPrice
   // 户型 一室、两室、三室，四室，四室及以上
   let longLayouts = searchData.secondLayoutMap.concat();
@@ -3565,10 +3563,8 @@ const ljSecondScreenParam = type => {
     obj = { ...obj, ...d }
   }
   // 价钱
-  let minPrice = searchData.minPrice;
-  let maxPrice = searchData.maxPrice;
-  if (minPrice === "") { minPrice = searchData.placeholderMinPrice }
-  if (maxPrice === "") { maxPrice = searchData.placeholderMaxPrice }
+  let minPrice = searchData.minPrice === "" ? 0 : searchData.minPrice;
+  let maxPrice = searchData.maxPrice === "" ? 99999 : searchData.maxPrice;
   condition += "bp" + minPrice + "ep" + maxPrice;
   // 户型 一室、两室、三室，四室，四室及以上
   let longLayouts = searchData.secondLayoutMap.concat();
