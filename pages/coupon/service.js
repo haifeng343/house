@@ -9,6 +9,8 @@ const daysZH = {
   5: "五天"
 };
 
+const activityCouponId = [12, 13];
+
 export default class CouponService {
   getUseableCouponList() {
     return Http.get("/fdd/userCoupon/getUsable.json", { couponType: 1 })
