@@ -3,6 +3,7 @@
   "usingComponents": {
     "RightPanel": "../RightPanel/index",
     "TopPanel": "../TopPanel/index",
-    "Range": "../Range/index"
+    "Range": "../Range/index",
+    "secondPrice": "../secondPrice/secondPrice"
   }
 }

@@ -137,7 +137,11 @@
 .filter-item {
   display: flex;
   flex-direction: column;
-  margin-bottom: 48rpx;
+  margin-bottom: 40rpx;
+}
+
+.filter-item.size {
+  margin-bottom: 0;
 }
 
 .filter-title {
