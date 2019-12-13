@@ -3774,39 +3774,39 @@ const ljSecondScreenParam = type => {
   //楼层
   let floorTypeArr = searchData.secondFloorTypeMap.concat()
   if (floorTypeArr.length) {
-    if (floorTypeArr.indexOf(1)) {
+    if (floorTypeArr.indexOf(1) > -1) {
       condition += "lc1";
     }
-    if (floorTypeArr.indexOf(2)) {
+    if (floorTypeArr.indexOf(2) > -1) {
       condition += "lc2";
     }
-    if (floorTypeArr.indexOf(3)) {
+    if (floorTypeArr.indexOf(3) > -1) {
       condition += "lc3";
     }
   }
   //装修
   let decoratetypeArr = searchData.secondHouseDecorationMap.concat()
   if (decoratetypeArr.length) {
-    if (decoratetypeArr.indexOf(1)) {
+    if (decoratetypeArr.indexOf(1) > -1) {
       condition += "de3";
     }
-    if (decoratetypeArr.indexOf(2)) {
+    if (decoratetypeArr.indexOf(2) > -1) {
       condition += "de2";
     }
-    if (decoratetypeArr.indexOf(3)) {
+    if (decoratetypeArr.indexOf(3) > -1) {
       condition += "de1";
     }
   }
   //用途
   let housetypeArr = searchData.secondHouseUseMap.concat()
   if (housetypeArr.length) {
-    if (housetypeArr.indexOf(1)) {
+    if (housetypeArr.indexOf(1) > -1) {
       condition += "sf1";
     }
-    if (housetypeArr.indexOf(2)) {
+    if (housetypeArr.indexOf(2) > -1) {
       condition += "sf3";
     }
-    if (housetypeArr.indexOf(3)) {
+    if (housetypeArr.indexOf(3) > -1) {
       condition += "sf2sf4sf6sf5";
     }
   }
