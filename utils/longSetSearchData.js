@@ -223,10 +223,17 @@ const chooseSlectData = (data, isSecond = false) => {
         id: data.wiwj.searchId,
         name: data.wiwj.searchName
       };
-      areaJson.wiwj = {
-        communityid: data.wiwj.searchId,
-        zn: data.wiwj.searchName
-      };
+      if(!isSecond) {
+        areaJson.wiwj = {
+          communityid: data.wiwj.searchId,
+          zn: data.wiwj.searchName
+        };
+      } else {
+        areaJson.wiwj = {
+          conmmunityid: data.wiwj.searchId,
+          zn: data.wiwj.searchName
+        };
+      }
     }
     if (data.lianjia) {
       result.areaId.lj = data.lianjia.uri
