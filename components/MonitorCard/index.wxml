@@ -2,16 +2,11 @@
   <movable-area class="area">
     <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend">
       <view class="bg"></view>
-      <view class="{{rentType != 3?tag:''}} {{rentType == 2?'long_tag':''}}"></view>
       <text class="icon-font uniE929" />
       <view class="content">
         <view class="top">
           <view class="top-item1">
-            <view class="top-item1-text1">{{data.title}}
-            <!-- <span class="top-item1-textTag" wx:if="{{obj.rentType==3 && obj.data.secondHouseDecorationMap[1]}}">毛胚房</span>
-            <span class="top-item1-textTag" wx:if="{{obj.rentType==3 && obj.data.secondHouseDecorationMap[2]}}">普通装修</span> -->
-            <span class="top-item1-textTag" wx:if="{{obj.rentType==3 && obj.data.secondHouseDecorationMap[3]}}">精装修</span>
-            </view>
+            <view class="top-item1-text1">{{data.title}}</view>
             <view class="top-item1-text2">
               <text class="top-item1-text2-label">花费/币:</text>
               <text class="top-item1-text2-value">{{data.totalFee}}</text>
