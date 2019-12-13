@@ -627,7 +627,7 @@ const getSecondWiwjData = (type, wiwjfilter = {}) => {
   let y =
     type == 1
       ? app.globalData.secondSearchData
-      : app.globalData.monitorSearchLongData;
+      : app.globalData.monitorSecondSearchData;
   return new Promise((resolve, reject) => {
     longrent.wiwj.ershouSearch({
       "city": y.cityId.wiwj,
@@ -695,7 +695,7 @@ const getSecondLianjiaData = (type, lianjiafilter = []) => {
   let y =
     type == 1
       ? app.globalData.secondSearchData
-      : app.globalData.monitorSearchLongData;
+      : app.globalData.monitorSecondSearchData;
   return new Promise((resolve, reject) => {
     longrent.lianjia.ershouSearch({
       "city": y.cityId.lj,
@@ -3589,7 +3589,7 @@ const wiwjSecondScreenParam = type => {
     obj.broom = broom;
   }
   //建筑面积
-  let minArea = searchData.minArea;
+  let minArea = searchData.minArea === '' ? 0 : searchData.minArea;
   let maxArea = searchData.maxArea === 151 ? 99999 : searchData.maxArea;
   obj.buildarea = minArea + ',' + maxArea;
   //朝向
@@ -3745,7 +3745,7 @@ const ljSecondScreenParam = type => {
     }
   }
   //建筑面积
-  let minArea = searchData.minArea;
+  let minArea = searchData.minArea === '' ? 0 : searchData.minArea;
   let maxArea = searchData.maxArea === 151 ? 99999 : searchData.maxArea;
   condition += "ba" + minArea + "ea" + maxArea;
   //朝向
@@ -4332,18 +4332,21 @@ const updateSecondMonitorData = addData => {
   let app = getApp();
   let y = app.globalData.monitorSecondSearchData;
   let data = {
-    cityName: y.city, //城市名称
+    id: addData.monitorId,
+    cityName: y.area, //城市名称
     searchJson: y.areaJson, //搜索参数拼接
-    minPrice: (y.minPrice === "") ? y.placeholderMinPrice : y.minPrice,
-    maxPrice: (y.maxPrice === "") ? y.placeholderMaxPrice : y.maxPrice,
+    minPrice: (y.minPrice === "") ? 0 : y.minPrice,
+    maxPrice: (y.maxPrice === "") ? 99999 : y.maxPrice,
     areaJson: JSON.stringify(y.areaId),
-    minArea: y.minArea,
-    maxArea: y.maxArea,
-    towerAge: y.secondBuildingAgeMap,
+    minArea: y.minArea === '' ? 0 : y.minArea,
+    maxArea: y.maxArea === 151 ? 99999 : y.maxArea,
 
   }
-  if (y.longSortTypes) {
-    data['sortType'] = y.longSortTypes
+  if (y.secondBuildingAgeMap){
+    data['towerAge']=y.secondBuildingAgeMap
+  }
+  if (y.secondSortTypeMap) {
+    data['sortType'] = y.secondSortTypeMap
   }
   if (y.areaType) { //位置ID
     data['locationType'] = y.areaType
@@ -4380,7 +4383,6 @@ const updateSecondMonitorData = addData => {
   if (y.secondLayoutMap.length) { //户型
     data['layoutRoom'] = y.secondLayoutMap.join(',');
   }
-  data['notice'] = notice.join(',');
 
   //黑名单数据
   let wiwjId = [],
@@ -4399,13 +4401,13 @@ const updateSecondMonitorData = addData => {
     }
   }
   let c = util.compareArr(addData.rowData, addData.allOriginalData, 'platformId', 'housesid')
-  data.fddLongRentUsable = c;
+  data.fddUsedUsable = c;
   data.actualPrice = addData.lowPrice;
-  data.fddShortRentBlock = {
+  data.fddUsedBlock = {
     wiwj: wiwjId,
     lj: ljId,
   };
-  data.fddLongRentCount = {
+  data.fddUsedCount = {
     allTotal: addData.allCount,
     wiwjTotal: addData.wiwjCount,
     ljTotal: addData.lianjiaCount,
