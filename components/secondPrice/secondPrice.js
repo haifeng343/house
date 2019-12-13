@@ -76,8 +76,8 @@ Component({
           temp = true
         }
         if (temp) {
-          this.setData({ min: minPrice, max: maxPrice })
-          this.triggerEvent("changeSecondPrice", { minPrice, maxPrice })
+          this.setData({ min: minPrice + '', max: maxPrice + '' })
+          this.triggerEvent("changeSecondPrice", { minPrice: minPrice + '', maxPrice: maxPrice + '' })
         }
       }
     },
