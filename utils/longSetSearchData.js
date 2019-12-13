@@ -47,7 +47,7 @@ const longSetSearchData = (data, city, type, isSecond = false) => {
 };
 
 //选择长租地点列表数据处理
-const chooseArea = (fullname, city, chooseType) => {
+const chooseArea = (fullname, city, chooseType, isSecond = false) => {
   return getPositionInfoByName(fullname, city, chooseType).then(resp => {
     let type = fullname.split("_")[1];
     let result = { areaId: {} };
@@ -62,15 +62,27 @@ const chooseArea = (fullname, city, chooseType) => {
       result.areaType = 10;
       if (info.wiwj && info.wiwj[0]) {
         result.areaId.wiwj = info.wiwj[0].id;
-        areaJson.wiwj = {
-          districtids: info.wiwj[0].id
-        };
+        if (!isSecond) {
+          areaJson.wiwj = {
+            districtids: info.wiwj[0].id
+          };
+        } else {
+          areaJson.wiwj = {
+            districtid: info.wiwj[0].id
+          };
+        }
       }
       if (info.lj && info.lj[0]) {
         result.areaId.lj = info.lj[0].district_quanpin;
-        areaJson.lj = {
-          bizcircle_quanpin: info.lj[0].district_quanpin
-        };
+        if (!isSecond) {
+          areaJson.lj = {
+            bizcircle_quanpin: info.lj[0].district_quanpin
+          };
+        } else {
+          areaJson.lj = {
+            district_id: info.lj[0].district_quanpin
+          };
+        }
       }
       if (info.ftx && info.ftx[0]) {
         result.areaId.ftx = info.ftx[0].name;

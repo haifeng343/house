@@ -99,7 +99,7 @@ Component({
       if (!isSecond) {
         chooseType = searchLongData.chooseType || 1
       }
-      chooseArea(fullname, searchLongData.city, chooseType).then(
+      chooseArea(fullname, searchLongData.city, chooseType, isSecond).then(
         resp => {
           if (!isSecond) {
             app.globalData.searchLongData = Object.assign(
