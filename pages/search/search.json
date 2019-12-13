@@ -3,7 +3,8 @@
     "priceblock": "/components/PriceBlock/index",
     "authDialog": "/components/AuthDialog/AuthDialog",
     "Range": "/components/Range/index",
-    "CouponDialog": "/components/CouponDialog/index"
+    "CouponDialog": "/components/CouponDialog/index",
+    "secondPrice": "/components/secondPrice/secondPrice"
   },
   "navigationBarTitleText": "房盯盯",
   "disableScroll": true

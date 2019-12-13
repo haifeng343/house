@@ -1148,45 +1148,12 @@ Page({
     app.globalData.secondSearchData.secondHouseDecorationMap = secondSearchData.secondHouseDecorationMap
     this.setData({ secondSearchData });
   },
-  //二手房最小价格
-  changeMinPrice(e) {
-    let minPrice = e.detail.value.replace(/\D/g, '')
-    let secondSearchData = { ...this.data.secondSearchData }
-    secondSearchData.minPrice = minPrice
-    const app = getApp()
-    app.globalData.secondSearchData.minPrice = minPrice
-    this.setData({ secondSearchData })
-  },
-  //二手房最大价格
-  changeMaxPrice(e) {
-    let maxPrice = e.detail.value.replace(/\D/g, '')
-    let secondSearchData = { ...this.data.secondSearchData }
-    secondSearchData.maxPrice = maxPrice
-    const app = getApp()
-    app.globalData.secondSearchData.maxPrice = maxPrice
-    this.setData({ secondSearchData })
-  },
   //二手房更换价格
-  changeSecondPrice() {
-    let secondSearchData = { ...this.data.secondSearchData }
-    let minPrice = +secondSearchData.minPrice
-    let maxPrice = +secondSearchData.maxPrice
-    if (minPrice && maxPrice) {
-      if (minPrice > maxPrice) {
-        minPrice = minPrice + maxPrice
-        maxPrice = minPrice - maxPrice
-        minPrice = minPrice - maxPrice
-      }
-      if (minPrice === maxPrice) {
-        minPrice -= 1
-      }
-      secondSearchData.minPrice = minPrice + ''
-      secondSearchData.maxPrice = maxPrice + ''
-      const app = getApp()
-      app.globalData.secondSearchData.minPrice = minPrice + ''
-      app.globalData.secondSearchData.maxPrice = maxPrice + ''
-      this.setData({ secondSearchData })
-    }
+  changeSecondPrice(e) {
+    let secondSearchData = { ...this.data.secondSearchData, ...e.detail }
+    const app = getApp()
+    app.globalData.secondSearchData = { ...app.globalData.secondSearchData, ...e.detail }
+    this.setData({ secondSearchData })
   },
   //二手房面积
   handleSecondPriceChange(e) {
