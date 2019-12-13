@@ -2634,11 +2634,11 @@ const getMonitorSecondHouseData = (list, mSelect) => {
           houseList[i].data.BaseDetail.heading,
         address: houseList[i].data.qyname + "·" + houseList[i].data.sqname,
         tagwall: houseList[i].data.tagwall,
-        area: Number(houseList[i].data.BaseDetail.area),
+        area: Number(houseList[i].data.BaseDetail.buildarea),
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
         priceMargin: houseList[i].priceMargin || "",
-        unit_price: houseList[i].data.unitprice,
+        unit_price: Number(houseList[i].data.unitprice),
       };
       wiwjFilterData.push(wiwjObjs);
       allData.push(wiwjObjs);
@@ -2654,11 +2654,11 @@ const getMonitorSecondHouseData = (list, mSelect) => {
         introduce: houseList[i].data.desc_abtest,
         address: houseList[i].data.community_name,
         tagwall: lianjiaTagwall1(houseList[i].data.color_tags),
-        area: Number(houseList[i].data.rent_area),
+        area: Number(houseList[i].data.area),
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
         priceMargin: houseList[i].priceMargin || "",
-        unit_price: houseList[i].data.unit_price,
+        unit_price: Number(houseList[i].data.unit_price),
       };
       ljFilterData.push(lianjiaObjs);
       allData.push(lianjiaObjs);
@@ -2672,6 +2672,13 @@ const getMonitorSecondHouseData = (list, mSelect) => {
       price
     }) => sum + price, 0) / allData.length :
     0;
+  let averageunitPrice =
+    allData.length > 0 ?
+      allData.reduce((sum, {
+        unit_price
+      }) => sum + unit_price, 0) / allData.length :
+      0;
+  console.log(averageunitPrice)
   let sortArr = [...allData];
   let areasortArr = [...allData];
   let wiwjSortArr = [...wiwjFilterData];
@@ -2731,6 +2738,7 @@ const getMonitorSecondHouseData = (list, mSelect) => {
   return {
     allData,
     averagePrice: parseInt(average),
+    averageunitPrice: parseInt(averageunitPrice),
     lowPrice,
     highAreaData,
     lowPriceData,
@@ -4053,15 +4061,17 @@ const addSecondMonitorData = addData => {
   let data = {
     cityName: y.city, //城市名称
     searchJson: y.areaJson, //搜索参数拼接
-    minPrice: (y.minPrice === "") ? y.placeholderMinPrice:y.minPrice,
-    maxPrice: (y.maxPrice === "") ? y.placeholderMaxPrice : y.maxPrice,
+    minPrice: y.minPrice === "" ? 0:y.minPrice,
+    maxPrice: y.maxPrice === "" ? 99999 : y.maxPrice,
     areaJson: JSON.stringify(y.areaId),
     minArea: y.minArea,
     maxArea: y.maxArea === 151 ? 99999 : y.maxArea,
-    towerAge: y.secondBuildingAgeMap,
   }
-  if (y.longSortTypes) {
-    data['sortType'] = y.longSortTypes
+  if (y.secondBuildingAgeMap){
+    data['towerAge'] = y.secondBuildingAgeMap
+  }
+  if (y.secondSortTypeMap) {
+    data['sortType'] = y.secondSortTypeMap
   }
   if (y.areaType) { //位置ID
     data['locationType'] = y.areaType
@@ -4122,13 +4132,13 @@ const addSecondMonitorData = addData => {
     }
   }
   let c = util.compareArr(addData.rowData, addData.allOriginalData, 'platformId', 'housesid')
-  data.fddLongRentUsable = c
+  data.fddUsedUsable  = c
   data.actualPrice = addData.lowPrice
-  data.fddShortRentBlock = {
+  data.fddUsedBlock  = {
     wiwj: wiwjId,
     lj: ljId
   };
-  data.fddSecondRentCount = {
+  data.fddUsedCount  = {
     allTotal: addData.allCount,
     wiwjTotal: addData.wiwjCount,
     ljTotal: addData.lianjiaCount,

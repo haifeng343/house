@@ -467,7 +467,7 @@ Page({
       wiwjCount: this.data.wiwjCount,
       lianjiaCount: this.data.lianjiaCount,
       showCount: this.data.allOriginalData.length,
-      averagePrice: this.data.averageunitPrice,//二手房单价平均价
+      averagePrice: this.data.averagePrice,//二手房单价平均价
       lowPrice: this.data.lowPrice,
       highAreaData: this.data.highAreaData,
       lowPriceData: this.data.lowPriceData,
