@@ -7,10 +7,13 @@ Component({
     houseType:{
       type: Number //1：短租 2：长租 2:二手房
     },
-    sortType:{
+    sortType:{ //1推荐 2低价有限
       type:Number
     },
-    longSortTypes:{
+    longSortTypes: {//1: 低价优先, 2: 空间优先, 3: 最新发布
+      type: Number
+    },
+    secondSortType: {//1: 低总价优先 2: 低单价优先
       type: Number
     },
     allCount:{
