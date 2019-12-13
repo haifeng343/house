@@ -242,7 +242,7 @@ Component({
         this.promiseVersion += 1;
         if (chooseType === 1) {
           longRentTip
-            .getIntermediaryData(cityId, searchKey, this.promiseVersion)
+            .getSecondIntermediaryData(cityId, searchKey, this.promiseVersion)
             .then(resp => {
               const { result, promiseVersion } = resp;
               if (this.promiseVersion === promiseVersion) {
@@ -761,7 +761,8 @@ Component({
           chooseArea(
             areaItem.value,
             insideData.city,
-            insideData.chooseType
+            insideData.chooseType,
+            true
           ).then(resp => {
             Object.keys(resp).forEach(key => this.changeList.add(key));
             this.setData(resp);
@@ -851,7 +852,8 @@ Component({
         chooseArea(
           stationItem.value,
           insideData.city,
-          insideData.chooseType
+          insideData.chooseType,
+          true
         ).then(resp => {
           Object.keys(resp).forEach(key => this.changeList.add(key));
           this.setData(resp);
@@ -987,7 +989,7 @@ Component({
     handleSelectSearchResult(event) {
       const { item } = event.currentTarget.dataset;
 
-      chooseSlectData(item);
+      chooseSlectData(item,true);
 
       const { city, chooseType } = this.data.data;
 
