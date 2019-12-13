@@ -1214,11 +1214,23 @@ Page({
     searchLongData.longLayouts = [];
     searchLongData.advSort = 0;
     let secondSearchData = app.globalData.secondSearchData
-    secondSearchData.secondHouseDecorationMap = []
-    secondSearchData.secondHouseTagMap = [1]
+    if (secondSearchData.secondHouseDecorationMap.indexOf(3) >= 0) {
+      secondSearchData.secondHouseDecorationMap = [3]
+    } else {
+      secondSearchData.secondHouseDecorationMap = [0]
+    }
+    if (secondSearchData.secondHouseTagMap.indexOf(1) >= 0) {
+      secondSearchData.secondHouseTagMap = [1]
+    } else {
+      secondSearchData.secondHouseTagMap = [0]
+    }
     secondSearchData.secondHeadingMap = []
     secondSearchData.secondFloorTypeMap = []
-    secondSearchData.secondHouseUseMap = [1]
+    if (secondSearchData.secondHouseUseMap.indexOf(1) >= 0) {
+      secondSearchData.secondHouseUseMap = [1]
+    } else {
+      secondSearchData.secondHouseUseMap = [0]
+    }
     secondSearchData.secondBuildingAgeMap = 0
     this.searchDataStorage = searchDataStorage.subscribe(hasSearchData => {
       console.log("hasSearchData=" + hasSearchData);
