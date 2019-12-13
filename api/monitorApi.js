@@ -340,7 +340,7 @@ const addLongBatchAddBlacklist = data => {
 const addSecondBatchAddBlacklist = data => {
   return new Promise((resolve, reject) => {
     data.token = wx.getStorageSync('token')
-    api.postApiMonitorForm(monitor.json2Form(data), '/fdd/longRentMonitor/batchAddBlacklist.json').then(res => {
+    api.postApiMonitorForm(monitor.json2Form(data), '/user/used/batchAddBlacklist.json').then(res => {
       if (res.statusCode == 200 && res.data.success) {
         resolve(res)
       } else {

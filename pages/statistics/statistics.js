@@ -180,6 +180,7 @@ Page({
           data.enoughList[i]['lowPriceData'] = data.lianjiaLowPriceData
         }
       }
+      
       this.setData({
         allCount: data.allCount,
         wiwjCount: data.wiwjCount,

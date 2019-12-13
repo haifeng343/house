@@ -2053,7 +2053,7 @@ const getBrandSecondHouseData = data => {
           address: wiwjData[i].qyname + "·" + wiwjData[i].sqname,
           tagwall: wiwjData[i].tagwall,
           area: Number(wiwjData[i].buildarea),
-          unit_price: wiwjData[i].unitprice,
+          unit_price: Number(wiwjData[i].unitprice),
         };
         wiwjFilterData.push(wiwjObjs);
         allData.push(wiwjObjs);
@@ -2082,7 +2082,7 @@ const getBrandSecondHouseData = data => {
           address: lianjiaData[i].community_name,
           tagwall: lianjiaSecondTagwall(lianjiaData[i].color_tags),
           area: Number(lianjiaData[i].area),
-          unit_price: lianjiaData[i].unit_price,
+          unit_price: Number(lianjiaData[i].unit_price),
         };
         lianjiaFilterData.push(lianjiaObjs);
         allData.push(lianjiaObjs);
@@ -2115,7 +2115,7 @@ const getBrandSecondHouseData = data => {
         unit_price
     }) => sum + unit_price, 0) / allData.length :
     0;
-  console.log(unitPrice+'米/平方')
+  console.log(unitPrice+'米/平方111111111111111111')
   let sortArr = [...allData];
   let areasortArr = [...allData];
   let wiwjSortArr = [...wiwjFilterData];

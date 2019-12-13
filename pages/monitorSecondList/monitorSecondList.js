@@ -226,14 +226,14 @@ Page({
           monitorCityId.lj = cityList.lj.city_id
         }
       }
-      for (let i in houseList){
-        app.globalData.monitorSecondSearchData = {
-          unit_price: houseList[i].data.unitprice
-        };
-        app.globalData.monitorDefaultSearchSecondData = {
-          unit_price: houseList[i].data.unitprice
-        };
-      }
+      // for (let i in houseList){
+      //   app.globalData.monitorSecondSearchData = {
+      //     unit_price: houseList[i].data.unitprice
+      //   };
+      //   app.globalData.monitorDefaultSearchSecondData = {
+      //     unit_price: houseList[i].data.unitprice
+      //   };
+      // }
       app.globalData.monitorSecondSearchData = {
         city: monitorDetail.cityName, //城市名
         cityId: monitorCityId, //城市ID
