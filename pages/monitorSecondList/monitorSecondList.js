@@ -60,7 +60,6 @@ Page({
       listSortType: 1,
       wiwjfilter,
       ljfilter,
-      chooseType: x.chooseType, //1品牌中介，2个人房源
       longSortTypes: x.longSortTypes, //1: 低价优先, 2: 空间优先, 3: 最新发布
       mSelect: 1
     }, () => {
@@ -211,6 +210,7 @@ Page({
         })
         return;
       }
+      console.log(res)
       let houseList = res.data.data.houseList; //监控房源
       let monitorDetail = res.data.data.monitorDetail; //监控条件
       let monitorCount = res.data.data.monitorCount; //监控计算
@@ -226,14 +226,7 @@ Page({
           monitorCityId.lj = cityList.lj.city_id
         }
       }
-      // for (let i in houseList){
-      //   app.globalData.monitorSecondSearchData = {
-      //     unit_price: houseList[i].data.unitprice
-      //   };
-      //   app.globalData.monitorDefaultSearchSecondData = {
-      //     unit_price: houseList[i].data.unitprice
-      //   };
-      // }
+     
       app.globalData.monitorSecondSearchData = {
         city: monitorDetail.cityName, //城市名
         cityId: monitorCityId, //城市ID
@@ -245,7 +238,7 @@ Page({
         minPrice: monitorDetail.minPrice, //最低价
         maxPrice: monitorDetail.maxPrice === 99999 ? 151 : monitorDetail.maxPrice, //最高价 不限"99999"
         placeholderMinPrice: monitorDetail.actualPrice || 0, //城市最低价格
-        placeholderMaxPrice: "200", //城市最高价格
+        placeholderMaxPrice: (monitorDetail.cityName == '北京' || monitorDetail.cityName == '北京')?500:300, //城市最高价格
         minArea: monitorDetail.minArea, //最低面积
         maxArea: monitorDetail.maxArea, //最高面积 上限150
         
@@ -269,7 +262,7 @@ Page({
         minPrice: monitorDetail.minPrice, //最低价
         maxPrice: monitorDetail.maxPrice === 99999 ? 151 : monitorDetail.maxPrice, //最高价 不限"99999"
         placeholderMinPrice: monitorDetail.actualPrice || 0, //城市最低价格
-        placeholderMaxPrice: "200", //城市最高价格
+        placeholderMaxPrice: (monitorDetail.cityName == '北京' || monitorDetail.cityName == '北京') ? 500 : 300, //城市最高价格
         minArea: monitorDetail.minArea, //最低面积
         maxArea: monitorDetail.maxArea, //最高面积 上限150
         secondHouseDecorationMap: monitorDetail.decorate || '', //装修  1: 毛坯房 2: 普通装修 3: 精装修
@@ -356,7 +349,7 @@ Page({
         allOriginalData: monitorHouseData.allData,
         allData: monitorHouseData.allData.slice(0, 5),
         allCount: monitorCount.allTotal,
-        averagePrice: monitorHouseData.averagePrice,
+        averagePrice: monitorHouseData.averageunitPrice,
         lowPrice: monitorHouseData.lowPrice,
         highAreaData: monitorHouseData.highAreaData,
         lowPriceData: monitorHouseData.lowPriceData,
@@ -377,7 +370,6 @@ Page({
         loadingDisplay: 'none',
         countFlag: 1,
         longSortTypes: monitorDetail.sortType || '',
-        chooseType: monitorDetail.houseSource,
         updateData: Object.assign({}, app.globalData.monitorSecondSearchData),
         defalutData: Object.assign({}, app.globalData.monitorDefaultSearchSecondData),
         mSelect: detail ? detail : this.data.mSelect
@@ -423,12 +415,13 @@ Page({
       type: 2
     })
     if (houseData.allCount > 0 && houseData.allData.length > 0) {
+      console.log(houseData)
       this.setData({
         countFlag: 1,
         allOriginalData: houseData.allData,
         allData: houseData.allData.slice(0, 5),
         allCount: houseData.allCount,
-        averagePrice: houseData.averagePrice,
+        averagePrice: houseData.averageunitPrice,
         lowPrice: houseData.lowPrice,
         lowPriceData: houseData.lowPriceData,
         highAreaData: houseData.highAreaData,
@@ -469,13 +462,13 @@ Page({
   },
   //跳转统计详情
   goToDetail() {
-    const app = getApp()
+    const app = getApp();
     app.globalData.houseListData = {
       allCount: this.data.allCount,
       wiwjCount: this.data.wiwjCount,
       lianjiaCount: this.data.lianjiaCount,
       showCount: this.data.allOriginalData.length,
-      averagePrice: this.data.averagePrice,
+      averagePrice: this.data.averageunitPrice,//二手房单价平均价
       lowPrice: this.data.lowPrice,
       highAreaData: this.data.highAreaData,
       lowPriceData: this.data.lowPriceData,
@@ -488,7 +481,6 @@ Page({
       totalFee: this.data.totalFee, //消耗盯盯币
       isBack: false,
       sortType: this.data.longSortTypes,
-      chooseType: this.data.chooseType,
       allOriginalData: this.data.allOriginalData,
       rowData: this.data.rowData,
     }
@@ -613,7 +605,7 @@ Page({
     let shortBlock = short.concat(b)
     wx.setStorageSync('fddShortRentBlock', shortBlock)
 
-    let houseData = house.houseLongFilter(allData, this.data.chooseType)
+    let houseData = house.houseLongFilter(allData, 1)
     this.setData({
       allOriginalData: [],
       allData: []
@@ -630,7 +622,7 @@ Page({
     this.setData({
       allOriginalData: allData,
       allData: allData.slice(0, 5),
-      averagePrice: houseData.averagePrice,
+      averagePrice: houseData.averageunitPrice,
       lowPrice: houseData.lowPrice,
       lowPriceData: houseData.lowPriceData,
       highAreaData: houseData.highAreaData,
@@ -696,7 +688,7 @@ Page({
     let shortBlock = short.concat(b)
     wx.setStorageSync('fddShortRentBlock', shortBlock)
 
-    let houseData = house.houseLongFilter(a, this.data.chooseType)
+    let houseData = house.houseLongFilter(a, 1)
     this.setData({
       allOriginalData: [],
       allData: []
@@ -713,7 +705,7 @@ Page({
     this.setData({
       allOriginalData: a,
       allData: a.slice(0, 5),
-      averagePrice: houseData.averagePrice,
+      averagePrice: houseData.averageunitPrice,
       lowPrice: houseData.lowPrice,
       lowPriceData: houseData.lowPriceData,
       highAreaData: houseData.highAreaData,
