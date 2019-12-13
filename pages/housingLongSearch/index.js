@@ -133,8 +133,8 @@ Page({
       this.timer = setTimeout(() => {
         this.promiseVersion += 1;
         longRentTip
-          .getIntermediaryData(
-          secondSearchData.cityId,
+          .getSecondIntermediaryData(
+            secondSearchData.cityId,
             this.data.value,
             this.promiseVersion
           )
