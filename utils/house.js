@@ -2108,6 +2108,14 @@ const getBrandSecondHouseData = data => {
       price
     }) => sum + price, 0) / allData.length :
     0;
+  //平均价
+  let unitPrice =
+    allData.length > 0 ?
+    allData.reduce((sum, {
+        unit_price
+    }) => sum + unit_price, 0) / allData.length :
+    0;
+  console.log(unitPrice+'米/平方')
   let sortArr = [...allData];
   let areasortArr = [...allData];
   let wiwjSortArr = [...wiwjFilterData];
@@ -2139,12 +2147,17 @@ const getBrandSecondHouseData = data => {
   }
   if (y.advSort == 2) {
     let allArr = [...allData];
-    allArr.sort(util.compareSort("area", "desc"));
+    allArr.sort(util.compareSort("unit_price", "desc"));
     allData = allArr
   }
   if (y.advSort == 21) {
     let allArr = [...allData];
-    allArr.sort(util.compareSort("area", "asc"));
+    allArr.sort(util.compareSort("unit_price", "desc"));
+    allData = allArr
+  }
+  if (y.advSort == 31) {
+    let allArr = [...allData];
+    allArr.sort(util.compareSort("area", "desc"));
     allData = allArr
   }
   //所有房源面积最大
@@ -2162,6 +2175,7 @@ const getBrandSecondHouseData = data => {
     allCount,
     averagePrice: parseInt(average),
     lowPrice,
+    unitPrice,
     lowPriceData,
     highAreaData,
     wiwjLowPriceData,
@@ -2624,7 +2638,7 @@ const getMonitorSecondHouseData = (list, mSelect) => {
         newLevel: houseList[i].newLevel,
         priceDownLevel: houseList[i].priceDownLevel,
         priceMargin: houseList[i].priceMargin || "",
-        unit_price: houseList[i].data.unit_price,
+        unit_price: houseList[i].data.unitprice,
       };
       wiwjFilterData.push(wiwjObjs);
       allData.push(wiwjObjs);

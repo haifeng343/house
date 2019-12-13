@@ -4,7 +4,7 @@
     <view wx:if="{{houseType == 3}}">总计:{{allCount}}套(已选:{{showCount}}套)</view>
     <view wx:if="{{houseType == 1}}">{{sortType == 1?'推荐价':'最低价'}}:¥{{lowPrice}}</view>
     <view wx:if="{{houseType == 2}}">{{longSortTypes == 1?'最低价':'推荐价'}}:¥{{lowPrice}}</view>
-    <view wx:if="{{houseType == 3}}" class="m1">最低价:{{lowPrice}}</view>
+    <view wx:if="{{houseType == 3}}" class="m1">最低价:{{lowPrice}}万</view>
     <view class="check_detail">
       <text>查看明细</text>
       <image class="check_more" src="../../assets/image/more.png"></image>

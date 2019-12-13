@@ -20,7 +20,6 @@ Page({
     fee: 0,
     sort: false,
     enoughList:[],
-    types:'',//3.二手房的展示
   },
 
   /**

@@ -85,10 +85,13 @@ Page({
           allArr.sort(util.compareSort("price", "desc"));
         }
         if (e.detail['advSort'] == 2) {
-          allArr.sort(util.compareSort("area", "desc"));
+          allArr.sort(util.compareSort("un", "desc"));
         }
         if (e.detail['advSort'] == 21) {
           allArr.sort(util.compareSort("area", "asc"));
+        }
+        if (e.detail['advSort'] == 31) {
+          allArr.sort(util.compareSort("area", "desc"));
         }
         this.setData({
           loadingDisplay: "none",
@@ -223,7 +226,39 @@ Page({
           monitorCityId.lj = cityList.lj.city_id
         }
       }
+      for (let i in houseList){
+        app.globalData.monitorSecondSearchData = {
+          unit_price: houseList[i].data.unitprice
+        };
+        app.globalData.monitorDefaultSearchSecondData = {
+          unit_price: houseList[i].data.unitprice
+        };
+      }
       app.globalData.monitorSecondSearchData = {
+        city: monitorDetail.cityName, //城市名
+        cityId: monitorCityId, //城市ID
+        cityJson: monitorDetail.cityJson,
+        area: monitorDetail.locationName || '', // 地点
+        areaId: JSON.parse(monitorDetail.areaJson || {}), //地点标识
+        areaType: monitorDetail.locationType || 0, //地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线50：地铁站 60：附近
+        areaJson: monitorDetail.searchJson, //json
+        minPrice: monitorDetail.minPrice, //最低价
+        maxPrice: monitorDetail.maxPrice === 99999 ? 151 : monitorDetail.maxPrice, //最高价 不限"99999"
+        placeholderMinPrice: monitorDetail.actualPrice || 0, //城市最低价格
+        placeholderMaxPrice: "200", //城市最高价格
+        minArea: monitorDetail.minArea, //最低面积
+        maxArea: monitorDetail.maxArea, //最高面积 上限150
+        
+        secondHouseDecorationMap: monitorDetail.decorate || '', //装修  1: 毛坯房 2: 普通装修 3: 精装修
+        secondHouseTagMap: monitorDetail.houseTags ? monitorDetail.houseTags.split(',').map(item => +item) : [], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
+        secondHeadingMap: monitorDetail.heading ? monitorDetail.heading.split(',').map(item => +item) : [], //朝向 1: 朝东 2: 朝西 3: 朝南 4: 朝北 10: 南北通透
+        secondFloorTypeMap: monitorDetail.floorType ? monitorDetail.floorType.split(',').map(item => +item) : [], //楼层 1: 低楼层 2: 中楼层 3: 高楼层
+        secondHouseUseMap: monitorDetail.purpose ? monitorDetail.purpose.split(',').map(item => +item) : [], //用途 1: 普通住宅 2: 别墅 3: 其他
+        secondBuildingAgeMap: monitorDetail.towerAge || '', //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
+        secondLayoutMap: monitorDetail.layoutRoom ? monitorDetail.layoutRoom.split(',').map(item => +item) : [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
+        secondSortTypeMap: monitorDetail.sortType || 0, //房源偏好 1: 低总价优先 2: 低单价优先
+      }
+      app.globalData.monitorDefaultSearchSecondData = {
         city: monitorDetail.cityName, //城市名
         cityId: monitorCityId, //城市ID
         cityJson: monitorDetail.cityJson,
@@ -245,27 +280,6 @@ Page({
         secondBuildingAgeMap: monitorDetail.towerAge || '', //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
         secondLayoutMap: monitorDetail.layoutRoom ? monitorDetail.layoutRoom.split(',').map(item => +item) : [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
         secondSortTypeMap: monitorDetail.sortType || 0, //房源偏好 1: 低总价优先 2: 低单价优先
-      }
-      app.globalData.monitorDefaultSearchSecondData = {
-        chooseType: monitorDetail.houseSource, //1品牌中介，2个人房源
-        city: monitorDetail.cityName, //城市名
-        cityId: monitorCityId, //城市ID
-        cityJson: monitorDetail.cityJson,
-        area: monitorDetail.locationName || '', // 地点
-        areaId: JSON.parse(monitorDetail.areaJson || {}), //地点标识
-        areaType: monitorDetail.locationType || 0, //地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
-        areaJson: monitorDetail.searchJson, //json
-        longBuildAreas: monitorDetail.buildArea, //0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
-        longFloorTypes: monitorDetail.floorType ? monitorDetail.floorType.split(',').map(item => +item) : [], //1: 低楼层, 2: 中楼层, 3: 高楼层
-        longHeadings: monitorDetail.heading ? monitorDetail.heading.split(',').map(item => +item) : [], //{1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
-        longHouseTags: monitorDetail.houseTags ? monitorDetail.houseTags.split(',').map(item => +item) : [], //1: 精装修, 2: 近地铁, 3: 拎包入住, 4: 随时看房, 5: 集中供暖, 6: 新上房源, 7: 配套齐全, 8: 视频看房
-        longLayouts: monitorDetail.layoutRoom ? monitorDetail.layoutRoom.split(',').map(item => +item) : [], //1: 一室, 2: 二室, 3: 三室, 11: 三室及以上, 12: 四室及以上
-        longRentTypes: monitorDetail.rentType || 0, //1: 整租, 2: 合租 3: 主卧, 4: 次卧
-        longSortTypes: monitorDetail.sortType || 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
-        minPrice: monitorDetail.minPrice, //最低价
-        maxPrice: monitorDetail.maxPrice == 99999 ? 10000 : monitorDetail.maxPrice, //最高价 不限99999
-        // advSort: monitorDetail.sortType || 0
-        advSort: -1
       }
       let x = app.globalData.monitorSecondSearchData
       // new positionService().getSearchHoset(x.city, 3).then(resp => {
@@ -301,6 +315,7 @@ Page({
       }
       wx.hideLoading()
       let monitorHouseData = house.getMonitorSecondHouseData(houseList, detail ? detail : this.data.mSelect); //监控房源列表
+      console.log(monitorHouseData)
       if (monitorHouseData.allData.length == 0) {
         this.setData({
           countFlag: 0,
