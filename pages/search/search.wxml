@@ -181,7 +181,7 @@
                         </view>
                     </view>
                     <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
-                        <view class='title icon_2'>面积(平米): <text style="color:#F1612A">{{secondSearchData.minArea===0?(secondSearchData.maxArea===151?'不限':(secondSearchData.maxArea+' 以下')):(secondSearchData.maxArea===151?(secondSearchData.minArea+' 以上'):(secondSearchData.minArea + ' - ' + secondSearchData.maxArea))}}</text></view>
+                        <view class='title icon_2'>面积(平米): <block wx:if="{{secondSearchData.minArea === 0 && secondSearchData.maxArea === 151}}"><text style="color:#F1612A">不限</text></block><block wx:elif="{{secondSearchData.minArea === 0 && secondSearchData.maxArea !== 151}}"><text style="color:#F1612A">{{secondSearchData.maxArea + ' 以下'}}</text></block><block wx:elif="{{secondSearchData.minArea !== 0 && secondSearchData.maxArea === 151}}"><text style="color:#F1612A">{{secondSearchData.minArea + ' 以上'}}</text></block><block wx:else><text style="color:#F1612A">{{secondSearchData.minArea}}</text> — <text style="color:#F1612A">{{secondSearchData.maxArea}}</text></block></view>
                         <view style="margin-top: -42rpx">
                             <Range wx:if="{{showSecondPriceBlock}}" min="{{secondSearchData.minArea}}" max="{{secondSearchData.maxArea}}" step="{{1}}" maxStep="{{151}}" bind:onChange="handleSecondPriceChange" showValueView="{{false}}"/>
                         </view>
