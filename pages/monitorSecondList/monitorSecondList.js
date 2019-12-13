@@ -54,12 +54,14 @@ Page({
   },
   onHouseShow() {
     let x = app.globalData.monitorSecondSearchData
-    let wiwjfilter = house.wiwjSecondScreenParam(2);
-    let ljfilter = house.ljSecondScreenParam(2);
+    let wiwjfilter = house.wiwjScreenParam(2);
+    let ljfilter = house.ljScreenParam(2);
     this.setData({
       listSortType: 1,
       wiwjfilter,
       ljfilter,
+      chooseType: x.chooseType, //1品牌中介，2个人房源
+      longSortTypes: x.longSortTypes, //1: 低价优先, 2: 空间优先, 3: 最新发布
       mSelect: 1
     }, () => {
         this.getAllBrandData();
@@ -209,7 +211,6 @@ Page({
         })
         return;
       }
-      console.log(res)
       let houseList = res.data.data.houseList; //监控房源
       let monitorDetail = res.data.data.monitorDetail; //监控条件
       let monitorCount = res.data.data.monitorCount; //监控计算
@@ -225,7 +226,14 @@ Page({
           monitorCityId.lj = cityList.lj.city_id
         }
       }
-     
+      // for (let i in houseList){
+      //   app.globalData.monitorSecondSearchData = {
+      //     unit_price: houseList[i].data.unitprice
+      //   };
+      //   app.globalData.monitorDefaultSearchSecondData = {
+      //     unit_price: houseList[i].data.unitprice
+      //   };
+      // }
       app.globalData.monitorSecondSearchData = {
         city: monitorDetail.cityName, //城市名
         cityId: monitorCityId, //城市ID
@@ -274,10 +282,10 @@ Page({
         secondSortTypeMap: monitorDetail.sortType || 0, //房源偏好 1: 低总价优先 2: 低单价优先
       }
       let x = app.globalData.monitorSecondSearchData
-      new positionService().getSearchHoset(x.city, 1).then(resp => {
-        const positionData = resp.data;
-        this.setData({ positionData });
-      });
+      // new positionService().getSearchHoset(x.city, 3).then(resp => {
+      //   const positionData = resp.data;
+      //   this.setData({ positionData });
+      // });
       if (!monitorCount || !monitorCount.allTotal || monitorCount.allTotal == 0 || !houseList || houseList.length == 0) {
         this.setData({
           countFlag: 0,
@@ -369,6 +377,7 @@ Page({
         loadingDisplay: 'none',
         countFlag: 1,
         longSortTypes: monitorDetail.sortType || '',
+        chooseType: monitorDetail.houseSource,
         updateData: Object.assign({}, app.globalData.monitorSecondSearchData),
         defalutData: Object.assign({}, app.globalData.monitorDefaultSearchSecondData),
         mSelect: detail ? detail : this.data.mSelect
@@ -378,8 +387,8 @@ Page({
   async getAllBrandData() {
     wx.removeStorageSync('fddShortRentBlock');
     let enoughList = [];
-    let wiwjDataObj = await house.getSecondWiwjData(2, this.data.wiwjfilter);
-    let lianjiaDataObj = await house.getSecondLianjiaData(2, this.data.ljfilter)
+    let wiwjDataObj = await house.getWiwjData(2, this.data.wiwjfilter);
+    let lianjiaDataObj = await house.getLianjiaData(2, this.data.ljfilter)
     if (wiwjDataObj.network && lianjiaDataObj.network) {
       this.setData({
         loadingDisplay: 'none',
@@ -406,7 +415,7 @@ Page({
       })
     }
     enoughList.sort(util.compareSort('value', 'desc'));
-    let houseData = house.getBrandSecondHouseData({
+    let houseData = house.getBrandHouseData({
       wiwjCount: wiwjDataObj.wiwjCount,
       lianjiaCount: lianjiaDataObj.lianjiaCount,
       wiwjData,
@@ -461,13 +470,13 @@ Page({
   },
   //跳转统计详情
   goToDetail() {
-    const app = getApp();
+    const app = getApp()
     app.globalData.houseListData = {
       allCount: this.data.allCount,
       wiwjCount: this.data.wiwjCount,
       lianjiaCount: this.data.lianjiaCount,
       showCount: this.data.allOriginalData.length,
-      averagePrice: this.data.averageunitPrice,//二手房单价平均价
+      averagePrice: this.data.averagePrice,
       lowPrice: this.data.lowPrice,
       highAreaData: this.data.highAreaData,
       lowPriceData: this.data.lowPriceData,
@@ -480,6 +489,7 @@ Page({
       totalFee: this.data.totalFee, //消耗盯盯币
       isBack: false,
       sortType: this.data.longSortTypes,
+      chooseType: this.data.chooseType,
       allOriginalData: this.data.allOriginalData,
       rowData: this.data.rowData,
     }
@@ -604,7 +614,7 @@ Page({
     let shortBlock = short.concat(b)
     wx.setStorageSync('fddShortRentBlock', shortBlock)
 
-    let houseData = house.houseLongFilter(allData, 1)
+    let houseData = house.houseLongFilter(allData, this.data.chooseType)
     this.setData({
       allOriginalData: [],
       allData: []
@@ -621,7 +631,7 @@ Page({
     this.setData({
       allOriginalData: allData,
       allData: allData.slice(0, 5),
-      averagePrice: houseData.averageunitPrice,
+      averagePrice: houseData.averagePrice,
       lowPrice: houseData.lowPrice,
       lowPriceData: houseData.lowPriceData,
       highAreaData: houseData.highAreaData,
@@ -687,7 +697,7 @@ Page({
     let shortBlock = short.concat(b)
     wx.setStorageSync('fddShortRentBlock', shortBlock)
 
-    let houseData = house.houseLongFilter(a, 1)
+    let houseData = house.houseLongFilter(a, this.data.chooseType)
     this.setData({
       allOriginalData: [],
       allData: []
@@ -704,7 +714,7 @@ Page({
     this.setData({
       allOriginalData: a,
       allData: a.slice(0, 5),
-      averagePrice: houseData.averageunitPrice,
+      averagePrice: houseData.averagePrice,
       lowPrice: houseData.lowPrice,
       lowPriceData: houseData.lowPriceData,
       highAreaData: houseData.highAreaData,
