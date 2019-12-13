@@ -1216,7 +1216,7 @@ Page({
     if (secondSearchData.secondHouseDecorationMap.indexOf(3) >= 0) {
       secondSearchData.secondHouseDecorationMap = [3]
     } else {
-      secondSearchData.secondHouseDecorationMap = [0]
+      secondSearchData.secondHouseDecorationMap = []
     }
     if (secondSearchData.secondHouseTagMap.indexOf(1) >= 0) {
       secondSearchData.secondHouseTagMap = [1]
