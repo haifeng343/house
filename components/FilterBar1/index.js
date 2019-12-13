@@ -63,15 +63,25 @@ Component({
     currentAreaType: 0,
     currentArea: 0,
     currentStation: 0,
-    longBuildAreas: -1, // 0: ≤40㎡, 1: 40-60㎡, 2: 60-80㎡, 3: 80-100㎡, 4: 100-120㎡, 5: ≥120㎡, -1: 不限
-    longFloorTypes: [], // 1: 低楼层, 2: 中楼层, 3: 高楼层
-    longHeadings: [], // 1: 朝东, 2: 朝西, 3: 朝南, 4: 朝北, 10: 南北通透
-    longHouseTags: [], // 1: 精装修, 2: 近地铁, 3: 拎包入住, 4: 随时看房, 5: 集中供暖, 6: 新上房源, 7: 配套齐全, 8: 视频看房
-    longLayouts: [], // 1: 一室, 2: 二室, 3: 三室, 11: 三室及以上, 12: 四室及以上
-    longRentTypes: 0, // 1: 整租, 2: 合租 3: 主卧, 4: 次卧
-    longSortTypes: 0, // 1: 低价优先, 2: 空间优先, 3: 最新发布
-    minPrice: 0, // 最低价
-    maxPrice: 5500, // 最高价 不限99999
+    city: "", //城市名
+    cityId: {}, //城市ID
+    cityJson: "",
+    area: "", // 地点
+    areaId: {}, //地点标识
+    areaType: 0, //地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
+    areaJson: "", //json
+    minPrice: "", //最低价
+    maxPrice: "", //最高价 不限空字符串 "99999"
+    minArea: 0, //最低面积
+    maxArea: 90, //最高面积 上限150
+    secondHouseDecorationMap: [], //装修  1: 毛坯房 2: 普通装修 3: 精装修
+    secondHouseTagMap: [1], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
+    secondHeadingMap: [], //朝向 1: 朝东 2: 朝西 3: 朝南 4: 朝北 10: 南北通透
+    secondFloorTypeMap: [], //楼层 1: 低楼层 2: 中楼层 3: 高楼层
+    secondHouseUseMap: [1], //用途 1: 普通住宅 2: 别墅 3: 其他
+    secondBuildingAgeMap: 0, //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
+    secondLayoutMap: [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
+    secondSortTypeMap: 0, //房源偏好 1: 低总价优先 2: 低单价优先
     advSort: 0,
     rangeCustom: false,
     area: "",
@@ -206,6 +216,20 @@ Component({
   },
   animationFlag: false,
   methods: {
+    handleChangeSecondPrice(event) {
+      const { maxPrice, minPrice } = event.detail;
+      this.changeList.add("maxPrice");
+      this.changeList.add("minPrice");
+      this.setData({ maxPrice, minPrice });
+    },
+
+    handleSizeChange(event) {
+      const minArea = event.detail.min;
+      const maxArea = event.detail.max;
+      this.setData({ minArea, maxArea });
+      this.changeList.add("minArea");
+      this.changeList.add("maxArea");
+    },
     handleSearchInputChange(event) {
       this.setData({ isSearch: true });
       const searchKey = event.detail.value;
