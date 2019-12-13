@@ -55,6 +55,7 @@ Page({
   onHouseShow() {
     let x = app.globalData.monitorSecondSearchData
     let wiwjfilter = house.wiwjSecondScreenParam(2);
+    console.log(wiwjfilter)
     let ljfilter = house.ljSecondScreenParam(2);
     this.setData({
       listSortType: 1,
@@ -83,10 +84,10 @@ Page({
           allArr.sort(util.compareSort("price", "desc"));
         }
         if (e.detail['advSort'] == 2) {
-          allArr.sort(util.compareSort("un", "desc"));
+          allArr.sort(util.compareSort("unit_price", "asc"));
         }
         if (e.detail['advSort'] == 21) {
-          allArr.sort(util.compareSort("area", "asc"));
+          allArr.sort(util.compareSort("unit_price", "desc"));
         }
         if (e.detail['advSort'] == 31) {
           allArr.sort(util.compareSort("area", "desc"));
@@ -844,14 +845,13 @@ Page({
       allCount: this.data.allCount,
       wiwjCount: this.data.wiwjCount,
       lianjiaCount: this.data.lianjiaCount,
-      fangtianxiaCount: this.data.fangtianxiaCount,
-      wbtcCount: this.data.wbtcCount,
     }
     let addData = house.updateSecondMonitorData(data)
     wx.showLoading({
       title: '正在修改监控...',
       mask: true
     });
+    
     monitorApi.updateSecondMonitor(addData).then(res => {
       wx.hideLoading();
       wx.showToast({

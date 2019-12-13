@@ -307,53 +307,60 @@ Page({
           if (city.indexOf("市") === city.length - 1) {
             city = city.substring(0, city.length - 1);
           }
-          this.service
-            .getCityList(city)
-            .then(rslt => {
-              var data = rslt.data[0];
-              let json = JSON.parse(data.json);
-              let searchData = this.data.searchData;
-              searchData.city = data.name;
-              searchData.area = "";
-              searchData.areaType = "";
-              searchData.cityId = {
-                tj: json.tj && json.tj.id,
-                mn: json.mn && json.mn.city_id,
-                zg: json.zg && json.zg.id,
-                xz: json.xz && json.xz.cityId
-              };
-              searchData.ltude = {
-                tj: resp.result.location.lat + "," + resp.result.location.lng,
-                mn: resp.result.location.lat + "," + resp.result.location.lng,
-                zg: resp.result.location.lat + "," + resp.result.location.lng,
-                xz: resp.result.location.lat + "," + resp.result.location.lng
-              };
-              this.setData(
-                {
-                  searchData,
-                  cityText: "手动定位"
-                },
-                () => {
-                  const app = getApp();
-                  app.globalData.searchData = this.data.searchData;
-
-                  //搜索城市历史
-                  let searchCityHistory = {}
-                  searchCityHistory.city = app.globalData.searchData.city
-                  searchCityHistory.cityId = app.globalData.searchData.cityId
-                  searchCityHistory.cityType = app.globalData.searchData.cityType
-                  wx.setStorageSync('searchCityHistory', searchCityHistory)
-
-                  this.getHotPosition(this.data.searchData.city);
-                }
-              );
-            })
-            .catch(error => {
-              console.error(error);
-              this.setData({
-                cityText: "手动定位"
-              });
+          if (city === this.data.searchData.city) {
+            this.setData({
+              cityText: "手动定位"
             });
+            this.getHotPosition(this.data.searchData.city);
+          } else {
+            this.service
+              .getCityList(city)
+              .then(rslt => {
+                var data = rslt.data[0];
+                let json = JSON.parse(data.json);
+                let searchData = this.data.searchData;
+                searchData.city = data.name;
+                searchData.area = "";
+                searchData.areaType = "";
+                searchData.cityId = {
+                  tj: json.tj && json.tj.id,
+                  mn: json.mn && json.mn.city_id,
+                  zg: json.zg && json.zg.id,
+                  xz: json.xz && json.xz.cityId
+                };
+                searchData.ltude = {
+                  tj: resp.result.location.lat + "," + resp.result.location.lng,
+                  mn: resp.result.location.lat + "," + resp.result.location.lng,
+                  zg: resp.result.location.lat + "," + resp.result.location.lng,
+                  xz: resp.result.location.lat + "," + resp.result.location.lng
+                };
+                this.setData(
+                  {
+                    searchData,
+                    cityText: "手动定位"
+                  },
+                  () => {
+                    const app = getApp();
+                    app.globalData.searchData = this.data.searchData;
+
+                    //搜索城市历史
+                    let searchCityHistory = {}
+                    searchCityHistory.city = app.globalData.searchData.city
+                    searchCityHistory.cityId = app.globalData.searchData.cityId
+                    searchCityHistory.cityType = app.globalData.searchData.cityType
+                    wx.setStorageSync('searchCityHistory', searchCityHistory)
+
+                    this.getHotPosition(this.data.searchData.city);
+                  }
+                );
+              })
+              .catch(error => {
+                console.error(error);
+                this.setData({
+                  cityText: "手动定位"
+                });
+              });
+          }
         }
       });
     } else {
@@ -366,9 +373,16 @@ Page({
   calcCityByLocationLong(location) {
     if (location) {
       getLocationInfo(location).then(resp => {
-        const city = resp.result.address_component.city
+        let city = resp.result.address_component.city
         if (city) {
-          if (this.data.searchLongList.length) {
+          if (city.indexOf("市") === city.length - 1) {
+            city = city.substring(0, city.length - 1);
+          }
+          if(city === this.data.searchLongData.city) {
+            this.setData({
+              cityText2: "手动定位"
+            });
+          } else if (this.data.searchLongList.length) {
             this.locationSetData(city, this.data.searchLongList)
           } else {
             this.service.getLongCityList().then(resp => {
@@ -756,7 +770,9 @@ Page({
       searchLongData = { ...searchLongData, ...data }
       secondSearchData = { ...secondSearchData, ...data }
       this.setData({ searchLongData, secondSearchData})
-      this.setSecondPrice(data.city)
+      if (this.data.secondNeedGetPrice) {
+        this.setSecondPrice(data.city)
+      }
     } else if (searchLongCityHistory.city && searchLongCityHistory.city !== "") {
       data.city = searchLongCityHistory.city
       data.cityId = searchLongCityHistory.cityId
@@ -837,7 +853,7 @@ Page({
             secondSearchData.maxPrice = newArray[1]
             app.globalData.secondSearchData.minPrice = newArray[0]
             app.globalData.secondSearchData.maxPrice = newArray[1]
-            this.setData({ secondSearchData })
+            this.setData({ secondSearchData, secondNeedGetPrice: false })
           }
         }
       })
@@ -875,6 +891,11 @@ Page({
     const app = getApp();
     const searchLongData = app.globalData.searchLongData
     const secondSearchData = app.globalData.secondSearchData
+    let data = { ...this.data.secondSearchData }
+    let secondNeedGetPrice = false;
+    if (data.city !== secondSearchData.city) {
+      secondNeedGetPrice =  true
+    } 
     const {
       selectedNumber,
       beginDate,
@@ -923,6 +944,7 @@ Page({
         showPriceBlock: true,
         showLongPriceBlock: true,
         showSecondPriceBlock: true,
+        secondNeedGetPrice: secondNeedGetPrice,
         beginDate: fecha.format(
           fecha.parse(searchData.beginDate, "YYYY-MM-DD"),
           "MM[月]DD[日]"

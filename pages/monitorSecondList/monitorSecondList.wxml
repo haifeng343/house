@@ -65,7 +65,7 @@
 
 <stopDialog bind:stopEvent="getstopEventEvent" bind:stopConfrimEvent="getstopConfirmEventEvent" startTimeName="{{startTimeName}}" taskTime="{{taskTime}}" fee="{{fee}}" totalFee="{{totalFee}}" style="display:{{stopDisplay}}"></stopDialog>
 
-<updateLongDialog bind:updateCancelEvent="getUpdateCancelEvent" bind:updateConfrimEvent="getUpdateConfrimEvent" updateData="{{updateData}}" defalutData="{{defalutData}}" style="display:{{updateMonitorDisplay}}"></updateLongDialog>
+<updateLongDialog bind:updateCancelEvent="getUpdateCancelEvent" bind:updateConfrimEvent="getUpdateConfrimEvent" updateData="{{updateData}}" defalutData="{{defalutData}}" rentType="{{3}}" style="display:{{updateMonitorDisplay}}"></updateLongDialog>
 
 <monitorEnoughDialog dialogTitle="{{dialogTitle}}" dialogText="{{dialogText}}" dialogBtn="{{dialogBtn}}" rentType="{{3}}"  style="display:{{monitorenoughDisplay}}" list="{{enoughList}}" bind:enoughEvent="getEnoughEvent" paddingBottom="1"></monitorEnoughDialog>
 
