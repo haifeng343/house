@@ -861,31 +861,6 @@ Component({
     },
 
     handleSubmit() {
-      if (
-        Number.isNaN(this.data.minPrice) ||
-        this.data.minPrice < 0 ||
-        this.data.minPrice > 10000 ||
-        this.data.minPrice !== ~~this.data.minPrice
-      ) {
-        wx.showToast({ title: "请输入正确的最低价", icon: "none" });
-        return;
-      }
-
-      if (
-        Number.isNaN(this.data.minPrice) ||
-        this.data.maxPrice < 100 ||
-        this.data.maxPrice > 10000 ||
-        this.data.maxPrice !== ~~this.data.maxPrice
-      ) {
-        wx.showToast({ title: "请输入正确的最高价", icon: "none" });
-        return;
-      }
-
-      if (this.data.minPrice >= this.data.maxPrice) {
-        wx.showToast({ title: "最高价必须高于最低价", icon: "none" });
-        return;
-      }
-
       this.setData({
         showRightPanel: false,
         showTopPanel: false,
