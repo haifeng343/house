@@ -24,8 +24,6 @@ Page({
     lianjiaLowPriceData: {},
     wiwjCount: 0,
     lianjiaCount: 0,
-    fangtianxiaCount: 0,
-    wbtcCount: 0,
     wiwjFilterData: [],
     lianjiaFilterData: [],
     rowData: [],
@@ -38,8 +36,6 @@ Page({
     monitorBottom: false,
     wiwjfilter: {},
     ljfilter: [],
-    ftxfilter: {},
-    tcfilter: {},
     secondSearchData: {},
     positionData: [],
     editFlag: false,
@@ -47,10 +43,8 @@ Page({
     indexArr: [],
   },
   onLoad: function(options) {
-    //1品牌中介，2个人房源
     let x = app.globalData.secondSearchData;
     let wiwjfilter = house.wiwjSecondScreenParam(1);
-    console.log(wiwjfilter)
     let ljfilter = house.ljSecondScreenParam(1);
     new positionService().getSearchHoset(x.city, 1).then(resp => {
       const positionData = resp.data;
@@ -59,11 +53,11 @@ Page({
       });
     });
     this.setData({
-        listSortType: 1,
-        wiwjfilter,
-        ljfilter,
-        secondSearchData: Object.assign({}, x),
-        longSortTypes: x.longSortTypes //1: 低价优先, 2: 空间优先, 3: 最新发布
+      listSortType: 1,
+      wiwjfilter,
+      ljfilter,
+      secondSearchData: Object.assign({}, x),
+      secondSortType: x.secondSortTypeMap //1: 低总价优先 2: 低单价优先
       },
       () => {
         this.getAllBrandData();
@@ -332,14 +326,11 @@ Page({
   },
   // 跳转统计详情
   goToDetail() {
-    console.log(111)
     let app = getApp();
     app.globalData.houseListData = {
       allCount: this.data.allCount,
       wiwjCount: this.data.wiwjCount,
       lianjiaCount: this.data.lianjiaCount,
-      fangtianxiaCount: this.data.fangtianxiaCount,
-      wbtcCount: this.data.wbtcCount,
       showCount: this.data.allOriginalData.length,
       averagePrice: this.data.averagePrice,
       lowPrice: this.data.lowPrice,

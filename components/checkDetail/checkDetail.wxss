@@ -7,9 +7,6 @@
   z-index: 33;
   justify-content: space-between;
 }
-.m1{
-  text-align: center;
-}
 .house_detail view {color: #1d1d1d;}
 .house_detail .select{text-align: center}
 .house_detail .check_detail {color: #f1612a;display: flex;align-items: center;justify-content: flex-end;}
