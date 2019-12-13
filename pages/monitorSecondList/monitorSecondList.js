@@ -337,21 +337,19 @@ Page({
         return;
       }
       let enoughList = [];
-      if (monitorDetail.houseSource == 1) {
-        if (monitorCount.wiwjTotal > -1) {
-          enoughList.push({
-            key: 'wiwj',
-            name: '我爱我家',
-            value: monitorCount.wiwjTotal
-          })
-        }
-        if (monitorCount.ljTotal > -1) {
-          enoughList.push({
-            key: 'lj',
-            name: '贝壳',
-            value: monitorCount.ljTotal
-          })
-        }
+      if (monitorCount.wiwjTotal > -1) {
+        enoughList.push({
+          key: 'wiwj',
+          name: '我爱我家',
+          value: monitorCount.wiwjTotal
+        })
+      }
+      if (monitorCount.ljTotal > -1) {
+        enoughList.push({
+          key: 'lj',
+          name: '贝壳',
+          value: monitorCount.ljTotal
+        })
       }
       enoughList.sort(util.compareSort('value', 'desc'));
       this.setData({

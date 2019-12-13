@@ -2108,14 +2108,14 @@ const getBrandSecondHouseData = data => {
       price
     }) => sum + price, 0) / allData.length :
     0;
-  //平均价
-  let unitPrice =
+  //单价平均价
+  let averageunitPrice =
     allData.length > 0 ?
     allData.reduce((sum, {
         unit_price
     }) => sum + unit_price, 0) / allData.length :
     0;
-  console.log(unitPrice+'米/平方111111111111111111')
+  console.log(averageunitPrice+'米/平方111111111111111111')
   let sortArr = [...allData];
   let areasortArr = [...allData];
   let wiwjSortArr = [...wiwjFilterData];
@@ -2175,7 +2175,7 @@ const getBrandSecondHouseData = data => {
     allCount,
     averagePrice: parseInt(average),
     lowPrice,
-    unitPrice,
+    averageunitPrice: parseInt(averageunitPrice),
     lowPriceData,
     highAreaData,
     wiwjLowPriceData,

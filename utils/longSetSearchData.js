@@ -1,7 +1,7 @@
 import Http from "./http";
 import { getLocationInfo } from "./map";
 
-const getPositionInfoByName = (positionKey, cityName, type) => {
+const getPositionInfoByName = (positionKey, cityName, type=1) => {
   return Http.post("/long/positionDetail.json", {
     positionKey,
     cityName,
