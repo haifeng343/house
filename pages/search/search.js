@@ -1190,7 +1190,6 @@ Page({
   },
   //二手房面积
   handleSecondPriceChange(e) {
-    console.log(e.detail)
     let secondSearchData = { ...this.data.secondSearchData }
     secondSearchData.minArea = e.detail.min
     secondSearchData.maxArea = e.detail.max
