@@ -3533,7 +3533,7 @@ const wiwjSecondScreenParam = type => {
   }
   if (areaType == 30) {
     if (searchData.areaId.wiwj) {
-      obj.communityid = searchData.areaId.wiwj.id;
+      obj.conmmunityid = searchData.areaId.wiwj.id;
       obj.zn = searchData.areaId.wiwj.name;
     } else {
       keysword = true;

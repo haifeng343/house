@@ -195,6 +195,7 @@ App({
       secondBuildingAgeMap: 0, //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
       secondLayoutMap: [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
       secondSortTypeMap: 0, //房源偏好 1: 低总价优先 2: 低单价优先
+      advSort: 0,//1 价格从低到高 2单价从低到高 11 价格从高到低 21 单价从高到低 31面积从高到底
     },
     monitorSecondSearchData: {
       city: "", //城市名
@@ -216,6 +217,7 @@ App({
       secondBuildingAgeMap: 0, //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
       secondLayoutMap: [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
       secondSortTypeMap: 0, //房源偏好 1: 低总价优先 2: 低单价优先
+      advSort: 0,//1 价格从低到高 2单价从低到高 11 价格从高到低 21 单价从高到低 31面积从高到底
     },
     monitorDefaultSearchSecondData: {
       city: "", //城市名
@@ -237,6 +239,7 @@ App({
       secondBuildingAgeMap: 0, //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
       secondLayoutMap: [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
       secondSortTypeMap: 0, //房源偏好 1: 低总价优先 2: 低单价优先
+      advSort: 0,//1 价格从低到高 2单价从低到高 11 价格从高到低 21 单价从高到低 31面积从高到底
     },
     hotPosition: []
   }
