@@ -5,7 +5,7 @@ Component({
    */
   properties: {
     houseType:{
-      type: Number //1：短租 2：长租
+      type: Number //1：短租 2：长租 2:二手房
     },
     sortType:{
       type:Number
