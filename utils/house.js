@@ -2134,7 +2134,7 @@ const getBrandSecondHouseData = data => {
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("price", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
-  let y = data.type == 1 ? app.globalData.searchLongData : app.globalData.monitorSearchLongData;
+  let y = data.type == 1 ? app.globalData.secondSearchData : app.globalData.monitorSecondSearchData;
   if (y.advSort == 1) {
     let allArr = [...allData];
     allArr.sort(util.compareSort("price", "asc"));
@@ -2685,7 +2685,7 @@ const getMonitorSecondHouseData = (list, mSelect) => {
   sortArr.sort(util.compareSort("price", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
 
-  let y = app.globalData.monitorSearchLongData;
+  let y = app.globalData.monitorSecondSearchData;
   if (y.advSort == 1) {
     let allArr = [...allData];
     allArr.sort(util.compareSort("price", "asc"));

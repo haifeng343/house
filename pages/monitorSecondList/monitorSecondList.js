@@ -54,13 +54,12 @@ Page({
   },
   onHouseShow() {
     let x = app.globalData.monitorSecondSearchData
-    let wiwjfilter = house.wiwjScreenParam(2);
-    let ljfilter = house.ljScreenParam(2);
+    let wiwjfilter = house.wiwjSecondScreenParam(2);
+    let ljfilter = house.ljSecondScreenParam(2);
     this.setData({
       listSortType: 1,
       wiwjfilter,
       ljfilter,
-      longSortTypes: x.longSortTypes, //1: 低价优先, 2: 空间优先, 3: 最新发布
       mSelect: 1
     }, () => {
         this.getAllBrandData();
@@ -275,10 +274,10 @@ Page({
         secondSortTypeMap: monitorDetail.sortType || 0, //房源偏好 1: 低总价优先 2: 低单价优先
       }
       let x = app.globalData.monitorSecondSearchData
-      // new positionService().getSearchHoset(x.city, 3).then(resp => {
-      //   const positionData = resp.data;
-      //   this.setData({ positionData });
-      // });
+      new positionService().getSearchHoset(x.city, 1).then(resp => {
+        const positionData = resp.data;
+        this.setData({ positionData });
+      });
       if (!monitorCount || !monitorCount.allTotal || monitorCount.allTotal == 0 || !houseList || houseList.length == 0) {
         this.setData({
           countFlag: 0,
@@ -379,8 +378,8 @@ Page({
   async getAllBrandData() {
     wx.removeStorageSync('fddShortRentBlock');
     let enoughList = [];
-    let wiwjDataObj = await house.getWiwjData(2, this.data.wiwjfilter);
-    let lianjiaDataObj = await house.getLianjiaData(2, this.data.ljfilter)
+    let wiwjDataObj = await house.getSecondWiwjData(2, this.data.wiwjfilter);
+    let lianjiaDataObj = await house.getSecondLianjiaData(2, this.data.ljfilter)
     if (wiwjDataObj.network && lianjiaDataObj.network) {
       this.setData({
         loadingDisplay: 'none',
@@ -407,7 +406,7 @@ Page({
       })
     }
     enoughList.sort(util.compareSort('value', 'desc'));
-    let houseData = house.getBrandHouseData({
+    let houseData = house.getBrandSecondHouseData({
       wiwjCount: wiwjDataObj.wiwjCount,
       lianjiaCount: lianjiaDataObj.lianjiaCount,
       wiwjData,
