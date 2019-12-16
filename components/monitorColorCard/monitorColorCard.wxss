@@ -96,15 +96,18 @@
   width: 304rpx;
   height: 80rpx;
   overflow: hidden;
+  line-height: 66rpx;
 }
 .monitor_card .card_address .type{
   font-size:24rpx;
   border: 1px solid #FFFFFF;
-  padding: 6rpx 14rpx;
+  padding: 0 14rpx;
   margin-right: 10rpx;
   border-radius: 22rpx;
   margin-top: 10rpx;
-  display: inline-block
+  display: inline-block;
+  height: 44rpx;
+  line-height: 44rpx;
 }
 .monitor_card .card_budget{
   flex: 1;

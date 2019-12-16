@@ -3571,7 +3571,7 @@ const wiwjSecondScreenParam = type => {
   }
   if (areaType == 60) {
     if (searchData.areaId.nearby) {
-      obj.location = searchData.areaId.latitude+','+searchData.areaId.longitude;
+      obj.location = searchData.areaId.longitude + ',' + searchData.areaId.latitude;
       obj.nearby = searchData.areaId.nearby;
     }
   }

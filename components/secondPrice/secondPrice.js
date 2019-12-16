@@ -64,6 +64,7 @@ Component({
     },
     //二手房更换价格
     changePrice() {
+      this.triggerEvent("focus", true)
       let minPrice = +this.data.min
       let maxPrice = +this.data.max
       if (minPrice && maxPrice) {
@@ -84,5 +85,9 @@ Component({
         }
       }
     },
+    bindfocus() {
+      console.log('focus')
+      this.triggerEvent("focus", false)
+    }
   }
 })
