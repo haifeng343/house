@@ -49,13 +49,13 @@ Component({
 
     //二手房最小价格
     changeMinPrice(e) {
-      let min = e.detail.value.replace(/\D/g, '')
+      let min = (+e.detail.value.replace(/\D/g, '')) + ''
       this.setData({ min })
       this.triggerEvent("changeSecondPrice", { minPrice:min, maxPrice:this.data.max })
     },
     //二手房最大价格
     changeMaxPrice(e) {
-      let max = e.detail.value.replace(/\D/g, '')
+      let max = (+e.detail.value.replace(/\D/g, '')) + ''
       if(max === '0') {
         max = ''
       }
