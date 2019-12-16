@@ -2115,7 +2115,6 @@ const getBrandSecondHouseData = data => {
         unit_price
     }) => sum + unit_price, 0) / allData.length :
     0;
-  console.log(averageunitPrice+'米/平方111111111111111111')
   let sortArr = [...allData];
   let areasortArr = [...allData];
   let wiwjSortArr = [...wiwjFilterData];
@@ -2678,7 +2677,6 @@ const getMonitorSecondHouseData = (list, mSelect) => {
         unit_price
       }) => sum + unit_price, 0) / allData.length :
       0;
-  console.log(averageunitPrice)
   let sortArr = [...allData];
   let areasortArr = [...allData];
   let wiwjSortArr = [...wiwjFilterData];
@@ -3690,20 +3688,31 @@ const ljSecondScreenParam = type => {
   //区域
   if (areaType == 10) {
     if (searchData.areaId.lj) {
-      condition = searchData.areaId.lj + "/";
+      condition += "d"+searchData.areaId.lj;
     } else {
       keysword = true;
     }
   }
-  if (areaType == 20 || areaType == 30) {
+  if (areaType == 20) {
     if (searchData.areaId.lj) {
-      condition = searchData.areaId.lj;
+      condition += "b"+searchData.areaId.lj;
+    } else {
+      keysword = true;
+    }
+  }
+  if (areaType == 30){
+    if (searchData.areaId.lj) {
+      condition += "c"+searchData.areaId.lj;
     } else {
       keysword = true;
     }
   }
   if (areaType == 40) {
-    keysword = true;
+    if (searchData.areaId.lj) {
+      condition += "li"+searchData.areaId.lj
+    }else{
+      keysword = true;
+    }
   }
   if (areaType == 50) {
     if (searchData.areaId.lj && searchData.areaId.lj.id) {
