@@ -375,9 +375,7 @@ Page({
       lowPrice: this.data.lowPrice,
       allCount: this.data.allCount,
       wiwjCount: this.data.wiwjCount,
-      lianjiaCount: this.data.lianjiaCount,
-      fangtianxiaCount: this.data.fangtianxiaCount,
-      wbtcCount: this.data.wbtcCount,
+      lianjiaCount: this.data.lianjiaCount
     }
     let addData = house.addSecondMonitorData(data)
     wx.showLoading({
