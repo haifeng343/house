@@ -834,8 +834,10 @@ Component({
     },
 
     handleSubmit() {
-      var secondPrice = this.selectComponent("#secondPrice");
-      secondPrice.changePrice();
+      var secondPrice = this.selectComponent("#secondPrice") || ''
+      if (secondPrice) {
+        secondPrice.changePrice()
+      }
       this.setData({
         showRightPanel: false,
         showTopPanel: false,

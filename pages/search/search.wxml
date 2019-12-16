@@ -178,7 +178,7 @@
                     </view>
                     <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
                         <view class='title icon_2'>
-                            <text>面积(平米): </text>
+                            <text>面积(㎡): </text>
                             <block wx:if="{{secondSearchData.minArea === 0 && secondSearchData.maxArea === 151}}">
                                 <text style="color:#F1612A">不限</text>
                             </block>
