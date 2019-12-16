@@ -31,6 +31,24 @@ var rentType = function (type) {
   }
 }
 
+var secondLayout = function (type) {
+  if (type ==1) {
+    return '一室'
+  }
+  if (type == 2) {
+    return '二室'
+  }
+  if (type == 3) {
+    return '三室'
+  }
+  if (type == 4) {
+    return '四室'
+  }
+  if (type == 0) {
+    return '四室以上'
+  }
+}
+
 var arrCompare=function(arr1,arr2){
   if (JSON.stringify(arr1) == JSON.stringify(arr2)){
     return 1
@@ -42,5 +60,6 @@ module.exports = {
   xzCoverImage: xzCoverImage,
   zgCoverImage: zgCoverImage,
   rentType: rentType,
-  arrCompare: arrCompare
+  arrCompare: arrCompare,
+  secondLayout: secondLayout
 }
