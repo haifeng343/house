@@ -155,7 +155,7 @@
                         <view class='icon-font uniE92{{spread?"5":"6"}}'></view>
                     </view>
                 </scroll-view>
-                <scroll-view scroll-y class="search-content-main {{tabIndex!=3?'hidden':''}}" bindtouchstart="bindtouchstartsort" bindtouchend="bindtouchendsort">
+                <scroll-view scroll-y="{{secondFocus}}" class="search-content-main {{tabIndex!=3?'hidden':''}}" bindtouchstart="bindtouchstartsort" bindtouchend="bindtouchendsort">
                     <view class='search_item'>
                         <view class='position' bindtap='goCitySelectLong'>
                             {{secondSearchData.city}}
@@ -174,7 +174,7 @@
                             <text class="icon-font uniE930 {{checkHouseType.checkHouseType(secondSearchData.secondHouseUseMap,1)?'active':''}}"></text>
                             普通住宅
                         </view>
-                        <secondPrice minPrice="{{secondSearchData.minPrice}}" maxPrice="{{secondSearchData.maxPrice}}" bind:changeSecondPrice="changeSecondPrice" />
+                        <secondPrice minPrice="{{secondSearchData.minPrice}}" maxPrice="{{secondSearchData.maxPrice}}" bind:changeSecondPrice="changeSecondPrice" bind:focus="secondFocus" />
                     </view>
                     <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
                         <view class='title icon_2'>

@@ -21,7 +21,7 @@ export default JSON.stringify({
         icon: iconEnum["red"],
         resetList: [
           ["type", "longLayouts"],
-          ["filter", "longBuildAreas"]
+          ["type", "longBuildAreas"]
         ],
         list: [
           {
@@ -39,6 +39,7 @@ export default JSON.stringify({
         multi: true,
         field: "longLayouts",
         showType: [1, 2, 3, 4],
+        defaultValue: [],
         icon: iconEnum["thistle"],
         list: [
           {
@@ -66,35 +67,12 @@ export default JSON.stringify({
             showType: [2, 3, 4]
           }
         ]
-      }
-    ],
-    filter: [
-      {
-        title: "优先级",
-        field: "longSortTypes",
-        cancelable: true,
-        defaultValue: 0,
-        icon: iconEnum["red"],
-        list: [
-          {
-            label: "低价优先",
-            value: 1
-          },
-          {
-            label: "空间优先",
-            value: 2
-          },
-          {
-            label: "最新发布",
-            value: 3
-          }
-        ]
       },
       {
         title: "面积",
         field: "longBuildAreas",
         showType: [1],
-        defaultValue: -1,
+        defaultValue: -2,
         icon: iconEnum["wheat"],
         list: [
           {
@@ -126,12 +104,37 @@ export default JSON.stringify({
             value: 5
           }
         ]
+      }
+    ],
+    filter: [
+      {
+        title: "优先级",
+        field: "longSortTypes",
+        cancelable: true,
+        defaultValue: 0,
+        icon: iconEnum["red"],
+        list: [
+          {
+            label: "低价优先",
+            value: 1
+          },
+          {
+            label: "空间优先",
+            value: 2
+          },
+          {
+            label: "最新发布",
+            value: 3
+          }
+        ]
       },
+
       {
         title: "楼层",
         multi: true,
         field: "longFloorTypes",
         icon: iconEnum["thistle"],
+        defaultValue: [],
         list: [
           {
             label: "低楼层",
@@ -152,6 +155,7 @@ export default JSON.stringify({
         field: "longHeadings",
         multi: true,
         icon: iconEnum["wheat"],
+        defaultValue: [],
         list: [
           {
             label: "朝东",
@@ -180,6 +184,7 @@ export default JSON.stringify({
         multi: true,
         field: "longHouseTags",
         icon: iconEnum["cadetblue"],
+        defaultValue: [],
         list: [
           {
             label: "精装修",
@@ -268,6 +273,7 @@ export default JSON.stringify({
         multi: true,
         field: "longLayouts",
         icon: iconEnum["thistle"],
+        defaultValue: [],
         list: [
           {
             label: "一室",
@@ -314,6 +320,7 @@ export default JSON.stringify({
         title: "朝向",
         multi: true,
         field: "longHeadings",
+        defaultValue: [],
         icon: iconEnum["wheat"],
         list: [
           {
@@ -342,6 +349,7 @@ export default JSON.stringify({
         title: "房源亮点",
         multi: true,
         field: "longHouseTags",
+        defaultValue: [],
         icon: iconEnum["cadetblue"],
         list: [
           {

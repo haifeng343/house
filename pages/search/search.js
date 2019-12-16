@@ -122,7 +122,8 @@ Page({
     },
     searchLongList: [],
     needOnShow: false,
-    tabIndex: 1 //1短租，2长租，3二手房
+    tabIndex: 1, //1短租，2长租，3二手房
+    secondFocus: true
   },
 
   service: new searchService(),
@@ -1186,6 +1187,14 @@ Page({
     app.globalData.secondSearchData.minArea = e.detail.min
     app.globalData.secondSearchData.maxArea = e.detail.max
     this.setData({ secondSearchData })
+  },
+  secondFocus(temp = false) {
+    console.log(temp)
+    if(temp) {
+      this.setData({ secondFocus: temp.detail || false })
+    } else {
+      this.setData({ secondFocus: false })
+    }
   },
   init() {
     this.getHouseTypeAndEqu();

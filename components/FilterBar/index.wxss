@@ -129,15 +129,21 @@
 }
 
 .filter-list {
-  display: flex;
-  flex-direction: column;
   padding: 28rpx;
+}
+
+.type-panel .filter-list {
+  height: 488rpx;
+  overflow: scroll;
+  width: calc(100% + 48rpx);
+  padding-bottom: 0;
 }
 
 .filter-item {
   display: flex;
   flex-direction: column;
   margin-bottom: 48rpx;
+  flex: 0 0 auto;
 }
 
 .filter-title {
@@ -146,6 +152,7 @@
   font-weight: 500;
   position: relative;
   padding-left: 40rpx;
+  flex: 0 0 auto;
 }
 
 .option-list {
@@ -154,6 +161,7 @@
   flex-wrap: wrap;
   margin-right: -24rpx;
   margin-top: 20rpx;
+  flex: 0 0 auto;
 }
 
 .option-item {
