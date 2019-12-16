@@ -577,13 +577,10 @@ Component({
         .filter(key => typeof outsideData[key] !== "undefined")
         .filter(key => insideData.map.filter.find(item => item.field === key))
         .forEach(key => {
-          if (Array.isArray(outsideData[key])) {
-            assginData[key] = Object.assign([], outsideData[key]);
-          } else if (typeof outsideData[key] === "object") {
-            assginData[key] = Object.assign({}, outsideData[key]);
-          } else {
-            assginData[key] = outsideData[key];
-          }
+          this.changeList.add(key);
+          assginData[key] = this.data.map.filter.find(
+            item => item.field === key
+          ).defaultValue;
         });
 
       Object.keys(assginData).forEach(key => {
@@ -963,7 +960,7 @@ Component({
     handleSelectSearchResult(event) {
       const { item } = event.currentTarget.dataset;
 
-      chooseSlectData(item,true);
+      chooseSlectData(item, true);
 
       const { city } = this.data.data;
 
