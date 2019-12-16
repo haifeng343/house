@@ -28,7 +28,7 @@
       </view>
     </view>
     <view class="type-panel" wx:if="{{currentPanel === 'type'}}">
-      <view class="filter-list">
+      <scroll-view scroll-y class="filter-list">
         <block wx:for="{{map.type}}" wx:key="{{item.title}}">
           <view class="filter-item" wx:if="{{!item.showType || tools.includes(item.showType, longRentTypes)}}">
             <view class="filter-title">
@@ -44,7 +44,7 @@
             </view>
           </view>
         </block>
-      </view>
+      </scroll-view>
       <view class="button-wrapper">
         <view class="button button-submit" bindtap="handleSubmit">查看房源</view>
       </view>
