@@ -358,6 +358,15 @@ Component({
                     : max
               });
             }
+
+            wx.nextTick(() => {
+              const { minValue, maxValue } = this.data;
+
+              this.triggerEvent("onChange", {
+                min: minValue,
+                max: maxValue
+              });
+            });
           });
 
         const xStream = this.touchendStream.pipe(
