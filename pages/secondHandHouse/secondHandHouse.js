@@ -209,11 +209,11 @@ Page({
     }, 300);
   },
   getIndexLongHouseData() {
-    Http.get("/long/indexHose.json").then(resp => {
-      const hourLongMoney = resp.data.hourMoney || 2;
-      wx.setStorageSync("hourLongMoney", hourLongMoney);
+    Http.get("/second/indexHouse.json").then(resp => {
+      const hourSecondMoney = resp.data.hourMoney || 1;
+      wx.setStorageSync("hourSecondMoney", hourSecondMoney);
       this.setData({
-        fee: hourLongMoney
+        fee: hourSecondMoney
       })
     });
   },
