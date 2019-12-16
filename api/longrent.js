@@ -341,6 +341,11 @@ const lianjia = {
   },
   // type: bizcircle（商圈）， station（地铁站）， resblock（小区）， district（行政区）
   rentTip: function({ city, keywords }) {
+    // 链家一个字不让搜
+    if (keywords.length < 2) {
+      reject(false);
+      return;
+    }
     let queryUrl = `city_id=${city}&channel=rent&query=${encodeURIComponent(
       keywords
     )}`;
@@ -440,6 +445,11 @@ const lianjia = {
   // type: bizcircle（商圈）， station（地铁站）， resblock（小区）， district（行政区）
   ershouTip: function ({ city, keywords }) {
     return new Promise((resolve, reject) => {
+      // 链家一个字不让搜
+      if (keywords.length < 2) {
+        reject(false);
+        return
+      }
       wx.request({
         url: api_address + "/house/tip/ershou",
         method: "POST",
@@ -456,7 +466,6 @@ const lianjia = {
         },
         fail: res => {
           reject(false);
-          throwErrorResponse();
         }
       });
     });
@@ -495,7 +504,6 @@ const fangtianxia = {
         },
         fail: res => {
           reject(false);
-          throwErrorResponse();
         }
       });
     });
@@ -519,7 +527,6 @@ const fangtianxia = {
         },
         fail: res => {
           reject(false);
-          throwErrorResponse();
         }
       });
     });
@@ -703,7 +710,6 @@ const wbtc = {
         },
         fail: res => {
           reject(false);
-          throwErrorResponse();
         }
       });
     });

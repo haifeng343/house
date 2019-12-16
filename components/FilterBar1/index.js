@@ -1,12 +1,12 @@
 import FilterMap from "./FilterMap";
-import { chooseArea } from "../../utils/longSetSearchData";
 const longRentTip = require("../../utils/longRentTip");
 import {
   longSetSearchData,
-  chooseSlectData
+  chooseSlectData,
+  chooseArea,
+  isShowNearby
 } from "../../utils/longSetSearchData";
 import getHeightStrArray from "../../utils/getHeightStrArray";
-import { isShowNearby } from "../../utils/longSetSearchData.js";
 
 const areaKey = ["area", "areaId", "areaJson", "areaType"];
 
@@ -102,7 +102,6 @@ Component({
 
           const insideData = this.data;
 
-          const { chooseType } = outsideData;
 
           const map = JSON.parse(FilterMap);
 
@@ -233,66 +232,38 @@ Component({
     handleSearchInputChange(event) {
       this.setData({ isSearch: true });
       const searchKey = event.detail.value;
-      const { cityId, chooseType } = this.data.data;
+      const { cityId } = this.data.data;
       this.setData({ searchKey });
       if (this.timer) {
         clearTimeout(this.timer);
       }
       this.timer = setTimeout(() => {
         this.promiseVersion += 1;
-        if (chooseType === 1) {
-          longRentTip
-            .getSecondIntermediaryData(cityId, searchKey, this.promiseVersion)
-            .then(resp => {
-              const { result, promiseVersion } = resp;
-              if (this.promiseVersion === promiseVersion) {
-                this.setData({
-                  searchResultList: result.map(item =>
-                    Object.assign(
-                      {
-                        label: getHeightStrArray(item.name, searchKey),
-                        tag: areaTagMap[item.type]
-                      },
-                      item
-                    )
+        longRentTip
+          .getSecondIntermediaryData(cityId, searchKey, this.promiseVersion)
+          .then(resp => {
+            const { result, promiseVersion } = resp;
+            if (this.promiseVersion === promiseVersion) {
+              this.setData({
+                searchResultList: result.map(item =>
+                  Object.assign(
+                    {
+                      label: getHeightStrArray(item.name, searchKey),
+                      tag: areaTagMap[item.type]
+                    },
+                    item
                   )
-                });
-              }
-            })
-            .catch(error => {
-              console.error(error);
-              wx.showToast({
-                title: "网络异常",
-                icon: "none"
+                )
               });
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            wx.showToast({
+              title: "网络异常",
+              icon: "none"
             });
-        } else {
-          longRentTip
-            .getPersonalData(cityId, searchKey, this.promiseVersion)
-            .then(resp => {
-              const { result, promiseVersion } = resp;
-              if (this.promiseVersion === promiseVersion) {
-                this.setData({
-                  searchResultList: result.map(item =>
-                    Object.assign(
-                      {
-                        label: item.name,
-                        tag: areaTagMap[item.type]
-                      },
-                      item
-                    )
-                  )
-                });
-              }
-            })
-            .catch(error => {
-              console.error(error);
-              wx.showToast({
-                title: "网络异常",
-                icon: "none"
-              });
-            });
-        }
+          });
       }, 200);
     },
     handleClearSearchKey() {
@@ -761,7 +732,7 @@ Component({
           chooseArea(
             areaItem.value,
             insideData.city,
-            insideData.chooseType,
+            1,
             true
           ).then(resp => {
             Object.keys(resp).forEach(key => this.changeList.add(key));
@@ -852,7 +823,7 @@ Component({
         chooseArea(
           stationItem.value,
           insideData.city,
-          insideData.chooseType,
+          1,
           true
         ).then(resp => {
           Object.keys(resp).forEach(key => this.changeList.add(key));
@@ -908,10 +879,9 @@ Component({
 
       const { areaList } = insideData;
 
-      const { city, chooseType } = outsideData;
+      const { city, } = outsideData;
 
-      const history =
-        wx.getStorageSync("longSearchHistory_" + city + "_" + chooseType) || [];
+      const history = wx.getStorageSync("searchSecondHistory_" + city) || [];
       if (outsideData.areaJson.includes('"isHistory":true')) {
         // 搜索结果
         currentAreaType = 3;
@@ -991,9 +961,9 @@ Component({
 
       chooseSlectData(item,true);
 
-      const { city, chooseType } = this.data.data;
+      const { city } = this.data.data;
 
-      longSetSearchData(item, city, chooseType);
+      longSetSearchData(item, city, undefined, true);
 
       this.getAreaData();
 

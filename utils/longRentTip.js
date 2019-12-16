@@ -63,13 +63,13 @@ const matchSubway = (name, matchName) => {
 };
 
 //匹配小区名
-const matchXiaoqu = (name, matchName) => {
+const matchXiaoqu = (name, matchName, num = 0.6) => {
   var st1 = minWordsSet(name);
   var st2 = minWordsSet(matchName);
   var sameWords = sameWordsCount(st1, st2);
   var minWords = Math.min(st1.size, st2.size);
   var wordsRate = sameWords / minWords;
-  if (wordsRate >= 0.6) {
+  if (wordsRate >= num) {
     return true;
   }
   return false;
@@ -90,7 +90,7 @@ function sameWordsCount(set1 = "", set2 = "") {
   return count;
 }
 
-function returnData(wiwjData, lianjiaData, keywords) {
+function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
   var requestData = { area: [], buiness: [], xiaoqu: [], line: [], subway: [] }; //地点、商圈、小区、线路、地铁站
   if (!!wiwjData && wiwjData.data && wiwjData.data instanceof Array) {
     var length1 = wiwjData.data.length < 15 ? wiwjData.data.length : 15;
@@ -132,101 +132,266 @@ function returnData(wiwjData, lianjiaData, keywords) {
       }
     }
   }
-  if (!!lianjiaData && lianjiaData.data && lianjiaData.data instanceof Array) {
-    var length2 = lianjiaData.data.length < 15 ? lianjiaData.data.length : 15;
-    for (var index = 0; index < length2; index++) {
-      if (lianjiaData.data[index].type === "district") {
-        var isMatch = false;
-        for (var temp = 0; temp < requestData.area.length; temp++) {
-          if (
-            matchArea(requestData.area[temp].name, lianjiaData.data[index].name)
-          ) {
-            isMatch = true;
-            if (requestData.area[temp].wiwj) {
-              requestData.area[temp].lianjia = lianjiaData.data[index];
+  if(!isSecond) {
+    if (!!lianjiaData && lianjiaData.data && lianjiaData.data instanceof Array) {
+      var length2 = lianjiaData.data.length < 15 ? lianjiaData.data.length : 15;
+      for (var index = 0; index < length2; index++) {
+        if (lianjiaData.data[index].type === "district") {
+          var isMatch = false;
+          for (var temp = 0; temp < requestData.area.length; temp++) {
+            if (
+              matchArea(requestData.area[temp].name, lianjiaData.data[index].name)
+            ) {
+              isMatch = true;
+              if (requestData.area[temp].wiwj) {
+                requestData.area[temp].lj = lianjiaData.data[index];
+              }
+              break;
             }
-            break;
+          }
+          if (!isMatch) {
+            requestData.area.push({
+              name: lianjiaData.data[index].name,
+              lianjia: lianjiaData.data[index],
+              type: 10
+            });
           }
         }
-        if (!isMatch) {
-          requestData.area.push({
-            name: lianjiaData.data[index].name,
-            lianjia: lianjiaData.data[index],
-            type: 10
-          });
-        }
-      }
-      if (lianjiaData.data[index].type === "bizcircle") {
-        var isMatch = false;
-        for (var temp = 0; temp < requestData.buiness.length; temp++) {
-          if (requestData.buiness[temp].name === lianjiaData.data[index].name) {
-            isMatch = true;
-            if (requestData.buiness[temp].wiwj) {
-              requestData.buiness[temp].lianjia = lianjiaData.data[index];
+        if (lianjiaData.data[index].type === "bizcircle") {
+          var isMatch = false;
+          for (var temp = 0; temp < requestData.buiness.length; temp++) {
+            if (requestData.buiness[temp].name === lianjiaData.data[index].name) {
+              isMatch = true;
+              if (requestData.buiness[temp].wiwj) {
+                requestData.buiness[temp].lj = lianjiaData.data[index];
+              }
+              break;
             }
-            break;
+          }
+          if (!isMatch) {
+            requestData.buiness.push({
+              name: lianjiaData.data[index].name,
+              lianjia: lianjiaData.data[index],
+              type: 20
+            });
           }
         }
-        if (!isMatch) {
-          requestData.buiness.push({
-            name: lianjiaData.data[index].name,
-            lianjia: lianjiaData.data[index],
-            type: 20
-          });
-        }
-      }
-      if (lianjiaData.data[index].type === "resblock") {
-        var isMatch = false;
-        for (var temp = 0; temp < requestData.xiaoqu.length; temp++) {
-          if (
-            matchXiaoqu(
-              requestData.xiaoqu[temp].name,
-              lianjiaData.data[index].name
-            )
-          ) {
-            if (requestData.xiaoqu[temp].wiwj) {
-              var distance = getFlatternDistance(
-                requestData.xiaoqu[temp].wiwj.y,
-                requestData.xiaoqu[temp].wiwj.x,
-                lianjiaData.data[index].latitude,
-                lianjiaData.data[index].longitude
-              );
-              if (distance < 500) {
-                isMatch = true;
-                break;
+        if (lianjiaData.data[index].type === "resblock") {
+          var isMatch = false;
+          for (var temp = 0; temp < requestData.xiaoqu.length; temp++) {
+            if (
+              matchXiaoqu(
+                requestData.xiaoqu[temp].name,
+                lianjiaData.data[index].name
+              )
+            ) {
+              if (requestData.xiaoqu[temp].wiwj) {
+                var distance = getFlatternDistance(
+                  requestData.xiaoqu[temp].wiwj.y,
+                  requestData.xiaoqu[temp].wiwj.x,
+                  lianjiaData.data[index].latitude,
+                  lianjiaData.data[index].longitude
+                );
+                if (distance < 500) {
+                  isMatch = true;
+                  requestData.xiaoqu[temp].lj = lianjiaData.data[index]
+                  break;
+                }
               }
             }
           }
-        }
-        if (!isMatch) {
-          requestData.xiaoqu.push({
-            name: lianjiaData.data[index].name,
-            type: 30
-          });
-        }
-      }
-      if (lianjiaData.data[index].type === "station") {
-        var isMatch = false;
-        for (var temp = 0; temp < requestData.subway.length; temp++) {
-          if (
-            matchSubway(
-              requestData.subway[temp].name,
-              lianjiaData.data[index].name
-            )
-          ) {
-            isMatch = true;
-            if (requestData.subway[temp].wiwj) {
-              requestData.subway[temp].lianjia = lianjiaData.data[index];
-            }
-            break;
+          if (!isMatch) {
+            requestData.xiaoqu.push({
+              name: lianjiaData.data[index].name,
+              lianjia: lianjiaData.data[index],
+              type: 30
+            });
           }
         }
-        if (!isMatch) {
-          requestData.subway.push({
-            name: lianjiaData.data[index].name.replace(/站/gi, ""),
-            lianjia: lianjiaData.data[index],
-            type: 50
-          });
+        if (lianjiaData.data[index].type === "subway_line") {
+          var isMatch = false;
+          for (var temp = 0; temp < requestData.line.length; temp++) {
+            if (
+              matchXiaoqu(
+                requestData.line[temp].name,
+                lianjiaData.data[index].name,
+                1
+              )
+            ) {
+              isMatch = true;
+              requestData.line[temp].lj = lianjiaData.data[index]
+            }
+          }
+          if (!isMatch) {
+            requestData.line.push({
+              name: lianjiaData.data[index].name,
+              lianjia: lianjiaData.data[index],
+              type: 40
+            });
+          }
+        }
+        if (lianjiaData.data[index].type === "station") {
+          var isMatch = false;
+          for (var temp = 0; temp < requestData.subway.length; temp++) {
+            if (
+              matchSubway(
+                requestData.subway[temp].name,
+                lianjiaData.data[index].name
+              )
+            ) {
+              isMatch = true;
+              if (requestData.subway[temp].wiwj) {
+                requestData.subway[temp].lj = lianjiaData.data[index];
+              }
+              break;
+            }
+          }
+          if (!isMatch) {
+            requestData.subway.push({
+              name: lianjiaData.data[index].name.replace(/站/gi, ""),
+              lianjia: lianjiaData.data[index],
+              type: 50
+            });
+          }
+        }
+      }
+    }
+  } else {
+    if (!!lianjiaData && lianjiaData.data && lianjiaData.data instanceof Array) {
+      var length2 = lianjiaData.data.length < 15 ? lianjiaData.data.length : 15;
+      let lineIsMax = false;
+      for (var index = 0; index < length2; index++) {
+        if (requestData.line.length === 0) {
+          lineIsMax = false
+        } if (requestData.line.length > 1) {
+          lineIsMax = true
+        }
+        if (lianjiaData.data[index].level === "district") {
+          var isMatch = false;
+          for (var temp = 0; temp < requestData.area.length; temp++) {
+            if (
+              matchArea(requestData.area[temp].name, lianjiaData.data[index].text)
+            ) {
+              isMatch = true;
+              if (requestData.area[temp].wiwj) {
+                requestData.area[temp].lj = lianjiaData.data[index];
+              }
+              break;
+            }
+          }
+          if (!isMatch) {
+            requestData.area.push({
+              name: lianjiaData.data[index].text,
+              lianjia: lianjiaData.data[index],
+              type: 10
+            });
+          }
+        }
+        if (lianjiaData.data[index].level === "bizcircle") {
+          var isMatch = false;
+          for (var temp = 0; temp < requestData.buiness.length; temp++) {
+            if (requestData.buiness[temp].name === lianjiaData.data[index].text) {
+              isMatch = true;
+              if (requestData.buiness[temp].wiwj) {
+                requestData.buiness[temp].lj = lianjiaData.data[index];
+              }
+              break;
+            }
+          }
+          if (!isMatch) {
+            requestData.buiness.push({
+              name: lianjiaData.data[index].text,
+              lianjia: lianjiaData.data[index],
+              type: 20
+            });
+          }
+        }
+        if (lianjiaData.data[index].level === "community") {
+          var isMatch = false;
+          for (var temp = 0; temp < requestData.xiaoqu.length; temp++) {
+            if (
+              matchXiaoqu(
+                requestData.xiaoqu[temp].name,
+                lianjiaData.data[index].text
+              )
+            ) {
+              if (requestData.xiaoqu[temp].wiwj) {
+                var distance = getFlatternDistance(
+                  requestData.xiaoqu[temp].wiwj.y,
+                  requestData.xiaoqu[temp].wiwj.x,
+                  lianjiaData.data[index].latitude,
+                  lianjiaData.data[index].longitude
+                );
+                if (distance < 500) {
+                  isMatch = true;
+                  requestData.xiaoqu[temp].lj = lianjiaData.data[index]
+                  break;
+                }
+              }
+            }
+          }
+          if (!isMatch) {
+            requestData.xiaoqu.push({
+              name: lianjiaData.data[index].text,
+              lianjia: lianjiaData.data[index],
+              type: 30
+            });
+          }
+        }
+        if (lianjiaData.data[index].level === "subway_line") {
+          var isMatch = false;
+          for (var temp = 0; temp < requestData.line.length; temp++) {
+            if (lineIsMax) {
+              if (requestData.line[temp].lj) {
+                delete requestData.line[temp].lj
+              }
+              isMatch = true
+              break
+            } else {
+              lineIsMax = true
+            }
+            if (
+              matchXiaoqu(
+                requestData.line[temp].name,
+                lianjiaData.data[index].text,
+                1
+              )
+            ) {
+              isMatch = true;
+              requestData.line[temp].lj = lianjiaData.data[index]
+            }
+          }
+          if (!isMatch) {
+            requestData.line.push({
+              name: lianjiaData.data[index].text,
+              lianjia: lianjiaData.data[index],
+              type: 40
+            });
+          }
+        }
+        if (lianjiaData.data[index].level === "subway_station") {
+          var isMatch = false;
+          for (var temp = 0; temp < requestData.subway.length; temp++) {
+            if (
+              matchSubway(
+                requestData.subway[temp].name,
+                lianjiaData.data[index].text
+              )
+            ) {
+              isMatch = true;
+              if (requestData.subway[temp].wiwj) {
+                requestData.subway[temp].lj = lianjiaData.data[index];
+              }
+              break;
+            }
+          }
+          if (!isMatch) {
+            requestData.subway.push({
+              name: lianjiaData.data[index].text.replace(/站/gi, ""),
+              lianjia: lianjiaData.data[index],
+              type: 50
+            });
+          }
         }
       }
     }
@@ -588,7 +753,7 @@ const getSecondIntermediaryData = (data, keywords, promiseVersion) => {
         if (count === 2) {
           resolve({
             promiseVersion,
-            result: returnData(results1, results2, keywords)
+            result: returnData(results1, results2, keywords, true)
           });
         }
       })
@@ -597,7 +762,7 @@ const getSecondIntermediaryData = (data, keywords, promiseVersion) => {
         if (count === 2) {
           resolve({
             promiseVersion,
-            result: returnData(results1, results2, keywords)
+            result: returnData(results1, results2, keywords, true)
           });
         }
       });
@@ -606,12 +771,12 @@ const getSecondIntermediaryData = (data, keywords, promiseVersion) => {
       .then(resp => {
         const results = [];
         const resultMap = [];
-        for (const r of resp.data) {
-          if (resultMap.includes(`%%${r.type}%%__${r.name}`)) {
+        for (const r of resp) {
+          if (resultMap.includes(`%%${r.type}%%__${r.text}`)) {
             continue;
           }
           results.push(r);
-          resultMap.push(`%%${r.type}%%__${r.name}`);
+          resultMap.push(`%%${r.type}%%__${r.text}`);
         }
         return Promise.resolve({ data: results });
       })
@@ -621,7 +786,7 @@ const getSecondIntermediaryData = (data, keywords, promiseVersion) => {
         if (count === 2) {
           resolve({
             promiseVersion,
-            result: returnData(results1, results2, keywords)
+            result: returnData(results1, results2, keywords, true)
           });
         }
       })
@@ -630,7 +795,7 @@ const getSecondIntermediaryData = (data, keywords, promiseVersion) => {
         if (count === 2) {
           resolve({
             promiseVersion,
-            result: returnData(results1, results2, keywords)
+            result: returnData(results1, results2, keywords, true)
           });
         }
       });

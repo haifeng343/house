@@ -13,7 +13,7 @@ const getPositionInfoByName = (positionKey, cityName, type=1) => {
 // 数据，城市名，房源类型（品牌中介，个人房源）
 const longSetSearchData = (data, city, type, isSecond = false) => {
   console.log("设置搜索历史");
-  console.log(data, city, type);
+  // console.log(data, city, type);
   let item = chooseSlectData(data, isSecond);
   console.log(item);
   let history = []
@@ -80,7 +80,7 @@ const chooseArea = (fullname, city, chooseType, isSecond = false) => {
           };
         } else {
           areaJson.lj = {
-            district_id: info.lj[0].district_quanpin
+            district_id: info.lj[0].district_id
           };
         }
       }
@@ -168,15 +168,16 @@ const chooseSlectData = (data, isSecond = false) => {
         }
       }
     }
-    if (data.lianjia) {
-      result.areaId.lj = data.lianjia.uri.replace(/\//gi, "");
+    if (data.lj) {
       if (!isSecond) {
+        result.areaId.lj = data.lj.uri.replace(/\//gi, "");
         areaJson.lj = {
-          bizcircle_quanpin: data.lianjia.uri.replace(/\//gi, "")
+          bizcircle_quanpin: data.lj.uri.replace(/\//gi, "")
         }
       } else {
+        result.areaId.lj = data.lj.district_id.replace(/\//gi, "");
         areaJson.lj = {
-          district_id: data.lianjia.uri.replace(/\//gi, "")
+          district_id: data.lj.district_id.replace(/\//gi, "")
         }
       }
     }
@@ -194,15 +195,16 @@ const chooseSlectData = (data, isSecond = false) => {
         }
       }
     }
-    if (data.lianjia) {
-      result.areaId.lj = data.lianjia.uri;
+    if (data.lj) {
       if (!isSecond) {
+        result.areaId.lj = data.lj.uri;
         areaJson.lj = {
-          bizcircle_quanpin: data.lianjia.uri
+          bizcircle_quanpin: data.lj.uri
         }
       } else {
+        result.areaId.lj = data.lj.bizcircle_id;
         areaJson.lj = {
-          bizcircle_id: data.lianjia.uri
+          bizcircle_id: data.lj.bizcircle_id
         }
       }
     }
@@ -235,15 +237,16 @@ const chooseSlectData = (data, isSecond = false) => {
         };
       }
     }
-    if (data.lianjia) {
-      result.areaId.lj = data.lianjia.uri
-      if(!isSecond) {
+    if (data.lj) {
+      if (!isSecond) {
+        result.areaId.lj = data.lj.uri
         areaJson.lj = {
-          uri: data.lianjia.uri
+          uri: data.lj.uri
         }
       } else {
+        result.areaId.lj = data.lj.community_id
         areaJson.lj = {
-          community_id: data.lianjia.uri
+          community_id: data.lj.community_id
         }
       }
     }
@@ -253,6 +256,12 @@ const chooseSlectData = (data, isSecond = false) => {
       result.areaId.wiwj = data.wiwj.searchId;
       areaJson.wiwj = {
         lineid: data.wiwj.searchId
+      };
+    }
+    if (data.lj) {
+      result.areaId.lj = data.lj.subway_line_id
+      areaJson.lj = {
+        subway_line_id: data.lj.subway_line_id
       };
     }
   }
@@ -274,16 +283,27 @@ const chooseSlectData = (data, isSecond = false) => {
         };
       }
     }
-    if (data.lianjia) {
-      let list = data.lianjia.uri.split("s");
-      result.areaId.lj = {
-        id: list[1].replace(/[^0-9]/gi, ""),
-        lineid: list[0].replace(/[^0-9]/gi, "")
-      };
-      areaJson.lianjia = {
-        subway_station_id: list[1].replace(/[^0-9]/gi, ""),
-        subway_line_id: list[0].replace(/[^0-9]/gi, "")
-      };
+    if (data.lj) {
+      if (!isSecond) {
+        let list = data.lj.uri.split("s");
+        result.areaId.lj = {
+          id: list[1].replace(/[^0-9]/gi, ""),
+          lineid: list[0].replace(/[^0-9]/gi, "")
+        };
+        areaJson.lj = {
+          subway_station_id: list[1].replace(/[^0-9]/gi, ""),
+          subway_line_id: list[0].replace(/[^0-9]/gi, "")
+        };
+      } else {
+        result.areaId.lj = {
+          id: data.lj.subway_station_id,
+          lineid: data.lj.subway_line_id
+        };
+        areaJson.lj = {
+          subway_station_id: data.lj.subway_station_id,
+          subway_line_id: data.lj.subway_line_id
+        };
+      }
     }
   }
   result.areaJson = JSON.stringify(areaJson);
