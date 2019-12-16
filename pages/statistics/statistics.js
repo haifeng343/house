@@ -205,7 +205,7 @@ Page({
         monitorId: data.monitorId || '',
         totalFee: data.totalFee || '', //消耗盯盯币
         sort: data.sortType, // 1低总价 2低单价 默认0
-        sorts: data.sortType == 1 ? 1 : ( 2 ? 2 : 0 ), // 1低总价 2低单价 默认0
+        sorts: data.sortType, // 1低总价 2低单价 默认0
         rentType: 3, //1：短租 2：长租  3二手房
         fee,
         type: (data.bottomType == 1 || data.bottomType == 2) ? 2 : 1
