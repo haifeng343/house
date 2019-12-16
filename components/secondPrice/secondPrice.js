@@ -64,6 +64,7 @@ Component({
     },
     //二手房更换价格
     changePrice() {
+      console.log('222')
       let minPrice = +this.data.min
       let maxPrice = +this.data.max
       if (minPrice && maxPrice) {

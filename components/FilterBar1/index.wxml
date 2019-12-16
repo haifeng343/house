@@ -20,7 +20,7 @@
           <text>预算(万元)</text>
         </view>
         <view class="price-range-wrapper">
-          <secondPrice minPrice="{{minPrice}}" maxPrice="{{maxPrice}}" bind:changeSecondPrice="handleChangeSecondPrice" />
+          <secondPrice id="secondPrice" minPrice="{{minPrice}}" maxPrice="{{maxPrice}}" bind:changeSecondPrice="handleChangeSecondPrice" />
         </view>
       </view>
       <view class="button-wrapper">

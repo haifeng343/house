@@ -834,6 +834,8 @@ Component({
     },
 
     handleSubmit() {
+      var secondPrice = this.selectComponent("#secondPrice");
+      secondPrice.changePrice();
       this.setData({
         showRightPanel: false,
         showTopPanel: false,
