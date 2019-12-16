@@ -168,7 +168,7 @@
                             <text class="icon-font {{secondSearchData.area === '' ? 'uniE90C' : 'uniE901'}}" catchtap="handleClearScenic" />
                         </view>
                     </view>
-                    <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
+                    <view class='search_item noBorder' style='height:auto;padding-top:20rpx;margin-bottom:0'>
                         <view class='title icon_1'>预算(万元)</view>
                         <view class='sort' data-index="{{1}}" bindtap='selectHouseUseMap'>
                             <text class="icon-font uniE930 {{checkHouseType.checkHouseType(secondSearchData.secondHouseUseMap,1)?'active':''}}"></text>
@@ -176,7 +176,7 @@
                         </view>
                         <secondPrice minPrice="{{secondSearchData.minPrice}}" maxPrice="{{secondSearchData.maxPrice}}" bind:changeSecondPrice="changeSecondPrice" bind:focus="secondFocus" />
                     </view>
-                    <view class='search_item noBorder' style='height:auto;padding-top:20rpx;'>
+                    <view class='search_item noBorder' style='height:auto;padding-top:20rpx;margin-bottom:20rpx;'>
                         <view class='title icon_2'>
                             <text>面积(㎡): </text>
                             <block wx:if="{{secondSearchData.minArea === 0 && secondSearchData.maxArea === 151}}">
@@ -194,7 +194,7 @@
                                 <text style="color:#F1612A">{{secondSearchData.maxArea}}</text>
                             </block>
                         </view>
-                        <view style="margin-top: -42rpx">
+                        <view style="margin-top: -46rpx; margin-bottom: -16rpx">
                             <Range wx:if="{{showSecondPriceBlock}}" min="{{secondSearchData.minArea}}" max="{{secondSearchData.maxArea}}" step="{{1}}" maxStep="{{151}}" bind:onChange="handleSecondPriceChange" showValueView="{{false}}"/>
                         </view>
                     </view>
