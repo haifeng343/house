@@ -27,6 +27,7 @@
       <view class="statistics_detail">
         <houseStat 
           sort="{{sort}}"
+          sorts="{{sorts}}"
           rentType="{{rentType}}"
           list="{{enoughList}}"
         ></houseStat>

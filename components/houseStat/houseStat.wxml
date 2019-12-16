@@ -55,7 +55,7 @@
       <view wx:if="{{item.value}}" class="stat_layout {{list.length == 3&&index ==0?'stat_normal':'stat_other'}} {{list.length == 3&&index ==2?'stat_ab':''}} {{item.key =='wiwj'||item.key =='ftx'?'wiwj_layout':''}} {{item.key =='lj'||item.key =='tc'?'lianjia_layout':''}}" bindtap="navigateToPlatform" data-platform="{{item.key}}">
         <view class="tip">{{item.name}}</view>
         <view class="stat_tip">
-          <view class="price">{{sort?'推荐价':'最低价'}}:<text wx:if="{{rentType!=3}}">￥</text>{{item.lowPriceData.price||'--'}}/<text wx:if="{{rentType ==  3}}">万</text><text wx:else>月</text></view>
+          <view class="price"><text wx:if="{{sorts===1}}">最低价:￥{{item.lowPriceData.price||'--'}}万</text><text wx:if="{{sorts===2}}">最低单价:{{item.lowPriceData.unit_price}}元/平</text><text wx:if="{{ sorts!==1 && sorts!==2 }}">推荐价:￥{{item.lowPriceData.price||'--'}}万</text></view>
           <view class="num">房源数:{{item.value}}套(已选{{item.selectCount}}套)</view>
         </view>
         <image class="tu_image" mode="aspectFill" wx:if="{{item.lowPriceData.imgurl}}" src="{{item.lowPriceData.imgurl}}"></image>

@@ -2129,6 +2129,10 @@ const getBrandSecondHouseData = data => {
       })
     ) :
     0;
+  //所有最低单价
+  let lowUnitPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) {
+    return o.unit_price;
+  })) : 0;
 
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("price", "asc"));
@@ -2175,6 +2179,7 @@ const getBrandSecondHouseData = data => {
     averagePrice: parseInt(average),
     lowPrice,
     averageunitPrice: parseInt(averageunitPrice),
+    lowUnitPrice: parseInt(lowUnitPrice),
     lowPriceData,
     highAreaData,
     wiwjLowPriceData,
@@ -2686,6 +2691,9 @@ const getMonitorSecondHouseData = (list, mSelect) => {
 
   //所有最低价
   let lowPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) { return o.price; })) : 0;
+  //所有最低单价
+  let lowUnitPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) {
+     return o.unit_price; })) : 0;
   //所有房源最低价格的数据
   sortArr.sort(util.compareSort("price", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
@@ -2738,6 +2746,7 @@ const getMonitorSecondHouseData = (list, mSelect) => {
     averagePrice: parseInt(average),
     averageunitPrice: parseInt(averageunitPrice),
     lowPrice,
+    lowUnitPrice,
     highAreaData,
     lowPriceData,
     wiwjLowPriceData,

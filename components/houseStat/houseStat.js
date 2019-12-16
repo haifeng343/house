@@ -10,6 +10,9 @@ Component({
     sort: {
       type: Boolean
     },
+    sorts:{
+      type:Number
+    },
     rentType:{
       type: Number
     }

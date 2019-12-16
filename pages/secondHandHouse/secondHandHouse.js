@@ -264,6 +264,7 @@ Page({
         allCount: houseData.allCount,
         averagePrice: houseData.averageunitPrice,//二手房单价平均价
         lowPrice: houseData.lowPrice,
+        lowUnitPrice: houseData.lowUnitPrice,//二手房的单位最低价
         lowPriceData: houseData.lowPriceData,
         highAreaData: houseData.highAreaData,
         wiwjLowPriceData: houseData.wiwjLowPriceData,
@@ -333,6 +334,7 @@ Page({
       lianjiaCount: this.data.lianjiaCount,
       showCount: this.data.allOriginalData.length,
       averagePrice: this.data.averagePrice,
+      lowUnitPrice: this.data.lowUnitPrice,//二手房的单位最低价
       lowPrice: this.data.lowPrice,
       lowPriceData: this.data.lowPriceData,
       highAreaData: this.data.highAreaData,
@@ -341,7 +343,7 @@ Page({
       bindPhone: this.data.bindPhone,
       bindPublic: this.data.bindPublic,
       isBack: false,
-      sortType: this.data.longSortTypes,
+      sortType: this.data.secondSortType,
       allOriginalData: this.data.allOriginalData,
       rowData: this.data.rowData,
     };
@@ -478,6 +480,12 @@ Page({
     wx.navigateTo({
       url: "../public/public"
     });
+  },
+  //跳转到监控规则
+  navtoMonitorRule() {
+    wx.navigateTo({
+      url: '../monitorRule/index',
+    })
   },
   // 房源充足，到底和查看更多弹窗隐藏
   getEnoughEvent(e) {

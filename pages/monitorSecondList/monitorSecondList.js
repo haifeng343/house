@@ -40,7 +40,8 @@ Page({
     selectAllFlag: false,
     indexArr: [],
     mSelect: 1, //1全部 2新上 3价格
-    isMtype: false
+    isMtype: false,
+    lowUnitPrice:0,
   },
   onLoad: function (options) {
     let data = app.globalData.monitorSecondData
@@ -308,7 +309,7 @@ Page({
       }
       wx.hideLoading()
       let monitorHouseData = house.getMonitorSecondHouseData(houseList, detail ? detail : this.data.mSelect); //监控房源列表
-      console.log(monitorHouseData)
+      console.log(monitorHouseData.lowUnitPrice)
       if (monitorHouseData.allData.length == 0) {
         this.setData({
           countFlag: 0,
@@ -322,6 +323,7 @@ Page({
           allOriginalData: [],
           allData: [],
           allCount: 0,
+          lowUnitPrice: monitorHouseData.lowUnitPrice,
           updateData: Object.assign({}, app.globalData.monitorSecondSearchData),
           defalutData: Object.assign({}, app.globalData.monitorDefaultSearchSecondData),
           editFlag: false,
@@ -347,6 +349,7 @@ Page({
       enoughList.sort(util.compareSort('value', 'desc'));
       this.setData({
         allOriginalData: monitorHouseData.allData,
+        lowUnitPrice: monitorHouseData.lowUnitPrice,//单位最低价
         allData: monitorHouseData.allData.slice(0, 5),
         allCount: monitorCount.allTotal,
         averagePrice: monitorHouseData.averageunitPrice,
@@ -369,7 +372,7 @@ Page({
         bottomType: 1, //0:房源列表；1监控详情房源列表；2监控详情修改之后
         loadingDisplay: 'none',
         countFlag: 1,
-        longSortTypes: monitorDetail.sortType || '',
+        secondSortType: app.globalData.monitorSecondSearchData.secondSortTypeMap,
         updateData: Object.assign({}, app.globalData.monitorSecondSearchData),
         defalutData: Object.assign({}, app.globalData.monitorDefaultSearchSecondData),
         mSelect: detail ? detail : this.data.mSelect
@@ -480,7 +483,7 @@ Page({
       monitorId: this.data.monitorId,
       totalFee: this.data.totalFee, //消耗盯盯币
       isBack: false,
-      sortType: this.data.longSortTypes,
+      sortType: this.data.secondSortType,
       allOriginalData: this.data.allOriginalData,
       rowData: this.data.rowData,
     }

@@ -24,6 +24,9 @@ Component({
     },
     showCount: {
       type: Number
+    },
+    lowUnitPrice:{//二手房的最低平均价
+      type:Number
     }
   },
 

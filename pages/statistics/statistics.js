@@ -19,7 +19,9 @@ Page({
     updateSecondDisplay: 'none',
     fee: 0,
     sort: false,
+    sorts: 0,
     enoughList:[],
+    lowUnitPrice: 0,//二手房的最低平均价
   },
 
   /**
@@ -180,7 +182,6 @@ Page({
           data.enoughList[i]['lowPriceData'] = data.lianjiaLowPriceData
         }
       }
-      
       this.setData({
         allCount: data.allCount,
         wiwjCount: data.wiwjCount,
@@ -192,6 +193,7 @@ Page({
         highAreaData: data.highAreaData,
         enoughList: data.enoughList,
         allOriginalData: data.allOriginalData,
+        lowUnitPrice: data.unit_price,
         rowData: data.rowData,
         ddCoin: data.ddCoin || 0,
         bindPhone: data.bindPhone || false,
@@ -201,7 +203,8 @@ Page({
         startTimeName: data.startTimeName || '',
         monitorId: data.monitorId || '',
         totalFee: data.totalFee || '', //消耗盯盯币
-        sort: data.sortType == 1 ? false : ( 2 ? false : true ),
+        sort: data.sortType, // 1低总价 2低单价 默认0
+        sorts: data.sortType == 1 ? 1 : ( 2 ? 2 : 3 ), // 1低总价 2低单价 默认0
         rentType: 3, //1：短租 2：长租  3二手房
         fee,
         type: (data.bottomType == 1 || data.bottomType == 2) ? 2 : 1

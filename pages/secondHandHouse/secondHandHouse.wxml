@@ -5,7 +5,7 @@
       <view class="bg_border"></view>
     </view>
     
-    <checkDetail wx:if="{{countFlag === 1}}" houseType="{{3}}" showCount="{{allOriginalData.length}}" allCount="{{allCount}}" lowPrice="{{lowPrice}}" secondSortType="{{secondSortType}}" bind:detailEvent="goToDetail"></checkDetail>
+    <checkDetail wx:if="{{countFlag === 1}}" houseType="{{3}}" showCount="{{allOriginalData.length}}" allCount="{{allCount}}" lowPrice="{{lowPrice}}" lowUnitPrice="{{lowUnitPrice}}" secondSortType="{{secondSortType}}" bind:detailEvent="goToDetail"></checkDetail>
 
   </view>
   <view class="block"></view>
@@ -22,7 +22,7 @@
       </block>
     </view>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&!loadingShow}}">
-      <text wx:if="{{allCount>50}}">房源已加载完，您还可以开启监控，查看<text class="rules_txt">监控规则</text></text>
+      <text wx:if="{{allCount>50}}">房源已加载完，您还可以开启监控，查看<text class="rules_txt" bindtap="navtoMonitorRule">监控规则</text></text>
       <text wx:else>房源已加载完，若不满意你试试添加监控</text>
     </view>
     <mp-loading type="dot-red" tips="加载中" show="{{loadingShow}}"></mp-loading>
