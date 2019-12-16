@@ -15,8 +15,8 @@
             <text class="task_right">{{filter.rentType(updateData.longRentTypes)}}</text>
           </view>
           <view class="task" wx:else>
-            <view><text>类型:</text><text class="update" wx:if="{{filter.arrCompare(updateData.secondLayoutMap,defalutData.secondLayoutMap)==2}}">已改</text></view>
-            <text class="task_right">{{filter.secondLayout(updateData.secondLayoutMap)}}</text>
+            <view><text>户型:</text><text class="update" wx:if="{{filter.arrCompare(updateData.secondLayoutMap,defalutData.secondLayoutMap)==2}}">已改</text></view>
+            <text class="task_right">{{filter.secondlayoutmulti(updateData.secondLayoutMap)}}</text>
           </view>
           <view class="task" wx:if="{{rentType!=3}}">
             <view><text>预算:</text><text class="update" wx:if="{{updateData.minPrice!=defalutData.minPrice||updateData.maxPrice!=defalutData.maxPrice}}">已改</text></view>

@@ -32,6 +32,7 @@ var rentType = function (type) {
 }
 
 var secondLayout = function (type) {
+  console.log(type)
   if (type ==1) {
     return '一室'
   }
@@ -44,9 +45,18 @@ var secondLayout = function (type) {
   if (type == 4) {
     return '四室'
   }
-  if (type == 0) {
+  if (type == 5) {
     return '四室以上'
   }
+}
+
+var secondlayoutmulti = function(typeArr) {
+  if (!typeArr) return [];
+  var arr = [];
+  for (var i = 0; i < typeArr.length; i++) {
+    arr.push(secondLayout(typeArr[i]));
+  }
+  return arr;
 }
 
 var arrCompare=function(arr1,arr2){
@@ -61,5 +71,6 @@ module.exports = {
   zgCoverImage: zgCoverImage,
   rentType: rentType,
   arrCompare: arrCompare,
-  secondLayout: secondLayout
+  secondLayout: secondLayout,
+  secondlayoutmulti: secondlayoutmulti,
 }
