@@ -102,7 +102,6 @@ Component({
 
           const insideData = this.data;
 
-
           const map = JSON.parse(FilterMap);
 
           const assginData = {};
@@ -567,6 +566,10 @@ Component({
     },
 
     handleResetFilter() {
+      this.doResetFilter(true);
+    },
+
+    doResetFilter(resetToDefault) {
       const outsideData = this.data.data;
 
       const insideData = this.data;
@@ -578,9 +581,19 @@ Component({
         .filter(key => insideData.map.filter.find(item => item.field === key))
         .forEach(key => {
           this.changeList.add(key);
-          assginData[key] = this.data.map.filter.find(
-            item => item.field === key
-          ).defaultValue;
+          if (resetToDefault) {
+            assginData[key] = this.data.map.filter.find(
+              item => item.field === key
+            ).defaultValue;
+          } else {
+            if (Array.isArray(outsideData[key])) {
+              assginData[key] = Object.assign([], outsideData[key]);
+            } else if (typeof outsideData[key] === "object") {
+              assginData[key] = Object.assign({}, outsideData[key]);
+            } else {
+              assginData[key] = outsideData[key];
+            }
+          }
         });
 
       Object.keys(assginData).forEach(key => {
@@ -670,7 +683,7 @@ Component({
     },
 
     resetAll() {
-      this.handleResetFilter();
+      this.doResetFilter(false);
       this.handleResetType();
       this.handleResetPrice();
       this.handleResetSearch();
@@ -726,12 +739,7 @@ Component({
       if (currentAreaType === 0) {
         const areaItem = areaList[currentAreaType].list[index];
         if (areaItem.value !== null) {
-          chooseArea(
-            areaItem.value,
-            insideData.city,
-            1,
-            true
-          ).then(resp => {
+          chooseArea(areaItem.value, insideData.city, 1, true).then(resp => {
             Object.keys(resp).forEach(key => this.changeList.add(key));
             this.setData(resp);
           });
@@ -817,12 +825,7 @@ Component({
       if (currentAreaType === 1) {
         const stationItem =
           areaList[currentAreaType].list[currentArea].list[index];
-        chooseArea(
-          stationItem.value,
-          insideData.city,
-          1,
-          true
-        ).then(resp => {
+        chooseArea(stationItem.value, insideData.city, 1, true).then(resp => {
           Object.keys(resp).forEach(key => this.changeList.add(key));
           this.setData(resp);
         });
@@ -831,9 +834,9 @@ Component({
     },
 
     handleSubmit() {
-      var secondPrice = this.selectComponent("#secondPrice") || ''
+      var secondPrice = this.selectComponent("#secondPrice") || "";
       if (secondPrice) {
-        secondPrice.changePrice()
+        secondPrice.changePrice();
       }
       this.setData({
         showRightPanel: false,
@@ -880,7 +883,7 @@ Component({
 
       const { areaList } = insideData;
 
-      const { city, } = outsideData;
+      const { city } = outsideData;
 
       const history = wx.getStorageSync("searchSecondHistory_" + city) || [];
       if (outsideData.areaJson.includes('"isHistory":true')) {

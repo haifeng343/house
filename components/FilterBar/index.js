@@ -572,6 +572,10 @@ Component({
     },
 
     handleResetFilter() {
+      this.doResetFilter(true);
+    },
+
+    doResetFilter(resetToDefault) {
       const outsideData = this.data.data;
 
       const insideData = this.data;
@@ -583,9 +587,19 @@ Component({
         .filter(key => insideData.map.filter.find(item => item.field === key))
         .forEach(key => {
           this.changeList.add(key);
-          assginData[key] = this.data.map.filter.find(
-            item => item.field === key
-          ).defaultValue;
+          if (resetToDefault) {
+            assginData[key] = this.data.map.filter.find(
+              item => item.field === key
+            ).defaultValue;
+          } else {
+            if (Array.isArray(outsideData[key])) {
+              assginData[key] = Object.assign([], outsideData[key]);
+            } else if (typeof outsideData[key] === "object") {
+              assginData[key] = Object.assign({}, outsideData[key]);
+            } else {
+              assginData[key] = outsideData[key];
+            }
+          }
         });
 
       Object.keys(assginData).forEach(key => {
@@ -675,7 +689,7 @@ Component({
     },
 
     resetAll() {
-      this.handleResetFilter();
+      this.doResetFilter(false);
       this.handleResetType();
       this.handleResetPrice();
       this.handleResetSearch();
