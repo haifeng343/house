@@ -562,8 +562,8 @@ Page({
         });
       }
     } else {
-      let searchLongData = this.data.searchLongData;
-      if (!searchLongData.city) {
+      let secondSearchData = this.data.secondSearchData;
+      if (!secondSearchData.city) {
         wx.showToast({
           title: "请先选择城市",
           icon: "none"
@@ -639,34 +639,34 @@ Page({
         "searchData.area": "",
         "searchData.areaId": {},
         "searchData.ltude": {},
-        "searchData.areaType": ""
+        "searchData.areaType": 0
       });
       app.globalData.searchData.area = ""
       app.globalData.searchData.areaId = {}
       app.globalData.searchData.ltude = {}
-      app.globalData.searchData.areaType = ""
+      app.globalData.searchData.areaType = 0
     } else if (this.data.tabIndex === 2 && !!this.data.searchLongData.area) {
       this.setData({
         "searchLongData.area": "",
         "searchLongData.areaId": {},
-        "searchLongData.areaType": "",
-        "searchLongData.areaJson": {}
+        "searchLongData.areaType": 0,
+        "searchLongData.areaJson": ""
       });
       app.globalData.searchLongData.area = ""
       app.globalData.searchLongData.areaId = {}
-      app.globalData.searchLongData.areaType = ""
-      app.globalData.searchLongData.areaJson = {}
+      app.globalData.searchLongData.areaType = 0
+      app.globalData.searchLongData.areaJson = ""
     } else if (this.data.tabIndex === 3 && !!this.data.secondSearchData.area) {
       this.setData({
         "secondSearchData.area": "",
         "secondSearchData.areaId": {},
-        "secondSearchData.areaType": "",
-        "secondSearchData.areaJson": {}
+        "secondSearchData.areaType": 0,
+        "secondSearchData.areaJson": ""
       });
       app.globalData.secondSearchData.area = ""
       app.globalData.secondSearchData.areaId = {}
-      app.globalData.secondSearchData.areaType = ""
-      app.globalData.secondSearchData.areaJson = {}
+      app.globalData.secondSearchData.areaType = 0
+      app.globalData.secondSearchData.areaJson = ""
     } else {
       this.goPositionSelect();
     }
