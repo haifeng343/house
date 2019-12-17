@@ -1346,19 +1346,22 @@ const getHouseData = data => {
   let maxTotal = 50;
   let allData = [];
   let rowData = [];
+  let y = data.type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
   let tjData = data.tjData.filter(item => {
-    return item.allowBooking && Number(item.finalPrice) > 0;
+    let _price = Number(item.finalPrice)
+    return item.allowBooking && _price > 0 && _price <= y.maxPrice && _price >= y.minPrice;
   });
   let xzData = data.xzData.filter(item => {
-    return Number(item.showPriceV2.showPrice || item.luPrice) > 0;
+    let _price = Number(item.showPriceV2.showPrice || item.luPrice)
+    return _price > 0 && _price <= y.maxPrice && _price >= y.minPrice;
   });
   let mnData = data.mnData.filter(item => {
-    return Number(item.sale_price) > 0;
+    let _price = Number(item.sale_price)
+    return _price > 0 && _price <= y.maxPrice && _price >= y.minPrice;
   });
   let zgData = data.zgData.filter(item => {
-    return (
-      (item.discountPrice ? item.discountPrice / 100 : item.price / 100) > 0
-    );
+    let _price = item.discountPrice ? item.discountPrice / 100 : item.price / 100
+    return _price > 0 && _price <= y.maxPrice && _price >= y.minPrice;;
   });
   for (let i = 0; i < maxTotal; i++) {
     if (data.tjCount > 0) {
@@ -1571,7 +1574,7 @@ const getHouseData = data => {
   sortArr.sort(util.compareSort("finalPrice", "asc"));
   let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
 
-  let y = data.type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
+  // let y = data.type == 1 ? app.globalData.searchData : app.globalData.monitorSearchData;
   if (y.advSort == 2) {
     let allArr = [...allData];
     allArr.sort(util.compareSort("finalPrice", "asc"));
