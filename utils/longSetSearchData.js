@@ -14,8 +14,8 @@ const getPositionInfoByName = (positionKey, cityName, type=1) => {
 const longSetSearchData = (data, city, type, isSecond = false) => {
   console.log("设置搜索历史");
   // console.log(data, city, type);
-  // let item = chooseSlectData(data, isSecond);
-  console.log(item);
+  let item = chooseSlectData(data, isSecond);
+  // console.log(item);
   let history = []
   if (!isSecond) {
     history = [].concat(
