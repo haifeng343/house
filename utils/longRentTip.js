@@ -152,7 +152,7 @@ function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
           if (!isMatch) {
             requestData.area.push({
               name: lianjiaData.data[index].name,
-              lianjia: lianjiaData.data[index],
+              lj: lianjiaData.data[index],
               type: 10
             });
           }
@@ -171,7 +171,7 @@ function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
           if (!isMatch) {
             requestData.buiness.push({
               name: lianjiaData.data[index].name,
-              lianjia: lianjiaData.data[index],
+              lj: lianjiaData.data[index],
               type: 20
             });
           }
@@ -203,7 +203,7 @@ function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
           if (!isMatch) {
             requestData.xiaoqu.push({
               name: lianjiaData.data[index].name,
-              lianjia: lianjiaData.data[index],
+              lj: lianjiaData.data[index],
               type: 30
             });
           }
@@ -225,7 +225,7 @@ function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
           if (!isMatch) {
             requestData.line.push({
               name: lianjiaData.data[index].name,
-              lianjia: lianjiaData.data[index],
+              lj: lianjiaData.data[index],
               type: 40
             });
           }
@@ -249,7 +249,7 @@ function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
           if (!isMatch) {
             requestData.subway.push({
               name: lianjiaData.data[index].name.replace(/站/gi, ""),
-              lianjia: lianjiaData.data[index],
+              lj: lianjiaData.data[index],
               type: 50
             });
           }
@@ -282,7 +282,7 @@ function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
           if (!isMatch) {
             requestData.area.push({
               name: lianjiaData.data[index].text,
-              lianjia: lianjiaData.data[index],
+              lj: lianjiaData.data[index],
               type: 10
             });
           }
@@ -301,7 +301,7 @@ function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
           if (!isMatch) {
             requestData.buiness.push({
               name: lianjiaData.data[index].text,
-              lianjia: lianjiaData.data[index],
+              lj: lianjiaData.data[index],
               type: 20
             });
           }
@@ -333,7 +333,7 @@ function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
           if (!isMatch) {
             requestData.xiaoqu.push({
               name: lianjiaData.data[index].text,
-              lianjia: lianjiaData.data[index],
+              lj: lianjiaData.data[index],
               type: 30
             });
           }
@@ -364,7 +364,7 @@ function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
           if (!isMatch) {
             requestData.line.push({
               name: lianjiaData.data[index].text,
-              lianjia: lianjiaData.data[index],
+              lj: lianjiaData.data[index],
               type: 40
             });
           }
@@ -388,7 +388,7 @@ function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
           if (!isMatch) {
             requestData.subway.push({
               name: lianjiaData.data[index].text.replace(/站/gi, ""),
-              lianjia: lianjiaData.data[index],
+              lj: lianjiaData.data[index],
               type: 50
             });
           }

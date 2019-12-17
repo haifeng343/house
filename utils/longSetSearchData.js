@@ -14,7 +14,7 @@ const getPositionInfoByName = (positionKey, cityName, type=1) => {
 const longSetSearchData = (data, city, type, isSecond = false) => {
   console.log("设置搜索历史");
   // console.log(data, city, type);
-  let item = chooseSlectData(data, isSecond);
+  // let item = chooseSlectData(data, isSecond);
   console.log(item);
   let history = []
   if (!isSecond) {
@@ -176,9 +176,9 @@ const chooseSlectData = (data, isSecond = false) => {
           bizcircle_quanpin: data.lj.uri.replace(/\//gi, "")
         }
       } else {
-        result.areaId.lj = data.lj.district_id.replace(/\//gi, "");
+        result.areaId.lj = data.lj.district_id;
         areaJson.lj = {
-          district_id: data.lj.district_id.replace(/\//gi, "")
+          district_id: data.lj.district_id
         }
       }
     }
