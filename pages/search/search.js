@@ -1015,11 +1015,13 @@ Page({
   //table切换
   changeTab(event) {
     let tabIndex = +event.currentTarget.dataset.index || 1
-    this.setData({ tabIndex, spread: false })
-    if (tabIndex === 1) {
-      this.getHotCity()
-    } else {
-      this.getHotCityLong()
+    if (tabIndex !== this.data.tabIndex) {
+      this.setData({ tabIndex, spread: false })
+      if (tabIndex === 1) {
+        this.getHotCity()
+      } else {
+        this.getHotCityLong()
+      }
     }
   },
   //长租切换房源
