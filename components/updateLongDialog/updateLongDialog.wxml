@@ -16,7 +16,8 @@
           </view>
           <view class="task" wx:else>
             <view><text>户型:</text><text class="update" wx:if="{{filter.arrCompare(updateData.secondLayoutMap,defalutData.secondLayoutMap)==2}}">已改</text></view>
-            <text class="task_right">{{filter.secondlayoutmulti(updateData.secondLayoutMap)}}室</text>
+            <text class="task_right" wx:if="{{updateData.secondLayoutMap.length>0}}">{{filter.secondlayoutmulti(updateData.secondLayoutMap)}}室</text>
+            <text class="task_right" wx:else>不限</text>
           </view>
           <view class="task" wx:if="{{rentType!=3}}">
             <view><text>预算:</text><text class="update" wx:if="{{updateData.minPrice!=defalutData.minPrice||updateData.maxPrice!=defalutData.maxPrice}}">已改</text></view>
