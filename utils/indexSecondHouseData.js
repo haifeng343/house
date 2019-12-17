@@ -2,7 +2,6 @@ import Http from "./http";
 import { searchSecondDataStorage } from "./searchSecondDataStorage"
 const getIndexSecondHouseData = () => {
   Http.get('/second/indexHouse.json').then(resp => {
-    console.log(resp)
     const secondLayoutMap = resp.data.secondLayoutMap || []
     const secondSortTypeMap = resp.data.secondSortTypeMap || []
     const secondHouseDecorationMap = resp.data.secondHouseDecorationMap || []
