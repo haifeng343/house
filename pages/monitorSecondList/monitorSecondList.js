@@ -576,11 +576,23 @@ Page({
     wx.setStorageSync('followNum', 1)
     let index = this.data.followIndex
     if (this.data.bottomType == 1) {
-      let item = this.data.allData[index]
+      let wiwj = [],lj = [];
+      let item = this.data.allData[index];
       let data = {
-        uniqueId: item.housesid,
         monitorId: this.data.monitorId,
         platform: item.platformId
+      }
+      if(item.platformId=='wiwj'){
+        data.blockData = {
+          wiwj :[item.housesid],
+          lj : []
+        }
+      }
+      if (item.platformId == 'lj') {
+        data.blockData = {
+          wiwj :[],
+          lj :[item.housesid]
+        }
       }
       monitorApi.addSecondBatchAddBlacklist(data).then(res => {
         if (res.data.success) {
@@ -652,9 +664,7 @@ Page({
     })
     if (this.data.bottomType == 1) {
       let wiwjId = [],
-        ljId = [],
-        ftxId = [],
-        tcId = []
+        ljId = [];
       for (let i = 0; i < b.length; i++) {
         if (b[i].platformId == 'wiwj') {
           wiwjId.push(b[i].housesid)
