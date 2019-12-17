@@ -596,6 +596,14 @@ const getWiwjData = (type, wiwjfilter = {}) => {
     app.globalData.searchLongData :
     app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
+    if (wiwjfilter.keyswordFlag) {
+      wiwjCount = 0;
+      resolve({
+        arr: [],
+        wiwjCount
+      });
+      return;
+    }
     longrent.wiwj
       .rentSearch({
         city: y.cityId.wiwj,
@@ -629,6 +637,14 @@ const getSecondWiwjData = (type, wiwjfilter = {}) => {
       ? app.globalData.secondSearchData
       : app.globalData.monitorSecondSearchData;
   return new Promise((resolve, reject) => {
+    if (wiwjfilter.keyswordFlag) {
+      wiwjCount = 0;
+      resolve({
+        arr: [],
+        wiwjCount
+      });
+      return;
+    }
     longrent.wiwj.ershouSearch({
       "city": y.cityId.wiwj,
       "page": {
@@ -663,6 +679,14 @@ const getLianjiaData = (type, lianjiafilter = []) => {
     app.globalData.searchLongData :
     app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
+    if (lianjiafilter.length && lianjiafilter[0].keyswordFlag) {
+      lianjiaCount = 0;
+      resolve({
+        arr: [],
+        lianjiaCount
+      });
+      return;
+    }
     longrent.lianjia
       .rentSearch({
         city: y.cityId.lj,
@@ -697,6 +721,14 @@ const getSecondLianjiaData = (type, lianjiafilter = []) => {
       ? app.globalData.secondSearchData
       : app.globalData.monitorSecondSearchData;
   return new Promise((resolve, reject) => {
+    if (lianjiafilter.length&&lianjiafilter[0].keyswordFlag) {
+      lianjiaCount = 0;
+      resolve({
+        arr: [],
+        lianjiaCount
+      });
+      return;
+    }
     longrent.lianjia.ershouSearch({
       "city": y.cityId.lj,
       "page": {
@@ -734,6 +766,14 @@ const getFangtianxiaData = (type, fangtianxiafilter = {}) => {
     app.globalData.searchLongData :
     app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
+    if (fangtianxiafilter.keyswordFlag) {
+      fangtianxiaCount = 0;
+      resolve({
+        arr: [],
+        fangtianxiaCount
+      });
+      return;
+    }
     longrent.fangtianxia
       .rentSearch({
         city: y.cityId.ftx,
@@ -775,6 +815,14 @@ const getWbtcData = (type, wbtcfilter = {}) => {
     app.globalData.searchLongData :
     app.globalData.monitorSearchLongData;
   return new Promise((resolve, reject) => {
+    if (wbtcfilter.keyswordFlag) {
+      wbtcCount = 0;
+      resolve({
+        arr: [],
+        wbtcCount
+      });
+      return;
+    }
     longrent.wbtc
       .rentSearch({
         city: y.cityId.tc,
@@ -2776,7 +2824,8 @@ const wiwjScreenParam = type => {
     if (searchData.areaId.wiwj) {
       obj.districtids = searchData.areaId.wiwj;
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 20) {
@@ -2798,7 +2847,8 @@ const wiwjScreenParam = type => {
     if (searchData.areaId.wiwj) {
       obj.lineid = searchData.areaId.wiwj;
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 50) {
@@ -2806,7 +2856,8 @@ const wiwjScreenParam = type => {
       obj.lineid = searchData.areaId.wiwj.lineid;
       obj.stationid = searchData.areaId.wiwj.id;
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 60) {
@@ -3000,7 +3051,8 @@ const ljScreenParam = type => {
     if (searchData.areaId.lj) {
       condition = searchData.areaId.lj + "/";
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 20 || areaType == 30) {
@@ -3011,7 +3063,8 @@ const ljScreenParam = type => {
     }
   }
   if (areaType == 40) {
-    keysword = true;
+    //keysword = true;
+    obj.keyswordFlag = true
   }
   if (areaType == 50) {
     if (searchData.areaId.lj && searchData.areaId.lj.id) {
@@ -3022,7 +3075,8 @@ const ljScreenParam = type => {
         searchData.areaId.lj.id +
         "/";
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 60) {
@@ -3216,7 +3270,8 @@ const ftxScreenParam = type => {
     if (searchData.areaId.ftx) {
       obj.district = searchData.areaId.ftx;
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 20) {
@@ -3227,14 +3282,19 @@ const ftxScreenParam = type => {
       keysword = true;
     }
   }
-  if (areaType == 30 || areaType == 40) {
+  if (areaType == 30) {
     keysword = true;
+  }
+  if (areaType == 40){
+    //keysword = true;
+    obj.keyswordFlag = true
   }
   if (areaType == 50) {
     if (searchData.areaId.ftx && searchData.areaId.ftx.id) {
       obj.search_text = searchData.areaId.ftx.id;
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 60) {
@@ -3381,18 +3441,24 @@ const tcScreenParam = type => {
       obj.filterParams.filterArea = searchData.areaId.tc;
       obj.filterParams.filterLocal = searchData.areaId.tc;
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
-  if (areaType == 20 || areaType == 30 || areaType == 40) {
+  if (areaType == 20 || areaType == 30 ) {
     keysword = true;
+  }
+  if (areaType == 40){
+    //keysword = true;
+    obj.keyswordFlag = true
   }
   if (areaType == 50) {
     if (searchData.areaId.tc && searchData.areaId.tc.id) {
       obj.filterParams.ditieId = searchData.areaId.tc.lineid;
       obj.filterParams.param12557 = searchData.areaId.tc.id;
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 60) {
@@ -3536,7 +3602,8 @@ const wiwjSecondScreenParam = type => {
     if (searchData.areaId.wiwj) {
       obj.districtid = searchData.areaId.wiwj;
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 20) {
@@ -3558,7 +3625,8 @@ const wiwjSecondScreenParam = type => {
     if (searchData.areaId.wiwj) {
       obj.lineid = searchData.areaId.wiwj;
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 50) {
@@ -3566,7 +3634,8 @@ const wiwjSecondScreenParam = type => {
       obj.lineid = searchData.areaId.wiwj.lineid;
       obj.stationid = searchData.areaId.wiwj.id;
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 60) {
@@ -3699,7 +3768,8 @@ const ljSecondScreenParam = type => {
     if (searchData.areaId.lj) {
       condition += "d"+searchData.areaId.lj;
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 20) {
@@ -3720,7 +3790,8 @@ const ljSecondScreenParam = type => {
     if (searchData.areaId.lj) {
       condition += "li"+searchData.areaId.lj
     }else{
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 50) {
@@ -3732,7 +3803,8 @@ const ljSecondScreenParam = type => {
         searchData.areaId.lj.id +
         "/";
     } else {
-      keysword = true;
+      //keysword = true;
+      obj.keyswordFlag = true
     }
   }
   if (areaType == 60) {
