@@ -22,8 +22,8 @@
       </block>
     </view>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&!loadingShow}}">
-      <text wx:if="{{allCount>50}}">已展示全部房源</text>
-      <text wx:else>房源已加载完，若不满意你试试添加监控</text>
+      <view wx:if="{{allCount>50}}">房源已加载完，您还可以开启监控，查看<text class="rules_txt" bindtap="navtoMonitorRule">监控规则</text></view>
+      <view wx:else>房源已加载完，若不满意你试试添加监控</view>
     </view>
     <mp-loading type="dot-red" tips="加载中" show="{{loadingShow}}"></mp-loading>
   </view>

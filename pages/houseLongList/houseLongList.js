@@ -777,6 +777,12 @@ Page({
       url: "../public/public"
     });
   },
+  //跳转到监控规则
+  navtoMonitorRule() {
+    wx.navigateTo({
+      url: '../monitorRule/index',
+    })
+  },
   // 房源充足，到底和查看更多弹窗隐藏
   getEnoughEvent(e) {
     this.setData({
