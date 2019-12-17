@@ -633,6 +633,7 @@ Page({
   },
 
   handleClearScenic() {
+    const app = getApp()
     if (this.data.tabIndex === 1 && !!this.data.searchData.area) {
       this.setData({
         "searchData.area": "",
@@ -640,6 +641,10 @@ Page({
         "searchData.ltude": {},
         "searchData.areaType": ""
       });
+      app.globalData.searchData.area = ""
+      app.globalData.searchData.areaId = {}
+      app.globalData.searchData.ltude = {}
+      app.globalData.searchData.areaType = ""
     } else if (this.data.tabIndex === 2 && !!this.data.searchLongData.area) {
       this.setData({
         "searchLongData.area": "",
@@ -647,6 +652,10 @@ Page({
         "searchLongData.areaType": "",
         "searchLongData.areaJson": {}
       });
+      app.globalData.searchLongData.area = ""
+      app.globalData.searchLongData.areaId = {}
+      app.globalData.searchLongData.areaType = ""
+      app.globalData.searchLongData.areaJson = {}
     } else if (this.data.tabIndex === 3 && !!this.data.secondSearchData.area) {
       this.setData({
         "secondSearchData.area": "",
@@ -654,6 +663,10 @@ Page({
         "secondSearchData.areaType": "",
         "secondSearchData.areaJson": {}
       });
+      app.globalData.secondSearchData.area = ""
+      app.globalData.secondSearchData.areaId = {}
+      app.globalData.secondSearchData.areaType = ""
+      app.globalData.secondSearchData.areaJson = {}
     } else {
       this.goPositionSelect();
     }

@@ -51,7 +51,7 @@ Component({
         id: 3
       },
       {
-        title: "筛选",
+        title: "更多",
         action: "advance",
         class: "",
         active: false,
