@@ -194,7 +194,7 @@ export default JSON.stringify({
         },
         {
           label: "20年以上",
-          value: 10
+          value: 5
         }
       ]
     }
