@@ -1226,6 +1226,7 @@ Page({
     searchLongData.longLayouts = [];
     searchLongData.advSort = 0;
     let secondSearchData = app.globalData.secondSearchData
+    app.globalData.secondSearchData.advSort = 0; 
     if (secondSearchData.secondHouseDecorationMap.indexOf(3) >= 0) {
       secondSearchData.secondHouseDecorationMap = [3]
     } else {
