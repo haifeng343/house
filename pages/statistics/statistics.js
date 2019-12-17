@@ -165,7 +165,6 @@ Page({
         title: '二手房-统计信息'
       })
       let data = app.globalData.houseListData;
-      console.log(data)
       let fee = 1;
       if (data.fee) {
         fee = data.fee
@@ -182,7 +181,6 @@ Page({
           data.enoughList[i]['lowPriceData'] = data.lianjiaLowPriceData
         }
       }
-      console.log(data)
       this.setData({
         allCount: data.allCount,
         wiwjCount: data.wiwjCount,

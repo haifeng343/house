@@ -738,7 +738,6 @@ const getSecondLianjiaData = (type, lianjiafilter = []) => {
       "filterList": lianjiafilter
     }).then(res => {
         if(res){
-          console.log(res)
           lianjiaCount = res.total_count;
           resolve({
             arr: res.list.slice(0, 50),

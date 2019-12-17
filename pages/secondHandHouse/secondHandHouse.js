@@ -118,7 +118,6 @@ Page({
     }
   },
   onReachBottom() {
-    console.log("到底了");
     this.setData({
       loadingShow: true
     });
@@ -203,7 +202,6 @@ Page({
           scrollTop: e.scrollTop,
           scrollIng: false
         });
-        console.log("滚动结束");
         clearTimeout(timer);
       }
     }, 300);
@@ -229,8 +227,6 @@ Page({
       });
       return;
     }
-    console.log(wiwjDataObj);
-    console.log(lianjiaDataObj);
     let wiwjData = wiwjDataObj.arr || [];
     let lianjiaData = lianjiaDataObj.arr || [];
     if (wiwjDataObj.wiwjCount > -1) {
@@ -255,7 +251,6 @@ Page({
       lianjiaData,
       type: 1
     });
-    console.log(houseData)
     if (houseData.allCount > 0) {
       this.setData({
         countFlag: 1,
@@ -440,7 +435,6 @@ Page({
       lianjiaCount: this.data.lianjiaCount
     }
     let addData = house.addSecondMonitorData(data)
-    console.log(addData)
     wx.showLoading({
       title: '正在添加监控...',
       mask: true

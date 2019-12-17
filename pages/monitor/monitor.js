@@ -45,7 +45,6 @@ Page({
   },
   monitorChange(e) {
     var index = e.currentTarget.dataset.index;
-    console.log(index)
     let token = wx.getStorageSync('token');
     if (token) {
       if (index === '1' && this.data.active != index) {
