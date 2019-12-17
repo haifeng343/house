@@ -30,7 +30,6 @@ Component({
     editFlag: {
       type: Boolean,
       observer: function (editFlag) {
-        console.log(editFlag)
         if (editFlag) {
           this.setData({
             x: 30

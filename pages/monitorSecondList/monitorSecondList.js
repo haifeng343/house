@@ -56,7 +56,6 @@ Page({
   onHouseShow() {
     let x = app.globalData.monitorSecondSearchData
     let wiwjfilter = house.wiwjSecondScreenParam(2);
-    console.log(wiwjfilter)
     let ljfilter = house.ljSecondScreenParam(2);
     this.setData({
       listSortType: 1,
@@ -121,7 +120,6 @@ Page({
     }
   },
   onReachBottom() {
-    console.log('到底了')
     this.setData({
       loadingShow: true
     })
@@ -193,7 +191,6 @@ Page({
           scrollTop: e.scrollTop,
           scrollIng: false
         })
-        console.log('滚动结束')
         clearTimeout(timer)
       }
     }, 300)
@@ -211,7 +208,6 @@ Page({
         })
         return;
       }
-      console.log(res)
       let houseList = res.data.data.houseList; //监控房源
       let monitorDetail = res.data.data.monitorDetail; //监控条件
       let monitorCount = res.data.data.monitorCount; //监控计算
@@ -309,7 +305,6 @@ Page({
       }
       wx.hideLoading()
       let monitorHouseData = house.getMonitorSecondHouseData(houseList, detail ? detail : this.data.mSelect); //监控房源列表
-      console.log(monitorHouseData.lowUnitPrice)
       if (monitorHouseData.allData.length == 0) {
         this.setData({
           countFlag: 0,
@@ -418,7 +413,6 @@ Page({
       type: 2
     })
     if (houseData.allCount > 0 && houseData.allData.length > 0) {
-      console.log(houseData)
       this.setData({
         countFlag: 1,
         allOriginalData: houseData.allData,
