@@ -325,6 +325,7 @@ Page({
    */
   recharge(e) {
     var type = e.detail.type
+    app.switchRent = this.data.active
     wx.navigateTo({
       url: `/pages/deposit/deposit?type=${type}`
     });
@@ -410,6 +411,7 @@ Page({
       this.delItem(e)
     }
     if ((item.status == 11 || item.status == 0) && this.data.ddCoin < item.fee) {
+      app.switchRent = this.data.active
       wx.navigateTo({
         url: `/pages/deposit/deposit?type=${type}`
       });
