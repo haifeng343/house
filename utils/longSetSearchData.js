@@ -73,12 +73,13 @@ const chooseArea = (fullname, city, chooseType, isSecond = false) => {
         }
       }
       if (info.lj && info.lj[0]) {
-        result.areaId.lj = info.lj[0].district_quanpin;
         if (!isSecond) {
+          result.areaId.lj = info.lj[0].district_quanpin;
           areaJson.lj = {
             bizcircle_quanpin: info.lj[0].district_quanpin
           };
         } else {
+          result.areaId.lj = info.lj[0].district_id;
           areaJson.lj = {
             district_id: info.lj[0].district_id
           };
