@@ -243,7 +243,7 @@ Page({
         minArea: monitorDetail.minArea, //最低面积
         maxArea: monitorDetail.maxArea, //最高面积 上限150
         
-        secondHouseDecorationMap: monitorDetail.decorate || '', //装修  1: 毛坯房 2: 普通装修 3: 精装修
+        secondHouseDecorationMap: monitorDetail.decorate.split(',').map(item => +item) || [], //装修  1: 毛坯房 2: 普通装修 3: 精装修
         secondHouseTagMap: monitorDetail.houseTags ? monitorDetail.houseTags.split(',').map(item => +item) : [], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
         secondHeadingMap: monitorDetail.heading ? monitorDetail.heading.split(',').map(item => +item) : [], //朝向 1: 朝东 2: 朝西 3: 朝南 4: 朝北 10: 南北通透
         secondFloorTypeMap: monitorDetail.floorType ? monitorDetail.floorType.split(',').map(item => +item) : [], //楼层 1: 低楼层 2: 中楼层 3: 高楼层
@@ -266,7 +266,7 @@ Page({
         placeholderMaxPrice: (monitorDetail.cityName == '北京' || monitorDetail.cityName == '北京') ? 500 : 300, //城市最高价格
         minArea: monitorDetail.minArea, //最低面积
         maxArea: monitorDetail.maxArea, //最高面积 上限150
-        secondHouseDecorationMap: monitorDetail.decorate || '', //装修  1: 毛坯房 2: 普通装修 3: 精装修
+        secondHouseDecorationMap: monitorDetail.decorate.split(',').map(item => +item) || [], //装修  1: 毛坯房 2: 普通装修 3: 精装修
         secondHouseTagMap: monitorDetail.houseTags ? monitorDetail.houseTags.split(',').map(item => +item) : [], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
         secondHeadingMap: monitorDetail.heading ? monitorDetail.heading.split(',').map(item => +item) : [], //朝向 1: 朝东 2: 朝西 3: 朝南 4: 朝北 10: 南北通透
         secondFloorTypeMap: monitorDetail.floorType ? monitorDetail.floorType.split(',').map(item => +item) : [], //楼层 1: 低楼层 2: 中楼层 3: 高楼层
