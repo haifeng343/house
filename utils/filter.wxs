@@ -34,19 +34,19 @@ var rentType = function (type) {
 var secondLayout = function (type) {
   console.log(type)
   if (type ==1) {
-    return '一室'
+    return '1'
   }
   if (type == 2) {
-    return '二室'
+    return '2'
   }
   if (type == 3) {
-    return '三室'
+    return '3'
   }
   if (type == 4) {
-    return '四室'
+    return '4'
   }
   if (type == 5) {
-    return '四室以上'
+    return '4+'
   }
 }
 
