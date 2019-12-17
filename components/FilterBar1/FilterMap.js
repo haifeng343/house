@@ -174,6 +174,7 @@ export default JSON.stringify({
       field: "secondBuildingAgeMap",
       icon: iconEnum["thistle"],
       defaultValue: 0,
+      cancelable: true,
       list: [
         {
           label: "5年以内",
