@@ -68,7 +68,6 @@ export default JSON.stringify({
       title: "装修",
       field: "secondHouseDecorationMap",
       multi: true,
-      showType: [1],
       defaultValue: [],
       icon: iconEnum["wheat"],
       list: [

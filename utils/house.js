@@ -75,7 +75,7 @@ const getTjData = (type, tjfilter) => {
           arr.push.apply(arr, res.data.items || []);
         }
         resolve({
-          arr: arr.slice(0, 50),
+          arr: arr,
           tjCount
         });
       });
@@ -135,7 +135,7 @@ const getXzData = (type, xzfilter) => {
       if (res) {
         xzCount = Number(res.data.count);
         resolve({
-          arr: res.data.item,
+          arr: res.data.item||[],
           xzCount
         });
       } else {
@@ -180,7 +180,7 @@ const getMnData = (type, mnfilter) => {
           mnCount = res[3].mnCount
         }
         resolve({
-          arr: arr2.slice(0, 50),
+          arr: arr2,
           mnCount
         });
       })
@@ -224,7 +224,7 @@ const getMnData1 = (type, mnfilter) => {
       .then(res => {
         if (res) {
           resolve({
-            arr: res.data.rooms.list,
+            arr: res.data.rooms.list||[],
             mnCount: Number(res.data.rooms.page.record_count)
           });
         }
@@ -272,7 +272,7 @@ const getMnData2 = (type, mnfilter) => {
       .then(res => {
         if (res) {
           resolve({
-            arr: res.data.rooms.list,
+            arr: res.data.rooms.list || [],
             mnCount: Number(res.data.rooms.page.record_count)
           });
         }
@@ -320,7 +320,7 @@ const getMnData3 = (type, mnfilter) => {
       .then(res => {
         if (res) {
           resolve({
-            arr: res.data.rooms.list,
+            arr: res.data.rooms.list || [],
             mnCount: Number(res.data.rooms.page.record_count)
           });
         }
@@ -368,7 +368,7 @@ const getMnData4 = (type, mnfilter) => {
       .then(res => {
         if (res) {
           resolve({
-            arr: res.data.rooms.list,
+            arr: res.data.rooms.list || [],
             mnCount: Number(res.data.rooms.page.record_count)
           });
         }
@@ -462,9 +462,9 @@ const getZgData = (type, zgfilter) => {
           arr2.push.apply(arr2, s_arr2);
           if (zgfilter.sortType === 2) {
             arr2.sort(util.compareSort("_price", "asc"));
-            arr1 = arr2.slice(0, 50)
+            arr1 = arr2
           } else {
-            arr1 = arr2.slice(0, 50)
+            arr1 = arr2
           }
           resolve({
             arr: arr1,
@@ -520,7 +520,7 @@ const getZgData1 = (type, zgfilter) => {
       if (res) {
         zgCount = Number(res.data.count);
         resolve({
-          arr: res.data.list,
+          arr: res.data.list || [],
           zgCount
         });
       } else {
@@ -575,7 +575,7 @@ const getZgData2 = (type, zgfilter) => {
       if (res) {
         zgCount = Number(res.data.count);
         resolve({
-          arr: res.data.list,
+          arr: res.data.list || [],
           zgCount
         });
       } else {
@@ -617,7 +617,7 @@ const getWiwjData = (type, wiwjfilter = {}) => {
         if (res) {
           wiwjCount = res.data.count;
           resolve({
-            arr: res.data.list && res.data.list.slice(0, 50),
+            arr: res.data.list ||[],
             wiwjCount
           });
         }
@@ -656,7 +656,7 @@ const getSecondWiwjData = (type, wiwjfilter = {}) => {
       if (res) {
         wiwjCount = res.data.count;
         resolve({
-          arr: res.data.list.slice(0, 50) || [],
+          arr: res.data.list || [],
           wiwjCount
         })
       }
@@ -700,7 +700,7 @@ const getLianjiaData = (type, lianjiafilter = []) => {
         if (res) {
           lianjiaCount = res.data.total;
           resolve({
-            arr: res.data.list && res.data.list.slice(0, 50),
+            arr: res.data.list||[],
             lianjiaCount
           });
         }
@@ -740,7 +740,7 @@ const getSecondLianjiaData = (type, lianjiafilter = []) => {
         if(res){
           lianjiaCount = res.total_count;
           resolve({
-            arr: res.list.slice(0, 50),
+            arr: res.list||[],
             lianjiaCount
           });
         }
@@ -787,7 +787,7 @@ const getFangtianxiaData = (type, fangtianxiafilter = {}) => {
           fangtianxiaCount = Number(res.houses.housecount);
           resolve({
             arr: res.houses.houseinfo && Array.isArray(res.houses.houseinfo) ?
-              res.houses.houseinfo.slice(0, 50) :
+              res.houses.houseinfo||[] :
               [res.houses.houseinfo],
             fangtianxiaCount
           });
@@ -854,7 +854,7 @@ const getWbtcData = (type, wbtcfilter = {}) => {
           });
         } else {
           resolve({
-            arr: arr.slice(0, 50),
+            arr: arr,
             wbtcCount
           });
         }
@@ -872,7 +872,7 @@ const getWbtcData = (type, wbtcfilter = {}) => {
           wbtcCount = arr.length;
         }
         resolve({
-          arr: arr.slice(0, 50),
+          arr: arr,
           wbtcCount
         });
       });
