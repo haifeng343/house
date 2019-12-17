@@ -674,6 +674,12 @@ Page({
     });
     this.getStartMonitor(e.detail.noteSelect, e.detail.publicSelect);
   },
+  //跳转到监控规则
+  navtoMonitorRule() {
+    wx.navigateTo({
+      url: '../monitorRule/index',
+    })
+  },
   //开启监控--未关注公众号时
   getMonitorPublicEvent(e) {
     this.setData({

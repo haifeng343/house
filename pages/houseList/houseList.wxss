@@ -12,6 +12,12 @@ page {
   z-index: 33;
   transform: translateY(0);
 }
+.rules_txt{
+  color: #F1612A;
+  font-size: 24rpx;
+  padding-bottom: 1rpx;
+  border-bottom: 1rpx solid #F1612A;
+}
 .header.hidden {
   transform: translateY(-100%);
 }
