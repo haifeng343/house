@@ -300,7 +300,7 @@ function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
             if (requestData.buiness[temp].name === lianjiaData.data[index].text) {
               isMatch = true;
               if (requestData.buiness[temp].wiwj) {
-                requestData.buiness[temp].lj = lianjiaData.data[index];
+                // requestData.buiness[temp].lj = lianjiaData.data[index];
               }
               break;
             }
@@ -308,7 +308,7 @@ function returnData(wiwjData, lianjiaData, keywords, isSecond = false) {
           if (!isMatch) {
             requestData.buiness.push({
               name: lianjiaData.data[index].text,
-              lj: lianjiaData.data[index],
+              // lj: lianjiaData.data[index],
               type: 20
             });
           }

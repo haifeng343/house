@@ -82,13 +82,13 @@
                   <text>预算:不限</text>
                 </view>
                 <view class="card_down_money" wx:if="{{item.minPrice==0&&item.maxPrice<99999}}">
-                  <text>预算:低于¥{{item.maxPrice}}{{item.rentType == 3?'万':''}}</text>
+                  <text>预算:低于{{item.rentType == 3?'':'¥'}}{{item.maxPrice}}{{item.rentType == 3?'万':''}}</text>
                 </view>
                 <view class="card_down_money" wx:if="{{item.minPrice>0&&item.maxPrice==99999}}">
-                  <text>预算:高于¥{{item.minPrice}}{{item.rentType == 3?'万':''}}</text>
+                  <text>预算:高于{{item.rentType == 3?'':'¥'}}{{item.minPrice}}{{item.rentType == 3?'万':''}}</text>
                 </view>
                 <view class="card_down_money" wx:if="{{item.minPrice>0&&item.maxPrice<99999}}">
-                  <text>预算:¥{{item.minPrice}}-¥{{item.maxPrice}}{{item.rentType == 3?'万':''}}</text>
+                  <text>预算:{{item.rentType == 3?'':'¥'}}{{item.minPrice}}-{{item.rentType == 3?'':'¥'}}{{item.maxPrice}}{{item.rentType == 3?'万':''}}</text>
                 </view>
             </view>
           </view>
