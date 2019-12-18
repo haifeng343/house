@@ -10,7 +10,6 @@
     </view>
   </view>
 </view>
-<RightPanel wx:if="{{showRightPanel}}" filter="{{map.filter}}" type="{{longRentTypes}}" bind:onClose="handleHideRightPanel" bind:onSelect="handleSelectFilter" bind:onSubmit="handleSubmit" bind:onReset="handleResetFilter" />
 <view class="toppanel-container" wx:if="{{showTopPanel}}">
   <TopPanel id="TopPanel" bind:onClose="handleHideTopPanel">
     <view class="price-panel" wx:if="{{currentPanel === 'price'}}">
@@ -87,7 +86,13 @@
         <scroll-view scroll-y class="search-result-list">
           <view wx:for="{{searchResultList}}" wx:key="{{item.label}}" class="search-result-item" bindtap="handleSelectSearchResult" data-item="{{item}}">
             <view class="search-result-tag">{{item.tag}}</view>
-            <view class="search-result-text"><text wx:for="{{item.label}}" wx:key="*this" class="{{item === searchKey ? 'hightlight' : ''}}">{{item}}</text></view><text class="icon-font uniE90C"></text></view>
+            <view class="search-result-text">
+              <text wx:for="{{item.label}}" wx:key="*this" class="{{item === searchKey ? 'hightlight' : ''}}">
+                {{item}}
+              </text>
+            </view>
+            <text class="icon-font uniE90C"></text>
+          </view>
         </scroll-view>
       </view>
       <block wx:if="{{!isSearch}}">
@@ -123,6 +128,29 @@
           <text>{{item.label}}</text>
           <text class="icon-font uniE930" wx:if="{{item.active}}" />
         </view>
+      </view>
+    </view>
+    <view class="filter-panel" wx:if="{{currentPanel === 'advance'}}">
+      <scroll-view scroll-y class="filter-list">
+        <block wx:for="{{map.filter}}" wx:key="{{item.title}}">
+          <view wx:if="{{!item.showType || tools.includes(item.showType, type)}}" class="filter-item">
+            <view class="filter-title">
+              <image wx:if="{{item.icon}}" src="{{item.icon}}" class="title-icon" />
+              <text>{{item.title}}</text>
+            </view>
+            <view class="option-list">
+              <block wx:for="{{item.list}}" wx:for-item="item2" wx:key="{{item2.label}}">
+                <view wx:if="{{!item2.showType || tools.includes(item2.showType, type)}}" class="option-item {{item2.active ? 'active' : ''}}" bindtap="handleSelectFilter" data-value="{{item2.value}}" data-field="{{item.field}}">
+                  {{item2.label}}
+                </view>
+              </block>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+      <view class="button-wrapper">
+        <view class="button button-reset" bindtap="handleResetFilter">重置</view>
+        <view class="button button-submit" bindtap="handleSubmit">确定</view>
       </view>
     </view>
   </TopPanel>

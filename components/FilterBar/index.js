@@ -320,7 +320,7 @@ Component({
     handleTabitemAction(tabItem) {
       switch (tabItem.action) {
         case "advance":
-          this.setData({ showRightPanel: true, showTopPanel: false });
+          this.setData({ showTopPanel: true, currentPanel: "advance" });
           break;
         case "price":
           this.setData({ showTopPanel: true, currentPanel: "price" });
@@ -503,7 +503,7 @@ Component({
     },
 
     handleSelectFilter(event) {
-      const { value, field } = event.detail;
+      const { value, field } = event.currentTarget.dataset;
       const filterItem = this.data.map.filter.find(
         item => item.field === field
       );
