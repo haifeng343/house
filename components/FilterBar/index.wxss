@@ -79,7 +79,7 @@
 }
 
 .filter-panel {
-  height: 680rpx;
+  height: 840rpx;
 }
 
 .content-wrapper {
@@ -143,7 +143,7 @@
 }
 
 .filter-panel .filter-list {
-  height: 540rpx;
+  height: 700rpx;
   overflow: scroll;
   width: calc(100% + 48rpx);
   padding-bottom: 0;
@@ -159,7 +159,7 @@
 .filter-item {
   display: flex;
   flex-direction: column;
-  margin-bottom: 48rpx;
+  margin-bottom: 20rpx;
   flex: 0 0 auto;
   width: calc(100% - 96rpx);
 }
