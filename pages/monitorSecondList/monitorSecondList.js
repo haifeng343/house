@@ -235,7 +235,7 @@ Page({
         areaType: monitorDetail.locationType || 0, //地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线50：地铁站 60：附近
         areaJson: monitorDetail.searchJson, //json
         minPrice: monitorDetail.minPrice, //最低价
-        maxPrice: monitorDetail.maxPrice, //最高价 不限"99999"
+        maxPrice: monitorDetail.maxPrice == 99999 ? '' : monitorDetail.maxPrice, //最高价 不限"99999"
         placeholderMinPrice: monitorDetail.actualPrice || 0, //城市最低价格
         placeholderMaxPrice: (monitorDetail.cityName == '北京' || monitorDetail.cityName == '北京')?500:300, //城市最高价格
         minArea: +monitorDetail.minArea, //最低面积
@@ -260,7 +260,7 @@ Page({
         areaType: monitorDetail.locationType || 0, //地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线50：地铁站 60：附近
         areaJson: monitorDetail.searchJson, //json
         minPrice: monitorDetail.minPrice, //最低价
-        maxPrice: monitorDetail.maxPrice, //最高价 不限"99999"
+        maxPrice: monitorDetail.maxPrice == 99999 ? '' : monitorDetail.maxPrice, //最高价 不限"99999"
         placeholderMinPrice: monitorDetail.actualPrice || 0, //城市最低价格
         placeholderMaxPrice: (monitorDetail.cityName == '北京' || monitorDetail.cityName == '北京') ? 500 : 300, //城市最高价格
         minArea: +monitorDetail.minArea, //最低面积

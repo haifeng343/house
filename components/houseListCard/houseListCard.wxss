@@ -179,6 +179,9 @@
   color: #FFFFFF;
   margin-right: 6rpx
 }
+.house_card .house_newprice .green{
+  background:linear-gradient(180deg,rgba(18,190,139,1) 0%,rgba(0,191,87,1) 100%)!important;
+}
 .house_card .house_newprice .pricedown{margin-right: 18rpx}
 .house_card .house_tag {
   display: inline-block;

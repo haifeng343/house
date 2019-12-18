@@ -7,9 +7,7 @@
   justify-content: space-between;
   box-sizing: border-box;
 }
-.green{
-  background:linear-gradient(180deg,rgba(18,190,139,1) 0%,rgba(0,191,87,1) 100%)!important;
-}
+
 page {
   font-size: 28rpx;
   color: #1D1D1D;

@@ -77,6 +77,9 @@
   color: #FFFFFF;
   margin-right: 6rpx
 }
+.card_words .card_newprice .green{
+  background:linear-gradient(180deg,rgba(18,190,139,1) 0%,rgba(0,191,87,1) 100%)!important;
+}
 .card .card_star{
   position: absolute;
   top: 0;
