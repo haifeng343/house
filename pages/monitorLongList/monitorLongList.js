@@ -44,7 +44,8 @@ Page({
     selectAllFlag: false,
     indexArr: [],
     mSelect: 1,//1全部 2新上 3价格
-    isMtype:false
+    isMtype:false,
+    advSort:-1
   },
   onLoad: function (options) {
     let data = app.globalData.monitorLongData
@@ -88,7 +89,8 @@ Page({
         app.globalData.monitorSearchLongData['advSort'] = e.detail['advSort'];
         this.setData({
           loadingDisplay: "block",
-          allData: []
+          allData: [],
+          advSort: e.detail['advSort']
         });
         if (e.detail['advSort'] == 1) {
           allArr.sort(util.compareSort("price", "asc"));
@@ -256,7 +258,7 @@ Page({
         minPrice: monitorDetail.minPrice,//最低价
         maxPrice: monitorDetail.maxPrice == 99999 ? 10000 : monitorDetail.maxPrice,//最高价 不限99999
         //advSort: monitorDetail.sortType || 0
-        advSort:-1
+        advSort: this.data.advSort || -1
       }
       app.globalData.monitorDefaultSearchLongData = {
         chooseType: monitorDetail.houseSource, //1品牌中介，2个人房源
@@ -277,7 +279,7 @@ Page({
         minPrice: monitorDetail.minPrice,//最低价
         maxPrice: monitorDetail.maxPrice == 99999 ? 10000 : monitorDetail.maxPrice,//最高价 不限99999
         // advSort: monitorDetail.sortType || 0
-        advSort: -1
+        advSort: this.data.advSort || -1
       }
       let x = app.globalData.monitorSearchLongData
       new positionService().getSearchHoset(x.city, x.chooseType).then(resp => {
