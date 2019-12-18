@@ -42,6 +42,7 @@ Page({
     mSelect: 1, //1全部 2新上 3价格
     isMtype: false,
     lowUnitPrice:0,
+    advSort: -1
   },
   onLoad: function (options) {
     let data = app.globalData.monitorSecondData
@@ -75,7 +76,8 @@ Page({
         app.globalData.monitorSecondSearchData['advSort'] = e.detail['advSort'];
         this.setData({
           loadingDisplay: "block",
-          allData: []
+          allData: [],
+          advSort: e.detail['advSort']
         });
         if (e.detail['advSort'] == 1) {
           allArr.sort(util.compareSort("price", "asc"));
@@ -247,6 +249,7 @@ Page({
         secondBuildingAgeMap: monitorDetail.towerAge || '', //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
         secondLayoutMap: monitorDetail.layoutRoom ? monitorDetail.layoutRoom.split(',').map(item => +item) : [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
         secondSortTypeMap: monitorDetail.sortType || 0, //房源偏好 1: 低总价优先 2: 低单价优先
+        advSort: this.data.advSort || -1
       }
       app.globalData.monitorDefaultSearchSecondData = {
         city: monitorDetail.cityName, //城市名
@@ -270,6 +273,7 @@ Page({
         secondBuildingAgeMap: monitorDetail.towerAge || '', //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
         secondLayoutMap: monitorDetail.layoutRoom ? monitorDetail.layoutRoom.split(',').map(item => +item) : [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
         secondSortTypeMap: monitorDetail.sortType || 0, //房源偏好 1: 低总价优先 2: 低单价优先
+        advSort: this.data.advSort || -1
       }
       let x = app.globalData.monitorSecondSearchData
       new positionService().getSearchHoset(x.city, 1).then(resp => {
