@@ -29,7 +29,7 @@
             </view>
             <view class="newLevel pricedown green" wx:if="{{item.priceDownLevel >0 }}">
               <text class="icon-font uniE967"></text>
-              <text class="">降价{{item.priceMargin?item.priceMargin:''}}</text>
+              <text class="">降价{{item.priceMargin?item.priceMargin:''}}<text wx:if="{{rentType==3}}">万</text></text>
             </view>
           </view>
         </view>
@@ -90,7 +90,7 @@
         </view>
         <view class="newLevel pricedown green" wx:if="{{item.priceDownLevel >0 }}">
           <text class="icon-font uniE967"></text>
-          <text class="">降价{{item.priceMargin?item.priceMargin:''}}</text>
+          <text class="">降价{{item.priceMargin?item.priceMargin:''}}<text wx:if="{{rentType==3}}">万</text></text>
         </view>
       </view>
     </view>
