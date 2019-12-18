@@ -10,9 +10,7 @@
   left: 50px;
   top: 0
 }
-.green{
-  background:linear-gradient(180deg,rgba(18,190,139,1) 0%,rgba(0,191,87,1) 100%)!important;
-}
+
 .wrapper {
   width: calc(100vw);
   height: 286rpx;
