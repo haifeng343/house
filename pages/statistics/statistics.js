@@ -177,6 +177,7 @@ Page({
           data.enoughList[i]['lowPriceData'] = data.wiwjLowPriceData
         }
         if (data.enoughList[i].key == 'lj') {
+          data.enoughList[i]['name'] = '贝壳'
           data.enoughList[i]['selectCount'] = data.lianjiaFilterData.length
           data.enoughList[i]['lowPriceData'] = data.lianjiaLowPriceData
         }
