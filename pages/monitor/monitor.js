@@ -11,30 +11,35 @@ Page({
     ddCoin: 0,
     active: 1
   },
-  onLoad: function(options) {},
+  onLoad: function(options) { },
   onShow: function() {
     let token = wx.getStorageSync('token');
     if (token) {
-      if (app.switchRent == 1 || !app.switchRent) {
+      if (app.switchRent == 1) {
         this.setData({
           active: 1,
           data: []
         })
+        wx.setStorageSync('monitorIndex',1)
         this.getMonitorData()
-      }
-      if (app.switchRent == 2) {
+      }else if (app.switchRent == 2) {
         this.setData({
           active: 2,
           data: []
         })
+        wx.setStorageSync('monitorIndex', 2)
         this.getLongMonitorData()
-      }
-      if (app.switchRent == 3) {
+      }else if (app.switchRent == 3) {
         this.setData({
           active: 3,
           data: []
         })
+        wx.setStorageSync('monitorIndex', 2)
         this.getSecondHandData()
+      } else {
+        let active = wx.getStorageSync('monitorIndex') || 1
+        this.setData({ active, data: [] })
+        this.getMonitorData()
       }
       this.getUserInfo()
     } else {
@@ -52,6 +57,7 @@ Page({
           active: 1,
           data: []
         })
+        wx.setStorageSync('monitorIndex', 1)
         this.getMonitorData()
       }
       if (index === '2' && this.data.active != index) {
@@ -59,14 +65,15 @@ Page({
           active: 2,
           data: []
         })
+        wx.setStorageSync('monitorIndex', 2)
         this.getLongMonitorData()
       }
-
       if (index === '3' && this.data.active != index) {
         this.setData({
           active: 3,
           data: []
         })
+        wx.setStorageSync('monitorIndex', 3)
         this.getSecondHandData()
       }
     } else {
