@@ -1029,6 +1029,7 @@ Page({
   changeTab(event) {
     let tabIndex = +event.currentTarget.dataset.index || 1
     if (tabIndex !== this.data.tabIndex) {
+      wx.setStorageSync('tabIndex', tabIndex)
       this.setData({ tabIndex, spread: false })
       if (tabIndex === 1) {
         this.getHotCity()
@@ -1284,10 +1285,15 @@ Page({
     }
   },
   onLoad(params) {
-    const tab = +params.tab;
+    let tab = +params.tab;
+    if(!tab) {
+      tab = wx.getStorageSync('tabIndex') || 1
+    } else {
+      wx.setStorageSync('tabIndex', tab)
+    }
     this.init();
     this.searchDataSubscription = SearchDataSubject.subscribe(() => {
-      this.setData({ showPriceBlock: false, tabIndex: tab || 1 });
+      this.setData({ showPriceBlock: false, tabIndex: tab });
       setTimeout(() => {
         this.getSearchDataFromGlobal();
         this.setData({ needOnShow: true });
