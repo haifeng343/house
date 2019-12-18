@@ -50,6 +50,9 @@ Component({
     //二手房最小价格
     changeMinPrice(e) {
       let min = (+e.detail.value.replace(/\D/g, '')) + ''
+      if (min === '0' && e.detail.value.replace(/\D/g, '') != '0') {
+        min = ''
+      }
       this.setData({ min })
       this.triggerEvent("changeSecondPrice", { minPrice:min, maxPrice:this.data.max })
     },

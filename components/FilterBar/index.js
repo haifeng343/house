@@ -1,12 +1,12 @@
 import FilterMap from "./FilterMap";
-import { chooseArea } from "../../utils/longSetSearchData";
 const longRentTip = require("../../utils/longRentTip");
 import {
+  chooseArea,
   longSetSearchData,
-  chooseSlectData
+  chooseSlectData,
+  isShowNearby
 } from "../../utils/longSetSearchData";
 import getHeightStrArray from "../../utils/getHeightStrArray";
-import { isShowNearby } from "../../utils/longSetSearchData.js";
 
 const areaKey = ["area", "areaId", "areaJson", "areaType"];
 
@@ -320,7 +320,7 @@ Component({
     handleTabitemAction(tabItem) {
       switch (tabItem.action) {
         case "advance":
-          this.setData({ showRightPanel: true, showTopPanel: false });
+          this.setData({ showTopPanel: true, currentPanel: "advance" });
           break;
         case "price":
           this.setData({ showTopPanel: true, currentPanel: "price" });
@@ -503,7 +503,7 @@ Component({
     },
 
     handleSelectFilter(event) {
-      const { value, field } = event.detail;
+      const { value, field } = event.currentTarget.dataset;
       const filterItem = this.data.map.filter.find(
         item => item.field === field
       );
