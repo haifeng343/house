@@ -61,11 +61,7 @@
         <scroll-view scroll-y class="search-result-list">
           <view wx:for="{{searchResultList}}" wx:key="{{item.label}}" class="search-result-item" bindtap="handleSelectSearchResult" data-item="{{item}}">
             <view class="search-result-tag">{{item.tag}}</view>
-            <view class="search-result-text">
-              <text wx:for="{{item.label}}" wx:key="*this" class="{{item === searchKey ? 'hightlight' : ''}}">
-                {{item}}
-              </text>
-            </view>
+            <view class="search-result-text"><text wx:for="{{item.label}}" wx:key="*this" class="{{item === searchKey ? 'hightlight' : ''}}">{{item}}</text></view>
             <text class="icon-font uniE90C"></text>
           </view>
         </scroll-view>
@@ -74,9 +70,7 @@
         <view class="area-wrapper">
           <scroll-view scroll-y class="area-list level1">
             <block wx:for="{{areaList}}" wx:key="{{item.title}}">
-              <view class="area-item {{currentAreaType === index ? 'active' : ''}}" wx:if="{{item.list.length > 0}}" bindtap="handleSelectAreaType" data-index="{{index}}">
-                <text>{{item.title}}</text>
-              </view>
+              <view class="area-item {{currentAreaType === index ? 'active' : ''}}" wx:if="{{item.list.length > 0}}" bindtap="handleSelectAreaType" data-index="{{index}}"><text>{{item.title}}</text></view>
             </block>
           </scroll-view>
           <scroll-view scroll-into-view="{{level2View}}" scroll-y class="area-list level2 " wx:if="{{areaList[currentAreaType].list}}">
