@@ -156,14 +156,7 @@
   margin-top: 20rpx;
 }
 .card_time .romm_num{
-  background: #FFFFFF;
-  color: #5CD6B6;
-  text-align: center;
-  display: inline-block;
-  padding: 0 4rpx;
-}
-.monitor_red_card .card_time .romm_num{
-  color: #DA4E3A
+  font-weight: bold
 }
 .monitor_card .card_time{
   font-size: 28rpx;
