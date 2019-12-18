@@ -235,11 +235,11 @@ Page({
         areaType: monitorDetail.locationType || 0, //地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线50：地铁站 60：附近
         areaJson: monitorDetail.searchJson, //json
         minPrice: monitorDetail.minPrice, //最低价
-        maxPrice: monitorDetail.maxPrice, //最高价 不限"99999"
+        maxPrice: monitorDetail.maxPrice == 99999 ? '' : monitorDetail.maxPrice, //最高价 不限"99999"
         placeholderMinPrice: monitorDetail.actualPrice || 0, //城市最低价格
         placeholderMaxPrice: (monitorDetail.cityName == '北京' || monitorDetail.cityName == '北京')?500:300, //城市最高价格
-        minArea: monitorDetail.minArea, //最低面积
-        maxArea: monitorDetail.maxArea >= 151 ? '不限' : monitorDetail.maxArea, //最高面积 上限150
+        minArea: +monitorDetail.minArea, //最低面积
+        maxArea: monitorDetail.maxArea == 99999 ? 151 : (+monitorDetail.maxArea), //最高面积 上限150
         
         secondHouseDecorationMap: monitorDetail.decorate?monitorDetail.decorate.split(',').map(item => +item):[], //装修  1: 毛坯房 2: 普通装修 3: 精装修
         secondHouseTagMap: monitorDetail.houseTags ? monitorDetail.houseTags.split(',').map(item => +item) : [], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
@@ -260,11 +260,11 @@ Page({
         areaType: monitorDetail.locationType || 0, //地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线50：地铁站 60：附近
         areaJson: monitorDetail.searchJson, //json
         minPrice: monitorDetail.minPrice, //最低价
-        maxPrice: monitorDetail.maxPrice, //最高价 不限"99999"
+        maxPrice: monitorDetail.maxPrice == 99999 ? '' : monitorDetail.maxPrice, //最高价 不限"99999"
         placeholderMinPrice: monitorDetail.actualPrice || 0, //城市最低价格
         placeholderMaxPrice: (monitorDetail.cityName == '北京' || monitorDetail.cityName == '北京') ? 500 : 300, //城市最高价格
-        minArea: monitorDetail.minArea, //最低面积
-        maxArea: monitorDetail.maxArea >= 151 ? '不限':monitorDetail.maxArea, //最高面积 上限150
+        minArea: +monitorDetail.minArea, //最低面积
+        maxArea: monitorDetail.maxArea == 99999 ? 151 : (+monitorDetail.maxArea), //最高面积 上限150
         secondHouseDecorationMap: monitorDetail.decorate ?monitorDetail.decorate.split(',').map(item => +item):[], //装修  1: 毛坯房 2: 普通装修 3: 精装修
         secondHouseTagMap: monitorDetail.houseTags ? monitorDetail.houseTags.split(',').map(item => +item) : [], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
         secondHeadingMap: monitorDetail.heading ? monitorDetail.heading.split(',').map(item => +item) : [], //朝向 1: 朝东 2: 朝西 3: 朝南 4: 朝北 10: 南北通透

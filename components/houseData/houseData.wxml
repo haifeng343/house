@@ -55,8 +55,8 @@
       <view class="real_num">{{allCount}}</view>
     </view>
     <view class="data_layout data_average">
-      <view>当前均价/平米</view>
-      <view class="average_price">¥{{averagePrice}}</view>
+      <view>当前均价(元/㎡)</view>
+      <view class="average_price">{{averagePrice}}</view>
     </view>
   </view>
   <view class="data_sencond">
@@ -66,7 +66,7 @@
     </view>
     <view class="data_layout data_low">
       <view>当前最低总价/万</view>
-      <view class="low_price">¥{{lowPrice}}</view>
+      <view class="low_price">{{lowPrice}}</view>
     </view>
   </view>
 </view>
