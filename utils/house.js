@@ -2086,6 +2086,7 @@ const getBrandSecondHouseData = data => {
         break;
       }
       if (wiwj == 1) {
+        console.log(wiwjData)
         let wiwjObjs = {
           platformId: "wiwj",
           collection: false,
@@ -2093,13 +2094,12 @@ const getBrandSecondHouseData = data => {
           imgurl: wiwjData[i].imgurl,
           price: Number(wiwjData[i].price),
           housetitle: wiwjData[i].BaseDetail.housetitle,
-          introduce: wiwjData[i].BaseDetail.bedroom+'室'+
-            wiwjData[i].BaseDetail.livingroom +
+          introduce: wiwjData[i].bedroom +'室'+
+            wiwjData[i].livingroom+'厅' +
             "/" +
-            wiwjData[i].BaseDetail.buildarea +
+            wiwjData[i].buildarea +
             "㎡/" +
-
-            wiwjData[i].BaseDetail.heading,
+            wiwjData[i].heading,
           address: wiwjData[i].qyname + "·" + wiwjData[i].sqname,
           tagwall: wiwjData[i].tagwall,
           area: Number(wiwjData[i].buildarea),
