@@ -28,10 +28,10 @@
           </view>
           <view class="task" wx:else>
             <view><text>预算:</text><text class="update" wx:if="{{updateData.minPrice!=defalutData.minPrice||updateData.maxPrice!=defalutData.maxPrice}}">已改</text></view>
-            <text class="task_right" wx:if="{{updateData.minPrice==0&&updateData.maxPrice==10000}}">不限</text>
-            <text class="task_right" wx:if="{{updateData.minPrice>0&&updateData.maxPrice==10000}}">高于{{updateData.minPrice}}万</text>
-            <text class="task_right" wx:if="{{updateData.minPrice==0&&updateData.maxPrice<10000}}">低于{{updateData.maxPrice}}万</text>
-            <text class="task_right" wx:if="{{updateData.minPrice>0&&updateData.maxPrice<10000}}">{{updateData.minPrice}}万-{{updateData.maxPrice}}万</text>
+            <text class="task_right" wx:if="{{updateData.minPrice==0&&updateData.maxPrice==99999}}">不限</text>
+            <text class="task_right" wx:if="{{updateData.minPrice>0&&updateData.maxPrice==99999}}">高于{{updateData.minPrice}}万</text>
+            <text class="task_right" wx:if="{{updateData.minPrice==0&&updateData.maxPrice<99999}}">低于{{updateData.maxPrice}}万</text>
+            <text class="task_right" wx:if="{{updateData.minPrice>0&&updateData.maxPrice<99999}}">{{updateData.minPrice}}万-{{updateData.maxPrice}}万</text>
           </view>
           <view class="task" wx:if="{{rentType!=3}}">
             <view><text>高级筛选:</text><text class="update" wx:if="{{filter.arrCompare(updateData.longSortTypes,defalutData.longSortTypes)==2||filter.arrCompare(updateData.longBuildAreas,defalutData.longBuildAreas)==2||filter.arrCompare(updateData.longFloorTypes,defalutData.longFloorTypes)==2||filter.arrCompare(updateData.longHeadings,defalutData.longHeadings)==2||filter.arrCompare(updateData.longHouseTags,defalutData.longHouseTags)==2}}">已改</text></view>
