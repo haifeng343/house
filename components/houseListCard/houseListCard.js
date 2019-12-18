@@ -43,6 +43,16 @@ Component({
       type: Boolean,
       value: true
     },
+    singleEditFlag: {
+      type: Boolean,
+      observer: function (singleEditFlag) {
+        if (singleEditFlag) {
+          this.setData({
+            x: 0
+          })
+        }
+      }
+    }
   },
 
   /**

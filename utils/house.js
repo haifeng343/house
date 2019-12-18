@@ -2478,6 +2478,62 @@ const houseLongFilter = (allData, xType) => {
     })
   }
 }
+const houseSecondFilter = allData => {
+  let wiwjFilterData = [],
+    ljFilterData = [];
+  //平均价
+  let average = allData.length > 0 ? allData.reduce((sum, {
+    price
+  }) => sum + price, 0) / allData.length : 0;
+  let averageunitPrice =
+    allData.length > 0 ?
+      allData.reduce((sum, {
+        unit_price
+      }) => sum + unit_price, 0) / allData.length :
+      0;
+  //所有最低价
+  let lowPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) { return o.price; })) : 0;
+  //所有最低单价
+  let lowUnitPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) {
+    return o.unit_price;
+  })) : 0;
+  //所有房源最低价格的数据
+  let sortArr = [...allData];
+  let areasortArr = [...allData];
+  sortArr.sort(util.compareSort("price", "asc"));
+  let lowPriceData = sortArr.length > 0 ? sortArr[0] : "";
+  //所有房源面积最大
+  areasortArr.sort(util.compareSort("area", "desc"));
+  let highAreaData = areasortArr.length > 0 ? areasortArr[0] : "";
+  for (let i = 0; i < allData.length; i++) {
+    if (allData[i].platformId == 'wiwj') {
+      wiwjFilterData.push(allData[i])
+    }
+    if (allData[i].platformId == 'lj') {
+      ljFilterData.push(allData[i])
+    }
+  }
+  //我爱我家最低价格数据
+  wiwjFilterData.sort(util.compareSort("price", "asc"));
+  let wiwjLowPriceData = wiwjFilterData.length > 0 ? wiwjFilterData[0] : "";
+  //链家最低价格数据
+  ljFilterData.sort(util.compareSort("price", "asc"));
+  let ljLowPriceData = ljFilterData.length > 0 ? ljFilterData[0] : "";
+
+  return {
+    allData,
+    averagePrice: parseInt(average),
+    averageunitPrice: parseInt(averageunitPrice),
+    lowPrice,
+    lowUnitPrice,
+    highAreaData,
+    lowPriceData,
+    wiwjLowPriceData,
+    ljLowPriceData,
+    wiwjFilterData,
+    ljFilterData,
+  };
+}
 const getMonitorLongHouseData = (list, mSelect) => {
   let app = getApp();
   let allData = []; //监控房源列表
@@ -2666,8 +2722,6 @@ const getMonitorSecondHouseData = (list, mSelect) => {
   let allData = []; //监控房源列表
   let wiwjFilterData = []; //监控我爱我家房源
   let ljFilterData = []; //监控链家房源
-  let ftxFilterData = []; //监控房天下房源
-  let wbtcFilterData = []; //监控58同城房源
 
   let houseList = monitorFilter(list, mSelect)
   for (let i = 0; i < houseList.length; i++) {
@@ -2735,8 +2789,6 @@ const getMonitorSecondHouseData = (list, mSelect) => {
   let areasortArr = [...allData];
   let wiwjSortArr = [...wiwjFilterData];
   let ljSortArr = [...ljFilterData];
-  let ftxSortArr = [...ftxFilterData];
-  let wbtcSortArr = [...wbtcFilterData];
 
   //所有最低价
   let lowPrice = allData.length > 0 ? Math.min.apply(Math, allData.map(function (o) { return o.price; })) : 0;
@@ -2784,12 +2836,7 @@ const getMonitorSecondHouseData = (list, mSelect) => {
   //链家最低价格数据
   ljSortArr.sort(util.compareSort("price", "asc"));
   let ljLowPriceData = ljSortArr.length > 0 ? ljSortArr[0] : "";
-  //房天下最低价格数据
-  ftxSortArr.sort(util.compareSort("price", "asc"));
-  let ftxLowPriceData = ftxSortArr.length > 0 ? ftxSortArr[0] : "";
-  //58同城最低价格数据
-  wbtcSortArr.sort(util.compareSort("price", "asc"));
-  let wbtcLowPriceData = wbtcSortArr.length > 0 ? wbtcSortArr[0] : "";
+
   return {
     allData,
     averagePrice: parseInt(average),
@@ -2800,12 +2847,8 @@ const getMonitorSecondHouseData = (list, mSelect) => {
     lowPriceData,
     wiwjLowPriceData,
     ljLowPriceData,
-    ftxLowPriceData,
-    wbtcLowPriceData,
     wiwjFilterData,
     ljFilterData,
-    ftxFilterData,
-    wbtcFilterData
   };
 };
 const wiwjScreenParam = type => {
@@ -4611,6 +4654,7 @@ module.exports = {
   ljSecondScreenParam,
   houseShortFilter,
   houseLongFilter,
+  houseSecondFilter,
   addMonitorData,
   addLongMonitorData,
   addSecondMonitorData,

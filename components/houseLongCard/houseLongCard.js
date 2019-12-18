@@ -47,15 +47,12 @@ Component({
     singleEditFlag:{
       type: Boolean,
       observer: function (singleEditFlag) {
-        if (singleEditFlag && this.properties.followIndex === this.properties.idx){
+        if (singleEditFlag){
           this.setData({
             x: 0
           })
         }
       }
-    },
-    followIndex:{
-      type: Number
     }
   },
 

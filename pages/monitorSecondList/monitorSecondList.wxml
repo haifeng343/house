@@ -22,7 +22,7 @@
 
     <view class="house_card">
       <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
-        <houseLongCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}"  bottomType="{{bottomType}}" type="{{2}}" rentType="{{3}}" idx="{{idx}}" isFirst="{{isFirst}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" isStatist="{{bottomType ===1?true:false}}"></houseLongCard>
+        <houseLongCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}"  bottomType="{{bottomType}}" type="{{2}}" rentType="{{3}}" idx="{{idx}}" isFirst="{{isFirst}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" singleEditFlag="{{singleEditFlag}}" isStatist="{{bottomType ===1?true:false}}"></houseLongCard>
       </block>
     </view>
     
