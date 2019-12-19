@@ -40,7 +40,7 @@
 .card_words .address image{width: 20rpx;height:26rpx;vertical-align: middle;margin-right: 10rpx;}
 .card_words .address text{line-height: 34rpx;vertical-align: middle;}
 .card_words .label{height: 44rpx;overflow:hidden;}
-.card_words .label text{
+.card_words .label .text1{
   display: inline-block;
   font-size: 20rpx;
   color: #F1612A;

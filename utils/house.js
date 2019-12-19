@@ -2723,7 +2723,8 @@ const getMonitorSecondHouseData = (list, mSelect) => {
   let wiwjFilterData = []; //监控我爱我家房源
   let ljFilterData = []; //监控链家房源
 
-  let houseList = monitorFilter(list, mSelect)
+  let houseList = monitorFilter(list, mSelect);
+  console.log(houseList);
   for (let i = 0; i < houseList.length; i++) {
     if (houseList[i].platform == "wiwj") {
       let wiwjObjs = {
@@ -2734,7 +2735,7 @@ const getMonitorSecondHouseData = (list, mSelect) => {
         price: Number(houseList[i].data.price),
         housetitle: houseList[i].data.housetitle,
         introduce: houseList[i].data.bedroom + '室' +
-          houseList[i].data.livingroom +
+          houseList[i].data.livingroom +'厅'+
           "/" +
           houseList[i].data.buildarea +
           "㎡/" +
