@@ -45,7 +45,15 @@ Page({
           data: [] 
         })
         delete app.switchRent
-        this.getMonitorData()
+        if (active === 1) {
+          this.getMonitorData()
+        }
+        if (active === 2) {
+          this.getLongMonitorData()
+        }
+        if (active === 3) {
+          this.getSecondHandData()
+        }
       }
       this.getUserInfo()
     } else {
