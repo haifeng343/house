@@ -714,6 +714,11 @@ Page({
               singleEditFlag: false
             })
           }
+          wx.showToast({
+            title: res.data.resultMsg,
+            icon: "none",
+            duration: 2000
+          });
           // if (this.data.scrollTop) {
           //   console.log(this.data.scrollTop)
           //   wx.pageScrollTo({
@@ -781,6 +786,11 @@ Page({
           editFlag: false,
           allData: []
         })
+        wx.showToast({
+          title: res.data.resultMsg,
+          icon: "none",
+          duration: 2000
+        });
         this.getMonitorData()
       });
     } 
