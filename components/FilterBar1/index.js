@@ -671,11 +671,11 @@ Component({
       this.setData(Object.assign({}, assginData, { map: insideData.map }));
     },
 
-    handleResetPrice() {
-      const { minPrice, maxPrice } = this.data.data;
-      this.setData({ minPrice, maxPrice, rangeCustom: this.rangeCustom });
-      this.changeList.add("minPrice");
-      this.changeList.add("maxPrice");
+    handleResetSize() {
+      const { minArea, maxArea } = this.data.data;
+      this.setData({ minArea, maxArea, rangeCustom: this.rangeCustom });
+      this.changeList.add("minArea");
+      this.changeList.add("maxArea");
     },
 
     checkReset() {
@@ -692,7 +692,7 @@ Component({
     resetAll() {
       this.doResetFilter(false);
       this.handleResetType();
-      this.handleResetPrice();
+      this.handleResetSize();
       this.handleResetSearch();
       this.handleResetView();
     },
