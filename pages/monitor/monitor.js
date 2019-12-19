@@ -13,6 +13,7 @@ Page({
   },
   onLoad: function(options) { },
   onShow: function() {
+    const app = getApp()
     let token = wx.getStorageSync('token');
     if (token) {
       if (app.switchRent == 1) {
@@ -21,7 +22,6 @@ Page({
           data: []
         })
         wx.setStorageSync('monitorIndex',1)
-        delete app.switchRent
         this.getMonitorData()
       }else if (app.switchRent == 2) {
         this.setData({
@@ -29,7 +29,6 @@ Page({
           data: []
         })
         wx.setStorageSync('monitorIndex', 2)
-        delete app.switchRent
         this.getLongMonitorData()
       }else if (app.switchRent == 3) {
         this.setData({
@@ -40,11 +39,11 @@ Page({
         this.getSecondHandData()
       } else {
         let active = wx.getStorageSync('monitorIndex') || 1
+        app.switchRent = active
         this.setData({ 
           active, 
           data: [] 
         })
-        delete app.switchRent
         if (active === 1) {
           this.getMonitorData()
         }
@@ -65,12 +64,14 @@ Page({
   monitorChange(e) {
     var index = e.currentTarget.dataset.index;
     let token = wx.getStorageSync('token');
+    const app = getApp()
     if (token) {
       if (index === '1' && this.data.active != index) {
         this.setData({
           active: 1,
           data: []
         })
+        app.switchRent = 1
         wx.setStorageSync('monitorIndex', 1)
         this.getMonitorData()
       }
@@ -79,6 +80,7 @@ Page({
           active: 2,
           data: []
         })
+        app.switchRent = 2
         wx.setStorageSync('monitorIndex', 2)
         this.getLongMonitorData()
       }
@@ -87,6 +89,7 @@ Page({
           active: 3,
           data: []
         })
+        app.switchRent = 3
         wx.setStorageSync('monitorIndex', 3)
         this.getSecondHandData()
       }
