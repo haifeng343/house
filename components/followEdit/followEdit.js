@@ -8,7 +8,14 @@ Component({
       type:Number
     },
     scrollIng:{
-      type: Boolean
+      type: Boolean,
+      observer: function (scrollIng){
+        if (scrollIng){
+          this.setData({
+            show: false
+          })
+        }
+      }
     },
     editFlag:{
       type: Boolean
