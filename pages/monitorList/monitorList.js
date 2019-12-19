@@ -855,6 +855,11 @@ Page({
             followDisplay: e.detail.show,
             singleEditFlag: false
           });
+          wx.showToast({
+            title: res.data.resultMsg,
+            icon: "none",
+            duration: 2000
+          });
         }
       });
     }
@@ -912,6 +917,11 @@ Page({
           followDisplay: e.detail.show,
           editFlag: false,
           allData: []
+        });
+        wx.showToast({
+          title: res.data.resultMsg,
+          icon: "none",
+          duration: 2000
         });
         this.getMonitorData();
       });
