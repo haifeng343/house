@@ -1291,9 +1291,10 @@ Page({
     } else {
       wx.setStorageSync('tabIndex', tab)
     }
+    this.setData({ tabIndex: tab })
     this.init();
     this.searchDataSubscription = SearchDataSubject.subscribe(() => {
-      this.setData({ showPriceBlock: false, tabIndex: tab });
+      this.setData({ showPriceBlock: false});
       setTimeout(() => {
         this.getSearchDataFromGlobal();
         this.setData({ needOnShow: true });

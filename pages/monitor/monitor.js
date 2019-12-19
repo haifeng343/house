@@ -21,6 +21,7 @@ Page({
           data: []
         })
         wx.setStorageSync('monitorIndex',1)
+        delete app.switchRent
         this.getMonitorData()
       }else if (app.switchRent == 2) {
         this.setData({
@@ -28,17 +29,22 @@ Page({
           data: []
         })
         wx.setStorageSync('monitorIndex', 2)
+        delete app.switchRent
         this.getLongMonitorData()
       }else if (app.switchRent == 3) {
         this.setData({
           active: 3,
           data: []
         })
-        wx.setStorageSync('monitorIndex', 2)
+        wx.setStorageSync('monitorIndex', 3)
         this.getSecondHandData()
       } else {
         let active = wx.getStorageSync('monitorIndex') || 1
-        this.setData({ active, data: [] })
+        this.setData({ 
+          active, 
+          data: [] 
+        })
+        delete app.switchRent
         this.getMonitorData()
       }
       this.getUserInfo()
