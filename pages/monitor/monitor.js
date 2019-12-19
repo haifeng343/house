@@ -559,19 +559,18 @@ Page({
         areaType: 0, //地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
         areaJson: "", //json
         minPrice: "", //最低价
-        maxPrice: "", //最高价 不限"99999"
-        placeholderMinPrice: "100", //城市最低价格
-        placeholderMaxPrice: "200", //城市最高价格
+        maxPrice: "", //最高价 不限空字符串 "99999"
         minArea: 0, //最低面积
         maxArea: 90, //最高面积 上限150
         secondHouseDecorationMap: [], //装修  1: 毛坯房 2: 普通装修 3: 精装修
-        secondHouseTagMap: [1], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
+        secondHouseTagMap: [], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
         secondHeadingMap: [], //朝向 1: 朝东 2: 朝西 3: 朝南 4: 朝北 10: 南北通透
         secondFloorTypeMap: [], //楼层 1: 低楼层 2: 中楼层 3: 高楼层
         secondHouseUseMap: [1], //用途 1: 普通住宅 2: 别墅 3: 其他
         secondBuildingAgeMap: 0, //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
         secondLayoutMap: [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
         secondSortTypeMap: 0, //房源偏好 1: 低总价优先 2: 低单价优先
+        advSort: 0,//1 价格从低到高 2单价从低到高 11 价格从高到低 21 单价从高到低 31面积从高到底
       }
       app.globalData.monitorDefaultSecondSearchData = {
         city: "", //城市名
@@ -582,19 +581,18 @@ Page({
         areaType: 0, //地点类型 0:未选择 10：行政区 20:商圈 30：小区 40：地铁线，50：地铁站 60：附近
         areaJson: "", //json
         minPrice: "", //最低价
-        maxPrice: "", //最高价 不限"99999"
-        placeholderMinPrice: "100", //城市最低价格
-        placeholderMaxPrice: "200", //城市最高价格
+        maxPrice: "", //最高价 不限空字符串 "99999"
         minArea: 0, //最低面积
         maxArea: 90, //最高面积 上限150
         secondHouseDecorationMap: [], //装修  1: 毛坯房 2: 普通装修 3: 精装修
-        secondHouseTagMap: [1], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
+        secondHouseTagMap: [], //房源特色 1: 满二 2: 满五 3: 近地铁 4: 随时看房 5: VR房源 6: 新上房源
         secondHeadingMap: [], //朝向 1: 朝东 2: 朝西 3: 朝南 4: 朝北 10: 南北通透
         secondFloorTypeMap: [], //楼层 1: 低楼层 2: 中楼层 3: 高楼层
         secondHouseUseMap: [1], //用途 1: 普通住宅 2: 别墅 3: 其他
         secondBuildingAgeMap: 0, //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
         secondLayoutMap: [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
         secondSortTypeMap: 0, //房源偏好 1: 低总价优先 2: 低单价优先
+        advSort: 0,//1 价格从低到高 2单价从低到高 11 价格从高到低 21 单价从高到低 31面积从高到底
       }
       app.globalData.monitorSecondData = {
         item: item
