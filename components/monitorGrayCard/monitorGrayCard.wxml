@@ -53,8 +53,10 @@
             <view class="card_address" wx:if="{{item.rentType == 3}}">
               <view class="city_text">{{item.cityName}}</view>
               <view class="city_type">
-                <view class="type" wx:if="{{item.maxArea == 99999}}"><text>面积不限</text></view>
-                <view class="type" wx:else><text>{{item.minArea}}-{{item.maxArea}}㎡</text></view>
+                <view class="type" wx:if="{{item.maxArea == 99999 && item.minArea>0}}">{{item.minArea}}<text>㎡以上</text></view>
+                <view class="type" wx:if="{{item.maxArea < 99999 && item.minArea==0}}">{{item.maxArea}}<text>㎡以下</text></view>
+                <view class="type" wx:if="{{item.maxArea < 99999 && item.minArea>0}}">{{item.minArea}}-{{item.maxArea}}㎡</view>
+                <view class="type" wx:if="{{item.maxArea == 99999 && item.minArea==0}}"><text>面积不限</text></view>
                 <view class="type" wx:if="{{item.layoutRoom}}"><text>{{item.layoutRoom}}室</text></view>
                 <view class="type" wx:if="{{item.houseTagsIndex>-1}}"><text>满二</text></view>
                 <view class="type" wx:if="{{item.decorateIndex>-1}}"><text>精装修</text></view>
