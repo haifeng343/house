@@ -832,12 +832,12 @@ const getWbtcData = (type, wbtcfilter = {}) => {
         filter: wbtcfilter
       })
       .then(res => {
-        if (
-          res.result.getListInfo.infolist && res.result.getListInfo.infolist.length > 0 &&
-          res.result.getListInfo.infolist[0]["itemtype"] === "listTangram"
-        ) {
-          res.result.getListInfo.infolist.shift();
-        }
+        // if (
+        //   res.result.getListInfo.infolist && res.result.getListInfo.infolist.length > 0 &&
+        //   res.result.getListInfo.infolist[0]["itemtype"] === "listTangram"
+        // ) {
+        //   res.result.getListInfo.infolist.shift();
+        // }
         wbtcCount = res.result.getListInfo.searchNum;
         arr = res.result.getListInfo.infolist || [];
         if (arr.length > wbtcCount) {
@@ -4595,7 +4595,7 @@ function lianjianFilter(arr) {
 
 function wbtcFilter(arr) {
   let newArr = arr.filter(item => {
-    return !item.isApartment
+    return !item.isApartment && item.infoID
   });
   return newArr;
 }
