@@ -70,6 +70,7 @@
   line-height: 52rpx;
   color: #1d1d1d;
   font-weight: 400;
+  white-space: nowrap;
 }
 .container .content .top .money.up {
   color: #f25555;
