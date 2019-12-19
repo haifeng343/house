@@ -1236,14 +1236,14 @@ Page({
     if (secondSearchData.secondHouseTagMap.indexOf(1) >= 0) {
       secondSearchData.secondHouseTagMap = [1]
     } else {
-      secondSearchData.secondHouseTagMap = [0]
+      secondSearchData.secondHouseTagMap = []
     }
     secondSearchData.secondHeadingMap = []
     secondSearchData.secondFloorTypeMap = []
     if (secondSearchData.secondHouseUseMap.indexOf(1) >= 0) {
       secondSearchData.secondHouseUseMap = [1]
     } else {
-      secondSearchData.secondHouseUseMap = [0]
+      secondSearchData.secondHouseUseMap = []
     }
     secondSearchData.secondBuildingAgeMap = 0
     this.searchDataStorage = searchDataStorage.subscribe(hasSearchData => {
