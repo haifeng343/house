@@ -13,7 +13,7 @@
             <text>{{item.address}}</text>
           </view>
           <view class="label" wx:if="{{rentType==3}}">
-            <view class="card_newprice" wx:if="{{bottomType == 1}}">
+            <view class="card_newprice">
               <view class="newLevel" wx:if="{{item.newLevel >0 }}">
                 <text class="icon-font uniE968"></text>
                 <text class="">新上</text>
@@ -22,10 +22,10 @@
                 <text class="icon-font uniE967"></text>
                 <text class="">降价{{item.priceMargin?item.priceMargin:''}}<text wx:if="{{rentType==3}}">万</text></text>
               </view>
-            <view wx:for="{{item.tagwall}}" wx:key="{{index}}" wx:for-item="itemTag">
+            </view>
+            <block wx:for="{{item.tagwall}}" wx:key="{{index}}" wx:for-item="itemTag">
               <text class="text1">{{itemTag}}</text>
-            </view>
-            </view>
+            </block>
           </view>
           <view class="label" wx:else>
             <block wx:for="{{item.tagwall}}" wx:key="{{index}}" wx:for-item="itemTag">
@@ -90,7 +90,7 @@
       </view>
       <view class="label">
         <block wx:for="{{item.tagwall}}" wx:key="{{index}}" wx:for-item="itemTag">
-          <text class="text1">{{itemTag}}</text>
+          <text>{{itemTag}}</text>
         </block>
       </view>
       <view class="card_price">
