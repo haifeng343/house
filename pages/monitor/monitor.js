@@ -112,8 +112,8 @@ Page({
           res.data.data[i].dayNum = monitor.setDay(res.data.data[i].monitorTime)
           res.data.data[i].hourNum = monitor.setHour(res.data.data[i].monitorTime)
           res.data.data[i].index = i
+          res.data.data[i].longRentType = res.data.data[i].rentType
           res.data.data[i].rentType = 2
-          //res.data.data[i].status = 11
         }
         this.setData({
           data: res.data.data,

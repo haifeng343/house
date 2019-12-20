@@ -51,7 +51,7 @@
             <view class="card_address" wx:if="{{item.rentType == 2}}">
               <view class="text">{{item.cityName}}</view>
               <view class="type"><text>{{item.houseSource ==1?'品牌中介':'个人房源'}}</text></view>
-              <view class="type" wx:if="{{item.rentType}}"><text>{{filter.rentType(item.rentType)}}</text></view>
+              <view class="type" wx:if="{{item.longRentType}}"><text>{{filter.rentType(item.longRentType)}}</text></view>
             </view>
             <view class="card_address" wx:if="{{item.rentType == 3}}">
               <view class="city_text">{{item.cityName}}</view>
