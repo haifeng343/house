@@ -90,7 +90,7 @@
       </view>
       <view class="label">
         <block wx:for="{{item.tagwall}}" wx:key="{{index}}" wx:for-item="itemTag">
-          <text>{{itemTag}}</text>
+          <text class="text1">{{itemTag}}</text>
         </block>
       </view>
       <view class="card_price">
