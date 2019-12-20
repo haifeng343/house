@@ -2099,7 +2099,7 @@ const getBrandSecondHouseData = data => {
             wiwjData[i].buildarea +
             "㎡/" +
             wiwjData[i].heading,
-          address: wiwjData[i].qyname + "·" + wiwjData[i].sqname,
+          address: wiwjData[i].qyname ? (wiwjData[i].qyname + "·" + wiwjData[i].sqname) : wiwjData[i].communityname,
           tagwall: wiwjData[i].tagwall,
           area: Number(wiwjData[i].buildarea),
           unit_price: Number(wiwjData[i].unitprice),
@@ -2128,7 +2128,7 @@ const getBrandSecondHouseData = data => {
           price: Number(lianjiaData[i].price_str),
           housetitle: lianjiaData[i].title,
           introduce: lianjiaData[i].desc_abtest,
-          address: lianjiaData[i].community_name,
+          address: lianjiaData[i].community_name ? lianjiaData[i].community_name: third_desc,
           tagwall: lianjiaSecondTagwall(lianjiaData[i].color_tags),
           area: Number(lianjiaData[i].area),
           unit_price: Number(lianjiaData[i].unit_price),
@@ -2740,7 +2740,7 @@ const getMonitorSecondHouseData = (list, mSelect) => {
           houseList[i].data.buildarea +
           "㎡/" +
           houseList[i].data.heading,
-        address: houseList[i].data.qyname + "·" + houseList[i].data.sqname,
+        address: houseList[i].data.qyname ? (houseList[i].data.qyname + "·" + houseList[i].data.sqname) : houseList[i].data.communityname,
         tagwall: houseList[i].data.tagwall,
         area: Number(houseList[i].data.buildarea),
         newLevel: houseList[i].newLevel,
@@ -2760,7 +2760,7 @@ const getMonitorSecondHouseData = (list, mSelect) => {
         price: Number(houseList[i].data.price_str),
         housetitle: houseList[i].data.title,
         introduce: houseList[i].data.desc_abtest,
-        address: houseList[i].data.community_name,
+        address: houseList[i].data.community_name ? houseList[i].data.community_name : houseList[i].data.third_desc,
         tagwall: lianjiaTagwall1(houseList[i].data.color_tags),
         area: Number(houseList[i].data.area),
         newLevel: houseList[i].newLevel,
