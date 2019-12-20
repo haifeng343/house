@@ -145,6 +145,7 @@
       <view class="button-wrapper">
         <view class="button button-reset" bindtap="handleResetFilter">重置</view>
         <view class="button button-submit" bindtap="handleSubmit">确定</view>
+        <view class="scroll_mask"></view>
       </view>
     </view>
   </TopPanel>

@@ -46,6 +46,7 @@
       </scroll-view>
       <view class="button-wrapper">
         <view class="button button-submit" bindtap="handleSubmit">查看房源</view>
+        <view class="scroll_mask"></view>
       </view>
     </view>
     <view class="area-panel" wx:if="{{currentPanel === 'area'}}">
@@ -120,6 +121,7 @@
       <view class="button-wrapper">
         <view class="button button-reset" bindtap="handleResetFilter">重置</view>
         <view class="button button-submit" bindtap="handleSubmit">确定</view>
+        <view class="scroll_mask"></view>
       </view>
     </view>
   </TopPanel>

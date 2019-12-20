@@ -40,6 +40,7 @@
     </scroll-view>
     <view class='search-btn'>
       <view class="button" bindtap='searchSubmit'>查看房源</view>
+      <view class="scroll_mask"></view>
     </view>
   </TopPanel>
   <TopPanel wx:if='{{shownType === 2}}' bind:onClose="handleClosePanel">
