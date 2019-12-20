@@ -189,14 +189,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 24rpx;
+  margin-right: 20rpx;
   font-size: 28rpx;
   color: #1d1d1d;
   font-weight: 400;
   background-color: #f0f0f0;
   border-radius: 48rpx;
-  margin-bottom: 26rpx;
-  padding: 0 28rpx;
+  margin-bottom: 20rpx;
+  width: 146rpx;
 }
 
 .option-item.active {
