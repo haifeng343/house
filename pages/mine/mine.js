@@ -111,7 +111,7 @@ Page({
   handleGotoFeedBack() {
     if (this.data.isAuth) {
       wx.navigateTo({
-        url: "/pages/feedback/fund"
+        url: "/pages/feedback/index"
       });
     } else {
       this.action = "gotofeedback";
