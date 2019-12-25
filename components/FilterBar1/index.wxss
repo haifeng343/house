@@ -70,16 +70,22 @@
   z-index: 333;
 }
 
-.price-panel,
+.price-panel {
+  width: 100%;
+  height: 310rpx;
+  display: flex;
+  flex-direction: column;
+}
+
 .type-panel {
   width: 100%;
-  height: 540rpx;
+  height: 560rpx;
   display: flex;
   flex-direction: column;
 }
 
 .filter-panel {
-  height: 880rpx;
+  height: 850rpx;
 }
 
 .content-wrapper {
@@ -152,7 +158,7 @@
 }
 
 .filter-panel .filter-list {
-  height: 740rpx;
+  height: 710rpx;
   overflow: scroll;
   width: calc(100% + 48rpx);
   padding-bottom: 0;

@@ -339,12 +339,12 @@
 .search_item .houseType {
   flex: 0 0 auto;
   height: 40rpx;
-  width: 138rpx;
+  width: 148rpx;
   border-radius: 40rpx;
   background: #f0f0f0;
   text-align: center;
   line-height: 40rpx;
-  margin-right: 16rpx;
+  margin-right: 10rpx;
   margin-bottom: 20rpx;
 }
 .search_item .houseType.active {
@@ -358,13 +358,13 @@
 }
 .search_item .leaseType {
   flex: 0 0 auto;
-  width: 156rpx;
+  width: 148rpx;
   height: 40rpx;
   border-radius: 40rpx;
   background: #f0f0f0;
   text-align: center;
   line-height: 40rpx;
-  margin-right: 16rpx;
+  margin-right: 10rpx;
 }
 .search_item .leaseType.active {
   background-color: #f1612a;

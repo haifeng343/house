@@ -70,10 +70,16 @@
   z-index: 333;
 }
 
-.price-panel,
-.type-panel {
+.price-panel {
   width: 100%;
   height: 540rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.type-panel {
+  width: 100%;
+  height: 390rpx;
   display: flex;
   flex-direction: column;
 }
