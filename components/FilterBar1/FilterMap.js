@@ -44,11 +44,28 @@ export default JSON.stringify({
   ],
   filter: [
     {
+        title: "房源偏好",
+        field: "secondSortTypeMap",
+        defaultValue: 0,
+        cancelable: true,
+        icon: iconEnum["red"],
+        list: [
+            {
+                label: "低总价优先",
+                value: 1
+            },
+            {
+                label: "低单价优先",
+                value: 2
+            }
+        ]
+    },
+    {
       title: "用途",
       field: "secondHouseUseMap",
       multi: true,
       defaultValue: [],
-      icon: iconEnum["red"],
+      icon: iconEnum["thistle"],
       list: [
         {
           label: "普通住宅",

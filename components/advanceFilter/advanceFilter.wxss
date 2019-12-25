@@ -28,7 +28,7 @@ page {
 }
 
 .search-content {
-  height: 600rpx;
+  height: 660rpx;
   padding-top: 40rpx;
   box-sizing: border-box;
 }
@@ -276,7 +276,7 @@ page {
   position: absolute;
   top:-40rpx;
   left: 0;
-  background: linear-gradient(rgba(255,255,255,0) 0%,rgba(255,255,255,1) 70%,rgba(255,255,255,1) 100%);
+  background: linear-gradient(rgba(255,255,255,0) 0%,rgba(255,255,255,1) 90%,rgba(255,255,255,1) 100%);
 }
 
 .button {

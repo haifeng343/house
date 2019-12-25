@@ -1,20 +1,20 @@
 <view wx:if="{{countFlag ===1}}" class="house_shortcuts {{!scrollIng ? '' : 'hidden'}}">
   <view class="select_back" wx:if="{{!editFlag}}">
-    <view bindtap="goEdit" class="top select_item active" src="../../assets/image/edit.png"><text class="icon-font uniE92E"></text></view>
+    <view bindtap="goEdit" class="top select_item active"><text class="icon-font uniE949"></text></view>
   </view>
   <view class="select_back" wx:else>
     <view bindtap="goEdit" class="select_item active">取消</view>
   </view>
 
   <view class="select_back" wx:if="{{listType&&bottomType==1}}">
-    <view class="select_item active" bindtap="showSelsect">{{list[listType-1]}}</view>
+    <view class="select_item active" bindtap="showSelect">{{list[listType-1]}}</view>
     <view wx:for="{{list}}" wx:if="{{index + 1 != listType}}" class="select_item list {{!scrollIng && show ? 'show' : ''}}" bindtap="changeSelect" data-index="{{index + 1}}" wx:key="{{index}}">{{item}}</view>
   </view>
 </view>
 
 <view wx:if="{{countFlag ===0}}" class="house_shortcuts {{!scrollIng ? '' : 'hidden'}}">
   <view class="select_back" wx:if="{{(listType==2||listType==3)&&bottomType==1}}">
-    <view class="select_item active" bindtap="showSelsect">{{list[listType-1]}}</view>
+    <view class="select_item active" bindtap="showSelect">{{list[listType-1]}}</view>
     <view wx:for="{{list}}" wx:if="{{index + 1 != listType}}" class="select_item list {{!scrollIng && show ? 'show' : ''}}" bindtap="changeSelect" data-index="{{index + 1}}" wx:key="{{index}}">{{item}}</view>
   </view>
 </view>

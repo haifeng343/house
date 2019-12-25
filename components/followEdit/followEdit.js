@@ -46,7 +46,7 @@ Component({
       })
       this.triggerEvent('editEvent', '')
     },
-    showSelsect() {
+    showSelect() {
       this.setData({
         show: !this.data.show
       })
