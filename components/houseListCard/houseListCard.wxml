@@ -85,7 +85,7 @@
     <view class="house_classify" wx:else>榛果</view>
     <view class="house_price">
       <text>¥</text>
-      <text class="o_price" wx:if="{{item.oriPrice!=item.finalPrice}}">{{item.oriPrice}}</text>
+      <!--<text class="o_price" wx:if="{{item.oriPrice!=item.finalPrice}}">{{item.oriPrice}}</text>-->
       <text>{{item.finalPrice}}/晚{{dayCount==1?'':'(均价)'}}</text>
       <view class="triangle"></view>
     </view>
