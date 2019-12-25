@@ -1,62 +1,85 @@
 @import "/app.wxss";
-.mask{
+.mask {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
-  z-index: 101
+  z-index: 101;
 }
-.mask_content{
+.mask_content {
   margin-top: 300rpx;
   height: 434rpx;
 }
 
-.mask_content .house_image .image{
+.mask_content .house_image .image {
   width: 84rpx;
   height: 74rpx;
   margin-top: 26rpx;
 }
-.mask_content .content{
+.mask_content .content {
   width: 624rpx;
   height: 336rpx;
-  background: #FFFFFF;
-  border-radius:  0 0 16rpx 16rpx;
+  background: #ffffff;
+  border-radius: 0 0 16rpx 16rpx;
 }
-.mask_content .content .title{
-  color: #1D1D1D;
+.mask_content .content .title {
+  color: #1d1d1d;
   font-size: 32rpx;
   text-align: center;
-  padding-top: 30rpx
+  padding-top: 30rpx;
 }
-.mask_content .content .text{
-  padding-top: 8rpx;
+.mask_content .content .text {
   margin: 0 50rpx;
   text-indent: 28rpx;
   font-size: 28rpx;
-  color: #BEC3CD
+  color: #bec3cd;
+  text-align: center;
 }
-.mask_content .content .ding{color: #1D1D1D}
-.mask_content .content .btn{
+.mask_content .content .ding {
+  color: #1d1d1d;
+}
+.mask_content .content .btn {
   width: 272rpx;
   height: 92rpx;
-  background: -webkit-linear-gradient(top,#E75D28,#E94444);
+  background: -webkit-linear-gradient(top, #e75d28, #e94444);
   box-shadow: 4rpx 4rpx 8rpx 0px rgba(198, 55, 35, 0.48);
-  color: #FFFFFF;
+  color: #ffffff;
   margin: 52rpx auto 0;
   border-radius: 46rpx;
   text-align: center;
   line-height: 92rpx;
 }
-.mask_colse{
+.mask_colse {
   text-align: center;
   margin-top: 34rpx;
 }
-.mask_colse .close_image{
+.mask_colse .close_image {
   width: 66rpx;
   height: 66rpx;
+}
+.contact-button {
+  width: 272rpx;
+  height: 92rpx;
+  background: -webkit-linear-gradient(top, #e75d28, #e94444);
+  box-shadow: 4rpx 4rpx 8rpx 0px rgba(198, 55, 35, 0.48);
+  color: #ffffff;
+  margin: 24rpx auto 0;
+  border-radius: 46rpx;
+  text-align: center;
+  line-height: 92rpx;
+  position: relative;
+  font-size: 28rpx;
+  font-weight: 500;
+  padding: 0;
+}
+.contact-button ::after {
+  display: none;
+}
+.contact-button :active {
+  top: 2rpx;
 }

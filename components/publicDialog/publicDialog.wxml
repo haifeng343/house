@@ -6,7 +6,8 @@
       <view class="content">
         <view class="title">关注公众号提醒</view>
         <view class="text">为了能够及时的给您推送监控通知，需您微信手动关注我们的公众号<text class="ding">“帮盯盯”</text></view>
-        <view class="btn" catchtap="bindConfirm">现在关注</view>
+        <view class="text">对话框回复1识别二维码关注</view>
+        <button open-type="contact" class="contact-button" catchtap="bindConfirm">前往关注</button>
       </view>
       <view class="mask_colse">
         <image catchtap="bindClose" class="close_image" src="../../assets/image/close_down.png"></image>

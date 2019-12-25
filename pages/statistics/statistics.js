@@ -304,9 +304,6 @@ Page({
     this.setData({
       publicDisplay: e.detail,
     })
-    wx.navigateTo({
-      url: '../public/public',
-    })
   },
   // 添加监控，开启监控
   getStartMonitor(noteSelect, publicSelect) {

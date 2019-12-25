@@ -610,9 +610,6 @@ Page({
     this.setData({
       publicDisplay: e.detail
     });
-    wx.navigateTo({
-      url: "../public/public"
-    });
   },
   //获取用户信息，盯盯币，是否绑定微信公众号 和 手机绑定
   getUserInfo() {

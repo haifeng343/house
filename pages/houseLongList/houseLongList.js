@@ -773,9 +773,6 @@ Page({
     this.setData({
       publicDisplay: e.detail
     });
-    wx.navigateTo({
-      url: "../public/public"
-    });
   },
   //跳转到监控规则
   navtoMonitorRule() {
