@@ -1,5 +1,5 @@
-@import '../../assets/styles/font.wxss';
-@import '../../assets/styles/flex.wxss';
+@import "../../assets/styles/font.wxss";
+@import "../../assets/styles/flex.wxss";
 
 page {
   height: 100%;
@@ -235,4 +235,26 @@ page .page .menu-list {
 
 .dialog-container .dialog-button .button:active {
   top: 2rpx;
+}
+
+page .page .contact {
+  padding: 32rpx 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f1612a;
+  font-size: 28rpx;
+  width: 100%;
+  background-color: #fff;
+  border: none;
+  line-height: 40rpx;
+  height: 40rpx;
+  box-sizing: content-box;
+}
+page .page .contact::after {
+  display: none;
+}
+page .page .contact .uniE96A {
+  font-size: 40rpx;
+  margin-right: 16rpx;
 }

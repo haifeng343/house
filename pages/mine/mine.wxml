@@ -51,9 +51,13 @@
     <view class="menu-item" bindtap="handleShare">
       <menuItem label="分享给好友" icon="uniE911" desc="{{shareDesc}}" />
     </view>
-    <view class="menu-item" bindtap="handleGotoContact">
-      <menuItem label="联系客服" icon="uniE91C" />
+    <view class="menu-item" bindtap="handleGotoFeedBack">
+      <menuItem label="留言反馈" icon="uniE91C" />
     </view>
+    <button open-type="contact" class="contact">
+      <span class="icon-font uniE96A"></span>
+      <span>联系客服</span>
+    </button>
   </scroll-view>
   <authDialog bind:onConfirm="handleGetUserInfo" bind:onCancel="handleCloseAuthDialog" wx:if="{{showAuthDialog}}" />
   <ShareCard wx:if="{{showShareCard}}" bind:onClose="handleCloseShareCard" />

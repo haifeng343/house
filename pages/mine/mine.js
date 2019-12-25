@@ -108,10 +108,15 @@ Page({
       this.showAuthDialog();
     }
   },
-  handleGotoContact() {
-    wx.navigateTo({
-      url: `/pages/contact/index`
-    });
+  handleGotoFeedBack() {
+    if (this.data.isAuth) {
+      wx.navigateTo({
+        url: "/pages/feedback/fund"
+      });
+    } else {
+      this.action = "gotofeedback";
+      this.showAuthDialog();
+    }
   },
   handleGotoFund() {
     if (this.data.isAuth) {
@@ -146,6 +151,10 @@ Page({
 
       case "gotocoupon":
         this.handleGotoCoupon();
+        break;
+
+      case "gotofeedback":
+        this.handleGotoFeedBack();
         break;
     }
   },
