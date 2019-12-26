@@ -199,19 +199,19 @@
 
 .option-item {
   height: 48rpx;
+  line-height: 48rpx;
   box-sizing: border-box;
   border: solid 2rpx #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 20rpx;
+  margin-right: 10rpx;
   font-size: 28rpx;
   color: #1d1d1d;
   font-weight: 400;
   background-color: #f0f0f0;
   border-radius: 48rpx;
   margin-bottom: 20rpx;
-  width: 146rpx;
+  text-align: center;
+  width: 160rpx;
+  white-space:nowrap;
 }
 
 .option-item.active {

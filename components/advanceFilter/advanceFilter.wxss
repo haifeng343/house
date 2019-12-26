@@ -187,13 +187,14 @@ page {
 
 .search_item .houseType {
   flex: 0 0 auto;
-  width: 136rpx;
+  width: 144rpx;
   height: 40rpx;
   border-radius: 40rpx;
   background: #f0f0f0;
   text-align: center;
   line-height: 40rpx;
-  margin-right: 22rpx;
+  margin-right: 10rpx;
+  white-space:nowrap;
 }
 
 .search_item .houseType.active {
@@ -209,13 +210,14 @@ page {
 
 .search_item .leaseType {
   flex: 0 0 auto;
-  width: 156rpx;
+  width: 144rpx;
   height: 40rpx;
   border-radius: 40rpx;
   background: #f0f0f0;
   text-align: center;
   line-height: 40rpx;
-  margin-right: 34rpx;
+  margin-right: 10rpx;
+  white-space:nowrap;
 }
 
 .search_item .leaseType.active {
