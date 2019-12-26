@@ -200,19 +200,19 @@
                     </view>
                     <view wx:if="{{spread}}">
                         <view class='search_item noBorder'>
-                            <view class='title icon_4'>户型</view>
+                            <view class='title icon_3'>户型</view>
                             <view class="houseType {{checkHouseType.checkHouseType(secondSearchData.secondLayoutMap,index,true)?'active':''}}" wx:for-index="index" bindtap='selectLayoutMap' data-index='{{index}}' wx:key='{{item}}' wx:for="{{allSecondData.secondLayoutMap}}">
                                 {{item}}
                             </view>
                         </view>
                         <view class='search_item noBorder'>
-                            <view class='title icon_3'>房源偏好</view>
+                            <view class='title icon_4'>房源偏好</view>
                             <view class="leaseType {{secondSearchData.secondSortTypeMap==index?'active':''}}" wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypeMap' data-index='{{index}}' wx:for='{{allSecondData.secondSortTypeMap}}'>
                                 {{item}}
                             </view>
                         </view>
                         <view class='search_item noBorder'>
-                            <view class='title icon_2'>其他</view>
+                            <view class='title icon_1'>其他</view>
                             <view class="leaseType {{checkHouseType.checkHouseType(secondSearchData.secondHouseTagMap,1)?'active':''}}" data-index="{{1}}" bindtap='selectHouseTagMap'>满二</view>
                             <view class="leaseType {{checkHouseType.checkHouseType(secondSearchData.secondHouseDecorationMap,3)?'active':''}}" data-index="{{3}}" bindtap='selectHouseDecorationMap'>精装修</view>
                         </view>

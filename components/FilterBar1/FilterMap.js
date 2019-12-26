@@ -65,7 +65,7 @@ export default JSON.stringify({
       field: "secondHouseUseMap",
       multi: true,
       defaultValue: [],
-      icon: iconEnum["thistle"],
+      icon: iconEnum["wheat"],
       list: [
         {
           label: "普通住宅",
@@ -86,7 +86,7 @@ export default JSON.stringify({
       field: "secondHouseDecorationMap",
       multi: true,
       defaultValue: [],
-      icon: iconEnum["wheat"],
+      icon: iconEnum["thistle"],
       list: [
         {
           label: "毛胚房",
@@ -106,7 +106,7 @@ export default JSON.stringify({
       title: "楼层",
       multi: true,
       field: "secondFloorTypeMap",
-      icon: iconEnum["thistle"],
+      icon: iconEnum["cadetblue"],
       defaultValue: [],
       list: [
         {
@@ -127,7 +127,7 @@ export default JSON.stringify({
       title: "朝向",
       field: "secondHeadingMap",
       multi: true,
-      icon: iconEnum["wheat"],
+      icon: iconEnum["red"],
       defaultValue: [],
       list: [
         {
@@ -156,7 +156,7 @@ export default JSON.stringify({
       title: "房源特色",
       multi: true,
       field: "secondHouseTagMap",
-      icon: iconEnum["cadetblue"],
+      icon: iconEnum["wheat"],
       defaultValue: [],
       list: [
         {

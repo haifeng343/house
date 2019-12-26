@@ -40,7 +40,7 @@ export default JSON.stringify({
         field: "longLayouts",
         showType: [1, 2, 3, 4],
         defaultValue: [],
-        icon: iconEnum["thistle"],
+        icon: iconEnum["wheat"],
         list: [
           {
             label: "一室",
@@ -73,7 +73,7 @@ export default JSON.stringify({
         field: "longBuildAreas",
         showType: [1],
         defaultValue: -1,
-        icon: iconEnum["wheat"],
+        icon: iconEnum["thistle"],
         list: [
           {
             label: "不限",
@@ -133,7 +133,7 @@ export default JSON.stringify({
         title: "楼层",
         multi: true,
         field: "longFloorTypes",
-        icon: iconEnum["thistle"],
+        icon: iconEnum["wheat"],
         defaultValue: [],
         list: [
           {
@@ -154,7 +154,7 @@ export default JSON.stringify({
         title: "朝向",
         field: "longHeadings",
         multi: true,
-        icon: iconEnum["wheat"],
+        icon: iconEnum["thistle"],
         defaultValue: [],
         list: [
           {
