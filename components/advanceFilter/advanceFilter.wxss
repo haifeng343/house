@@ -188,6 +188,7 @@ page {
 .search_item .houseType {
   width: 144rpx;
   height: 48rpx;
+  font-size: 26rpx;
   line-height: 44rpx;
   box-sizing: border-box;
   border: solid 2rpx #f0f0f0;
@@ -211,7 +212,8 @@ page {
 
 .search_item .leaseType {
   width: 144rpx;
- height: 48rpx;
+  height: 48rpx;
+  font-size: 26rpx;
   line-height: 44rpx;
   box-sizing: border-box;
   border: solid 2rpx #f0f0f0;

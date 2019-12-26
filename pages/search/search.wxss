@@ -307,7 +307,6 @@
   font-size: 28rpx;
   position: absolute;
   right: 0;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -339,6 +338,7 @@
 .search_item .houseType {
   width: 148rpx;
   height: 48rpx;
+  font-size: 26rpx;
   line-height: 44rpx;
   box-sizing: border-box;
   border: solid 2rpx #f0f0f0;
@@ -361,6 +361,7 @@
 .search_item .leaseType {
   width: 148rpx;
   height: 48rpx;
+  font-size: 26rpx;
   line-height: 44rpx;
   box-sizing: border-box;
   border: solid 2rpx #f0f0f0;

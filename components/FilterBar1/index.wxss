@@ -203,7 +203,7 @@
   box-sizing: border-box;
   border: solid 2rpx #f0f0f0;
   margin-right: 10rpx;
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #1d1d1d;
   font-weight: 400;
   background-color: #f0f0f0;
