@@ -1938,7 +1938,7 @@ const getBrandHouseData = data => {
             wiwjData[i].BaseDetail.floorStr +
             "/" +
             wiwjData[i].BaseDetail.heading,
-          address: wiwjData[i].qyname + "·" + wiwjData[i].sqname,
+          address: wiwjData[i].qyname ? (wiwjData[i].qyname + "·" + wiwjData[i].sqname) : wiwjData[i].communityname,
           tagwall: wiwjData[i].tagwall,
           area: Number(wiwjData[i].BaseDetail.area)
         };
@@ -2557,7 +2557,7 @@ const getMonitorLongHouseData = (list, mSelect) => {
           houseList[i].data.BaseDetail.floorStr +
           "/" +
           houseList[i].data.BaseDetail.heading,
-        address: houseList[i].data.qyname + "·" + houseList[i].data.sqname,
+        address: houseList[i].data.qyname ? (houseList[i].data.qyname + "·" + houseList[i].data.sqname) : houseList[i].data.communityname,
         tagwall: houseList[i].data.tagwall,
         area: Number(houseList[i].data.BaseDetail.area),
         newLevel: houseList[i].newLevel,
