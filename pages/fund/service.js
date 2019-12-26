@@ -19,7 +19,6 @@ const fundIcon = {
   "41": "uniE96B"
 };
 
-
 const coinFundIcon = {
   "1": "uniE93B",
   "2": "uniE93C",
@@ -39,6 +38,9 @@ export default class FundService {
           item.date = item.createTime.substr(5, 11);
           item.money = item.money.toFixed(2);
           item.icon = fundIcon[item.type];
+          if (item.type === 6 || item.type === 7) {
+            item.desc = item.remark;
+          }
 
           const orderNo = item.orderNo;
 
