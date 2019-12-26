@@ -15,8 +15,10 @@ const fundIcon = {
   "6": "uniE906",
   "7": "uniE95F",
   "8": "uniE93C",
-  "33": "uniE93B"
+  "33": "uniE93B",
+  "41": "uniE96B"
 };
+
 
 const coinFundIcon = {
   "1": "uniE93B",
