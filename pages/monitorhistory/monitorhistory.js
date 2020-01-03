@@ -16,9 +16,9 @@ Page({
   targetMonitorId: -1,
 
   onLoad() {
-    wx.showLoading({
-      mask: true
-    });
+    // wx.showLoading({
+    //   mask: true
+    // });
     this.getShortHistory()
   },
   getShortHistory(){
@@ -80,10 +80,10 @@ Page({
   handleFundTypeChange(event) {
     const fundListType = +event.currentTarget.dataset.value;
     if (this.data.fundListType !== fundListType) {
-      wx.showLoading({
-        title: '获取历史数据...',
-        mask: true
-      });
+      // wx.showLoading({
+      //   title: '获取历史数据...',
+      //   mask: true
+      // });
       this.setData(
         {
           fundListType,
@@ -122,10 +122,10 @@ Page({
   handleDialogConfirm() {
     if (this.submitFlag === false) {
       this.submitFlag = true;
-      wx.showLoading({
-        title: '请稍候...',
-        mask: true
-      });
+      // wx.showLoading({
+      //   title: '请稍候...',
+      //   mask: true
+      // });
       if (this.data.fundListType ==1){
         this.service
           .removeHistoryMonitor(this.targetMonitorId)

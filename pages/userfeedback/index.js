@@ -10,10 +10,10 @@ Page({
   submitFlag: false,
 
   onLoad() {
-    wx.showLoading({
-      title: '请稍候...',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '请稍候...',
+    //   mask: true
+    // });
     this.service
       .getUserFeedBackList()
       .then(feedbackList => {

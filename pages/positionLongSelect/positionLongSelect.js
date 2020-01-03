@@ -139,10 +139,10 @@ Page({
     }
     this.setData({ city, type, isSecond, history });
     let list = this.data.list
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // });
 
     //获取列表数据
     let chooseType = 1

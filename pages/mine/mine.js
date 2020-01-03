@@ -176,10 +176,10 @@ Page({
     this.setData({ showCouponDialog: false });
   },
   showAuthDialog() {
-    wx.showLoading({
-      title: "获取登录授权中",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "获取登录授权中",
+    //   mask: true
+    // });
 
     getSessionKey()
       .then(() => {
@@ -217,10 +217,10 @@ Page({
 
     if (this.submitFlag === false) {
       this.submitFlag = true;
-      wx.showLoading({
-        title: "获取授权信息...",
-        mask: true
-      });
+      // wx.showLoading({
+      //   title: "获取授权信息...",
+      //   mask: true
+      // });
       this.setData({ showAuthDialog: false });
       getSessionKey().then(sessionKey => {
         const data = {
@@ -285,10 +285,10 @@ Page({
     if (this.isFirstShare === false) {
       return;
     }
-    wx.showLoading({
-      title: "请稍候...",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "请稍候...",
+    //   mask: true
+    // });
     this.service
       .requestShare()
       .then(couponList => {

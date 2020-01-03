@@ -435,10 +435,10 @@ Page({
       lianjiaCount: this.data.lianjiaCount
     }
     let addData = house.addSecondMonitorData(data)
-    wx.showLoading({
-      title: '正在添加监控...',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '正在添加监控...',
+    //   mask: true
+    // });
     monitorApi.addSecondMonitor(addData).then(res => {
       wx.hideLoading();
       wx.showToast({

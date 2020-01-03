@@ -101,10 +101,10 @@ Page({
   },
   getLongMonitorData() {
     let data = {}
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "加载中...",
+    //   mask: true
+    // });
     monitorApi.getMonitorLongList(data).then(res => {
       wx.hideLoading();
       if (res.data.data.length) {
@@ -128,10 +128,10 @@ Page({
   },
   getMonitorData() {
     let data = {}
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "加载中...",
+    //   mask: true
+    // });
     monitorApi.getMonitorList(data).then(res => {
       wx.hideLoading();
       if (res.data.data.length) {
@@ -156,10 +156,10 @@ Page({
   },
   getSecondHandData() {
     let data = {}
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "加载中...",
+    //   mask: true
+    // });
     monitorApi.getMonitorSecondList(data).then(res => {
       wx.hideLoading();
       if (res.data.data.length) {
@@ -370,10 +370,10 @@ Page({
     let data = {
       monitorId: this.data.startItem.id
     }
-    wx.showLoading({
-      title: '正在开启监控...',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '正在开启监控...',
+    //   mask: true
+    // });
     if (this.data.active == 1) {
       monitorApi.startMonitor(data).then(res => {
         wx.hideLoading();

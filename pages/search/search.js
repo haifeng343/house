@@ -538,10 +538,10 @@ Page({
         });
       } else {
         this.showAuthDialog();
-        wx.showLoading({
-          title: "获取登录授权中",
-          mask: true
-        });
+        // wx.showLoading({
+        //   title: "获取登录授权中",
+        //   mask: true
+        // });
       }
     } else if (this.data.tabIndex === 2) {
       let searchLongData = this.data.searchLongData;
@@ -556,10 +556,10 @@ Page({
         });
       } else {
         this.showAuthDialog();
-        wx.showLoading({
-          title: "获取登录授权中",
-          mask: true
-        });
+        // wx.showLoading({
+        //   title: "获取登录授权中",
+        //   mask: true
+        // });
       }
     } else {
       let secondSearchData = this.data.secondSearchData;
@@ -574,10 +574,10 @@ Page({
         });
       } else {
         this.showAuthDialog();
-        wx.showLoading({
-          title: "获取登录授权中",
-          mask: true
-        });
+        // wx.showLoading({
+        //   title: "获取登录授权中",
+        //   mask: true
+        // });
       }
       
     }
@@ -686,10 +686,10 @@ Page({
 
     if (this.submitFlag === false) {
       this.submitFlag = true;
-      wx.showLoading({
-        title: "获取授权信息...",
-        mask: true
-      });
+      // wx.showLoading({
+      //   title: "获取授权信息...",
+      //   mask: true
+      // });
       this.setData({ showAuthDialog: false });
       getSessionKey().then(sessionKey => {
         const data = {

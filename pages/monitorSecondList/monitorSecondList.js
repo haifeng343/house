@@ -495,20 +495,20 @@ Page({
     })
   },
   goToMAllSelect(e) {
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "加载中...",
+    //   mask: true
+    // });
     this.setData({
       allData: []
     })
     this.getMonitorData(e.detail)
   },
   goMselect(e) {
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "加载中...",
+    //   mask: true
+    // });
     this.setData({
       allData: []
     })
@@ -516,10 +516,10 @@ Page({
   },
   goTocheckAll(e) {
     let index = e.currentTarget.dataset.index
-    wx.showLoading({
-      title: "加载中...",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "加载中...",
+    //   mask: true
+    // });
     this.setData({
       allData: []
     })
@@ -823,10 +823,10 @@ Page({
       lianjiaCount: this.data.lianjiaCount,
     }
     let addData = house.updateSecondMonitorData(data)
-    wx.showLoading({
-      title: '正在修改监控...',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '正在修改监控...',
+    //   mask: true
+    // });
     
     monitorApi.updateSecondMonitor(addData).then(res => {
       wx.hideLoading();

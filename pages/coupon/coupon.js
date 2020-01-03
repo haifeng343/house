@@ -22,10 +22,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
-    wx.showLoading({
-      title: "",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "",
+    //   mask: true
+    // });
     this.getCouponList().then(_ => {
       wx.hideLoading();
     });
@@ -59,10 +59,10 @@ Page({
     this.setData(
       { currentTabValue: tabValue, isLoaded: false, couponList: [] },
       () => {
-        wx.showLoading({
-          title: "",
-          mask: true
-        });
+        // wx.showLoading({
+        //   title: "",
+        //   mask: true
+        // });
         this.getCouponList().then(_ => {
           wx.hideLoading();
         });
@@ -76,10 +76,10 @@ Page({
     if (item.type === 3) {
       if (this.submitFlag === false) {
         this.submitFlag = true;
-        wx.showLoading({
-          title: "",
-          mask: true
-        });
+        // wx.showLoading({
+        //   title: "",
+        //   mask: true
+        // });
         this.service
           .exchangeCoupon(item.id)
           .then(_ => {

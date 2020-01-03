@@ -98,10 +98,10 @@ Page({
   },
 
   handletimeRangeChange(event) {
-    wx.showLoading({
-      title: "获取账单数据...",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "获取账单数据...",
+    //   mask: true
+    // });
     const timeRange = event.detail.value;
     this.setData({ timeRange, isLoaded: false, fundList: [] }, () => {
       if (this.data.fundListType === 1) {
@@ -113,10 +113,10 @@ Page({
   },
 
   handlebillTypeChange(event) {
-    wx.showLoading({
-      title: "获取账单数据...",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "获取账单数据...",
+    //   mask: true
+    // });
     const billType = event.detail.value;
     this.setData({ billType, isLoaded: false, fundList: [] }, () => {
       if (this.data.fundListType === 1) {
@@ -130,10 +130,10 @@ Page({
   handleFundTypeChange(event) {
     const fundListType = +event.currentTarget.dataset.value;
     if (this.data.fundListType !== fundListType) {
-      wx.showLoading({
-        title: "获取账单数据...",
-        mask: true
-      });
+      // wx.showLoading({
+      //   title: "获取账单数据...",
+      //   mask: true
+      // });
       this.setData(
         {
           fundListType,
@@ -201,10 +201,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    wx.showLoading({
-      title: "获取账单数据...",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "获取账单数据...",
+    //   mask: true
+    // });
 
     this.getFundList();
   }

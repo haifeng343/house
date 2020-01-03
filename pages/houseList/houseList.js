@@ -699,10 +699,10 @@ Page({
       zgCount: this.data.zgCount
     };
     let addData = house.addMonitorData(data);
-    wx.showLoading({
-      title: "正在添加监控...",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "正在添加监控...",
+    //   mask: true
+    // });
     monitorApi.addMonitor(addData).then(res => {
       wx.hideLoading();
       wx.showToast({

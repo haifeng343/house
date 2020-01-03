@@ -69,10 +69,10 @@ Page({
       return
     }
     this.submitFlag = true;
-    wx.showLoading({
-      title: '搜索中...',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '搜索中...',
+    //   mask: true
+    // });
     this.service.doSearch(this.data.value).then(result => {
       wx.hideLoading();
       this.formatResult(result.data)

@@ -248,10 +248,10 @@ Page({
       hotPosition
     });
     let list = this.data.list
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // });
     this.service.getPositionList(city).then(resp => {
       wx.hideLoading();
       let data = resp.data;

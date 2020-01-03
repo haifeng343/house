@@ -53,10 +53,10 @@ Page({
 
         if (this.submitFlag === false && this.data.countDown === 0) {
             this.submitFlag = true;
-            wx.showLoading({
-                title: '获取验证码...',
-                mask: true
-            });
+            // wx.showLoading({
+            //     title: '获取验证码...',
+            //     mask: true
+            // });
 
             this.service
                 .getCode(this.mobile)
@@ -94,10 +94,10 @@ Page({
         if (this.submitFlag === false) {
             this.submitFlag = true;
 
-            wx.showLoading({
-                title: '绑定手机号...',
-                mask: true
-            });
+            // wx.showLoading({
+            //     title: '绑定手机号...',
+            //     mask: true
+            // });
 
             this.service
                 .bindMoblie(this.mobile, this.code)

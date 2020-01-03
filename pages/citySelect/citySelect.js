@@ -71,10 +71,10 @@ Page({
     this.setData({ history: [] });
   },
   getCityList() {
-    wx.showLoading({
-      title: "加载中",
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: "加载中",
+    //   mask: true
+    // });
     this.service.indexParam().then(resp => {
       let data = resp.data.fddHotCity.split(",");
       let hot = [];
