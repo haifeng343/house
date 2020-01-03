@@ -28,10 +28,10 @@ Page({
       return;
     }
 
-    // wx.showLoading({
-    //   title: '提交中...',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '提交中...',
+      mask: true
+    });
 
     if (this.submitFlag === false) {
       this.submitFlag = true;

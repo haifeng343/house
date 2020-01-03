@@ -320,10 +320,10 @@ Page({
       zgCount: this.data.zgCount,
     }
     let addData = house.addMonitorData(data)
-    // wx.showLoading({
-    //   title: '正在添加监控...',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '正在添加监控...',
+      mask: true
+    });
     monitorApi.addMonitor(addData).then(res => {
       wx.hideLoading();
       wx.showToast({
@@ -350,10 +350,10 @@ Page({
       wbtcCount: this.data.wbtcCount,
     }
     let addData = house.addLongMonitorData(data)
-    // wx.showLoading({
-    //   title: '正在添加监控...',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '正在添加监控...',
+      mask: true
+    });
     monitorApi.addLongMonitor(addData).then(res => {
       wx.hideLoading();
       wx.showToast({
@@ -378,10 +378,10 @@ Page({
       lianjiaCount: this.data.lianjiaCount
     }
     let addData = house.addSecondMonitorData(data)
-    // wx.showLoading({
-    //   title: '正在添加监控...',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '正在添加监控...',
+      mask: true
+    });
     monitorApi.addSecondMonitor(addData).then(res => {
       wx.hideLoading();
       wx.showToast({
@@ -541,10 +541,10 @@ Page({
       zgCount: this.data.zgCount,
     }
     let addData = house.updateShortMonitorData(data)
-    // wx.showLoading({
-    //   title: '正在修改监控...',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '正在修改监控...',
+      mask: true
+    });
     monitorApi.updateMonitor(addData).then(res => {
       wx.hideLoading();
       wx.showToast({
@@ -581,10 +581,10 @@ Page({
       wbtcCount: this.data.wbtcCount,
     }
     let addData = house.updateLongMonitorData(data)
-    // wx.showLoading({
-    //   title: '正在修改监控...',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '正在修改监控...',
+      mask: true
+    });
     monitorApi.updateLongMonitor(addData).then(res => {
       wx.hideLoading();
       wx.showToast({
@@ -619,10 +619,10 @@ Page({
       lianjiaCount: this.data.lianjiaCount,
     }
     let addData = house.updateSecondMonitorData(data)
-    // wx.showLoading({
-    //   title: '正在修改监控...',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '正在修改监控...',
+      mask: true
+    });
     monitorApi.updateSecondMonitor(addData).then(res => {
       wx.hideLoading();
       wx.showToast({

@@ -101,12 +101,13 @@ Page({
   },
   getLongMonitorData() {
     let data = {}
-    // wx.showLoading({
-    //   title: "加载中...",
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: "加载中...",
+      mask: true
+    });
     monitorApi.getMonitorLongList(data).then(res => {
       wx.hideLoading();
+      wx.showToast({title:'',icon:'none',duration:0});
       if (res.data.data.length) {
         for (let i = 0; i < res.data.data.length; i++) {
           res.data.data[i].dayNum = monitor.setDay(res.data.data[i].monitorTime)
@@ -128,12 +129,13 @@ Page({
   },
   getMonitorData() {
     let data = {}
-    // wx.showLoading({
-    //   title: "加载中...",
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: "加载中...",
+      mask: true
+    });
     monitorApi.getMonitorList(data).then(res => {
       wx.hideLoading();
+      wx.showToast({title:'',icon:'none',duration:0});
       if (res.data.data.length) {
         for (let i = 0; i < res.data.data.length; i++) {
           res.data.data[i].beginDay = monitor.setDate(res.data.data[i].beginDate)
@@ -156,12 +158,13 @@ Page({
   },
   getSecondHandData() {
     let data = {}
-    // wx.showLoading({
-    //   title: "加载中...",
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: "加载中...",
+      mask: true
+    });
     monitorApi.getMonitorSecondList(data).then(res => {
       wx.hideLoading();
+      wx.showToast({title:'',icon:'none',duration:0});
       if (res.data.data.length) {
         for (let i = 0; i < res.data.data.length; i++) {
           res.data.data[i].dayNum = monitor.setDay(res.data.data[i].monitorTime)
@@ -370,13 +373,14 @@ Page({
     let data = {
       monitorId: this.data.startItem.id
     }
-    // wx.showLoading({
-    //   title: '正在开启监控...',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '正在开启监控...',
+      mask: true
+    });
     if (this.data.active == 1) {
       monitorApi.startMonitor(data).then(res => {
         wx.hideLoading();
+        wx.showToast({title:'',icon:'none',duration:0});
         if (res.data.success) {
           wx.showToast({
             title: res.data.resultMsg,
@@ -390,6 +394,7 @@ Page({
     if (this.data.active == 2) {
       monitorApi.startLongMonitor(data).then(res => {
         wx.hideLoading();
+        wx.showToast({title:'',icon:'none',duration:0});
         if (res.data.success) {
           wx.showToast({
             title: res.data.resultMsg,
@@ -403,6 +408,7 @@ Page({
     if (this.data.active == 3) {
       monitorApi.startSecondMonitor(data).then(res => {
         wx.hideLoading();
+        wx.showToast({title:'',icon:'none',duration:0});
         if (res.data.success) {
           wx.showToast({
             title: res.data.resultMsg,

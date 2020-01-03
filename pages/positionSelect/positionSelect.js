@@ -248,12 +248,13 @@ Page({
       hotPosition
     });
     let list = this.data.list
-    // wx.showLoading({
-    //   title: '加载中',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
     this.service.getPositionList(city).then(resp => {
       wx.hideLoading();
+        wx.showToast({title:'',icon:'none',duration:0});
       let data = resp.data;
       for (const item of data) {
         let info = item.split('_');

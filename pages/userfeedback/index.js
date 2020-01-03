@@ -10,14 +10,15 @@ Page({
   submitFlag: false,
 
   onLoad() {
-    // wx.showLoading({
-    //   title: '请稍候...',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '请稍候...',
+      mask: true
+    });
     this.service
       .getUserFeedBackList()
       .then(feedbackList => {
         wx.hideLoading();
+        wx.showToast({title:'',icon:'none',duration:0});
         this.setData({ feedbackList });
         if (feedbackList.length === 0) {
           wx.showToast({

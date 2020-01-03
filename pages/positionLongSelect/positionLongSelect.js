@@ -139,10 +139,10 @@ Page({
     }
     this.setData({ city, type, isSecond, history });
     let list = this.data.list
-    // wx.showLoading({
-    //   title: '加载中',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
 
     //获取列表数据
     let chooseType = 1
@@ -151,6 +151,7 @@ Page({
     }
     this.service.getSearchHoset(city, chooseType).then(resp => {
       wx.hideLoading();
+      wx.showToast({title:'',icon:'none',duration:0});
       let data = resp.data;
       for (const item of data) {
         let info = item.split('_')

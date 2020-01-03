@@ -17,12 +17,13 @@ Page({
   },
   service: new CitySelectService(),
   getCityList() {
-    // wx.showLoading({
-    //   title: '加载中',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
     return this.service.getCityList().then(resp => {
       wx.hideLoading();
+      wx.showToast({title:'',icon:'none',duration:0});
       this.formatData(resp.data);
     });
   },

@@ -64,12 +64,13 @@ Page({
       return
     }
     this.submitFlag = true;
-    // wx.showLoading({
-    //   title: '搜索中...',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '搜索中...',
+      mask: true
+    });
     this.service.doSearch(this.data.value, app.globalData.searchData.city||'').then(result => {
       wx.hideLoading();
+      wx.showToast({title:'',icon:'none',duration:0});
       this.formatResult(result.data)
       let length = Object.keys(result.data).length
       this.setData({
@@ -79,6 +80,7 @@ Page({
     }).then(() => {
       this.submitFlag = false;
       wx.hideLoading();
+      wx.showToast({title:'',icon:'none',duration:0});
     }).catch(error => {
       this.submitFlag = false;
       wx.showToast({

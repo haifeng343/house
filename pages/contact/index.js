@@ -64,10 +64,10 @@ Page({
 
     if (this.submitFlag === false) {
       this.submitFlag = true;
-      // wx.showLoading({
-      //   title: '获取授权信息...',
-      //   mask: true
-      // });
+      wx.showLoading({
+        title: '获取授权信息...',
+        mask: true
+      });
       this.setData({ showAuthDialog: false });
       getSessionKey().then(sessionKey => {
         const data = {

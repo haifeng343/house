@@ -737,10 +737,10 @@ Page({
       wbtcCount: this.data.wbtcCount,
     }
     let addData = house.addLongMonitorData(data)
-    // wx.showLoading({
-    //   title: '正在添加监控...',
-    //   mask: true
-    // });
+    wx.showLoading({
+      title: '正在添加监控...',
+      mask: true
+    });
     monitorApi.addLongMonitor(addData).then(res => {
       wx.hideLoading();
       wx.showToast({

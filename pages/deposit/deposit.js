@@ -81,10 +81,10 @@ Page({
       });
     } else if (this.submitFlag === false) {
       this.submitFlag = true;
-      // wx.showLoading({
-      //   title: "正在兑换...",
-      //   mask: true
-      // });
+      wx.showLoading({
+        title: "正在兑换...",
+        mask: true
+      });
       this.service
         .doExchangeCion(exchangeAmount)
         .then(resp => {
@@ -155,14 +155,15 @@ Page({
     }
     if (this.submitFlag === false) {
       this.submitFlag = true;
-      // wx.showLoading({
-      //   title: "创建支付订单...",
-      //   mask: true
-      // });
+      wx.showLoading({
+        title: "创建支付订单...",
+        mask: true
+      });
       this.service
         .createOrder(this.data.money, this.data.coin)
         .then(params => {
           wx.hideLoading();
+          wx.showToast({title:'',icon:'none',duration:0});
           wx.requestPayment({
             timeStamp: params.timeStamp,
             nonceStr: params.nonceStr,
