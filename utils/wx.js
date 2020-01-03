@@ -12,10 +12,8 @@ const doWechatLogin = () => {
   })
     .then(code => {
       return Http.post(loginUrl, { code }).then(resp => {
-        wx.hideLoading({
-          title: '获取登录授权中',
-          mask: true
-        });
+        wx.hideLoading();
+        wx.showToast({title:'',icon:'none',duration:0});
         const sessionKey = resp.data.session_key;
         wx.setStorageSync('sessionKey', sessionKey);
         return Promise.resolve(resp);

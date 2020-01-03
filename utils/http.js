@@ -48,6 +48,7 @@ const request = (
             message: '接口请求失败'
           });
           wx.hideLoading();
+          wx.showToast({title:'',icon:'none',duration:0});
         }
         if (typeof resp.data.code === 'number') {
           if (resp.data.code !== 200) {
@@ -65,6 +66,7 @@ const request = (
           message: '你的网络可能开小差了~'
         });
         wx.hideLoading();
+        wx.showToast({title:'',icon:'none',duration:0});
       }
     });
   });
