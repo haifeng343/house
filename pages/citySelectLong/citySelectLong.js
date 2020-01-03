@@ -23,7 +23,7 @@ Page({
     });
     return this.service.getCityList().then(resp => {
       wx.hideLoading();
-      wx.showToast({title:'',icon:'none',duration:0});
+      wx.showToast({title:'',icon:'none',duration:1});
       this.formatData(resp.data);
     });
   },

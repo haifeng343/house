@@ -254,7 +254,7 @@ Page({
     });
     this.service.getPositionList(city).then(resp => {
       wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:0});
+      wx.showToast({title:'',icon:'none',duration:1});
       let data = resp.data;
       for (const item of data) {
         let info = item.split('_');

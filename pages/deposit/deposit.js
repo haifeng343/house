@@ -163,7 +163,7 @@ Page({
         .createOrder(this.data.money, this.data.coin)
         .then(params => {
           wx.hideLoading();
-          wx.showToast({title:'',icon:'none',duration:0});
+          wx.showToast({title:'',icon:'none',duration:1});
           wx.requestPayment({
             timeStamp: params.timeStamp,
             nonceStr: params.nonceStr,

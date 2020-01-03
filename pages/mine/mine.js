@@ -184,7 +184,7 @@ Page({
     getSessionKey()
       .then(() => {
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:0});
+        wx.showToast({title:'',icon:'none',duration:1});
         this.setData({ showAuthDialog: true });
       })
       .catch(() => {
@@ -295,7 +295,7 @@ Page({
       .then(couponList => {
         console.log(couponList);
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:0});
+        wx.showToast({title:'',icon:'none',duration:1});
         this.isFirstShare = false;
         this.setData({ shareDesc: "", showCouponDialog: true, couponList });
       })

@@ -13,7 +13,7 @@ const doWechatLogin = () => {
     .then(code => {
       return Http.post(loginUrl, { code }).then(resp => {
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:0});
+        wx.showToast({title:'',icon:'none',duration:1});
         const sessionKey = resp.data.session_key;
         wx.setStorageSync('sessionKey', sessionKey);
         return Promise.resolve(resp);

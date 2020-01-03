@@ -164,7 +164,7 @@ Page({
       .getFundList(this.data.timeRange, this.data.billType)
       .then(fundList => {
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:0});
+        wx.showToast({title:'',icon:'none',duration:1});
         this.setData({ fundList, isLoaded: true });
       })
       .catch(error => {
@@ -184,7 +184,7 @@ Page({
         .then(fundList => {
           this.requestFlag = false;
           wx.hideLoading();
-          wx.showToast({title:'',icon:'none',duration:0});
+          wx.showToast({title:'',icon:'none',duration:1});
           this.setData({ fundList, isLoaded: true });
         })
         .catch(error => {
