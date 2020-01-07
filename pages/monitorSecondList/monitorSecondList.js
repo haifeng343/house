@@ -415,36 +415,33 @@ Page({
     if (houseData.allCount > 0 && houseData.allData.length > 0) {
       this.setData({
         countFlag: 1,
-        allOriginalData: houseData.allData,
-        allData: houseData.allData.slice(0, 5),
-        allCount: houseData.allCount,
-        averagePrice: houseData.averageunitPrice,
-        lowPrice: houseData.lowPrice,
-        lowPriceData: houseData.lowPriceData,
-        highAreaData: houseData.highAreaData,
-        wiwjLowPriceData: houseData.wiwjLowPriceData,
-        lianjiaLowPriceData: houseData.lianjiaLowPriceData,
-        wiwjCount: wiwjDataObj.wiwjCount,
-        lianjiaCount: lianjiaDataObj.lianjiaCount,
-        wiwjFilterData: houseData.wiwjFilterData,
-        lianjiaFilterData: houseData.lianjiaFilterData,
-        enoughList,
-        loadingDisplay: 'none',
-        rowData: houseData.rowData,
-        enoughBottom: false,
-        bottomType: 2,
-        isMonitorHouse: 0,
       });
     } else {
       this.setData({
         countFlag: 0,
-        loadingDisplay: 'none',
-        bottomType: 2,
-        allOriginalData: houseData.allData,
-        allData: houseData.allData.slice(0, 5),
-        allCount: houseData.allCount,
       });
     }
+    this.setData({
+      allOriginalData: houseData.allData,
+      allData: houseData.allData.slice(0, 5),
+      allCount: houseData.allCount,
+      averagePrice: houseData.averageunitPrice,
+      lowPrice: houseData.lowPrice,
+      lowPriceData: houseData.lowPriceData,
+      highAreaData: houseData.highAreaData,
+      wiwjLowPriceData: houseData.wiwjLowPriceData,
+      lianjiaLowPriceData: houseData.lianjiaLowPriceData,
+      wiwjCount: wiwjDataObj.wiwjCount,
+      lianjiaCount: lianjiaDataObj.lianjiaCount,
+      wiwjFilterData: houseData.wiwjFilterData,
+      lianjiaFilterData: houseData.lianjiaFilterData,
+      enoughList,
+      loadingDisplay: 'none',
+      rowData: houseData.rowData,
+      enoughBottom: false,
+      bottomType: 2,
+      isMonitorHouse: 0,
+    });
   },
   // 获取用户信息，盯盯币，是否绑定微信公众号 和 手机绑定
   getUserInfo() {

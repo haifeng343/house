@@ -251,36 +251,34 @@ Page({
       lianjiaData,
       type: 1
     });
-    if (houseData.allCount > 0) {
+    if (houseData.allCount > 0 && houseData.allData.length>0) {
       this.setData({
         countFlag: 1,
-        allOriginalData: houseData.allData,
-        allData: houseData.allData.slice(0, 5),
-        allCount: houseData.allCount,
-        averagePrice: houseData.averageunitPrice,//二手房单价平均价
-        lowPrice: houseData.lowPrice,
-        lowUnitPrice: houseData.lowUnitPrice,//二手房的单位最低价
-        lowPriceData: houseData.lowPriceData,
-        highAreaData: houseData.highAreaData,
-        wiwjLowPriceData: houseData.wiwjLowPriceData,
-        lianjiaLowPriceData: houseData.lianjiaLowPriceData,
-        wiwjCount: wiwjDataObj.wiwjCount,
-        lianjiaCount: lianjiaDataObj.lianjiaCount,
-        wiwjFilterData: houseData.wiwjFilterData,
-        lianjiaFilterData: houseData.lianjiaFilterData,
-        enoughList,
-        loadingDisplay: "none",
-        rowData: houseData.rowData
       });
     } else {
       this.setData({
-        loadingDisplay: "none",
         countFlag: 0,
-        allOriginalData: houseData.allData,
-        allData: houseData.allData.slice(0, 5),
-        allCount: houseData.allCount
       });
     }
+    this.setData({
+      allOriginalData: houseData.allData,
+      allData: houseData.allData.slice(0, 5),
+      allCount: houseData.allCount,
+      averagePrice: houseData.averageunitPrice,//二手房单价平均价
+      lowPrice: houseData.lowPrice,
+      lowUnitPrice: houseData.lowUnitPrice,//二手房的单位最低价
+      lowPriceData: houseData.lowPriceData,
+      highAreaData: houseData.highAreaData,
+      wiwjLowPriceData: houseData.wiwjLowPriceData,
+      lianjiaLowPriceData: houseData.lianjiaLowPriceData,
+      wiwjCount: wiwjDataObj.wiwjCount,
+      lianjiaCount: lianjiaDataObj.lianjiaCount,
+      wiwjFilterData: houseData.wiwjFilterData,
+      lianjiaFilterData: houseData.lianjiaFilterData,
+      enoughList,
+      loadingDisplay: "none",
+      rowData: houseData.rowData
+    });
   },
   // 获取用户信息，盯盯币，是否绑定微信公众号 和 手机绑定
   getUserInfo() {
