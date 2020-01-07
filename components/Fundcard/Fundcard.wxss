@@ -1,6 +1,6 @@
-@import "../../assets/styles/font.wxss";
+@import '../../assets/styles/font.wxss';
 
-@import "../../assets/styles/flex.wxss";
+@import '../../assets/styles/flex.wxss';
 
 :host {
   display: flex;
@@ -18,8 +18,14 @@
 .container.fdd .icon .icon-font {
   color: #e94444;
 }
-.container.fdd .platform-name {
+.container.fdd .content .bottom .platform-name {
   color: #e75d28;
+}
+.container.pdd .icon .icon-font {
+  color: #10bcae;
+}
+.container.pdd .content .bottom .platform-name {
+  color: #10bcae;
 }
 .container.fdd .order-no {
   color: #1d1d1d;
@@ -32,7 +38,7 @@
 }
 .container .icon .icon-font {
   font-size: 48rpx;
-  color: #10bcae;
+  color: #0050fe;
 }
 .container .icon .icon-font.uniE93B,
 .container .icon .icon-font.uniE963 {
@@ -103,7 +109,7 @@
 .container .content .bottom .platform-name {
   font-size: 28rpx;
   font-weight: 400;
-  color: #bec3cd;
+  color: #0050fe;
   line-height: 40rpx;
 }
 .container .content .bottom .time {
@@ -194,7 +200,7 @@
 }
 .container .content .detail {
   font-size: 24rpx;
-  color: #f1612a;
+  color: #0050fe;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
@@ -202,6 +208,9 @@
   height: 40rpx;
   width: 140rpx;
   margin-bottom: -10rpx;
+}
+.container .content .detail text {
+  display: inline-block;
 }
 .pay-list {
   width: 100%;

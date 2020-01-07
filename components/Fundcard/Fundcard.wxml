@@ -1,13 +1,13 @@
-<view class="{{'container ' + (isLoaded ? '' : 'hidden') + ' ' + (data.platformType === 2 ? 'fdd' : 'pdd')}}">
+<view class="container {{isLoaded ? '' : 'hidden'}} {{data.platformClass}}">
   <view class="wrapper">
     <view class="icon flex-box-center-center">
       <text class="icon-font {{data.icon}}" />
     </view>
     <view class="content">
       <view class="top">
-        <view class="title">{{data.logName}}</view>
+        <view class="title">{{data.remark}}</view>
         <view class="money {{data.direction < 0 ? 'up' : 'down'}}">
-          {{data.direction > 0 ? '+' : '-'}}{{data.money}}
+          {{data.direction > 0 ? '+' : '-'}}{{data.moneyText}}
         </view>
       </view>
       <block wx:if="{{data.desc}}">
@@ -22,8 +22,7 @@
       <block wx:else>
         <view class="bottom">
           <view class="platform-name">
-            <block wx:if="{{data.platformType === 1}}">票盯盯</block>
-            <block wx:else>房盯盯</block>
+            <block>{{data.platformName}}</block>
           </view>
           <view class="time">{{data.createTime}}</view>
         </view>
@@ -42,8 +41,7 @@
             </block>
           </view>
           <view class="withdraw-platform-name">
-            <block wx:if="{{data.platformType === 1}}">票盯盯</block>
-            <block wx:else>房盯盯</block>
+            <block>{{item.platformName}}</block>
           </view>
           <view class="withdraw-expand" bindtap="handleExpandClick">
             <text>{{expand === true ? '收起' : '展开更多'}}</text>
@@ -55,9 +53,9 @@
         <view class="item">
           <view class="date">
             <text class="type">任务结算</text>
-            {{item.date}}
+            {{item.createTime}}
           </view>
-          <view class="money">{{item.money}}币</view>
+          <view class="money">{{item.moneyText}}</view>
         </view>
       </view>
     </view>
