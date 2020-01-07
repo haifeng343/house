@@ -88,13 +88,11 @@ Page({
     if (this.data.currentTabValue === 0) {
       return this.service.getCityList().then(resp => {
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:1});
         this.formatData(resp.data);
       });
     } else {
       return this.service.getForeignCityList().then(resp => {
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:1});
         this.formatData(resp.data);
       });
     }

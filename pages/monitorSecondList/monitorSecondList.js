@@ -304,7 +304,6 @@ Page({
         })
       }
       wx.hideLoading()
-      wx.showToast({title:'',icon:'none',duration:1});
       let monitorHouseData = house.getMonitorSecondHouseData(houseList, detail ? detail : this.data.mSelect); //监控房源列表
       if (monitorHouseData.allData.length == 0) {
         this.setData({

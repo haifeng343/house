@@ -18,7 +18,6 @@ Page({
       .getUserFeedBackList()
       .then(feedbackList => {
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:1});
         this.setData({ feedbackList });
         if (feedbackList.length === 0) {
           wx.showToast({

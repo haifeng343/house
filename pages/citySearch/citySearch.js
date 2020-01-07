@@ -75,7 +75,6 @@ Page({
     });
     this.service.doSearch(this.data.value).then(result => {
       wx.hideLoading();
-      wx.showToast({title:'',icon:'none',duration:1});
       this.formatResult(result.data)
       let length = Object.keys(result.data).length
       this.setData({
@@ -85,7 +84,6 @@ Page({
     }).then(() => {
       this.submitFlag = false;
       wx.hideLoading();
-      wx.showToast({title:'',icon:'none',duration:1});
     }).catch(error => {
       this.submitFlag = false;
       wx.showToast({

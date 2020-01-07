@@ -26,7 +26,6 @@ Page({
       .getMonitorList()
       .then(monitorList => {
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:1});
         this.setData({ isLoaded: true, monitorList });
       })
       .catch(error => {
@@ -44,7 +43,6 @@ Page({
       .getMonitorLongList()
       .then(monitorList => {
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:1});
         this.setData({ isLoaded: true, monitorList });
       })
       .catch(error => {
@@ -62,7 +60,6 @@ Page({
       .getMonitorSecondList()
       .then(monitorList => {
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:1});
         this.setData({ isLoaded: true, monitorList });
       })
       .catch(error => {

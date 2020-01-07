@@ -28,7 +28,6 @@ Page({
     });
     this.getCouponList().then(_ => {
       wx.hideLoading();
-      wx.showToast({title:'',icon:'none',duration:1});
     });
   },
 
@@ -66,7 +65,6 @@ Page({
         });
         this.getCouponList().then(_ => {
           wx.hideLoading();
-          wx.showToast({title:'',icon:'none',duration:1});
         });
       }
     );

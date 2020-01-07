@@ -107,7 +107,6 @@ Page({
     });
     monitorApi.getMonitorLongList(data).then(res => {
       wx.hideLoading();
-      wx.showToast({title:'',icon:'none',duration:1});
       if (res.data.data.length) {
         for (let i = 0; i < res.data.data.length; i++) {
           res.data.data[i].dayNum = monitor.setDay(res.data.data[i].monitorTime)
@@ -135,7 +134,6 @@ Page({
     });
     monitorApi.getMonitorList(data).then(res => {
       wx.hideLoading();
-      wx.showToast({title:'',icon:'none',duration:1});
       if (res.data.data.length) {
         for (let i = 0; i < res.data.data.length; i++) {
           res.data.data[i].beginDay = monitor.setDate(res.data.data[i].beginDate)
@@ -164,7 +162,6 @@ Page({
     });
     monitorApi.getMonitorSecondList(data).then(res => {
       wx.hideLoading();
-      wx.showToast({title:'',icon:'none',duration:1});
       if (res.data.data.length) {
         for (let i = 0; i < res.data.data.length; i++) {
           res.data.data[i].dayNum = monitor.setDay(res.data.data[i].monitorTime)
@@ -380,7 +377,6 @@ Page({
     if (this.data.active == 1) {
       monitorApi.startMonitor(data).then(res => {
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:1});
         if (res.data.success) {
           wx.showToast({
             title: res.data.resultMsg,
@@ -394,7 +390,6 @@ Page({
     if (this.data.active == 2) {
       monitorApi.startLongMonitor(data).then(res => {
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:1});
         if (res.data.success) {
           wx.showToast({
             title: res.data.resultMsg,
@@ -408,7 +403,6 @@ Page({
     if (this.data.active == 3) {
       monitorApi.startSecondMonitor(data).then(res => {
         wx.hideLoading();
-        wx.showToast({title:'',icon:'none',duration:1});
         if (res.data.success) {
           wx.showToast({
             title: res.data.resultMsg,
