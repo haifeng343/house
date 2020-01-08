@@ -200,7 +200,7 @@
 }
 .container .content .detail {
   font-size: 24rpx;
-  color: #0050fe;
+  color: #e75d28;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
