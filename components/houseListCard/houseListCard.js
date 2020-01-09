@@ -116,10 +116,14 @@ Component({
         return;
       }
       if (e.detail.source === "touch") {
-        if (e.detail.x > 0) {
-          return;
+        let x = e.detail.x;
+        if (x > 0) {
+          x = 0;
         }
-        this.touchmoveStream.next(e.detail.x);
+        if (x < -64) {
+          x = -64;
+        }
+        this.touchmoveStream.next(x);
       }
     },
     handleTouchend() {

@@ -120,7 +120,14 @@ Component({
         return;
       }
       if (e.detail.source === "touch") {
-        this.touchmoveStream.next(e.detail.x);
+        let x = e.detail.x;
+        if (x > 0) {
+          x = 0;
+        }
+        if (x < -64) {
+          x = -64;
+        }
+        this.touchmoveStream.next(x);
       }
     },
     handleTouchend() {
