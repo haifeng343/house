@@ -1,5 +1,5 @@
-import * as rxjs from '../../utils/rx';
-const monitor = require('../../utils/monitor.js')
+import * as rxjs from "../../utils/rx";
+const monitor = require("../../utils/monitor.js");
 Component({
   /**
    * 组件的属性列表
@@ -9,47 +9,46 @@ Component({
       type: Object,
       value: {}
     },
-    type:{
-      type:Number
+    type: {
+      type: Number
     },
-    idx:{
+    idx: {
       type: Number
     },
     dayCount: {
       type: Number
     },
-    editFlag:{
+    editFlag: {
       type: Boolean,
-      observer: function (editFlag){
-        console.log(editFlag)
-        if (editFlag){
+      observer: function(editFlag) {
+        console.log(editFlag);
+        if (editFlag) {
           this.setData({
-            x:30
-          })
-        }else{
-          this.setData({
-            x: 0
-          })
+            x: 30
+          });
+        } else {
+          this.touchmoveStream.next(0);
+          this.touchendStream.next(true);
         }
       }
     },
-    allCount:{
+    allCount: {
       type: Number
     },
-    bottomType:{
+    bottomType: {
       type: Number
     },
-    isStatist: { //是否不是统计详情页  false：统计详情
+    isStatist: {
+      //是否不是统计详情页  false：统计详情
       type: Boolean,
       value: true
     },
     singleEditFlag: {
       type: Boolean,
-      observer: function (singleEditFlag) {
+      observer: function(singleEditFlag) {
         if (singleEditFlag) {
-          this.setData({
-            x: 0
-          })
+          this.touchmoveStream.next(0);
+          this.touchendStream.next(true);
         }
       }
     }
@@ -62,7 +61,7 @@ Component({
     x: {
       type: Number,
       value: 0
-    },
+    }
   },
   lifetimes: {
     created() {
@@ -72,7 +71,7 @@ Component({
 
       const moveDirectionStream = this.touchmoveStream.pipe(
         rxjs.operators.pairwise(),
-        rxjs.operators.map(([p, n]) => (n - p > 0 ? 1 : -1)),
+        rxjs.operators.map(([p, n]) => (n - p >= 0 ? 1 : -1)),
         rxjs.operators.startWith(1)
       );
 
@@ -93,18 +92,18 @@ Component({
         this.xSubscription.unsubscribe();
       }
     },
-    ready(){
-      let num = wx.getStorageSync('autoswiperNum');
-      if (this.properties.idx == 0 && !num && this.properties.isStatist){
-        wx.setStorageSync('autoswiperNum', 1)
+    ready() {
+      let num = wx.getStorageSync("autoswiperNum");
+      if (this.properties.idx == 0 && !num && this.properties.isStatist) {
+        wx.setStorageSync("autoswiperNum", 1);
         this.setData({
           x: -67
-        })
-        setTimeout(()=>{
+        });
+        setTimeout(() => {
           this.setData({
             x: 0
-          })
-        },2000)
+          });
+        }, 2000);
       }
     }
   },
@@ -113,44 +112,51 @@ Component({
    */
   methods: {
     handleMovableChange(e) {
-      if (this.properties.editFlag){return}
-      if (e.detail.source === 'touch') {
-        if(e.detail.x>0){return}
+      if (this.properties.editFlag) {
+        return;
+      }
+      if (e.detail.source === "touch") {
+        if (e.detail.x > 0) {
+          return;
+        }
         this.touchmoveStream.next(e.detail.x);
       }
     },
     handleTouchend() {
-      if (this.properties.editFlag) { return }
+      if (this.properties.editFlag) {
+        return;
+      }
       this.touchendStream.next(true);
     },
     goToPlatformDetail(e) {
-      let app = getApp()
-      let platform = e.currentTarget.dataset.platform
-      let productid = e.currentTarget.dataset.productid
-      let beginDate = this.properties.type == 1 ? app.globalData.searchData.beginDate : app.globalData.monitorSearchData.beginDate
-      let endDate = this.properties.type == 1 ? app.globalData.searchData.endDate : app.globalData.monitorSearchData.endDate
-      if (this.properties.editFlag && this.data.isStatist) { 
-        this.selectItem(e)
-        return
+      let app = getApp();
+      let platform = e.currentTarget.dataset.platform;
+      let productid = e.currentTarget.dataset.productid;
+      let beginDate =
+        this.properties.type == 1
+          ? app.globalData.searchData.beginDate
+          : app.globalData.monitorSearchData.beginDate;
+      let endDate =
+        this.properties.type == 1
+          ? app.globalData.searchData.endDate
+          : app.globalData.monitorSearchData.endDate;
+      if (this.properties.editFlag && this.data.isStatist) {
+        this.selectItem(e);
+        return;
       }
-      monitor.navigateToMiniProgram(
-        platform,
-        productid,
-        beginDate,
-        endDate
-      )
+      monitor.navigateToMiniProgram(platform, productid, beginDate, endDate);
     },
-    delItem(e){
+    delItem(e) {
       let detail = {
-        index: e.currentTarget.dataset.index,
-      }
-      this.triggerEvent('deleteEvent', detail);
+        index: e.currentTarget.dataset.index
+      };
+      this.triggerEvent("deleteEvent", detail);
     },
-    selectItem(e){
+    selectItem(e) {
       let detail = {
-        index: e.currentTarget.dataset.index,
-      }
-      this.triggerEvent('collectionEvent', detail);
+        index: e.currentTarget.dataset.index
+      };
+      this.triggerEvent("collectionEvent", detail);
     }
   }
-})
+});
