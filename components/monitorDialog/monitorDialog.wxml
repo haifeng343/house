@@ -28,7 +28,7 @@
             </view>
             
           </view>
-          <view class="ding"><text>时长不足时，任务将自动暂停</text></view>
+          <view class="ding"><text>盯盯币不足时，任务将自动暂停</text></view>
         </view>
         <view class="mask-btn">
           <text class="cancel" catchtap="bindCancel">取消</text>
