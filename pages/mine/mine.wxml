@@ -8,6 +8,7 @@
           <view>
             <view class="name">{{nickName}}</view>
             <view class="name" wx:if="{{mobile}}">{{mobile}}</view>
+            <view wx:else class="name" bindtap="gotoBindPhone">点击绑定手机号</view>
           </view>
         </view>
       </block>

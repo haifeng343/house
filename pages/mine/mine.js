@@ -306,7 +306,11 @@ Page({
         });
       });
   },
-
+  gotoBindPhone(){
+    wx.navigateTo({
+      url: '/pages/bindPhone/bindPhone',
+    })
+  },
   onShareAppMessage() {
     this.shareFlag = true;
     this.setData({ showShareCard: false });
