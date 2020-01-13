@@ -1110,13 +1110,19 @@ Page({
     let data = app.globalData.searchLongData;
     if (searchLongData.longSortTypes === index) {
       searchLongData.longSortTypes = 0;
+      searchLongData.advSort = 0;
       data.longSortTypes = 0;
       data.advSort = 0;
     } else {
       searchLongData.longSortTypes = parseInt(index);
+      searchLongData.advSort = parseInt(index);
       data.longSortTypes = parseInt(index);
+      data.advSort = parseInt(index);
+      if (parseInt(index)===3) {
+        searchLongData.advSort = 0;
+        data.advSort = 0;
+      }
     }
-    console.log(app);
     this.setData({
       searchLongData
     });
@@ -1171,10 +1177,14 @@ Page({
     let data = app.globalData.secondSearchData
     if (secondSearchData.secondSortTypeMap === index) {
       secondSearchData.secondSortTypeMap = 0
+      secondSearchData.advSort = 0
       data.secondSortTypeMap = 0
+      data.advSort = 0
     } else {
       secondSearchData.secondSortTypeMap = parseInt(index)
+      secondSearchData.advSort = parseInt(index)
       data.secondSortTypeMap = parseInt(index)
+      data.advSort = parseInt(index)
     }
     this.setData({ secondSearchData });
   },
@@ -1242,6 +1252,7 @@ Page({
   onShow() {
     const app = getApp();
     app.globalData.searchData.advSort = 1; 
+    //长租
     let searchLongData = app.globalData.searchLongData;
     searchLongData.longBuildAreas = -1;
     searchLongData.longFloorTypes = [];
@@ -1249,8 +1260,20 @@ Page({
     searchLongData.longHouseTags = [];
     searchLongData.longLayouts = [];
     searchLongData.advSort = 0;
+    if (searchLongData.longSortTypes === 1) {
+      searchLongData.advSort = 1;
+    } else if (searchLongData.longSortTypes === 2) {
+      searchLongData.advSort = 2;
+    }
+    app.globalData.searchLongData = searchLongData;
+    //二手房
     let secondSearchData = app.globalData.secondSearchData
-    app.globalData.secondSearchData.advSort = 0; 
+    secondSearchData.advSort = 0; 
+    if (secondSearchData.secondSortTypeMap === 1) {
+      secondSearchData.advSort = 1;
+    } else if (secondSearchData.secondSortTypeMap === 2) {
+      secondSearchData.advSort = 2;
+    }
     if (secondSearchData.secondHouseDecorationMap.indexOf(3) >= 0) {
       secondSearchData.secondHouseDecorationMap = [3]
     } else {
@@ -1269,6 +1292,10 @@ Page({
       secondSearchData.secondHouseUseMap = []
     }
     secondSearchData.secondBuildingAgeMap = 0
+    app.globalData.secondSearchData = secondSearchData;
+
+    this.setData({ searchLongData, secondSearchData });
+
     this.searchDataStorage = searchDataStorage.subscribe(hasSearchData => {
       console.log("hasSearchData=" + hasSearchData);
       if (!hasSearchData) {
