@@ -2199,7 +2199,7 @@ const getBrandSecondHouseData = data => {
   }
   if (y.advSort == 2) {
     let allArr = [...allData];
-    allArr.sort(util.compareSort("unit_price", "desc"));
+    allArr.sort(util.compareSort("unit_price", "asc"));
     allData = allArr
   }
   if (y.advSort == 21) {

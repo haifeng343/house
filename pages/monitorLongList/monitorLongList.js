@@ -45,7 +45,7 @@ Page({
     indexArr: [],
     mSelect: 1,//1全部 2新上 3价格
     isMtype:false,
-    advSort:-1,
+    advSort:0,
     housecardHeight:0 //每个房源卡片高度
   },
   onLoad: function (options) {
@@ -108,11 +108,19 @@ Page({
         this.setData({
           loadingDisplay: "none",
           allOriginalData: allArr,
-          allData: allArr.slice(0, 5)
+          allData: allArr.slice(0, 5),
+          updateData: Object.assign({}, app.globalData.monitorSearchLongData),
         })
       } else {
         for (let key in e.detail) {
           app.globalData.monitorSearchLongData[key] = e.detail[key]
+        }
+        if(arr.indexOf('longSortTypes')>-1){
+          if(e.detail['longSortTypes'] === 1||e.detail['longSortTypes'] === 2){
+            app.globalData.monitorSearchLongData = Object.assign(app.globalData.monitorSearchLongData, {'advSort':e.detail['longSortTypes']});
+          }else{
+            app.globalData.monitorSearchLongData = Object.assign(app.globalData.monitorSearchLongData, {'advSort':0});
+          }
         }
         SearchLongMonitorDataSubject.next()
         this.setData({
@@ -258,8 +266,7 @@ Page({
         longSortTypes: monitorDetail.sortType || 0, //1: 低价优先, 2: 空间优先, 3: 最新发布
         minPrice: monitorDetail.minPrice,//最低价
         maxPrice: monitorDetail.maxPrice == 99999 ? 10000 : monitorDetail.maxPrice,//最高价 不限99999
-        //advSort: monitorDetail.sortType || 0
-        advSort: this.data.advSort || -1
+        advSort: this.data.advSort ? this.data.advSort:this.advSortType(monitorDetail.sortType)
       }
       app.globalData.monitorDefaultSearchLongData = {
         chooseType: monitorDetail.houseSource, //1品牌中介，2个人房源
@@ -279,8 +286,7 @@ Page({
         longSortTypes: monitorDetail.sortType||0, //1: 低价优先, 2: 空间优先, 3: 最新发布
         minPrice: monitorDetail.minPrice,//最低价
         maxPrice: monitorDetail.maxPrice == 99999 ? 10000 : monitorDetail.maxPrice,//最高价 不限99999
-        // advSort: monitorDetail.sortType || 0
-        advSort: this.data.advSort || -1
+        advSort: this.data.advSort ? this.data.advSort:this.advSortType(monitorDetail.sortType)
       }
       let x = app.globalData.monitorSearchLongData
       new positionService().getSearchHoset(x.city, x.chooseType).then(resp => {
@@ -391,6 +397,17 @@ Page({
         })
       })
     })
+  },
+  advSortType(value){
+    if(value){
+      if(value === 1||value === 2){
+        return value
+      }else{
+        return 0
+      } 
+    }else{
+      return 0 
+    }
   },
   async getAllBrandData() {
     wx.removeStorageSync('fddShortRentBlock');

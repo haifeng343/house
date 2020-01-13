@@ -67,8 +67,6 @@ Page({
   },
   onShow: function() {
     this.getUserInfo();
-
-
   },
   submit(e) {
     //把改变的值重新
@@ -99,11 +97,19 @@ Page({
         this.setData({
           loadingDisplay: "none",
           allOriginalData: allArr,
-          allData: allArr.slice(0, 5)
+          allData: allArr.slice(0, 5),
+          secondSearchData: Object.assign({}, app.globalData.secondSearchData),
         })
       } else {
         for (let key in e.detail) {
           app.globalData.secondSearchData[key] = e.detail[key];
+        }
+        if(arr.indexOf('secondSortTypeMap')>-1){
+          if(e.detail['secondSortTypeMap'] === 1||e.detail['secondSortTypeMap'] === 2){
+            app.globalData.secondSearchData = Object.assign(app.globalData.secondSearchData, {'advSort':e.detail['secondSortTypeMap']});
+          }else{
+            app.globalData.secondSearchData = Object.assign(app.globalData.secondSearchData, {'advSort':0});
+          }
         }
         SearchSecondDataSubject.next();
         this.setData({

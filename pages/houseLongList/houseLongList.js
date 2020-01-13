@@ -108,11 +108,19 @@ Page({
         this.setData({
           loadingDisplay: "none",
           allOriginalData: allArr,
-          allData: allArr.slice(0, 5)
+          allData: allArr.slice(0, 5),
+          searchLongData: Object.assign({}, app.globalData.searchLongData),
         })
       }else{
         for (let key in e.detail) {
           app.globalData.searchLongData[key] = e.detail[key];
+        }
+        if(arr.indexOf('longSortTypes')>-1){
+          if(e.detail['longSortTypes'] === 1||e.detail['longSortTypes'] === 2){
+            app.globalData.searchLongData = Object.assign(app.globalData.searchLongData, {'advSort':e.detail['longSortTypes']});
+          }else{
+            app.globalData.searchLongData = Object.assign(app.globalData.searchLongData, {'advSort':0});
+          }
         }
         SearchLongDataSubject.next();
         this.setData({

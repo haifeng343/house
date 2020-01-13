@@ -42,7 +42,7 @@ Page({
     mSelect: 1, //1全部 2新上 3价格
     isMtype: false,
     lowUnitPrice:0,
-    advSort: -1
+    advSort: 0
   },
   onLoad: function (options) {
     let data = app.globalData.monitorSecondData
@@ -97,11 +97,19 @@ Page({
         this.setData({
           loadingDisplay: "none",
           allOriginalData: allArr,
-          allData: allArr.slice(0, 5)
+          allData: allArr.slice(0, 5),
+          updateData: Object.assign({}, app.globalData.monitorSecondSearchData),
         })
       } else {
         for (let key in e.detail) {
           app.globalData.monitorSecondSearchData[key] = e.detail[key]
+        }
+        if(arr.indexOf('secondSortTypeMap')>-1){
+          if(e.detail['secondSortTypeMap'] === 1||e.detail['secondSortTypeMap'] === 2){
+            app.globalData.monitorSecondSearchData = Object.assign(app.globalData.monitorSecondSearchData, {'advSort':e.detail['secondSortTypeMap']});
+          }else{
+            app.globalData.monitorSecondSearchData = Object.assign(app.globalData.monitorSecondSearchData, {'advSort':0});
+          }
         }
         SearchSecondMonitorDataSubject.next()
         this.setData({
@@ -247,7 +255,7 @@ Page({
         secondBuildingAgeMap: monitorDetail.towerAge || '', //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
         secondLayoutMap: monitorDetail.layoutRoom ? monitorDetail.layoutRoom.split(',').map(item => +item) : [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
         secondSortTypeMap: monitorDetail.sortType || 0, //房源偏好 1: 低总价优先 2: 低单价优先
-        advSort: this.data.advSort || -1
+        advSort: this.data.advSort ? this.data.advSort:this.advSortType(monitorDetail.sortType)
       }
       app.globalData.monitorDefaultSearchSecondData = {
         city: monitorDetail.cityName, //城市名
@@ -269,7 +277,7 @@ Page({
         secondBuildingAgeMap: monitorDetail.towerAge || '', //楼龄 1: 5年以内 2: 10年以内 3: 15年以内 4: 20年以内 5: 20年以上
         secondLayoutMap: monitorDetail.layoutRoom ? monitorDetail.layoutRoom.split(',').map(item => +item) : [], //户型 1: 一室 2: 二室 3: 三室 4: 四室 5: 四室以上
         secondSortTypeMap: monitorDetail.sortType || 0, //房源偏好 1: 低总价优先 2: 低单价优先
-        advSort: this.data.advSort || -1
+        advSort: this.data.advSort ? this.data.advSort:this.advSortType(monitorDetail.sortType)
       }
       let x = app.globalData.monitorSecondSearchData
       new positionService().getSearchHoset(x.city, 1).then(resp => {
@@ -373,6 +381,17 @@ Page({
         mSelect: detail ? detail : this.data.mSelect
       })
     })
+  },
+  advSortType(value){
+    if(value){
+      if(value === 1||value === 2){
+        return value
+      }else{
+        return 0
+      } 
+    }else{
+      return 0 
+    }
   },
   async getAllBrandData() {
     wx.removeStorageSync('fddShortRentBlock');
