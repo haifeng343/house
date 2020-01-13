@@ -20,7 +20,8 @@ Page({
     shareDesc: "",
     couponList: [],
     showCouponDialog: false,
-    couponDesc: ""
+    couponDesc: "",
+    IsMobile:false,
   },
   service: new MineService(),
   action: "",
@@ -269,7 +270,11 @@ Page({
         }
       });
     }
-
+    if(this.data.mobile){
+      this.setData({
+        IsMobile:true
+      })
+    }
     if (this.shareFlag === true) {
       this.requestShare();
     }
