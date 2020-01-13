@@ -232,12 +232,12 @@
         <view class="dialog-overlay" bindtap="handleCloseTipDialog"></view>
         <view class="dialog-container">
         <view class="dialog-title">
-            <text>长租房源偏好</text>
+            <text>房源偏好说明</text>
         </view>
         <view class="dialog-content dialog-content1">
-            <view>1、低价优先：按价格从低到高顺序获取房源;</view>
-            <view>2、空间优先：按面积从大到小顺序获取房源;</view>
-            <view>3、最新发布：按发布时间从近到远顺序获取房源;</view>
+            <view>低价优先：按价格从低到高顺序获取房源</view>
+            <view>空间优先：按面积从大到小顺序获取房源</view>
+            <view>最新发布：按发布时间从近到远顺序获取房源</view>
         </view>
         <view class="dialog-button">
             <view class="button" bindtap="handleCloseTipDialog1">知道了</view>
@@ -248,11 +248,11 @@
         <view class="dialog-overlay" bindtap="handleCloseTipDialog2"></view>
         <view class="dialog-container">
         <view class="dialog-title">
-            <text>二手房源偏好</text>
+            <text>房源偏好说明</text>
         </view>
         <view class="dialog-content dialog-content2">
-            <view>1、低总价优先：按房屋总价从低到高顺序获取房源;</view>
-            <view>2、低单价优先：按面积单价从低到高顺序获取房源;</view>
+            <view>低总价优先：按房屋总价从低到高顺序获取房源</view>
+            <view>低单价优先：按面积单价从低到高顺序获取房源</view>
         </view>
         <view class="dialog-button">
             <view class="button" bindtap="handleCloseTipDialog2">知道了</view>

@@ -365,10 +365,12 @@
   margin-left: 8rpx;
 }
 .dialog-container .dialog-content1{
-  height: 300rpx!important;
+  height: 200rpx!important;
+  font-size: 24rpx!important;
 }
 .dialog-container .dialog-content2{
-  height: 230rpx!important;
+  height: 190rpx!important;
+  font-size: 24rpx!important;
 }
 .search_item .leaseType {
   width: 148rpx;
