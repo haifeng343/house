@@ -123,7 +123,9 @@ Page({
     searchLongList: [],
     needOnShow: false,
     tabIndex: 2, //1短租，2长租，3二手房
-    secondFocus: true
+    secondFocus: true,
+    showTipChangDialog:false,//长租的tips提示
+    showTipSecondDialog:false,//长租的tips提示
   },
 
   service: new searchService(),
@@ -256,6 +258,16 @@ Page({
       searchData,
       priceText
     });
+  },
+  showChangDialog(){
+    this.setData({
+      showTipChangDialog:true
+    })
+  },
+  showSecondDialog(){
+    this.setData({
+      showTipSecondDialog:true
+    })
   },
   handleRepos() {
     if (this.data.tabIndex === 1) {
@@ -994,6 +1006,17 @@ Page({
         });
       }
     );
+  },
+
+  handleCloseTipDialog1(){
+    this.setData({
+      showTipChangDialog:false
+    })
+  },
+  handleCloseTipDialog2(){
+    this.setData({
+      showTipSecondDialog:false
+    })
   },
   getbanner() {
     this.service.getBanner().then(resp => {

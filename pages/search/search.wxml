@@ -144,7 +144,7 @@
                             </view>
                         </view>
                         <view class='search_item noBorder'>
-                            <view class='title icon_3'>房源偏好</view>
+                            <view class='title icon_3'>房源偏好<text class="icon-font uniE92D" bindtap="showChangDialog"></text></view>
                             <view class='leaseType {{searchLongData.longSortTypes==index?"active":""}}' wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypes' data-index='{{index}}' wx:for='{{allLongData.longSortTypes[searchLongData.chooseType-1]}}'>
                                 {{item}}
                             </view>
@@ -206,7 +206,7 @@
                             </view>
                         </view>
                         <view class='search_item noBorder'>
-                            <view class='title icon_4'>房源偏好</view>
+                            <view class='title icon_4'>房源偏好<text class="icon-font uniE92D" bindtap="showSecondDialog"></text></view>
                             <view class="leaseType {{secondSearchData.secondSortTypeMap==index?'active':''}}" wx:key='{{item}}' wx:for-index="index" bindtap='selectSortTypeMap' data-index='{{index}}' wx:for='{{allSecondData.secondSortTypeMap}}'>
                                 {{item}}
                             </view>
@@ -226,6 +226,37 @@
             <view class='search-btn-back'>
                 <view class='search-btn' bindtap='searchSubmit'>查询</view>
             </view>
+        </view>
+    </view>
+    <view wx:if="{{showTipChangDialog}}" catchtouchmove="true" class="tipDialog">
+        <view class="dialog-overlay" bindtap="handleCloseTipDialog"></view>
+        <view class="dialog-container">
+        <view class="dialog-title">
+            <text>长租房源偏好</text>
+        </view>
+        <view class="dialog-content dialog-content1">
+            <view>1、低价优先：按价格从低到高顺序获取房源;</view>
+            <view>2、空间优先：按面积从大到小顺序获取房源;</view>
+            <view>3、最新发布：按发布时间从近到远顺序获取房源;</view>
+        </view>
+        <view class="dialog-button">
+            <view class="button" bindtap="handleCloseTipDialog1">知道了</view>
+        </view>
+        </view>
+    </view>
+    <view wx:if="{{showTipSecondDialog}}" catchtouchmove="true" class="tipDialog">
+        <view class="dialog-overlay" bindtap="handleCloseTipDialog2"></view>
+        <view class="dialog-container">
+        <view class="dialog-title">
+            <text>二手房源偏好</text>
+        </view>
+        <view class="dialog-content dialog-content2">
+            <view>1、低总价优先：按房屋总价从低到高顺序获取房源;</view>
+            <view>2、低单价优先：按面积单价从低到高顺序获取房源;</view>
+        </view>
+        <view class="dialog-button">
+            <view class="button" bindtap="handleCloseTipDialog2">知道了</view>
+        </view>
         </view>
     </view>
     <view wx:if="{{showAuthDialog}}">

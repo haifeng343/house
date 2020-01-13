@@ -357,6 +357,18 @@
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAqCAYAAAA9IzKsAAAAAXNSR0IArs4c6QAAAkZJREFUWAnd1T9PwkAUAPBWMRGJBhcNITI4KaOTGDeNTrqx+Q0c1MQYXDBh8c/CB3B0dHQywWAiyqZRF2cERxPEQE2U+h54pS3Xcne9MnhJuba5e/fj9fqqKBJaMpkclBBGPEQikQjGYrEcHCnRKJ7+AQIqlcqFrutLAFgOh8Nf1Wq1wIsRRtgAZF0hiBDCASAM4UbQAKqqHsDRBMX0n4QrIwOEz9I7APZLpVImGo2uAeSKxIF9csi6WZkz4QI4woXL5fJ3PB4/r9Vq83DJlREmRC8A+feikJ6PgwWw+3g7sfdSGEVMsVhs8D4aVwQLYOs5N6lp9ev6R+NSFKKSVNp7VsBPXc8rij7bmq+qxZGx4OrJzGINr1li4DgqgmUyZsACwGjYBCBdCE+ANoMbYkFIAQhADIRUACfEQEB1u4Qqt9KZr2IlbBUivOe4B8gEp55hj5hf0TOIg/Uf9pYkAAbT9YTb6wtrvRmZwPGQjQ3oopCBY7zGJpyB9vTOLz0jp4FAIGNBdGa0z6QBSGAbxLhNTuy9dABZgAKhZsI3gAOkC+E7gAKxIPoGsEHMr6jSrOtZ42NEBvrZt1/ftAURCg5vQpG493Ndc2yoEbmhSChteRw4IPV0M/6paTkoMnPmCbLPERCIhNazUwuNLkQ/IGYArkdF+AmxA1wRfkBogJ4ImRAnABNCBsQNwIzwAukF4EKIQFgA3AgeCCtACMEC4QEII9wgvABPCBpEBOAZYYZA6X0n3wK83/e2/ZAP77zeBfu+8L9b8BemK2ApqG19cgAAAABJRU5ErkJggg==)
     no-repeat center left;
   background-size: 22rpx 28rpx;
+  display: flex;
+  align-items: center;
+}
+.search_item .title.icon_3 .uniE92D{
+  color: #e75d28;
+  margin-left: 8rpx;
+}
+.dialog-container .dialog-content1{
+  height: 300rpx!important;
+}
+.dialog-container .dialog-content2{
+  height: 230rpx!important;
 }
 .search_item .leaseType {
   width: 148rpx;
@@ -379,6 +391,12 @@
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAqCAYAAAA9IzKsAAAAAXNSR0IArs4c6QAAAjxJREFUWAnd1z9PwkAUAPBW62AISWHQoQmDm4xOMmt00o3Nb+DGgi5ISAiy4AdwdHR0IsHoYNLND0HA0YS0CTE0nu8BV9rSP3fXK4NNyrVN771fX++uQVEkbNVqdVtCGPEQlUplt1QqDWC/EY2S6gkQMB6PXwghJwA41XX9ZzKZfPBihBEBAM0rBBFCRACEIdyIMICqqnew/4LiYCnhqsgW5bO0EYDb4XDYMgzjAiCvNA6Mkw7rYGWuRAzgHhOPRiOnXC4/W5Z1DKdcFWFCJAHo04tCEl8HC4A0m3uk280jxjTNKe+riUUwAdrt/ZnjvDuW1ReFqLSUwZYZMJ2+KYQcYn8YmKaWz5+r9bqF5ywx5v3wJ7ixdCZYAQ+AxhCBrFUiDUAU4kPIAIhAXIRMAC/ERcDq1odV7swTAFfC+UKE16LGAL0/qmUZI94p+gSBcP3HUS4FgLHgwSpx0xdyfbmVwA5QjStoDKhAF89xE63AovfqN6Iij5qmtXyIVZfFkSwAjRuEuNfpQbCVDaDxwyChlcgKEAVZQ2QNCIP4EJsCBCHeKarAt+CBfozojVm28+lr2w0fYieXu4akn1km9saGQTrQCoWG73XgDaTTKcxsewCHR94Oso/ngGLxUq3VpmsITJY1xAvAfKGILCFBQCwiC0gYIBEhExIFYELIgMQBmBFpIEkALoQIhAXAjeCBsAKEECwQHoAwIg7CC0iFCIOIAFIjvBAAfGvLbwFe3/gG/8p10uvtbjzxv0v4BxjeWC3mDAvsAAAAAElFTkSuQmCC)
     no-repeat center left;
   background-size: 22rpx 28rpx;
+  display: flex;
+  align-items: center;
+}
+.search_item .title.icon_4 .uniE92D{
+  color: #e75d28;
+  margin-left:8rpx;
 }
 .search_item .equipments {
   font-size: 28rpx;
