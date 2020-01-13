@@ -122,7 +122,7 @@ Page({
     },
     searchLongList: [],
     needOnShow: false,
-    tabIndex: 1, //1短租，2长租，3二手房
+    tabIndex: 2, //1短租，2长租，3二手房
     secondFocus: true
   },
 
@@ -1287,7 +1287,7 @@ Page({
   onLoad(params) {
     let tab = +params.tab;
     if(!tab) {
-      tab = wx.getStorageSync('tabIndex') || 1
+      tab = wx.getStorageSync('tabIndex') || 2
     } else {
       wx.setStorageSync('tabIndex', tab)
     }
