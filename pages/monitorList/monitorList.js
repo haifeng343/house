@@ -53,7 +53,7 @@ Page({
     selectAllFlag: false,
     indexArr: [],
     mSelect: 1, //1全部 2新上 3价格
-    advSort: "",
+    advSort: 1,
     updateData: {},
     isMtype: false
   },
@@ -91,6 +91,9 @@ Page({
         allArr.sort(util.compareSort("finalPrice", "desc"));
       }
       this.setData({
+        advSort: app.globalData.monitorSearchData.advSort
+      })
+      this.setData({
         loadingDisplay: "none",
         allOriginalData: allArr,
         allData: allArr.slice(0, 5)
@@ -114,9 +117,17 @@ Page({
         showUI: true,
         editFlag: false,
         selectAllFlag: false,
-        advSort: app.globalData.monitorSearchData.advSort,
+        //advSort: app.globalData.monitorSearchData.advSort,
         mSelect:1
       });
+      if(app.globalData.monitorSearchData.sort === 2){
+        app.globalData.monitorSearchData.advSort = 2
+      }else{
+        app.globalData.monitorSearchData.advSort = 1
+      }
+      this.setData({
+        advSort: app.globalData.monitorSearchData.advSort
+      })
       SearchDataSubject.next();
       this.onShow();
     }
@@ -368,8 +379,7 @@ Page({
         equipment:
           (monitorDetail.facilities && monitorDetail.facilities.split(",")) ||
           [],
-        // advSort: this.data.advSort ? this.data.advSort : monitorDetail.sortType
-        advSort:-1
+        advSort:  this.data.advSort!==1 ? this.data.advSort : this.advSortType(monitorDetail.sortType)
       };
       //监控详情条件 ---监控默认条件
       app.globalData.monitorDefaultData = {
@@ -396,8 +406,7 @@ Page({
         equipment:
           (monitorDetail.facilities && monitorDetail.facilities.split(",")) ||
           [],
-        //advSort: monitorDetail.sortType
-        advSort: -1
+          advSort: this.data.advSort!==1 ? this.data.advSort : this.advSortType(monitorDetail.sortType)
       };
       let searchData = app.globalData.monitorSearchData;
       let defaultData = app.globalData.monitorDefaultData;
@@ -556,6 +565,17 @@ Page({
         updateData: JSON.stringify(app.globalData.monitorSearchData)
       })
     })
+  },
+  advSortType(value){
+    if(value){
+      if(value === 2){
+        return 2
+      }else{
+        return 1
+      }
+    }else{
+      return 1
+    }
   },
   async getAllData() {
     wx.removeStorageSync("fddShortRentBlock");

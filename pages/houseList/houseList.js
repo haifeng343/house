@@ -51,7 +51,8 @@ Page({
     editFlag: false,
     selectAllFlag: false,
     indexArr: [],
-    updateData: {}
+    updateData: {},
+    advSort: 1,
   },
   clickSelectItem(e) {
     var type = e.detail.type;
@@ -95,6 +96,9 @@ Page({
         allArr.sort(util.compareSort("finalPrice", "desc"));
       }
       this.setData({
+        advSort: app.globalData.monitorSearchData.advSort
+      })
+      this.setData({
         loadingDisplay: "none",
         allOriginalData: allArr,
         allData: allArr.slice(0, 5)
@@ -110,6 +114,14 @@ Page({
         editFlag: false,
         selectAllFlag: false
       });
+      if(app.globalData.searchData.sort === 2){
+        app.globalData.searchData.advSort = 2
+      }else{
+        app.globalData.searchData.advSort = 1
+      }
+      this.setData({
+        advSort: app.globalData.monitorSearchData.advSort
+      })
       SearchDataSubject.next();
       this.onLoad();
     }
@@ -145,6 +157,7 @@ Page({
       locationName: x.area || "全城",
       budget: budget,
       sortType: x.sort,
+      advSort:x.sort,
       updateData: JSON.stringify(x)
     });
     this.getIndexHouseData();
