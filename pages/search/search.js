@@ -181,8 +181,15 @@ Page({
     }
   },
   changeSort() {
-    var sort = this.data.searchData.sort;
-    this.data.searchData.sort = sort === 1 ? 2 : 1;
+    let searchData = this.data.searchData;
+    let sort = searchData.sort;
+    if(sort === 1) {
+        searchData.sort = 2;
+        searchData.advSort = 2;
+    }else {
+        searchData.sort = 1;
+        searchData.advSort = 1;
+    }
     this.setData({
       searchData: this.data.searchData
     });
@@ -1251,7 +1258,14 @@ Page({
   },
   onShow() {
     const app = getApp();
-    app.globalData.searchData.advSort = 1; 
+    let searchData = app.globalData.searchData;
+    app.globalData.searchData.advSort = 1;
+    if(searchData.sort === 2) {
+        searchData.advSort = 2
+    } else {
+        searchData.advSort = 1
+    }
+    app.globalData.searchData = searchData;
     //长租
     let searchLongData = app.globalData.searchLongData;
     searchLongData.longBuildAreas = -1;
@@ -1267,7 +1281,7 @@ Page({
     }
     app.globalData.searchLongData = searchLongData;
     //二手房
-    let secondSearchData = app.globalData.secondSearchData
+    let secondSearchData = app.globalData.secondSearchData;
     secondSearchData.advSort = 0; 
     if (secondSearchData.secondSortTypeMap === 1) {
       secondSearchData.advSort = 1;
@@ -1294,7 +1308,7 @@ Page({
     secondSearchData.secondBuildingAgeMap = 0
     app.globalData.secondSearchData = secondSearchData;
 
-    this.setData({ searchLongData, secondSearchData });
+    this.setData({ searchData, searchLongData, secondSearchData });
 
     this.searchDataStorage = searchDataStorage.subscribe(hasSearchData => {
       console.log("hasSearchData=" + hasSearchData);
