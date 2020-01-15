@@ -25,6 +25,9 @@ Component({
     },
     cityName: {
       type: String
+    },
+    sort: {
+      type: Number
     }
   },
   data: {
@@ -265,8 +268,6 @@ Component({
       var data = event.currentTarget.dataset;
       const { type, way } = data;
       const station = data.station;
-
-      console.log(this.data.middleList[type].line);
 
       this.setData(
         {
@@ -599,7 +600,6 @@ Component({
           initKey: ""
         };
         let randomKey = "";
-        console.log(1);
         data.map((item, index) => {
           let position = item.split("_");
           let cityName = position[0];
@@ -765,6 +765,21 @@ Component({
           this.getHotPosition(true);
         }
       );
+    },
+    sort(newValue) {
+      console.log(newValue);
+      if (this.data.isLoaded && typeof newValue === "number") {
+        this.setData({
+          sortList: this.data.sortList.map(item => {
+            if (item.value === newValue) {
+              item.active = true;
+            } else {
+              item.active = false;
+            }
+            return item;
+          })
+        });
+      }
     }
   }
 });

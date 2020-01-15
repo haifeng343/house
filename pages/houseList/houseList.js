@@ -96,7 +96,7 @@ Page({
         allArr.sort(util.compareSort("finalPrice", "desc"));
       }
       this.setData({
-        advSort: app.globalData.monitorSearchData.advSort
+        advSort: app.globalData.searchData.advSort
       })
       this.setData({
         loadingDisplay: "none",
@@ -120,7 +120,7 @@ Page({
         app.globalData.searchData.advSort = 1
       }
       this.setData({
-        advSort: app.globalData.monitorSearchData.advSort
+        advSort: app.globalData.searchData.advSort
       })
       SearchDataSubject.next();
       this.onLoad();
