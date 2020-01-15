@@ -2,6 +2,7 @@
 import { authSubject } from "../../utils/auth";
 import { getSessionKey } from "../../utils/wx";
 import MineService from "./service";
+const app = getApp();
 Page({
   /**
    * 页面的初始数据
@@ -270,7 +271,7 @@ Page({
         }
       });
     }
-    if(this.data.mobile){
+    if(app.globalData.isUserBindPhone){
       this.setData({
         IsMobile:true
       })
