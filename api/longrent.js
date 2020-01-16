@@ -341,11 +341,6 @@ const lianjia = {
   },
   // type: bizcircle（商圈）， station（地铁站）， resblock（小区）， district（行政区）
   rentTip: function({ city, keywords }) {
-    // 链家一个字不让搜
-    if (keywords.length < 2) {
-      reject(false);
-      return;
-    }
     let queryUrl = `city_id=${city}&channel=rent&query=${encodeURIComponent(
       keywords
     )}`;
