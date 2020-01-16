@@ -511,6 +511,10 @@ const fangtianxia = {
   // wordtype 汉字：楼盘，商圈
   rentTip: function({ city, keywords }) {
     return new Promise((resolve, reject) => {
+      if(keywords.length<2) {
+        reject(false);
+        return;
+      }
       wx.request({
         url: api_address + "/house/tip/rent",
         method: "POST",
