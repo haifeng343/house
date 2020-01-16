@@ -507,8 +507,7 @@ const fangtianxia = {
   rentTip: function({ city, keywords }) {
     return new Promise((resolve, reject) => {
       if(keywords.length<2) {
-        reject(false);
-        return;
+        return reject(false);
       }
       wx.request({
         url: api_address + "/house/tip/rent",
