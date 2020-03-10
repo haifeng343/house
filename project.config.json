@@ -12,6 +12,7 @@
 		"newFeature": true,
 		"coverView": true,
 		"autoAudits": false,
+		"showShadowRootInWxmlPanel": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": false,
 		"uploadWithSourceMap": true,
@@ -137,6 +138,12 @@
 					"name": "二手房房源列表",
 					"pathName": "pages/secondHandHouse/secondHandHouse",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/houseDetail/houseDetail",
+					"pathName": "pages/houseDetail/houseDetail",
 					"scene": null
 				}
 			]

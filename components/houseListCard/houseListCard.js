@@ -133,6 +133,7 @@ Component({
       this.touchendStream.next(true);
     },
     goToPlatformDetail(e) {
+      console.log(e.currentTarget.dataset)
       let app = getApp();
       let platform = e.currentTarget.dataset.platform;
       let productid = e.currentTarget.dataset.productid;

@@ -30,7 +30,9 @@
     "pages/housingLongSearch/index",
     "pages/monitorRule/index",
     "pages/secondHandHouse/secondHandHouse",
-    "pages/monitorSecondList/monitorSecondList"
+    "pages/monitorSecondList/monitorSecondList",
+    "components/houseDetail/houseDetail",
+    "pages/houseDetail/houseDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",

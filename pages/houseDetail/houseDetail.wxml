@@ -1,0 +1,16 @@
+<houseDetail
+  imgUrls="{{imgUrls}}"
+  title="{{title}}"
+  tags="{{tags}}"
+  IsShowLandlord="{{IsShowLandlord}}"
+  Landlord="{{Landlord}}"
+  IsCheckInNotice="{{IsCheckInNotice}}"
+  checkInNotice="{{checkInNotice}}"
+  bottomObject="{{bottomObject}}"
+  IsSurroundings="{{IsSurroundings}}"
+  surroundings="{{surroundings}}"
+  IsFacility="{{IsFacility}}"
+  facility="{{facility}}"
+  IsHouseDetail="{{IsHouseDetail}}"
+  houseDetails="{{houseDetails}}"
+   ></houseDetail>
