@@ -1,5 +1,5 @@
 <wxs src="../../utils/filter.wxs" module="filter" />
-<view class="house_card" wx:if="{{isStatist}}" data-productId="{{item.productId}}" data-platform="{{item.platformId}}" data-index="{{idx}}" data-item="{{item}}" catchtap="goToPlatformDetail">
+<view class="house_card" wx:if="{{isStatist}}" data-productId="{{item.productId}}" data-platform="{{item.platformId}}" data-index="{{idx}}" catchtap="goToPlatformDetail">
   <view class="house_area">
     <movable-area class="area">
       <movable-view class="wrapper" direction="horizontal" inertia="true" x="{{x}}" out-of-bounds="true" damping="100" bindchange="handleMovableChange" bindtouchend="handleTouchend" disabled="{{editFlag}}">
@@ -70,7 +70,7 @@
     </view>
   </view>
 </view>
-<view class="house_card" wx:else data-productId="{{item.productId}}" data-platform="{{item.platformId}}" data-index="{{idx}}" catchtap="goToPlatformDetail">
+<view class="house_card" wx:else data-productId="{{item.productId}}" data-platform="{{item.platformId}}" data-index="{{idx}}" data-money="{{item.finalPrice}}" catchtap="goToPlatformDetail">
   <view class="house_area">
     <view class="swiper">
       <block wx:for="{{item.pictureList}}" wx:key="{{index}}" wx:for-item="items">

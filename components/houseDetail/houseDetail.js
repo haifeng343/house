@@ -72,6 +72,18 @@ Component({
     IsFacility:false,//短租为true 其他为false
     houseDetails:{},//除短租外的房源详情信息
     IsHouseDetail:false,//除短租外的房源详情信息
+
+    navbarIndex:1,//默认选中房源特色的核心卖点
+    navbar:[//房源特色导航栏
+      {
+        index:1,
+        name:'核心卖点'
+      },
+      {
+        index:2,
+        name:'周边配套'
+      }
+    ]
   },
 
   /**
@@ -83,5 +95,10 @@ Component({
         current: e.detail.current
       })
     },
+    navbarChange(e){
+      this.setData({
+        navbarIndex:e.currentTarget.dataset.index
+      })
+    }
   }
 })

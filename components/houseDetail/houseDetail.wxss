@@ -391,7 +391,17 @@ swiper-item image {
   box-shadow: 4rpx 4rpx 4rpx 0 rgba(198, 55, 35, 0.48);
   border-radius: 46rpx;
 }
-
+.fix-img{
+  width: 76rpx;
+  height: 76rpx;
+}
+.fix-house{
+  font-size: 28rpx;
+  color:rgba(185,185,185,1);
+}
+.fix-black{
+  color: #000;
+}
 .houseDetail{
   width: 100%;
   height: auto;
@@ -431,13 +441,143 @@ swiper-item image {
   color:rgba(255,99,99,1);
   line-height:44rpx;
 }
-.detail-between{
+.detail-house{
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  margin-top: 52rpx;
   font-size: 28rpx;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  padding-left: 78rpx;
+}
+.detail-ol-mtp{
+  margin-top: 14rpx;
+}
+.detail-ol{
+  width: 50%;
+  display: flex;
   line-height: 40rpx;
+  justify-content: flex-start;
 }
 .grayText{
   color:rgba(185,185,185,1);
+}
+.navbar{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30rpx;
+  font-size: 28rpx;
+  color:rgba(189,189,189,1);
+  position: relative;
+}
+.navbar .navbarLi{
+  position: relative;
+  height: 60rpx;
+}
+.navbar .navbarLi.active{
+  color:#000;
+}
+.navbar .navbarLi.active::before{
+  content: '';
+  position: absolute;
+  left: 18rpx;
+  bottom: 0rpx;
+  width: 72rpx;
+  height: 10rpx;
+  background:rgba(255,99,99,1);
+  border-radius:6rpx;
+}
+.navbar-content{
+  width: 100%;
+  height: auto;
+  margin-top: 20rpx;
+  background:rgba(255,255,255,1);
+  border-radius:3px;
+  border:1px solid rgba(245,245,245,1);
+  box-sizing: border-box;
+  padding: 40rpx 50rpx;
+  font-size: 28rpx;
+  line-height: 40rpx;
+}
+.plot{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  box-sizing: border-box;
+  padding-left: 50rpx;
+  margin-top: 26rpx;
+  padding-bottom: 30rpx;
+  border-bottom:2rpx solid rgba(249,249,249,1);
+}
+.plot-item{
+  width: 33.33%;
+  text-align: left;
+}
+.plot-title{
+  font-size: 24rpx;
+  color:rgba(185,185,185,1);
+  line-height:34rpx;
+  margin-bottom: 10rpx;
+}
+.plot-number{
+  color:rgba(255,99,99,1);
+  line-height:44rpx;
+  font-size: 32rpx;
+}
+.plot-detail{
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  padding-left: 50rpx;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 8rpx;
+}
+.plot-detail-label{
+  width: 140rpx;
+  text-align: right;
+  color:rgba(185,185,185,1);
+}
+.plot-detail-item{
+  display: flex;
+  justify-content: flex-start;
+  width: 50%;
+  margin-top: 20rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 24rpx;
+}
+.plot-detail-item:last-child{
+  width: 100%;
+}
+.soldPlot{
+  width: 100%;
+  height: auto;
+  margin-top: 30rpx;
+  padding-bottom: 30rpx;
+  box-sizing: border-box;
+  border-bottom: 2rpx solid rgba(249,249,249,1);
+}
+.soldPlot-title{
+  font-size: 28rpx;
+  line-height: 40rpx;
+}
+.soldPlot-text{
+  display: flex;
+  justify-content: space-between;
+}
+.soldPlot-price{
+  font-size: 32rpx;
+  color:rgba(255,99,99,1);
+  line-height: 44rpx;
+}
+.soldPlot-average{
+  margin-left: 34rpx;
+  color:rgba(185,185,185,1);
+  font-size: 24rpx;
 }

@@ -1,102 +1,187 @@
 <view class='banner'>
-  <swiper bindchange="swiperChange" indicatorDots='{{indicatorDots}}' current='{{current}}' autoplay='{{autoplay}}' interval='{{interval}}' duration='{{duration}}' circular='{{circular}}' display-multiple-items='1'>
-    <block wx:for="{{imgUrls}}" wx:key="item">
-      <swiper-item>
-        <view class='box'>
-          <image src='{{item}}' lazy-load="true"></image>
-        </view>
-      </swiper-item>
-    </block>
-  </swiper>
-  <view class="dots">
-    <block wx:for="{{imgUrls}}" wx:key="index">
-      <view class="dot{{index == current ? ' active' : ''}}">
-      <image src="../../assets/image/dot.png" class="dotImg"></image>
-      {{current+1}}/{{imgUrls.length}}</view>
-    </block>
-  </view>
+	<swiper bindchange="swiperChange" indicatorDots='{{indicatorDots}}' current='{{current}}' autoplay='{{autoplay}}' interval='{{interval}}' duration='{{duration}}' circular='{{circular}}' display-multiple-items='1'>
+		<block wx:for="{{imgUrls}}" wx:key="item">
+			<swiper-item>
+				<view class='box'>
+					<image src='{{item}}' lazy-load="true"></image>
+				</view>
+			</swiper-item>
+		</block>
+	</swiper>
+	<view class="dots">
+		<block wx:for="{{imgUrls}}" wx:key="index">
+			<view class="dot{{index == current ? ' active' : ''}}">
+				<image src="../../assets/image/dot.png" class="dotImg"></image>
+				{{current+1}}/{{imgUrls.length}}
+			</view>
+		</block>
+	</view>
 </view>
 <view class="container">
-  <view class="title">{{title}}</view>
-  <view class="tags">
-    <view class="tag" wx:for="{{tags}}" wx:key="item">{{item}}</view>
-  </view>
+	<view class="title">{{title}}</view>
+	<view class="tags">
+		<view class="tag" wx:for="{{tags}}" wx:key="item">{{item}}</view>
+	</view>
 
-  <view class="surroundings" wx:if="{{IsSurroundings==true}}">
-    <view class="surrounding" wx:for="{{surroundings}}" wx:key="item">{{item}}</view>
-  </view>
+	<view class="surroundings" wx:if="{{IsSurroundings==true}}">
+		<view class="surrounding" wx:for="{{surroundings}}" wx:key="item">{{item}}</view>
+	</view>
 
-  <view class="houseDetail">
-    <view class="houseDetailItem" wx:for="{{houseDetails}}" wx:key="item">
-      <view class="houseNumber">{{item.number}}万</view>
-      <view>{{item.tag}}</view>
-    </view>
-  </view>
-  <view class="detail-between">
-      <view><text class="grayText">看房：</text></view>
-    </view>
-
+	<view>
+		<view class="houseDetail">
+			<view class="houseDetailItem" wx:for="{{houseDetails}}" wx:key="item">
+				<view class="houseNumber">{{item.number}}万</view>
+				<view>{{item.tag}}</view>
+			</view>
+		</view>
+		<view class="detail-house">
+			<view class="detail-ol"><text class="grayText">看房:</text>随时看房</view>
+			<view class="detail-ol"><text class="grayText">入住:</text>随时入住</view>
+			<view class="detail-ol detail-ol-mtp"><text class="grayText">装修:</text>精装</view>
+			<view class="detail-ol detail-ol-mtp"><text class="grayText">朝向:</text>朝南</view>
+			<view class="detail-ol detail-ol-mtp"><text class="grayText">楼层:</text>低楼层/33层</view>
+		</view>
+	</view>
 </view>
+
+
 <view class="heng"></view>
 <view class="container">
-  <view wx:if="{{IsFacility==true}}">
-    <view class="landlordTitle">配套设施</view>
-    <view class="facility">
-      <view class="facilityTag" wx:for="{{facility}}" wx:key="item">
-        <image src="../../assets/image/orange.png" class="orange"></image>
-        <view class="facilityText">{{item}}</view>
-      </view>
-    </view>
-  </view>
-  <view class="landlord" wx:if="{{IsShowLandlord==true}}">
-    <view class="landlordTitle">房东介绍</view>
-    <view class="landlordContainer">
-      <view class="landlordTop">
-        <image src="{{Landlord.img}}" class="landlordAvator"></image>
-        <view class="landlordRight">
-          <view class="landlordName">{{Landlord.name}}</view>
-          <view class="landlordTags">
-            <view class="landlordTag" wx:for="{{Landlord.tags}}" wx:key="item">{{item}}</view>
-          </view>
-        </view>
-      </view>
-      <view class="landlordBottom">
-        <view class="landlordTxt">
-          <view class="landlordLabel">回复率：</view>
-          <view class="lanlordValue">{{Landlord.response}}%</view>
-        </view>
+	<view class="landlordTitle">房源特色</view>
+	<view class="navbar">
+		<view class="navbarLi {{navbarIndex==item.index?'active':''}}" wx:for="{{navbar}}" wx:key="item" data-index="{{item.index}}" bindtap="navbarChange">{{item.name}}</view>
+	</view>
+	<view class="navbar-content">一句话描述房源情况，部分含有周边配套，交</view>
 
-        <view class="landlordTxt">
-          <view class="landlordLabel">回复时长：</view>
-          <view class="lanlordValue">{{Landlord.duration}}小时以内</view>
-        </view>
-      </view>
-    </view>
+
+	<view class="landlordTitle">黄龙万科小区</view>
+	<view class="plot">
+		<view class="plot-item">
+			<view class="plot-title">参考均价 (元/㎡)</view>
+			<view class="plot-number">12312.2</view>
+		</view>
+		<view class="plot-item">
+			<view class="plot-title">二手房 (套)</view>
+			<view class="plot-number">149</view>
+		</view>
+		<view class="plot-item">
+			<view class="plot-title">租房 (套)</view>
+			<view class="plot-number">41</view>
+		</view>
+	</view>
+	<view class="plot-detail">
+		<view class="plot-detail-item">
+			<view class="plot-detail-label">建成年代:</view>
+			<view class="plot-detail-text">2006年</view>
+		</view>
+		<view class="plot-detail-item">
+			<view class="plot-detail-label">建筑类型:</view>
+			<view class="plot-detail-text">板楼</view>
+		</view>
+		<view class="plot-detail-item">
+			<view class="plot-detail-label">容积率:</view>
+			<view class="plot-detail-text">3%</view>
+		</view>
+		<view class="plot-detail-item">
+			<view class="plot-detail-label">绿化率:</view>
+			<view class="plot-detail-text">300户</view>
+		</view>
+		<view class="plot-detail-item">
+			<view class="plot-detail-label">开发企业:</view>
+			<view class="plot-detail-text">绿地集团</view>
+		</view>
+	</view>
+</view>
+
+<view class="heng"></view>
+<view class="container">
+	<view class="landlordTitle">同小区已售房源</view>
+	<view class="soldPlot">
+		<view class="soldPlot-title">3室2厅 南北 低楼层</view>
+		<view class="soldPlot-text">
+			<view class="soldPlot-price">123万<text class="soldPlot-average">11232元/㎡</text></view>
+			<view>成交日期:2020-12-12</view>
+		</view>
+	</view>
+	<view class="soldPlot">
+		<view class="soldPlot-title">3室2厅 南北 低楼层</view>
+		<view class="soldPlot-text">
+			<view class="soldPlot-price">123万<text class="soldPlot-average">11232元/㎡</text></view>
+			<view>成交日期:2020-12-12</view>
+		</view>
+	</view>
+</view>
+
+<view class="heng"></view>
+<view class="container">
+	<view wx:if="{{IsFacility==true}}">
+		<view class="landlordTitle">配套设施</view>
+		<view class="facility">
+			<view class="facilityTag" wx:for="{{facility}}" wx:key="item">
+				<image src="../../assets/image/orange.png" class="orange"></image>
+				<view class="facilityText">{{item}}</view>
+			</view>
+		</view>
+	</view>
+  <view>
+		<view class="landlordTitle">房源描述</view>
+    <view class="navbar-content">一句话描述房源情况，部分含有周边配套，交</view>
   </view>
-  <view class="checkInNotice" wx:if="{{IsCheckInNotice==true}}">
-    <view class="checkInNoticeTitle">入住须知</view>
-    <view class="checkInNoticeLi">
-      <view class="checkInNoticeLabel">入离时间：</view>
-      <view class="checkInNoticeText">{{checkInNotice.startTime}}后入住，{{checkInNotice.endTime}}前退房</view>
-    </view>
-    <view class="checkInNoticeLi">
-      <view class="checkInNoticeLabel">接待要求：</view>
-      <view class="claim">({{checkInNotice.claim}})</view>
-    </view>
-    <view class="checkInNoticeTags">
-      <view class="checkInNoticeTag" wx:for="{{checkInNotice.tags}}" wx:key="item">
-        <image src="{{item.isTrue==true?'../../assets/image/goupng.png':'../../assets/image/chapng.png'}}" class="{{item.isTrue==true?'symbol':'symbolFalse'}}"></image>
-        <view class="{{item.isTrue==true?'symbolText':'symbolFalseText'}}">{{item.text}}</view>
-      </view>
-    </view>
-  </view>
+	<view class="landlord" wx:if="{{IsShowLandlord==true}}">
+		<view class="landlordTitle">房东介绍</view>
+		<view class="landlordContainer">
+			<view class="landlordTop">
+				<image src="{{Landlord.img}}" class="landlordAvator"></image>
+				<view class="landlordRight">
+					<view class="landlordName">{{Landlord.name}}</view>
+					<view class="landlordTags">
+						<view class="landlordTag" wx:for="{{Landlord.tags}}" wx:key="item">{{item}}</view>
+					</view>
+				</view>
+			</view>
+			<view class="landlordBottom">
+				<view class="landlordTxt">
+					<view class="landlordLabel">回复率:</view>
+					<view class="lanlordValue">{{Landlord.response}}%</view>
+				</view>
+
+				<view class="landlordTxt">
+					<view class="landlordLabel">回复时长:</view>
+					<view class="lanlordValue">{{Landlord.duration}}小时以内</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="checkInNotice" wx:if="{{IsCheckInNotice==true}}">
+		<view class="checkInNoticeTitle">入住须知</view>
+		<view class="checkInNoticeLi">
+			<view class="checkInNoticeLabel">入离时间:</view>
+			<view class="checkInNoticeText">{{checkInNotice.startTime}}后入住，{{checkInNotice.endTime}}前退房</view>
+		</view>
+		<view class="checkInNoticeLi">
+			<view class="checkInNoticeLabel">接待要求:</view>
+			<view class="claim">({{checkInNotice.claim}})</view>
+		</view>
+		<view class="checkInNoticeTags">
+			<view class="checkInNoticeTag" wx:for="{{checkInNotice.tags}}" wx:key="item">
+				<image src="{{item.isTrue==true?'../../assets/image/goupng.png':'../../assets/image/chapng.png'}}" class="{{item.isTrue==true?'symbol':'symbolFalse'}}"></image>
+				<view class="{{item.isTrue==true?'symbolText':'symbolFalseText'}}">{{item.text}}</view>
+			</view>
+		</view>
+	</view>
 </view>
 
 <view class="lastHidden"></view>
 <!--底部悬浮框-->
+<!-- <view class="fix-footer">
+	<view class="fix-text">
+		<view class="money">¥{{bottomObject.money}}</view><text class="daynight">/晚</text>
+		<view class="daycount">(共{{bottomObject.dayCount}}晚)</view>
+	</view>
+	<view class="fix-btn">前往预定</view>
+</view> -->
 <view class="fix-footer">
-  <view class="fix-text">
-    <view class="money">¥{{bottomObject.money}}</view><text class="daynight">/晚</text><view class="daycount">(共{{bottomObject.dayCount}}晚)</view>
-  </view>
-  <view class="fix-btn">前往预定</view>
+	<image src="http://image2.5i5j.com//group1/M00/D5/EB/CgqJMV5lrzqAdE1OAAf5LI51SKc931.jpg" class="fix-img"></image>
+	<view class="fix-house">房源提供平台:<text class="fix-black">房天下</text></view>
+	<view class="fix-btn">前往咨询</view>
 </view>
