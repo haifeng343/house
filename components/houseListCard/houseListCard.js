@@ -18,6 +18,9 @@ Component({
     dayCount: {
       type: Number
     },
+    IsSearch:{
+      type:Boolean
+    },
     editFlag: {
       type: Boolean,
       observer: function(editFlag) {
@@ -133,10 +136,12 @@ Component({
       this.touchendStream.next(true);
     },
     goToPlatformDetail(e) {
-      console.log(e.currentTarget.dataset)
+      console.log(e.currentTarget.dataset);
       let app = getApp();
       let platform = e.currentTarget.dataset.platform;
+      let money = e.currentTarget.dataset.money;
       let productid = e.currentTarget.dataset.productid;
+      let dayCount = e.currentTarget.dataset.daycount;
       let beginDate =
         this.properties.type == 1
           ? app.globalData.searchData.beginDate
@@ -149,6 +154,10 @@ Component({
         this.selectItem(e);
         return;
       }
+      let r = e.currentTarget.dataset;
+      wx.navigateTo({
+        url: '/pages/houseDetail/houseDetail?money='+money+'&platform='+platform+'&productid='+productid+'&beginDate='+beginDate+'&endDate='+endDate+'&type=1'+'&index='+r.index+'&dayCount='+dayCount,
+      })
       // monitor.navigateToMiniProgram(platform, productid, beginDate, endDate);
     },
     delItem(e) {

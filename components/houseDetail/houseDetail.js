@@ -1,9 +1,14 @@
-// components/collectDialog/collectDialog.js
+import * as rxjs from "../../utils/rx";
+const monitor = require("../../utils/monitor.js");
+const app = getApp();
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
+    type:{//区别 1.短租 2.长租的品牌中介 3.长租的个人房源 4.二手房
+      type:Number
+    },
     imgUrls:{
       type:Array
     },
@@ -13,23 +18,14 @@ Component({
     tags:{
       type:Array
     },
-    IsShowLandlord:{
-      type:Boolean
-    },
     Landlord:{
       type:Object
     },
     checkInNotice:{
       type:Object
     },
-    IsCheckInNotice:{
-      type:Boolean
-    },
     bottomObject:{
       type:Object
-    },
-    IsSurroundings:{
-      type:Boolean
     },
     surroundings:{
       type:Object
@@ -37,15 +33,12 @@ Component({
     facility:{
       type:Object
     },
-    IsFacility:{
-      type:Boolean
-    },
-    IsHouseDetail:{
-      type:Boolean
-    },
     houseDetails:{
       type:Object
-    }
+    },
+    houseListData:{
+      type:Object
+    },
   },
 
   /**
@@ -61,17 +54,12 @@ Component({
     current: 0, //初始化时第一个显示的图片 下标值（从0）index
 
     title:'',//标题
-    IsShowLandlord:false,//短租为true，其他为false
     Landlord:{},//房主信息
-    IsCheckInNotice:false,//入住须知 短租为true 其他为false
     checkInNotice:{},//入住须知
     bottomObject:{},//短租地步数据 money单价  dayCount几晚
-    IsSurroundings:false,//短租环境为true，其他为false
     surroundings:{},//短租环境
     facility:{},//短租配套设施
-    IsFacility:false,//短租为true 其他为false
     houseDetails:{},//除短租外的房源详情信息
-    IsHouseDetail:false,//除短租外的房源详情信息
 
     navbarIndex:1,//默认选中房源特色的核心卖点
     navbar:[//房源特色导航栏
@@ -83,7 +71,9 @@ Component({
         index:2,
         name:'周边配套'
       }
-    ]
+    ],
+    
+    houseListData:{},//短租传递的参数
   },
 
   /**
@@ -99,6 +89,14 @@ Component({
       this.setData({
         navbarIndex:e.currentTarget.dataset.index
       })
-    }
+    },
+    goToPlatformDetail(e) {
+      let platform = e.currentTarget.dataset.platform;
+      let productid = e.currentTarget.dataset.productid;
+      let beginDate = this.properties.houseListData.beginDate;
+      let endDate = this.properties.houseListData.endDate;
+
+      monitor.navigateToMiniProgram(platform, productid, beginDate, endDate);
+    },
   }
 })

@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    type:1,//区别 1.短租 2.长租的品牌中介 3.长租的个人房源 4.二手房
     imgUrls:[
       '../../assets/image/bg.png',
       '../../assets/image/bg.png',
@@ -22,11 +23,8 @@ Page({
 
     title:'近西湖浙大灵隐 魅蓝组局民俗风情双人床近西湖浙大灵隐 魅蓝组局民俗风情双人床近西湖浙大灵隐 魅蓝组局民俗风情双人床近西湖浙大灵隐 魅蓝组局民俗风情双人床',
     tags:['近地铁','随时看房','男女合租','近地铁','随时看房','男女合租','近地铁','随时看房','男女合租'],//标签
-    IsSurroundings:true,//短租 环境为true，其他为false
     surroundings:['整租','29m','酒店式公寓'],//环境
-    IsFacility:true,//短租 配套设施
     facility:['无线','WIFI','电视','空调','洗衣机','无线','WIFI','电视','空调','洗衣机','无线','WIFI','电视','空调','洗衣机','无线','WIFI','电视','空调','洗衣机'],//短租配套设施
-    IsShowLandlord:true,//房东信息 只有短租为true，其他都为false
     Landlord:{
       img:'../../assets/image/hotel.png',//头像
       name:'董明珠',//姓名
@@ -34,11 +32,11 @@ Page({
       response:'13',//回复率
       duration:'2',//回复时长
     },
-    IsCheckInNotice:true,//入住须知 短租为true，其他为false
     checkInNotice:{//入住须知
       startTime:'',
       endTime:'',
       claim:'房东接待',
+      money:0,
       tags:[
         {
           isTrue:true,
@@ -67,7 +65,6 @@ Page({
       money:0,//单价
       dayCount:0,//短租 几晚
     },
-    IsHouseDetail:true,//除短租外的房源详情信息
     houseDetails:[//除短租外的房源详情信息
       {
         tag:'售价',
@@ -81,28 +78,30 @@ Page({
         tag:'售价',
         number:'445'
       },
-    ]
+    ],
+
+    houseListData:{},//短租的传递参数
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onShow: function (options) {
-      console.log(app.globalData.searchData);
-      let person = app.globalData.searchData;
-      this.data.checkInNotice.startTime = person.beginDate;
-      this.data.checkInNotice.endTime = person.endDate;
-      this.data.bottomObject.dayCount = person.dayCount;
-      console.log(this.data.checkInNotice);
+  onShow: function () {
+      
+  },
+  onLoad:function(options){
+    console.log(options)
       this.setData({
-        checkInNotice:this.data.checkInNotice,
-        bottomObject:this.data.bottomObject,
-      })
-      if(this.data.bottomObject.dayCount==0){
+        houseListData:Object.assign(this.data.houseListData,options),
+      });
+      if(options.type==1){
         wx.setNavigationBarTitle({
           title: '短租-房源详情',
-        })
+        });
       }
+  },
+  goToSelect(e){
+    console.log(e)
   },
 
   /**

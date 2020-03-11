@@ -14,7 +14,7 @@
       </view>
       <view class='search_item'>
         <view class='title icon_2'>户型</view>
-        <view class="houseType  {{checkHouseType.checkHouseType(searchData.houseType,index) ? 'active':''}}" bindtap='selectHouseType' data-index='{{index}}' wx:key='{{item}}' wx:for='{{houseType}}'>
+        <view class="houseType  {{checkHouseType.checkHouseType(searchData.houseType,index) ? 'active':''}}" bindtap='selectHouseType' data-index='{{index}}' wx:key='item' wx:for='{{houseType}}'>
           {{item}}
         </view>
       </view>
@@ -51,17 +51,17 @@
       </view>
       <view class='position-content'>
         <scroll-view scroll-into-view="{{level1View}}" scroll-y class='position-type'>
-          <view class='item {{key === typeActive ? "active" : ""}}' id="{{key === typeActive ? 'activelevel1' : ''}}" wx:if='{{item.length>0}}' wx:for='{{area}}' wx:for-index='key' wx:key='{{key}}' bindtap='chooseType' data-type='{{key}}'>
+          <view class='item {{key === typeActive ? "active" : ""}}' id="{{key === typeActive ? 'activelevel1' : ''}}" wx:if='{{item.length>0}}' wx:for='{{area}}' wx:for-index='key' wx:key='key' bindtap='chooseType' data-type='{{key}}'>
             {{item.name}}
           </view>
         </scroll-view>
         <scroll-view scroll-into-view="{{level2View}}" scroll-y class='position-middle'>
-          <view class='item {{key === middleActive ? "active" : ""}} {{lastList.length > 0 ? "" : "last"}}' id="{{key === middleActive ? 'activelevel2' : ''}}" data-way='{{lastList.length > 0 ? "subway" : ""}}' wx:for='{{middleList}}' wx:key='{{key}}' wx:for-index='key' bindtap='chooseSecond' data-type='{{key}}'>
+          <view class='item {{key === middleActive ? "active" : ""}} {{lastList.length > 0 ? "" : "last"}}' id="{{key === middleActive ? 'activelevel2' : ''}}" data-way='{{lastList.length > 0 ? "subway" : ""}}' wx:for='{{middleList}}' wx:key='key' wx:for-index='key' bindtap='chooseSecond' data-type='{{key}}'>
             {{item.name}}
           </view>
         </scroll-view>
         <scroll-view scroll-into-view="{{level3View}}" scroll-y class='position-last' wx:if='{{lastList.length > 0}}'>
-          <view class='item {{key === lastActive ? "active" : ""}}' id="{{key === lastActive ? 'activelevel3' : ''}}" wx:for='{{lastList}}' wx:for-index='key' wx:key='{{key}}' bindtap='chooseLast' data-type='{{key}}' wx:if="{{key !== 'length'}}">
+          <view class='item {{key === lastActive ? "active" : ""}}' id="{{key === lastActive ? 'activelevel3' : ''}}" wx:for='{{lastList}}' wx:for-index='key' wx:key='key' bindtap='chooseLast' data-type='{{key}}' wx:if="{{key !== 'length'}}">
             {{item.name}}
           </view>
         </scroll-view>
@@ -91,7 +91,7 @@
   <TopPanel wx:if='{{shownType === 4}}' bind:onClose="handleClosePanel">
     <view class="sort-panel">
       <view class="sort-list">
-        <view class="sort-item {{item.active ? 'active' : ''}}" wx:for="{{sortList}}" wx:key="{{item.label}}" bindtap="handleSelectSort" data-value="{{item.value}}">
+        <view class="sort-item {{item.active ? 'active' : ''}}" wx:for="{{sortList}}" wx:key="item.label" bindtap="handleSelectSort" data-value="{{item.value}}">
           <text>{{item.label}}</text>
           <text class="icon-font uniE930" wx:if="{{item.active}}" />
         </view>
