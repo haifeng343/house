@@ -8,7 +8,7 @@ export const api_address = 'https://fytest.bangdingding.cn';
 //接口开发环境 https://fangdev.bangdingding.cn
 //接口测试环境 https://fangtest.bangdingding.cn
 //接口正式环境 https://fang.bangdingding.cn
-export const default_address = 'https://fangdev.bangdingding.cn';
+export const default_address      = 'https://fangdev.bangdingding.cn';
 
 //三方平台数据api
 export const wiwj_address         = "https://appapi.5i5j.com"
@@ -26,3 +26,7 @@ export const xiaozhu_address      = "https://securewireless.xiaozhu.com"
 export const muniao_address       = "https://service.muniao.com"
 export const meituan_address      = "https://api-phx.meituan.com"
 
+//详情页
+export const tujia_address2       = "https://mpclient.tujia.com"
+export const xiaozhu_address2     = "https://wirelesspub-lodgeunit.xiaozhu.com"
+export const muniao_address2      = "https://mp.muniao.com"
