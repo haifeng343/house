@@ -1359,9 +1359,9 @@ Page({
     // muniao.getData('284145').then(res => {
     //   console.log('res', res)
     // })
-    zhenguo.getData('6487223').then(res => {
-      console.log('res', res)
-    })
+    // zhenguo.getData('6487223').then(res => {
+    //   console.log('res', res)
+    // })
     let tab = +params.tab;
     if(!tab) {
       tab = wx.getStorageSync('tabIndex') || 2
