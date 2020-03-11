@@ -19,6 +19,7 @@ import getIndexHouseData from "../../utils/indexHouseData";
 import getIndexLongHouseData from "../../utils/indexLongHouseData";
 import getIndexSecondHouseData from "../../utils/indexSecondHouseData";
 import { changeHistoryStorage } from "../../utils/longSetSearchData";
+import { tujia, xiaozhu, muniao, zhenguo } from "../../api/informationData.js"
 Page({
   /**
    * 页面的初始数据
@@ -1349,6 +1350,18 @@ Page({
     }
   },
   onLoad(params) {
+    // tujia.getData('22672056').then(res=>{
+    //   console.log('res',res)
+    // })
+    // xiaozhu.getData('132403005403').then(res => {
+    //   console.log('res', res)
+    // })
+    // muniao.getData('284145').then(res => {
+    //   console.log('res', res)
+    // })
+    // zhenguo.getData('6487223').then(res => {
+    //   console.log('res', res)
+    // })
     let tab = +params.tab;
     if(!tab) {
       tab = wx.getStorageSync('tabIndex') || 2
