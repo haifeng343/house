@@ -15,7 +15,7 @@
     <view class="search_empty" wx:if="{{countFlag === 2}}">
       <noNetwork title="网络异常，请刷新重试"></noNetwork>
     </view>
-    <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
+    <block wx:for="{{allData}}" wx:key="idx" wx:for-index="idx">
       <houseListCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{1}}" idx="{{idx}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" dayCount="{{dayCount}}" isStatist="{{false}}"></houseListCard>
     </block>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&!loadingShow}}">

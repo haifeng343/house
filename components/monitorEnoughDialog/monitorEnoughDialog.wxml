@@ -6,7 +6,7 @@
       <view class="mask_content">{{dialogText}}</view>
       <view class="mask_mold">
         <view wx:if="{{list.length != 3}}" class="mold_first {{list.length == 2?'mold_two':''}} {{list.length == 1?'mold_one':''}}">
-          <block wx:if="list.length!=3" wx:for="{{list}}" wx:key="{{index}}">
+          <block wx:if="list.length!=3" wx:for="{{list}}" wx:key="index">
             <view class="mold {{index ==0&&list.length == 3?'mold_normal':'mold_other'}} {{index ==2&&list.length == 3?'mold_ab':''}}" catchtap="navigateToPlatform" data-platform="{{item.key}}">
               <view class="mold_name" wx:if="{{item.key == 'tj'}}">
                 <image wx:if="{{item.value>0}}" src="https://piaodingding.oss-cn-hangzhou.aliyuncs.com/images/wechat/fdd/tj_dialog.png"></image>

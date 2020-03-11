@@ -149,7 +149,7 @@ Component({
         this.selectItem(e);
         return;
       }
-      monitor.navigateToMiniProgram(platform, productid, beginDate, endDate);
+      // monitor.navigateToMiniProgram(platform, productid, beginDate, endDate);
     },
     delItem(e) {
       let detail = {
