@@ -1,14 +1,8 @@
-import { tujia_address2, xiaozhu_address2, muniao_address2, meituan_address, wiwj_address } from "../utils/httpAddress.js";
-const DEFAULT_PAGE = { size: 15, num: 1 }; //默认分页参数
-const LIAN_APP_ID = "20170324_android";
-const LIAN_APP_SECRET = "93273ef46a0b880faf4466c48f74878f";
-const SOUFUN_IMEI = "866135030723842";
-const TONGCHENG_VER = "8.25.2";
+import { tujia_address2, xiaozhu_address2, muniao_address2, meituan_address, wiwj_address, lianjia_address2 } from "../utils/httpAddress.js";
 var base64_encode = require("../utils/base64.js").base64_encode;
 import { CryptoJS } from "../utils/sha1.js";
 import { xml2json } from "../utils/xml2json.js";
 import MD5 from "../utils/md5";
-
 
 const tujia = {
   getData: function (houseId) {
@@ -531,11 +525,11 @@ const zhenguo = {
 };
 
 const wiwj = {
-  getHouseData: function (houseId) {
+  getHouseData: function ({houseId,cityId}) {
     let data = { hid: houseId }
     return new Promise((resolve, reject) => {
       wx.request({
-        url: wiwj_address + "/appapi/exchange/2/v1/allinfo",
+        url: wiwj_address + `/appapi/exchange/${cityId}/v1/allinfo`,
         method: "POST",
         data: data,
         success: res => {
@@ -609,22 +603,22 @@ const wiwj = {
             }
 
             let community = data.community || {}
-            if (community.address && community.address) {
+            if (community.address) {
               request.address = community.address
             }
-            if (community.price && community.price) {
+            if (community.price) {
               request.xqprice = community.price
             }
-            if (community.salecount && community.salecount) {
+            if (community.salecount) {
               request.salecount = community.salecount
             }
-            if (community.startData && community.startData) {
+            if (community.startData) {
               request.startData = community.startData
             }
-            if (community.communitytype && community.communitytype) {
+            if (community.communitytype) {
               request.communitytype = community.communitytype
             }
-            if (community.develop && community.develop) {
+            if (community.develop) {
               request.develop = community.develop
             }
             let communityid = '';
@@ -669,10 +663,164 @@ const wiwj = {
   }
 };
 
+const lianjia = {
+  getHouseData: function (r = { house_code: '', city_id: '' }) {
+    var n = "";
+    Object.keys(r).sort().forEach(function (e) {
+      void 0 !== r[e] ? n += e + "=" + ("object" === typeof(r[e]) ? JSON.stringify(r[e]) : r[e]) : delete r[e]
+    }),
+    n += "6e8566e348447383e16fdd1b233dbb49"
+    n = "ljwxapp:" + (n = MD5(n))
+    console.log(n,base64_encode(n))
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: lianjia_address2 + `/ershoufang/detail?house_code=103106856678&city_id=330100`,
+        method: "GET",
+        header: {
+          authorization: base64_encode(n),
+          "lianjia-source": "ljwxapp",
+          "time-stamp": new Date().getTime()
+        },
+        success: res => {
+          if (res.data) {
+            let data = res.data.data || {}
+            console.log(data)
+            if (Object.keys(data).length === 0) {
+              reject(false);
+            }
+            let request = {
+              houseId: r.house_code, //房子id
+              houseName: '', //标题
+              price: '', //售价
+              layout: '', //户型
+              buildarea: '', //面积
+              houseTags: [], //标签
+              looktime: '', //看房时间
+              gettime: '', //入住
+              decoratelevel: '', //装修
+              heading: '', //朝向
+              floorStr: '', //楼层
+              housePicture: [], //图片
+              memo: '', //核心卖点
+              rim: '', //周边配套
+              address: '', //小区名称
+              xqprice: '', //小区均价
+              salecount: '', //小区在售房源
+              rentcount: '', //小区在租房源
+              startData: '', //建成年代
+              communitytype: '', //建筑类型
+              plotRatio: '', //容积率
+              virescence: '', //绿化率
+              develop: '', //开发商
+            }
+            let houseinfo = data.house_info || {}
+            if (houseinfo.title) {
+              request.houseName = houseinfo.title
+            }
+            if (houseinfo.list_price) {
+              request.price = houseinfo.list_price
+            }
+            if (houseinfo.tags && houseinfo.tags.length) {
+              for (let index = 0; index < houseinfo.tags.length; index++ ) {
+                if (houseinfo.tags[index].title) {
+                  request.houseTags.push(houseinfo.tags[index].title)
+                }
+              }
+            }
+            if (houseinfo.frame_type) {
+              request.layout = houseinfo.frame_type
+            }
+            if (houseinfo.house_area) {
+              request.buildarea = houseinfo.house_area
+            }
+            // if (houseinfo.looktime) {
+            //   request.looktime = houseinfo.looktime
+            // }
+            if (houseinfo.decoration_type) {
+              request.decoratelevel = houseinfo.decoration_type
+            }
+            if (houseinfo.orientation) {
+              request.heading = houseinfo.orientation
+            }
+            if (houseinfo.floor_level) {
+              request.floorStr = houseinfo.floor_level + (houseinfo.floor_total ? '/' + houseinfo.floor_total :'')
+            }
+            if (houseinfo.picture_uri_list && houseinfo.picture_uri_list.length) {
+              request.housePicture = houseinfo.picture_uri_list
+            }
+            // if (houseinfo.memo && houseinfo.memo) {
+            //   request.memo = houseinfo.memo
+            // }
+            // if (houseinfo.rim && houseinfo.rim) {
+            //   request.rim = houseinfo.rim
+            // }
+
+            // let community = data.community || {}
+            if (houseinfo.resblock_name) {
+              request.address = houseinfo.resblock_name
+            }
+            // if (community.price) {
+            //   request.xqprice = community.price
+            // }
+            // if (community.salecount) {
+            //   request.salecount = community.salecount
+            // }
+            if (houseinfo.building_year) {
+              request.startData = houseinfo.building_year
+            }
+            if (houseinfo.building_type) {
+              request.communitytype = houseinfo.building_type
+            }
+            // if (community.develo) {
+            //   request.develop = community.develop
+            // }
+            // let communityid = '';
+            // if (data.houseinfo && data.houseinfo.communityid) {
+            //   communityid = data.houseinfo.communityid
+            // }
+            // return new Promise((resolve, reject) => {
+            //   wx.request({
+            //     url: wiwj_address + `/community/2/v1/allinfo`,
+            //     method: "POST",
+            //     data: { communityid },
+            //     success: req => {
+            //       let reqData = req.data || {}
+            //       reqData = reqData.data || {}
+            //       if (Object.keys(reqData).length === 0) {
+            //         reject(false);
+            //       }
+            //       resolve(reqData)
+            //     },
+            //     fail: res => {
+            //       reject(false)
+            //     }
+            //   })
+            // }).then(res => {
+            //   let communityInfo = res.communityInfo || {}
+            //   request.plotRatio = communityInfo.plotRatio || ''
+            //   request.virescence = communityInfo.virescence || ''
+            //   request.rentcount = communityInfo.rentcount || ''
+            //   resolve(request);
+            // }).catch(res => {
+              resolve(request);
+            // })
+          } else {
+            reject(false);
+          }
+        },
+        fail: res => {
+          reject(false);
+        }
+      });
+    });
+  }
+}
+
 module.exports = {
   tujia,
   xiaozhu,
   muniao,
   zhenguo,
-  wiwj
+  wiwj,
+  lianjia
 };

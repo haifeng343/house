@@ -19,7 +19,7 @@ import getIndexHouseData from "../../utils/indexHouseData";
 import getIndexLongHouseData from "../../utils/indexLongHouseData";
 import getIndexSecondHouseData from "../../utils/indexSecondHouseData";
 import { changeHistoryStorage } from "../../utils/longSetSearchData";
-import { tujia, xiaozhu, muniao, zhenguo, wiwj } from "../../api/informationData.js"
+import { tujia, xiaozhu, muniao, zhenguo, wiwj, lianjia } from "../../api/informationData.js"
 Page({
   /**
    * 页面的初始数据
@@ -1362,9 +1362,12 @@ Page({
     // zhenguo.getData('6487223').then(res => {
     //   console.log('res', res)
     // })
-    // wiwj.getHouseData('90333226').then(res => {
-    //   console.log('res', res)
-    // })
+    wiwj.getHouseData({ houseId:'90333226', cityId:'2' }).then(res => {
+      console.log('res', res)
+    })
+    lianjia.getHouseData({ house_code: 103106856678, city_id: 330100 }).then(res => {
+      console.log('res', res)
+    })
     let tab = +params.tab;
     if(!tab) {
       tab = wx.getStorageSync('tabIndex') || 2
