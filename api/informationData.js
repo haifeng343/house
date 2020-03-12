@@ -1,4 +1,4 @@
-import { tujia_address2, xiaozhu_address2, muniao_address2, meituan_address } from "../utils/httpAddress.js";
+import { tujia_address2, xiaozhu_address2, muniao_address2, meituan_address, wiwj_address } from "../utils/httpAddress.js";
 const DEFAULT_PAGE = { size: 15, num: 1 }; //默认分页参数
 const LIAN_APP_ID = "20170324_android";
 const LIAN_APP_SECRET = "93273ef46a0b880faf4466c48f74878f";
@@ -25,7 +25,7 @@ const tujia = {
             if (Object.keys(data).length === 0) {
               reject(false);
             }
-            let requset = {
+            let request = {
               houseId: '', //房子id
               houseName: '', //标题
               houseTags: [], //标签
@@ -36,29 +36,29 @@ const tujia = {
               landlordInfo: {} //房东介绍
             }
             if (data.houseId) {
-              requset.houseId = data.houseId
+              request.houseId = data.houseId
             }
             if (data.houseName) {
-              requset.houseName = data.houseName
+              request.houseName = data.houseName
             }
             if (data.houseTags && data.houseTags.length) {
               for (let index = 0; index < data.houseTags.length; index++) {
                 if (data.houseTags[index].text) {
-                  requset.houseTags.push(data.houseTags[index].text)
+                  request.houseTags.push(data.houseTags[index].text)
                 }
               }
             }
             if (data.housePicture && data.housePicture.housePics && data.housePicture.housePics.length) {
               for (let index = 0; index < data.housePicture.housePics.length; index++) {
                 if (data.housePicture.housePics[index].url) {
-                  requset.housePicture.push(data.housePicture.housePics[index].url)
+                  request.housePicture.push(data.housePicture.housePics[index].url)
                 }
               }
             }
             if (data.houseSummarys && data.houseSummarys.length) {
               for (let index = 0; index < data.houseSummarys.length; index++) {
                 if (data.houseSummarys[index].title) {
-                  requset.houseSummarys.push(data.houseSummarys[index].title)
+                  request.houseSummarys.push(data.houseSummarys[index].title)
                 }
               }
             }
@@ -68,7 +68,7 @@ const tujia = {
                 if (listTemp.groupName == '基础设施') {
                   for (let index = 0; index < listTemp.facilitys.length; index++) {
                     if (listTemp.facilitys[index].name) {
-                      requset.houseFacilitys.push(listTemp.facilitys[index].name)
+                      request.houseFacilitys.push(listTemp.facilitys[index].name)
                     }
                   }
                 }
@@ -83,7 +83,7 @@ const tujia = {
                   for(let temp = 0; temp < data.checkInRules[index].items.length; temp++ ){
                     item.items.push({ title: data.checkInRules[index].items[temp].introduction, isDeleted: data.checkInRules[index].items[temp].isDeleted})
                   }
-                  requset.checkInRules.push(item)
+                  request.checkInRules.push(item)
                 }
               }
             }
@@ -102,9 +102,9 @@ const tujia = {
                   }
                 }
               }
-              requset.landlordInfo = landlordInfo
+              request.landlordInfo = landlordInfo
             }
-            resolve(requset);
+            resolve(request);
           } else {
             reject(false);
           }
@@ -131,7 +131,7 @@ const xiaozhu = {
             if (Object.keys(data).length === 0) {
               reject(false);
             }
-            let requset = {
+            let request = {
               houseId: houseId,//房子id
               houseName: '', //标题
               houseTags: [], //标签
@@ -142,34 +142,34 @@ const xiaozhu = {
               landlordInfo: {} //房东介绍
             }
             if (data.luDetail && data.luDetail.lodgeUnitName) {
-              requset.houseName = data.luDetail.lodgeUnitName
+              request.houseName = data.luDetail.lodgeUnitName
             }
             if (data.luTags && data.luTags.length) {
               for (let index = 0; index < data.luTags.length; index++) {
                 if (data.luTags[index].title) {
-                  requset.houseTags.push(data.luTags[index].title)
+                  request.houseTags.push(data.luTags[index].title)
                 }
               }
             }
             if (data.images && data.images.length) {
               for (let index = 0; index < data.images.length; index++) {
                 if (data.images[index].imgUrl) {
-                  requset.housePicture.push(data.images[index].imgUrl)
+                  request.housePicture.push(data.images[index].imgUrl)
                 }
               }
             }
             //头部特点分四块
             if (data.luDetail && data.luDetail.leaseType) {
-              requset.houseSummarys.push(data.luDetail.leaseType)
+              request.houseSummarys.push(data.luDetail.leaseType)
             }
             if (data.luDetail && data.luDetail.houseType) {
-              requset.houseSummarys.push(data.luDetail.houseType)
+              request.houseSummarys.push(data.luDetail.houseType)
             }
             if (data.bed && data.bed.bedGuestTip) {
-              requset.houseSummarys.push(data.bed.bedGuestTip)
+              request.houseSummarys.push(data.bed.bedGuestTip)
             }
             if (data.addTenant && data.addTenant.addTenant && data.addTenant.addTenantTip) {
-              requset.houseSummarys.push(data.addTenant.addTenantTip)
+              request.houseSummarys.push(data.addTenant.addTenantTip)
             }
 
             if (data.facility && data.facility.length){
@@ -177,7 +177,7 @@ const xiaozhu = {
                 let listTemp = data.facility[temp]
                 for (let index = 0; index < listTemp.items.length; index++) {
                   if (listTemp.items[index].name) {
-                    requset.houseFacilitys.push(listTemp.items[index].name)
+                    request.houseFacilitys.push(listTemp.items[index].name)
                   }
                 }
               }
@@ -190,7 +190,7 @@ const xiaozhu = {
                   item.title = data.bookNotice.dealRule[index].name
                   item.checkInRuleFloat = false
                   item.items.push({ title: data.bookNotice.dealRule[index].detail, isDeleted:false })
-                  requset.checkInRules.push(item)
+                  request.checkInRules.push(item)
                 }
               }
             }
@@ -206,10 +206,10 @@ const xiaozhu = {
               if (data.landlord.realIdentity) {
                 landlordInfo.hotelTags.push("实名认证")
               }
-              requset.landlordInfo = landlordInfo
+              request.landlordInfo = landlordInfo
             }
 
-            resolve(requset);
+            resolve(request);
           } else {
             reject(false);
           }
@@ -237,7 +237,7 @@ const muniao = {
             if (Object.keys(data).length === 0) {
               reject(false);
             }
-            let requset = {
+            let request = {
               houseId: houseId, //房子id
               houseName: '', //标题
               houseTags: [], //标签
@@ -248,54 +248,54 @@ const muniao = {
               landlordInfo: {} //房东介绍
             }
             if (data.title) {
-              requset.houseName = data.title
+              request.houseName = data.title
             }
             //标签，3个
             if (data.room_type) {
-              requset.houseTags.push(data.room_type)
+              request.houseTags.push(data.room_type)
             }
             if (data.rent_type) {
-              requset.houseTags.push(data.rent_type)
+              request.houseTags.push(data.rent_type)
             }
             if (data.size) {
-              requset.houseTags.push(data.size + '㎡')
+              request.houseTags.push(data.size + '㎡')
             }
 
             if (data.photo && data.photo.length) {
               for (let index = 0; index < data.photo.length; index++) {
                 if (data.photo[index].img_url) {
-                  requset.housePicture.push(data.photo[index].img_url)
+                  request.housePicture.push(data.photo[index].img_url)
                 }
               }
             }
 
             //头部特点, 7块
             if (data.rent_type) {
-              requset.houseSummarys.push(data.rent_type)
+              request.houseSummarys.push(data.rent_type)
             }
             if (data.room_type) {
-              requset.houseSummarys.push(data.room_type)
+              request.houseSummarys.push(data.room_type)
             }
             if (data.house_type) {
-              requset.houseSummarys.push(data.house_type)
+              request.houseSummarys.push(data.house_type)
             }
             if (data.max_num) {
-              requset.houseSummarys.push(data.max_num)
+              request.houseSummarys.push(data.max_num)
             }
             if (data.unit_str) {
-              requset.houseSummarys.push(data.unit_str)
+              request.houseSummarys.push(data.unit_str)
             }
             if (data.bathroom_self || data.bathroom_pub) {
-              requset.houseSummarys.push((data.bathroom_self + data.bathroom_pub ) + '个卫生间')
+              request.houseSummarys.push((data.bathroom_self + data.bathroom_pub ) + '个卫生间')
             }
             if (data.beds && data.beds.count) {
-              requset.houseSummarys.push(data.beds.count + '张床')
+              request.houseSummarys.push(data.beds.count + '张床')
             }
 
             if (data.support && data.support.length) {
               for (let index = 0; index < data.support.length; index++) {
                 if (data.support[index].name) {
-                  requset.houseFacilitys.push(data.support[index].name)
+                  request.houseFacilitys.push(data.support[index].name)
                 }
               }
             }
@@ -306,34 +306,34 @@ const muniao = {
               item.title = '最早入住时间'
               item.checkInRuleFloat = false
               item.items.push({ title: '当天' + data.checkin_time + ':00', isDeleted: false })
-              requset.checkInRules.push(item)
+              request.checkInRules.push(item)
             }
             if (data.checkout_time) {
               let item = { items: [] };
               item.title = '最晚退房时间'
               item.checkInRuleFloat = false
               item.items.push({ title: '当天' + data.checkout_time + ':00', isDeleted: false })
-              requset.checkInRules.push(item)
+              request.checkInRules.push(item)
             }
             if (data.deposit && data.deposit.is_deposit) {
               let item = { items: [] };
               item.title = '线下押金'
               item.checkInRuleFloat = false
               item.items.push({ title: data.deposit.money, isDeleted:false })
-              requset.checkInRules.push(item)
+              request.checkInRules.push(item)
             }
             if (data.need_idcard) {
               let item = { items: [] };
               item.title = '身份证'
               item.checkInRuleFloat = false
               item.items.push({ title: "需要", isDeleted: false })
-              requset.checkInRules.push(item)
+              request.checkInRules.push(item)
             } else {
               let item = { items: [] };
               item.title = '身份证'
               item.checkInRuleFloat = false
               item.items.push({ title: "不需要", isDeleted: false })
-              requset.checkInRules.push(item)
+              request.checkInRules.push(item)
             }
             if (data.rule && data.rule.length) {
               let item = { items: [] };
@@ -342,7 +342,7 @@ const muniao = {
               for (let index = 0; index < data.rule.length; index++) {
                 item.items.push({ title: data.rule[index].name, isDeleted: data.rule[index].is_show === 1 ? true : false })
               }
-              requset.checkInRules.push(item)
+              request.checkInRules.push(item)
             }
 
 
@@ -367,9 +367,9 @@ const muniao = {
               if (data.host.reply_time) {
                 landlordInfo.reply_time = data.host.reply_time
               }
-              requset.landlordInfo = landlordInfo
+              request.landlordInfo = landlordInfo
             }
-            resolve(requset);
+            resolve(request);
           } else {
             reject(false);
           }
@@ -396,11 +396,10 @@ const zhenguo = {
             let data = res.data.data || {}
             data = data.product || {}
             data = data.productAllInfoResult || {}
-            console.log(data)
             if (Object.keys(data).length === 0) {
               reject(false);
             }
-            let requset = {
+            let request = {
               houseId: houseId, //房子id
               houseName: '', //标题
               houseTags: [], //标签
@@ -411,12 +410,12 @@ const zhenguo = {
               landlordInfo: {} //房东介绍
             }
             if (data.title) {
-              requset.houseName = data.title
+              request.houseName = data.title
             }
             if (data.productTagInfoList && data.productTagInfoList.length) {
               for (let index = 0; index < data.productTagInfoList.length; index++) {
                 if (data.productTagInfoList[index].tagName) {
-                  requset.houseTags.push(data.productTagInfoList[index].tagName)
+                  request.houseTags.push(data.productTagInfoList[index].tagName)
                 }
               }
             }
@@ -424,32 +423,32 @@ const zhenguo = {
             if (data.productMediaInfoList && data.productMediaInfoList.length) {
               for (let index = 0; index < data.productMediaInfoList.length; index++) {
                 if (data.productMediaInfoList[index].mediaUrl) {
-                  requset.housePicture.push(data.productMediaInfoList[index].mediaUrl)
+                  request.housePicture.push(data.productMediaInfoList[index].mediaUrl)
                 }
               }
             }
 
             //头部特点, 5块
             if (data.layoutRoom) {
-              requset.houseSummarys.push(data.layoutRoom + '间卧室')
+              request.houseSummarys.push(data.layoutRoom + '间卧室')
             }
             if (data.layoutHall || data.layoutKitchen || data.layoutWc) {
-              requset.houseSummarys.push(data.layoutHall + '厅' + data.layoutKitchen + '厨' + data.layoutWc + '卫')
+              request.houseSummarys.push(data.layoutHall + '厅' + data.layoutKitchen + '厨' + data.layoutWc + '卫')
             }
             if (data.usableArea) {
-              requset.houseSummarys.push(data.usableArea + '㎡')
+              request.houseSummarys.push(data.usableArea + '㎡')
             }
             if (data.bedCount) {
-              requset.houseSummarys.push(data.bedCount +'张床')
+              request.houseSummarys.push(data.bedCount +'张床')
             }
             if (data.maxGuestNumber) {
-              requset.houseSummarys.push('宜居' + data.maxGuestNumber + '人')
+              request.houseSummarys.push('宜居' + data.maxGuestNumber + '人')
             }
 
             if (data.facilityList && data.facilityList.length) {
               for (let index = 0; index < data.facilityList.length; index++) {
                 if (data.facilityList[index].value) {
-                  requset.houseFacilitys.push(data.facilityList[index].value)
+                  request.houseFacilitys.push(data.facilityList[index].value)
                 }
               }
             }
@@ -460,14 +459,14 @@ const zhenguo = {
               item.title = '最早入住时间'
               item.checkInRuleFloat = false
               item.items.push({ title: '当天' + data.productRpInfo.earliestCheckinTime, isDeleted: false })
-              requset.checkInRules.push(item)
+              request.checkInRules.push(item)
             }
             if (data.productRpInfo && data.productRpInfo.latestCheckoutTime) {
               let item = { items: [] };
               item.title = '最晚退房时间'
               item.checkInRuleFloat = false
               item.items.push({ title: '当天' + data.productRpInfo.latestCheckoutTime, isDeleted: false })
-              requset.checkInRules.push(item)
+              request.checkInRules.push(item)
             }
             if (data.guestNoticeList && data.guestNoticeList.length) {
               let item = { items: [] };
@@ -476,7 +475,7 @@ const zhenguo = {
               for (let index = 0; index < data.guestNoticeList.length; index++) {
                 item.items.push({ title: data.guestNoticeList[index].value, isDeleted: data.guestNoticeList[index].metaValue === '1' ? true : false })
               }
-              requset.checkInRules.push(item)
+              request.checkInRules.push(item)
             }
             let landlordInfo = { hotelName: '', hotelLogo: '', hotelTags: [], reply_rate: '', reply_time: '' }
             let hostId = data.hostId
@@ -513,11 +512,150 @@ const zhenguo = {
               if (res.replyTime) {
                 landlordInfo.reply_time = parseInt(res.replyTime/60)
               }
-              requset.landlordInfo = landlordInfo
-              resolve(requset);
+              request.landlordInfo = landlordInfo
+              resolve(request);
             }).catch(res=>{
-              requset.landlordInfo = landlordInfo
-              resolve(requset);
+              request.landlordInfo = landlordInfo
+              resolve(request);
+            })
+          } else {
+            reject(false);
+          }
+        },
+        fail: res => {
+          reject(false);
+        }
+      });
+    });
+  }
+};
+
+const wiwj = {
+  getHouseData: function (houseId) {
+    let data = { hid: houseId }
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: wiwj_address + "/appapi/exchange/2/v1/allinfo",
+        method: "POST",
+        data: data,
+        success: res => {
+          if (res.data) {
+            // console.log(res.data)
+            let data = res.data.data || {}
+            if (Object.keys(data).length === 0) {
+              reject(false);
+            }
+            let request = {
+              houseId: houseId, //房子id
+              houseName: '', //标题
+              price: '', //售价
+              layout: '', //户型
+              buildarea: '', //面积
+              houseTags: [], //标签
+              looktime: '', //看房时间
+              gettime: '', //入住
+              decoratelevel: '', //装修
+              heading: '', //朝向
+              floorStr: '', //楼层
+              housePicture: [], //图片
+              memo:'', //核心卖点
+              rim:'', //周边配套
+              address: '', //小区名称
+              xqprice: '', //小区均价
+              salecount: '', //小区在售房源
+              rentcount: '', //小区在租房源
+              startData: '', //建成年代
+              communitytype: '', //建筑类型
+              plotRatio: '', //容积率
+              virescence: '', //绿化率
+              develop: '', //开发商
+            }
+            let houseinfo = data.houseinfo || {}
+            if (houseinfo.housetitle) {
+              request.houseName = houseinfo.housetitle
+            }
+            if (houseinfo.price) {
+              request.price = houseinfo.price
+            }
+            if (houseinfo.tagwall && houseinfo.tagwall.length) {
+              request.houseTags = houseinfo.tagwall
+            }
+            if (houseinfo.bedroom || houseinfo.livingroom || houseinfo.toilet) {
+              request.layout = houseinfo.bedroom + '室' + houseinfo.livingroom + '厅' + houseinfo.toilet + '卫'
+            }
+            if (houseinfo.buildarea) {
+              request.buildarea = houseinfo.buildarea
+            }
+            if (houseinfo.looktime) {
+              request.looktime = houseinfo.looktime
+            }
+            if (houseinfo.decoratelevel) {
+              request.decoratelevel = houseinfo.decoratelevel
+            }
+            if (houseinfo.heading) {
+              request.heading = houseinfo.heading
+            }
+            if (houseinfo.floorStr) {
+              request.floorStr = houseinfo.floorStr
+            }
+            if (houseinfo.imgs && houseinfo.imgs.length) {
+              request.housePicture = houseinfo.imgs
+            }
+            if (houseinfo.memo && houseinfo.memo) {
+              request.memo = houseinfo.memo
+            }
+            if (houseinfo.rim && houseinfo.rim) {
+              request.rim = houseinfo.rim
+            }
+
+            let community = data.community || {}
+            if (community.address && community.address) {
+              request.address = community.address
+            }
+            if (community.price && community.price) {
+              request.xqprice = community.price
+            }
+            if (community.salecount && community.salecount) {
+              request.salecount = community.salecount
+            }
+            if (community.startData && community.startData) {
+              request.startData = community.startData
+            }
+            if (community.communitytype && community.communitytype) {
+              request.communitytype = community.communitytype
+            }
+            if (community.develop && community.develop) {
+              request.develop = community.develop
+            }
+            let communityid = '';
+            if (data.houseinfo && data.houseinfo.communityid) {
+              communityid = data.houseinfo.communityid
+            }
+            return new Promise((resolve, reject) => {
+              wx.request({
+                url: wiwj_address + `/community/2/v1/allinfo`,
+                method: "POST",
+                data: { communityid },
+                success: req => {
+                  let reqData = req.data || {}
+                  reqData = reqData.data || {}
+                  if (Object.keys(reqData).length === 0) {
+                    reject(false);
+                  }
+                  resolve(reqData)
+                },
+                fail: res => {
+                  reject(false)
+                }
+              })
+            }).then(res => {
+              let communityInfo = res.communityInfo || {}
+              request.plotRatio = communityInfo.plotRatio || ''
+              request.virescence = communityInfo.virescence || ''
+              request.rentcount = communityInfo.rentcount || ''
+              resolve(request);
+            }).catch(res => {
+              resolve(request);
             })
           } else {
             reject(false);
@@ -535,5 +673,6 @@ module.exports = {
   tujia,
   xiaozhu,
   muniao,
-  zhenguo
+  zhenguo,
+  wiwj
 };
