@@ -74,7 +74,16 @@ Component({
     ],
     
     houseListData:{},//短租传递的参数
+
+    houseSecondGetData:{},//二手房缓存的详情
   },
+    lifetimes:{
+      ready(){
+        this.setData({
+          houseSecondGetData : app.globalData.houseSecondGetData
+        })
+      }
+    },
 
   /**
    * 组件的方法列表
@@ -91,12 +100,17 @@ Component({
       })
     },
     goToPlatformDetail(e) {
+      console.log(e)
       let platform = e.currentTarget.dataset.platform;
       let productid = e.currentTarget.dataset.productid;
       let beginDate = this.properties.houseListData.beginDate;
       let endDate = this.properties.houseListData.endDate;
-
-      monitor.navigateToMiniProgram(platform, productid, beginDate, endDate);
+      let city = JSON.parse(decodeURIComponent(e.currentTarget.dataset.city));
+      if(this.properties.type==1){
+        monitor.navigateToMiniProgram(platform, productid, beginDate, endDate);
+      }else if(this.properties.type==4){
+        monitor.navigateToSecondMiniProgram(platform, productid, city);
+      }
     },
   }
 })

@@ -1,5 +1,6 @@
 import * as rxjs from "../../utils/rx";
 const monitor = require("../../utils/monitor.js");
+import { tujia, xiaozhu, muniao, zhenguo,wiwj,lianjia } from "../../api/informationData.js"
 Component({
   /**
    * 组件的属性列表
@@ -9,7 +10,7 @@ Component({
       type: Object,
       value: {}
     },
-    mobitorType: {
+    monitorType: {
       //1：查询房源列表  2：监控房源列表
       type: Number,
       value: ""
@@ -69,7 +70,8 @@ Component({
     x: {
       type: Number,
       value: 0
-    }
+    },
+    preven:true,
   },
   lifetimes: {
     created() {
@@ -150,6 +152,7 @@ Component({
       let app = getApp();
       let platform = e.currentTarget.dataset.platform;
       let productid = e.currentTarget.dataset.productid;
+      console.log(productid)
       //长租
       if (this.properties.rentType == 2) {
         let type = app.globalData.searchLongData.chooseType ==1?2:3;
@@ -179,9 +182,35 @@ Component({
           this.selectItem(e);
           return;
         }
-        wx.navigateTo({
-          url: '/pages/houseDetail/houseDetail?type='+type,
-        })
+        console.log(productid)
+        for(var a in city){
+          if(platform == a){
+            if(this.data.preven){
+              wiwj.getHouseData({ houseId:productid, cityId:city[a] }).then(res => {
+                if(res){
+                  console.log('res',res);
+                  wx.navigateTo({
+                    url: '/pages/houseDetail/houseDetail?platform='+platform+'&productid='+productid+'&type='+type+'&city='+encodeURIComponent(JSON.stringify(city)),
+                  });
+                  app.globalData.houseSecondGetData=res;
+                  this.setData({
+                    preven:false
+                  })
+                }else{
+                  wx.showToast({
+                    icon:'none',
+                    title: '该房源暂无详情页',
+                  })
+                }
+              })
+            }else{
+              this.setData({
+                preven:false
+              })
+            }
+          }
+        }
+
         // monitor.navigateToSecondMiniProgram(platform, productid, city);
       }
     },

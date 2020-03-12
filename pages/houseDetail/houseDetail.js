@@ -40,20 +40,7 @@ Page({
       money:0,//单价
       dayCount:0,//短租 几晚
     },
-    houseDetails:[//除短租外的房源详情信息
-      {
-        tag:'售价',
-        number:'445'
-      },
-      {
-        tag:'售价',
-        number:'445'
-      },
-      {
-        tag:'售价',
-        number:'445'
-      },
-    ],
+    houseDetails:{},//除短租外的房源详情信息
 
     houseListData:{},//短租的传递参数
 
@@ -107,11 +94,19 @@ Page({
 
       //二手房
       if(tabIndex == 3 || monitorIndex == 3){
+        let houseSecondGetData = app.globalData.houseSecondGetData;
+        let city = options.city;
+        console.log(houseSecondGetData)
         wx.setNavigationBarTitle({
           title: '二手房-房源详情',
         });
+
         this.setData({
+          imgUrls:houseSecondGetData.housePicture,
+          title:houseSecondGetData.houseName,
+          tags:houseSecondGetData.houseTags,
           type:4,
+          city:city,
         })
       }
 
