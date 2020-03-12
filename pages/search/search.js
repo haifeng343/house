@@ -1362,12 +1362,12 @@ Page({
     // zhenguo.getData('6487223').then(res => {
     //   console.log('res', res)
     // })
-    wiwj.getHouseData({ houseId:'90333226', cityId:'2' }).then(res => {
-      console.log('res', res)
-    })
-    lianjia.getHouseData({ house_code: 103106856678, city_id: 330100 }).then(res => {
-      console.log('res', res)
-    })
+    // wiwj.getHouseData({ houseId:'90333226', cityId:'2' }).then(res => {
+    //   console.log('res', res)
+    // })
+    // lianjia.getHouseData({ house_code: 101103493167, city_id: 110000 }).then(res => {
+    //   console.log('res', res)
+    // })
     let tab = +params.tab;
     if(!tab) {
       tab = wx.getStorageSync('tabIndex') || 2

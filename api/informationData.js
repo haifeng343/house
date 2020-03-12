@@ -1,4 +1,4 @@
-import { tujia_address2, xiaozhu_address2, muniao_address2, meituan_address, wiwj_address, lianjia_address2 } from "../utils/httpAddress.js";
+import { tujia_address2, xiaozhu_address2, muniao_address2, meituan_address, wiwj_address, lianjia_address2, lianjia_address3 } from "../utils/httpAddress.js";
 var base64_encode = require("../utils/base64.js").base64_encode;
 import { CryptoJS } from "../utils/sha1.js";
 import { xml2json } from "../utils/xml2json.js";
@@ -665,16 +665,16 @@ const wiwj = {
 
 const lianjia = {
   getHouseData: function (r = { house_code: '', city_id: '' }) {
-    var n = "";
+    let { house_code, city_id } = r;
+    let n = "";
     Object.keys(r).sort().forEach(function (e) {
       void 0 !== r[e] ? n += e + "=" + ("object" === typeof(r[e]) ? JSON.stringify(r[e]) : r[e]) : delete r[e]
-    }),
+    })
     n += "6e8566e348447383e16fdd1b233dbb49"
     n = "ljwxapp:" + (n = MD5(n))
-    console.log(n,base64_encode(n))
     return new Promise((resolve, reject) => {
       wx.request({
-        url: lianjia_address2 + `/ershoufang/detail?house_code=103106856678&city_id=330100`,
+        url: lianjia_address2 + `/ershoufang/detail?house_code=${house_code}&city_id=${city_id}`,
         method: "GET",
         header: {
           authorization: base64_encode(n),
@@ -684,7 +684,7 @@ const lianjia = {
         success: res => {
           if (res.data) {
             let data = res.data.data || {}
-            console.log(data)
+            // console.log(data)
             if (Object.keys(data).length === 0) {
               reject(false);
             }
@@ -746,22 +746,25 @@ const lianjia = {
               request.floorStr = houseinfo.floor_level + (houseinfo.floor_total ? '/' + houseinfo.floor_total :'')
             }
             if (houseinfo.picture_uri_list && houseinfo.picture_uri_list.length) {
-              request.housePicture = houseinfo.picture_uri_list
+              for (let index = 0; index < houseinfo.picture_uri_list.length; index++) {
+                request.housePicture.push(houseinfo.picture_uri_list[index] + "!m_fill,w_750,h_562,lg_north_west,lx_0,ly_0,l_fbk,f_jpg,ls_50") 
+              }
             }
-            // if (houseinfo.memo && houseinfo.memo) {
-            //   request.memo = houseinfo.memo
-            // }
-            // if (houseinfo.rim && houseinfo.rim) {
-            //   request.rim = houseinfo.rim
-            // }
+
+            let house_feature = data.house_feature || {}
+            house_feature = house_feature.content || {}
+            house_feature = house_feature.list || {}
+            if (house_feature.sellPoint && house_feature.sellPoint.desc) {
+              request.memo = house_feature.sellPoint.desc
+            }
+            if (house_feature.surroundMating && house_feature.surroundMating.desc) {
+              request.memo = house_feature.surroundMating.desc
+            }
 
             // let community = data.community || {}
             if (houseinfo.resblock_name) {
               request.address = houseinfo.resblock_name
             }
-            // if (community.price) {
-            //   request.xqprice = community.price
-            // }
             // if (community.salecount) {
             //   request.salecount = community.salecount
             // }
@@ -771,39 +774,53 @@ const lianjia = {
             if (houseinfo.building_type) {
               request.communitytype = houseinfo.building_type
             }
-            // if (community.develo) {
-            //   request.develop = community.develop
-            // }
-            // let communityid = '';
-            // if (data.houseinfo && data.houseinfo.communityid) {
-            //   communityid = data.houseinfo.communityid
-            // }
-            // return new Promise((resolve, reject) => {
-            //   wx.request({
-            //     url: wiwj_address + `/community/2/v1/allinfo`,
-            //     method: "POST",
-            //     data: { communityid },
-            //     success: req => {
-            //       let reqData = req.data || {}
-            //       reqData = reqData.data || {}
-            //       if (Object.keys(reqData).length === 0) {
-            //         reject(false);
-            //       }
-            //       resolve(reqData)
-            //     },
-            //     fail: res => {
-            //       reject(false)
-            //     }
-            //   })
-            // }).then(res => {
-            //   let communityInfo = res.communityInfo || {}
-            //   request.plotRatio = communityInfo.plotRatio || ''
-            //   request.virescence = communityInfo.virescence || ''
-            //   request.rentcount = communityInfo.rentcount || ''
-            //   resolve(request);
-            // }).catch(res => {
+          
+            if (houseinfo && houseinfo.resblock_id) {
+              let resblock_code = houseinfo.resblock_id
+              let test = { resblock_code: resblock_code };
+              let n = "resblock_code=" + resblock_code;
+              n += "6e8566e348447383e16fdd1b233dbb49"
+              n = "ljwxapp:" + (n = MD5(n))
+              return new Promise((resolve, reject) => {
+                wx.request({
+                  url: lianjia_address3 + `/xiaoqu/detail?resblock_code=${resblock_code}`,
+                  method: "GET",
+                  header: {
+                    authorization: base64_encode(n),
+                    "lianjia-source": "ljwxapp",
+                    "time-stamp": new Date().getTime()
+                  },
+                  success: req => {
+                    let reqData = req.data || {}
+                    reqData = reqData.data || {}
+                    if (Object.keys(reqData).length === 0) {
+                      reject(false);
+                    }
+                    resolve(reqData)
+                  },
+                  fail: res => {
+                    reject(false)
+                  }
+                })
+              }).then(res => {
+                // console.log('user',res)
+                let communityInfo = res.info || {}
+                if (communityInfo.developers && communityInfo.developers.name) {
+                  request.develop = ommunityInfo.developers.name
+                }
+                if (communityInfo.price_unit_avg) {
+                  request.xqprice = ommunityInfo.price_unit_avg
+                }
+                // request.plotRatio = communityInfo.plotRatio || ''
+                // request.virescence = communityInfo.virescence || ''
+                // request.rentcount = communityInfo.rentcount || ''
+                resolve(request);
+              }).catch(res => {
+                resolve(request);
+              })
+            } else {
               resolve(request);
-            // })
+            }
           } else {
             reject(false);
           }
