@@ -554,7 +554,7 @@ Page({
         });
       } else if (this.data.isAuth) {
         wx.navigateTo({
-          url: "../houseList/houseList?type=1"
+          url: "../houseList/houseList"
         });
       } else {
         this.showAuthDialog();
@@ -571,9 +571,8 @@ Page({
           icon: "none"
         });
       } else if (this.data.isAuth) {
-        let type = searchLongData.chooseType==1?2:3;
         wx.navigateTo({
-          url: "../houseLongList/houseLongList?type="+type
+          url: "../houseLongList/houseLongList"
         });
       } else {
         this.showAuthDialog();
@@ -591,7 +590,7 @@ Page({
         });
       } else if (this.data.isAuth) {
         wx.navigateTo({
-          url: "../secondHandHouse/secondHandHouse?type=4"
+          url: "../secondHandHouse/secondHandHouse"
         });
       } else {
         this.showAuthDialog();

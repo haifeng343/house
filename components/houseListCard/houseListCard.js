@@ -13,6 +13,9 @@ Component({
     type: {
       type: Number
     },
+    mobitorType: {
+      type: Number
+    },
     idx: {
       type: Number
     },
@@ -144,11 +147,11 @@ Component({
       let productid = e.currentTarget.dataset.productid;
       let dayCount = e.currentTarget.dataset.daycount;
       let beginDate =
-        this.properties.type == 1
+        this.properties.mobitorType == 1
           ? app.globalData.searchData.beginDate
           : app.globalData.monitorSearchData.beginDate;
       let endDate =
-        this.properties.type == 1
+        this.properties.mobitorType == 1
           ? app.globalData.searchData.endDate
           : app.globalData.monitorSearchData.endDate;
       if (this.properties.editFlag && this.data.isStatist) {
@@ -161,10 +164,9 @@ Component({
         if(platform == i){
           if(this.data.preven){
             arr1[i].getData(productid).then((res)=>{
-              console.log('res',res)
               if(res){
                 wx.navigateTo({
-                  url: '/pages/houseDetail/houseDetail?money='+money+'&platform='+platform+'&productid='+productid+'&beginDate='+beginDate+'&endDate='+endDate+'&type=1'+'&index='+r.index+'&dayCount='+dayCount+'&houseGetData='+encodeURIComponent(JSON.stringify(res)),
+                  url: '/pages/houseDetail/houseDetail?money='+money+'&platform='+platform+'&productid='+productid+'&beginDate='+beginDate+'&endDate='+endDate+'&type='+this.properties.type+'&index='+r.index+'&dayCount='+dayCount+'&houseGetData='+encodeURIComponent(JSON.stringify(res)),
                 });
                 this.setData({
                   preven:false

@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    type:1,//区别 1.短租 2.长租的品牌中介 3.长租的个人房源 4.二手房
+    type:0,//区别 1.短租 2.长租的品牌中介 3.长租的个人房源 4.二手房
     imgUrls:[],
     autoplay: true, //是否自动播放
     indicatorDots: false, //指示点
@@ -67,14 +67,17 @@ Page({
       
   },
   onLoad:function(options){
-    console.log(options)
+    console.log(options);
+    let tabIndex = wx.getStorageSync('tabIndex');
+    let monitorIndex = wx.getStorageSync('monitorIndex');
+    console.log(tabIndex)
       this.setData({
         houseListData:Object.assign(this.data.houseListData,options),
         productid:options.productid,
       });
 
       //短租
-      if(options.type==1){
+      if(tabIndex == 1 ||  monitorIndex == 1){
         wx.setNavigationBarTitle({
           title: '短租-房源详情',
         });
@@ -88,8 +91,23 @@ Page({
           Landlord:houseShortGetData.landlordInfo,
           checkInNotice :houseShortGetData.checkInRules,
           facility:houseShortGetData.houseFacilitys,
+          type:1,
         })
       };
+
+      //长租
+      if(tabIndex == 2 || monitorIndex == 2){
+        this.setData({//长租的品牌中介和个人房源区分
+          type:app.globalData.searchLongData.chooseType == 1?2:3
+        })
+      }
+
+      //二手房
+      if(tabIndex == 3 || monitorIndex == 3){
+        this.setData({
+          type:4,
+        })
+      }
 
   },
   goToSelect(e){
