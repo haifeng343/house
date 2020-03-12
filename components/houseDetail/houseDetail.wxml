@@ -124,7 +124,7 @@
 <view class="heng" wx:if="{{type == 4}}"></view>
 
 <view class="container">
-	<view wx:if="{{IsFacility==true}}">
+	<view wx:if="{{type != 4}}">
 		<view class="landlordTitle">配套设施</view>
 		<view class="facility">
 			<view class="facilityTag" wx:for="{{facility}}" wx:key="item">
@@ -141,42 +141,48 @@
 		<view class="landlordTitle">房东介绍</view>
 		<view class="landlordContainer">
 			<view class="landlordTop">
-				<image src="{{Landlord.img}}" class="landlordAvator"></image>
+				<image src="{{Landlord.hotelLogo}}" class="landlordAvator"></image>
 				<view class="landlordRight">
-					<view class="landlordName">{{Landlord.name}}</view>
+					<view class="landlordName">{{Landlord.hotelName}}</view>
 					<view class="landlordTags">
-						<view class="landlordTag" wx:for="{{Landlord.tags}}" wx:key="item">{{item}}</view>
+						<view class="landlordTag" wx:for="{{Landlord.hotelTags}}" wx:key="item">{{item}}</view>
 					</view>
 				</view>
 			</view>
 			<view class="landlordBottom">
 				<view class="landlordTxt">
 					<view class="landlordLabel">回复率:</view>
-					<view class="lanlordValue">{{Landlord.response}}%</view>
+					<view class="lanlordValue">{{Landlord.reply_rate?Landlord.reply_rate:'--'}}</view>
 				</view>
 
 				<view class="landlordTxt">
 					<view class="landlordLabel">回复时长:</view>
-					<view class="lanlordValue">{{Landlord.duration}}小时以内</view>
+					<view class="lanlordValue">{{Landlord.reply_time?Landlord.reply_time:'--'}}</view>
 				</view>
 			</view>
 		</view>
 	</view>
 	<view class="checkInNotice" wx:if="{{type == 1}}">
 		<view class="checkInNoticeTitle">入住须知</view>
-		<view class="checkInNoticeLi">
-			<view class="checkInNoticeLabel">入离时间:</view>
-			<view class="checkInNoticeText">{{houseListData.beginDate}}后入住，{{houseListData.endDate}}前退房</view>
-		</view>
-		<view class="checkInNoticeLi">
-			<view class="checkInNoticeLabel">接待要求:</view>
-			<view class="claim">({{checkInNotice.claim}})</view>
-		</view>
-		<view class="checkInNoticeTags">
-			<view class="checkInNoticeTag" wx:for="{{checkInNotice.tags}}" wx:key="item">
-				<image src="{{item.isTrue==true?'../../assets/image/goupng.png':'../../assets/image/chapng.png'}}" class="{{item.isTrue==true?'symbol':'symbolFalse'}}"></image>
-				<view class="{{item.isTrue==true?'symbolText':'symbolFalseText'}}">{{item.text}}</view>
+		<view class="checkInNoticeLi" wx:for="{{checkInNotice}}" wx:key="item">
+			<view class="flex-start" wx:if="{{item.checkInRuleFloat==false}}">
+				<view class="checkInNoticeLabel">{{item.title}}:</view>
+				<view class="checkInNoticeText" wx:for="{{item.items}}" wx:key="h" wx:for-item="h">{{h.title}}</view>
 			</view>
+			<!-- <view wx:else>
+				<view class="checkInNoticeLabel">{{item.title}}:</view>
+				<view class="claim" wx:for="{{item.items}}" wx:key="k" wx:for-item="k">({{k.title}})</view>
+			</view> -->
+
+		<view wx:else class="flex-start">
+			<view class="checkInNoticeLabel">{{item.title}}:</view>
+			<view class="checkInNoticeTags">
+				<view class="checkInNoticeTag" wx:for="{{item.items}}" wx:key="k" wx:for-item="k">
+					<image src="{{k.isDeleted==true?'../../assets/image/goupng.png':'../../assets/image/chapng.png'}}" class="{{k.isDeleted==true?'symbol':'symbolFalse'}}"></image>
+					<view class="{{k.isDeleted==true?'symbolText':'symbolFalseText'}}">{{k.title}}</view>
+				</view>
+			</view>
+		</view>
 		</view>
 	</view>
 </view>
