@@ -1,5 +1,6 @@
 import * as rxjs from "../../utils/rx";
 const monitor = require("../../utils/monitor.js");
+import { tujia, xiaozhu, muniao, zhenguo } from "../../api/informationData.js"
 Component({
   /**
    * 组件的属性列表
@@ -10,6 +11,9 @@ Component({
       value: {}
     },
     type: {
+      type: Number
+    },
+    mobitorType: {
       type: Number
     },
     idx: {
@@ -64,7 +68,8 @@ Component({
     x: {
       type: Number,
       value: 0
-    }
+    },
+    preven:true,//默认可以点击
   },
   lifetimes: {
     created() {
@@ -136,18 +141,17 @@ Component({
       this.touchendStream.next(true);
     },
     goToPlatformDetail(e) {
-      console.log(e.currentTarget.dataset);
       let app = getApp();
       let platform = e.currentTarget.dataset.platform;
       let money = e.currentTarget.dataset.money;
       let productid = e.currentTarget.dataset.productid;
       let dayCount = e.currentTarget.dataset.daycount;
       let beginDate =
-        this.properties.type == 1
+        this.properties.mobitorType == 1
           ? app.globalData.searchData.beginDate
           : app.globalData.monitorSearchData.beginDate;
       let endDate =
-        this.properties.type == 1
+        this.properties.mobitorType == 1
           ? app.globalData.searchData.endDate
           : app.globalData.monitorSearchData.endDate;
       if (this.properties.editFlag && this.data.isStatist) {
@@ -155,9 +159,33 @@ Component({
         return;
       }
       let r = e.currentTarget.dataset;
-      wx.navigateTo({
-        url: '/pages/houseDetail/houseDetail?money='+money+'&platform='+platform+'&productid='+productid+'&beginDate='+beginDate+'&endDate='+endDate+'&type=1'+'&index='+r.index+'&dayCount='+dayCount,
-      })
+      let arr1 = {tj:tujia,xz:xiaozhu,mn:muniao,zg:zhenguo};
+      for(var i in arr1){
+        if(platform == i){
+          if(this.data.preven){
+            arr1[i].getData(productid).then((res)=>{
+              if(res){
+                wx.navigateTo({
+                  url: '/pages/houseDetail/houseDetail?money='+money+'&platform='+platform+'&productid='+productid+'&beginDate='+beginDate+'&endDate='+endDate+'&type='+this.properties.type+'&index='+r.index+'&dayCount='+dayCount+'&houseGetData='+encodeURIComponent(JSON.stringify(res)),
+                });
+                this.setData({
+                  preven:false
+                })
+              }else{
+                wx.showToast({
+                  icon:'none',
+                  title: '该房源暂无详情页',
+                })
+              }
+            })
+          }else{
+            this.setData({
+              preven:true
+            })
+          }
+        }
+      }
+
       // monitor.navigateToMiniProgram(platform, productid, beginDate, endDate);
     },
     delItem(e) {

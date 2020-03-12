@@ -1,4 +1,6 @@
 // pages/houseDetail/houseDetail.js
+
+import { tujia, xiaozhu, muniao, zhenguo } from "../../api/informationData.js"
 const app = getApp();
 Page({
 
@@ -6,14 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    type:1,//区别 1.短租 2.长租的品牌中介 3.长租的个人房源 4.二手房
-    imgUrls:[
-      '../../assets/image/bg.png',
-      '../../assets/image/bg.png',
-      '../../assets/image/bg.png',
-      '../../assets/image/bg.png',
-      '../../assets/image/bg.png',
-    ],
+    type:0,//区别 1.短租 2.长租的品牌中介 3.长租的个人房源 4.二手房
+    imgUrls:[],
     autoplay: true, //是否自动播放
     indicatorDots: false, //指示点
     interval: 5000, //图片切换间隔时间
@@ -21,44 +17,23 @@ Page({
     circular: true,//循环播放
     current: 0, //初始化时第一个显示的图片 下标值（从0）index
 
-    title:'近西湖浙大灵隐 魅蓝组局民俗风情双人床近西湖浙大灵隐 魅蓝组局民俗风情双人床近西湖浙大灵隐 魅蓝组局民俗风情双人床近西湖浙大灵隐 魅蓝组局民俗风情双人床',
-    tags:['近地铁','随时看房','男女合租','近地铁','随时看房','男女合租','近地铁','随时看房','男女合租'],//标签
-    surroundings:['整租','29m','酒店式公寓'],//环境
-    facility:['无线','WIFI','电视','空调','洗衣机','无线','WIFI','电视','空调','洗衣机','无线','WIFI','电视','空调','洗衣机','无线','WIFI','电视','空调','洗衣机'],//短租配套设施
+    title:'',
+    tags:[],//标签
+    surroundings:[],//环境
+    facility:[],//短租配套设施
     Landlord:{
-      img:'../../assets/image/hotel.png',//头像
-      name:'董明珠',//姓名
-      tags:['实名认证','自营民俗','dsddddddd','实名认证','自营民俗','实名认证','自营民俗'],//标签
-      response:'13',//回复率
-      duration:'2',//回复时长
+      img:'',//头像
+      name:'',//姓名
+      tags:[],//标签
+      response:0,//回复率
+      duration:0,//回复时长
     },
     checkInNotice:{//入住须知
       startTime:'',
       endTime:'',
-      claim:'房东接待',
+      claim:'',
       money:0,
-      tags:[
-        {
-          isTrue:true,
-          text:'接待儿童'
-        },
-        {
-          isTrue:true,
-          text:'接待儿童'
-        },
-        {
-          isTrue:true,
-          text:'接待儿童'
-        },
-        {
-          isTrue:false,
-          text:'接待儿童'
-        },
-        {
-          isTrue:true,
-          text:'接待儿童'
-        },
-      ]
+      tags:[]
     },
     bottomObject:{
       //短租地步数据
@@ -81,6 +56,8 @@ Page({
     ],
 
     houseListData:{},//短租的传递参数
+
+    productid:null,//接口传入的id
   },
 
   /**
@@ -90,15 +67,48 @@ Page({
       
   },
   onLoad:function(options){
-    console.log(options)
+    console.log(options);
+    let tabIndex = wx.getStorageSync('tabIndex');
+    let monitorIndex = wx.getStorageSync('monitorIndex');
+    console.log(tabIndex)
       this.setData({
         houseListData:Object.assign(this.data.houseListData,options),
+        productid:options.productid,
       });
-      if(options.type==1){
+
+      //短租
+      if(tabIndex == 1 ||  monitorIndex == 1){
         wx.setNavigationBarTitle({
           title: '短租-房源详情',
         });
+        let houseShortGetData = JSON.parse(decodeURIComponent(options.houseGetData));
+        console.log(houseShortGetData)
+        this.setData({
+          imgUrls:houseShortGetData.housePicture,
+          title:houseShortGetData.houseName,
+          tags:houseShortGetData.houseTags,
+          surroundings :houseShortGetData.houseSummarys,
+          Landlord:houseShortGetData.landlordInfo,
+          checkInNotice :houseShortGetData.checkInRules,
+          facility:houseShortGetData.houseFacilitys,
+          type:1,
+        })
+      };
+
+      //长租
+      if(tabIndex == 2 || monitorIndex == 2){
+        this.setData({//长租的品牌中介和个人房源区分
+          type:app.globalData.searchLongData.chooseType == 1?2:3
+        })
       }
+
+      //二手房
+      if(tabIndex == 3 || monitorIndex == 3){
+        this.setData({
+          type:4,
+        })
+      }
+
   },
   goToSelect(e){
     console.log(e)

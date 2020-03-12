@@ -2,7 +2,6 @@
   width: 750rpx;
   height: 440rpx;
   position: relative;
-  border: 1px solid #000;
   box-sizing: border-box;
 }
 
@@ -44,6 +43,7 @@ swiper-item image {
   right: 24rpx;
   width: 106rpx;
   height: 40rpx;
+  line-height: 40rpx;
   border-radius: 20rpx;
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
@@ -283,9 +283,20 @@ swiper-item image {
 }
 
 .checkInNoticeLabel {
+  display: block;
+  white-space: nowrap;
+  min-width: 100rpx;
+  overflow: hidden;
   color: rgba(185, 185, 185, 1);
 }
-
+.checkInNoticeText{
+  max-width: 80%;
+}
+.landlordName{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellpisis;
+}
 .claim {
   color: rgba(241, 97, 42, 1);
 }
@@ -293,7 +304,7 @@ swiper-item image {
 .checkInNoticeTags {
   width: 100%;
   box-sizing: border-box;
-  padding-left: 120rpx;
+  padding-left: 10rpx;
   font-size: 24rpx;
   font-weight: 400;
   display: flex;
@@ -580,4 +591,9 @@ swiper-item image {
   margin-left: 34rpx;
   color:rgba(185,185,185,1);
   font-size: 24rpx;
+}
+.flex-start{
+  display: flex;
+  justify-content: flex-start;
+  flex: 1;
 }

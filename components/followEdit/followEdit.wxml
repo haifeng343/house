@@ -8,13 +8,13 @@
 
   <view class="select_back" wx:if="{{listType&&bottomType==1}}">
     <view class="select_item active" bindtap="showSelect">{{list[listType-1]}}</view>
-    <view wx:for="{{list}}" wx:if="{{index + 1 != listType}}" class="select_item list {{!scrollIng && show ? 'show' : ''}}" bindtap="changeSelect" data-index="{{index + 1}}" wx:key="{{index}}">{{item}}</view>
+    <view wx:for="{{list}}" wx:if="{{index + 1 != listType}}" class="select_item list {{!scrollIng && show ? 'show' : ''}}" bindtap="changeSelect" data-index="{{index + 1}}" wx:key="index">{{item}}</view>
   </view>
 </view>
 
 <view wx:if="{{countFlag ===0}}" class="house_shortcuts {{!scrollIng ? '' : 'hidden'}}">
   <view class="select_back" wx:if="{{(listType==2||listType==3)&&bottomType==1}}">
     <view class="select_item active" bindtap="showSelect">{{list[listType-1]}}</view>
-    <view wx:for="{{list}}" wx:if="{{index + 1 != listType}}" class="select_item list {{!scrollIng && show ? 'show' : ''}}" bindtap="changeSelect" data-index="{{index + 1}}" wx:key="{{index}}">{{item}}</view>
+    <view wx:for="{{list}}" wx:if="{{index + 1 != listType}}" class="select_item list {{!scrollIng && show ? 'show' : ''}}" bindtap="changeSelect" data-index="{{index + 1}}" wx:key="index">{{item}}</view>
   </view>
 </view>
