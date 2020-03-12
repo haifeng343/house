@@ -12,7 +12,7 @@
             <text class="icon-font uniE939"></text>
         </view>
         <view class='position-list history'>
-            <view class='item history' wx:for='{{history}}' wx:key='{{index}}' bindtap='handleSelectHistory' data-item='{{item}}'>
+            <view class='item history' wx:for='{{history}}' wx:key='item' bindtap='handleSelectHistory' data-item='{{item}}'>
                 {{item.area}}
             </view>
         </view>
@@ -31,7 +31,7 @@
             </view>
         </view>
     </view>
-    <block wx:for='{{list}}' wx:for-index='key' wx:key='{{item.type}}'>
+    <block wx:for='{{list}}' wx:for-index='key' wx:key='item'>
         <positionLongSelectItem  data='{{item}}' key='{{key}}' type='{{item.type}}' isSecond="{{isSecond}}" wx:if='{{item.data.length > 0}}'></positionLongSelectItem>
     </block>
 </view>

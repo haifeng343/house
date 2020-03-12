@@ -9,10 +9,14 @@ Component({
       type: Object,
       value: {}
     },
-    type: {
+    mobitorType: {
       //1：查询房源列表  2：监控房源列表
       type: Number,
       value: ""
+    },
+    type:{
+      //2.长租的品牌中介 3.长租的个人房源 4.二手房
+      type:Number
     },
     rentType: {
       //2长租，3：二手房
@@ -146,27 +150,39 @@ Component({
       let app = getApp();
       let platform = e.currentTarget.dataset.platform;
       let productid = e.currentTarget.dataset.productid;
+      //长租
       if (this.properties.rentType == 2) {
+        let type = app.globalData.searchLongData.chooseType ==1?2:3;
         let city =
-          this.properties.type == 1
+          this.properties.monitorType == 1
             ? app.globalData.searchLongData.cityId
             : app.globalData.monitorSearchLongData.cityId;
         if (this.properties.editFlag && this.data.isStatist) {
           this.selectItem(e);
           return;
         }
-        monitor.navigateToLongMiniProgram(platform, productid, city);
+        
+        wx.navigateTo({
+          url: '/pages/houseDetail/houseDetail?type='+type,
+        })
+        
+        // monitor.navigateToLongMiniProgram(platform, productid, city);
       }
+      //二手房
       if (this.properties.rentType == 3) {
+        let type = 4;
         let city =
-          this.properties.type == 1
+          this.properties.monitorType == 1
             ? app.globalData.secondSearchData.cityId
             : app.globalData.monitorSecondSearchData.cityId;
         if (this.properties.editFlag && this.data.isStatist) {
           this.selectItem(e);
           return;
         }
-        monitor.navigateToSecondMiniProgram(platform, productid, city);
+        wx.navigateTo({
+          url: '/pages/houseDetail/houseDetail?type='+type,
+        })
+        // monitor.navigateToSecondMiniProgram(platform, productid, city);
       }
     },
     delItem(e) {
