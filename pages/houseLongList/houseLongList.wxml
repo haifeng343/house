@@ -17,7 +17,7 @@
       <noNetwork title="网络异常，请刷新重试"></noNetwork>
     </view>
     <view class="house_card">
-      <block wx:for="{{allData}}" wx:key="{{idx}}" wx:for-index="idx">
+      <block wx:for="{{allData}}" wx:key="item" wx:for-index="idx">
         <houseLongCard item="{{item}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{1}}" rentType="{{2}}" idx="{{idx}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" singleEditFlag="{{singleEditFlag}}" followIndex="{{followIndex}}" isStatist="{{false}}"></houseLongCard>
       </block>
     </view>

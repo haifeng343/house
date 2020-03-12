@@ -23,12 +23,12 @@
                 <text class="">降价{{item.priceMargin?item.priceMargin:''}}<text wx:if="{{rentType==3}}">万</text></text>
               </view>
             </view>
-            <block wx:for="{{item.tagwall}}" wx:key="{{index}}" wx:for-item="itemTag">
+            <block wx:for="{{item.tagwall}}" wx:key="itemTag" wx:for-item="itemTag">
               <text class="text1">{{itemTag}}</text>
             </block>
           </view>
           <view class="label" wx:else>
-            <block wx:for="{{item.tagwall}}" wx:key="{{index}}" wx:for-item="itemTag">
+            <block wx:for="{{item.tagwall}}" wx:key="itemTag" wx:for-item="itemTag">
               <text class="text1">{{itemTag}}</text>
             </block>
           </view>
@@ -89,7 +89,7 @@
         <text>{{item.address}}</text>
       </view>
       <view class="label" wx:if="{{rentType!=3}}">
-        <block wx:for="{{item.tagwall}}" wx:key="{{index}}" wx:for-item="itemTag">
+        <block wx:for="{{item.tagwall}}" wx:key="itemTag" wx:for-item="itemTag">
           <text class="text1">{{itemTag}}</text>
         </block>
       </view>
@@ -104,7 +104,7 @@
             <text class="">降价{{item.priceMargin?item.priceMargin:''}}<text wx:if="{{rentType==3}}">万</text></text>
           </view>
         </view>
-        <block wx:for="{{item.tagwall}}" wx:key="{{index}}" wx:for-item="itemTag">
+        <block wx:for="{{item.tagwall}}" wx:key="itemTag" wx:for-item="itemTag">
           <text class="text1">{{itemTag}}</text>
         </block>
       </view>

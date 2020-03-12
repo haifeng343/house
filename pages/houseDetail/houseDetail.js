@@ -97,6 +97,9 @@ Page({
 
       //长租
       if(tabIndex == 2 || monitorIndex == 2){
+        wx.setNavigationBarTitle({
+          title: '长租-房源详情',
+        });
         this.setData({//长租的品牌中介和个人房源区分
           type:app.globalData.searchLongData.chooseType == 1?2:3
         })
@@ -104,6 +107,9 @@ Page({
 
       //二手房
       if(tabIndex == 3 || monitorIndex == 3){
+        wx.setNavigationBarTitle({
+          title: '二手房-房源详情',
+        });
         this.setData({
           type:4,
         })
