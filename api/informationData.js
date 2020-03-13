@@ -1,4 +1,4 @@
-import { tujia_address2, xiaozhu_address2, muniao_address2, meituan_address, wiwj_address, lianjia_address2, lianjia_address3, lianjia_address1 } from "../utils/httpAddress.js";
+import { tujia_address2, xiaozhu_address2, muniao_address2, meituan_address, wiwj_address, lianjia_address2, lianjia_address3, lianjia_address1, wbtc_address4 } from "../utils/httpAddress.js";
 var base64_encode = require("../utils/base64.js").base64_encode;
 import { CryptoJS } from "../utils/sha1.js";
 import { xml2json } from "../utils/xml2json.js";
@@ -811,7 +811,7 @@ const lianjia = {
         success: res => {
           if (res.data) {
             let data = res.data.data || {}
-            console.log(data)
+            // console.log(data)
             if (Object.keys(data).length === 0) {
               reject(false);
             }
@@ -1142,11 +1142,129 @@ const lianjia = {
   }
 }
 
+const wbtc = {
+  getLongData: function(houseId) {
+    let signature = MD5(houseId + 'HOUSEWECHAT')
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: wbtc_address4 + `/house/Api_get_zufang_detail?infoId=${houseId}&signature=${signature}`,
+        method: "GET",
+        success: res => {
+          if (res.data) {
+            console.log(res.data)
+            let data = res.data.data || {}
+            if (Object.keys(data).length === 0) {
+              reject(false);
+            }
+            let request = {
+              houseId: houseId, //房子id
+              houseName: '', //标题
+              price: '', //售价
+              layout: '', //户型
+              buildarea: '', //面积
+              houseTags: [], //标签
+              looktime: '', //看房时间
+              gettime: '', //入住
+              houseFacilitys: [], //配套设施
+              decoratelevel: '', //装修
+              heading: '', //朝向
+              floorStr: '', //楼层
+              housePicture: [], //图片
+              housememo: '', // 房源描述
+              address: '', //小区名称
+              startData: '', //建成年代
+              communitytype: '', //建筑类型
+              plotRatio: '', //容积率
+              virescence: '', //绿化率
+              house_address: '' //位置
+            }
+            let houseinfo = data.houseInfo || {}
+            if (houseinfo.title) {
+              request.houseName = houseinfo.title
+            }
+            if (houseinfo.price) {
+              request.price = houseinfo.price
+            }
+
+            //户型，面积，朝向
+            if (houseinfo.baseInfo && houseinfo.baseInfo.length) {
+              for (let index = 0; index < houseinfo.baseInfo.length; index++) {
+                if (houseinfo.baseInfo[index].title === '房型') {
+                  request.layout = houseinfo.baseInfo[index].content
+                }
+                if (houseinfo.baseInfo[index].title === '面积') {
+                  request.buildarea = houseinfo.baseInfo[index].content
+                }
+                if (houseinfo.baseInfo[index].title === '朝向') {
+                  request.heading = houseinfo.baseInfo[index].content
+                }
+              }
+            }
+
+            if (houseinfo.tags && houseinfo.tags.length) {
+              for (let index = 0; index < houseinfo.tags.length; index++) {
+                if (houseinfo.tags[index].text) {
+                  request.houseTags.push(houseinfo.tags[index].text)
+                }
+              }
+            }
+
+            //装修、楼层，类型，入住时间，看房时间
+            if (houseinfo.extendInfo && houseinfo.extendInfo.length) {
+              for (let index = 0; index < houseinfo.extendInfo.length; index++) {
+                for (let temp = 0; temp < houseinfo.extendInfo[index].length; temp++) {
+                  if (houseinfo.extendInfo[index][temp].title === '装修') {
+                    request.decoratelevel = houseinfo.extendInfo[index][temp].content
+                  }
+                  if (houseinfo.extendInfo[index][temp].title === '楼层') {
+                    request.floorStr = houseinfo.extendInfo[index][temp].content
+                  }
+                  if (houseinfo.extendInfo[index][temp].title === '类型') {
+                    request.communitytype = houseinfo.extendInfo[index][temp].content
+                  }
+                  if (houseinfo.extendInfo[index][temp].title === '入住') {
+                    request.gettime = houseinfo.extendInfo[index][temp].content
+                  }
+                  if (houseinfo.extendInfo[index][temp].title === '看房') {
+                    request.looktime = houseinfo.extendInfo[index][temp].content
+                  }
+                }
+              }
+            }
+
+            if (data.appliance && data.appliance.length) {
+              for (let index = 0; index < data.appliance.length; index++) {
+                if (data.appliance[index].have) {
+                  request.houseFacilitys.push(data.appliance[index].title)
+                }
+              }
+            }
+
+            if (data.imgUrls && data.imgUrls.length) {
+              request.housePicture = data.imgUrls
+            }
+            if (data.houseDetail) {
+              request.housememo = data.houseDetail
+            }
+            resolve(request);
+          } else {
+            reject(false);
+          }
+        },
+        fail: res => {
+          reject(false);
+        }
+      });
+    });
+  }
+}
+
 module.exports = {
   tujia,
   xiaozhu,
   muniao,
   zhenguo,
   wiwj,
-  lianjia
+  lianjia,
+  wbtc
 };
