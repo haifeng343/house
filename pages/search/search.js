@@ -1373,9 +1373,9 @@ Page({
     // wbtc.getLongData('41371156070425').then(res => {
     //   console.log('res', res)
     // })
-    ftx.getLongData({ houseId: 51917000, city:"杭州"}).then(res => {
-      console.log('res', res)
-    })
+    // ftx.getLongData({ houseId: 51917000, city:"杭州"}).then(res => {
+    //   console.log('res', res)
+    // })
     // wiwj.getHouseData({ houseId:'90333226', cityId:'2' }).then(res => {
     //   console.log('res', res)
     // })
