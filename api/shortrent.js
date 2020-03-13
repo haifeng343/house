@@ -1,4 +1,4 @@
-import { api_address, tujia_address, xiaozhu_address, muniao_address, meituan_address } from "../utils/httpAddress.js"
+import { api_address, tujia_address, muniao_address, meituan_address } from "../utils/httpAddress.js"
 const DEFAULT_PAGE = { size: 15, num: 1 };//默认分页参数
 
 /**

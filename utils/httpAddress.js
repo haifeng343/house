@@ -22,12 +22,11 @@ export const wbtc_address1        = "https://app.58.com"
 export const wbtc_address2        = "https://ditu.58.com"
 export const wbtc_address         = "https://apphouse.58.com"
 export const tujia_address        = "https://client.tujia.com"
-export const xiaozhu_address      = "https://securewireless.xiaozhu.com"
 export const muniao_address       = "https://service.muniao.com"
 export const meituan_address      = "https://api-phx.meituan.com"
 
 //详情页
-export const tujia_address2       = "https://mpclient.tujia.com"
+export const tujia_address2       = "https://fangtest.bangdingding.cn"
 export const xiaozhu_address2     = "https://wirelesspub-lodgeunit.xiaozhu.com"
 export const muniao_address2      = "https://mp.muniao.com"
 export const lianjia_address2     = "https://wxapp.api.ke.com"

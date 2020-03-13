@@ -1,4 +1,4 @@
-import { tujia_address2, xiaozhu_address2, muniao_address2, meituan_address, wiwj_address, lianjia_address2, lianjia_address3, lianjia_address1, wbtc_address4 } from "../utils/httpAddress.js";
+import { tujia_address2, xiaozhu_address2, muniao_address2, meituan_address, wiwj_address, lianjia_address2, lianjia_address3, lianjia_address1, wbtc_address4, fangtianxia_address3 } from "../utils/httpAddress.js";
 var base64_encode = require("../utils/base64.js").base64_encode;
 import { CryptoJS } from "../utils/sha1.js";
 import { xml2json } from "../utils/xml2json.js";
@@ -1259,6 +1259,112 @@ const wbtc = {
   }
 }
 
+const ftx = {
+  getLongData: function (r = { houseId: '', city: "" }) {
+    let { houseId, city} = r;
+    let c = 'wechat500Public'
+    let a = 'zfJxAGTDetail'
+    console.log(houseId, city)
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: fangtianxia_address3 + `/public/?c=${c}&a=${a}&houseid=${houseId}&cityname=${city}`,
+        method: "GET",
+        success: res => {
+          if (res.data) {
+            console.log(res.data)
+            let data = res.data
+            if (Object.keys(data).length === 0) {
+              reject(false);
+            }
+            let request = {
+              houseId: houseId, //房子id
+              houseName: '', //标题
+              price: '', //售价
+              layout: '', //户型
+              buildarea: '', //面积
+              houseTags: [], //标签
+              looktime: '', //看房时间
+              gettime: '', //入住
+              houseFacilitys: [], //配套设施
+              decoratelevel: '', //装修
+              heading: '', //朝向
+              floorStr: '', //楼层
+              housePicture: [], //图片
+              housememo: '', // 房源描述
+              address: '', //小区名称
+              startData: '', //建成年代
+              communitytype: '', //建筑类型
+              plotRatio: '', //容积率
+              virescence: '', //绿化率
+              house_address: '' //位置
+            }
+            let houseinfo = data.houseInfo || {}
+            if (data.housetitle) {
+              request.houseName = data.housetitle
+            }
+            if (data.price) {
+              request.price = data.price
+            }
+            if (data.room) {
+              request.layout = data.room
+            }
+            if (data.allacreage) {
+              request.buildarea = data.allacreage
+            }
+            if (data.faceto) {
+              request.heading = data.faceto
+            }
+            if (data.tags && data.tags.length) {
+              request.houseTags = data.tags
+            } 
+            if (data.fitment) {
+              request.decoratelevel = data.fitment
+            }
+            if (data.floor) {
+              request.floorStr = data.floor
+            }
+            if (data.receptiontime) {
+              request.looktime = data.receptiontime
+            }
+            if (data.entertime) {
+              request.gettime = data.entertime
+            }
+
+            //类型
+            // if (houseinfo.extendInfo && houseinfo.extendInfo.length) {
+            //   for (let index = 0; index < houseinfo.extendInfo.length; index++) {
+            //     for (let temp = 0; temp < houseinfo.extendInfo[index].length; temp++) {
+            //       if (houseinfo.extendInfo[index][temp].title === '类型') {
+            //         request.communitytype = houseinfo.extendInfo[index][temp].content
+            //       }
+    
+            //     }
+            //   }
+            // }
+
+            if (data.roomsets) {
+              request.houseFacilitys = data.roomsets.split(',')
+            }
+
+            if (data.shinimgs) {
+              request.housePicture = data.shinimgs.split(';')
+            }
+            if (data.housedetail) {
+              request.housememo = data.housedetail
+            }
+            resolve(request);
+          } else {
+            reject(false);
+          }
+        },
+        fail: res => {
+          reject(false);
+        }
+      });
+    });
+  }
+}
+
 module.exports = {
   tujia,
   xiaozhu,
@@ -1266,5 +1372,6 @@ module.exports = {
   zhenguo,
   wiwj,
   lianjia,
-  wbtc
+  wbtc,
+  ftx
 };
