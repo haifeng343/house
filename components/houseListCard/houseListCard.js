@@ -169,11 +169,13 @@ Component({
           if(this.data.preven){
             arr1[i].getData(productid).then((res)=>{
               if(res){
+                let that = this;
                 wx.navigateTo({
                   url: '/pages/houseDetail/houseDetail?money='+money+'&platform='+platform+'&productid='+productid+'&beginDate='+beginDate+'&endDate='+endDate+'&type='+this.properties.type+'&index='+r.index+'&dayCount='+dayCount,
                   complete:function(){
-                    let that = this;
-                    that.data.preven = false
+                    that.setData({
+                      preven:false
+                    })
                   }
                 });
                 app.globalData.houseGetData = res;

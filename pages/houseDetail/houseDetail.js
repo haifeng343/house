@@ -58,6 +58,7 @@ Page({
       this.setData({
         houseListData:Object.assign(this.data.houseListData,options),
         productid:options.productid,
+        platform:options.platform
       });
 
       //短租

@@ -39,6 +39,9 @@ Component({
     houseListData:{
       type:Object
     },
+    platform:{
+      type:String
+    }
   },
 
   /**
@@ -72,7 +75,7 @@ Component({
         name:'周边配套'
       }
     ],
-    
+    platform:'',//平台
     houseListData:{},//短租传递的参数
 
     houseSecondGetData:{},//二手房缓存的详情

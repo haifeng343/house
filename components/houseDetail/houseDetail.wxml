@@ -51,11 +51,14 @@
 			</view>
 		</view>
 		<view class="detail-house">
-			<view class="detail-ol"><text class="grayText">看房:</text>{{houseSecondGetData.looktime?houseSecondGetData.looktime:'--'}}</view>
-			<view class="detail-ol"><text class="grayText">入住:</text>{{houseSecondGetData.gettime?houseSecondGetData.gettime:'--'}}</view>
-			<view class="detail-ol detail-ol-mtp"><text class="grayText">装修:</text>{{houseSecondGetData.decoratelevel?houseSecondGetData.decoratelevel:'--'}}</view>
-			<view class="detail-ol detail-ol-mtp"><text class="grayText">朝向:</text>{{houseSecondGetData.heading?houseSecondGetData.heading:'--'}}</view>
-			<view class="detail-ol detail-ol-mtp"><text class="grayText">楼层:</text>{{houseSecondGetData.floorStr?houseSecondGetData.floorStr:'--'}}</view>
+			<view class="detail-ol"><view class="grayText">看房:</view>{{houseSecondGetData.looktime?houseSecondGetData.looktime:'--'}}</view>
+			<view class="detail-ol"><view class="grayText">入住:</view>{{houseSecondGetData.gettime?houseSecondGetData.gettime:'--'}}</view>
+			<view class="detail-ol detail-ol-mtp"><view class="grayText">装修:</view>{{houseSecondGetData.decoratelevel?houseSecondGetData.decoratelevel:'--'}}</view>
+			<view class="detail-ol detail-ol-mtp"><view class="grayText">朝向:</view>{{houseSecondGetData.heading?houseSecondGetData.heading:'--'}}</view>
+			<view class="detail-ol detail-ol-mtp"><view class="grayText">楼层:</view>{{houseSecondGetData.floorStr?houseSecondGetData.floorStr:'--'}}</view>
+			<view class="detail-ol detail-ol-mtp" wx:if="{{type ==4}}"><view class="grayText">小区:</view>{{houseSecondGetData.address?houseSecondGetData.address:'--'}}</view>
+			<view class="detail-ol detail-ol-mtp" wx:if="{{type ==4}}"><view class="grayText">开发商:</view><view class="overHiddeen">{{houseSecondGetData.develop?houseSecondGetData.develop:'--'}}</view></view>
+			<view class="detail-ol detail-ol-mtp" wx:if="{{type ==4}}"><view class="grayText">参考均价:</view><view class="orange">{{houseSecondGetData.xqprice?houseSecondGetData.xqprice+'元/㎡':'--'}}</view></view>
 		</view>
 	</view>
 
@@ -73,7 +76,7 @@
 	</view>
 
 
-	<view wx:if="{{(type == 2 || type ==4) && houseSecondGetData.address}}">
+	<!-- <view wx:if="{{(type == 2 || type ==4) && houseSecondGetData.address}}">
     <view class="landlordTitle">{{houseSecondGetData.address?houseSecondGetData.address:'--'}}</view>
     <view class="plot">
       <view class="plot-item">
@@ -111,11 +114,8 @@
         <view class="plot-detail-text">{{houseSecondGetData.develop?houseSecondGetData.develop:'--'}}</view>
       </view>
     </view>
-  </view>
+  </view> -->
 </view>
-
-<!---跟上面的同小区已售房源挂钩 条件判断一样-->
-<view class="heng" wx:if="{{type == 4}}"></view>
 
 <view class="container">
 	<view wx:if="{{type != 4}}">
@@ -192,6 +192,11 @@
 </view>
 <view class="fix-footer" wx:if="{{type !== 1}}">
 	<image src="http://image2.5i5j.com//group1/M00/D5/EB/CgqJMV5lrzqAdE1OAAf5LI51SKc931.jpg" class="fix-img"></image>
-	<view class="fix-house">房源提供平台:<text class="fix-black">房天下</text></view>
+	<view class="fix-house">房源提供平台:
+		<text class="fix-black" wx:if="{{platform=='ftx'}}">房天下</text>
+		<text class="fix-black" wx:if="{{platform=='wiwj'}}">我爱我家</text>
+		<text class="fix-black" wx:if="{{platform=='lj'}}">贝壳</text>
+		<text class="fix-black" wx:if="{{platform=='tc'}}">58同城</text>
+	</view>
 	<view class="fix-btn" data-productId="{{houseListData.productid}}" data-platform="{{houseListData.platform}}" data-city="{{houseListData.city}}" bindtap="goToPlatformDetail">前往咨询</view>
 </view>

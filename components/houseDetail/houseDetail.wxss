@@ -95,7 +95,7 @@ swiper-item image {
 }
 .lastHidden{
   width: 100%;
-  height: 128rpx;
+  height: 148rpx;
   background: transparent;
 }
 .title {
@@ -471,6 +471,18 @@ swiper-item image {
   display: flex;
   line-height: 40rpx;
   justify-content: flex-start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.overHiddeen{
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.orange{
+  color:rgba(255,99,99,1);
 }
 .grayText{
   color:rgba(185,185,185,1);

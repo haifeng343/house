@@ -10,5 +10,6 @@
   facility="{{facility}}"
   houseDetails="{{houseDetails}}"
   houseListData="{{houseListData}}"
+  platform="{{platform}}"
    bind:collectionEvent="goToSelect"
    ></houseDetail>

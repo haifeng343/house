@@ -149,6 +149,7 @@ Component({
       this.triggerEvent("collectionEvent", detail);
     },
     goToPlatformDetail(e) {
+      console.log(this.data.preven)
       if (this.data.preven) {
         return;
       }
@@ -192,11 +193,13 @@ Component({
             wiwj.getHouseData({ houseId: productid, cityId: city.wiwj }).then(res => {
               if (res) {
                 console.log('res', res);
+                let that = this;
                 wx.navigateTo({
                   url: '/pages/houseDetail/houseDetail?platform=' + platform + '&productid=' + productid + '&type=' + type + '&city=' + encodeURIComponent(JSON.stringify(city)),
                   complete:function(){
-                    let that =this
-                    that.data.preven=false;
+                    that.setData({
+                      preven:false
+                    })
                   }
                 });
                 app.globalData.houseSecondGetData = res;
@@ -213,13 +216,16 @@ Component({
             lianjia.getHouseData({ house_code: productid, city_id: city.lj }).then(res => {
               if (res) {
                 console.log('res', res);
+                let that = this;
                 wx.navigateTo({
                   url: '/pages/houseDetail/houseDetail?platform=' + platform + '&productid=' + productid + '&type=' + type + '&city=' + encodeURIComponent(JSON.stringify(city)),
+                  complete:function(){
+                    that.setData({
+                      preven:false
+                    })
+                  }
                 });
                 app.globalData.houseSecondGetData = res;
-                this.setData({
-                  preven: false
-                })
               } else {
                 wx.showToast({
                   icon: 'none',
