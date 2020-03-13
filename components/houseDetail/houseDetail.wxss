@@ -501,6 +501,7 @@ swiper-item image {
   height: 60rpx;
 }
 .navbar .navbarLi.active{
+  transition: all 1s ease;
   color:#000;
 }
 .navbar .navbarLi.active::before{
@@ -524,6 +525,7 @@ swiper-item image {
   padding: 40rpx 50rpx;
   font-size: 28rpx;
   line-height: 40rpx;
+  transition: all 1s ease;
 }
 .plot{
   width: 100%;
@@ -575,9 +577,6 @@ swiper-item image {
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: 24rpx;
-}
-.plot-detail-item:last-child{
-  width: 100%;
 }
 .soldPlot{
   width: 100%;

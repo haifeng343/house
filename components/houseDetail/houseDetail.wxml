@@ -19,7 +19,7 @@
 </view>
 <view class="container">
 	<view class="title">{{title}}</view>
-	<view class="tags">
+	<view class="tags" wx:if="{{tags.length>0}}">
 		<view class="tag" wx:for="{{tags}}" wx:key="item">{{item}}</view>
 	</view>
 
@@ -29,7 +29,7 @@
 
 	<view wx:if="{{type !== 1}}">
 		<view class="houseDetail" wx:if="{{type == 4}}">
-			<view class="houseDetailItem" wx:if="{{type == 4}}">
+			<view class="houseDetailItem">
 				<view class="houseNumber">{{houseSecondData.price}}万</view>
 				<view>售价</view>
 			</view>
@@ -44,34 +44,62 @@
 		</view>
 		<view class="houseDetail" wx:if="{{type == 2 || type == 3}}">
 			<view class="houseDetailItem">
-				<view class="houseNumber">{{houseLongData.price}}元/月</view>
+				<view class="houseNumber">{{houseLongData.price?houseLongData.price:'--'}}元/月</view>
 				<view>租金</view>
 			</view>
 			<view class="houseDetailItem">
-				<view class="houseNumber">{{houseLongData.layout}}</view>
+				<view class="houseNumber">{{houseLongData.layout?houseLongData.layout:'--'}}</view>
 				<view>户型</view>
 			</view>
 			<view class="houseDetailItem">
-				<view class="houseNumber">{{houseLongData.buildarea}}㎡</view>
+				<view class="houseNumber">{{houseLongData.buildarea?houseLongData.buildarea:'--'}}㎡</view>
 				<view>面积</view>
 			</view>
 		</view>
 		<view class="detail-house" wx:if="{{type ==2 || type == 3}}">
-			<view class="detail-ol"><view class="grayText">看房:</view>{{houseLongData.looktime?houseLongData.looktime:'--'}}</view>
-			<view class="detail-ol"><view class="grayText">入住:</view>{{houseLongData.gettime?houseLongData.gettime:'--'}}</view>
-			<view class="detail-ol detail-ol-mtp"><view class="grayText">装修:</view>{{houseLongData.decoratelevel?houseLongData.decoratelevel:'--'}}</view>
-			<view class="detail-ol detail-ol-mtp"><view class="grayText">朝向:</view>{{houseLongData.heading?houseLongData.heading:'--'}}</view>
-			<view class="detail-ol detail-ol-mtp"><view class="grayText">楼层:</view>{{houseLongData.floorStr?houseLongData.floorStr:'--'}}</view>
+			<view class="detail-ol">
+				<view class="grayText">看房:</view>{{houseLongData.looktime?houseLongData.looktime:'--'}}
+			</view>
+			<view class="detail-ol">
+				<view class="grayText">入住:</view>{{houseLongData.gettime?houseLongData.gettime:'--'}}
+			</view>
+			<view class="detail-ol detail-ol-mtp">
+				<view class="grayText">装修:</view>{{houseLongData.decoratelevel?houseLongData.decoratelevel:'--'}}
+			</view>
+			<view class="detail-ol detail-ol-mtp">
+				<view class="grayText">朝向:</view>{{houseLongData.heading?houseLongData.heading:'--'}}
+			</view>
+			<view class="detail-ol detail-ol-mtp">
+				<view class="grayText">楼层:</view>{{houseLongData.floorStr?houseLongData.floorStr:'--'}}
+			</view>
 		</view>
 		<view class="detail-house" wx:if="{{type ==4}}">
-			<view class="detail-ol"><view class="grayText">看房:</view>{{houseSecondData.looktime?houseSecondData.looktime:'--'}}</view>
-			<view class="detail-ol"><view class="grayText">入住:</view>{{houseSecondData.gettime?houseSecondData.gettime:'--'}}</view>
-			<view class="detail-ol detail-ol-mtp"><view class="grayText">装修:</view>{{houseSecondData.decoratelevel?houseSecondData.decoratelevel:'--'}}</view>
-			<view class="detail-ol detail-ol-mtp"><view class="grayText">朝向:</view>{{houseSecondData.heading?houseSecondData.heading:'--'}}</view>
-			<view class="detail-ol detail-ol-mtp"><view class="grayText">楼层:</view>{{houseSecondData.floorStr?houseSecondData.floorStr:'--'}}</view>
-			<view class="detail-ol detail-ol-mtp" wx:if="{{type ==4}}"><view class="grayText">小区:</view>{{houseSecondData.address?houseSecondData.address:'--'}}</view>
-			<view class="detail-ol detail-ol-mtp" wx:if="{{type ==4}}"><view class="grayText">开发商:</view><view class="overHiddeen">{{houseSecondData.develop?houseSecondData.develop:'--'}}</view></view>
-			<view class="detail-ol detail-ol-mtp" wx:if="{{type ==4}}"><view class="grayText">参考均价:</view><view class="orange">{{houseSecondData.xqprice?houseSecondData.xqprice+'元/㎡':'--'}}</view></view>
+			<view class="detail-ol">
+				<view class="grayText">看房:</view>{{houseSecondData.looktime?houseSecondData.looktime:'--'}}
+			</view>
+			<view class="detail-ol">
+				<view class="grayText">入住:</view>{{houseSecondData.gettime?houseSecondData.gettime:'--'}}
+			</view>
+			<view class="detail-ol detail-ol-mtp">
+				<view class="grayText">装修:</view>{{houseSecondData.decoratelevel?houseSecondData.decoratelevel:'--'}}
+			</view>
+			<view class="detail-ol detail-ol-mtp">
+				<view class="grayText">朝向:</view>{{houseSecondData.heading?houseSecondData.heading:'--'}}
+			</view>
+			<view class="detail-ol detail-ol-mtp">
+				<view class="grayText">楼层:</view>{{houseSecondData.floorStr?houseSecondData.floorStr:'--'}}
+			</view>
+			<view class="detail-ol detail-ol-mtp" wx:if="{{type ==4}}">
+				<view class="grayText">小区:</view>{{houseSecondData.address?houseSecondData.address:'--'}}
+			</view>
+			<view class="detail-ol detail-ol-mtp" wx:if="{{type ==4}}">
+				<view class="grayText">开发商:</view>
+				<view class="overHiddeen">{{houseSecondData.develop?houseSecondData.develop:'--'}}</view>
+			</view>
+			<view class="detail-ol detail-ol-mtp" wx:if="{{type ==4}}">
+				<view class="grayText">参考均价:</view>
+				<view class="orange">{{houseSecondData.xqprice?houseSecondData.xqprice+'元/㎡':'--'}}</view>
+			</view>
 		</view>
 	</view>
 
@@ -109,7 +137,7 @@
 			<view class="landlordTop">
 				<image src="{{Landlord.hotelLogo}}" class="landlordAvator"></image>
 				<view class="landlordRight">
-					<view class="landlordName">{{Landlord.hotelName}}</view>
+					<view class="landlordName">{{Landlord.hotelName?Landlord.hotelName:'--'}}</view>
 					<view class="landlordTags">
 						<view class="landlordTag" wx:for="{{Landlord.hotelTags}}" wx:key="item">{{item}}</view>
 					</view>
@@ -135,50 +163,46 @@
 				<view class="checkInNoticeLabel">{{item.title}}:</view>
 				<view class="checkInNoticeText" wx:for="{{item.items}}" wx:key="h" wx:for-item="h">{{h.title}}</view>
 			</view>
-			<!-- <view wx:else>
-				<view class="checkInNoticeLabel">{{item.title}}:</view>
-				<view class="claim" wx:for="{{item.items}}" wx:key="k" wx:for-item="k">({{k.title}})</view>
-			</view> -->
 
-		<view wx:else class="flex-start">
-			<view class="checkInNoticeLabel">{{item.title}}:</view>
-			<view class="checkInNoticeTags">
-				<view class="checkInNoticeTag" wx:for="{{item.items}}" wx:key="k" wx:for-item="k">
-					<image src="{{k.isDeleted==true?'../../assets/image/goupng.png':'../../assets/image/chapng.png'}}" class="{{k.isDeleted==true?'symbol':'symbolFalse'}}"></image>
-					<view class="{{k.isDeleted==true?'symbolText':'symbolFalseText'}}">{{k.title}}</view>
+			<view wx:else class="flex-start">
+				<view class="checkInNoticeLabel">{{item.title}}:</view>
+				<view class="checkInNoticeTags">
+					<view class="checkInNoticeTag" wx:for="{{item.items}}" wx:key="k" wx:for-item="k">
+						<image src="{{k.isDeleted==true?'../../assets/image/goupng.png':'../../assets/image/chapng.png'}}" class="{{k.isDeleted==true?'symbol':'symbolFalse'}}"></image>
+						<view class="{{k.isDeleted==true?'symbolText':'symbolFalseText'}}">{{k.title}}</view>
+					</view>
 				</view>
 			</view>
-		</view>
 		</view>
 	</view>
 </view>
 
-<view class="heng" wx:if="{{houseLongData.address}}"></view>
+<view class="heng" wx:if="{{(type == 2 || type == 3) && houseLongData.address}}"></view>
 <view class="container" wx:if="{{(type == 2 || type == 3) && houseLongData.address}}">
-    <view class="landlordTitle">{{houseLongData.address?houseLongData.address:'--'}}</view>
-    <view class="plot-detail">
-      <view class="plot-detail-item" wx:if="{{houseLongData.startData}}">
-        <view class="plot-detail-label">建成年代:</view>
-        <view class="plot-detail-text">{{houseLongData.startData}}</view>
-      </view>
-      <view class="plot-detail-item" wx:if="{{houseLongData.communitytype}}">
-        <view class="plot-detail-label">建筑类型:</view>
-        <view class="plot-detail-text">{{houseLongData.communitytype}}</view>
-      </view>
-      <view class="plot-detail-item" wx:if="{{houseLongData.plotRatio}}">
-        <view class="plot-detail-label">容积率:</view>
-        <view class="plot-detail-text">{{houseLongData.plotRatio}}</view>
-      </view>
-      <view class="plot-detail-item" wx:if="{{houseLongData.virescence}}">
-        <view class="plot-detail-label">绿化率:</view>
-        <view class="plot-detail-text">{{houseLongData.virescence}}</view>
-      </view>
-      <view class="plot-detail-item" wx:if="{{houseLongData.develop}}">
-        <view class="plot-detail-label">位置:</view>
-        <view class="plot-detail-text">{{houseLongData.develop}}</view>
-      </view>
-    </view>
-  </view>
+	<view class="landlordTitle">{{houseLongData.address?houseLongData.address:'--'}}</view>
+	<view class="plot-detail">
+		<view class="plot-detail-item" wx:if="{{houseLongData.startData}}">
+			<view class="plot-detail-label">建成年代:</view>
+			<view class="plot-detail-text">{{houseLongData.startData}}</view>
+		</view>
+		<view class="plot-detail-item" wx:if="{{houseLongData.communitytype}}">
+			<view class="plot-detail-label">建筑类型:</view>
+			<view class="plot-detail-text">{{houseLongData.communitytype}}</view>
+		</view>
+		<view class="plot-detail-item" wx:if="{{houseLongData.plotRatio}}">
+			<view class="plot-detail-label">容积率:</view>
+			<view class="plot-detail-text">{{houseLongData.plotRatio}}</view>
+		</view>
+		<view class="plot-detail-item" wx:if="{{houseLongData.virescence}}">
+			<view class="plot-detail-label">绿化率:</view>
+			<view class="plot-detail-text">{{houseLongData.virescence}}</view>
+		</view>
+		<view class="plot-detail-item" wx:if="{{houseLongData.house_address}}">
+			<view class="plot-detail-label">位置:</view>
+			<view class="plot-detail-text">{{houseLongData.house_address}}</view>
+		</view>
+	</view>
+</view>
 
 <view class="lastHidden"></view>
 <!--底部悬浮框-->

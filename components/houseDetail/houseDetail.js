@@ -113,12 +113,13 @@ Component({
       let productid = e.currentTarget.dataset.productid;
       let beginDate = this.properties.houseListData.beginDate;
       let endDate = this.properties.houseListData.endDate;
-      let city = JSON.parse(decodeURIComponent(e.currentTarget.dataset.city));
       if(this.properties.type==1){
         monitor.navigateToMiniProgram(platform, productid, beginDate, endDate);
       }else if(this.properties.type==2 || this.properties.type==3){
+        let city = JSON.parse(decodeURIComponent(e.currentTarget.dataset.city));
         monitor.navigateToLongMiniProgram(platform, productid, city);
       }else if(this.properties.type==4){
+        let city = JSON.parse(decodeURIComponent(e.currentTarget.dataset.city));
         monitor.navigateToSecondMiniProgram(platform, productid, city);
       }
     },

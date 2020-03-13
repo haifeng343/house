@@ -16,7 +16,7 @@
       <noNetwork title="网络异常，请刷新重试"></noNetwork>
     </view>
     <block wx:for="{{allData}}" wx:key="idx" wx:for-index="idx">
-      <houseListCard item="{{item}}" searchType="{{searchType}}" editFlag="{{editFlag}}" allCount="{{allCount}}" type="{{type}}" idx="{{idx}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" dayCount="{{dayCount}}" isStatist="{{false}}"></houseListCard>
+      <houseListCard item="{{item}}" searchType="{{searchType}}" editFlag="{{editFlag}}" allCount="{{allCount}}" monitorType="{{1}}" type="{{type}}" idx="{{idx}}" bind:deleteEvent="deleteItem" bind:collectionEvent="goToSelect" dayCount="{{dayCount}}" isStatist="{{false}}"></houseListCard>
     </block>
     <view class="no-more-data" wx:if="{{allData.length&&allData.length==allOriginalData.length&&!loadingShow}}">
       <view wx:if="{{allCount>50}}">已展示全部房源</view>

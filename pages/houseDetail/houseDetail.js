@@ -54,7 +54,7 @@ Page({
       
   },
   onLoad:function(options){
-    console.log('type:',options.type);
+    console.log('options:',options);
       this.setData({
         houseListData:Object.assign(this.data.houseListData,options),
         productid:options.productid,

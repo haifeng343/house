@@ -13,7 +13,7 @@ Component({
     type: {
       type: Number
     },
-    mobitorType: {
+    monitorType: {
       type: Number
     },
     idx: {
@@ -151,11 +151,11 @@ Component({
       let productid = e.currentTarget.dataset.productid;
       let dayCount = e.currentTarget.dataset.daycount;
       let beginDate =
-        this.properties.mobitorType == 1
+        this.properties.monitorType == 1
           ? app.globalData.searchData.beginDate
           : app.globalData.monitorSearchData.beginDate;
       let endDate =
-        this.properties.mobitorType == 1
+        this.properties.monitorType == 1
           ? app.globalData.searchData.endDate
           : app.globalData.monitorSearchData.endDate;
       if (this.properties.editFlag && this.data.isStatist) {
