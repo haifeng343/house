@@ -191,11 +191,11 @@
 		</view>
 		<view class="plot-detail-item" wx:if="{{houseLongData.plotRatio}}">
 			<view class="plot-detail-label">容积率:</view>
-			<view class="plot-detail-text">{{houseLongData.plotRatio}}</view>
+			<view class="plot-detail-text">{{houseLongData.plotRatio}}%</view>
 		</view>
 		<view class="plot-detail-item" wx:if="{{houseLongData.virescence}}">
 			<view class="plot-detail-label">绿化率:</view>
-			<view class="plot-detail-text">{{houseLongData.virescence}}</view>
+			<view class="plot-detail-text">{{houseLongData.virescence}}%</view>
 		</view>
 		<view class="plot-detail-item" wx:if="{{houseLongData.house_address}}">
 			<view class="plot-detail-label">位置:</view>

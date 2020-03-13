@@ -563,11 +563,6 @@ swiper-item image {
   flex-wrap: wrap;
   margin-top: 8rpx;
 }
-.plot-detail-label{
-  width: 140rpx;
-  text-align: right;
-  color:rgba(185,185,185,1);
-}
 .plot-detail-item{
   display: flex;
   justify-content: flex-start;
@@ -577,6 +572,17 @@ swiper-item image {
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: 24rpx;
+}
+.plot-detail-label{
+  width: 140rpx;
+  text-align: right;
+  color:rgba(185,185,185,1);
+}
+.plot-detail-text{
+  width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .soldPlot{
   width: 100%;

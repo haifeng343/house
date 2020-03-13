@@ -67,6 +67,10 @@ Page({
           title: '短租-房源详情',
         });
         let houseShortGetData = app.globalData.houseSortData;
+
+        //过滤特殊字符串
+        let pattern=/[`~!@#$^&*()=|{}':;',\\\[\]\.<>\/?~！@#￥……&*（）——|{}【】'；：""'。，、？]/g;
+        houseShortGetData.landlordInfo.reply_time = houseShortGetData.landlordInfo.reply_time.replace(pattern,"");
         this.setData({
           imgUrls:houseShortGetData.housePicture,
           title:houseShortGetData.houseName,
