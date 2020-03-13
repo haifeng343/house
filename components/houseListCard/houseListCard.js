@@ -69,7 +69,7 @@ Component({
       type: Number,
       value: 0
     },
-    preven:true,//默认可以点击
+    preven:false,//默认可以点击
   },
   lifetimes: {
     created() {
@@ -141,6 +141,10 @@ Component({
       this.touchendStream.next(true);
     },
     goToPlatformDetail(e) {
+      if(this.data.preven){
+        return
+      }
+      this.data.preven = true;
       let app = getApp();
       let platform = e.currentTarget.dataset.platform;
       let money = e.currentTarget.dataset.money;
@@ -166,21 +170,19 @@ Component({
             arr1[i].getData(productid).then((res)=>{
               if(res){
                 wx.navigateTo({
-                  url: '/pages/houseDetail/houseDetail?money='+money+'&platform='+platform+'&productid='+productid+'&beginDate='+beginDate+'&endDate='+endDate+'&type='+this.properties.type+'&index='+r.index+'&dayCount='+dayCount+'&houseGetData='+encodeURIComponent(JSON.stringify(res)),
+                  url: '/pages/houseDetail/houseDetail?money='+money+'&platform='+platform+'&productid='+productid+'&beginDate='+beginDate+'&endDate='+endDate+'&type='+this.properties.type+'&index='+r.index+'&dayCount='+dayCount,
+                  complete:function(){
+                    let that = this;
+                    that.data.preven = false
+                  }
                 });
-                this.setData({
-                  preven:false
-                })
+                app.globalData.houseGetData = res;
               }else{
                 wx.showToast({
                   icon:'none',
                   title: '该房源暂无详情页',
                 })
               }
-            })
-          }else{
-            this.setData({
-              preven:true
             })
           }
         }

@@ -242,6 +242,7 @@ App({
       advSort: 0,//1 价格从低到高 2单价从低到高 11 价格从高到低 21 单价从高到低 31面积从高到底
     },
     hotPosition: [],
+    houseGetData:{},//短租详情数据
     houseSecondGetData:{},//二手房详情数据
   }
 });

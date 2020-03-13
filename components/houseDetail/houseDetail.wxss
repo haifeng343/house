@@ -293,6 +293,7 @@ swiper-item image {
   max-width: 80%;
 }
 .landlordName{
+  width: 88%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellpisis;

@@ -41,6 +41,7 @@ Page({
     editFlag: false,
     selectAllFlag: false,
     indexArr: [],
+    type:0,////1.短租  2长租的品牌中介 3长租的个人房源 4.二手房
   },
   onLoad: function(options) {
     let x = app.globalData.secondSearchData;
@@ -56,6 +57,7 @@ Page({
       listSortType: 1,
       wiwjfilter,
       ljfilter,
+      type:options.type || 0,
       secondSearchData: Object.assign({}, x),
       secondSortType: x.secondSortTypeMap //1: 低总价优先 2: 低单价优先
       },

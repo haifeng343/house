@@ -69,46 +69,46 @@
 		<view class="navbar">
 			<view class="navbarLi {{navbarIndex==item.index?'active':''}}" wx:for="{{navbar}}" wx:key="item" data-index="{{item.index}}" bindtap="navbarChange">{{item.name}}</view>
 		</view>
-		<view class="navbar-content">{{navbarIndex==1?houseSecondGetData.memo:houseSecondGetData.rim}}</view>
+		<view class="navbar-content">{{navbarIndex==1?(houseSecondGetData.memo?houseSecondGetData.memo:'暂无核心卖点'):(houseSecondGetData.rim?houseSecondGetData.rim:'暂无周边配套')}}</view>
 	</view>
 
 
-	<view wx:if="{{(type == 2 || type ==4)}}">
-    <view class="landlordTitle">{{houseSecondGetData.address}}</view>
+	<view wx:if="{{(type == 2 || type ==4) && houseSecondGetData.address}}">
+    <view class="landlordTitle">{{houseSecondGetData.address?houseSecondGetData.address:'--'}}</view>
     <view class="plot">
       <view class="plot-item">
         <view class="plot-title">参考均价 (元/㎡)</view>
-        <view class="plot-number">{{houseSecondGetData.xqprice}}</view>
+        <view class="plot-number">{{houseSecondGetData.xqprice?houseSecondGetData.xqprice:'--'}}</view>
       </view>
       <view class="plot-item">
         <view class="plot-title">二手房 (套)</view>
-        <view class="plot-number">{{houseSecondGetData.salecount}}</view>
+        <view class="plot-number">{{houseSecondGetData.salecount?houseSecondGetData.salecount:'--'}}</view>
       </view>
       <view class="plot-item">
         <view class="plot-title">租房 (套)</view>
-        <view class="plot-number">{{houseSecondGetData.rentcount}}</view>
+        <view class="plot-number">{{houseSecondGetData.rentcount?houseSecondGetData.rentcount:'--'}}</view>
       </view>
     </view>
     <view class="plot-detail">
       <view class="plot-detail-item">
         <view class="plot-detail-label">建成年代:</view>
-        <view class="plot-detail-text">{{houseSecondGetData.startData}}</view>
+        <view class="plot-detail-text">{{houseSecondGetData.startData?houseSecondGetData.startData:'--'}}</view>
       </view>
       <view class="plot-detail-item">
         <view class="plot-detail-label">建筑类型:</view>
-        <view class="plot-detail-text">{{houseSecondGetData.communitytype}}</view>
+        <view class="plot-detail-text">{{houseSecondGetData.communitytype?houseSecondGetData.communitytype:'--'}}</view>
       </view>
       <view class="plot-detail-item">
         <view class="plot-detail-label">容积率:</view>
-        <view class="plot-detail-text">{{houseSecondGetData.plotRatio}}%</view>
+        <view class="plot-detail-text">{{houseSecondGetData.plotRatio?houseSecondGetData.plotRatio:'--'}}</view>
       </view>
       <view class="plot-detail-item">
         <view class="plot-detail-label">绿化率:</view>
-        <view class="plot-detail-text">{{houseSecondGetData.virescence}}%</view>
+        <view class="plot-detail-text">{{houseSecondGetData.virescence?houseSecondGetData.virescence:'--'}}</view>
       </view>
       <view class="plot-detail-item">
         <view class="plot-detail-label">开发企业:</view>
-        <view class="plot-detail-text">{{houseSecondGetData.develop}}</view>
+        <view class="plot-detail-text">{{houseSecondGetData.develop?houseSecondGetData.develop:'--'}}</view>
       </view>
     </view>
   </view>

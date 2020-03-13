@@ -53,6 +53,7 @@ Page({
     indexArr: [],
     updateData: {},
     advSort: 1,
+    type:0,////1.短租  2长租的品牌中介 3长租的个人房源 4.二手房
   },
   clickSelectItem(e) {
     var type = e.detail.type;
@@ -158,7 +159,8 @@ Page({
       budget: budget,
       sortType: x.sort,
       advSort:x.sort,
-      updateData: JSON.stringify(x)
+      updateData: JSON.stringify(x),
+      type:options.type || 0
     });
     this.getIndexHouseData();
     this.getAllData();

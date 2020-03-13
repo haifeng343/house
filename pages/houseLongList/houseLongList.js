@@ -45,7 +45,7 @@ Page({
     positionData: [],
     editFlag: false,
     selectAllFlag: false,
-    indexArr: []
+    indexArr: [],
   },
   onLoad: function(options) {
     //1品牌中介，2个人房源
@@ -67,7 +67,7 @@ Page({
         tcfilter,
         searchLongData: Object.assign({}, x),
         chooseType: x.chooseType, //1品牌中介，2个人房源
-        longSortTypes: x.longSortTypes //1: 低价优先, 2: 空间优先, 3: 最新发布
+        longSortTypes: x.longSortTypes, //1: 低价优先, 2: 空间优先, 3: 最新发布
       },
       () => {
         if (x.chooseType === 1) {
@@ -467,29 +467,6 @@ Page({
       })
       this.goToSelectAll()
     }
-  },
-  //不再关注
-  deleteItem(e) {
-    let num = wx.getStorageSync('followNum');
-    let index = e.detail.index;
-    if (!num) {
-      this.setData({
-        followText: '屏蔽房源后，该房源将不会在后续监控中出现！',
-        followType: 1,
-        followDisplay: 'block',
-        followIndex: index,
-        singleEditFlag:false
-      })
-    }else{
-      this.setData({
-        followText: "是否确认屏蔽此房源！",
-        followType: 1,
-        followDisplay: "block",
-        followIndex: index,
-        singleEditFlag: false
-      });
-    }
-
   },
   //批量不再关注
   deleteBatchItem() {

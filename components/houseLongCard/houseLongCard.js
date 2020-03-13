@@ -1,6 +1,6 @@
 import * as rxjs from "../../utils/rx";
 const monitor = require("../../utils/monitor.js");
-import { tujia, xiaozhu, muniao, zhenguo,wiwj,lianjia } from "../../api/informationData.js"
+import { tujia, xiaozhu, muniao, zhenguo, wiwj, lianjia } from "../../api/informationData.js"
 Component({
   /**
    * 组件的属性列表
@@ -15,9 +15,9 @@ Component({
       type: Number,
       value: ""
     },
-    type:{
+    type: {
       //2.长租的品牌中介 3.长租的个人房源 4.二手房
-      type:Number
+      type: Number
     },
     rentType: {
       //2长租，3：二手房
@@ -38,7 +38,7 @@ Component({
     },
     editFlag: {
       type: Boolean,
-      observer: function(editFlag) {
+      observer: function (editFlag) {
         if (editFlag) {
           this.setData({
             x: 30
@@ -54,7 +54,7 @@ Component({
     },
     singleEditFlag: {
       type: Boolean,
-      observer: function(singleEditFlag) {
+      observer: function (singleEditFlag) {
         if (singleEditFlag) {
           this.touchmoveStream.next(0);
           this.touchendStream.next(true);
@@ -71,7 +71,7 @@ Component({
       type: Number,
       value: 0
     },
-    preven:true,
+    preven: false,
   },
   lifetimes: {
     created() {
@@ -149,13 +149,17 @@ Component({
       this.triggerEvent("collectionEvent", detail);
     },
     goToPlatformDetail(e) {
+      if (this.data.preven) {
+        return;
+      }
+      this.data.preven = true;
       let app = getApp();
       let platform = e.currentTarget.dataset.platform;
       let productid = e.currentTarget.dataset.productid;
       console.log(productid)
       //长租
       if (this.properties.rentType == 2) {
-        let type = app.globalData.searchLongData.chooseType ==1?2:3;
+        let type = app.globalData.searchLongData.chooseType == 1 ? 2 : 3;
         let city =
           this.properties.monitorType == 1
             ? app.globalData.searchLongData.cityId
@@ -164,11 +168,11 @@ Component({
           this.selectItem(e);
           return;
         }
-        
+
         wx.navigateTo({
-          url: '/pages/houseDetail/houseDetail?type='+type,
+          url: '/pages/houseDetail/houseDetail?type=' + type,
         })
-        
+
         // monitor.navigateToLongMiniProgram(platform, productid, city);
       }
       //二手房
@@ -182,34 +186,48 @@ Component({
           this.selectItem(e);
           return;
         }
-        console.log(productid)
-        for(var a in city){
-          if(platform == a){
-            if(this.data.preven){
-              wiwj.getHouseData({ houseId:productid, cityId:city[a] }).then(res => {
-                if(res){
-                  console.log('res',res);
-                  wx.navigateTo({
-                    url: '/pages/houseDetail/houseDetail?platform='+platform+'&productid='+productid+'&type='+type+'&city='+encodeURIComponent(JSON.stringify(city)),
-                  });
-                  app.globalData.houseSecondGetData=res;
-                  this.setData({
-                    preven:false
-                  })
-                }else{
-                  wx.showToast({
-                    icon:'none',
-                    title: '该房源暂无详情页',
-                  })
-                }
-              })
-            }else{
-              this.setData({
-                preven:false
-              })
-            }
+        console.log(platform)
+        console.log(city)
+          if (platform == 'wiwj') {
+            wiwj.getHouseData({ houseId: productid, cityId: city.wiwj }).then(res => {
+              if (res) {
+                console.log('res', res);
+                wx.navigateTo({
+                  url: '/pages/houseDetail/houseDetail?platform=' + platform + '&productid=' + productid + '&type=' + type + '&city=' + encodeURIComponent(JSON.stringify(city)),
+                  complete:function(){
+                    let that =this
+                    that.data.preven=false;
+                  }
+                });
+                app.globalData.houseSecondGetData = res;
+          
+              } else {
+                wx.showToast({
+                  icon: 'none',
+                  title: '该房源暂无详情页',
+                })
+              }
+            })
           }
-        }
+          if (platform == 'lj') {
+            lianjia.getHouseData({ house_code: productid, city_id: city.lj }).then(res => {
+              if (res) {
+                console.log('res', res);
+                wx.navigateTo({
+                  url: '/pages/houseDetail/houseDetail?platform=' + platform + '&productid=' + productid + '&type=' + type + '&city=' + encodeURIComponent(JSON.stringify(city)),
+                });
+                app.globalData.houseSecondGetData = res;
+                this.setData({
+                  preven: false
+                })
+              } else {
+                wx.showToast({
+                  icon: 'none',
+                  title: '该房源暂无详情页',
+                })
+              }
+            })
+          }
 
         // monitor.navigateToSecondMiniProgram(platform, productid, city);
       }

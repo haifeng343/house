@@ -54,22 +54,18 @@ Page({
       
   },
   onLoad:function(options){
-    console.log(options);
-    let tabIndex = wx.getStorageSync('tabIndex');
-    let monitorIndex = wx.getStorageSync('monitorIndex');
-    console.log(tabIndex)
+    console.log('type:',options.type);
       this.setData({
         houseListData:Object.assign(this.data.houseListData,options),
         productid:options.productid,
       });
 
       //短租
-      if(tabIndex == 1 ||  monitorIndex == 1){
+      if(options.type == 1 ){
         wx.setNavigationBarTitle({
           title: '短租-房源详情',
         });
-        let houseShortGetData = JSON.parse(decodeURIComponent(options.houseGetData));
-        console.log(houseShortGetData)
+        let houseShortGetData = app.globalData.houseGetData;
         this.setData({
           imgUrls:houseShortGetData.housePicture,
           title:houseShortGetData.houseName,
@@ -78,12 +74,12 @@ Page({
           Landlord:houseShortGetData.landlordInfo,
           checkInNotice :houseShortGetData.checkInRules,
           facility:houseShortGetData.houseFacilitys,
-          type:1,
+          type:options.type,
         })
       };
 
       //长租
-      if(tabIndex == 2 || monitorIndex == 2){
+      if(options.type == 2 || options.type == 3){
         wx.setNavigationBarTitle({
           title: '长租-房源详情',
         });
@@ -93,7 +89,7 @@ Page({
       }
 
       //二手房
-      if(tabIndex == 3 || monitorIndex == 3){
+      if(options.type == 4){
         let houseSecondGetData = app.globalData.houseSecondGetData;
         let city = options.city;
         console.log(houseSecondGetData)

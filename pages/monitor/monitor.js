@@ -9,7 +9,8 @@ Page({
     monitorEndDisplay: 'none',
     monitorStartDisplay: 'none',
     ddCoin: 0,
-    active: 1
+    active: 1,
+    type:0,//1.短租  2长租的品牌中介 3长租的个人房源 4.二手房
   },
   onLoad: function(options) { },
   onShow: function() {
@@ -19,21 +20,24 @@ Page({
       if (app.switchRent == 1) {
         this.setData({
           active: 1,
-          data: []
+          data: [],
+          type:1,
         })
         wx.setStorageSync('monitorIndex',1)
         this.getMonitorData()
       }else if (app.switchRent == 2) {
         this.setData({
           active: 2,
-          data: []
+          data: [],
+          type:2
         })
         wx.setStorageSync('monitorIndex', 2)
         this.getLongMonitorData()
       }else if (app.switchRent == 3) {
         this.setData({
           active: 3,
-          data: []
+          data: [],
+          type:4
         })
         wx.setStorageSync('monitorIndex', 3)
         this.getSecondHandData()
