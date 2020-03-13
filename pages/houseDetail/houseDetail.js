@@ -66,7 +66,7 @@ Page({
         wx.setNavigationBarTitle({
           title: '短租-房源详情',
         });
-        let houseShortGetData = app.globalData.houseGetData;
+        let houseShortGetData = app.globalData.houseSortData;
         this.setData({
           imgUrls:houseShortGetData.housePicture,
           title:houseShortGetData.houseName,
@@ -84,14 +84,19 @@ Page({
         wx.setNavigationBarTitle({
           title: '长租-房源详情',
         });
+        let houseLongGetData = app.globalData.houseLongData;
         this.setData({//长租的品牌中介和个人房源区分
+          imgUrls:houseLongGetData.housePicture,
+          title:houseLongGetData.houseName,
+          tags:houseLongGetData.houseTags,
+          facility:houseLongGetData.houseFacilitys,
           type:app.globalData.searchLongData.chooseType == 1?2:3
         })
       }
 
       //二手房
       if(options.type == 4){
-        let houseSecondGetData = app.globalData.houseSecondGetData;
+        let houseSecondGetData = app.globalData.houseSecondData;
         let city = options.city;
         console.log(houseSecondGetData)
         wx.setNavigationBarTitle({

@@ -178,7 +178,7 @@ Component({
                     })
                   }
                 });
-                app.globalData.houseGetData = res;
+                app.globalData.houseSortData = res;
               }else{
                 wx.showToast({
                   icon:'none',

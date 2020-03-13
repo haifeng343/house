@@ -169,10 +169,28 @@ Component({
           this.selectItem(e);
           return;
         }
-
-        wx.navigateTo({
-          url: '/pages/houseDetail/houseDetail?type=' + type,
-        })
+        console.log(city)
+        if(platform == 'wiwj')
+          wiwj.getLongData({ houseId:productid, cityId:city.wiwj }).then(res => {
+            if (res) {
+              let that = this;
+              wx.navigateTo({
+                url: '/pages/houseDetail/houseDetail?platform=' + platform + '&productid=' + productid + '&type=' + type + '&city=' + encodeURIComponent(JSON.stringify(city)),
+                complete:function(){
+                  that.setData({
+                    preven:false
+                  })
+                }
+              });
+              app.globalData.houseLongData = res;
+              console.log(app.globalData.houseLongData)
+            } else {
+              wx.showToast({
+                icon: 'none',
+                title: '该房源暂无详情页',
+              })
+            }
+          })
 
         // monitor.navigateToLongMiniProgram(platform, productid, city);
       }
@@ -202,7 +220,7 @@ Component({
                     })
                   }
                 });
-                app.globalData.houseSecondGetData = res;
+                app.globalData.houseSecondData = res;
           
               } else {
                 wx.showToast({

@@ -76,15 +76,20 @@ Component({
       }
     ],
     platform:'',//平台
-    houseListData:{},//短租传递的参数
+    houseListData:{},//
+    houseSortData:{},//短租传递的参数
+    houseLongData:{},//长租传递的参数
 
-    houseSecondGetData:{},//二手房缓存的详情
+    houseSecondData:{},//二手房缓存的详情
   },
     lifetimes:{
       ready(){
         this.setData({
-          houseSecondGetData : app.globalData.houseSecondGetData
+          houseSortData : app.globalData.houseSortData,
+          houseLongData : app.globalData.houseLongData,
+          houseSecondData : app.globalData.houseSecondData,
         })
+        console.log(this.data.houseLondData)
       }
     },
 
@@ -111,6 +116,8 @@ Component({
       let city = JSON.parse(decodeURIComponent(e.currentTarget.dataset.city));
       if(this.properties.type==1){
         monitor.navigateToMiniProgram(platform, productid, beginDate, endDate);
+      }else if(this.properties.type==2 || this.properties.type==3){
+        monitor.navigateToLongMiniProgram(platform, productid, city);
       }else if(this.properties.type==4){
         monitor.navigateToSecondMiniProgram(platform, productid, city);
       }
