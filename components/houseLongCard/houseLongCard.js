@@ -1,6 +1,6 @@
 import * as rxjs from "../../utils/rx";
 const monitor = require("../../utils/monitor.js");
-import { tujia, xiaozhu, muniao, zhenguo, wiwj, lianjia } from "../../api/informationData.js"
+import { wiwj, lianjia,wbtc } from "../../api/informationData.js"
 Component({
   /**
    * 组件的属性列表
@@ -170,7 +170,7 @@ Component({
           return;
         }
         console.log(city)
-        if(platform == 'wiwj')
+        if(platform == 'wiwj'){
           wiwj.getLongData({ houseId:productid, cityId:city.wiwj }).then(res => {
             if (res) {
               let that = this;
@@ -191,6 +191,30 @@ Component({
               })
             }
           })
+        }
+        if(platform == 'tc'){
+          wbtc.getLongData(productid).then(res => {
+            if (res) {
+              let that = this;
+              wx.navigateTo({
+                url: '/pages/houseDetail/houseDetail?platform=' + platform + '&productid=' + productid + '&type=' + type + '&city=' + encodeURIComponent(JSON.stringify(city)),
+                complete:function(){
+                  that.setData({
+                    preven:false
+                  })
+                }
+              });
+              app.globalData.houseLongData = res;
+              app.globalData.houseLongData.buildarea = app.globalData.houseLongData.buildarea.replace('㎡','');
+              console.log(app.globalData.houseLongData)
+            } else {
+              wx.showToast({
+                icon: 'none',
+                title: '该房源暂无详情页',
+              })
+            }
+          })
+        }
 
         // monitor.navigateToLongMiniProgram(platform, productid, city);
       }
