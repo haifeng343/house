@@ -1367,6 +1367,9 @@ Page({
     // wiwj.getLongData({ houseId:'90332937', cityId:'2' }).then(res => {
     //   console.log('res', res)
     // })
+    // lianjia.getLongData({ house_code: 'HZ2373642574210023424', city_id: 110000 }).then(res => {
+    //   console.log('res', res)
+    // })
     // wiwj.getHouseData({ houseId:'90333226', cityId:'2' }).then(res => {
     //   console.log('res', res)
     // })

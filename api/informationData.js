@@ -1,4 +1,4 @@
-import { tujia_address2, xiaozhu_address2, muniao_address2, meituan_address, wiwj_address, lianjia_address2, lianjia_address3 } from "../utils/httpAddress.js";
+import { tujia_address2, xiaozhu_address2, muniao_address2, meituan_address, wiwj_address, lianjia_address2, lianjia_address3, lianjia_address1 } from "../utils/httpAddress.js";
 var base64_encode = require("../utils/base64.js").base64_encode;
 import { CryptoJS } from "../utils/sha1.js";
 import { xml2json } from "../utils/xml2json.js";
@@ -560,6 +560,7 @@ const wiwj = {
               communitytype: '', //建筑类型
               plotRatio: '', //容积率
               virescence: '', //绿化率
+              house_address: '' //位置
             }
             let houseinfo = data.houseinfo || {}
             if (houseinfo.housetitle) {
@@ -640,6 +641,7 @@ const wiwj = {
               let communityInfo = res.communityInfo || {}
               request.plotRatio = communityInfo.plotRatio || ''
               request.virescence = communityInfo.virescence || ''
+              request.house_address = (communityInfo.qyname ? communityInfo.qyname + '-' : '') + (communityInfo.selladd ? communityInfo.selladd : '')
               resolve(request);
             }).catch(res => {
               resolve(request);
@@ -793,6 +795,184 @@ const wiwj = {
 };
 
 const lianjia = {
+  getLongData: function (r = { house_code: '', city_id: '' }) {
+    let { house_code, city_id } = r;
+    let ts = new Date().valueOf() / 1000;
+    let signStr = 'cd02613a5cfaf7ad91e565d668b6056c' + `house_code=${house_code}` + `ts=${ts}` + 'v1/house/detail'
+    let sign = MD5(signStr);
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: lianjia_address1 + `/v1/house/detail?house_code=${house_code}&ts=${ts}`,
+        method: "GET",
+        header: {
+          "rent-sign": sign,
+          "rent-app-id": "rent-xcx"
+        },
+        success: res => {
+          if (res.data) {
+            let data = res.data.data || {}
+            console.log(data)
+            if (Object.keys(data).length === 0) {
+              reject(false);
+            }
+            let request = {
+              houseId: r.house_code, //房子id
+              houseName: '', //标题
+              price: '', //售价
+              layout: '', //户型
+              buildarea: '', //面积
+              houseTags: [], //标签
+              looktime: '', //看房时间
+              gettime: '', //入住
+              houseFacilitys: [], //配套设施
+              decoratelevel: '', //装修
+              heading: '', //朝向
+              floorStr: '', //楼层
+              housePicture: [], //图片
+              housememo: '', // 房源描述
+              address: '', //小区名称
+              startData: '', //建成年代
+              communitytype: '', //建筑类型
+              plotRatio: '', //容积率
+              virescence: '', //绿化率
+              house_address: '' //位置
+            }
+            let houseinfo = data.base_info || {}
+            if (houseinfo.house_title) {
+              request.houseName = houseinfo.house_title
+            }
+            if (houseinfo.rent_price_listing) {
+              request.price = houseinfo.rent_price_listing
+            }
+            if (houseinfo.layout) {
+              request.layout = houseinfo.layout
+            }
+            if (houseinfo.rent_area) {
+              request.buildarea = houseinfo.rent_area
+            }
+            if (houseinfo.house_tags && houseinfo.house_tags.length) {
+              for (let index = 0; index < houseinfo.house_tags.length; index++) {
+                if (houseinfo.house_tags[index].name) {
+                  request.houseTags.push(houseinfo.house_tags[index].name)
+                }
+              }
+            }
+
+            //入住时间，看房时间, 楼层
+            if (houseinfo.meta_info && houseinfo.meta_info.length) {
+              for (let index = 0; index < houseinfo.meta_info.length; index++) {
+                if (houseinfo.meta_info[index].key === 'available_see_time') {
+                  request.looktime = houseinfo.meta_info[index].desc
+                }
+                if (houseinfo.meta_info[index].key === 'available_rent_time') {
+                  request.gettime = houseinfo.meta_info[index].desc
+                }
+                if (houseinfo.meta_info[index].key === 'floor_level') {
+                  request.floorStr = houseinfo.meta_info[index].desc
+                }
+              }
+            }
+
+            let house_intro = data.house_intro || {}
+            if (house_intro.furniture && house_intro.furniture.length) {
+              for (let index = 0; index < house_intro.furniture.length; index++) {
+                if (house_intro.furniture[index].name && house_intro.furniture[index].val) {
+                  request.houseFacilitys.push(house_intro.furniture[index].name)
+                }
+              }
+            }
+
+            // if (houseinfo.decoration_type) {
+            //   request.decoratelevel = houseinfo.decoration_type
+            // }
+            if (houseinfo.frame_orientation) {
+              request.heading = houseinfo.frame_orientation
+            }
+
+            let house_picture = data.house_picture || {}
+            if (house_picture && house_picture.length) {
+              for (let index = 0; index < house_picture.length; index++) {
+                request.housePicture.push(house_picture[index].house_picture_url)
+              }
+            }
+
+            let house_feature = data.house_feature || {}
+            house_feature = house_feature.content || {}
+            house_feature = house_feature.list || {}
+            if (house_feature.sellPoint && house_feature.sellPoint.desc) {
+              request.memo = house_feature.sellPoint.desc
+            }
+            if (house_feature.surroundMating && house_feature.surroundMating.desc) {
+              request.memo = house_feature.surroundMating.desc
+            }
+
+            // let community = data.community || {}
+            if (houseinfo.resblock_name) {
+              request.address = houseinfo.resblock_name
+            }
+
+            if (houseinfo && houseinfo.resblock_id) {
+              let resblock_code = houseinfo.resblock_id
+              let test = { resblock_code: resblock_code };
+              let n = "resblock_code=" + resblock_code;
+              n += "6e8566e348447383e16fdd1b233dbb49"
+              n = "ljwxapp:" + (n = MD5(n))
+              return new Promise((resolve, reject) => {
+                wx.request({
+                  url: lianjia_address3 + `/xiaoqu/detail?resblock_code=${resblock_code}`,
+                  method: "GET",
+                  header: {
+                    authorization: base64_encode(n),
+                    "lianjia-source": "ljwxapp",
+                    "time-stamp": new Date().getTime()
+                  },
+                  success: req => {
+                    let reqData = req.data || {}
+                    reqData = reqData.data || {}
+                    if (Object.keys(reqData).length === 0) {
+                      reject(false);
+                    }
+                    resolve(reqData)
+                  },
+                  fail: res => {
+                    reject(false)
+                  }
+                })
+              }).then(res => {
+                // console.log('user',res)
+                let communityInfo = res.info || {}
+                if (communityInfo.developers && communityInfo.developers.name) {
+                  request.develop = ommunityInfo.developers.name
+                }
+                if (communityInfo.price_unit_avg) {
+                  request.xqprice = ommunityInfo.price_unit_avg
+                }
+                if (communityInfo.building_year && communityInfo.building_year.length) {
+                  request.startData = communityInfo.building_year[0]
+                }
+                if (communityInfo.building_types && communityInfo.building_types.length) {
+                  request.communitytype = communityInfo.building_types[0]
+                }
+                if (communityInfo.bizcircle_name) {
+                  request.house_address = communityInfo.bizcircle_name
+                }
+                resolve(request);
+              }).catch(res => {
+                resolve(request);
+              })
+            } else {
+              resolve(request);
+            }
+          } else {
+            reject(false);
+          }
+        },
+        fail: res => {
+          reject(false);
+        }
+      });
+    });
+  },
   getHouseData: function (r = { house_code: '', city_id: '' }) {
     let { house_code, city_id } = r;
     let n = "";
@@ -868,8 +1048,8 @@ const lianjia = {
             if (houseinfo.decoration_type) {
               request.decoratelevel = houseinfo.decoration_type
             }
-            if (houseinfo.orientation) {
-              request.heading = houseinfo.orientation
+            if (houseinfo.frame_orientation) {
+              request.heading = houseinfo.frame_orientation
             }
             if (houseinfo.floor_level) {
               request.floorStr = houseinfo.floor_level + (houseinfo.floor_total ? '/' + houseinfo.floor_total :'')
