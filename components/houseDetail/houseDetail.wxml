@@ -157,21 +157,21 @@
 <view class="container" wx:if="{{(type == 2 || type == 3) && houseLongData.address}}">
     <view class="landlordTitle">{{houseLongData.address?houseLongData.address:'--'}}</view>
     <view class="plot-detail">
-      <view class="plot-detail-item">
+      <view class="plot-detail-item" wx:if="{{houseLongData.startData}}">
         <view class="plot-detail-label">建成年代:</view>
-        <view class="plot-detail-text">{{houseLongData.startData?houseLongData.startData:'--'}}</view>
+        <view class="plot-detail-text">{{houseLongData.startData}}</view>
       </view>
-      <view class="plot-detail-item">
+      <view class="plot-detail-item" wx:if="{{houseLongData.communitytype}}">
         <view class="plot-detail-label">建筑类型:</view>
-        <view class="plot-detail-text">{{houseLongData.communitytype?houseLongData.communitytype:'--'}}</view>
+        <view class="plot-detail-text">{{houseLongData.communitytype}}</view>
       </view>
-      <view class="plot-detail-item">
+      <view class="plot-detail-item" wx:if="{{houseLongData.plotRatio}}">
         <view class="plot-detail-label">容积率:</view>
-        <view class="plot-detail-text">{{houseLongData.plotRatio?houseLongData.plotRatio+'%':'--'}}</view>
+        <view class="plot-detail-text">{{houseLongData.plotRatio}}</view>
       </view>
-      <view class="plot-detail-item">
+      <view class="plot-detail-item" wx:if="{{houseLongData.virescence}}">
         <view class="plot-detail-label">绿化率:</view>
-        <view class="plot-detail-text">{{houseLongData.virescence?houseLongData.virescence+'%':'--'}}</view>
+        <view class="plot-detail-text">{{houseLongData.virescence}}</view>
       </view>
       <view class="plot-detail-item" wx:if="{{houseLongData.develop}}">
         <view class="plot-detail-label">位置:</view>
