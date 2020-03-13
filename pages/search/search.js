@@ -1364,6 +1364,9 @@ Page({
     // zhenguo.getData('6487223').then(res => {
     //   console.log('res', res)
     // })
+    // wiwj.getLongData({ houseId:'90332937', cityId:'2' }).then(res => {
+    //   console.log('res', res)
+    // })
     // wiwj.getHouseData({ houseId:'90333226', cityId:'2' }).then(res => {
     //   console.log('res', res)
     // })

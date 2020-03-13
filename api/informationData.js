@@ -524,7 +524,136 @@ const zhenguo = {
   }
 };
 
+const listMap = { '1': '洗衣机', '2': '冰箱', '3': '电视', '4': '空调', '5': '热水器', '6': '天然气', '7': '暖气', '8': '床', '9': '网络', '10': '电梯' }
 const wiwj = {
+  getLongData: function ({ houseId, cityId }) {
+    let data = { hid: houseId }
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: wiwj_address + `/appapi/rent/${cityId}/v1/allinfo`,
+        method: "POST",
+        data: data,
+        success: res => {
+          if (res.data) {
+            console.log(res.data)
+            let data = res.data.data || {}
+            if (Object.keys(data).length === 0) {
+              reject(false);
+            }
+            let request = {
+              houseId: houseId, //房子id
+              houseName: '', //标题
+              price: '', //售价
+              layout: '', //户型
+              buildarea: '', //面积
+              houseTags: [], //标签
+              looktime: '', //看房时间
+              gettime: '', //入住
+              houseFacilitys: [], //配套设施
+              decoratelevel: '', //装修
+              heading: '', //朝向
+              floorStr: '', //楼层
+              housePicture: [], //图片
+              housememo: '', // 房源描述
+              address: '', //小区名称
+              startData: '', //建成年代
+              communitytype: '', //建筑类型
+              plotRatio: '', //容积率
+              virescence: '', //绿化率
+            }
+            let houseinfo = data.houseinfo || {}
+            if (houseinfo.housetitle) {
+              request.houseName = (houseinfo.rentmodename ? houseinfo.rentmodename + '/' : '') + houseinfo.housetitle
+            }
+            if (houseinfo.price) {
+              request.price = houseinfo.price
+            }
+            if (houseinfo.tagwall && houseinfo.tagwall.length) {
+              request.houseTags = houseinfo.tagwall
+            }
+            if (houseinfo.bedroom || houseinfo.livingroom || houseinfo.toilet) {
+              request.layout = houseinfo.bedroom + '室' + houseinfo.livingroom + '厅' + houseinfo.toilet + '卫'
+            }
+            if (houseinfo.area) {
+              request.buildarea = houseinfo.area
+            }
+            if (houseinfo.contacttime) {
+              request.looktime = houseinfo.contacttime
+            }
+            // if (houseinfo.contacttime) {
+            //   request.gettime = houseinfo.contacttime
+            // }
+            if (houseinfo.equipments && houseinfo.equipments.length) {
+              for (let index = 0; index < houseinfo.equipments.length; index++) {
+                if (listMap[houseinfo.equipments[index]]) {
+                  request.houseFacilitys.push(listMap[houseinfo.equipments[index]])
+                }
+              }
+            }
+            if (houseinfo.decoratelevel) {
+              request.decoratelevel = houseinfo.decoratelevel
+            }
+            if (houseinfo.heading) {
+              request.heading = houseinfo.heading
+            }
+            if (houseinfo.floorStr) {
+              request.floorStr = houseinfo.floorStr
+            }
+            if (houseinfo.imgs && houseinfo.imgs.length) {
+              request.housePicture = houseinfo.imgs
+            }
+            if (houseinfo.memo1) {
+              request.housememo = houseinfo.memo1
+            }
+            let community = data.community || {}
+            if (community.address) {
+              request.address = community.address
+            }
+            if (community.startData) {
+              request.startData = community.startData
+            }
+            if (community.communitytype) {
+              request.communitytype = community.communitytype
+            }
+            let communityid = '';
+            if (data.houseinfo && data.houseinfo.communityid) {
+              communityid = data.houseinfo.communityid
+            }
+            return new Promise((resolve, reject) => {
+              wx.request({
+                url: wiwj_address + `/community/2/v1/allinfo`,
+                method: "POST",
+                data: { communityid },
+                success: req => {
+                  let reqData = req.data || {}
+                  reqData = reqData.data || {}
+                  if (Object.keys(reqData).length === 0) {
+                    reject(false);
+                  }
+                  resolve(reqData)
+                },
+                fail: res => {
+                  reject(false)
+                }
+              })
+            }).then(res => {
+              let communityInfo = res.communityInfo || {}
+              request.plotRatio = communityInfo.plotRatio || ''
+              request.virescence = communityInfo.virescence || ''
+              resolve(request);
+            }).catch(res => {
+              resolve(request);
+            })
+          } else {
+            reject(false);
+          }
+        },
+        fail: res => {
+          reject(false);
+        }
+      });
+    });
+  },
   getHouseData: function ({houseId,cityId}) {
     let data = { hid: houseId }
     return new Promise((resolve, reject) => {
