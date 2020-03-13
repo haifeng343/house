@@ -19,7 +19,7 @@ import getIndexHouseData from "../../utils/indexHouseData";
 import getIndexLongHouseData from "../../utils/indexLongHouseData";
 import getIndexSecondHouseData from "../../utils/indexSecondHouseData";
 import { changeHistoryStorage } from "../../utils/longSetSearchData";
-import { tujia, xiaozhu, muniao, zhenguo, wiwj, lianjia } from "../../api/informationData.js"
+import { tujia, xiaozhu, muniao, zhenguo, wiwj, lianjia, wbtc } from "../../api/informationData.js"
 Page({
   /**
    * 页面的初始数据
@@ -1368,6 +1368,9 @@ Page({
     //   console.log('res', res)
     // })
     // lianjia.getLongData({ house_code: 'HZ2373642574210023424', city_id: 110000 }).then(res => {
+    //   console.log('res', res)
+    // })
+    // wbtc.getLongData('41371156070425').then(res => {
     //   console.log('res', res)
     // })
     // wiwj.getHouseData({ houseId:'90333226', cityId:'2' }).then(res => {
