@@ -254,6 +254,7 @@ swiper-item image {
   flex-direction: row;
   font-size: 28rpx;
   line-height: 50rpx;
+  align-items: center;
   color: rgba(29, 29, 29, 1);
 }
 
@@ -264,6 +265,7 @@ swiper-item image {
 .lanlordValue {
   font-size: 36rpx;
   font-weight: 500;
+  line-height: 50rpx;
 }
 
 .checkInNoticeTitle {
